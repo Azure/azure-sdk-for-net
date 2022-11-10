@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="servicePrincipalKey">
         /// Specify the application&apos;s key.
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="FactorySecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="office365TenantId"/>, <paramref name="servicePrincipalTenantId"/>, <paramref name="servicePrincipalId"/> or <paramref name="servicePrincipalKey"/> is null. </exception>
         public Office365LinkedService(BinaryData office365TenantId, BinaryData servicePrincipalTenantId, BinaryData servicePrincipalId, FactorySecretBaseDefinition servicePrincipalKey)
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="servicePrincipalKey">
         /// Specify the application&apos;s key.
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="FactorySecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
         internal Office365LinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData office365TenantId, BinaryData servicePrincipalTenantId, BinaryData servicePrincipalId, FactorySecretBaseDefinition servicePrincipalKey, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// Specify the application&apos;s key.
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="FactorySecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public FactorySecretBaseDefinition ServicePrincipalKey { get; set; }
         /// <summary>

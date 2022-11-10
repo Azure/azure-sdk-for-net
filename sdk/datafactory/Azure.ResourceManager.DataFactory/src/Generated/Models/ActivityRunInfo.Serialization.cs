@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> linkedServiceName = default;
             Optional<string> status = default;
             Optional<DateTimeOffset> activityRunStart = default;
-            Optional<DateTimeOffset?> activityRunEnd = default;
-            Optional<int?> durationInMs = default;
+            Optional<DateTimeOffset> activityRunEnd = default;
+            Optional<int> durationInMs = default;
             Optional<BinaryData> input = default;
             Optional<BinaryData> output = default;
             Optional<BinaryData> error = default;
@@ -92,24 +92,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        activityRunEnd = null;
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
                     }
-                    else
-                    {
-                        activityRunEnd = property.Value.GetDateTimeOffset("O");
-                    }
+                    activityRunEnd = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("durationInMs"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        durationInMs = null;
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
                     }
-                    else
-                    {
-                        durationInMs = property.Value.GetInt32();
-                    }
+                    durationInMs = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("input"))
@@ -126,12 +122,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        output = null;
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
                     }
-                    else
-                    {
-                        output = BinaryData.FromString(property.Value.GetRawText());
-                    }
+                    output = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("error"))

@@ -5,4 +5,7 @@
     <Description>Azure Resource Manager client SDK for Azure resource provider DataFactory</Description>
     <PackageTags>azure;management;arm;resource manager;datafactory</PackageTags>
   </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\core\Azure.Core.Expressions.DataFactory\src\Azure.Core.Expressions.DataFactory.csproj" />
+  </ItemGroup>
 </Project>

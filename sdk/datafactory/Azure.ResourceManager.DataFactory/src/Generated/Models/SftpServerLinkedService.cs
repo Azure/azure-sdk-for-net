@@ -39,19 +39,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="password">
         /// Password to logon the SFTP server for Basic authentication.
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="FactorySecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
         /// <param name="privateKeyPath"> The SSH private key file path for SshPublicKey authentication. Only valid for on-premises copy. For on-premises copy with SshPublicKey authentication, either PrivateKeyPath or PrivateKeyContent should be specified. SSH private key should be OpenSSH format. Type: string (or Expression with resultType string). </param>
         /// <param name="privateKeyContent">
         /// Base64 encoded SSH private key content for SshPublicKey authentication. For on-premises copy with SshPublicKey authentication, either PrivateKeyPath or PrivateKeyContent should be specified. SSH private key should be OpenSSH format.
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="FactorySecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="passPhrase">
         /// The password to decrypt the SSH private key if the SSH private key is encrypted.
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="FactorySecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="skipHostKeyValidation"> If true, skip the SSH host key validation. Default value is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="hostKeyFingerprint"> The host key finger-print of the SFTP server. When SkipHostKeyValidation is false, HostKeyFingerprint should be specified. Type: string (or Expression with resultType string). </param>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// Password to logon the SFTP server for Basic authentication.
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="FactorySecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public FactorySecretBaseDefinition Password { get; set; }
         /// <summary>
@@ -237,13 +237,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// Base64 encoded SSH private key content for SshPublicKey authentication. For on-premises copy with SshPublicKey authentication, either PrivateKeyPath or PrivateKeyContent should be specified. SSH private key should be OpenSSH format.
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="FactorySecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public FactorySecretBaseDefinition PrivateKeyContent { get; set; }
         /// <summary>
         /// The password to decrypt the SSH private key if the SSH private key is encrypted.
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="FactorySecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public FactorySecretBaseDefinition PassPhrase { get; set; }
         /// <summary>

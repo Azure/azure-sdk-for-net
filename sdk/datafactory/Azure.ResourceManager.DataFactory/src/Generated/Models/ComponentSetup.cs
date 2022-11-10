@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="licenseKey">
         /// The license key to activate the component.
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="FactorySecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         internal ComponentSetup(string customSetupBaseType, string componentName, FactorySecretBaseDefinition licenseKey) : base(customSetupBaseType)
         {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// The license key to activate the component.
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="FactorySecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public FactorySecretBaseDefinition LicenseKey { get; set; }
     }

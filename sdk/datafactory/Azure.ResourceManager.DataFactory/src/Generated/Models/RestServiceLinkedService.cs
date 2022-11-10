@@ -41,14 +41,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="password">
         /// The password used in Basic authentication type.
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="FactorySecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="authHeaders"> The additional HTTP headers in the request to RESTful API used for authorization. Type: object (or Expression with resultType object). </param>
         /// <param name="servicePrincipalId"> The application&apos;s client ID used in AadServicePrincipal authentication type. </param>
         /// <param name="servicePrincipalKey">
         /// The application&apos;s key used in AadServicePrincipal authentication type.
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="FactorySecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="tenant"> The tenant information (domain name or tenant ID) used in AadServicePrincipal authentication type under which your application resides. </param>
         /// <param name="azureCloudType"> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </param>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="clientSecret">
         /// The client secret associated with your application.
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="FactorySecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="tokenEndpoint"> The token endpoint of the authorization server to acquire access token. Type: string (or Expression with resultType string). </param>
         /// <param name="resource"> The target service or resource to which the access will be requested. Type: string (or Expression with resultType string). </param>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// The password used in Basic authentication type.
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="FactorySecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public FactorySecretBaseDefinition Password { get; set; }
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// The application&apos;s key used in AadServicePrincipal authentication type.
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="FactorySecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public FactorySecretBaseDefinition ServicePrincipalKey { get; set; }
         /// <summary>
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// The client secret associated with your application.
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="FactorySecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public FactorySecretBaseDefinition ClientSecret { get; set; }
         /// <summary>

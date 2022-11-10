@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             Optional<string> catalogServerEndpoint = default;
             Optional<string> catalogAdminUserName = default;
-            Optional<FactorySecretString> catalogAdminPassword = default;
+            Optional<FactorySecureString> catalogAdminPassword = default;
             Optional<IntegrationRuntimeSsisCatalogPricingTier> catalogPricingTier = default;
             Optional<string> dualStandbyPairName = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    catalogAdminPassword = FactorySecretString.DeserializeFactorySecretString(property.Value);
+                    catalogAdminPassword = FactorySecureString.DeserializeFactorySecureString(property.Value);
                     continue;
                 }
                 if (property.NameEquals("catalogPricingTier"))

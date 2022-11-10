@@ -225,7 +225,7 @@ rename-mapping:
   PurviewConfiguration: FactoryPurviewConfiguration
   RunFilterParameters: RunFilterContent
   SecretBase: FactorySecretBaseDefinition
-  SecureString: FactorySecretString
+  SecureString: FactorySecureString
   SsisObjectMetadataStatusResponse: SsisObjectMetadataStatusResult
   SsisParameter: SsisParameterInfo
   IntegrationRuntimeOutboundNetworkDependenciesEndpointsResponse: IntegrationRuntimeOutboundNetworkDependenciesResult

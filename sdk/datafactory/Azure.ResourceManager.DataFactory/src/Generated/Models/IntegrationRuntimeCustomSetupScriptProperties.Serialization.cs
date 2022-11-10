@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal static IntegrationRuntimeCustomSetupScriptProperties DeserializeIntegrationRuntimeCustomSetupScriptProperties(JsonElement element)
         {
             Optional<Uri> blobContainerUri = default;
-            Optional<FactorySecretString> sasToken = default;
+            Optional<FactorySecureString> sasToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("blobContainerUri"))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sasToken = FactorySecretString.DeserializeFactorySecretString(property.Value);
+                    sasToken = FactorySecureString.DeserializeFactorySecureString(property.Value);
                     continue;
                 }
             }

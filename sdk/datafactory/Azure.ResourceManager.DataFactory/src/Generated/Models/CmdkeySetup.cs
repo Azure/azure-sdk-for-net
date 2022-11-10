@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="password">
         /// The password of data source access.
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="FactorySecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetName"/>, <paramref name="userName"/> or <paramref name="password"/> is null. </exception>
         public CmdkeySetup(BinaryData targetName, BinaryData userName, FactorySecretBaseDefinition password)
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="password">
         /// The password of data source access.
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="FactorySecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         internal CmdkeySetup(string customSetupBaseType, BinaryData targetName, BinaryData userName, FactorySecretBaseDefinition password) : base(customSetupBaseType)
         {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// The password of data source access.
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="FactorySecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public FactorySecretBaseDefinition Password { get; set; }
     }

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="accessKey">
         /// The Azure Batch account access key.
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="FactorySecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="batchUri"> The Azure Batch URI. Type: string (or Expression with resultType string). </param>
         /// <param name="poolName"> The Azure Batch pool name. Type: string (or Expression with resultType string). </param>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// The Azure Batch account access key.
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="FactorySecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public FactorySecretBaseDefinition AccessKey { get; set; }
         /// <summary>

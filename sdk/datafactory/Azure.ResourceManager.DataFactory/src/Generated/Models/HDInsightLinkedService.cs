@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="password">
         /// HDInsight cluster password.
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="FactorySecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="linkedServiceName"> The Azure Storage linked service reference. </param>
         /// <param name="hcatalogLinkedServiceName"> A reference to the Azure SQL linked service that points to the HCatalog database. </param>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// HDInsight cluster password.
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="FactorySecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public FactorySecretBaseDefinition Password { get; set; }
         /// <summary> The Azure Storage linked service reference. </summary>

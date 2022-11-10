@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class FactorySecretString : IUtf8JsonSerializable
+    public partial class FactorySecureString : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static FactorySecretString DeserializeFactorySecretString(JsonElement element)
+        internal static FactorySecureString DeserializeFactorySecureString(JsonElement element)
         {
             string value = default;
             string type = default;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new FactorySecretString(type, value);
+            return new FactorySecureString(type, value);
         }
     }
 }
