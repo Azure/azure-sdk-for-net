@@ -327,7 +327,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             int blobSize = 1024;
             int chunkSize = 1024 / 4; // Four equal-sized chunks
 
-            var data = GetRandomBuffer(blobSize);
+            var data = GetConstantBuffer(blobSize, 1);
             UploadBlobResult uploadResult = default;
             string digest = default;
 
@@ -356,7 +356,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             int remainderChunkSize = 20;
             blobSize += remainderChunkSize;
 
-            var data = GetRandomBuffer(blobSize);
+            var data = GetConstantBuffer(blobSize, 2);
             UploadBlobResult uploadResult = default;
             string digest = default;
 
@@ -383,7 +383,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             int blobSize = 1024;
             int chunkSize = 1024 / 4; // Four equal-sized chunks
 
-            var data = GetRandomBuffer(blobSize);
+            var data = GetConstantBuffer(blobSize, 3);
             UploadBlobResult uploadResult = default;
             string digest = OciBlobDescriptor.ComputeDigest(new MemoryStream(data));
 
@@ -620,6 +620,14 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var buffer = new byte[size];
             random.NextBytes(buffer);
             return buffer;
+        }
+
+        private static byte[] GetConstantBuffer(long size, byte value)
+        {
+            var array = new byte[size];
+            var span = new Span<byte>(array);
+            span.Fill(value);
+            return array;
         }
     }
 }
