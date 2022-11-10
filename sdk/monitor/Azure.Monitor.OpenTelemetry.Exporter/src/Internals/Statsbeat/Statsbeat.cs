@@ -17,6 +17,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
     internal static class Statsbeat
     {
+        private static bool s_isEnabled = true;
+
         internal const string StatsBeat_ConnectionString_NonEU = "<Non-EU-ConnectionString>";
 
         internal const string StatsBeat_ConnectionString_EU = "EU-ConnectionString";
@@ -57,6 +59,45 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             "swedencentral",
             "switzerlandnorth",
             "switzerlandwest",
+            "uksouth",
+            "ukwest"
+        };
+
+        internal static readonly HashSet<string> Non_EU_Endpoints = new()
+        {
+            "eastasia",
+            "southeastasia",
+            "chinaeast2",
+            "chinaeast3",
+            "chinanorth3",
+            "centralindia",
+            "southindia",
+            "jioindiacentral",
+            "jioindiawest",
+            "japaneast",
+            "japanwest",
+            "koreacentral",
+            "koreasouth",
+            "australiacentral",
+            "australiacentral2",
+            "australiaeast",
+            "australiasoutheast",
+            "canadacentral",
+            "canadaeast",
+            "qatarcentral",
+            "uaecentral",
+            "uaenorth",
+            "southafricanorth",
+            "brazilsouth",
+            "brazilsoutheast",
+            "centralus",
+            "eastus",
+            "eastus2",
+            "northcentralus",
+            "southcentralus",
+            "westus",
+            "westus2",
+            "westus3",
         };
 
         private static string GetOS()
@@ -79,13 +120,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         internal static void InitializeAttachStatsbeat(string connectionString)
         {
-            if (s_attachStatsBeatMeterProvider == null)
+            // check whether it is disabled or already initialized.
+            if (s_isEnabled && s_attachStatsBeatMeterProvider == null)
             {
                 if (s_statsBeat_ConnectionString == null)
                 {
                     ConnectionStringParser.GetValues(connectionString, out string instrumentationKey, out string ingestionEndpoint);
                     SetCustomerIkey(instrumentationKey);
                     SetStatsbeatConnectionString(ingestionEndpoint);
+                }
+
+                if (!s_isEnabled)
+                {
+                    // TODO: log
+                    return;
                 }
 
                 s_myMeter.CreateObservableGauge("AttachStatsBeat", () => GetAttachStatsBeat());
@@ -121,9 +169,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     s_statsBeat_ConnectionString = StatsBeat_ConnectionString_EU;
                 }
-                else
+                else if (Non_EU_Endpoints.Contains(endpoint))
                 {
                     s_statsBeat_ConnectionString = StatsBeat_ConnectionString_NonEU;
+                }
+                else
+                {
+                    // disable statsbeat
+                    s_isEnabled = false;
                 }
             }
         }
