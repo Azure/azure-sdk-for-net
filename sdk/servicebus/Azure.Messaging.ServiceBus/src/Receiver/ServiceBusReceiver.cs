@@ -674,15 +674,6 @@ namespace Azure.Messaging.ServiceBus
         ///     </item>
         ///   </list>
         /// </exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <list type="bullet">
-        ///     <item>
-        ///       <description>
-        ///         The dead letter reason or dead letter error description exceeded the maximum length of 4096.
-        ///       </description>
-        ///     </item>
-        ///   </list>
-        /// </exception>
         public virtual async Task DeadLetterMessageAsync(
             ServiceBusReceivedMessage message,
             IDictionary<string, object> propertiesToModify = null,
