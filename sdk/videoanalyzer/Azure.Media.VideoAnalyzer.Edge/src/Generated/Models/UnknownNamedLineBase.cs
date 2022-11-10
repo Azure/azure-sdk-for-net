@@ -8,7 +8,7 @@
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> The UnknownNamedLineBase. </summary>
-    public partial class UnknownNamedLineBase : NamedLineBase
+    internal partial class UnknownNamedLineBase : NamedLineBase
     {
         /// <summary> Initializes a new instance of UnknownNamedLineBase. </summary>
         /// <param name="type"> The Type discriminator for the derived types. </param>

@@ -8,7 +8,7 @@
 namespace Azure.Communication.JobRouter
 {
     /// <summary> The UnknownQueueSelectorAttachment. </summary>
-    public partial class UnknownQueueSelectorAttachment : QueueSelectorAttachment
+    internal partial class UnknownQueueSelectorAttachment : QueueSelectorAttachment
     {
         /// <summary> Initializes a new instance of UnknownQueueSelectorAttachment. </summary>
         /// <param name="kind"> The type discriminator describing the type of label selector attachment. </param>

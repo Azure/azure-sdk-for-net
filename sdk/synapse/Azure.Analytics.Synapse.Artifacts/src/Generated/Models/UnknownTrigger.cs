@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The UnknownTrigger. </summary>
-    public partial class UnknownTrigger : Trigger
+    internal partial class UnknownTrigger : Trigger
     {
         /// <summary> Initializes a new instance of UnknownTrigger. </summary>
         /// <param name="type"> Trigger type. </param>

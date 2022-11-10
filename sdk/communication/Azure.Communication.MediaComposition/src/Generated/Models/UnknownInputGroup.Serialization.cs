@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
 {
-    public partial class UnknownInputGroup : IUtf8JsonSerializable
+    internal partial class UnknownInputGroup : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

@@ -10,7 +10,7 @@ using Azure.Search.Documents.Indexes.Models;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> The UnknownTokenFilter. </summary>
-    public partial class UnknownTokenFilter : TokenFilter
+    internal partial class UnknownTokenFilter : TokenFilter
     {
         /// <summary> Initializes a new instance of UnknownTokenFilter. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the token filter. </param>

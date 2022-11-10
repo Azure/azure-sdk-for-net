@@ -8,7 +8,7 @@
 namespace Azure.AI.Language.Conversations
 {
     /// <summary> The UnknownAnalyzeConversationLROTask. </summary>
-    public partial class UnknownAnalyzeConversationLROTask : AnalyzeConversationLROTask
+    internal partial class UnknownAnalyzeConversationLROTask : AnalyzeConversationLROTask
     {
         /// <summary> Initializes a new instance of UnknownAnalyzeConversationLROTask. </summary>
         /// <param name="taskName"></param>

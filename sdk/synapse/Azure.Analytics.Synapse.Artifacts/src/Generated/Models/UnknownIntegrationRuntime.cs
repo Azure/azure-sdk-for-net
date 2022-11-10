@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The UnknownIntegrationRuntime. </summary>
-    public partial class UnknownIntegrationRuntime : IntegrationRuntime
+    internal partial class UnknownIntegrationRuntime : IntegrationRuntime
     {
         /// <summary> Initializes a new instance of UnknownIntegrationRuntime. </summary>
         /// <param name="type"> Type of integration runtime. </param>

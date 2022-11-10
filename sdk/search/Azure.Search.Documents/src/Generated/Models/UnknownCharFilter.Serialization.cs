@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    public partial class UnknownCharFilter : IUtf8JsonSerializable
+    internal partial class UnknownCharFilter : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

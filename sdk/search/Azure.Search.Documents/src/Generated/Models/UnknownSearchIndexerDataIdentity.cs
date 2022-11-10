@@ -10,7 +10,7 @@ using Azure.Search.Documents.Indexes.Models;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> The UnknownSearchIndexerDataIdentity. </summary>
-    public partial class UnknownSearchIndexerDataIdentity : SearchIndexerDataIdentity
+    internal partial class UnknownSearchIndexerDataIdentity : SearchIndexerDataIdentity
     {
         /// <summary> Initializes a new instance of UnknownSearchIndexerDataIdentity. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the identity. </param>

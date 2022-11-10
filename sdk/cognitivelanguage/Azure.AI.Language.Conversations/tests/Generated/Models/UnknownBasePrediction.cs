@@ -8,7 +8,7 @@
 namespace Azure.AI.Language.Conversations
 {
     /// <summary> The UnknownBasePrediction. </summary>
-    public partial class UnknownBasePrediction : BasePrediction
+    internal partial class UnknownBasePrediction : BasePrediction
     {
         /// <summary> Initializes a new instance of UnknownBasePrediction. </summary>
         /// <param name="projectKind"> The type of the project. </param>

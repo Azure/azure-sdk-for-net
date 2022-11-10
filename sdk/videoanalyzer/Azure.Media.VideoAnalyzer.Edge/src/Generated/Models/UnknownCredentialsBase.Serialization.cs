@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class UnknownCredentialsBase : IUtf8JsonSerializable
+    internal partial class UnknownCredentialsBase : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

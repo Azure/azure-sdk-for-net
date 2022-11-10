@@ -8,7 +8,7 @@
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> The UnknownCredentialsBase. </summary>
-    public partial class UnknownCredentialsBase : CredentialsBase
+    internal partial class UnknownCredentialsBase : CredentialsBase
     {
         /// <summary> Initializes a new instance of UnknownCredentialsBase. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>

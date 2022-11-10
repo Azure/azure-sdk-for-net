@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The UnknownCopySink. </summary>
-    public partial class UnknownCopySink : CopySink
+    internal partial class UnknownCopySink : CopySink
     {
         /// <summary> Initializes a new instance of UnknownCopySink. </summary>
         /// <param name="type"> Copy sink type. </param>

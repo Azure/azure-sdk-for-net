@@ -12,7 +12,7 @@ using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Models
 {
-    public partial class UnknownSearchIndexerSkill : IUtf8JsonSerializable
+    internal partial class UnknownSearchIndexerSkill : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

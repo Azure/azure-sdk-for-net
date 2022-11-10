@@ -10,7 +10,7 @@ using Azure.Search.Documents.Indexes.Models;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> The UnknownDataChangeDetectionPolicy. </summary>
-    public partial class UnknownDataChangeDetectionPolicy : DataChangeDetectionPolicy
+    internal partial class UnknownDataChangeDetectionPolicy : DataChangeDetectionPolicy
     {
         /// <summary> Initializes a new instance of UnknownDataChangeDetectionPolicy. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the data change detection policy. </param>

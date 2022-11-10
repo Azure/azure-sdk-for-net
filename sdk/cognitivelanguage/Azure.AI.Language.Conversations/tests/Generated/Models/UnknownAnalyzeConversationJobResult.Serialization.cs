@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
-    public partial class UnknownAnalyzeConversationJobResult : IUtf8JsonSerializable
+    internal partial class UnknownAnalyzeConversationJobResult : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

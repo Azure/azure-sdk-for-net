@@ -8,7 +8,7 @@
 namespace Azure.AI.Language.Conversations
 {
     /// <summary> The UnknownAnalyzeConversationTaskResult. </summary>
-    public partial class UnknownAnalyzeConversationTaskResult : AnalyzeConversationTaskResult
+    internal partial class UnknownAnalyzeConversationTaskResult : AnalyzeConversationTaskResult
     {
         /// <summary> Initializes a new instance of UnknownAnalyzeConversationTaskResult. </summary>
         /// <param name="kind"> Enumeration of supported conversational task results. </param>

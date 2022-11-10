@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The UnknownDatasetLocation. </summary>
-    public partial class UnknownDatasetLocation : DatasetLocation
+    internal partial class UnknownDatasetLocation : DatasetLocation
     {
         /// <summary> Initializes a new instance of UnknownDatasetLocation. </summary>
         /// <param name="type"> Type of dataset storage location. </param>

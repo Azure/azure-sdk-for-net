@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The UnknownFormatWriteSettings. </summary>
-    public partial class UnknownFormatWriteSettings : FormatWriteSettings
+    internal partial class UnknownFormatWriteSettings : FormatWriteSettings
     {
         /// <summary> Initializes a new instance of UnknownFormatWriteSettings. </summary>
         /// <param name="type"> The write setting type. </param>

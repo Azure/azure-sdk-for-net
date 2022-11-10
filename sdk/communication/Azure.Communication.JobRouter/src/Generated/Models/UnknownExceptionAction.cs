@@ -8,7 +8,7 @@
 namespace Azure.Communication.JobRouter
 {
     /// <summary> The UnknownExceptionAction. </summary>
-    public partial class UnknownExceptionAction : ExceptionAction
+    internal partial class UnknownExceptionAction : ExceptionAction
     {
         /// <summary> Initializes a new instance of UnknownExceptionAction. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of ExceptionAction. </param>

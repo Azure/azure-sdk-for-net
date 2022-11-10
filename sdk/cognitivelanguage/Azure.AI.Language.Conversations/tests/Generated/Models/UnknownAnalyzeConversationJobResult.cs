@@ -10,7 +10,7 @@ using System;
 namespace Azure.AI.Language.Conversations
 {
     /// <summary> The UnknownAnalyzeConversationJobResult. </summary>
-    public partial class UnknownAnalyzeConversationJobResult : AnalyzeConversationJobResult
+    internal partial class UnknownAnalyzeConversationJobResult : AnalyzeConversationJobResult
     {
         /// <summary> Initializes a new instance of UnknownAnalyzeConversationJobResult. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>

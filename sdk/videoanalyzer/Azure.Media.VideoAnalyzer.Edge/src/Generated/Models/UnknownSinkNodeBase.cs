@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> The UnknownSinkNodeBase. </summary>
-    public partial class UnknownSinkNodeBase : SinkNodeBase
+    internal partial class UnknownSinkNodeBase : SinkNodeBase
     {
         /// <summary> Initializes a new instance of UnknownSinkNodeBase. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>

@@ -8,7 +8,7 @@
 namespace Azure.Communication.JobRouter
 {
     /// <summary> The UnknownJobExceptionTrigger. </summary>
-    public partial class UnknownJobExceptionTrigger : JobExceptionTrigger
+    internal partial class UnknownJobExceptionTrigger : JobExceptionTrigger
     {
         /// <summary> Initializes a new instance of UnknownJobExceptionTrigger. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of ExceptionTrigger. </param>

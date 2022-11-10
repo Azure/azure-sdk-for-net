@@ -8,7 +8,7 @@
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> The UnknownEndpointBase. </summary>
-    public partial class UnknownEndpointBase : EndpointBase
+    internal partial class UnknownEndpointBase : EndpointBase
     {
         /// <summary> Initializes a new instance of UnknownEndpointBase. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>

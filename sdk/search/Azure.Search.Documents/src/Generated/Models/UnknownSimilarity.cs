@@ -10,7 +10,7 @@ using Azure.Search.Documents.Indexes.Models;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> The UnknownSimilarity. </summary>
-    public partial class UnknownSimilarity : SimilarityAlgorithm
+    internal partial class UnknownSimilarity : SimilarityAlgorithm
     {
         /// <summary> Initializes a new instance of UnknownSimilarity. </summary>
         /// <param name="oDataType"></param>
