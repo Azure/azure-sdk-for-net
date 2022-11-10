@@ -1,38 +1,50 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Runtime.InteropServices;
 using Azure.Core;
+using Azure.Storage.DataMovement.JobPlanModels;
 
 namespace Azure.Storage.DataMovement
 {
     /// <summary>
     /// This matching the JobPartPlanHeader of azcopy
+    ///
+    /// TODO: check if we want to set the pack and/or size for the struct layout
     /// </summary>
+    [StructLayout(LayoutKind.Sequential, CharSet=CharSet.Unicode)]
     internal struct JobPartPlanHeader
     {
         /// <summary>
         /// The version of data schema format of header
         /// This will seem weird because we will have a schema for how we store the data
         /// when the schema changes this verison will increment
+        ///
+        /// Set to a size of 3
+        /// TODO: Consider changing to an int when GA comes. In public preview we should
+        /// leave the version as "b1", instead of complete ints.
         /// </summary>
-        public int Version;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 3)]
+        public byte[] Version;
 
         /// <summary>
         /// The start time of the job part
         /// </summary>
-        public ushort startTime;
+        public long StartTime;
 
         /// <summary>
         /// The Transfer/Job Id
         ///
-        /// 16 byte array
+        /// Size of a GUID
         /// </summary>
-        public byte[] transferId;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 16)]
+        public Guid TransferId;
 
         /// <summary>
         /// Job Part's part number (0+)
         ///
-        /// We don't expect there to be more than 50,000 job parts (this number is from the number of blocks in a blob)
+        /// We don't expect there to be more than 50,000 job parts
         /// So reaching int.MAX is extremely unlikely
         /// </summary>
         public uint PartNum;
@@ -45,20 +57,25 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// The root directory of the source
         ///
-        /// Size of byte array in azcopy is 1000 bytes
+        /// Size of byte[] in azcopy is 1000 bytes.
+        /// TODO: consider a different number, the max name of a blob cannot exceed 254
+        /// however the max length of a path in linux is 4096.
         /// </summary>
-        public byte[] USourceRoot;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1000)]
+        public byte[] SourceRoot;
 
         /// <summary>
-        /// Length of the extra source query params if applicable.
+        /// Length of the extra source query params if the source is a URL.
         /// </summary>
 	    public ushort SourceExtraQueryLength;
 
         /// <summary>
         /// Extra query params applicable to the source
         ///
-        /// Size of byte array in azcopy is 1000 bytes
+        /// Size of byte array in azcopy is 1000 bytes.
+        /// TODO: consider changing this to something like 2048 because the max a url could be
         /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1000)]
         public byte[] SourceExtraQuery;
 
         /// <summary>
@@ -71,6 +88,7 @@ namespace Azure.Storage.DataMovement
         ///
         /// Size of byte array in azcopy is 1000 bytes
         /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1000)]
         public byte[] DestinationRoot;
 
         /// <summary>
@@ -83,6 +101,7 @@ namespace Azure.Storage.DataMovement
         ///
         /// Size of byte array in azcopy is 1000 bytes
         /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1000)]
         public byte[] DestExtraQuery;
 
         /// <summary>
@@ -130,11 +149,6 @@ namespace Azure.Storage.DataMovement
         /// TODO: change to struct for FolderPropertyOptions
         /// </summary>
         public byte FolderPropertyOption;
-
-        /// <summary>
-        /// TBD might remove
-        /// </summary>
-        public uint CommandStringLength;
 
         /// <summary>
         /// The number of transfers in the Job part
@@ -204,9 +218,9 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// For delete operation specify what to do with snapshots
         /// </summary>
-        public byte DeleteSnapshotsOption;
+        public JobPartDeleteSnapshotsOption DeleteSnapshotsOption;
 
-        public byte PermanentDeleteOption;
+        public JobPartPermanentDeleteOption PermanentDeleteOption;
 
         public JobPartPlanRehydratePriorityType RehydratePriorityType;
     }

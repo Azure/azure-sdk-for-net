@@ -2,19 +2,19 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.Collections.Generic;
-using System.Text;
-using Azure.Storage.DataMovement.Models;
-using System.Threading.Tasks;
 using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.Storage.Blobs.DataMovement.Models;
-using System.Buffers;
+using Azure.Storage.DataMovement.Models;
 using Azure.Storage.Shared;
+using static Azure.Storage.DataMovement.TransferJobInternal;
 
 namespace Azure.Storage.DataMovement
 {
-    internal class StreamToUriJobPart : JobPartInternal
+    internal class ServiceToServiceJobPart : JobPartInternal
     {
         public delegate Task CommitBlockTaskInternal(CancellationToken cancellationToken);
         public CommitBlockTaskInternal CommitBlockTask { get; internal set; }
@@ -38,7 +38,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="uploadPool"></param>
         /// <param name="events"></param>
         /// <param name="cancellationTokenSource"></param>
-        public StreamToUriJobPart(
+        public ServiceToServiceJobPart(
             DataTransfer dataTransfer,
             StorageResource sourceResource,
             StorageResource destinationResource,
@@ -61,10 +61,6 @@ namespace Azure.Storage.DataMovement
                   cancellationTokenSource)
         { }
 
-        /// <summary>
-        /// Processes the job to job parts
-        /// </summary>
-        /// <returns>The task that's queueing up the chunks</returns>
         public override async Task ProcessPartToChunkAsync()
         {
             // Attempt to get the length, it's possible the file could
@@ -124,7 +120,7 @@ namespace Azure.Storage.DataMovement
                 else
                 {
                     // Single Put Blob Request
-                    await QueueChunk( async () => await SingleUploadCall(fileLength.Value).ConfigureAwait(false)).ConfigureAwait(false);
+                    await QueueChunk(async () => await SingleSyncCopyInternal(fileLength.Value).ConfigureAwait(false)).ConfigureAwait(false);
                 }
             }
             else
@@ -138,14 +134,14 @@ namespace Azure.Storage.DataMovement
         internal static CommitChunkHandler GetCommitController(
             long expectedLength,
             CommitBlockTaskInternal commitBlockTask,
-            StreamToUriJobPart jobPart)
+            ServiceToServiceJobPart jobPart)
         => new CommitChunkHandler(
             expectedLength,
             GetBlockListCommitHandlerBehaviors(commitBlockTask, jobPart));
 
         internal static CommitChunkHandler.Behaviors GetBlockListCommitHandlerBehaviors(
             CommitBlockTaskInternal commitBlockTask,
-            StreamToUriJobPart jobPart)
+            ServiceToServiceJobPart jobPart)
         {
             return new CommitChunkHandler.Behaviors
             {
@@ -162,71 +158,19 @@ namespace Azure.Storage.DataMovement
         }
         #endregion
 
-        internal async Task SingleUploadCall(long length)
+        internal async Task SingleSyncCopyInternal(long length)
         {
             try
             {
-                ReadStreamStorageResourceInfo result =  await _sourceResource.ReadStreamAsync().ConfigureAwait(false);
+                await OnTransferStatusChanged(StorageTransferStatus.InProgress).ConfigureAwait(false);
 
-                using Stream stream = result.Content;
-                await _destinationResource.WriteFromStreamAsync(
-                        stream,
-                        _cancellationTokenSource.Token).ConfigureAwait(false);
+                await _destinationResource.CopyFromUriAsync(
+                    _sourceResource.Uri,
+                    default, // TODO: change to respective options if necessary
+                    _cancellationTokenSource.Token).ConfigureAwait(false);
 
-                // Set completion status to completed
                 ReportBytesWritten(length);
                 await OnTransferStatusChanged(StorageTransferStatus.Completed).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                await InvokeFailedArg(ex).ConfigureAwait(false);
-            }
-        }
-
-        internal async Task StageBlockInternal(
-            long offset,
-            long blockLength)
-        {
-            try
-            {
-                Stream slicedStream = Stream.Null;
-                ReadStreamStorageResourceInfo result = await _sourceResource.ReadPartialStreamAsync(
-                    offset: offset,
-                    length: blockLength,
-                    cancellationToken: _cancellationTokenSource.Token).ConfigureAwait(false);
-                using (Stream stream = result.Content)
-                {
-                    //await OnTransferStatusChanged(StorageTransferStatus.InProgress, true).ConfigureAwait(false);
-                    slicedStream = await GetOffsetPartitionInternal(
-                        stream,
-                        (int)offset,
-                        (int)blockLength,
-                        _arrayPool,
-                        _cancellationTokenSource.Token).ConfigureAwait(false);
-                }
-                await _destinationResource.WriteStreamToOffsetAsync(
-                        offset,
-                        blockLength,
-                        slicedStream,
-                        default,
-                        _cancellationTokenSource.Token).ConfigureAwait(false);
-                // Invoke event handler to keep track of all the stage blocks
-                await _commitBlockHandler.InvokeEvent(
-                    new StageChunkEventArgs(
-                        _dataTransfer.Id,
-                        true,
-                        offset,
-                        blockLength,
-                        true,
-                        _cancellationTokenSource.Token)).ConfigureAwait(false);
-            }
-            // If we fail to stage a block, we need to make sure the rest of the stage blocks are cancelled
-            // (Core already performs the retry policy on the one stage block request
-            // which means the rest are not worth to continue)
-            catch (OperationCanceledException)
-            {
-                // Job was cancelled
-                await TriggerCancellation().ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -257,9 +201,43 @@ namespace Azure.Storage.DataMovement
             {
                 // Queue paritioned block task
                 await QueueChunk(async () =>
-                    await StageBlockInternal(
+                    await PutBlockFromUri(
                         block.Offset,
                         block.Length).ConfigureAwait(false)).ConfigureAwait(false);
+            }
+        }
+
+        internal async Task PutBlockFromUri(
+            long offset,
+            long blockLength)
+        {
+            try
+            {
+                await _destinationResource.CopyBlockFromUriAsync(
+                    sourceUri: _sourceResource.Uri,
+                    range: new HttpRange(offset, blockLength),
+                    cancellationToken: _cancellationTokenSource.Token).ConfigureAwait(false);
+                // Invoke event handler to keep track of all the stage blocks
+                await _commitBlockHandler.InvokeEvent(
+                    new StageChunkEventArgs(
+                        _dataTransfer.Id,
+                        true,
+                        offset,
+                        blockLength,
+                        true,
+                        _cancellationTokenSource.Token)).ConfigureAwait(false);
+            }
+            // If we fail to stage a block, we need to make sure the rest of the stage blocks are cancelled
+            // (Core already performs the retry policy on the one stage block request
+            // which means the rest are not worth to continue)
+            catch (OperationCanceledException)
+            {
+                // Job was cancelled
+                await TriggerCancellation().ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                await InvokeFailedArg(ex).ConfigureAwait(false);
             }
         }
 
@@ -288,7 +266,7 @@ namespace Azure.Storage.DataMovement
             acceptableBlockSize = Math.Max(acceptableBlockSize, minRequiredBlockSize);
 
             long absolutePosition = 0;
-            long blockLength;
+            long blockLength = acceptableBlockSize;
 
             // TODO: divide up paritions based on how much array pool is left
             while (absolutePosition < streamLength)
@@ -300,45 +278,6 @@ namespace Azure.Storage.DataMovement
                 yield return (absolutePosition, blockLength);
                 absolutePosition += blockLength;
             }
-        }
-
-        /// <summary>
-        /// Gets a partition from the current location of the given stream.
-        ///
-        /// This partition is buffered and it is safe to get many before using any of them.
-        /// </summary>
-        /// <param name="stream">
-        /// Stream to buffer a partition from.
-        /// </param>
-        /// <param name="offset">
-        /// Minimum amount of data to wait on before finalizing buffer.
-        /// </param>
-        /// <param name="length">
-        /// Max amount of data to buffer before cutting off for the next.
-        /// </param>
-        /// <param name="arrayPool">
-        /// </param>
-        /// <param name="cancellationToken">
-        /// </param>
-        /// <returns>
-        /// Task containing the buffered stream partition.
-        /// </returns>
-        private static async Task<SlicedStream> GetOffsetPartitionInternal(
-            Stream stream,
-            int offset,
-            int length,
-            ArrayPool<byte> arrayPool,
-            CancellationToken cancellationToken)
-        {
-            return await PartitionedStream.BufferStreamPartitionInternal(
-                stream: stream,
-                minCount: length,
-                maxCount: length,
-                absolutePosition: offset,
-                arrayPool: arrayPool,
-                maxArrayPoolRentalSize: default,
-                async: true,
-                cancellationToken: cancellationToken).ConfigureAwait(false);
         }
     }
 }

@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Shared;
@@ -33,6 +34,24 @@ namespace Azure.Storage.Blobs
         public string EncryptionScope { get; internal set; }
 
         public bool PreserveBlobNameOuterSlashes { get; internal set; }
+
+        public BlobClientConfiguration(
+            HttpPipeline pipeline,
+            TokenCredential tokenCredential,
+            ClientDiagnostics clientDiagnostics,
+            BlobClientOptions.ServiceVersion version,
+            CustomerProvidedKey? customerProvidedKey,
+            TransferValidationOptions transferValidation,
+            string encryptionScope,
+            bool preserveBlobNameOuterSlashes)
+            : base(pipeline, tokenCredential, clientDiagnostics)
+        {
+            Version = version;
+            CustomerProvidedKey = customerProvidedKey;
+            TransferValidation = transferValidation;
+            EncryptionScope = encryptionScope;
+            PreserveBlobNameOuterSlashes = preserveBlobNameOuterSlashes;
+        }
 
         public BlobClientConfiguration(
             HttpPipeline pipeline,

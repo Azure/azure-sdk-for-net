@@ -25,16 +25,25 @@ namespace Azure.Storage.DataMovement
         protected TransferCheckpointer() { }
 
         /// <summary>
+        /// Adds a new transfer to the checkpointer.
+        ///
+        /// If the transfer id already exists, this method will throw.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public abstract Task TryAddTransferAsync(string id);
+
+        /// <summary>
         /// Creates a stream to the stored memory stored checkpointing information.
         /// </summary>
         /// <returns></returns>
-        public abstract Task<Stream> ReadCheckPointStreamAsync(string id);
+        public abstract Task<Stream> ReadCheckPointStreamAsync(string id, int partNumber);
 
         /// <summary>
         /// Writes to the memory mapped file to store the checkpointing information.
         /// </summary>
         /// <returns></returns>
-        public abstract Task WriteToCheckpointAsync(string id, long offset, byte[] buffer, CancellationToken cancellationToken);
+        public abstract Task WriteToCheckpointAsync(string id, int partNumber, long offset, byte[] buffer, CancellationToken cancellationToken);
 
         /// <summary>
         /// Removes transfer checkpoint information from checkpointer

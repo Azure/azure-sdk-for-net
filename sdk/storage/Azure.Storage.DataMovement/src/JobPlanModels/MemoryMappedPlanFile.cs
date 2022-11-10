@@ -18,6 +18,18 @@ namespace Azure.Storage.DataMovement
         public MemoryMappedFile MemoryMappedFileReference { get; internal set; }
 
         /// <summary>
+        /// Save the associated file name within a struct. This will contain
+        /// our transfer id, job part id, verison etc.
+        /// </summary>
+        internal JobPlanFileName _jobPlanFileName { get; set; }
+
+        /// <summary>
+        /// The associated file on disk. When the last process has finished working
+        /// with the file, the data is saved to the file on the disk.
+        /// </summary>
+        public string FilePath { get => _jobPlanFileName.ToString(); }
+
+        /// <summary>
         /// Length of the file
         /// </summary>
         public int Length { get; internal set; }
@@ -31,13 +43,15 @@ namespace Azure.Storage.DataMovement
         /// Constructor to create a new Memory Mapped file
         /// </summary>
         /// <param name="id"></param>
-        public MemoryMappedPlanFile(string id)
+        /// <param name="jobPart"></param>
+        public MemoryMappedPlanFile(string id, int jobPart)
         {
             // Create new memory mapped job plan file
             // TODO: Change to the size of a job plan file.
-            MemoryMappedFile idMappedFile = MemoryMappedFile.CreateNew(id, Constants.MB);
+            MemoryMappedFileReference = MemoryMappedFile.CreateNew(id, Constants.MB);
             Length = Constants.MB;
             Semaphore = new SemaphoreSlim(1);
+            _jobPlanFileName = new JobPlanFileName(id: id, jobPartNumber: jobPart);
         }
 
         /// <summary>
@@ -49,7 +63,8 @@ namespace Azure.Storage.DataMovement
         {
             existingFile.Contains(id);
             // TODO: verify job plan file
-            MemoryMappedFile idMappedFile = MemoryMappedFile.CreateFromFile(existingFile);
+            _jobPlanFileName = new JobPlanFileName(existingFile);
+            MemoryMappedFileReference = MemoryMappedFile.CreateFromFile(existingFile);
         }
     }
 }

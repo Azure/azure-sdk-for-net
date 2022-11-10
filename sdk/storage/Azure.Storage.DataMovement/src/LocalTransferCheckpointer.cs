@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.MemoryMappedFiles;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,7 +23,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Stores references to the memory mapped files stored by ids
         /// </summary>
-        internal Dictionary<string, MemoryMappedPlanFile> _memoryMappedFiles;
+        internal Dictionary<string, Dictionary<int, MemoryMappedPlanFile>> _memoryMappedFiles;
 
         /// <summary>
         /// Constructor
@@ -31,27 +32,59 @@ namespace Azure.Storage.DataMovement
         public LocalTransferCheckpointer(string folderPath)
         {
             Argument.CheckNotNullOrEmpty(folderPath, nameof(folderPath));
-            if (!Directory.Exists(_pathToCheckpointer))
+            if (!Directory.Exists(folderPath))
             {
-                throw new IOException($"Cannot find local path, \"{_pathToCheckpointer}\" to access to checkpoint information.");
+                throw new DirectoryNotFoundException($"The following directory path, \"{folderPath}\" was not found.");
+            }
+            FileAttributes attributes = File.GetAttributes(folderPath);
+            if (attributes != FileAttributes.Directory)
+            {
+                throw new DirectoryNotFoundException($"The following directory path, \"{folderPath}\" was not found not to have the attributes of a Directory but of ${attributes}");
             }
             _pathToCheckpointer = folderPath;
+
+            _memoryMappedFiles = new Dictionary<string, Dictionary<int, MemoryMappedPlanFile>>();
+        }
+
+        /// <summary>
+        /// Adds a new transfer to the checkpointer.
+        ///
+        /// If the transfer id already exists, this method will throw.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public override Task TryAddTransferAsync(string id)
+        {
+            if (!_memoryMappedFiles.ContainsKey(id))
+            {
+                // Create empty list of memory mapped job parts
+                Dictionary<int, MemoryMappedPlanFile> tempJobParts = new Dictionary<int, MemoryMappedPlanFile>();
+                _memoryMappedFiles.Add(id, tempJobParts);
+            }
+            else
+            {
+                throw new ArgumentException($"Transfer id {id} already has existing checkpoint information associated with the id. Consider cleaning out where the transfer information is stored.");
+            }
+            return Task.CompletedTask;
         }
 
         /// <summary>
         /// Creates a stream to the stored memory stored checkpointing information.
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public override Task<Stream> ReadCheckPointStreamAsync(string id)
+        public override Task<Stream> ReadCheckPointStreamAsync(string id, int partNumber)
         {
-            if (_memoryMappedFiles.TryGetValue(id, out MemoryMappedPlanFile idMappedFile))
+            if (_memoryMappedFiles.TryGetValue(id, out Dictionary<int, MemoryMappedPlanFile> jobPartFiles))
             {
-                return Task.FromResult<Stream>(idMappedFile.MemoryMappedFileReference.CreateViewStream());
+                if (!jobPartFiles.ContainsKey(partNumber))
+                {
+                    throw new ArgumentException($"Checkpointer information from Transfer id \"{id}\", at part number \"{partNumber}\" was not found. Cannot read from plan file");
+                }
+                return Task.FromResult<Stream>(jobPartFiles[partNumber].MemoryMappedFileReference.CreateViewStream());
             }
             else
             {
-                throw new ArgumentException($"Checkpointer information from Transfer id {id}, was not found. Cannot read from plan file");
+                throw new ArgumentException($"Checkpointer information from Transfer id \"{id}\", at part number \"{partNumber}\" was not found. Cannot read from plan file");
             }
         }
 
@@ -61,32 +94,53 @@ namespace Azure.Storage.DataMovement
         /// Creates the checkpoint file for the respective id if it does not currently exist
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="partNumber"></param>
         /// <param name="offset"></param>
         /// <param name="buffer"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="ArgumentNullException"></exception>
-        public override async Task WriteToCheckpointAsync(string id, long offset, byte[] buffer, CancellationToken cancellationToken)
+        public override async Task WriteToCheckpointAsync(
+            string id,
+            int partNumber,
+            long offset,
+            byte[] buffer,
+            CancellationToken cancellationToken)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotDefault(ref partNumber, nameof(partNumber));
             if (buffer?.Length == 0)
             {
-                throw new ArgumentException("Buffer cannot be null or empty");
+                throw new ArgumentException("Buffer cannot be empty");
             }
-
-            if (!_memoryMappedFiles.ContainsKey(id))
+            if (_memoryMappedFiles.TryGetValue(id, out Dictionary<int, MemoryMappedPlanFile> jobPartFiles))
             {
-                // Memory mapped file does not yet exist.
-                MemoryMappedPlanFile idMappedFile = new MemoryMappedPlanFile(id);
-                _memoryMappedFiles.Add(id, idMappedFile);
+                if (!jobPartFiles.ContainsKey(partNumber))
+                {
+                    MemoryMappedPlanFile mappedFile = new MemoryMappedPlanFile(id, partNumber);
+                    _memoryMappedFiles[id].Add(partNumber, mappedFile);
+                }
+                else
+                {
+                    // partNumber file already exists
+                    // lock file
+                    await _memoryMappedFiles[id][partNumber].Semaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
+
+                    using (MemoryMappedViewAccessor accessor = _memoryMappedFiles[id][partNumber].MemoryMappedFileReference
+                    .CreateViewAccessor(offset, buffer.Length, MemoryMappedFileAccess.Write))
+                    {
+                        accessor.WriteArray(0, buffer, 0, buffer.Length);
+                        // to flush to the underlying file that supports the mmf
+                        accessor.Flush();
+                    }
+                    // unlock file
+                    _memoryMappedFiles[id][partNumber].Semaphore.Release();
+                }
             }
-            await _memoryMappedFiles[id].Semaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
-
-            using (MemoryMappedViewAccessor accessor = _memoryMappedFiles[id].MemoryMappedFileReference
-                .CreateViewAccessor(offset, buffer.Length, MemoryMappedFileAccess.Write))
+            else
             {
-                accessor.WriteArray(0, buffer, 0, buffer.Length);
+                throw new ArgumentException($"Checkpointer information from Transfer id \"{id}\" was not found. Call TryAddTransferAsync before attempting to add transfer information");
             }
         }
 
@@ -95,10 +149,35 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
         public override Task<bool> TryRemoveStoredTransferAsync(string id)
         {
-            throw new NotImplementedException();
+            bool result = true;
+            Argument.AssertNotNullOrWhiteSpace(id, nameof(id));
+            if (!_memoryMappedFiles.TryGetValue(id, out Dictionary<int, MemoryMappedPlanFile> jobPartFiles))
+            {
+                throw new ArgumentException($"Checkpointer information from Transfer id \"{id}\" was not found. Call TryAddTransferAsync before attempting to add transfer information");
+            }
+            foreach (MemoryMappedPlanFile jobPartPair in jobPartFiles.Values)
+            {
+                try
+                {
+                    File.Delete(jobPartPair.FilePath);
+                }
+                catch (FileNotFoundException)
+                {
+                    // If we cannot find the file, it's either we deleted
+                    // we have not created this job part yet.
+                }
+                catch
+                {
+                    // If we run into an issue attempting to delete we should
+                    // keep track that we could not at least delete one of files
+                    // TODO: change return type to better show which files we
+                    // were unable to remove
+                    result = false;
+                }
+            }
+            return Task.FromResult(result);
         }
 
         /// <summary>
@@ -107,7 +186,7 @@ namespace Azure.Storage.DataMovement
         /// <returns></returns>
         public override Task<List<string>> GetStoredTransfersAsync()
         {
-            throw new NotImplementedException();
+            return Task.FromResult(_memoryMappedFiles.Keys.ToList());
         }
     }
 }

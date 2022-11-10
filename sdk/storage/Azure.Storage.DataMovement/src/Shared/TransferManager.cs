@@ -293,14 +293,36 @@ namespace Azure.Storage.DataMovement
                 // Source is remote
                 if (destinationResource.CanProduceUri == ProduceUriType.ProducesUri)
                 {
-                    // Most likely a copy operation.
-                    throw new NotImplementedException();
+                    // Service to Service Job (Copy job)
+                    transferJobInternal = new ServiceToServiceTransferJob(
+                        dataTransfer: dataTransfer,
+                        sourceResource: sourceResource,
+                        destinationResource: destinationResource,
+                        transferOptions: transferOptions,
+                        queueChunkTask: QueueJobChunkAsync,
+                        CheckPointFolderPath: Options?.Checkpointer,
+                        errorHandling: Options?.ErrorHandling ?? ErrorHandlingOptions.StopOnAllFailures,
+                        arrayPool: _arrayPool);
+                    // Queue Job
+                    await QueueJobAsync(transferJobInternal).ConfigureAwait(false);
+                    _dataTransfers.Add(dataTransfer);
                 }
                 else
                 {
                     // Download to local operation
-                    // BlobDownloadJob();
-                    throw new NotImplementedException();
+                    // Service to Local job (Download Job)
+                    transferJobInternal = new UriToStreamTransferJob(
+                        dataTransfer: dataTransfer,
+                        sourceResource: sourceResource,
+                        destinationResource: destinationResource,
+                        transferOptions: transferOptions,
+                        queueChunkTask: QueueJobChunkAsync,
+                        CheckPointFolderPath: Options?.Checkpointer,
+                        errorHandling: Options?.ErrorHandling ?? ErrorHandlingOptions.StopOnAllFailures,
+                        arrayPool: _arrayPool);
+                    // Queue Job
+                    await QueueJobAsync(transferJobInternal).ConfigureAwait(false);
+                    _dataTransfers.Add(dataTransfer);
                 }
             }
             return dataTransfer;

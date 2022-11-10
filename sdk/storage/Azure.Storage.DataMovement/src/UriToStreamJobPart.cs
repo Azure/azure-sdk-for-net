@@ -57,8 +57,7 @@ namespace Azure.Storage.DataMovement
                   checkpointer,
                   uploadPool,
                   events,
-                  cancellationTokenSource)
-        { }
+                  cancellationTokenSource){ }
 
         /// <summary>
         /// Processes the job to job parts

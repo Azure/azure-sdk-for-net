@@ -114,10 +114,12 @@ namespace Azure.Storage.DataMovement
                     {
                         rollingCount++;
                     }
-                    else if (valuesInWindowCount > windowSize) {
+                    else if (valuesInWindowCount > windowSize)
+                    {
                         bool oldWasSlow = await valuesInWindow.Reader.ReadAsync(cancellationToken).ConfigureAwait(false);
 
-                        if (oldWasSlow) {
+                        if (oldWasSlow)
+                        {
                             rollingCount--;
                         }
                     }

@@ -7,6 +7,7 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
@@ -16,6 +17,8 @@ namespace Azure.Storage.DataMovement
     /// </summary>
     public abstract class StorageResource
     {
+        internal TokenCredential _tokenCredential;
+
         /// <summary>
         /// For Mocking.
         /// </summary>

@@ -5,7 +5,7 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// Used to define the status of the job when storing the state to the job plan file.
     /// </summary>
-    internal enum TransferJobStatus
+    internal enum JobPlanTransferJobStatus
     {
         /// <summary>
         /// ransfer is ready to transfe and not started transfering yet.

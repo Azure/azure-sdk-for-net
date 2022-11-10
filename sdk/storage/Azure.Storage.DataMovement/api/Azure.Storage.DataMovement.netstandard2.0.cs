@@ -47,9 +47,10 @@ namespace Azure.Storage.DataMovement
     {
         public LocalTransferCheckpointer(string folderPath) { }
         public override System.Threading.Tasks.Task<System.Collections.Generic.List<string>> GetStoredTransfersAsync() { throw null; }
-        public override System.Threading.Tasks.Task<System.IO.Stream> ReadCheckPointStreamAsync(string id) { throw null; }
+        public override System.Threading.Tasks.Task<System.IO.Stream> ReadCheckPointStreamAsync(string id, int partNumber) { throw null; }
+        public override System.Threading.Tasks.Task TryAddTransferAsync(string id) { throw null; }
         public override System.Threading.Tasks.Task<bool> TryRemoveStoredTransferAsync(string id) { throw null; }
-        public override System.Threading.Tasks.Task WriteToCheckpointAsync(string id, long offset, byte[] buffer) { throw null; }
+        public override System.Threading.Tasks.Task WriteToCheckpointAsync(string id, int partNumber, long offset, byte[] buffer, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     [System.FlagsAttribute]
     public enum ProduceUriType
@@ -118,9 +119,10 @@ namespace Azure.Storage.DataMovement
     {
         protected TransferCheckpointer() { }
         public abstract System.Threading.Tasks.Task<System.Collections.Generic.List<string>> GetStoredTransfersAsync();
-        public abstract System.Threading.Tasks.Task<System.IO.Stream> ReadCheckPointStreamAsync(string id);
+        public abstract System.Threading.Tasks.Task<System.IO.Stream> ReadCheckPointStreamAsync(string id, int partNumber);
+        public abstract System.Threading.Tasks.Task TryAddTransferAsync(string id);
         public abstract System.Threading.Tasks.Task<bool> TryRemoveStoredTransferAsync(string id);
-        public abstract System.Threading.Tasks.Task WriteToCheckpointAsync(string id, long offset, byte[] buffer);
+        public abstract System.Threading.Tasks.Task WriteToCheckpointAsync(string id, int partNumber, long offset, byte[] buffer, System.Threading.CancellationToken cancellationToken);
     }
     public partial class TransferManager
     {

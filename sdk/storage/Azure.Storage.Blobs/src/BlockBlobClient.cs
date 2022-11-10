@@ -351,14 +351,14 @@ namespace Azure.Storage.Blobs.Specialized
             return new BlockBlobClient(
                 blobUri,
                 new BlobClientConfiguration(
-                    pipeline,
-                    null,
-                    new StorageClientDiagnostics(options),
-                    options.Version,
-                    options.CustomerProvidedKey,
-                    options.TransferValidation,
-                    null,
-                    options.PreserveBlobNameSlashes));
+                    pipeline: pipeline,
+                    sharedKeyCredential: null,
+                    clientDiagnostics: new StorageClientDiagnostics(options),
+                    version: options.Version,
+                    customerProvidedKey: options.CustomerProvidedKey,
+                    transferValidation: options.TransferValidation,
+                    encryptionScope: null,
+                    preserveBlobNameOuterSlashes: options.PreserveBlobNameSlashes));
         }
 
         /// <summary>

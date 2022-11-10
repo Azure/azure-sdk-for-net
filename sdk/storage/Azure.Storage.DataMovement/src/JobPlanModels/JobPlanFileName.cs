@@ -49,7 +49,10 @@ namespace Azure.Storage.DataMovement
         /// <param name="id"></param>
         /// <param name="jobPartNumber"></param>
         /// <param name="schemaVersion"></param>
-        public JobPlanFileName(string id, int jobPartNumber, string schemaVersion)
+        public JobPlanFileName(
+            string id,
+            int jobPartNumber,
+            string schemaVersion = Constants.DataMovement.PlanFile.SchemaVersion)
         {
             Id = id;
             JobPartNumber = jobPartNumber;
@@ -89,6 +92,10 @@ namespace Azure.Storage.DataMovement
             }
         }
 
+        /// <summary>
+        /// Converts struct to the full file path
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return $"{Id}--{JobPartNumber.ToString("D5", NumberFormatInfo.CurrentInfo)}.{Constants.DataMovement.PlanFile.FileExtension}{SchemaVersion}";

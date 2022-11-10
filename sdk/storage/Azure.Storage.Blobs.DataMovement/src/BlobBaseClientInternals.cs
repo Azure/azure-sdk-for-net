@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
@@ -22,13 +23,14 @@ namespace Azure.Storage.Blobs.DataMovement
         private BlobBaseClientInternals() { }
 
         /// <summary>
-        /// Get a <see cref="BlobBaseClient"/>'s <see cref="HttpPipeline"/>
-        /// for creating child clients.
+        /// Get a <see cref="BlobBaseClient"/>'s <see cref="TokenCredential"/>
+        /// for passing the authorization when performing service to service copy
+        /// where OAuth is necessary to authenticate the source.
         /// </summary>
         /// <param name="client">The BlobServiceClient.</param>
         /// <returns>The BlobServiceClient's HttpPipeline.</returns>
-        public static new HttpPipeline GetHttpPipeline(BlobBaseClient client) =>
-            BlobBaseClient.GetHttpPipeline(client);
+        public static new TokenCredential GetTokenCredential(BlobBaseClient client) =>
+            BlobBaseClient.GetTokenCredential(client);
 
         /// <summary>
         /// Get a <see cref="BlobBaseClient"/>'s <see cref="BlobClientOptions"/>

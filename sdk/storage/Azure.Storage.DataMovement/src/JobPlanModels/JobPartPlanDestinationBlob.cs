@@ -1,54 +1,57 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+using System.Runtime.InteropServices;
+
 namespace Azure.Storage.DataMovement
 {
-    internal class JobPartPlanDestinationBlob
+    /// <summary>
+    /// Describes the structure of a destination blob.
+    ///
+    /// Comes to a total of 6311 bytes
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct JobPartPlanDestinationBlob
     {
         /// <summary>
         /// Blob Type
         /// </summary>
-        public JobPlanBlobType BlobType { get; internal set; }
+        public JobPlanBlobType BlobType;
 
         /// <summary>
         /// Represents user decision to interpret the content-encoding from source file
         /// </summary>
-        public bool NoGuessMimeType { get; internal set; }
+        public bool NoGuessMimeType;
 
         /// <summary>
         /// Specifies the length of MIME content type of the blob
         ///
         /// TODO: make a type for this?
         /// </summary>
-        public ushort ContentTypeLength { get; internal set; }
+        public ushort ContentTypeLength;
 
         /// <summary>
         /// Specifies the MIME content type of the blob. The default type is application/octet-stream
-        ///
-        /// 256 byte array
-        /// TODO: force the size of this array onto this parameter. We need to constrain the 256 bytes parititon in the plan file
         /// </summary>
-        public byte[] ContentType { get; internal set; }
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
+        public byte[] ContentType;
 
         /// <summary>
         /// Specifies length of content encoding which have been applied to the blob.
         ///
         /// TODO: make a type for this?
         /// </summary>
-        public ushort ContentEncodingLength { get; internal set; }
+        public ushort ContentEncodingLength;
 
         /// <summary>
         /// Specifies the MIME content type of the blob. The default type is application/octet-stream
-        ///
-        /// 256 byte array
-        /// TODO: force the size of this array onto this parameter. We need to constrain the 256 bytes parititon in the plan file
         /// </summary>
-        public byte[] ContentEncoding { get; internal set; }
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
+        public byte[] ContentEncoding;
 
         /// <summary>
         /// Specifies length of content language which has been applied to the blob.
-        ///
         /// </summary>
-        public ushort ContentLanguageLength { get; internal set; }
+        public ushort ContentLanguageLength;
 
         /// <summary>
         /// Specifies which content language has been applied to the blob.
@@ -56,12 +59,13 @@ namespace Azure.Storage.DataMovement
         /// 256 byte array
         /// TODO: force the size of this array onto this parameter. We need to constrain the 256 bytes parititon in the plan file
         /// </summary>
-        public byte[] ContentLanguage { get; internal set; }
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
+        public byte[] ContentLanguage;
 
         /// <summary>
         /// Specifies length of content disposition which has been applied to the blob.
         /// </summary>
-        public ushort ContentDispositionLength { get; internal set; }
+        public ushort ContentDispositionLength;
 
         /// <summary>
         /// Specifies the content disposition of the blob
@@ -69,72 +73,77 @@ namespace Azure.Storage.DataMovement
         /// 256 byte array
         /// TODO: force the size of this array onto this parameter. We need to constrain the 256 bytes parititon in the plan file
         /// </summary>
-        public byte[] ContentDisposition { get; internal set; }
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
+        public byte[] ContentDisposition;
 
         /// <summary>
         /// Specifies the length of the cache control which has been applied to the blob.
         /// </summary>
-        public ushort CacheControlLength { get; internal set; }
+        public ushort CacheControlLength;
 
         /// <summary>
         /// Specifies the cache control of the blob
         /// </summary>
-        public byte[] CacheControl { get; internal set; }
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
+        public byte[] CacheControl;
 
         /// <summary>
         /// Specifies the tier if this is a block or page blob respectfully. Only one or none can be specified at a time.
         /// </summary>
-        public JobPartPlanBlockBlobTier BlockBlobTier { get; internal set; }
-        public PageBlobTier PageBlobTier { get; internal set; }
+        public JobPartPlanBlockBlobTier BlockBlobTier;
+        public PageBlobTier PageBlobTier;
 
         /// <summary>
         /// Controls uploading of MD5 hashes
         /// </summary>
-        public bool PutMd5 { get; internal set; }
+        public bool PutMd5;
 
         /// <summary>
         /// Length of metadata
         /// </summary>
-        public ushort MetadataLength { get; internal set; }
+        public ushort MetadataLength;
 
         /// <summary>
         /// Metadata
         /// </summary>
-        public byte[] Metadata { get; internal set; }
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1000)]
+        public byte[] Metadata;
 
         /// <summary>
         /// Length of blob tags
         /// </summary>
-        public ushort BlobTagsLength { get; internal set; }
+        public ushort BlobTagsLength;
 
         /// <summary>
         /// Blob Tags
         /// </summary>
-        public byte[] BlobTags { get; internal set; }
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4000)]
+        public byte[] BlobTags;
 
         /// <summary>
         /// Client Provided Key information
         /// </summary>
-        public bool CpkInfo { get; internal set; }
+        public bool CpkInfo;
 
         /// <summary>
         /// Is source encrypted?
         /// </summary>
-        public bool IsSourceEncrypted { get; internal set; }
+        public bool IsSourceEncrypted;
 
         /// <summary>
         /// Length of CPK encryption scope.
         /// </summary>
-        public byte[] CpkScopeInfo { get; internal set; }
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
+        public byte[] CpkScopeInfo;
 
         /// <summary>
         /// CPK encryption scope.
         /// </summary>
-        public ushort CpkScopeInfoLength { get; internal set; }
+        public ushort CpkScopeInfoLength;
 
         /// <summary>
         /// Specifies the maximum size of block which determines the number of chunks and chunk size of a transfer
         /// </summary>
-        public long BlockSize { get; internal set; }
+        public long BlockSize;
     }
 }
