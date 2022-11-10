@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+
 namespace Azure.Containers.ContainerRegistry.Specialized
 {
     /// <summary>
@@ -14,6 +16,11 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <param name="maxChunkSize">The maximum size of chunk to upload during the blob upload.</param>
         public UploadBlobOptions(int maxChunkSize)
         {
+            if (maxChunkSize <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(maxChunkSize), "Value must be non-zero and positive.");
+            }
+
             MaxChunkSize = maxChunkSize;
         }
 

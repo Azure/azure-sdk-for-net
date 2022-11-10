@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Security.Cryptography;
@@ -186,14 +187,17 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             scope.Start();
             try
             {
-                using Stream stream = new MemoryStream();
-                manifestStream.CopyTo(stream);
-                stream.Position = 0;
+                using MemoryStream stream = BufferStreamAsync(manifestStream, false).EnsureCompleted();
+                string digest = null;
 
-                string tagOrDigest = options.Tag ?? OciBlobDescriptor.ComputeDigest(stream);
+                string tagOrDigest = options.Tag ?? (digest = OciBlobDescriptor.ComputeDigest(stream));
                 ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = _restClient.CreateManifest(_repositoryName, tagOrDigest, manifestStream, ManifestMediaType.OciManifest.ToString(), cancellationToken);
 
-                if (!ValidateDigest(stream, response.Headers.DockerContentDigest))
+                bool valid = digest != null ?
+                    ValidateDigest(digest, response.Headers.DockerContentDigest) :
+                    ValidateDigest(stream, response.Headers.DockerContentDigest);
+
+                if (!valid)
                 {
                     throw _clientDiagnostics.CreateRequestFailedException(response,
                         new ResponseError(null, "The digest in the response does not match the digest of the uploaded manifest."));
@@ -263,15 +267,17 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             scope.Start();
             try
             {
-                using Stream stream = new MemoryStream();
-                await manifestStream.CopyToAsync(stream).ConfigureAwait(false);
-                manifestStream.Position = 0;
-                stream.Position = 0;
+                using MemoryStream stream = await BufferStreamAsync(manifestStream, true).ConfigureAwait(false);
+                string digest = null;
 
-                string tagOrDigest = options.Tag ?? OciBlobDescriptor.ComputeDigest(manifestStream);
+                string tagOrDigest = options.Tag ?? (digest = OciBlobDescriptor.ComputeDigest(stream));
                 ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = await _restClient.CreateManifestAsync(_repositoryName, tagOrDigest, manifestStream, ManifestMediaType.OciManifest.ToString(), cancellationToken).ConfigureAwait(false);
 
-                if (!ValidateDigest(stream, response.Headers.DockerContentDigest))
+                bool valid = digest != null ?
+                    ValidateDigest(digest, response.Headers.DockerContentDigest) :
+                    ValidateDigest(stream, response.Headers.DockerContentDigest);
+
+                if (!valid)
                 {
                     throw _clientDiagnostics.CreateRequestFailedException(response,
                         new ResponseError(null, "The digest in the response does not match the digest of the uploaded manifest."));
@@ -284,6 +290,30 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Make a copy of the manifest stream so we can seek around it when computing its digest.
+        /// </summary>
+        /// <param name="stream">The stream to copy.</param>
+        /// <param name="async">Whether the method was called from an async method.</param>
+        /// <returns></returns>
+        private static async Task<MemoryStream> BufferStreamAsync(Stream stream, bool async)
+        {
+            MemoryStream memoryStream = new();
+
+            if (async)
+            {
+                await stream.CopyToAsync(memoryStream).ConfigureAwait(false);
+            }
+            else
+            {
+                stream.CopyTo(memoryStream);
+            }
+
+            memoryStream.Position = 0;
+
+            return memoryStream;
         }
 
         private static Stream SerializeManifest(OciManifest manifest)
@@ -510,16 +540,28 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             }
         }
 
+        /// <summary>
+        /// Validate that the file content did not change in transmission from the registry.
+        /// </summary>
+        /// <param name="content">Stream content.</param>
+        /// <param name="digest">The digest returned from the registry.</param>
+        /// <returns>Whether the digest computed on the passed-in stream and the passed-in digest match.</returns>
         private static bool ValidateDigest(Stream content, string digest)
         {
-            // Validate that the file content did not change in transmission from the registry.
-
             // According to https://docs.docker.com/registry/spec/api/#content-digests, compliant
             // registry implementations use sha256.
 
+            Debug.Assert(content is MemoryStream, "Should only be called on internally allocated, seekable streams.");
+
             string contentDigest = OciBlobDescriptor.ComputeDigest(content);
             content.Position = 0;
-            return digest.Equals(contentDigest, StringComparison.OrdinalIgnoreCase);
+
+            return ValidateDigest(contentDigest, digest);
+        }
+
+        private static bool ValidateDigest(string d1, string d2)
+        {
+            return d1.Equals(d2, StringComparison.OrdinalIgnoreCase);
         }
 
         /// <summary>

@@ -269,9 +269,65 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Assert.AreEqual(digest, downloadResult.Value.Digest);
             Assert.AreEqual(streamLength, downloadResult.Value.Content.Length);
 
-            //// Clean up
+            // Clean up
             await client.DeleteBlobAsync(digest);
             downloadResult.Value.Dispose();
+        }
+
+        [RecordedTest]
+        public async Task CanUploadBlobInEqualSizeChunks()
+        {
+            // Arrange
+            var client = CreateBlobClient("chunked-blob");
+
+            int blobSize = 1024;
+            int chunkSize = 1024 / 4; // Four equal-sized chunks
+
+            var data = GetRandomBuffer(blobSize);
+            UploadBlobResult uploadResult = default;
+            string digest = default;
+
+            using (var stream = new MemoryStream(data))
+            {
+                digest = OciBlobDescriptor.ComputeDigest(stream);
+                uploadResult = await client.UploadBlobAsync(stream, new UploadBlobOptions(chunkSize));
+            }
+
+            // Assert
+            Assert.AreEqual(digest, uploadResult.Digest);
+            Assert.AreEqual(blobSize, uploadResult.Size);
+
+            // Clean up
+            await client.DeleteBlobAsync(digest);
+        }
+
+        [RecordedTest]
+        public async Task CanUploadBlobWithUnevenChunks()
+        {
+            // Arrange
+            var client = CreateBlobClient("chunked-blob-uneven");
+
+            int blobSize = 1024;
+            int chunkSize = 1024 / 4;    // Equal-sized chunks
+            int remainderChunkSize = 20;
+            blobSize += remainderChunkSize;
+
+            var data = GetRandomBuffer(blobSize);
+            UploadBlobResult uploadResult = default;
+            string digest = default;
+
+            using (var stream = new MemoryStream(data))
+            {
+                digest = OciBlobDescriptor.ComputeDigest(stream);
+                uploadResult = await client.UploadBlobAsync(stream, new UploadBlobOptions(chunkSize));
+            }
+
+            // Assert
+            Assert.AreEqual(digest, uploadResult.Digest);
+            Assert.AreEqual(blobSize, uploadResult.Size);
+
+            // Clean up
+            await client.DeleteBlobAsync(digest);
         }
 
         [RecordedTest]

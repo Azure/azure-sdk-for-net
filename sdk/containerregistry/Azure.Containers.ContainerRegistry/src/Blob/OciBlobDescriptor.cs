@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
@@ -28,8 +29,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
         internal static string ComputeDigest(Stream stream)
         {
-            // Note: this method assumes the input stream is seekable and
-            // resets stream.Position after computing the hash of stream contents.
+            Debug.Assert(stream is MemoryStream, "Should only be called on internally allocated, seekable streams.");
+
             using (SHA256 sha256 = SHA256.Create())
             {
                 var position = stream.Position;
