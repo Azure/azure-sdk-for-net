@@ -1,4 +1,4 @@
-# Analyze a conversation
+# Analyze a conversation with Conversation PII using text input
 
 This sample demonstrates how to analyze a conversation with Conversation PII (Text input). To get started, you'll need to create a Cognitive Language service endpoint and an API key. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/README.md) for links and instructions.
 
