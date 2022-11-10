@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel : MigrateMySqlAzureDBForMySqlSyncTaskOutput
     {
         /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel. </summary>
-        public MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel()
+        internal MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel()
         {
             ResultType = "DatabaseLevelOutput";
         }

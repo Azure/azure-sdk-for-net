@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    internal partial class UnknownDistributionMode : IUtf8JsonSerializable
+    public partial class UnknownDistributionMode : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

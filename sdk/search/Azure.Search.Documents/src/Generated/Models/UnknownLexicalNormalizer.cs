@@ -10,7 +10,7 @@ using Azure.Search.Documents.Indexes.Models;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> The UnknownLexicalNormalizer. </summary>
-    internal partial class UnknownLexicalNormalizer : LexicalNormalizer
+    public partial class UnknownLexicalNormalizer : LexicalNormalizer
     {
         /// <summary> Initializes a new instance of UnknownLexicalNormalizer. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the normalizer. </param>

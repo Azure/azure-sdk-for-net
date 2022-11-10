@@ -10,7 +10,7 @@ using Azure.Communication.MediaComposition.Models;
 namespace Azure.Communication.MediaComposition
 {
     /// <summary> The UnknownMediaOutput. </summary>
-    internal partial class UnknownMediaOutput : MediaOutput
+    public partial class UnknownMediaOutput : MediaOutput
     {
         /// <summary> Initializes a new instance of UnknownMediaOutput. </summary>
         /// <param name="kind"> Kind of media output. </param>

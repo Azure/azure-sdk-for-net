@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="totalBytes"> The total number of document bytes on the source at the beginning of the Copying stage, or -1 if the total size was unknown. </param>
         /// <param name="totalDocuments"> The total number of documents on the source at the beginning of the Copying stage, or -1 if the total count was unknown. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="elapsedTime"/> or <paramref name="errors"/> is null. </exception>
-        public MongoDBDatabaseProgress(long bytesCopied, long documentsCopied, string elapsedTime, IDictionary<string, MongoDBError> errors, long eventsPending, long eventsReplayed, MongoDBMigrationState state, long totalBytes, long totalDocuments) : base(bytesCopied, documentsCopied, elapsedTime, errors, eventsPending, eventsReplayed, state, totalBytes, totalDocuments)
+        internal MongoDBDatabaseProgress(long bytesCopied, long documentsCopied, string elapsedTime, IReadOnlyDictionary<string, MongoDBError> errors, long eventsPending, long eventsReplayed, MongoDBMigrationState state, long totalBytes, long totalDocuments) : base(bytesCopied, documentsCopied, elapsedTime, errors, eventsPending, eventsReplayed, state, totalBytes, totalDocuments)
         {
             Argument.AssertNotNull(elapsedTime, nameof(elapsedTime));
             Argument.AssertNotNull(errors, nameof(errors));
@@ -50,13 +50,13 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="totalBytes"> The total number of document bytes on the source at the beginning of the Copying stage, or -1 if the total size was unknown. </param>
         /// <param name="totalDocuments"> The total number of documents on the source at the beginning of the Copying stage, or -1 if the total count was unknown. </param>
         /// <param name="collections"> The progress of the collections in the database. The keys are the unqualified names of the collections. </param>
-        internal MongoDBDatabaseProgress(long bytesCopied, long documentsCopied, string elapsedTime, IDictionary<string, MongoDBError> errors, long eventsPending, long eventsReplayed, DateTimeOffset? lastEventOn, DateTimeOffset? lastReplayOn, string name, string qualifiedName, MongoDBProgressResultType resultType, MongoDBMigrationState state, long totalBytes, long totalDocuments, IDictionary<string, MongoDBCollectionProgress> collections) : base(bytesCopied, documentsCopied, elapsedTime, errors, eventsPending, eventsReplayed, lastEventOn, lastReplayOn, name, qualifiedName, resultType, state, totalBytes, totalDocuments)
+        internal MongoDBDatabaseProgress(long bytesCopied, long documentsCopied, string elapsedTime, IReadOnlyDictionary<string, MongoDBError> errors, long eventsPending, long eventsReplayed, DateTimeOffset? lastEventOn, DateTimeOffset? lastReplayOn, string name, string qualifiedName, MongoDBProgressResultType resultType, MongoDBMigrationState state, long totalBytes, long totalDocuments, IReadOnlyDictionary<string, MongoDBCollectionProgress> collections) : base(bytesCopied, documentsCopied, elapsedTime, errors, eventsPending, eventsReplayed, lastEventOn, lastReplayOn, name, qualifiedName, resultType, state, totalBytes, totalDocuments)
         {
             Collections = collections;
             ResultType = resultType;
         }
 
         /// <summary> The progress of the collections in the database. The keys are the unqualified names of the collections. </summary>
-        public IDictionary<string, MongoDBCollectionProgress> Collections { get; }
+        public IReadOnlyDictionary<string, MongoDBCollectionProgress> Collections { get; }
     }
 }

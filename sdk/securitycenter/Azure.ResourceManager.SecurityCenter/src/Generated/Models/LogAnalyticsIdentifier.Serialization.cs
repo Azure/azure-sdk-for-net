@@ -11,16 +11,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class LogAnalyticsIdentifier : IUtf8JsonSerializable
+    public partial class LogAnalyticsIdentifier
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("type");
-            writer.WriteStringValue(ResourceIdentifierType.ToString());
-            writer.WriteEndObject();
-        }
-
         internal static LogAnalyticsIdentifier DeserializeLogAnalyticsIdentifier(JsonElement element)
         {
             Optional<Guid> workspaceId = default;

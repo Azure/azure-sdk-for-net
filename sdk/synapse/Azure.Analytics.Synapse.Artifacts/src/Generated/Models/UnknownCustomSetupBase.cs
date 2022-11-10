@@ -8,7 +8,7 @@
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The UnknownCustomSetupBase. </summary>
-    internal partial class UnknownCustomSetupBase : CustomSetupBase
+    public partial class UnknownCustomSetupBase : CustomSetupBase
     {
         /// <summary> Initializes a new instance of UnknownCustomSetupBase. </summary>
         /// <param name="type"> The type of custom setup. </param>

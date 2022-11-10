@@ -8,7 +8,7 @@
 namespace Azure.AI.Language.Conversations
 {
     /// <summary> The UnknownBaseResolution. </summary>
-    internal partial class UnknownBaseResolution : BaseResolution
+    public partial class UnknownBaseResolution : BaseResolution
     {
         /// <summary> Initializes a new instance of UnknownBaseResolution. </summary>
         /// <param name="resolutionKind"> The entity resolution object kind. </param>

@@ -8,7 +8,7 @@
 namespace Azure.Communication.JobRouter
 {
     /// <summary> The UnknownDistributionMode. </summary>
-    internal partial class UnknownDistributionMode : DistributionMode
+    public partial class UnknownDistributionMode : DistributionMode
     {
         /// <summary> Initializes a new instance of UnknownDistributionMode. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of Mode. </param>

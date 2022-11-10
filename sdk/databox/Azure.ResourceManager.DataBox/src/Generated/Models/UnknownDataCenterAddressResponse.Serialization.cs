@@ -11,16 +11,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    internal partial class UnknownDataCenterAddressResponse : IUtf8JsonSerializable
+    internal partial class UnknownDataCenterAddressResponse
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("datacenterAddressType");
-            writer.WriteStringValue(DataCenterAddressType.ToSerialString());
-            writer.WriteEndObject();
-        }
-
         internal static UnknownDataCenterAddressResponse DeserializeUnknownDataCenterAddressResponse(JsonElement element)
         {
             DataCenterAddressType dataCenterAddressType = default;

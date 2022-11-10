@@ -12,26 +12,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSqlServerSqlDBTaskOutputMigrationLevel : IUtf8JsonSerializable
+    public partial class MigrateSqlServerSqlDBTaskOutputMigrationLevel
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(MigrationValidationResult))
-            {
-                writer.WritePropertyName("migrationValidationResult");
-                writer.WriteObjectValue(MigrationValidationResult);
-            }
-            if (Optional.IsDefined(MigrationReportResult))
-            {
-                writer.WritePropertyName("migrationReportResult");
-                writer.WriteObjectValue(MigrationReportResult);
-            }
-            writer.WritePropertyName("resultType");
-            writer.WriteStringValue(ResultType);
-            writer.WriteEndObject();
-        }
-
         internal static MigrateSqlServerSqlDBTaskOutputMigrationLevel DeserializeMigrateSqlServerSqlDBTaskOutputMigrationLevel(JsonElement element)
         {
             Optional<DateTimeOffset> startedOn = default;

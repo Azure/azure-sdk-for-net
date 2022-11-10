@@ -11,35 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSqlServerSqlDBSyncTaskOutputDatabaseError : IUtf8JsonSerializable
+    public partial class MigrateSqlServerSqlDBSyncTaskOutputDatabaseError
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(ErrorMessage))
-            {
-                writer.WritePropertyName("errorMessage");
-                writer.WriteStringValue(ErrorMessage);
-            }
-            if (Optional.IsCollectionDefined(Events))
-            {
-                writer.WritePropertyName("events");
-                writer.WriteStartArray();
-                foreach (var item in Events)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WritePropertyName("resultType");
-            writer.WriteStringValue(ResultType);
-            writer.WriteEndObject();
-        }
-
         internal static MigrateSqlServerSqlDBSyncTaskOutputDatabaseError DeserializeMigrateSqlServerSqlDBSyncTaskOutputDatabaseError(JsonElement element)
         {
             Optional<string> errorMessage = default;
-            Optional<IList<SyncMigrationDatabaseErrorEvent>> events = default;
+            Optional<IReadOnlyList<SyncMigrationDatabaseErrorEvent>> events = default;
             Optional<string> id = default;
             string resultType = default;
             foreach (var property in element.EnumerateObject())

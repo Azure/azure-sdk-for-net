@@ -8,7 +8,7 @@
 namespace Azure.AI.Language.Conversations
 {
     /// <summary> The UnknownTargetIntentResult. </summary>
-    internal partial class UnknownTargetIntentResult : TargetIntentResult
+    public partial class UnknownTargetIntentResult : TargetIntentResult
     {
         /// <summary> Initializes a new instance of UnknownTargetIntentResult. </summary>
         /// <param name="targetProjectKind"> This discriminator property specifies the type of the target project that returns the response. </param>

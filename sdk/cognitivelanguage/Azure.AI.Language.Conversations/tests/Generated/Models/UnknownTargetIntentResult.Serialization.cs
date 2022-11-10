@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
-    internal partial class UnknownTargetIntentResult
+    public partial class UnknownTargetIntentResult
     {
         internal static UnknownTargetIntentResult DeserializeUnknownTargetIntentResult(JsonElement element)
         {

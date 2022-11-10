@@ -8,7 +8,7 @@
 namespace Azure.Communication.JobRouter
 {
     /// <summary> The UnknownRouterRule. </summary>
-    internal partial class UnknownRouterRule : RouterRule
+    public partial class UnknownRouterRule : RouterRule
     {
         /// <summary> Initializes a new instance of UnknownRouterRule. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of Rule. </param>

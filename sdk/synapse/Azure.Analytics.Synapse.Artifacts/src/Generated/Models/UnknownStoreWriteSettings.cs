@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The UnknownStoreWriteSettings. </summary>
-    internal partial class UnknownStoreWriteSettings : StoreWriteSettings
+    public partial class UnknownStoreWriteSettings : StoreWriteSettings
     {
         /// <summary> Initializes a new instance of UnknownStoreWriteSettings. </summary>
         /// <param name="type"> The write setting type. </param>

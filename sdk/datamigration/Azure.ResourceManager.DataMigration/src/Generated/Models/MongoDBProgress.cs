@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="totalBytes"> The total number of document bytes on the source at the beginning of the Copying stage, or -1 if the total size was unknown. </param>
         /// <param name="totalDocuments"> The total number of documents on the source at the beginning of the Copying stage, or -1 if the total count was unknown. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="elapsedTime"/> or <paramref name="errors"/> is null. </exception>
-        protected MongoDBProgress(long bytesCopied, long documentsCopied, string elapsedTime, IDictionary<string, MongoDBError> errors, long eventsPending, long eventsReplayed, MongoDBMigrationState state, long totalBytes, long totalDocuments)
+        protected MongoDBProgress(long bytesCopied, long documentsCopied, string elapsedTime, IReadOnlyDictionary<string, MongoDBError> errors, long eventsPending, long eventsReplayed, MongoDBMigrationState state, long totalBytes, long totalDocuments)
         {
             Argument.AssertNotNull(elapsedTime, nameof(elapsedTime));
             Argument.AssertNotNull(errors, nameof(errors));
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"></param>
         /// <param name="totalBytes"> The total number of document bytes on the source at the beginning of the Copying stage, or -1 if the total size was unknown. </param>
         /// <param name="totalDocuments"> The total number of documents on the source at the beginning of the Copying stage, or -1 if the total count was unknown. </param>
-        internal MongoDBProgress(long bytesCopied, long documentsCopied, string elapsedTime, IDictionary<string, MongoDBError> errors, long eventsPending, long eventsReplayed, DateTimeOffset? lastEventOn, DateTimeOffset? lastReplayOn, string name, string qualifiedName, MongoDBProgressResultType resultType, MongoDBMigrationState state, long totalBytes, long totalDocuments)
+        internal MongoDBProgress(long bytesCopied, long documentsCopied, string elapsedTime, IReadOnlyDictionary<string, MongoDBError> errors, long eventsPending, long eventsReplayed, DateTimeOffset? lastEventOn, DateTimeOffset? lastReplayOn, string name, string qualifiedName, MongoDBProgressResultType resultType, MongoDBMigrationState state, long totalBytes, long totalDocuments)
         {
             BytesCopied = bytesCopied;
             DocumentsCopied = documentsCopied;
@@ -79,32 +79,32 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> The number of document bytes copied during the Copying stage. </summary>
-        public long BytesCopied { get; set; }
+        public long BytesCopied { get; }
         /// <summary> The number of documents copied during the Copying stage. </summary>
-        public long DocumentsCopied { get; set; }
+        public long DocumentsCopied { get; }
         /// <summary> The elapsed time in the format [ddd.]hh:mm:ss[.fffffff] (i.e. TimeSpan format). </summary>
-        public string ElapsedTime { get; set; }
+        public string ElapsedTime { get; }
         /// <summary> The errors and warnings that have occurred for the current object. The keys are the error codes. </summary>
-        public IDictionary<string, MongoDBError> Errors { get; }
+        public IReadOnlyDictionary<string, MongoDBError> Errors { get; }
         /// <summary> The number of oplog events awaiting replay. </summary>
-        public long EventsPending { get; set; }
+        public long EventsPending { get; }
         /// <summary> The number of oplog events replayed so far. </summary>
-        public long EventsReplayed { get; set; }
+        public long EventsReplayed { get; }
         /// <summary> The timestamp of the last oplog event received, or null if no oplog event has been received yet. </summary>
-        public DateTimeOffset? LastEventOn { get; set; }
+        public DateTimeOffset? LastEventOn { get; }
         /// <summary> The timestamp of the last oplog event replayed, or null if no oplog event has been replayed yet. </summary>
-        public DateTimeOffset? LastReplayOn { get; set; }
+        public DateTimeOffset? LastReplayOn { get; }
         /// <summary> The name of the progress object. For a collection, this is the unqualified collection name. For a database, this is the database name. For the overall migration, this is null. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
         /// <summary> The qualified name of the progress object. For a collection, this is the database-qualified name. For a database, this is the database name. For the overall migration, this is null. </summary>
-        public string QualifiedName { get; set; }
+        public string QualifiedName { get; }
         /// <summary> The type of progress object. </summary>
         internal MongoDBProgressResultType ResultType { get; set; }
-        /// <summary> Gets or sets the state. </summary>
-        public MongoDBMigrationState State { get; set; }
+        /// <summary> Gets the state. </summary>
+        public MongoDBMigrationState State { get; }
         /// <summary> The total number of document bytes on the source at the beginning of the Copying stage, or -1 if the total size was unknown. </summary>
-        public long TotalBytes { get; set; }
+        public long TotalBytes { get; }
         /// <summary> The total number of documents on the source at the beginning of the Copying stage, or -1 if the total count was unknown. </summary>
-        public long TotalDocuments { get; set; }
+        public long TotalDocuments { get; }
     }
 }

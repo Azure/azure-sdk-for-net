@@ -6,20 +6,11 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataCenterAddressResult : IUtf8JsonSerializable
+    public partial class DataCenterAddressResult
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("datacenterAddressType");
-            writer.WriteStringValue(DataCenterAddressType.ToSerialString());
-            writer.WriteEndObject();
-        }
-
         internal static DataCenterAddressResult DeserializeDataCenterAddressResult(JsonElement element)
         {
             if (element.TryGetProperty("datacenterAddressType", out JsonElement discriminator))

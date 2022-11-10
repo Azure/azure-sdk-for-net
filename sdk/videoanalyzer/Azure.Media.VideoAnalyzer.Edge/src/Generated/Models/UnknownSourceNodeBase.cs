@@ -8,7 +8,7 @@
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> The UnknownSourceNodeBase. </summary>
-    internal partial class UnknownSourceNodeBase : SourceNodeBase
+    public partial class UnknownSourceNodeBase : SourceNodeBase
     {
         /// <summary> Initializes a new instance of UnknownSourceNodeBase. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>

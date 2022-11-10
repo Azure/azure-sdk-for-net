@@ -11,24 +11,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrationReportResult : IUtf8JsonSerializable
+    public partial class MigrationReportResult
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
-            if (Optional.IsDefined(ReportUri))
-            {
-                writer.WritePropertyName("reportUrl");
-                writer.WriteStringValue(ReportUri.AbsoluteUri);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static MigrationReportResult DeserializeMigrationReportResult(JsonElement element)
         {
             Optional<string> id = default;

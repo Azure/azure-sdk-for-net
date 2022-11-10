@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
-    internal partial class UnknownBasePrediction
+    public partial class UnknownBasePrediction
     {
         internal static UnknownBasePrediction DeserializeUnknownBasePrediction(JsonElement element)
         {

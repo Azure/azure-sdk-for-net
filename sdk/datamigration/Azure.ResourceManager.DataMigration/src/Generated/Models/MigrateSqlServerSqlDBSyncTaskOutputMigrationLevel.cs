@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel : MigrateSqlServerSqlDBSyncTaskOutput
     {
         /// <summary> Initializes a new instance of MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel. </summary>
-        public MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel()
+        internal MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel()
         {
             ResultType = "MigrationLevelOutput";
         }

@@ -8,7 +8,7 @@
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> The UnknownVariable. </summary>
-    internal partial class UnknownVariable : TimeSeriesVariable
+    public partial class UnknownVariable : TimeSeriesVariable
     {
         /// <summary> Initializes a new instance of UnknownVariable. </summary>
         /// <param name="kind"> Allowed &quot;kind&quot; values are - &quot;numeric&quot; or &quot;aggregate&quot;. While &quot;numeric&quot; allows you to specify value of the reconstructed signal and the expression to aggregate them, the &quot;aggregate&quot; kind lets you directly aggregate on the event properties without specifying value. </param>

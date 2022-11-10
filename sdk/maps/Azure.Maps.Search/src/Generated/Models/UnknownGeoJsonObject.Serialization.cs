@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    internal partial class UnknownGeoJsonObject : IUtf8JsonSerializable
+    public partial class UnknownGeoJsonObject : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

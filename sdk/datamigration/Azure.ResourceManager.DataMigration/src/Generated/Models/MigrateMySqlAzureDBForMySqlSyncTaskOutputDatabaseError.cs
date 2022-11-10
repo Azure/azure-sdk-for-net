@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseError : MigrateMySqlAzureDBForMySqlSyncTaskOutput
     {
         /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseError. </summary>
-        public MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseError()
+        internal MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseError()
         {
             Events = new ChangeTrackingList<SyncMigrationDatabaseErrorEvent>();
             ResultType = "DatabaseLevelErrorOutput";
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="resultType"> Result type. </param>
         /// <param name="errorMessage"> Error message. </param>
         /// <param name="events"> List of error events. </param>
-        internal MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseError(string id, string resultType, string errorMessage, IList<SyncMigrationDatabaseErrorEvent> events) : base(id, resultType)
+        internal MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseError(string id, string resultType, string errorMessage, IReadOnlyList<SyncMigrationDatabaseErrorEvent> events) : base(id, resultType)
         {
             ErrorMessage = errorMessage;
             Events = events;
@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Error message. </summary>
-        public string ErrorMessage { get; set; }
+        public string ErrorMessage { get; }
         /// <summary> List of error events. </summary>
-        public IList<SyncMigrationDatabaseErrorEvent> Events { get; }
+        public IReadOnlyList<SyncMigrationDatabaseErrorEvent> Events { get; }
     }
 }

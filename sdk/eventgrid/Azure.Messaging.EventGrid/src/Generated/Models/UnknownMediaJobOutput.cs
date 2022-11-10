@@ -10,7 +10,7 @@ using Azure.Messaging.EventGrid.SystemEvents;
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> The UnknownMediaJobOutput. </summary>
-    internal partial class UnknownMediaJobOutput : MediaJobOutput
+    public partial class UnknownMediaJobOutput : MediaJobOutput
     {
         /// <summary> Initializes a new instance of UnknownMediaJobOutput. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>

@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class MigrateSqlServerSqlMITaskOutputError : MigrateSqlServerSqlMITaskOutput
     {
         /// <summary> Initializes a new instance of MigrateSqlServerSqlMITaskOutputError. </summary>
-        public MigrateSqlServerSqlMITaskOutputError()
+        internal MigrateSqlServerSqlMITaskOutputError()
         {
             ResultType = "ErrorOutput";
         }

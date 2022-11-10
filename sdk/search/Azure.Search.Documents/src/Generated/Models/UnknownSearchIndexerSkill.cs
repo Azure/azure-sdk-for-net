@@ -11,7 +11,7 @@ using Azure.Search.Documents.Indexes.Models;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> The UnknownSearchIndexerSkill. </summary>
-    internal partial class UnknownSearchIndexerSkill : SearchIndexerSkill
+    public partial class UnknownSearchIndexerSkill : SearchIndexerSkill
     {
         /// <summary> Initializes a new instance of UnknownSearchIndexerSkill. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the skill. </param>

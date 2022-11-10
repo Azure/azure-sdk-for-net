@@ -10,7 +10,7 @@ using Azure.Communication.MediaComposition.Models;
 namespace Azure.Communication.MediaComposition
 {
     /// <summary> The UnknownLayout. </summary>
-    internal partial class UnknownLayout : MediaCompositionLayout
+    public partial class UnknownLayout : MediaCompositionLayout
     {
         /// <summary> Initializes a new instance of UnknownLayout. </summary>
         /// <param name="kind"> Kind of layout. </param>

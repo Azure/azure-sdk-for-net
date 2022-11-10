@@ -11,7 +11,7 @@ using Azure.Messaging.EventGrid.SystemEvents;
 
 namespace Azure.Messaging.EventGrid.Models
 {
-    internal partial class UnknownMediaJobOutput
+    public partial class UnknownMediaJobOutput
     {
         internal static UnknownMediaJobOutput DeserializeUnknownMediaJobOutput(JsonElement element)
         {

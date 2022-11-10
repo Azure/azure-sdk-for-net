@@ -10,7 +10,7 @@ using Azure.Search.Documents.Indexes.Models;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> The UnknownCognitiveServicesAccount. </summary>
-    internal partial class UnknownCognitiveServicesAccount : CognitiveServicesAccount
+    public partial class UnknownCognitiveServicesAccount : CognitiveServicesAccount
     {
         /// <summary> Initializes a new instance of UnknownCognitiveServicesAccount. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the cognitive service resource attached to a skillset. </param>

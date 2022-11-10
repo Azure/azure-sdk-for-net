@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class MigrationValidationDatabaseSummaryResult
     {
         /// <summary> Initializes a new instance of MigrationValidationDatabaseSummaryResult. </summary>
-        public MigrationValidationDatabaseSummaryResult()
+        internal MigrationValidationDatabaseSummaryResult()
         {
         }
 

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataBox.Models
     public partial class DataCenterAddressInstructionResult : DataCenterAddressResult
     {
         /// <summary> Initializes a new instance of DataCenterAddressInstructionResult. </summary>
-        public DataCenterAddressInstructionResult()
+        internal DataCenterAddressInstructionResult()
         {
             DataCenterAddressType = DataCenterAddressType.DataCenterAddressInstruction;
         }

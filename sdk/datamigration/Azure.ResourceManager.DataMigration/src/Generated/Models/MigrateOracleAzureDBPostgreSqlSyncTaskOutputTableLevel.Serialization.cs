@@ -11,16 +11,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel : IUtf8JsonSerializable
+    public partial class MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("resultType");
-            writer.WriteStringValue(ResultType);
-            writer.WriteEndObject();
-        }
-
         internal static MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel DeserializeMigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel(JsonElement element)
         {
             Optional<string> tableName = default;

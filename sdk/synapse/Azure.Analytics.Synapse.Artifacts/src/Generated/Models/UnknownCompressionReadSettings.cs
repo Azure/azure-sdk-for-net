@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The UnknownCompressionReadSettings. </summary>
-    internal partial class UnknownCompressionReadSettings : CompressionReadSettings
+    public partial class UnknownCompressionReadSettings : CompressionReadSettings
     {
         /// <summary> Initializes a new instance of UnknownCompressionReadSettings. </summary>
         /// <param name="type"> The Compression setting type. </param>

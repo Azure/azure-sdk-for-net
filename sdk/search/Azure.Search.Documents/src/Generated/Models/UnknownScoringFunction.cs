@@ -10,7 +10,7 @@ using Azure.Search.Documents.Indexes.Models;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> The UnknownScoringFunction. </summary>
-    internal partial class UnknownScoringFunction : ScoringFunction
+    public partial class UnknownScoringFunction : ScoringFunction
     {
         /// <summary> Initializes a new instance of UnknownScoringFunction. </summary>
         /// <param name="type"> Indicates the type of function to use. Valid values include magnitude, freshness, distance, and tag. The function type must be lower case. </param>

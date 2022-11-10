@@ -6,20 +6,11 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class CopyLogDetails : IUtf8JsonSerializable
+    public partial class CopyLogDetails
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("copyLogDetailsType");
-            writer.WriteStringValue(CopyLogDetailsType.ToSerialString());
-            writer.WriteEndObject();
-        }
-
         internal static CopyLogDetails DeserializeCopyLogDetails(JsonElement element)
         {
             if (element.TryGetProperty("copyLogDetailsType", out JsonElement discriminator))

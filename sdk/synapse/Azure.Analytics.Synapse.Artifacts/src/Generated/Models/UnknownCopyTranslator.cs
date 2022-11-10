@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The UnknownCopyTranslator. </summary>
-    internal partial class UnknownCopyTranslator : CopyTranslator
+    public partial class UnknownCopyTranslator : CopyTranslator
     {
         /// <summary> Initializes a new instance of UnknownCopyTranslator. </summary>
         /// <param name="type"> Copy translator type. </param>

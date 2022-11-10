@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class MigrateSqlServerSqlMITaskOutputLoginLevel : MigrateSqlServerSqlMITaskOutput
     {
         /// <summary> Initializes a new instance of MigrateSqlServerSqlMITaskOutputLoginLevel. </summary>
-        public MigrateSqlServerSqlMITaskOutputLoginLevel()
+        internal MigrateSqlServerSqlMITaskOutputLoginLevel()
         {
             ExceptionsAndWarnings = new ChangeTrackingList<ReportableException>();
             ResultType = "LoginLevelOutput";

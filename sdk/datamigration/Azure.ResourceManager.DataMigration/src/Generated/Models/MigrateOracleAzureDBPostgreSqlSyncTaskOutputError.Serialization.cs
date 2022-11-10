@@ -10,16 +10,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateOracleAzureDBPostgreSqlSyncTaskOutputError : IUtf8JsonSerializable
+    public partial class MigrateOracleAzureDBPostgreSqlSyncTaskOutputError
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("resultType");
-            writer.WriteStringValue(ResultType);
-            writer.WriteEndObject();
-        }
-
         internal static MigrateOracleAzureDBPostgreSqlSyncTaskOutputError DeserializeMigrateOracleAzureDBPostgreSqlSyncTaskOutputError(JsonElement element)
         {
             Optional<ReportableException> error = default;

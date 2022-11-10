@@ -10,16 +10,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSqlServerSqlDBSyncTaskOutputError : IUtf8JsonSerializable
+    public partial class MigrateSqlServerSqlDBSyncTaskOutputError
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("resultType");
-            writer.WriteStringValue(ResultType);
-            writer.WriteEndObject();
-        }
-
         internal static MigrateSqlServerSqlDBSyncTaskOutputError DeserializeMigrateSqlServerSqlDBSyncTaskOutputError(JsonElement element)
         {
             Optional<ReportableException> error = default;

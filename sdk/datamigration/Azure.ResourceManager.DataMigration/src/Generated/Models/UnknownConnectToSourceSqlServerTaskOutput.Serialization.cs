@@ -10,16 +10,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    internal partial class UnknownConnectToSourceSqlServerTaskOutput : IUtf8JsonSerializable
+    internal partial class UnknownConnectToSourceSqlServerTaskOutput
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("resultType");
-            writer.WriteStringValue(ResultType);
-            writer.WriteEndObject();
-        }
-
         internal static UnknownConnectToSourceSqlServerTaskOutput DeserializeUnknownConnectToSourceSqlServerTaskOutput(JsonElement element)
         {
             Optional<string> id = default;

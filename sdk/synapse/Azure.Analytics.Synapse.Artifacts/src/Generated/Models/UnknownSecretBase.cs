@@ -8,7 +8,7 @@
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The UnknownSecretBase. </summary>
-    internal partial class UnknownSecretBase : SecretBase
+    public partial class UnknownSecretBase : SecretBase
     {
         /// <summary> Initializes a new instance of UnknownSecretBase. </summary>
         /// <param name="type"> Type of the secret. </param>

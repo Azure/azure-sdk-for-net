@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class ConnectToSourceSqlServerTaskOutputDatabaseLevel : ConnectToSourceSqlServerTaskOutput
     {
         /// <summary> Initializes a new instance of ConnectToSourceSqlServerTaskOutputDatabaseLevel. </summary>
-        public ConnectToSourceSqlServerTaskOutputDatabaseLevel()
+        internal ConnectToSourceSqlServerTaskOutputDatabaseLevel()
         {
             DatabaseFiles = new ChangeTrackingList<DatabaseFileInfo>();
             ResultType = "DatabaseLevelOutput";

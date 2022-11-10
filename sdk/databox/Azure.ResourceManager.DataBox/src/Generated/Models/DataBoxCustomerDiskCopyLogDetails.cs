@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.DataBox.Models
     public partial class DataBoxCustomerDiskCopyLogDetails : CopyLogDetails
     {
         /// <summary> Initializes a new instance of DataBoxCustomerDiskCopyLogDetails. </summary>
-        public DataBoxCustomerDiskCopyLogDetails()
+        internal DataBoxCustomerDiskCopyLogDetails()
         {
             CopyLogDetailsType = DataBoxOrderType.DataBoxCustomerDisk;
         }

@@ -8,7 +8,7 @@
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The UnknownWebLinkedServiceTypeProperties. </summary>
-    internal partial class UnknownWebLinkedServiceTypeProperties : WebLinkedServiceTypeProperties
+    public partial class UnknownWebLinkedServiceTypeProperties : WebLinkedServiceTypeProperties
     {
         /// <summary> Initializes a new instance of UnknownWebLinkedServiceTypeProperties. </summary>
         /// <param name="url"> The URL of the web service endpoint, e.g. http://www.microsoft.com . Type: string (or Expression with resultType string). </param>

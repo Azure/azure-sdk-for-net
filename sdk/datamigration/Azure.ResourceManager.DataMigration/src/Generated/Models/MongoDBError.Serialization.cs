@@ -10,34 +10,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MongoDBError : IUtf8JsonSerializable
+    public partial class MongoDBError
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Code))
-            {
-                writer.WritePropertyName("code");
-                writer.WriteStringValue(Code);
-            }
-            if (Optional.IsDefined(Count))
-            {
-                writer.WritePropertyName("count");
-                writer.WriteNumberValue(Count.Value);
-            }
-            if (Optional.IsDefined(Message))
-            {
-                writer.WritePropertyName("message");
-                writer.WriteStringValue(Message);
-            }
-            if (Optional.IsDefined(ErrorType))
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(ErrorType.Value.ToString());
-            }
-            writer.WriteEndObject();
-        }
-
         internal static MongoDBError DeserializeMongoDBError(JsonElement element)
         {
             Optional<string> code = default;

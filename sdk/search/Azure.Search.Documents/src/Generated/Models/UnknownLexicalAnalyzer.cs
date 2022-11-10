@@ -10,7 +10,7 @@ using Azure.Search.Documents.Indexes.Models;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> The UnknownLexicalAnalyzer. </summary>
-    internal partial class UnknownLexicalAnalyzer : LexicalAnalyzer
+    public partial class UnknownLexicalAnalyzer : LexicalAnalyzer
     {
         /// <summary> Initializes a new instance of UnknownLexicalAnalyzer. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the analyzer. </param>

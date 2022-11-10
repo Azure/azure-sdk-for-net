@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    internal partial class UnknownProcessorNodeBase : IUtf8JsonSerializable
+    public partial class UnknownProcessorNodeBase : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

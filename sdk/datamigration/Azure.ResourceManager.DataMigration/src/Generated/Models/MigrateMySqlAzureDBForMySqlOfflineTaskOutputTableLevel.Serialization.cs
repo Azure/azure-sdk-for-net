@@ -11,16 +11,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel : IUtf8JsonSerializable
+    public partial class MigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("resultType");
-            writer.WriteStringValue(ResultType);
-            writer.WriteEndObject();
-        }
-
         internal static MigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel(JsonElement element)
         {
             Optional<string> objectName = default;

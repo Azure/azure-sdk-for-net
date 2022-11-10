@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class MigrationValidationResult
     {
         /// <summary> Initializes a new instance of MigrationValidationResult. </summary>
-        public MigrationValidationResult()
+        internal MigrationValidationResult()
         {
             SummaryResults = new ChangeTrackingDictionary<string, MigrationValidationDatabaseSummaryResult>();
         }
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="migrationId"> Migration Identifier. </param>
         /// <param name="summaryResults"> Validation summary results for each database. </param>
         /// <param name="status"> Current status of validation at the migration level. Status from the database validation result status will be aggregated here. </param>
-        internal MigrationValidationResult(string id, string migrationId, IDictionary<string, MigrationValidationDatabaseSummaryResult> summaryResults, ValidationStatus? status)
+        internal MigrationValidationResult(string id, string migrationId, IReadOnlyDictionary<string, MigrationValidationDatabaseSummaryResult> summaryResults, ValidationStatus? status)
         {
             Id = id;
             MigrationId = migrationId;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Migration Identifier. </summary>
         public string MigrationId { get; }
         /// <summary> Validation summary results for each database. </summary>
-        public IDictionary<string, MigrationValidationDatabaseSummaryResult> SummaryResults { get; }
+        public IReadOnlyDictionary<string, MigrationValidationDatabaseSummaryResult> SummaryResults { get; }
         /// <summary> Current status of validation at the migration level. Status from the database validation result status will be aggregated here. </summary>
         public ValidationStatus? Status { get; }
     }

@@ -8,7 +8,7 @@
 namespace Azure.AI.Language.Conversations
 {
     /// <summary> The UnknownBaseExtraInformation. </summary>
-    internal partial class UnknownBaseExtraInformation : BaseExtraInformation
+    public partial class UnknownBaseExtraInformation : BaseExtraInformation
     {
         /// <summary> Initializes a new instance of UnknownBaseExtraInformation. </summary>
         /// <param name="extraInformationKind"> The extra information object kind. </param>

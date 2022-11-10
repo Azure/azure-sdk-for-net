@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class MigrateOracleAzureDBPostgreSqlSyncTaskOutputError : MigrateOracleAzureDBPostgreSqlSyncTaskOutput
     {
         /// <summary> Initializes a new instance of MigrateOracleAzureDBPostgreSqlSyncTaskOutputError. </summary>
-        public MigrateOracleAzureDBPostgreSqlSyncTaskOutputError()
+        internal MigrateOracleAzureDBPostgreSqlSyncTaskOutputError()
         {
             ResultType = "ErrorOutput";
         }

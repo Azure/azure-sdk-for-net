@@ -10,16 +10,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataBoxCustomerDiskCopyLogDetails : IUtf8JsonSerializable
+    public partial class DataBoxCustomerDiskCopyLogDetails
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("copyLogDetailsType");
-            writer.WriteStringValue(CopyLogDetailsType.ToSerialString());
-            writer.WriteEndObject();
-        }
-
         internal static DataBoxCustomerDiskCopyLogDetails DeserializeDataBoxCustomerDiskCopyLogDetails(JsonElement element)
         {
             Optional<string> serialNumber = default;

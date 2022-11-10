@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The UnknownExportSettings. </summary>
-    internal partial class UnknownExportSettings : ExportSettings
+    public partial class UnknownExportSettings : ExportSettings
     {
         /// <summary> Initializes a new instance of UnknownExportSettings. </summary>
         /// <param name="type"> The export setting type. </param>

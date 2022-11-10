@@ -10,7 +10,7 @@ using Azure.Search.Documents.Indexes.Models;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> The UnknownLexicalTokenizer. </summary>
-    internal partial class UnknownLexicalTokenizer : LexicalTokenizer
+    public partial class UnknownLexicalTokenizer : LexicalTokenizer
     {
         /// <summary> Initializes a new instance of UnknownLexicalTokenizer. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the tokenizer. </param>

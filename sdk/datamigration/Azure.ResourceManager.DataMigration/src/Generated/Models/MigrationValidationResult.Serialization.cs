@@ -11,30 +11,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrationValidationResult : IUtf8JsonSerializable
+    public partial class MigrationValidationResult
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(SummaryResults))
-            {
-                writer.WritePropertyName("summaryResults");
-                writer.WriteStartObject();
-                foreach (var item in SummaryResults)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            writer.WriteEndObject();
-        }
-
         internal static MigrationValidationResult DeserializeMigrationValidationResult(JsonElement element)
         {
             Optional<string> id = default;
             Optional<string> migrationId = default;
-            Optional<IDictionary<string, MigrationValidationDatabaseSummaryResult>> summaryResults = default;
+            Optional<IReadOnlyDictionary<string, MigrationValidationDatabaseSummaryResult>> summaryResults = default;
             Optional<ValidationStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
