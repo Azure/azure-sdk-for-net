@@ -2193,7 +2193,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     }
     public partial class AzureResourceIdentifier : Azure.ResourceManager.SecurityCenter.Models.SecurityAlertResourceIdentifier
     {
-        public AzureResourceIdentifier() { }
+        internal AzureResourceIdentifier() { }
         public Azure.Core.ResourceIdentifier AzureResourceId { get { throw null; } }
     }
     public partial class BaselineAdjustedResult
@@ -3100,7 +3100,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     }
     public partial class LogAnalyticsIdentifier : Azure.ResourceManager.SecurityCenter.Models.SecurityAlertResourceIdentifier
     {
-        public LogAnalyticsIdentifier() { }
+        internal LogAnalyticsIdentifier() { }
         public System.Guid? AgentId { get { throw null; } }
         public System.Guid? WorkspaceId { get { throw null; } }
         public string WorkspaceResourceGroup { get { throw null; } }
