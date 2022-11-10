@@ -42,6 +42,9 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 directive:
+  # these operations will be supported in the future
+  - remove-operation: BestPracticesVersions_Get
+  - remove-operation: BestPracticesVersions_ListByTenant
 #use scope parameter on the two paths that are defined multiple times
   - from: automanage.json
     where: $.paths
