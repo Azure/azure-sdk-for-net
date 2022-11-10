@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.HybridContainerService
 
         private ClientDiagnostics ProvisionedClusterClientDiagnostics => _provisionedClusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridContainerService", ProvisionedClusterResource.ResourceType.Namespace, Diagnostics);
         private ProvisionedClustersRestOperations ProvisionedClusterRestClient => _provisionedClusterRestClient ??= new ProvisionedClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ProvisionedClusterResource.ResourceType));
-        private ClientDiagnostics VirtualNetworkvirtualNetworksClientDiagnostics => _virtualNetworkvirtualNetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridContainerService", HybridContainerServiceVirtualNetworkResource.ResourceType.Namespace, Diagnostics);
-        private VirtualNetworksRestOperations VirtualNetworkvirtualNetworksRestClient => _virtualNetworkvirtualNetworksRestClient ??= new VirtualNetworksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HybridContainerServiceVirtualNetworkResource.ResourceType));
+        private ClientDiagnostics VirtualNetworkvirtualNetworksClientDiagnostics => _virtualNetworkvirtualNetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridContainerService", VirtualNetworkResource.ResourceType.Namespace, Diagnostics);
+        private VirtualNetworksRestOperations VirtualNetworkvirtualNetworksRestClient => _virtualNetworkvirtualNetworksRestClient ??= new VirtualNetworksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VirtualNetworkResource.ResourceType));
         private ClientDiagnostics StorageSpacestorageSpacesClientDiagnostics => _storageSpacestorageSpacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridContainerService", StorageSpaceResource.ResourceType.Namespace, Diagnostics);
         private StorageSpacesRestOperations StorageSpacestorageSpacesRestClient => _storageSpacestorageSpacesRestClient ??= new StorageSpacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(StorageSpaceResource.ResourceType));
 
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.HybridContainerService
         /// Operation Id: virtualNetworks_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HybridContainerServiceVirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<HybridContainerServiceVirtualNetworkResource> GetVirtualNetworksAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualNetworkResource> GetVirtualNetworksAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<HybridContainerServiceVirtualNetworkResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<VirtualNetworkResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = VirtualNetworkvirtualNetworksClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualNetworks");
                 scope.Start();
                 try
                 {
                     var response = await VirtualNetworkvirtualNetworksRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridContainerServiceVirtualNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -159,14 +159,14 @@ namespace Azure.ResourceManager.HybridContainerService
                     throw;
                 }
             }
-            async Task<Page<HybridContainerServiceVirtualNetworkResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<VirtualNetworkResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = VirtualNetworkvirtualNetworksClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualNetworks");
                 scope.Start();
                 try
                 {
                     var response = await VirtualNetworkvirtualNetworksRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridContainerServiceVirtualNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -183,17 +183,17 @@ namespace Azure.ResourceManager.HybridContainerService
         /// Operation Id: virtualNetworks_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HybridContainerServiceVirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<HybridContainerServiceVirtualNetworkResource> GetVirtualNetworks(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualNetworkResource> GetVirtualNetworks(CancellationToken cancellationToken = default)
         {
-            Page<HybridContainerServiceVirtualNetworkResource> FirstPageFunc(int? pageSizeHint)
+            Page<VirtualNetworkResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = VirtualNetworkvirtualNetworksClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualNetworks");
                 scope.Start();
                 try
                 {
                     var response = VirtualNetworkvirtualNetworksRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridContainerServiceVirtualNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -201,14 +201,14 @@ namespace Azure.ResourceManager.HybridContainerService
                     throw;
                 }
             }
-            Page<HybridContainerServiceVirtualNetworkResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<VirtualNetworkResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = VirtualNetworkvirtualNetworksClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualNetworks");
                 scope.Start();
                 try
                 {
                     var response = VirtualNetworkvirtualNetworksRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridContainerServiceVirtualNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

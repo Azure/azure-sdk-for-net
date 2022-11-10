@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class MigrateSqlServerSqlDBTaskOutputMigrationLevel : MigrateSqlServerSqlDBTaskOutput
     {
         /// <summary> Initializes a new instance of MigrateSqlServerSqlDBTaskOutputMigrationLevel. </summary>
-        internal MigrateSqlServerSqlDBTaskOutputMigrationLevel()
+        public MigrateSqlServerSqlDBTaskOutputMigrationLevel()
         {
             ExceptionsAndWarnings = new ChangeTrackingList<ReportableException>();
             ResultType = "MigrationLevelOutput";
@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Summary of database results in the migration. </summary>
         public string DatabaseSummary { get; }
         /// <summary> Migration Validation Results. </summary>
-        public MigrationValidationResult MigrationValidationResult { get; }
+        public MigrationValidationResult MigrationValidationResult { get; set; }
         /// <summary> Migration Report Result, provides unique url for downloading your migration report. </summary>
-        public MigrationReportResult MigrationReportResult { get; }
+        public MigrationReportResult MigrationReportResult { get; set; }
         /// <summary> Source server version. </summary>
         public string SourceServerVersion { get; }
         /// <summary> Source server brand version. </summary>

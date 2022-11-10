@@ -10,8 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSchemaSqlServerSqlDBTaskOutput
+    public partial class MigrateSchemaSqlServerSqlDBTaskOutput : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("resultType");
+            writer.WriteStringValue(ResultType);
+            writer.WriteEndObject();
+        }
+
         internal static MigrateSchemaSqlServerSqlDBTaskOutput DeserializeMigrateSchemaSqlServerSqlDBTaskOutput(JsonElement element)
         {
             if (element.TryGetProperty("resultType", out JsonElement discriminator))
@@ -24,22 +32,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     case "SchemaErrorOutput": return MigrateSchemaSqlServerSqlDBTaskOutputError.DeserializeMigrateSchemaSqlServerSqlDBTaskOutputError(element);
                 }
             }
-            Optional<string> id = default;
-            string resultType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resultType"))
-                {
-                    resultType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownMigrateSchemaSqlServerSqlDBTaskOutput(id.Value, resultType);
+            return UnknownMigrateSchemaSqlServerSqlDBTaskOutput.DeserializeUnknownMigrateSchemaSqlServerSqlDBTaskOutput(element);
         }
     }
 }

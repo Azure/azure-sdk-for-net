@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class SyncMigrationDatabaseErrorEvent
     {
         /// <summary> Initializes a new instance of SyncMigrationDatabaseErrorEvent. </summary>
-        internal SyncMigrationDatabaseErrorEvent()
+        public SyncMigrationDatabaseErrorEvent()
         {
         }
 

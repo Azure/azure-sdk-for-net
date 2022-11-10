@@ -11,8 +11,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataCenterAddressLocationResult
+    public partial class DataCenterAddressLocationResult : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("datacenterAddressType");
+            writer.WriteStringValue(DataCenterAddressType.ToSerialString());
+            writer.WriteEndObject();
+        }
+
         internal static DataCenterAddressLocationResult DeserializeDataCenterAddressLocationResult(JsonElement element)
         {
             Optional<string> contactPersonName = default;

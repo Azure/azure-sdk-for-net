@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static UnknownPartitionSchemeDescription DeserializeUnknownPartitionSchemeDescription(JsonElement element)
         {
-            ApplicationPartitionScheme partitionScheme = default;
+            ApplicationPartitionScheme partitionScheme = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("partitionScheme"))

@@ -31,22 +31,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     case "#Microsoft.VideoAnalyzer.NamedPolygonString": return NamedPolygonString.DeserializeNamedPolygonString(element);
                 }
             }
-            string type = default;
-            string name = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("@type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new NamedPolygonBase(type, name);
+            return UnknownNamedPolygonBase.DeserializeUnknownNamedPolygonBase(element);
         }
     }
 }

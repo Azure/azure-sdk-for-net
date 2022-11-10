@@ -11,8 +11,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel
+    public partial class MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("resultType");
+            writer.WriteStringValue(ResultType);
+            writer.WriteEndObject();
+        }
+
         internal static MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel DeserializeMigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel(JsonElement element)
         {
             Optional<string> databaseName = default;

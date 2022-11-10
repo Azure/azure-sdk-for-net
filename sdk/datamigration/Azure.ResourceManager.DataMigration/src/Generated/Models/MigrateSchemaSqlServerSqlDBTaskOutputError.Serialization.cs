@@ -10,8 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSchemaSqlServerSqlDBTaskOutputError
+    public partial class MigrateSchemaSqlServerSqlDBTaskOutputError : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("resultType");
+            writer.WriteStringValue(ResultType);
+            writer.WriteEndObject();
+        }
+
         internal static MigrateSchemaSqlServerSqlDBTaskOutputError DeserializeMigrateSchemaSqlServerSqlDBTaskOutputError(JsonElement element)
         {
             Optional<string> commandText = default;

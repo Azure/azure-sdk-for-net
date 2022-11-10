@@ -30,16 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "TargetUtilization": return TargetUtilizationScaleSettings.DeserializeTargetUtilizationScaleSettings(element);
                 }
             }
-            ScaleType scaleType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("scaleType"))
-                {
-                    scaleType = new ScaleType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownOnlineScaleSettings(scaleType);
+            return UnknownOnlineScaleSettings.DeserializeUnknownOnlineScaleSettings(element);
         }
     }
 }

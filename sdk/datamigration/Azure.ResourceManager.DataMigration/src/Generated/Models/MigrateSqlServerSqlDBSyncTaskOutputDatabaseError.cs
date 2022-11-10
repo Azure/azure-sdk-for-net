@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class MigrateSqlServerSqlDBSyncTaskOutputDatabaseError : MigrateSqlServerSqlDBSyncTaskOutput
     {
         /// <summary> Initializes a new instance of MigrateSqlServerSqlDBSyncTaskOutputDatabaseError. </summary>
-        internal MigrateSqlServerSqlDBSyncTaskOutputDatabaseError()
+        public MigrateSqlServerSqlDBSyncTaskOutputDatabaseError()
         {
             Events = new ChangeTrackingList<SyncMigrationDatabaseErrorEvent>();
             ResultType = "DatabaseLevelErrorOutput";
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="resultType"> Result type. </param>
         /// <param name="errorMessage"> Error message. </param>
         /// <param name="events"> List of error events. </param>
-        internal MigrateSqlServerSqlDBSyncTaskOutputDatabaseError(string id, string resultType, string errorMessage, IReadOnlyList<SyncMigrationDatabaseErrorEvent> events) : base(id, resultType)
+        internal MigrateSqlServerSqlDBSyncTaskOutputDatabaseError(string id, string resultType, string errorMessage, IList<SyncMigrationDatabaseErrorEvent> events) : base(id, resultType)
         {
             ErrorMessage = errorMessage;
             Events = events;
@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Error message. </summary>
-        public string ErrorMessage { get; }
+        public string ErrorMessage { get; set; }
         /// <summary> List of error events. </summary>
-        public IReadOnlyList<SyncMigrationDatabaseErrorEvent> Events { get; }
+        public IList<SyncMigrationDatabaseErrorEvent> Events { get; }
     }
 }

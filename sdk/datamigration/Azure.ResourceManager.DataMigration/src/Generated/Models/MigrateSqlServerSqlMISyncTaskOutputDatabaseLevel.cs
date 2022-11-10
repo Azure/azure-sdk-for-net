@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel : MigrateSqlServerSqlMISyncTaskOutput
     {
         /// <summary> Initializes a new instance of MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel. </summary>
-        internal MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel()
+        public MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel()
         {
             ActiveBackupSets = new ChangeTrackingList<BackupSetInfo>();
             ExceptionsAndWarnings = new ChangeTrackingList<ReportableException>();

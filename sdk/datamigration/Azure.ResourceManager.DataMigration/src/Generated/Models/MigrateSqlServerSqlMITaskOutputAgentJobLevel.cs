@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class MigrateSqlServerSqlMITaskOutputAgentJobLevel : MigrateSqlServerSqlMITaskOutput
     {
         /// <summary> Initializes a new instance of MigrateSqlServerSqlMITaskOutputAgentJobLevel. </summary>
-        internal MigrateSqlServerSqlMITaskOutputAgentJobLevel()
+        public MigrateSqlServerSqlMITaskOutputAgentJobLevel()
         {
             ExceptionsAndWarnings = new ChangeTrackingList<ReportableException>();
             ResultType = "AgentJobLevelOutput";

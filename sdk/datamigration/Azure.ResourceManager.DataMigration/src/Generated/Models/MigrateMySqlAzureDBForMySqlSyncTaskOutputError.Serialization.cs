@@ -10,8 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateMySqlAzureDBForMySqlSyncTaskOutputError
+    public partial class MigrateMySqlAzureDBForMySqlSyncTaskOutputError : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("resultType");
+            writer.WriteStringValue(ResultType);
+            writer.WriteEndObject();
+        }
+
         internal static MigrateMySqlAzureDBForMySqlSyncTaskOutputError DeserializeMigrateMySqlAzureDBForMySqlSyncTaskOutputError(JsonElement element)
         {
             Optional<ReportableException> error = default;

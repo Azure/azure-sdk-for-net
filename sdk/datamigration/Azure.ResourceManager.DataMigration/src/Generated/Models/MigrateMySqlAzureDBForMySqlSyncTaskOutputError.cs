@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class MigrateMySqlAzureDBForMySqlSyncTaskOutputError : MigrateMySqlAzureDBForMySqlSyncTaskOutput
     {
         /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlSyncTaskOutputError. </summary>
-        internal MigrateMySqlAzureDBForMySqlSyncTaskOutputError()
+        public MigrateMySqlAzureDBForMySqlSyncTaskOutputError()
         {
             ResultType = "ErrorOutput";
         }

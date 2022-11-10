@@ -10,7 +10,11 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Base type for character filters. </summary>
+    /// <summary>
+    /// Base type for character filters.
+    /// Please note <see cref="CharFilter"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="MappingCharFilter"/> and <see cref="PatternReplaceCharFilter"/>.
+    /// </summary>
     public partial class CharFilter
     {
 

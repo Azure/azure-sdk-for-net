@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     {
         internal static VirtualNetworksListResult DeserializeVirtualNetworksListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<HybridContainerServiceVirtualNetworkData>> value = default;
+            Optional<IReadOnlyList<VirtualNetworkData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<HybridContainerServiceVirtualNetworkData> array = new List<HybridContainerServiceVirtualNetworkData>();
+                    List<VirtualNetworkData> array = new List<VirtualNetworkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridContainerServiceVirtualNetworkData.DeserializeVirtualNetworkData(item));
+                        array.Add(VirtualNetworkData.DeserializeVirtualNetworkData(item));
                     }
                     value = array;
                     continue;

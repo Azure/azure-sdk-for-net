@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new UnknownEntityQueryItem(id, name, type, systemData.Value, kind);
+            return new Models.EntityQueryItem(id, name, type, systemData.Value, kind);
         }
     }
 }

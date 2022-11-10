@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class MigrateSchemaSqlServerSqlDBTaskOutputError : MigrateSchemaSqlServerSqlDBTaskOutput
     {
         /// <summary> Initializes a new instance of MigrateSchemaSqlServerSqlDBTaskOutputError. </summary>
-        internal MigrateSchemaSqlServerSqlDBTaskOutputError()
+        public MigrateSchemaSqlServerSqlDBTaskOutputError()
         {
             ResultType = "SchemaErrorOutput";
         }

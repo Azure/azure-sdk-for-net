@@ -10,8 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput
+    public partial class MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("resultType");
+            writer.WriteStringValue(ResultType);
+            writer.WriteEndObject();
+        }
+
         internal static MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput DeserializeMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput(JsonElement element)
         {
             if (element.TryGetProperty("resultType", out JsonElement discriminator))
@@ -25,22 +33,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     case "TableLevelOutput": return MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel.DeserializeMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel(element);
                 }
             }
-            Optional<string> id = default;
-            string resultType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resultType"))
-                {
-                    resultType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput(id.Value, resultType);
+            return UnknownMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput.DeserializeUnknownMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput(element);
         }
     }
 }

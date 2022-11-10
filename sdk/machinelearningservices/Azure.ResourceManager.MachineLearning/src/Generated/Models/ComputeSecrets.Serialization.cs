@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -23,16 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "VirtualMachine": return VirtualMachineSecrets.DeserializeVirtualMachineSecrets(element);
                 }
             }
-            ComputeType computeType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("computeType"))
-                {
-                    computeType = new ComputeType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownComputeSecrets(computeType);
+            return UnknownComputeSecrets.DeserializeUnknownComputeSecrets(element);
         }
     }
 }
