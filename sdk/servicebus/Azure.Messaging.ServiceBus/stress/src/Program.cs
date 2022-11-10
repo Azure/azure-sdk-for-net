@@ -50,9 +50,6 @@ public class Program
         // If a job index is provided, a single role is started, otherwise, all specified roles within the
         // test scenario runs are run in parallel.
 
-        var testScenarioTasks = new List<Task>();
-        var testsToRun = opts.All ? Enum.GetValues(typeof(TestScenario)) : new TestScenario[]{StringToTestScenario(opts.Test)};
-
         var testParameters = new TestParameters();
         testParameters.ServiceBusConnectionString = serviceBusConnectionString;
 
@@ -64,79 +61,95 @@ public class Program
 
         using var azureEventListener = new AzureEventSourceListener((args, level) => metrics.Client.TrackTrace($"EventWritten: {args.ToString()} Level: {level}."), EventLevel.Warning);
 
-        try
-        {
-            foreach (TestScenario testScenario in testsToRun)
-            {
-                var testName = testScenario.ToString();
-                metrics.Client.Context.GlobalProperties["TestName"] = testName;
-                var queueName = string.Empty;
+        await Task.Delay(1);
 
-                metrics.Client.TrackEvent("Starting a test run.");
+        // try
+        // {
+        //     var testScenario = StringToTestScenario(opts.Test);
+        //     var testScenarioName = testScenario.ToString();
+        //     metrics.Client.Context.GlobalProperties["TestName"] = testScenarioName;
+        //     var queueName = string.Empty;
 
-                switch (testScenario)
-                {
-                    case TestScenario.SendReceiveTest:
-                        environment.TryGetValue(EnvironmentVariables.ServiceBusSendReceiveTest, out queueName);
+        //     metrics.Client.TrackEvent("Starting a test run.");
 
-                        var sendReceiveTest = new SendReceiveTest(testParameters, metrics, opts.Role);
-                        testScenarioTasks.Add(sendReceiveTest.RunTestAsync(cancellationSource.Token));
-                        break;
-                }
-            }
+        //     TestScenario testRun;
 
-            var tasksWaiting = Task.WhenAll(testScenarioTasks);
+        //     switch (testScenario)
+        //     {
+        //         case TestScenarioName.SendReceiveTest:
+        //             environment.TryGetValue(EnvironmentVariables.ServiceBusSendReceiveTestQ, out queueName);
+        //             testRun = new SendReceiveTest(testParameters, metrics, opts.Role);
+        //             break;
+        //         case TestScenarioName.SendReceiveBatchesTest:
+        //             environment.TryGetValue(EnvironmentVariables.ServiceBusSendReceiveBatchesTestQ, out queueName);
+        //             testRun = new SendReceiveBatchesTest(testParameters, metrics, opts.Role);
+        //             break;
+        //         case TestScenarioName.SessionSendReceiveTest:
+        //             environment.TryGetValue(EnvironmentVariables.ServiceBusSessionSendReceiveTestQ, out queueName);
+        //             testRun = new SendReceiveTest(testParameters, metrics, opts.Role);
+        //             break;
+        //         case TestScenarioName.SendProcessTest:
+        //             environment.TryGetValue(EnvironmentVariables.ServiceBusSendProcessTestQ, out queueName);
+        //             testRun = new SendReceiveTest(testParameters, metrics, opts.Role);
+        //             break;
+        //         case TestScenarioName.SessionSendProcessTest:
+        //             environment.TryGetValue(EnvironmentVariables.ServiceBusSessionSendProcessTestQ, out queueName);
+        //             testRun = new SendReceiveTest(testParameters, metrics, opts.Role);
+        //             break;
+        //     }
 
-            while (tasksWaiting.Status == TaskStatus.Running)
-            {
-                metrics.UpdateEnvironmentStatistics();
+        //     var run = testRun.RunTestAsync(cancellationSource.Token).ConfigureAwait(false);
 
-                await Task.Delay(TimeSpan.FromMinutes(5), cancellationSource.Token).ConfigureAwait(false);
-            }
+        //     while (running.Status == TaskStatus.Running)
+        //     {
+        //         metrics.UpdateEnvironmentStatistics();
 
-            await tasksWaiting.ConfigureAwait(false);
-            // Wait for all tests scenarios to finish before returning.
+        //         await Task.Delay(TimeSpan.FromMinutes(5), cancellationSource.Token).ConfigureAwait(false);
+        //     }
 
-            metrics.Client.TrackEvent("Test run is ending.");
-        }
-        catch (TaskCanceledException)
-        {
-            // Run is complete
-        }
-        catch (Exception ex) when
-            (ex is OutOfMemoryException
-            || ex is StackOverflowException
-            || ex is ThreadAbortException)
-        {
-            throw;
-        }
-        catch (Exception ex)
-        {
-            metrics.Client.TrackException(ex);
-        }
-        finally
-        {
-            testParameters.Dispose();
-            metrics.Client.Flush();
-            await Task.Delay(60000).ConfigureAwait(false);
-        }
+        //     await tasksWaiting.ConfigureAwait(false);
+        //     // Wait for all tests scenarios to finish before returning.
+
+        //     metrics.Client.TrackEvent("Test run is ending.");
+        // }
+        // catch (TaskCanceledException)
+        // {
+        //     // Run is complete
+        // }
+        // catch (Exception ex) when
+        //     (ex is OutOfMemoryException
+        //     || ex is StackOverflowException
+        //     || ex is ThreadAbortException)
+        // {
+        //     throw;
+        // }
+        // catch (Exception ex)
+        // {
+        //     metrics.Client.TrackException(ex);
+        // }
+        // finally
+        // {
+        //     testParameters.Dispose();
+        //     metrics.Client.Flush();
+        //     await Task.Delay(60000).ConfigureAwait(false);
+        // }
     }
 
     /// <summary>
-    ///   Converts a string into a <see cref="TestScenario"/> value.
+    ///   Converts a string into a <see cref="TestScenarioName"/> value.
     /// </summary>
     ///
-    /// <param name="testScenario">The string to convert to a <see cref="TestScenario"/>.</param>
+    /// <param name="testScenario">The string to convert to a <see cref="TestScenarioName"/>.</param>
     ///
-    /// <returns>The <see cref="TestScenario"/> of the string input.</returns>
+    /// <returns>The <see cref="TestScenarioName"/> of the string input.</returns>
     ///
-    public static TestScenario StringToTestScenario(string testScenario) => testScenario switch
+    public static TestScenarioName StringToTestScenario(string testScenario) => testScenario switch
     {
-        "SendReceiveTest" or "SendRec" => TestScenario.SendReceiveTest,
-        "SendReceiveBatchesTest" or "SendRecBatch" => TestScenario.SendReceiveBatchesTest,
-        "SessionSendReceiveTest" or "SessionSendRec" => TestScenario.SessionSendReceiveTest,
-        "SessionSendProcessTest" or "SessionSendProc" => TestScenario.SessionSendProcessTest,
-        "SendProcessTest" or "SendProc" => TestScenario.SendProcessTest,
+        "SendReceiveTest" or "SendRec" => TestScenarioName.SendReceiveTest,
+        "SendReceiveBatchesTest" or "SendRecBatch" => TestScenarioName.SendReceiveBatchesTest,
+        "SessionSendReceiveTest" or "SessionSendRec" => TestScenarioName.SessionSendReceiveTest,
+        "SessionSendProcessTest" or "SessionSendProc" => TestScenarioName.SessionSendProcessTest,
+        "SendProcessTest" or "SendProc" => TestScenarioName.SendProcessTest,
         _ => throw new ArgumentNullException(),
     };
 
@@ -146,10 +159,10 @@ public class Program
     ///
     internal class Options
     {
-        [Option('t', "test", HelpText = "Enter which test to run for a single test run.")]
+        [Option('t', "test", HelpText = "Test scenario to run.")]
         public string Test { get; set; }
 
-        [Option('r', "role", HelpText = "Enter which role.")]
+        [Option('r', "role", HelpText = "Role to run in this container.")]
         public string Role { get; set; }
     }
 }
