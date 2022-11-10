@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0 (2022-10-31)
+## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
 - Support `Headers` field in `ConnectEventRequest` to carry over client headers.
