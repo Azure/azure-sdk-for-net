@@ -30,16 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "Custom": return CustomNCrossValidations.DeserializeCustomNCrossValidations(element);
                 }
             }
-            NCrossValidationsMode mode = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("mode"))
-                {
-                    mode = new NCrossValidationsMode(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownNCrossValidations(mode);
+            return UnknownNCrossValidations.DeserializeUnknownNCrossValidations(element);
         }
     }
 }

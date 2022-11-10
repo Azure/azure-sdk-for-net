@@ -16,8 +16,6 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
- 
-
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
@@ -53,5 +51,5 @@ rename-rules:
 
 prepend-rp-prefix:
   - AgentPool
-  - VirtualNetwork
+  - VirtualNetworks
 ```

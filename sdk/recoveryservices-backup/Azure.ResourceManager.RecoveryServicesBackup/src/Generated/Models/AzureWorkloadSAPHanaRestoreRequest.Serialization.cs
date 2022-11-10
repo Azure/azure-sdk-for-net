@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<TargetRestoreInfo> targetInfo = default;
             Optional<RecoveryMode> recoveryMode = default;
             Optional<string> targetVirtualMachineId = default;
-            string objectType = default;
+            string objectType = "AzureWorkloadSAPHanaRestoreRequest";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryType"))

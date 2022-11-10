@@ -415,6 +415,13 @@
       ]
     },
     {
+      "filename": "**/sdk/hybridaks/**/*.cs",
+      "words": [
+        "Vmip",
+        "Kubevirt"
+      ]
+    },
+    {
       "filename": "**/sdk/hybridkubernetes/**/*.cs",
       "words": [
         "kubeconfigs"

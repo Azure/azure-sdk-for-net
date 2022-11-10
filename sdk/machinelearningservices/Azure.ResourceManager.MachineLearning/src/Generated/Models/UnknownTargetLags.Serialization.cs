@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static UnknownTargetLags DeserializeUnknownTargetLags(JsonElement element)
         {
-            TargetLagsMode mode = default;
+            TargetLagsMode mode = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mode"))

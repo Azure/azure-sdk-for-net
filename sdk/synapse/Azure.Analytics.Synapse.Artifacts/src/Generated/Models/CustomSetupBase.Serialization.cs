@@ -25,16 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static CustomSetupBase DeserializeCustomSetupBase(JsonElement element)
         {
-            string type = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new CustomSetupBase(type);
+            return UnknownCustomSetupBase.DeserializeUnknownCustomSetupBase(element);
         }
 
         internal partial class CustomSetupBaseConverter : JsonConverter<CustomSetupBase>

@@ -34,7 +34,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="host"> Host name of the server. Type: string (or Expression with resultType string). </param>
         /// <param name="userId"> User ID to logon the server. Type: string (or Expression with resultType string). </param>
-        /// <param name="password"> Password to logon the server. </param>
+        /// <param name="password">
+        /// Password to logon the server.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
         internal FileServerLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object host, object userId, SecretBase password, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
@@ -49,7 +53,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object Host { get; set; }
         /// <summary> User ID to logon the server. Type: string (or Expression with resultType string). </summary>
         public object UserId { get; set; }
-        /// <summary> Password to logon the server. </summary>
+        /// <summary>
+        /// Password to logon the server.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </summary>
         public SecretBase Password { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public object EncryptedCredential { get; set; }
