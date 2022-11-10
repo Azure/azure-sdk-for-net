@@ -163,9 +163,9 @@ namespace Azure.AI.TextAnalytics
             ResolutionKind = ResolutionKind.CurrencyResolution;
         }
 
-        internal CurrencyResolution(ResolutionKind resolutionKind, string isO4217, string unit, double value) : base(resolutionKind)
+        internal CurrencyResolution(ResolutionKind resolutionKind, string iso4217, string unit, double value) : base(resolutionKind)
         {
-            Iso4217 = isO4217;
+            Iso4217 = iso4217;
             Unit = unit;
             Value = value;
             ResolutionKind = resolutionKind;
