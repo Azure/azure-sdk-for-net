@@ -11,7 +11,7 @@ namespace Azure.Messaging.WebPubSub.Clients
     public class WebPubSubDisconnectedEventArgs
     {
         /// <summary>
-        /// The connection id of disconnected connection. Could be null if the connection didn't receive a connected message.
+        /// The connection id of disconnected connection. Could be null if the connection hasn't received a connected message.
         /// </summary>
         public string ConnectionId { get; }
 

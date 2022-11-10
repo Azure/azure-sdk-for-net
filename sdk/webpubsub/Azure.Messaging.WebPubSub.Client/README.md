@@ -45,11 +45,10 @@ var client = new WebPubSubClient(new Uri("<client-access-uri>"));
 And in production, you usually get `ClientAccessUri` from a negotiate server.
 
 ```C# Snippet:WebPubSubClient_Construct2
-var serviceClient = new WebPubSubServiceClient("<connection-string>", "hub");
-
 var client = new WebPubSubClient(new WebPubSubClientCredential(token =>
 {
-    return new ValueTask<Uri>(serviceClient.GetClientAccessUriAsync(roles: new[] { "webpubsub.joinLeaveGroup", "webpubsub.sendToGroup" }));
+    // In common practice, you will have a negotiation server for generating token. Client should fetch token from it.
+    return FetchClientAccessTokenFromServerAsync(token);
 }));
 ```
 
