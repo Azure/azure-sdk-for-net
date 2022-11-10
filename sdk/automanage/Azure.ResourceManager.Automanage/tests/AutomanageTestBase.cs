@@ -93,39 +93,6 @@ namespace Azure.ResourceManager.Automanage.Tests
         }
 
         /// <summary>
-        /// Creates a configuration profile version
-        /// </summary>
-        /// <param name="collection">Configruation profile version collection to perform actions against</param>
-        /// <param name="versionName">Desired configuration profile version name</param>
-        /// <returns>ConfigurationProfileVersionResource</returns>
-        protected async Task<ConfigurationProfileVersionResource> CreateConfigurationProfileVersion(ConfigurationProfileVersionCollection collection, string versionName)
-        {
-            string configuration = "{" +
-                "\"Antimalware/Enable\":true," +
-                "\"Antimalware/EnableRealTimeProtection\":true," +
-                "\"Antimalware/RunScheduledScan\":true," +
-                "\"Backup/Enable\":true," +
-                "\"WindowsAdminCenter/Enable\":false," +
-                "\"VMInsights/Enable\":true," +
-                "\"AzureSecurityCenter/Enable\":true," +
-                "\"UpdateManagement/Enable\":true," +
-                "\"ChangeTrackingAndInventory/Enable\":true," +
-                "\"GuestConfiguration/Enable\":true," +
-                "\"AutomationAccount/Enable\":true," +
-                "\"LogAnalytics/Enable\":true," +
-                "\"BootDiagnostics/Enable\":true" +
-            "}";
-
-            ConfigurationProfileData data = new ConfigurationProfileData(DefaultLocation)
-            {
-                Configuration = new BinaryData(configuration)
-            };
-
-            var newProfile = await collection.CreateOrUpdateAsync(WaitUntil.Completed, versionName, data);
-            return newProfile.Value;
-        }
-
-        /// <summary>
         /// Creates an assignment between a configuration profile and a virtual machine
         /// </summary>
         /// <param name="vm">Virtual Machine to assign a profile to</param>
