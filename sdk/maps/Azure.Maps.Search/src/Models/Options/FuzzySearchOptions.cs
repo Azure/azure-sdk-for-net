@@ -68,7 +68,7 @@ namespace Azure.Maps.Search
         /// <item><description> <c>XStr</c> - Cross Streets (intersections) </description></item>
         /// </list>
         ///
-        /// Value should be a comma separated list of indexes (in any order) or <c>null</c> for no indexes.
+        /// Value should be a list of search indices (in any order) or <c>null</c> for no indices.
         /// </summary>
         public IEnumerable<SearchIndex> IndexFilter { get; set; }
 
