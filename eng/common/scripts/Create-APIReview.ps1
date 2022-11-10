@@ -133,7 +133,7 @@ if ($packages)
                 # Check if package name is approved. Preview version cannot be released without package name approval
                 if ($respCode -eq '202' -and $pkgInfo.ReleaseStatus -and $pkgInfo.ReleaseStatus -ne "Unreleased")
                 {
-                    Write-Host "Package name is not yet approved on APIView for $($PackageName). Package name must be approved by an API approver for a preview release if it was never released as GA version."
+                    Write-Host "Package name is not yet approved on APIView for $($PackageName). Package name must be approved by an API approver for a beta release if it was never released a stable version."
                     Write-Host "You can check http://aka.ms/azsdk/engsys/apireview/faq for more details on package name approval."
                     exit 1
                 }
