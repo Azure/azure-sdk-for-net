@@ -162,8 +162,10 @@ function DeployStressTests(
             -login:$login
     }
 
-    Write-Host "Releases deployed by $deployer"
-    Run helm list --all-namespaces -l deployId=$deployer
+    if ($FailedCommands.Count -lt $pkgs.Count) {
+        Write-Host "Releases deployed by $deployer"
+        Run helm list --all-namespaces -l deployId=$deployer
+    }
 
     if ($FailedCommands) {
         Write-Warning "The following commands failed:"
@@ -287,17 +289,27 @@ function DeployStressPackage(
     }
 
     Write-Host "Installing or upgrading stress test $($pkg.ReleaseName) from $($pkg.Directory)"
-    Run helm upgrade $pkg.ReleaseName $pkg.Directory `
-        -n $pkg.Namespace `
-        --install `
-        --set stress-test-addons.env=$environment `
-        --values (Join-Path $pkg.Directory generatedValues.yaml)
+    $result = (Run helm upgrade $pkg.ReleaseName $pkg.Directory `
+                -n $pkg.Namespace `
+                --install `
+                --set stress-test-addons.env=$environment `
+                --values (Join-Path $pkg.Directory generatedValues.yaml)) 2>&1
+
     if ($LASTEXITCODE) {
-        # Issues like 'UPGRADE FAILED: another operation (install/upgrade/rollback) is in progress'
-        # can be the result of cancelled `upgrade` operations (e.g. ctrl-c).
-        # See https://github.com/helm/helm/issues/4558
-        Write-Warning "The issue may be fixable by first running 'helm rollback -n $($pkg.Namespace) $($pkg.ReleaseName)'"
-        return
+        # Error: UPGRADE FAILED: create: failed to create: Secret "sh.helm.release.v1.stress-test.v3" is invalid: data: Too long: must have at most 1048576 bytes
+        # Error: UPGRADE FAILED: create: failed to create: Request entity too large: limit is 3145728
+        if ($result -like "*Too long*" -or $result -like "*Too large*") {
+          $result
+          Write-Warning "*** Ensure any files or directories not part of the stress config are added to .helmignore ***"
+          Write-Warning "*** See https://helm.sh/docs/chart_template_guide/helm_ignore_file/ ***"
+          return
+        } else {
+          # Issues like 'UPGRADE FAILED: another operation (install/upgrade/rollback) is in progress'
+          # can be the result of cancelled `upgrade` operations (e.g. ctrl-c).
+          # See https://github.com/helm/helm/issues/4558
+          Write-Warning "The issue may be fixable by first running 'helm rollback -n $($pkg.Namespace) $($pkg.ReleaseName)'"
+          return
+        }
     }
 
     # Helm 3 stores release information in kubernetes secrets. The only way to add extra labels around
