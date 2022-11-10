@@ -30,21 +30,6 @@ namespace Azure.ResourceManager.DataFactory
         public Azure.ResourceManager.DataFactory.Models.FactoryRepoConfiguration RepoConfiguration { get { throw null; } set { } }
         public string Version { get { throw null; } }
     }
-    public static partial class DataFactoryExpression
-    {
-        public static Azure.ResourceManager.DataFactory.DataFactoryExpression<T> FromExpression<T>(string expression) { throw null; }
-        public static Azure.ResourceManager.DataFactory.DataFactoryExpression<T> FromValue<T>(T value) { throw null; }
-    }
-    public partial class DataFactoryExpression<T>
-    {
-        protected DataFactoryExpression() { }
-        public DataFactoryExpression(string expression) { }
-        public DataFactoryExpression(T value) { }
-        public string GetString() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override string ToString() { throw null; }
-        public bool TryGetValue(out T value) { throw null; }
-    }
     public static partial class DataFactoryExtensions
     {
         public static Azure.Response<Azure.ResourceManager.DataFactory.DataFactoryResource> ConfigureFactoryRepoInformation(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationId, Azure.ResourceManager.DataFactory.Models.FactoryRepoUpdate factoryRepoUpdate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -843,7 +828,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public AzureBlobDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public Azure.ResourceManager.DataFactory.Models.DatasetCompression Compression { get { throw null; } set { } }
         public System.BinaryData FileName { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.DataFactoryExpression<string> FolderPath { get { throw null; } set { } }
+        public System.BinaryData FolderPath { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.DatasetStorageFormat Format { get { throw null; } set { } }
         public System.BinaryData ModifiedDatetimeEnd { get { throw null; } set { } }
         public System.BinaryData ModifiedDatetimeStart { get { throw null; } set { } }
@@ -3025,9 +3010,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         protected FactorySecretBaseDefinition() { }
     }
-    public partial class FactorySecretString : Azure.ResourceManager.DataFactory.Models.FactorySecretBaseDefinition
+    public partial class FactorySecureString : Azure.ResourceManager.DataFactory.Models.FactorySecretBaseDefinition
     {
-        public FactorySecretString(string value) { }
+        public FactorySecureString(string value) { }
         public string Value { get { throw null; } set { } }
     }
     public partial class FactoryTriggerDefinition
@@ -3966,7 +3951,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         public IntegrationRuntimeCustomSetupScriptProperties() { }
         public System.Uri BlobContainerUri { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.FactorySecretString SasToken { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.FactorySecureString SasToken { get { throw null; } set { } }
     }
     public partial class IntegrationRuntimeDataFlowProperties
     {
@@ -4137,7 +4122,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         public IntegrationRuntimeSsisCatalogInfo() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
-        public Azure.ResourceManager.DataFactory.Models.FactorySecretString CatalogAdminPassword { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.FactorySecureString CatalogAdminPassword { get { throw null; } set { } }
         public string CatalogAdminUserName { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeSsisCatalogPricingTier? CatalogPricingTier { get { throw null; } set { } }
         public string CatalogServerEndpoint { get { throw null; } set { } }
@@ -4317,8 +4302,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class LinkedIntegrationRuntimeKeyAuthorization : Azure.ResourceManager.DataFactory.Models.LinkedIntegrationRuntimeType
     {
-        public LinkedIntegrationRuntimeKeyAuthorization(Azure.ResourceManager.DataFactory.Models.FactorySecretString key) { }
-        public Azure.ResourceManager.DataFactory.Models.FactorySecretString Key { get { throw null; } set { } }
+        public LinkedIntegrationRuntimeKeyAuthorization(Azure.ResourceManager.DataFactory.Models.FactorySecureString key) { }
+        public Azure.ResourceManager.DataFactory.Models.FactorySecureString Key { get { throw null; } set { } }
     }
     public partial class LinkedIntegrationRuntimeRbacAuthorization : Azure.ResourceManager.DataFactory.Models.LinkedIntegrationRuntimeType
     {
@@ -6556,9 +6541,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class SsisExecutionCredential
     {
-        public SsisExecutionCredential(System.BinaryData domain, System.BinaryData userName, Azure.ResourceManager.DataFactory.Models.FactorySecretString password) { }
+        public SsisExecutionCredential(System.BinaryData domain, System.BinaryData userName, Azure.ResourceManager.DataFactory.Models.FactorySecureString password) { }
         public System.BinaryData Domain { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.FactorySecretString Password { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.FactorySecureString Password { get { throw null; } set { } }
         public System.BinaryData UserName { get { throw null; } set { } }
     }
     public partial class SsisExecutionParameter
