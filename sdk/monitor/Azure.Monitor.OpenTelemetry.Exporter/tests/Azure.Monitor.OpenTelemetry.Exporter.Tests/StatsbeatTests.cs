@@ -39,5 +39,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             Assert.Equal(Statsbeat.StatsBeat_ConnectionString_NonEU, Statsbeat.s_statsBeat_ConnectionString);
         }
+
+        [Fact]
+        public void StatsbeatIsNotInitializedForUnknownRegions()
+        {
+            var customer_ConnectionString = "InstrumentationKey=1aa11111-bbbb-1ccc-8ddd-eeeeffff3333;IngestionEndpoint=https://foo.in.applicationinsights.azure.com/";
+            ConnectionStringParser.GetValues(customer_ConnectionString, out string instrumentationKey, out string ingestionEndpoint);
+
+            // Set ConnectionString to null as it is static and may be impacted by other tests.
+            Statsbeat.s_statsBeat_ConnectionString = null;
+            Statsbeat.SetStatsbeatConnectionString(ingestionEndpoint);
+
+            Assert.Null(Statsbeat.s_statsBeat_ConnectionString);
+        }
     }
 }
