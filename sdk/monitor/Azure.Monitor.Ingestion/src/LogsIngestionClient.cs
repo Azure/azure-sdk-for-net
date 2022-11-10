@@ -2,9 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -89,7 +92,10 @@ namespace Azure.Monitor.Ingestion
         {
             //TODO: use Array pool instead
             MemoryStream stream = new MemoryStream(SingleUploadThreshold);
-            WriteMemory(stream, BinaryData.FromString("[").ToMemory());
+            Utf8JsonWriter writer = new Utf8JsonWriter(stream);
+            //ArrayPool<byte> pool = ArrayPool<byte>.Create(SingleUploadThreshold, 1);
+            //pool.Rent(SingleUploadThreshold);
+            writer.WriteStartArray();
             int entryCount = 0;
             List<T> currentLogList = new List<T>();
             foreach (var log in logEntries)
@@ -108,39 +114,42 @@ namespace Azure.Monitor.Ingestion
                 var memory = entry.ToMemory();
                 if (memory.Length > SingleUploadThreshold) // if single log is > 1 Mb send to be gzipped by itself
                 {
-                    MemoryStream tempStream = new MemoryStream(); // create tempStream for individual log
-                    WriteMemory(tempStream, BinaryData.FromString("[").ToMemory());
-                    WriteMemory(tempStream, memory);
-                    WriteMemory(tempStream, BinaryData.FromString("]").ToMemory());
-                    tempStream.Position = 0;
-                    yield return new BatchedLogs<T>(new List<T>{log}, BinaryData.FromStream(tempStream));
+                    // Create tempWriter and tempStream for individual log
+                    MemoryStream tempStream = new MemoryStream();
+                    Utf8JsonWriter tempWriter = new Utf8JsonWriter(tempStream);
+                    tempWriter.WriteStartArray();
+                    WriteMemory(tempWriter, memory);
+                    tempWriter.WriteEndArray();
+                    yield return new BatchedLogs<T>(new List<T>{log}, BinaryData.FromObjectAsJson(writer));
                 }
-                else if ((stream.Length + memory.Length + 1) >= SingleUploadThreshold) // if adding this entry makes stream > 1 Mb send current stream now
+                // if adding this entry makes stream > 1 Mb send current stream now
+                else if ((stream.Length + memory.Length + 1) >= SingleUploadThreshold)
                 {
-                    WriteMemory(stream, BinaryData.FromString("]").ToMemory());
-                    stream.Position = 0; // set Position to 0 to return everything from beginning of stream
-                    yield return new BatchedLogs<T>(currentLogList, BinaryData.FromStream(stream));
+                    writer.WriteEndArray();
+                    //stream.Position = 0; // set Position to 0 to return everything from beginning of stream
+                    yield return new BatchedLogs<T>(currentLogList, BinaryData.FromObjectAsJson(writer));
 
                     // reset stream and currentLogList
                     stream = new MemoryStream(SingleUploadThreshold); // reset stream
+                    writer.Flush();
                     currentLogList = new List<T>(); // reset log list
-                    WriteMemory(stream, memory); // add log to memory and currentLogList
+                    WriteMemory(writer, memory); // add log to memory and currentLogList
                     currentLogList.Add(log);
                 }
                 else
                 {
-                    WriteMemory(stream, memory);
+                    WriteMemory(writer, memory);
                     if ((entryCount + 1) == logEntries.Count())
                     {
                         // reached end of logs and we haven't returned yet
-                        WriteMemory(stream, BinaryData.FromString("]").ToMemory());
+                        writer.WriteEndArray();
                         stream.Position = 0;
                         currentLogList.Add(log);
                         yield return new BatchedLogs<T>(currentLogList, BinaryData.FromStream(stream));
                     }
                     else
                     {
-                        WriteMemory(stream, BinaryData.FromString(",").ToMemory());
+                        WriteMemory(writer, BinaryData.FromString(",").ToMemory());
                         currentLogList.Add(log);
                     }
                 }
@@ -148,9 +157,12 @@ namespace Azure.Monitor.Ingestion
             }
         }
 
-        private static void WriteMemory(MemoryStream stream, ReadOnlyMemory<byte> memory)
+        private static void WriteMemory(Utf8JsonWriter writer, ReadOnlyMemory<byte> memory)
         {
-            stream.Write(memory.ToArray(), 0, memory.Length); //TODO: fix ToArray
+            using (JsonDocument doc = JsonDocument.Parse(memory))
+            {
+                doc.RootElement.WriteTo(writer);
+            }
         }
 
         /// <summary> Ingestion API used to directly ingest data using Data Collection Rules. </summary>
