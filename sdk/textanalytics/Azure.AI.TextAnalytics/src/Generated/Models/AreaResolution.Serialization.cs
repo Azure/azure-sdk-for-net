@@ -6,11 +6,12 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.TextAnalytics.Models;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
-    internal partial class AreaResolution : IUtf8JsonSerializable
+    public partial class AreaResolution : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
