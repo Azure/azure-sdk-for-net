@@ -351,9 +351,6 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             var list = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
             ValidateRecordBaseInfo(list.First(item => item.Data.Name == soaRecordName).Data, soaRecordName);
-
-            // Delete - Type SOA cannot delete
-            // Description: https://github.com/Azure/azure-rest-api-specs/blob/main/specification/privatedns/resource-manager/Microsoft.Network/stable/2020-06-01/privatedns.json#L1015
         }
 
         [RecordedTest]
