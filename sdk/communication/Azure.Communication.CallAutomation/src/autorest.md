@@ -8,8 +8,10 @@ From Folder that contains autorest.md, Run `dotnet msbuild /t:GenerateCode` to g
 ```yaml
 tag: package-2023-01-15-preview
 model-namespace: false
-require:
-    -  https://raw.githubusercontent.com/williamzhao87/azure-rest-api-specs/306db405794c1e9edc3609f2d0656a675f165eb9/specification/communication/data-plane/CallAutomation/readme.md
+
+input-file:
+  - ./swagger-2023-01-15-preview.json
+title: Azure Communication Services
 
 generation1-convenience-client: true
 

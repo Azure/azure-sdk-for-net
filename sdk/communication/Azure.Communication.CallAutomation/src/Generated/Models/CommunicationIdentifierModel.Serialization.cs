@@ -20,6 +20,11 @@ namespace Azure.Communication
                 writer.WritePropertyName("rawId");
                 writer.WriteStringValue(RawId);
             }
+            if (Optional.IsDefined(Kind))
+            {
+                writer.WritePropertyName("kind");
+                writer.WriteStringValue(Kind.Value.ToString());
+            }
             if (Optional.IsDefined(CommunicationUser))
             {
                 writer.WritePropertyName("communicationUser");
@@ -41,6 +46,7 @@ namespace Azure.Communication
         internal static CommunicationIdentifierModel DeserializeCommunicationIdentifierModel(JsonElement element)
         {
             Optional<string> rawId = default;
+            Optional<CommunicationIdentifierModelKind> kind = default;
             Optional<CommunicationUserIdentifierModel> communicationUser = default;
             Optional<PhoneNumberIdentifierModel> phoneNumber = default;
             Optional<MicrosoftTeamsUserIdentifierModel> microsoftTeamsUser = default;
@@ -49,6 +55,16 @@ namespace Azure.Communication
                 if (property.NameEquals("rawId"))
                 {
                     rawId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("kind"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    kind = new CommunicationIdentifierModelKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("communicationUser"))
@@ -82,7 +98,7 @@ namespace Azure.Communication
                     continue;
                 }
             }
-            return new CommunicationIdentifierModel(rawId.Value, communicationUser.Value, phoneNumber.Value, microsoftTeamsUser.Value);
+            return new CommunicationIdentifierModel(rawId.Value, Optional.ToNullable(kind), communicationUser.Value, phoneNumber.Value, microsoftTeamsUser.Value);
         }
     }
 }

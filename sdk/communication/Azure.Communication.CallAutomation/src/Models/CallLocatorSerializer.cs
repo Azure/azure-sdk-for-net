@@ -8,33 +8,33 @@ namespace Azure.Communication.CallAutomation
 {
     internal class CallLocatorSerializer
     {
-        internal static CallLocatorModel Serialize(CallLocator identifier)
+        internal static CallLocatorInternal Serialize(CallLocator identifier)
             => identifier switch
             {
-                ServerCallLocator serverCallLocator => new CallLocatorModel
+                ServerCallLocator serverCallLocator => new CallLocatorInternal
                 {
                     ServerCallId = serverCallLocator.Id,
-                    Kind = CallLocatorKindModel.ServerCallLocator,
+                    Kind = CallLocatorKindInternal.ServerCallLocator,
                 },
-                GroupCallLocator groupCallLocator => new CallLocatorModel
+                GroupCallLocator groupCallLocator => new CallLocatorInternal
                 {
                     GroupCallId = groupCallLocator.Id,
-                    Kind = CallLocatorKindModel.GroupCallLocator,
+                    Kind = CallLocatorKindInternal.GroupCallLocator,
                 },
                 _ => throw new NotSupportedException(),
             };
 
-        public static CallLocator Deserialize(CallLocatorModel identifier)
+        public static CallLocator Deserialize(CallLocatorInternal identifier)
         {
             if (!identifier.Kind.HasValue)
             {
                 throw new JsonException("No type present in CallLocatorModel");
             }
 
-            if (identifier.Kind.Value == CallLocatorKindModel.ServerCallLocator)
+            if (identifier.Kind.Value == CallLocatorKindInternal.ServerCallLocator)
                 return new ServerCallLocator(AssertNotNull(identifier.ServerCallId, nameof(identifier.ServerCallId), nameof(identifier.ServerCallId)));
 
-            if (identifier.Kind.Value == CallLocatorKindModel.GroupCallLocator)
+            if (identifier.Kind.Value == CallLocatorKindInternal.GroupCallLocator)
                 return new GroupCallLocator(AssertNotNull(identifier.GroupCallId, nameof(identifier.GroupCallId), nameof(identifier.GroupCallId)));
 
             throw new JsonException("Unknown type present in CallLocatorModel");

@@ -50,6 +50,7 @@ namespace Azure.Communication.CallAutomation
             uri.AppendPath(":play", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(playRequest);
@@ -58,8 +59,8 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Plays audio to participants in the call. </summary>
-        /// <param name="callConnectionId"> The String to use. </param>
-        /// <param name="playRequest"> The PlayRequest to use. </param>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="playRequest"> play request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="playRequest"/> is null. </exception>
         public async Task<Response> PlayAsync(string callConnectionId, PlayRequestInternal playRequest, CancellationToken cancellationToken = default)
@@ -85,8 +86,8 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Plays audio to participants in the call. </summary>
-        /// <param name="callConnectionId"> The String to use. </param>
-        /// <param name="playRequest"> The PlayRequest to use. </param>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="playRequest"> play request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="playRequest"/> is null. </exception>
         public Response Play(string callConnectionId, PlayRequestInternal playRequest, CancellationToken cancellationToken = default)
@@ -123,6 +124,7 @@ namespace Azure.Communication.CallAutomation
             uri.AppendPath(":cancelAllMediaOperations", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -182,6 +184,7 @@ namespace Azure.Communication.CallAutomation
             uri.AppendPath(":recognize", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(recognizeRequest);

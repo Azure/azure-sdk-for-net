@@ -92,12 +92,34 @@ namespace Azure.Communication.CallAutomation
             var eventType = type.Replace(EventPrefix, "");
             switch (eventType)
             {
-                case nameof(AddParticipantResultEvent):
-                    return AddParticipantResultEvent.Deserialize(eventData);
-                case nameof(CallConnectionStateChangedEvent):
-                    return CallConnectionStateChangedEvent.Deserialize(eventData);
-                case nameof(CallingOperationResultDetails):
-                    return CallingOperationResultDetails.Deserialize(eventData);
+                case nameof(AddParticipantsFailed):
+                    return AddParticipantsFailed.Deserialize(eventData);
+                case nameof(AddParticipantsSucceeded):
+                    return AddParticipantsSucceeded.Deserialize(eventData);
+                case nameof(CallConnected):
+                    return CallConnected.Deserialize(eventData);
+                case nameof(CallDisconnected):
+                    return CallDisconnected.Deserialize(eventData);
+                case nameof(CallTransferAccepted):
+                    return CallTransferAccepted.Deserialize(eventData);
+                case nameof(CallTransferFailed):
+                    return CallTransferFailed.Deserialize(eventData);
+                case nameof(ParticipantsUpdated):
+                    return ParticipantsUpdated.Deserialize(eventData);
+                case nameof(RecordingStateChanged):
+                    return RecordingStateChanged.Deserialize(eventData);
+                case nameof(PlayCompleted):
+                    return PlayCompleted.Deserialize(eventData);
+                case nameof(PlayFailed):
+                    return PlayFailed.Deserialize(eventData);
+                case nameof(PlayCanceled):
+                    return PlayCanceled.Deserialize(eventData);
+                case nameof(RecognizeCompleted):
+                    return RecognizeCompleted.Deserialize(eventData);
+                case nameof(RecognizeFailed):
+                    return RecognizeFailed.Deserialize(eventData);
+                case nameof(RecognizeCanceled):
+                    return RecognizeCanceled.Deserialize(eventData);
                 default:
                     return null;
             }

@@ -10,11 +10,11 @@ using Azure.Core;
 
 namespace Azure.Communication
 {
-    /// <summary> A user that got created with an Azure Communication Services resource. </summary>
+    /// <summary> The CommunicationUserIdentifierModel. </summary>
     internal partial class CommunicationUserIdentifierModel
     {
         /// <summary> Initializes a new instance of CommunicationUserIdentifierModel. </summary>
-        /// <param name="id"> The Id of the communication user. </param>
+        /// <param name="id"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public CommunicationUserIdentifierModel(string id)
         {
@@ -23,7 +23,7 @@ namespace Azure.Communication
             Id = id;
         }
 
-        /// <summary> The Id of the communication user. </summary>
+        /// <summary> Gets or sets the id. </summary>
         public string Id { get; set; }
     }
 }

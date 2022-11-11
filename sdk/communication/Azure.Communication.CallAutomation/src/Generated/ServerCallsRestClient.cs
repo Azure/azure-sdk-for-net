@@ -118,6 +118,7 @@ namespace Azure.Communication.CallAutomation
             uri.AppendPath(recordingId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -177,6 +178,7 @@ namespace Azure.Communication.CallAutomation
             uri.AppendPath(":pause", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -236,6 +238,7 @@ namespace Azure.Communication.CallAutomation
             uri.AppendPath(":resume", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

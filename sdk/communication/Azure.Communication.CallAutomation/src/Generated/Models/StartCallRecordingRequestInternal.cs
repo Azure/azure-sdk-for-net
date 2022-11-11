@@ -18,7 +18,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of StartCallRecordingRequestInternal. </summary>
         /// <param name="callLocator"> The call locator. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> is null. </exception>
-        public StartCallRecordingRequestInternal(CallLocatorModel callLocator)
+        public StartCallRecordingRequestInternal(CallLocatorInternal callLocator)
         {
             Argument.AssertNotNull(callLocator, nameof(callLocator));
 
@@ -27,7 +27,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> The call locator. </summary>
-        public CallLocatorModel CallLocator { get; }
+        public CallLocatorInternal CallLocator { get; }
         /// <summary> The uri to send notifications to. </summary>
         public string RecordingStateCallbackUri { get; set; }
         /// <summary> The content type of call recording. </summary>

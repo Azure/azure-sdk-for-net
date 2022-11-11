@@ -118,6 +118,7 @@ namespace Azure.Communication.CallAutomation
             uri.AppendPath(callConnectionId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -185,6 +186,7 @@ namespace Azure.Communication.CallAutomation
             {
                 request.Headers.Add("Repeatability-First-Sent", repeatabilityFirstSent);
             }
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
