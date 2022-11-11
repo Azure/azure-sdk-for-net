@@ -29,7 +29,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
         internal static string ComputeDigest(Stream stream)
         {
-            Debug.Assert(stream is MemoryStream, "Should only be called on internally allocated, seekable streams.");
+            Debug.Assert(stream.CanSeek, "Should only be called on seekable streams.");
 
             using (SHA256 sha256 = SHA256.Create())
             {

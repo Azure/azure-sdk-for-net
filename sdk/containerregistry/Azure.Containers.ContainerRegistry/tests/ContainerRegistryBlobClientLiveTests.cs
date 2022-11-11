@@ -375,6 +375,33 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [RecordedTest]
+        public async Task CanUploadBlobInSingleChunk()
+        {
+            // Arrange
+            var client = CreateBlobClient("single-chunk-blob");
+
+            int blobSize = 512;
+            int chunkSize = 1024;
+
+            var data = GetConstantBuffer(blobSize, 3);
+            UploadBlobResult uploadResult = default;
+            string digest = default;
+
+            using (var stream = new MemoryStream(data))
+            {
+                digest = OciBlobDescriptor.ComputeDigest(stream);
+                uploadResult = await client.UploadBlobAsync(stream, new UploadBlobOptions(chunkSize));
+            }
+
+            // Assert
+            Assert.AreEqual(digest, uploadResult.Digest);
+            Assert.AreEqual(blobSize, uploadResult.Size);
+
+            // Clean up
+            await client.DeleteBlobAsync(digest);
+        }
+
+        [RecordedTest]
         public async Task CanUploadBlobFromNonSeekableStream()
         {
             // Arrange
