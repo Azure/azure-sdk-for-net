@@ -1,4 +1,5 @@
 param resourceLocation string = resourceGroup().location
+param baseName string = resourceGroup().name
 param catalogPatIdentifier string
 param devCenterPresetMsi string
 param projectEnvironmentTypePresetMsi string
@@ -6,7 +7,6 @@ param testUserOid string
 param testUserName string
 param projectAdminRoleDefinitionId string
 param deploymentEnvironmentsRoleDefinitionId string
-param baseName string
 
 var defaultDevCenterName = 'sdk-dc-${uniqueString('devcenter', baseName, resourceGroup().name)}'
 
