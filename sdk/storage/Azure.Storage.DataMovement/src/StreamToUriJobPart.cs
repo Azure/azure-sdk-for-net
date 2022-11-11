@@ -186,10 +186,11 @@ namespace Azure.Storage.DataMovement
                     offset: offset,
                     length: blockLength,
                     cancellationToken: _cancellationTokenSource.Token).ConfigureAwait(false);
+                using Stream stream = result.Content;
                 await _destinationResource.WriteStreamToOffsetAsync(
                         offset,
                         blockLength,
-                        result.Content,
+                        stream,
                         default,
                         _cancellationTokenSource.Token).ConfigureAwait(false);
                 // Invoke event handler to keep track of all the stage blocks

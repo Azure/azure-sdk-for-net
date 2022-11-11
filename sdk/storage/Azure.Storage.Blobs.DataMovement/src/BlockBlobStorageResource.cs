@@ -15,6 +15,7 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.DataMovement;
 using Azure.Storage.DataMovement.Models;
 using Azure.Storage.Shared;
+using static Azure.Storage.Constants.Blob;
 
 namespace Azure.Storage.Blobs.DataMovement
 {
@@ -28,7 +29,7 @@ namespace Azure.Storage.Blobs.DataMovement
         /// In order to ensure the block list is sent in the correct order
         /// we will order them by the offset. {offset, block_id}
         /// </summary>
-        private List<(long Offset, string BlockId)> _blocks;
+        private ConcurrentDictionary<long, string> _blocks;
         private BlockBlobStorageResourceOptions _options;
 
         /// <summary>
@@ -58,7 +59,7 @@ namespace Azure.Storage.Blobs.DataMovement
             BlockBlobStorageResourceOptions options = default)
         {
             _blobClient = blobClient;
-            _blocks = new List<(long,string)>();
+            _blocks = new ConcurrentDictionary<long, string>();
             _options = options;
         }
 
@@ -135,7 +136,10 @@ namespace Azure.Storage.Blobs.DataMovement
             CancellationToken cancellationToken = default)
         {
             string id = Shared.StorageExtensions.GenerateBlockId(offset);
-            _blocks.Add((offset, id));
+            if (!_blocks.TryAdd(offset, id))
+            {
+                throw new ArgumentException($"Cannot Stage Block to the specific offset \"{offset}\", it already exists in the existing list");
+            }
             await _blobClient.StageBlockAsync(
                 id,
                 stream,
@@ -174,7 +178,10 @@ namespace Azure.Storage.Blobs.DataMovement
             CancellationToken cancellationToken = default)
         {
             string id = options?.BlockId ?? Shared.StorageExtensions.GenerateBlockId(range.Offset);
-            _blocks.Add((range.Offset, id));
+            if (!_blocks.TryAdd(range.Offset, id))
+            {
+                throw new ArgumentException($"Cannot Stage Block to the specific offset \"{range.Offset}\", it already exists in the existing list");
+            }
             await _blobClient.StageBlockFromUriAsync(
                 sourceUri,
                 id,
@@ -196,11 +203,11 @@ namespace Azure.Storage.Blobs.DataMovement
         /// </summary>
         public override async Task CompleteTransferAsync(CancellationToken cancellationToken)
         {
-            if (_blocks != null && _blocks.Count > 0)
+            if (_blocks != null && !_blocks.IsEmpty)
             {
-                _blocks.Sort( (a,b) => a.Offset.CompareTo(b.Offset) );
+                IEnumerable<string> blockIds = _blocks.OrderBy(x => x.Key).Select(x => x.Value);
                 await _blobClient.CommitBlockListAsync(
-                    _blocks.Select(x => x.BlockId).ToList(),
+                    blockIds,
                     default,
                     cancellationToken).ConfigureAwait(false);
                 _blocks.Clear();
