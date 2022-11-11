@@ -6,8 +6,11 @@ param testUserOid string
 param testUserName string
 param projectAdminRoleDefinitionId string
 param deploymentEnvironmentsRoleDefinitionId string
+param baseName string
 
-var defaultDevCenterName = 'sdk-default-devcenter'
+var defaultDevCenterNamePrefix = 'sdk-dc-'
+var defaultDevCenterName = concat(defaultDevCenterNamePrefix, uniqueString('devcenter', baseName, resourceGroup().name))
+
 var defaultProjectName = 'sdk-default-project'
 var defaultPoolName = 'sdk-default-pool'
 var defaultNetworkConnectionName = 'sdk-default-networkconnection'
@@ -184,7 +187,7 @@ resource projectEnvironmentType 'Microsoft.DevCenter/projects/environmentTypes@2
   identity: {
     type: 'UserAssigned'
     userAssignedIdentities: {
-        '${devCenterPresetMsi}': {}
+        '${projectEnvironmentTypePresetMsi}': {}
     }
   }
   properties: {
