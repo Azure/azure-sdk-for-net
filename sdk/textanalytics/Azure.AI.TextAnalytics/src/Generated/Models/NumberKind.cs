@@ -8,10 +8,10 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
     /// <summary> The type of the extracted number entity. </summary>
-    internal readonly partial struct NumberKind : IEquatable<NumberKind>
+    public readonly partial struct NumberKind : IEquatable<NumberKind>
     {
         private readonly string _value;
 
