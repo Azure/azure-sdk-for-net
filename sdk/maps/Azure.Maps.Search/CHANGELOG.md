@@ -1,14 +1,10 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.0.0-beta.3 (2022-11-08)
 
 ### Bugs Fixed
 
-### Other Changes
+- Add setter for `FuzzySearchOptions.IndexFilter` Property
 
 ## 1.0.0-beta.2 (2022-10-11)
 
