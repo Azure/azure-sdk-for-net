@@ -39,33 +39,53 @@ namespace Azure
         /// </summary>
         /// <param name="utf8Json">A UTF8 encoded string representing a JSON value.</param>
         /// <returns>A <see cref="JsonData"/> representation of the value.</returns>
-        internal static JsonData Parse(BinaryData utf8Json) => new JsonData(JsonDocument.Parse(utf8Json));
+        internal static JsonData Parse(BinaryData utf8Json)
+        {
+            using var doc = JsonDocument.Parse(utf8Json);
+            return new JsonData(doc);
+        }
 
         /// <summary>
         /// Parses text representing a single JSON value into a <see cref="JsonData"/>.
         /// </summary>
         /// <param name="json">The JSON text to parse</param>
         /// <returns>A <see cref="JsonData"/> representation of the value.</returns>
-        internal static JsonData Parse(string json) => new JsonData(JsonDocument.Parse(json));
+        internal static JsonData Parse(string json)
+        {
+            using var doc = JsonDocument.Parse(json);
+            return new JsonData(doc);
+        }
 
         /// <summary>
         /// </summary>
         /// <param name="utf8Json">.</param>
         /// <returns>A <see cref="JsonData"/> representation of the value.</returns>
-        internal static JsonData Parse(ReadOnlyMemory<byte> utf8Json) => new JsonData(JsonDocument.Parse(utf8Json));
+        internal static JsonData Parse(ReadOnlyMemory<byte> utf8Json)
+        {
+            using var doc = JsonDocument.Parse(utf8Json);
+            return new JsonData(doc);
+        }
 
         /// <summary>
         /// </summary>
         /// <param name="utf8Json">.</param>
         /// <returns>A <see cref="JsonData"/> representation of the value.</returns>
-        internal static JsonData Parse(Stream utf8Json) => new JsonData(JsonDocument.Parse(utf8Json));
+        internal static JsonData Parse(Stream utf8Json)
+        {
+            using var doc = JsonDocument.Parse(utf8Json);
+            return new JsonData(doc);
+        }
 
         /// <summary>
         /// </summary>
         /// <param name="utf8Json">.</param>
         /// <param name="cancellationToken"></param>
         /// <returns>A <see cref="JsonData"/> representation of the value.</returns>
-        internal static async Task<JsonData> ParseAsync(Stream utf8Json, CancellationToken cancellationToken) => new JsonData(await JsonDocument.ParseAsync(utf8Json, cancellationToken: cancellationToken).ConfigureAwait(false));
+        internal static async Task<JsonData> ParseAsync(Stream utf8Json, CancellationToken cancellationToken)
+        {
+            using var doc = await JsonDocument.ParseAsync(utf8Json, cancellationToken: cancellationToken).ConfigureAwait(false);
+            return new JsonData(doc);
+        }
 
         /// <summary>
         /// Gets or sets a value at the given index in an array.

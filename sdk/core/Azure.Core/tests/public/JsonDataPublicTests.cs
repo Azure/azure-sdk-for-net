@@ -171,6 +171,14 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
+        public void CanAccessJsonPropertiesWithDotnetIllegalCharacters()
+        {
+            dynamic jsonData = new BinaryData("{ \"$foo\":\"Hello\" }").ToDynamic();
+
+            Assert.AreEqual("Hello", (string)jsonData["$foo"]);
+        }
+
+        [Test]
         public void FloatUnderflowThrows()
         {
             var json = new BinaryData("{ \"value\": -34028234663852885981170418348451692544000 }").ToDynamic().value;
