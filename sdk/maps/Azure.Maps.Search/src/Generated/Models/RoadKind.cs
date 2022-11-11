@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Maps.Search.Models
+namespace Azure.Maps.Search
 {
     /// <summary> Describes the possible uses of a road. </summary>
     public readonly partial struct RoadKind : IEquatable<RoadKind>

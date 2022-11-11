@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static ComplianceList DeserializeComplianceList(JsonElement element)
         {
-            Optional<IReadOnlyList<ComplianceData>> value = default;
+            Optional<IReadOnlyList<SecurityComplianceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ComplianceData> array = new List<ComplianceData>();
+                    List<SecurityComplianceData> array = new List<SecurityComplianceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComplianceData.DeserializeComplianceData(item));
+                        array.Add(SecurityComplianceData.DeserializeSecurityComplianceData(item));
                     }
                     value = array;
                     continue;

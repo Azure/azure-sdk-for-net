@@ -19,14 +19,11 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="createdDateTime"></param>
         /// <param name="jobId"></param>
         /// <param name="lastUpdatedDateTime"></param>
-        /// <param name="status"></param>
+        /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         internal JobState(DateTimeOffset createdDateTime, string jobId, DateTimeOffset lastUpdatedDateTime, TextAnalyticsOperationStatus status)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
+            Argument.AssertNotNull(jobId, nameof(jobId));
 
             CreatedDateTime = createdDateTime;
             JobId = jobId;
@@ -41,7 +38,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="expirationDateTime"></param>
         /// <param name="jobId"></param>
         /// <param name="lastUpdatedDateTime"></param>
-        /// <param name="status"></param>
+        /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="errors"></param>
         /// <param name="nextLink"></param>
         internal JobState(string displayName, DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, string jobId, DateTimeOffset lastUpdatedDateTime, TextAnalyticsOperationStatus status, IReadOnlyList<Error> errors, string nextLink)
@@ -66,7 +63,7 @@ namespace Azure.AI.TextAnalytics.Models
         public string JobId { get; }
         /// <summary> Gets the last updated date time. </summary>
         public DateTimeOffset LastUpdatedDateTime { get; }
-        /// <summary> Gets the status. </summary>
+        /// <summary> The status of the task at the mentioned last update time. </summary>
         public TextAnalyticsOperationStatus Status { get; }
         /// <summary> Gets the errors. </summary>
         public IReadOnlyList<Error> Errors { get; }

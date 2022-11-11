@@ -13,7 +13,7 @@ namespace Microsoft.Extensions.Azure
     /// </summary>
     public static class IngestionClientBuilderExtensions
     {
-        /// <summary>Uri endpoint, TokenCredential credential, LogsIngestionClientOptions options
+        /// <summary>
         /// Registers a <see cref="LogsIngestionClient"/> instance with the provided <paramref name="endpoint"/>
         /// </summary>
         public static IAzureClientBuilder<LogsIngestionClient, LogsIngestionClientOptions> AddLogsIngestionClient<TBuilder>(this TBuilder builder, Uri endpoint)

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
@@ -18,14 +19,11 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="ArgumentNullException"> <paramref name="unit"/> is null. </exception>
         internal CurrencyResolution(string unit, double value)
         {
-            if (unit == null)
-            {
-                throw new ArgumentNullException(nameof(unit));
-            }
+            Argument.AssertNotNull(unit, nameof(unit));
 
             Unit = unit;
             Value = value;
-            ResolutionKind = ResolutionKind.Currency;
+            ResolutionKind = ResolutionKind.CurrencyResolution;
         }
 
         /// <summary> Initializes a new instance of CurrencyResolution. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DeploymentManager.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceGroup"/> is null. </exception>
         internal ServiceUnitProperties(string targetResourceGroup, DeploymentMode deploymentMode)
         {
-            if (targetResourceGroup == null)
-            {
-                throw new ArgumentNullException(nameof(targetResourceGroup));
-            }
+            Argument.AssertNotNull(targetResourceGroup, nameof(targetResourceGroup));
 
             TargetResourceGroup = targetResourceGroup;
             DeploymentMode = deploymentMode;

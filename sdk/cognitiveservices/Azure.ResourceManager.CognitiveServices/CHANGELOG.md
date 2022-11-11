@@ -1,5 +1,21 @@
 # Release History
 
+## 1.2.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.1.0 (2022-11-02)
+
+### Other Changes
+
+- Upgraded API version to 2022-10-01
+
 ## 1.0.0 (2022-08-29)
 
 This is the first stable release of the Cognitive Services Management client library.

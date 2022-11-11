@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
@@ -21,16 +20,7 @@ namespace Azure.AI.Language.Conversations
                     case "ConversationResult": return ConversationalTaskResult.DeserializeConversationalTaskResult(element);
                 }
             }
-            AnalyzeConversationTaskResultsKind kind = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("kind"))
-                {
-                    kind = new AnalyzeConversationTaskResultsKind(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new AnalyzeConversationTaskResult(kind);
+            return UnknownAnalyzeConversationTaskResult.DeserializeUnknownAnalyzeConversationTaskResult(element);
         }
     }
 }

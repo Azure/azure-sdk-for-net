@@ -391,7 +391,7 @@ namespace Azure.AI.FormRecognizer.Tests
             using var stream = new MemoryStream(damagedFile);
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeContentAsync(stream));
-            Assert.AreEqual("InvalidImage", ex.ErrorCode);
+            Assert.AreEqual("BadArgument", ex.ErrorCode);
         }
 
         /// <summary>
@@ -405,7 +405,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var invalidUri = new Uri("https://idont.ex.ist");
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeContentFromUriAsync(invalidUri));
-            Assert.AreEqual("FailedToDownloadImage", ex.ErrorCode);
+            Assert.AreEqual("InvalidImage", ex.ErrorCode);
         }
 
         [RecordedTest]

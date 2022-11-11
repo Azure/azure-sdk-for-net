@@ -27,12 +27,10 @@ namespace Azure.Storage.Blobs.Models
         public StorageTransferOptions TransferOptions { get; set; }
 
         /// <summary>
-        /// Options for transfer validation settings on this operation.
-        /// When transfer validation options are set in the client, setting this parameter
-        /// acts as an override.
+        /// Optional override settings for this client's <see cref="BlobClientOptions.TransferValidation"/> settings.
         /// This operation does not allow <see cref="DownloadTransferValidationOptions.AutoValidateChecksum"/>
         /// to be set false.
         /// </summary>
-        public DownloadTransferValidationOptions TransferValidationOptions { get; set; }
+        public DownloadTransferValidationOptions TransferValidation { get; set; }
     }
 }

@@ -141,7 +141,8 @@ namespace Azure.ResourceManager.Tests
         public void DeserializationTest()
         {
             string json = "{\"name\":\"NameForPlan\",\"publisher\":\"PublisherForPlan\",\"product\":\"ProductForPlan\",\"promotionCode\":\"PromotionCodeForPlan\",\"version\":\"VersionForPlan\"}";
-            JsonElement element = JsonDocument.Parse(json).RootElement;
+            using var jsonDocument = JsonDocument.Parse(json);
+            JsonElement element = jsonDocument.RootElement;
             ArmPlan plan = ArmPlan.DeserializeArmPlan(element);
             Assert.IsTrue(plan.Name.Equals("NameForPlan"));
             Assert.IsTrue(plan.PromotionCode.Equals("PromotionCodeForPlan"));
@@ -151,7 +152,8 @@ namespace Azure.ResourceManager.Tests
         public void InvalidDeserializationTest()
         {
             string json = "{\"name\":\"NameForPlan\",\"notPublisher\":\"PublisherForPlan\",\"product\":\"ProductForPlan\",\"version\":\"VersionForPlan\"}";
-            JsonElement element = JsonDocument.Parse(json).RootElement;
+            using var jsonDocument = JsonDocument.Parse(json);
+            JsonElement element = jsonDocument.RootElement;
             ArmPlan plan = ArmPlan.DeserializeArmPlan(element);
             Assert.IsTrue(plan.Publisher == null);
             Assert.IsTrue(plan.PromotionCode == null);

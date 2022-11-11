@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Dns.Models
 {
     internal partial class SrvRecordListResult
     {
-        internal static SrvRecordListResult DeserializeSrvRecordSetListResult(JsonElement element)
+        internal static SrvRecordListResult DeserializeSrvRecordListResult(JsonElement element)
         {
             Optional<IReadOnlyList<SrvRecordData>> value = default;
             Optional<string> nextLink = default;

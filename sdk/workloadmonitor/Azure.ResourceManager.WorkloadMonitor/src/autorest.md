@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: WorkloadMonitor
 namespace: Azure.ResourceManager.WorkloadMonitor
+# default tag is a preview version
 require: https://github.com/Azure/azure-rest-api-specs/tree/34ba022add0034e30462b76e1548ce5a7e053e33/specification/workloadmonitor/resource-manager/readme.md
-tag: package-2020-01-13-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true

@@ -46,9 +46,9 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         internal static DynatraceMonitorResourceLogRules DeserializeDynatraceMonitorResourceLogRules(JsonElement element)
         {
-            Optional<SendAadLogsStatus> sendAadLogs = default;
-            Optional<SendSubscriptionLogsStatus> sendSubscriptionLogs = default;
-            Optional<SendActivityLogsStatus> sendActivityLogs = default;
+            Optional<AadLogsSendingStatus> sendAadLogs = default;
+            Optional<SubscriptionLogsSendingStatus> sendSubscriptionLogs = default;
+            Optional<ActivityLogsSendingStatus> sendActivityLogs = default;
             Optional<IList<DynatraceMonitorResourceFilteringTag>> filteringTags = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sendAadLogs = new SendAadLogsStatus(property.Value.GetString());
+                    sendAadLogs = new AadLogsSendingStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sendSubscriptionLogs"))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sendSubscriptionLogs = new SendSubscriptionLogsStatus(property.Value.GetString());
+                    sendSubscriptionLogs = new SubscriptionLogsSendingStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sendActivityLogs"))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sendActivityLogs = new SendActivityLogsStatus(property.Value.GetString());
+                    sendActivityLogs = new ActivityLogsSendingStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("filteringTags"))

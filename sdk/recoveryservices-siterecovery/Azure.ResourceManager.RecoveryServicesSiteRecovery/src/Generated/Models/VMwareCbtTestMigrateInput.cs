@@ -20,14 +20,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointId"/> or <paramref name="networkId"/> is null. </exception>
         public VMwareCbtTestMigrateInput(string recoveryPointId, string networkId)
         {
-            if (recoveryPointId == null)
-            {
-                throw new ArgumentNullException(nameof(recoveryPointId));
-            }
-            if (networkId == null)
-            {
-                throw new ArgumentNullException(nameof(networkId));
-            }
+            Argument.AssertNotNull(recoveryPointId, nameof(recoveryPointId));
+            Argument.AssertNotNull(networkId, nameof(networkId));
 
             RecoveryPointId = recoveryPointId;
             NetworkId = networkId;

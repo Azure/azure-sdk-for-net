@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/:analyze-conversations?api-version=2022-05-15-preview",
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/:analyze-conversations?api-version=2022-10-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "236",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-6a3f96e66a2c14f4fc9a01880a607eb8-9a321c85410b3145-00",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20220628.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "4fc777311ff8c76c4e2da7a309bdcc68",
+        "traceparent": "00-b0d19d2dc172f0c7099d6d18908f3c0a-f948e05f9096d64f-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221019.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "1da84fcbee7ccc2fdd695c82a3d591de",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -30,17 +30,17 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "f3c8bdc0-bd6e-4139-a2db-638ff9bcdbe8",
+        "apim-request-id": "d0792730-4120-49b0-b910-c7ec96a8f04e",
         "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.Language.OrchestrationWorkflow.Prediction=1",
-        "Date": "Wed, 29 Jun 2022 00:01:26 GMT",
+        "Date": "Thu, 20 Oct 2022 17:18:44 GMT",
         "Pragma": "no-cache",
-        "request-id": "f3c8bdc0-bd6e-4139-a2db-638ff9bcdbe8",
+        "request-id": "d0792730-4120-49b0-b910-c7ec96a8f04e",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "287"
+        "x-envoy-upstream-service-time": "471"
       },
       "ResponseBody": {
         "kind": "ConversationResult",
@@ -124,6 +124,6 @@
     "CONVERSATIONS_KEY": "Sanitized",
     "CONVERSATIONS_WORKFLOW_DEPLOYMENT_NAME": "production",
     "CONVERSATIONS_WORKFLOW_PROJECT_NAME": "OrchestrationScriptDeployed",
-    "RandomSeed": "1145039336"
+    "RandomSeed": "555787966"
   }
 }

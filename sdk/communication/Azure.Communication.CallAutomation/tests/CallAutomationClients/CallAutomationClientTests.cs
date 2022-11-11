@@ -7,6 +7,7 @@ using System.Net;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Azure.Communication.CallAutomation.Tests.Infrastructure;
+using Newtonsoft.Json.Linq;
 
 namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
 {
@@ -78,6 +79,34 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             Assert.AreEqual("mediaSubscriptionId", response.Value.CallConnectionProperties.MediaSubscriptionId);
         }
 
+        [TestCaseSource(nameof(TestData_AnswerCall_NoCallbackUri))]
+        public void AnswerCallWithOptions_NullCallbackUri(string incomingCallContext)
+        {
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200, CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionPayload);
+            AnswerCallOptions options = new AnswerCallOptions(incomingCallContext: incomingCallContext, callbackUri: null)
+            {
+                MediaStreamingOptions = _mediaStreamingConfiguration
+            };
+
+            ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(async () => await callAutomationClient.AnswerCallAsync(options).ConfigureAwait(false));
+            Assert.NotNull(ex);
+            Assert.True(ex?.Message.Contains(CallAutomationErrorMessages.InvalidHttpsUriMessage));
+        }
+
+        [TestCaseSource(nameof(TestData_AnswerCall_NoCallbackUri))]
+        public void AnswerCallWithOptions_HttpCallbackUri(string incomingCallContext)
+        {
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200, CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionPayload);
+            AnswerCallOptions options = new AnswerCallOptions(incomingCallContext: incomingCallContext, callbackUri: new Uri("http://example.com"))
+            {
+                MediaStreamingOptions = _mediaStreamingConfiguration
+            };
+
+            ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(async () => await callAutomationClient.AnswerCallAsync(options).ConfigureAwait(false));
+            Assert.NotNull(ex);
+            Assert.True(ex?.Message.Contains(CallAutomationErrorMessages.InvalidHttpsUriMessage));
+        }
+
         [TestCaseSource(nameof(TestData_AnswerCall))]
         public void AnswerCallAsync_401AuthFailed(string incomingCallContext, Uri callbackUri)
         {
@@ -143,7 +172,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(204);
 
-            var response = await callAutomationClient.RejectCallAsync(incomingCallContext, reason).ConfigureAwait(false);
+            RejectCallOptions rejectOption = new RejectCallOptions(incomingCallContext);
+            rejectOption.CallRejectReason = reason;
+
+            var response = await callAutomationClient.RejectCallAsync(rejectOption).ConfigureAwait(false);
             Assert.NotNull(response);
             Assert.AreEqual((int)HttpStatusCode.NoContent, response.Status);
         }
@@ -153,7 +185,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(204);
 
-            var response = callAutomationClient.RejectCall(incomingCallContext, reason);
+            RejectCallOptions rejectOption = new RejectCallOptions(incomingCallContext);
+            rejectOption.CallRejectReason = reason;
+
+            var response = callAutomationClient.RejectCall(rejectOption);
             Assert.NotNull(response);
             Assert.AreEqual((int)HttpStatusCode.NoContent, response.Status);
         }
@@ -163,7 +198,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
 
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async() => await callAutomationClient.RejectCallAsync(incomingCallContext, reason).ConfigureAwait(false));
+            RejectCallOptions rejectOption = new RejectCallOptions(incomingCallContext);
+            rejectOption.CallRejectReason = reason;
+
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async() => await callAutomationClient.RejectCallAsync(rejectOption).ConfigureAwait(false));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
@@ -173,7 +211,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
 
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callAutomationClient.RejectCall(incomingCallContext, reason));
+            RejectCallOptions rejectOption = new RejectCallOptions(incomingCallContext);
+            rejectOption.CallRejectReason = reason;
+
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callAutomationClient.RejectCall(rejectOption));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
@@ -217,7 +258,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                 targets: targets,
                 callbackUri: callbackUri)
             {
-                Subject = "subject",
                 MediaStreamingOptions = _mediaStreamingConfiguration
             };
 
@@ -239,7 +279,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                 targets: targets,
                 callbackUri: callbackUri)
             {
-                Subject = "subject",
                 MediaStreamingOptions = _mediaStreamingConfiguration
             };
 
@@ -250,6 +289,78 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             verifyCallConnectionProperties(result.CallConnectionProperties);
             Assert.AreEqual(CallConnectionId, result.CallConnection.CallConnectionId);
             Assert.AreEqual("mediaSubscriptionId", result.CallConnectionProperties.MediaSubscriptionId);
+        }
+
+        [TestCaseSource(nameof(TestData_CreateCall_NoCallerId))]
+        public void CreateCallWithOptions_NoCallerIdValidation(CallSource source, CommunicationIdentifier[] targets, Uri callbackUri)
+        {
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionPayload);
+            ;
+            CreateCallOptions options = new CreateCallOptions(
+                callSource: source,
+                targets: targets,
+                callbackUri: callbackUri)
+            {
+                MediaStreamingOptions = _mediaStreamingConfiguration
+            };
+
+            ArgumentNullException? ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await callAutomationClient.CreateCallAsync(options).ConfigureAwait(false));
+            Assert.NotNull(ex);
+            Assert.True(ex?.Message.Contains("Value cannot be null."));
+        }
+
+        [TestCaseSource(nameof(TestData_CreateCall_NoCallbackUri))]
+        public void CreateCallWithOptions_NullCallbackUri(CallSource source, CommunicationIdentifier[] targets)
+        {
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionPayload);
+            ;
+            CreateCallOptions options = new CreateCallOptions(
+                callSource: source,
+                targets: targets,
+                callbackUri: null)
+            {
+                MediaStreamingOptions = _mediaStreamingConfiguration
+            };
+
+            ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(async () => await callAutomationClient.CreateCallAsync(options).ConfigureAwait(false));
+            Assert.NotNull(ex);
+            Assert.True(ex?.Message.Contains(CallAutomationErrorMessages.InvalidHttpsUriMessage));
+        }
+
+        [TestCaseSource(nameof(TestData_CreateCall_NoCallbackUri))]
+        public void CreateCallWithOptions_HttpCallbackUri(CallSource source, CommunicationIdentifier[] targets)
+        {
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionPayload);
+            ;
+            CreateCallOptions options = new CreateCallOptions(
+                callSource: source,
+                targets: targets,
+                callbackUri: new Uri("http://example.com"))
+            {
+                MediaStreamingOptions = _mediaStreamingConfiguration
+            };
+
+            ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(async () => await callAutomationClient.CreateCallAsync(options).ConfigureAwait(false));
+            Assert.NotNull(ex);
+            Assert.True(ex?.Message.Contains(CallAutomationErrorMessages.InvalidHttpsUriMessage));
+        }
+
+        [TestCaseSource(nameof(TestData_CreateCall_EmptyTargets))]
+        public void CreateCallWithOptions_EmptyTargets(CallSource source, CommunicationIdentifier[] targets, Uri callbackUri)
+        {
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionPayload);
+            ;
+            CreateCallOptions options = new CreateCallOptions(
+                callSource: source,
+                targets: targets,
+                callbackUri: callbackUri)
+            {
+                MediaStreamingOptions = _mediaStreamingConfiguration
+            };
+
+            ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(async () => await callAutomationClient.CreateCallAsync(options).ConfigureAwait(false));
+            Assert.NotNull(ex);
+            Assert.True(ex?.Message.Contains("Value cannot be an empty collection."));
         }
 
         [TestCaseSource(nameof(TestData_CreateCall))]
@@ -327,6 +438,16 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                 },
             };
         }
+        private static IEnumerable<object?[]> TestData_AnswerCall_NoCallbackUri()
+        {
+            return new[]
+            {
+                new object?[]
+                {
+                    "dummyIncomingCallContext",
+                },
+            };
+        }
         private static IEnumerable<object?[]> TestData_RedirectCall()
         {
             return new[]
@@ -363,6 +484,43 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             };
         }
 
+        private static IEnumerable<object?[]> TestData_CreateCall_NoCallerId()
+        {
+            return new[]
+            {
+                new object?[]
+                {
+                    new CallSource(new CommunicationUserIdentifier("56789")),
+                    new CommunicationIdentifier[] {new CommunicationUserIdentifier("12345"), new PhoneNumberIdentifier("+1234567") },
+                    new Uri("https://bot.contoso.com/callback")
+                },
+            };
+        }
+
+        private static IEnumerable<object?[]> TestData_CreateCall_NoCallbackUri()
+        {
+            return new[]
+            {
+                new object?[]
+                {
+                    new CallSource(new CommunicationUserIdentifier("56789")),
+                    new CommunicationIdentifier[] {new CommunicationUserIdentifier("12345") }
+                },
+            };
+        }
+
+        private static IEnumerable<object?[]> TestData_CreateCall_EmptyTargets()
+        {
+            return new[]
+            {
+                new object?[]
+                {
+                    new CallSource(new CommunicationUserIdentifier("56789")),
+                    new CommunicationIdentifier[] {},
+                    new Uri("https://bot.contoso.com/callback")
+                },
+            };
+        }
         private static IEnumerable<object?[]> TestData_GetCallConnection()
         {
             return new[]

@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     case "ProcessNotAllowed": return ProcessNotAllowed.DeserializeProcessNotAllowed(element);
                 }
             }
-            Optional<ValueType> valueType = default;
+            Optional<SecurityValueType> valueType = default;
             Optional<string> displayName = default;
             Optional<string> description = default;
             bool isEnabled = default;
-            string ruleType = default;
+            string ruleType = "ListCustomAlertRule";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("valueType"))
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    valueType = new ValueType(property.Value.GetString());
+                    valueType = new SecurityValueType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("displayName"))

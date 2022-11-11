@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
         public ExtendedMongoDBCollectionResourceInfo(string collectionName) : base(collectionName)
         {
-            if (collectionName == null)
-            {
-                throw new ArgumentNullException(nameof(collectionName));
-            }
+            Argument.AssertNotNull(collectionName, nameof(collectionName));
         }
 
         /// <summary> Initializes a new instance of ExtendedMongoDBCollectionResourceInfo. </summary>

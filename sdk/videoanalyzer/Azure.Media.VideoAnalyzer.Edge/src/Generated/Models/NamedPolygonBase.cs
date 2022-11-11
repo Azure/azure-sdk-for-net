@@ -6,10 +6,15 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> Describes the named polygon. </summary>
+    /// <summary>
+    /// Describes the named polygon.
+    /// Please note <see cref="NamedPolygonBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="NamedPolygonString"/>.
+    /// </summary>
     public partial class NamedPolygonBase
     {
         /// <summary> Initializes a new instance of NamedPolygonBase. </summary>
@@ -17,10 +22,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public NamedPolygonBase(string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }

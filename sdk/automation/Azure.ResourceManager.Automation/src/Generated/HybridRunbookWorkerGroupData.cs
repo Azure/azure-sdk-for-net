@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Automation
         /// <param name="systemData"> The systemData. </param>
         /// <param name="groupType"> Type of the HybridWorkerGroup. </param>
         /// <param name="credential"> Sets the credential of a worker group. </param>
-        internal HybridRunbookWorkerGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GroupTypeEnum? groupType, RunAsCredentialAssociationProperty credential) : base(id, name, resourceType, systemData)
+        internal HybridRunbookWorkerGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HybridWorkerGroup? groupType, RunAsCredentialAssociationProperty credential) : base(id, name, resourceType, systemData)
         {
             GroupType = groupType;
             Credential = credential;
         }
 
         /// <summary> Type of the HybridWorkerGroup. </summary>
-        public GroupTypeEnum? GroupType { get; set; }
+        public HybridWorkerGroup? GroupType { get; set; }
         /// <summary> Sets the credential of a worker group. </summary>
         internal RunAsCredentialAssociationProperty Credential { get; set; }
         /// <summary> Gets or sets the name of the credential. </summary>

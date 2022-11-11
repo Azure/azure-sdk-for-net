@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
@@ -19,19 +20,13 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="ArgumentNullException"> <paramref name="offset"/> or <paramref name="value"/> is null. </exception>
         internal OrdinalResolution(string offset, RelativeTo relativeTo, string value)
         {
-            if (offset == null)
-            {
-                throw new ArgumentNullException(nameof(offset));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(offset, nameof(offset));
+            Argument.AssertNotNull(value, nameof(value));
 
             Offset = offset;
             RelativeTo = relativeTo;
             Value = value;
-            ResolutionKind = ResolutionKind.Ordinal;
+            ResolutionKind = ResolutionKind.OrdinalResolution;
         }
 
         /// <summary> Initializes a new instance of OrdinalResolution. </summary>

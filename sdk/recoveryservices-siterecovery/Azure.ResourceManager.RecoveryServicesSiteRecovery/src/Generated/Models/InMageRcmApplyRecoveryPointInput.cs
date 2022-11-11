@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointId"/> is null. </exception>
         public InMageRcmApplyRecoveryPointInput(string recoveryPointId)
         {
-            if (recoveryPointId == null)
-            {
-                throw new ArgumentNullException(nameof(recoveryPointId));
-            }
+            Argument.AssertNotNull(recoveryPointId, nameof(recoveryPointId));
 
             RecoveryPointId = recoveryPointId;
             InstanceType = "InMageRcm";

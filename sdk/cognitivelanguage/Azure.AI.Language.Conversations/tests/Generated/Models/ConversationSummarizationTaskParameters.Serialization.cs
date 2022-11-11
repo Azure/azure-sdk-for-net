@@ -23,6 +23,26 @@ namespace Azure.AI.Language.Conversations
                 writer.WriteStringValue(item.ToString());
             }
             writer.WriteEndArray();
+            if (Optional.IsDefined(SentenceCount))
+            {
+                writer.WritePropertyName("sentenceCount");
+                writer.WriteNumberValue(SentenceCount.Value);
+            }
+            if (Optional.IsDefined(StringIndexType))
+            {
+                writer.WritePropertyName("stringIndexType");
+                writer.WriteStringValue(StringIndexType.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(PhraseControls))
+            {
+                writer.WritePropertyName("phraseControls");
+                writer.WriteStartArray();
+                foreach (var item in PhraseControls)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(ModelVersion))
             {
                 writer.WritePropertyName("modelVersion");
@@ -39,6 +59,9 @@ namespace Azure.AI.Language.Conversations
         internal static ConversationSummarizationTaskParameters DeserializeConversationSummarizationTaskParameters(JsonElement element)
         {
             IList<SummaryAspect> summaryAspects = default;
+            Optional<int> sentenceCount = default;
+            Optional<StringIndexType> stringIndexType = default;
+            Optional<IList<PhraseControl>> phraseControls = default;
             Optional<string> modelVersion = default;
             Optional<bool> loggingOptOut = default;
             foreach (var property in element.EnumerateObject())
@@ -51,6 +74,41 @@ namespace Azure.AI.Language.Conversations
                         array.Add(new SummaryAspect(item.GetString()));
                     }
                     summaryAspects = array;
+                    continue;
+                }
+                if (property.NameEquals("sentenceCount"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    sentenceCount = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("stringIndexType"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    stringIndexType = new StringIndexType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("phraseControls"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<PhraseControl> array = new List<PhraseControl>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(PhraseControl.DeserializePhraseControl(item));
+                    }
+                    phraseControls = array;
                     continue;
                 }
                 if (property.NameEquals("modelVersion"))
@@ -69,7 +127,7 @@ namespace Azure.AI.Language.Conversations
                     continue;
                 }
             }
-            return new ConversationSummarizationTaskParameters(Optional.ToNullable(loggingOptOut), modelVersion.Value, summaryAspects);
+            return new ConversationSummarizationTaskParameters(Optional.ToNullable(loggingOptOut), modelVersion.Value, summaryAspects, Optional.ToNullable(sentenceCount), Optional.ToNullable(stringIndexType), Optional.ToList(phraseControls));
         }
     }
 }

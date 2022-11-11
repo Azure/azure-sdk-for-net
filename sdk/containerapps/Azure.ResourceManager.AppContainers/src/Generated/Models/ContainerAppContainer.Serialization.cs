@@ -16,6 +16,16 @@ namespace Azure.ResourceManager.AppContainers.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Probes))
+            {
+                writer.WritePropertyName("probes");
+                writer.WriteStartArray();
+                foreach (var item in Probes)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(Image))
             {
                 writer.WritePropertyName("image");
@@ -61,16 +71,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("resources");
                 writer.WriteObjectValue(Resources);
             }
-            if (Optional.IsCollectionDefined(Probes))
-            {
-                writer.WritePropertyName("probes");
-                writer.WriteStartArray();
-                foreach (var item in Probes)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsCollectionDefined(VolumeMounts))
             {
                 writer.WritePropertyName("volumeMounts");
@@ -86,16 +86,31 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppContainer DeserializeContainerAppContainer(JsonElement element)
         {
+            Optional<IList<ContainerAppProbe>> probes = default;
             Optional<string> image = default;
             Optional<string> name = default;
             Optional<IList<string>> command = default;
             Optional<IList<string>> args = default;
             Optional<IList<EnvironmentVar>> env = default;
             Optional<ContainerResources> resources = default;
-            Optional<IList<ContainerAppProbe>> probes = default;
             Optional<IList<ContainerAppVolumeMount>> volumeMounts = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("probes"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<ContainerAppProbe> array = new List<ContainerAppProbe>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ContainerAppProbe.DeserializeContainerAppProbe(item));
+                    }
+                    probes = array;
+                    continue;
+                }
                 if (property.NameEquals("image"))
                 {
                     image = property.Value.GetString();
@@ -161,21 +176,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                     resources = ContainerResources.DeserializeContainerResources(property.Value);
                     continue;
                 }
-                if (property.NameEquals("probes"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<ContainerAppProbe> array = new List<ContainerAppProbe>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ContainerAppProbe.DeserializeContainerAppProbe(item));
-                    }
-                    probes = array;
-                    continue;
-                }
                 if (property.NameEquals("volumeMounts"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppContainer(image.Value, name.Value, Optional.ToList(command), Optional.ToList(args), Optional.ToList(env), resources.Value, Optional.ToList(probes), Optional.ToList(volumeMounts));
+            return new ContainerAppContainer(image.Value, name.Value, Optional.ToList(command), Optional.ToList(args), Optional.ToList(env), resources.Value, Optional.ToList(volumeMounts), Optional.ToList(probes));
         }
     }
 }

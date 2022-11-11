@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.Dns
     /// <summary>
     /// A class representing a collection of <see cref="MXRecordResource" /> and their operations.
     /// Each <see cref="MXRecordResource" /> in the collection will belong to the same instance of <see cref="DnsZoneResource" />.
-    /// To get a <see cref="MXRecordCollection" /> instance call the GetMXRecordes method from an instance of <see cref="DnsZoneResource" />.
+    /// To get a <see cref="MXRecordCollection" /> instance call the GetMXRecords method from an instance of <see cref="DnsZoneResource" />.
     /// </summary>
     public partial class MXRecordCollection : ArmCollection, IEnumerable<MXRecordResource>, IAsyncEnumerable<MXRecordResource>
     {
-        private readonly ClientDiagnostics _recordSetMXRecordSetsClientDiagnostics;
-        private readonly RecordSetsRestOperations _recordSetMXRecordSetsRestClient;
+        private readonly ClientDiagnostics _mxRecordRecordSetsClientDiagnostics;
+        private readonly MXRecordRestOperations _mxRecordRecordSetsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MXRecordCollection"/> class for mocking. </summary>
         protected MXRecordCollection()
@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.Dns
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal MXRecordCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _recordSetMXRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", MXRecordResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(MXRecordResource.ResourceType, out string recordSetMXRecordSetsApiVersion);
-            _recordSetMXRecordSetsRestClient = new RecordSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, recordSetMXRecordSetsApiVersion);
+            _mxRecordRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", MXRecordResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(MXRecordResource.ResourceType, out string mxRecordRecordSetsApiVersion);
+            _mxRecordRecordSetsRestClient = new MXRecordRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, mxRecordRecordSetsApiVersion);
 #if DEBUG
-            ValidateResourceId(Id);
+			ValidateResourceId(Id);
 #endif
         }
 
@@ -56,26 +56,26 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary>
         /// Creates or updates a record set within a DNS zone.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{mxRecordName}
         /// Operation Id: RecordSets_CreateOrUpdate
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="mxRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<MXRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string relativeRecordSetName, MXRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="mxRecordName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<MXRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string mxRecordName, MXRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
+            Argument.AssertNotNull(mxRecordName, nameof(mxRecordName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _recordSetMXRecordSetsClientDiagnostics.CreateScope("MXRecordCollection.CreateOrUpdate");
+            using var scope = _mxRecordRecordSetsClientDiagnostics.CreateScope("MXRecordCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _recordSetMXRecordSetsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _mxRecordRecordSetsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "MX".ToDnsRecordType(), mxRecordName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
                 var operation = new DnsArmOperation<MXRecordResource>(Response.FromValue(new MXRecordResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -90,26 +90,26 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary>
         /// Creates or updates a record set within a DNS zone.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{mxRecordName}
         /// Operation Id: RecordSets_CreateOrUpdate
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="mxRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<MXRecordResource> CreateOrUpdate(WaitUntil waitUntil, string relativeRecordSetName, MXRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="mxRecordName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<MXRecordResource> CreateOrUpdate(WaitUntil waitUntil, string mxRecordName, MXRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
+            Argument.AssertNotNull(mxRecordName, nameof(mxRecordName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _recordSetMXRecordSetsClientDiagnostics.CreateScope("MXRecordCollection.CreateOrUpdate");
+            using var scope = _mxRecordRecordSetsClientDiagnostics.CreateScope("MXRecordCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _recordSetMXRecordSetsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, data, ifMatch, ifNoneMatch, cancellationToken);
+                var response = _mxRecordRecordSetsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "MX".ToDnsRecordType(), mxRecordName, data, ifMatch, ifNoneMatch, cancellationToken);
                 var operation = new DnsArmOperation<MXRecordResource>(Response.FromValue(new MXRecordResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
@@ -124,21 +124,21 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary>
         /// Gets a record set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{mxRecordName}
         /// Operation Id: RecordSets_Get
         /// </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="mxRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        public virtual async Task<Response<MXRecordResource>> GetAsync(string relativeRecordSetName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="mxRecordName"/> is null. </exception>
+        public virtual async Task<Response<MXRecordResource>> GetAsync(string mxRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
+            Argument.AssertNotNull(mxRecordName, nameof(mxRecordName));
 
-            using var scope = _recordSetMXRecordSetsClientDiagnostics.CreateScope("MXRecordCollection.Get");
+            using var scope = _mxRecordRecordSetsClientDiagnostics.CreateScope("MXRecordCollection.Get");
             scope.Start();
             try
             {
-                var response = await _recordSetMXRecordSetsRestClient.GetMXRecordAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, cancellationToken).ConfigureAwait(false);
+                var response = await _mxRecordRecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "MX".ToDnsRecordType(), mxRecordName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new MXRecordResource(Client, response.Value), response.GetRawResponse());
@@ -152,21 +152,21 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary>
         /// Gets a record set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{mxRecordName}
         /// Operation Id: RecordSets_Get
         /// </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="mxRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        public virtual Response<MXRecordResource> Get(string relativeRecordSetName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="mxRecordName"/> is null. </exception>
+        public virtual Response<MXRecordResource> Get(string mxRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
+            Argument.AssertNotNull(mxRecordName, nameof(mxRecordName));
 
-            using var scope = _recordSetMXRecordSetsClientDiagnostics.CreateScope("MXRecordCollection.Get");
+            using var scope = _mxRecordRecordSetsClientDiagnostics.CreateScope("MXRecordCollection.Get");
             scope.Start();
             try
             {
-                var response = _recordSetMXRecordSetsRestClient.GetMXRecord(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, cancellationToken);
+                var response = _mxRecordRecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "MX".ToDnsRecordType(), mxRecordName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new MXRecordResource(Client, response.Value), response.GetRawResponse());
@@ -191,11 +191,11 @@ namespace Azure.ResourceManager.Dns
         {
             async Task<Page<MXRecordResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _recordSetMXRecordSetsClientDiagnostics.CreateScope("MXRecordCollection.GetAll");
+                using var scope = _mxRecordRecordSetsClientDiagnostics.CreateScope("MXRecordCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _recordSetMXRecordSetsRestClient.ListMXRecordByTypeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _mxRecordRecordSetsRestClient.ListByTypeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "MX".ToDnsRecordType(), top, recordsetnamesuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new MXRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -206,11 +206,11 @@ namespace Azure.ResourceManager.Dns
             }
             async Task<Page<MXRecordResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _recordSetMXRecordSetsClientDiagnostics.CreateScope("MXRecordCollection.GetAll");
+                using var scope = _mxRecordRecordSetsClientDiagnostics.CreateScope("MXRecordCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _recordSetMXRecordSetsRestClient.ListMXRecordByTypeNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _mxRecordRecordSetsRestClient.ListByTypeNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "MX".ToDnsRecordType(), top, recordsetnamesuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new MXRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -235,11 +235,11 @@ namespace Azure.ResourceManager.Dns
         {
             Page<MXRecordResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _recordSetMXRecordSetsClientDiagnostics.CreateScope("MXRecordCollection.GetAll");
+                using var scope = _mxRecordRecordSetsClientDiagnostics.CreateScope("MXRecordCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _recordSetMXRecordSetsRestClient.ListMXRecordByType(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken);
+                    var response = _mxRecordRecordSetsRestClient.ListByType(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "MX".ToDnsRecordType(), top, recordsetnamesuffix, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new MXRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -250,11 +250,11 @@ namespace Azure.ResourceManager.Dns
             }
             Page<MXRecordResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _recordSetMXRecordSetsClientDiagnostics.CreateScope("MXRecordCollection.GetAll");
+                using var scope = _mxRecordRecordSetsClientDiagnostics.CreateScope("MXRecordCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _recordSetMXRecordSetsRestClient.ListMXRecordByTypeNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken);
+                    var response = _mxRecordRecordSetsRestClient.ListByTypeNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "MX".ToDnsRecordType(), top, recordsetnamesuffix, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new MXRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -268,21 +268,21 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{mxRecordName}
         /// Operation Id: RecordSets_Get
         /// </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="mxRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string relativeRecordSetName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="mxRecordName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string mxRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
+            Argument.AssertNotNull(mxRecordName, nameof(mxRecordName));
 
-            using var scope = _recordSetMXRecordSetsClientDiagnostics.CreateScope("MXRecordCollection.Exists");
+            using var scope = _mxRecordRecordSetsClientDiagnostics.CreateScope("MXRecordCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _recordSetMXRecordSetsRestClient.GetMXRecordAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _mxRecordRecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "MX".ToDnsRecordType(), mxRecordName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -294,21 +294,21 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{mxRecordName}
         /// Operation Id: RecordSets_Get
         /// </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="mxRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        public virtual Response<bool> Exists(string relativeRecordSetName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="mxRecordName"/> is null. </exception>
+        public virtual Response<bool> Exists(string mxRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
+            Argument.AssertNotNull(mxRecordName, nameof(mxRecordName));
 
-            using var scope = _recordSetMXRecordSetsClientDiagnostics.CreateScope("MXRecordCollection.Exists");
+            using var scope = _mxRecordRecordSetsClientDiagnostics.CreateScope("MXRecordCollection.Exists");
             scope.Start();
             try
             {
-                var response = _recordSetMXRecordSetsRestClient.GetMXRecord(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, cancellationToken: cancellationToken);
+                var response = _mxRecordRecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "MX".ToDnsRecordType(), mxRecordName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

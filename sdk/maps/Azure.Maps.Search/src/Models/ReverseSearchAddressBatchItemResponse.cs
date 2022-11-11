@@ -3,7 +3,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Maps.Search.Models

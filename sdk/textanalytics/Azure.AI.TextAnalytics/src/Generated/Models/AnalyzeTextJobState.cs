@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.TextAnalytics;
+using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -18,19 +19,13 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="createdDateTime"></param>
         /// <param name="jobId"></param>
         /// <param name="lastUpdatedDateTime"></param>
-        /// <param name="status"></param>
+        /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="tasks"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="tasks"/> is null. </exception>
         internal AnalyzeTextJobState(DateTimeOffset createdDateTime, string jobId, DateTimeOffset lastUpdatedDateTime, TextAnalyticsOperationStatus status, AnalyzeTasks tasks) : base(createdDateTime, jobId, lastUpdatedDateTime, status)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (tasks == null)
-            {
-                throw new ArgumentNullException(nameof(tasks));
-            }
+            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNull(tasks, nameof(tasks));
 
             Tasks = tasks;
         }
@@ -41,7 +36,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="expirationDateTime"></param>
         /// <param name="jobId"></param>
         /// <param name="lastUpdatedDateTime"></param>
-        /// <param name="status"></param>
+        /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="errors"></param>
         /// <param name="nextLink"></param>
         /// <param name="tasks"></param>

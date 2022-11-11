@@ -30,16 +30,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     case "RemoveAllActionGroups": return AlertProcessingRuleRemoveAllGroupsAction.DeserializeAlertProcessingRuleRemoveAllGroupsAction(element);
                 }
             }
-            AlertProcessingRuleActionType actionType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("actionType"))
-                {
-                    actionType = new AlertProcessingRuleActionType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownAlertProcessingRuleAction(actionType);
+            return UnknownAction.DeserializeUnknownAction(element);
         }
     }
 }

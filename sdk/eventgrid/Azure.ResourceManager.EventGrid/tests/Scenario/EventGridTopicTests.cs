@@ -19,7 +19,8 @@ namespace Azure.ResourceManager.EventGrid.Tests
         private ResourceGroupResource _resourceGroup;
         private EventGridTopicCollection _eventGridTopicCollection;
 
-        public EventGridTopicTests(bool isAsync) : base(isAsync)
+        public EventGridTopicTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

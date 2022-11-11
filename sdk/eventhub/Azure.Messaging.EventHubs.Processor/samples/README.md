@@ -75,6 +75,9 @@ For the event processor client to make use of Azure Storage blobs for checkpoint
 
 - [Processing Events in Batches](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample07_BatchProcessing.md)  
   A demonstration of how events can be processed in batches rather than individually.
+  
+- [Mocking Client Types](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample08_MockingClientTypes.md)  
+  A demonstration of how to mock the types in the Event Hubs Processor client library, focusing on common application scenarios.
 
 ## Contributing  
 
