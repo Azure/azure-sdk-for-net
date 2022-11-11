@@ -79,11 +79,11 @@ function generate-service-level-readme($docRepoLocation, $readmeBaseName, $pathP
   if ($packageInfos) {
     generate-markdown-table -readmeFolder $readmeFolder -readmeName $indexReadme -packageInfos $packageInfos -moniker $moniker
   }
-  if (!(Test-Path "$readmeFolder$serviceReadme")) {
+  if (!(Test-Path "$readmeFolder$serviceReadme") -and $packageInfos) {
     create-service-readme -readmeFolder $readmeFolder -readmeName $serviceReadme -moniker $moniker -msService $msService `
       -indexTableLink $indexReadme -serviceName $serviceName -author $author -msAuthor $msAuthor
   }
-  else {
+  elseif (Test-Path "$readmeFolder$serviceReadme") {
     update-metadata-table -readmeFolder $readmeFolder -readmeName $serviceReadme -serviceName $serviceName `
       -msService $msService -author $author -msAuthor $msAuthor
   }
