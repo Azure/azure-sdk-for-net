@@ -846,6 +846,9 @@ namespace Azure.AI.TextAnalytics
         }
         #endregion
 
+        #region Dynamic Classify
+        #endregion
+
         #region Linked Entities
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.LinkedEntity"/> for mocking purposes.

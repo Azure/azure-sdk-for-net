@@ -9,16 +9,16 @@ using System.Linq;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// A collection of the results of performing abstractive summarization on a given set of documents.
+    /// A collection of the results of performing dynamic classification on a given set of documents.
     /// </summary>
-    [DebuggerTypeProxy(typeof(AbstractSummaryResultCollectionDebugView))]
-    public class AbstractSummaryResultCollection : ReadOnlyCollection<AbstractSummaryResult>
+    [DebuggerTypeProxy(typeof(DynamicClassifyDocumentResultCollectionDebugView))]
+    public class DynamicClassifyDocumentResultCollection : ReadOnlyCollection<ClassifyDocumentResult>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AbstractSummaryResultCollection"/> class.
+        /// Initializes a new instance of the <see cref="DynamicClassifyDocumentResultCollection"/> class.
         /// </summary>
-        internal AbstractSummaryResultCollection(
-            IList<AbstractSummaryResult> list, TextDocumentBatchStatistics statistics, string modelVersion)
+        internal DynamicClassifyDocumentResultCollection(
+            IList<ClassifyDocumentResult> list, TextDocumentBatchStatistics statistics, string modelVersion)
             : base(list)
         {
             Statistics = statistics;
@@ -27,9 +27,8 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// The statistics associated with the results and how these were produced by the service. The value is
-        /// <c>null</c> unless <see cref="TextAnalyticsRequestOptions.IncludeStatistics"/> or
-        /// <see cref="AnalyzeActionsOptions.IncludeStatistics"/> was used to explicitly request that these were
-        /// included as part of the results.
+        /// <c>null</c> unless <see cref="TextAnalyticsRequestOptions.IncludeStatistics"/> was used to explicitly
+        /// request that these were included as part of the results.
         /// </summary>
         public TextDocumentBatchStatistics Statistics { get; }
 
@@ -41,19 +40,19 @@ namespace Azure.AI.TextAnalytics
         public string ModelVersion { get; }
 
         /// <summary>
-        /// A debugger proxy for the <see cref="AbstractSummaryResultCollection"/> class.
+        /// A debugger proxy for the <see cref="DynamicClassifyDocumentResultCollection"/> class.
         /// </summary>
-        internal class AbstractSummaryResultCollectionDebugView
+        internal class DynamicClassifyDocumentResultCollectionDebugView
         {
-            private AbstractSummaryResultCollection BaseCollection { get; }
+            private DynamicClassifyDocumentResultCollection BaseCollection { get; }
 
-            public AbstractSummaryResultCollectionDebugView(AbstractSummaryResultCollection collection)
+            public DynamicClassifyDocumentResultCollectionDebugView(DynamicClassifyDocumentResultCollection collection)
             {
                 BaseCollection = collection;
             }
 
             [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
-            public List<AbstractSummaryResult> Items
+            public List<ClassifyDocumentResult> Items
             {
                 get
                 {
