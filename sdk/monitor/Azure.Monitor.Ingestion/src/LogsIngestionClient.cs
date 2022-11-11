@@ -112,7 +112,8 @@ namespace Azure.Monitor.Ingestion
                     entry = options.Serializer.Serialize(log);
 
                 var memory = entry.ToMemory();
-                if (memory.Length > SingleUploadThreshold) // if single log is > 1 Mb send to be gzipped by itself
+                // if single log is > 1 Mb send to be gzipped by itself
+                if (memory.Length > SingleUploadThreshold)
                 {
                     // Create tempWriter and tempStream for individual log
                     MemoryStream tempStream = new MemoryStream();
@@ -120,17 +121,18 @@ namespace Azure.Monitor.Ingestion
                     tempWriter.WriteStartArray();
                     WriteMemory(tempWriter, memory);
                     tempWriter.WriteEndArray();
-                    yield return new BatchedLogs<T>(new List<T>{log}, BinaryData.FromObjectAsJson(writer));
+                    tempWriter.Flush();
+                    yield return new BatchedLogs<T>(new List<T>{log}, BinaryData.FromStream(stream));
                 }
                 // if adding this entry makes stream > 1 Mb send current stream now
                 else if ((stream.Length + memory.Length + 1) >= SingleUploadThreshold)
                 {
                     writer.WriteEndArray();
-                    //stream.Position = 0; // set Position to 0 to return everything from beginning of stream
-                    yield return new BatchedLogs<T>(currentLogList, BinaryData.FromObjectAsJson(writer));
+                    writer.Flush();
+                    yield return new BatchedLogs<T>(currentLogList, BinaryData.FromStream(stream));
 
                     // reset stream and currentLogList
-                    stream = new MemoryStream(SingleUploadThreshold); // reset stream
+                    stream = new MemoryStream(SingleUploadThreshold);
                     writer.Flush();
                     currentLogList = new List<T>(); // reset log list
                     WriteMemory(writer, memory); // add log to memory and currentLogList
