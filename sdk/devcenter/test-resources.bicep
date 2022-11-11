@@ -1,5 +1,5 @@
 param resourceLocation string = resourceGroup().location
-param catalogSecretIdentifier string
+param catalogPatIdentifier string
 param devCenterPresetMsi string
 param projectEnvironmentTypePresetMsi string
 param testUserOid string
@@ -8,8 +8,7 @@ param projectAdminRoleDefinitionId string
 param deploymentEnvironmentsRoleDefinitionId string
 param baseName string
 
-var defaultDevCenterNamePrefix = 'sdk-dc-'
-var defaultDevCenterName = concat(defaultDevCenterNamePrefix, uniqueString('devcenter', baseName, resourceGroup().name))
+var defaultDevCenterName = 'sdk-dc-${uniqueString('devcenter', baseName, resourceGroup().name)}'
 
 var defaultProjectName = 'sdk-default-project'
 var defaultPoolName = 'sdk-default-pool'
@@ -169,7 +168,7 @@ resource catalog 'Microsoft.DevCenter/devcenters/catalogs@2022-09-01-preview' = 
   properties: {
     gitHub: {
       branch: 'main'
-      secretIdentifier: catalogSecretIdentifier
+      secretIdentifier: catalogPatIdentifier
       path: '/NewFormat'
       uri: gitUri
     }
