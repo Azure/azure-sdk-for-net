@@ -43,8 +43,7 @@ namespace Azure.ResourceManager.Resources
 
         internal ResourcesArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
         {
-            var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, out var id);
-            Id = id;
+            var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia);
             _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, response, "ResourcesArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
         }
 
@@ -52,89 +51,24 @@ namespace Azure.ResourceManager.Resources
         {
             var lroDetails = BinaryData.FromBytes(Convert.FromBase64String(id)).ToObjectFromJson<Dictionary<string, string>>();
             lroDetails.TryGetValue("NextRequestUri", out string nextRequestUri);
-            IDictionary<string, object> responseObj = BinaryData.FromString(lroDetails["InitialResponse"]).ToObjectFromJson<IDictionary<string, object>>();
-            var content = BinaryData.FromObjectAsJson(responseObj["ContentStream"]);
-            var contentStream = new MemoryStream();
-            if (content != null)
-                content.ToStream().CopyTo(contentStream);
-            Response response = new ResourcesResponse(((JsonElement)responseObj["Status"]).GetInt32(), ((JsonElement)responseObj["ReasonPhrase"]).GetString(), contentStream, ((JsonElement)responseObj["ClientRequestId"]).GetString());
             if (nextRequestUri == null)
             {
-                Id = id;
+                IDictionary<string, object> responseObj = BinaryData.FromString(lroDetails["InitialResponse"]).ToObjectFromJson<IDictionary<string, object>>();
+                var content = BinaryData.FromObjectAsJson(responseObj["ContentStream"]);
+                var contentStream = new MemoryStream();
+                if (content != null)
+                    content.ToStream().CopyTo(contentStream);
+                Response response = new ResourcesArmOperation.ResourcesResponse(((JsonElement)responseObj["Status"]).GetInt32(), ((JsonElement)responseObj["ReasonPhrase"]).GetString(), contentStream, ((JsonElement)responseObj["ClientRequestId"]).GetString());
                 _operation = OperationInternal<T>.Succeeded(response, source.CreateResult(response, CancellationToken.None));
                 return;
             }
-            Uri.TryCreate(lroDetails["InitialUri"], UriKind.Absolute, out var startRequestUri);
-            string responseStr = lroDetails["InitialResponse"];
-            RequestMethod requestMethod = new RequestMethod(lroDetails["RequestMethod"]);
-            bool originalResponseHasLocation = bool.Parse(lroDetails["OriginalResponseHasLocation"]);
-            string lastKnownLocation = lroDetails["LastKnownLocation"];
-            if (!Enum.TryParse(lroDetails["FinalStateVia"], out OperationFinalStateVia finalStateVia))
-                finalStateVia = OperationFinalStateVia.Location;
 
-            var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, requestMethod, startRequestUri, response, finalStateVia, nextRequestUri, lroDetails["HeaderSource"], originalResponseHasLocation, lastKnownLocation, interimApiVersion);
-            Id = id;
-            _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, response, "ResourcesArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
-        }
-
-        internal class ResourcesResponse: Response
-        {
-            public ResourcesResponse()
-            {
-            }
-
-            internal ResourcesResponse(int status, string reasonPhase, Stream contentStream, string clientRequestId)//, ResponseHeaders headers, bool isError)
-            {
-                Status = status;
-                ReasonPhrase = reasonPhase;
-                ContentStream = contentStream;
-                ClientRequestId = clientRequestId;
-                // contentStream.Flush();
-                //Headers = headers;
-                //IsError = isError;
-            }
-
-            public override int Status { get; }
-
-            public override string ReasonPhrase { get; }
-
-            public override Stream ContentStream
-            {
-                get;
-                set;
-            }
-            public override string ClientRequestId { get; set; }
-            //public override ResponseHeaders Headers { get; }
-            //public new bool IsError { get; }
-
-            public override void Dispose()
-            {
-                throw new NotImplementedException();
-            }
-
-            protected override bool ContainsHeader(string name)
-            {
-                throw new NotImplementedException();
-            }
-
-            protected override IEnumerable<HttpHeader> EnumerateHeaders()
-            {
-                throw new NotImplementedException();
-            }
-
-            protected override bool TryGetHeader(string name, out string value)
-            {
-                throw new NotImplementedException();
-            }
-
-            protected override bool TryGetHeaderValues(string name, out IEnumerable<string> values)
-            {
-                throw new NotImplementedException();
-            }
+            var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, id, interimApiVersion);
+            _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, null, "ResourcesArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
         }
 
         /// <inheritdoc />
-        public override string Id { get; }
+        public override string Id => _operation.GetOperationId();
 
         /// <inheritdoc />
         public override T Value => _operation.Value;

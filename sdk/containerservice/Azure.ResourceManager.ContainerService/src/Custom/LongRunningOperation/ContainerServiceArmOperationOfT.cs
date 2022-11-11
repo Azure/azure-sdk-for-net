@@ -29,20 +29,12 @@ namespace Azure.ResourceManager.ContainerService
 
         internal ContainerServiceArmOperation(Response<T> response)
         {
-            var serializeOptions = new JsonSerializerOptions { Converters = { new NextLinkOperationImplementation.StreamConverter() } };
-            var lroDetails = new Dictionary<string, string>()
-            {
-                ["InitialResponse"] = BinaryData.FromObjectAsJson<Response>(response.GetRawResponse(), serializeOptions).ToString()
-            };
-            var lroData = BinaryData.FromObjectAsJson(lroDetails);
-            Id = Convert.ToBase64String(lroData.ToArray());
             _operation = OperationInternal<T>.Succeeded(response.GetRawResponse(), response.Value);
         }
 
         internal ContainerServiceArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, string interimApiVersion = null)
         {
-            var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, out var id, interimApiVersion);
-            Id = id;
+            var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, interimApiVersion);
             _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, response, "ContainerServiceArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
         }
 
@@ -50,32 +42,25 @@ namespace Azure.ResourceManager.ContainerService
         {
             var lroDetails = BinaryData.FromBytes(Convert.FromBase64String(id)).ToObjectFromJson<Dictionary<string, string>>();
             lroDetails.TryGetValue("NextRequestUri", out string nextRequestUri);
-            IDictionary<string, object> responseObj = BinaryData.FromString(lroDetails["InitialResponse"]).ToObjectFromJson<IDictionary<string, object>>();
-            var content = BinaryData.FromObjectAsJson(responseObj["ContentStream"]);
-            var contentStream = new MemoryStream();
-            if (content != null)
-                content.ToStream().CopyTo(contentStream);
-            Response response = new ContainerServiceArmOperation.ContainerServiceResponse(((JsonElement)responseObj["Status"]).GetInt32(), ((JsonElement)responseObj["ReasonPhrase"]).GetString(), contentStream, ((JsonElement)responseObj["ClientRequestId"]).GetString());
+
             if (nextRequestUri == null)
             {
-                Id = id;
+                IDictionary<string, object> responseObj = BinaryData.FromString(lroDetails["InitialResponse"]).ToObjectFromJson<IDictionary<string, object>>();
+                var content = BinaryData.FromObjectAsJson(responseObj["ContentStream"]);
+                var contentStream = new MemoryStream();
+                if (content != null)
+                    content.ToStream().CopyTo(contentStream);
+                Response response = new ContainerServiceArmOperation.ContainerServiceResponse(((JsonElement)responseObj["Status"]).GetInt32(), ((JsonElement)responseObj["ReasonPhrase"]).GetString(), contentStream, ((JsonElement)responseObj["ClientRequestId"]).GetString());
                 _operation = OperationInternal<T>.Succeeded(response, source.CreateResult(response, CancellationToken.None));
                 return;
             }
-            Uri.TryCreate(lroDetails["InitialUri"], UriKind.Absolute, out var startRequestUri);
-            RequestMethod requestMethod = new RequestMethod(lroDetails["RequestMethod"]);
-            bool originalResponseHasLocation = bool.Parse(lroDetails["OriginalResponseHasLocation"]);
-            string lastKnownLocation = lroDetails["LastKnownLocation"];
-            if (!Enum.TryParse(lroDetails["FinalStateVia"], out OperationFinalStateVia finalStateVia))
-                finalStateVia = OperationFinalStateVia.Location;
 
-            var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, requestMethod, startRequestUri, response, finalStateVia, nextRequestUri, lroDetails["HeaderSource"], originalResponseHasLocation, lastKnownLocation, interimApiVersion);
-            Id = id;
-            _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, response, "ContainerServiceArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
+            var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, id, interimApiVersion);
+            _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, null, "ContainerServiceArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
         }
 
         /// <inheritdoc />
-        public override string Id { get; }
+        public override string Id => _operation.GetOperationId();
 
         /// <inheritdoc />
         public override T Value => _operation.Value;

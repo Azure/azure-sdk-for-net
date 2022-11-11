@@ -5,6 +5,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -279,6 +282,24 @@ namespace Azure.Core
             }
         }
 
+        public string GetOperationId()
+        {
+            try
+            {
+                return _operation.GetOperationId();
+            }
+            catch (NotImplementedException)
+            {
+                var serializeOptions = new JsonSerializerOptions { Converters = { new StreamConverter() } };
+                var lroDetails = new Dictionary<string, string>()
+                {
+                    ["InitialResponse"] = BinaryData.FromObjectAsJson<Response>(_rawResponse).ToString()
+                };
+                var lroData = BinaryData.FromObjectAsJson(lroDetails);
+                return Convert.ToBase64String(lroData.ToArray());
+            }
+        }
+
         private static Response GetResponseFromState(OperationState<T> state)
         {
             if (state.HasSucceeded)
@@ -289,10 +310,73 @@ namespace Azure.Core
             throw state.OperationFailedException!;
         }
 
+        private class StreamConverter : JsonConverter<Stream>
+        {
+            /// <summary> Serialize stream to BinaryData string. </summary>
+            /// <param name="writer"> The writer. </param>
+            /// <param name="model"> The Stream model. </param>
+            /// <param name="options"> The options for JsonSerializer. </param>
+            public override void Write(Utf8JsonWriter writer, Stream model, JsonSerializerOptions options)
+            {
+                if (model.Length == 0)
+                {
+                    //JsonSerializer.Serialize(writer, JsonDocument.Parse("{}").RootElement);
+                    writer.WriteNullValue();
+                    return;
+                }
+                MemoryStream? memoryContent = model as MemoryStream;
+
+                if (memoryContent == null)
+                {
+                    throw new InvalidOperationException($"The response is not fully buffered.");
+                }
+
+                if (memoryContent.TryGetBuffer(out ArraySegment<byte> segment))
+                {
+                    var data = new BinaryData(segment.AsMemory());
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(data);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(data.ToString()).RootElement);
+#endif
+                }
+                else
+                {
+                    var data = new BinaryData(memoryContent.ToArray());
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(data);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(data.ToString()).RootElement);
+#endif
+                }
+            }
+
+            /// <summary> Deserialize Stream from BinaryData string. </summary>
+            /// <param name="reader"> The reader. </param>
+            /// <param name="typeToConvert"> The type to convert </param>
+            /// <param name="options"> The options for JsonSerializer. </param>
+            public override Stream Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                foreach (var property in document.RootElement.EnumerateObject())
+                {
+                    // todo: add null check
+                    var value = property.Value.GetString();
+                    return BinaryData.FromString(value!).ToStream();
+                }
+                return new BinaryData(Array.Empty<byte>()).ToStream();
+            }
+        }
+
         private class FinalOperation : IOperation<T>
         {
             public ValueTask<OperationState<T>> UpdateStateAsync(bool async, CancellationToken cancellationToken)
                 => throw new NotSupportedException("The operation has already completed");
+
+            public string GetOperationId()
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 
@@ -333,6 +417,11 @@ namespace Azure.Core
         /// </list>
         /// </returns>
         ValueTask<OperationState<T>> UpdateStateAsync(bool async, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// To get the Id of the operation for rehydration purpose.
+        /// </summary>
+        string GetOperationId();
     }
 
     /// <summary>
