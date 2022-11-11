@@ -6,6 +6,7 @@ charts
 *.sln.docstates
 .vs/
 *.lock.json
+*.env
 developer/
 launch.json
 launchSettings.json

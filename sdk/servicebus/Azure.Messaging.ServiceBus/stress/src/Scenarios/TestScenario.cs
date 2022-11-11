@@ -53,11 +53,13 @@ public abstract class TestScenario
     ///
     public async Task RunTestAsync(CancellationToken cancellationToken)
     {
+        Console.WriteLine("Starting Test Scenario");
         var runAllRoles = !int.TryParse(_jobIndex, out var roleIndex);
         var testRunTasks = new List<Task>();
 
         if (runAllRoles)
         {
+            Console.WriteLine("Running all roles");
             foreach (Role role in Roles)
             {
                 testRunTasks.Add(RunRoleAsync(role, cancellationToken));
@@ -83,6 +85,7 @@ public abstract class TestScenario
        switch (role)
         {
             case Role.Sender:
+                Console.WriteLine("starting a sender");
                 var senderConfiguration = new SenderConfiguration();
                 var sender = new Sender(_testParameters, senderConfiguration, _metrics);
                 return Task.Run(() => sender.RunAsync(cancellationToken));
@@ -93,6 +96,7 @@ public abstract class TestScenario
                 return Task.Run(() => processor.RunAsync(null, null, cancellationToken));
 
             case Role.Receiver:
+                Console.WriteLine("starting a receiver");
                 var receiverConfiguration = new ReceiverConfiguration();
                 var receiver = new Receiver(_testParameters, receiverConfiguration, _metrics);
                 return Task.Run(() => receiver.RunAsync(cancellationToken));

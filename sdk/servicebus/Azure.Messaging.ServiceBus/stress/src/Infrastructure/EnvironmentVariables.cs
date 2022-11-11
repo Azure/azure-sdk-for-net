@@ -32,43 +32,7 @@ public static class EnvironmentVariables
     ///   for the Service Bus send and receive test.
     /// </summary>
     ///
-    public const string ServiceBusSendReceiveTestQ = "SERVICEBUS_QUEUE_SENDRECEIVE";
-
-    // Queue Names
-
-    /// <summary>
-    ///   The name of the environment variable that holds the name of the Service Bus queue
-    ///   for the Service Bus send and receive batches test.
-    /// </summary>
-    ///
-    public const string ServiceBusSendReceiveBatchesTestQ = "SERVICEBUS_QUEUE_SENDRECEIVE_BATCHES";
-
-    // Queue Names
-
-    /// <summary>
-    ///   The name of the environment variable that holds the name of the Service Bus queue
-    ///   for the Service Bus session send and receive test.
-    /// </summary>
-    ///
-    public const string ServiceBusSessionSendReceiveTestQ = "SERVICEBUS_QUEUE_SESSION_SENDRECEIVE";
-
-    // Queue Names
-
-    /// <summary>
-    ///   The name of the environment variable that holds the name of the Service Bus queue
-    ///   for the Service Bus send and process test.
-    /// </summary>
-    ///
-    public const string ServiceBusSendProcessTestQ = "SERVICEBUS_QUEUE_SENDPROCESS";
-
-    // Queue Names
-
-    /// <summary>
-    ///   The name of the environment variable that holds the name of the Service Bus queue
-    ///   for the Service Bus session send and process test.
-    /// </summary>
-    ///
-    public const string ServiceBusSessionSendProcessTestQ = "SERVICEBUS_QUEUE_SESSION_SENDPROCESS";
+    public const string ServiceBusQueue = "SERVICEBUS_QUEUE";
 
     // Job Index Information
 
