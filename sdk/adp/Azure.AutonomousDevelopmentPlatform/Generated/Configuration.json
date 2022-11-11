@@ -1,9 +1,0 @@
-{
-  "OutputFolder": ".",
-  "Namespace": "AutonomousDevelopmentPlatform",
-  "LibraryName": "AutonomousDevelopmentPlatform",
-  "SharedSourceFolders": [
-    "../../../node_modules/@autorest/csharp/Generator.Shared",
-    "../../../node_modules/@autorest/csharp/Azure.Core.Shared"
-  ]
-}
