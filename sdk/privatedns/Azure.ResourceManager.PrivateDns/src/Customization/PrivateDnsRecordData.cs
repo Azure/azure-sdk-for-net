@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.PrivateDns
         {
             ARecords = new ChangeTrackingList<PrivateDnsARecordInfo>();
             AaaaRecords = new ChangeTrackingList<PrivateDnsAaaaRecordInfo>();
-            MxRecords = new ChangeTrackingList<PrivateDnsMXRecordInfo>();
+            MXRecords = new ChangeTrackingList<PrivateDnsMXRecordInfo>();
             PtrRecords = new ChangeTrackingList<PrivateDnsPtrRecordInfo>();
             SrvRecords = new ChangeTrackingList<PrivateDnsSrvRecordInfo>();
             TxtRecords = new ChangeTrackingList<PrivateDnsTxtRecordInfo>();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PrivateDns
             ARecords = aRecords;
             AaaaRecords = aaaaRecords;
             PrivateDnsCnameRecordInfo = privateDnsCnameRecordInfo;
-            MxRecords = mxRecords;
+            MXRecords = mxRecords;
             PtrRecords = ptrRecords;
             PrivateDnsSoaRecordInfo = privateDnsSoaRecordInfo;
             SrvRecords = srvRecords;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.PrivateDns
         }
 
         /// <summary> The list of MX records in the record set. </summary>
-        public IList<PrivateDnsMXRecordInfo> MxRecords { get; }
+        public IList<PrivateDnsMXRecordInfo> MXRecords { get; }
         /// <summary> The list of PTR records in the record set. </summary>
         public IList<PrivateDnsPtrRecordInfo> PtrRecords { get; }
         /// <summary> The SOA record in the record set. </summary>

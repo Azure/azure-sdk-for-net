@@ -56,6 +56,7 @@ rename-rules:
   SoaRecord: PrivateDnsSoaRecordInfo
   SrvRecord: PrivateDnsSrvRecordInfo
   TxtRecord: PrivateDnsTxtRecordInfo
+  ProvisioningState : PrivateDnsProvisioningState 
 
 override-operation-name:
   RecordSets_List: GetRecords
@@ -82,6 +83,7 @@ directive:
       $.PrivateZoneProperties.properties.numberOfRecordSets["x-ms-client-name"] = "numberOfRecords";
       $.PtrRecord.properties.ptrdname["x-ms-client-name"] = "PtrDomainName";
       $.TxtRecord.properties.value["x-ms-client-name"] = "values";
+      $.PrivateZoneProperties.properties.maxNumberOfRecordSets["x-ms-client-name"] = "maxNumberOfRecords";
 
 # FooTime => FooTimeInSeconds
   - from: privatedns.json

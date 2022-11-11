@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.PrivateDns
         public System.Collections.Generic.IList<Azure.ResourceManager.PrivateDns.Models.PrivateDnsAaaaRecordInfo> AaaaRecords { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.PrivateDns.Models.PrivateDnsARecordInfo> ARecords { get { throw null; } }
         public string Cname { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.PrivateDns.Models.PrivateDnsMXRecordInfo> MxRecords { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.PrivateDns.Models.PrivateDnsMXRecordInfo> MXRecords { get { throw null; } }
         public Azure.ResourceManager.PrivateDns.Models.PrivateDnsSoaRecordInfo PrivateDnsSoaRecordInfo { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.PrivateDns.Models.PrivateDnsPtrRecordInfo> PtrRecords { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.PrivateDns.Models.PrivateDnsSrvRecordInfo> SrvRecords { get { throw null; } }
@@ -331,13 +331,13 @@ namespace Azure.ResourceManager.PrivateDns
         public PrivateZoneData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public string InternalId { get { throw null; } }
-        public long? MaxNumberOfRecordSets { get { throw null; } }
+        public long? MaxNumberOfRecords { get { throw null; } }
         public long? MaxNumberOfVirtualNetworkLinks { get { throw null; } }
         public long? MaxNumberOfVirtualNetworkLinksWithRegistration { get { throw null; } }
         public long? NumberOfRecords { get { throw null; } }
         public long? NumberOfVirtualNetworkLinks { get { throw null; } }
         public long? NumberOfVirtualNetworkLinksWithRegistration { get { throw null; } }
-        public Azure.ResourceManager.PrivateDns.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.PrivateDns.Models.PrivateDnsProvisioningState? PrivateDnsProvisioningState { get { throw null; } }
     }
     public partial class PrivateZoneResource : Azure.ResourceManager.ArmResource
     {
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.PrivateDns
     {
         public VirtualNetworkLinkData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
-        public Azure.ResourceManager.PrivateDns.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.PrivateDns.Models.PrivateDnsProvisioningState? PrivateDnsProvisioningState { get { throw null; } }
         public bool? RegistrationEnabled { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier VirtualNetworkId { get { throw null; } set { } }
         public Azure.ResourceManager.PrivateDns.Models.VirtualNetworkLinkState? VirtualNetworkLinkState { get { throw null; } }
@@ -451,6 +451,28 @@ namespace Azure.ResourceManager.PrivateDns.Models
         public string Exchange { get { throw null; } set { } }
         public int? Preference { get { throw null; } set { } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PrivateDnsProvisioningState : System.IEquatable<Azure.ResourceManager.PrivateDns.Models.PrivateDnsProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PrivateDnsProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.PrivateDns.Models.PrivateDnsProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.PrivateDns.Models.PrivateDnsProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.PrivateDns.Models.PrivateDnsProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.PrivateDns.Models.PrivateDnsProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.PrivateDns.Models.PrivateDnsProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.PrivateDns.Models.PrivateDnsProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.PrivateDns.Models.PrivateDnsProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.PrivateDns.Models.PrivateDnsProvisioningState left, Azure.ResourceManager.PrivateDns.Models.PrivateDnsProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.PrivateDns.Models.PrivateDnsProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.PrivateDns.Models.PrivateDnsProvisioningState left, Azure.ResourceManager.PrivateDns.Models.PrivateDnsProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class PrivateDnsPtrRecordInfo
     {
         public PrivateDnsPtrRecordInfo() { }
@@ -479,28 +501,6 @@ namespace Azure.ResourceManager.PrivateDns.Models
     {
         public PrivateDnsTxtRecordInfo() { }
         public System.Collections.Generic.IList<string> Values { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.PrivateDns.Models.ProvisioningState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.PrivateDns.Models.ProvisioningState Canceled { get { throw null; } }
-        public static Azure.ResourceManager.PrivateDns.Models.ProvisioningState Creating { get { throw null; } }
-        public static Azure.ResourceManager.PrivateDns.Models.ProvisioningState Deleting { get { throw null; } }
-        public static Azure.ResourceManager.PrivateDns.Models.ProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.PrivateDns.Models.ProvisioningState Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.PrivateDns.Models.ProvisioningState Updating { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.PrivateDns.Models.ProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.PrivateDns.Models.ProvisioningState left, Azure.ResourceManager.PrivateDns.Models.ProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.PrivateDns.Models.ProvisioningState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.PrivateDns.Models.ProvisioningState left, Azure.ResourceManager.PrivateDns.Models.ProvisioningState right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VirtualNetworkLinkState : System.IEquatable<Azure.ResourceManager.PrivateDns.Models.VirtualNetworkLinkState>
