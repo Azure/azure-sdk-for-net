@@ -42,6 +42,8 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="purchaseOn"> This is the date when the Reservation was purchased. </param>
         /// <param name="splitProperties"></param>
         /// <param name="mergeProperties"></param>
+        /// <param name="swapProperties"></param>
+        /// <param name="appliedScopeProperties"></param>
         /// <param name="billingScopeId"> Subscription that will be charged for purchasing Reservation. </param>
         /// <param name="isRenewEnabled"> Setting this to true will automatically purchase a new reservation on the expiration date time. </param>
         /// <param name="renewSource"> Reservation Id of the reservation from which this reservation is renewed. Format of the resource Id is /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </param>
@@ -51,7 +53,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="userFriendlyAppliedScopeType"> The applied scope type of the reservation for display, e.g. Shared. </param>
         /// <param name="userFriendlyRenewState"> The renew state of the reservation for display, e.g. On. </param>
         /// <param name="utilization"> Reservation utilization. </param>
-        internal ReservationProperties(ReservedResourceType? reservedResourceType, InstanceFlexibility? instanceFlexibility, string displayName, IReadOnlyList<string> appliedScopes, AppliedScopeType? appliedScopeType, bool? isArchived, string capabilities, int? quantity, ReservationProvisioningState? provisioningState, DateTimeOffset? effectOn, DateTimeOffset? benefitStartOn, DateTimeOffset? lastUpdatedOn, DateTimeOffset? expireOn, string skuDescription, ExtendedStatusInfo extendedStatusInfo, ReservationBillingPlan? billingPlan, string displayProvisioningState, string provisioningSubState, DateTimeOffset? purchaseOn, ReservationSplitProperties splitProperties, ReservationMergeProperties mergeProperties, ResourceIdentifier billingScopeId, bool? isRenewEnabled, string renewSource, string renewDestination, RenewProperties renewProperties, ReservationTerm? term, string userFriendlyAppliedScopeType, string userFriendlyRenewState, ReservationPropertiesUtilization utilization)
+        internal ReservationProperties(ReservedResourceType? reservedResourceType, InstanceFlexibility? instanceFlexibility, string displayName, IReadOnlyList<string> appliedScopes, AppliedScopeType? appliedScopeType, bool? isArchived, string capabilities, int? quantity, ReservationProvisioningState? provisioningState, DateTimeOffset? effectOn, DateTimeOffset? benefitStartOn, DateTimeOffset? lastUpdatedOn, DateTimeOffset? expireOn, string skuDescription, ExtendedStatusInfo extendedStatusInfo, ReservationBillingPlan? billingPlan, string displayProvisioningState, string provisioningSubState, DateTimeOffset? purchaseOn, ReservationSplitProperties splitProperties, ReservationMergeProperties mergeProperties, ReservationSwapProperties swapProperties, AppliedScopeProperties appliedScopeProperties, ResourceIdentifier billingScopeId, bool? isRenewEnabled, string renewSource, string renewDestination, RenewProperties renewProperties, ReservationTerm? term, string userFriendlyAppliedScopeType, string userFriendlyRenewState, ReservationPropertiesUtilization utilization)
         {
             ReservedResourceType = reservedResourceType;
             InstanceFlexibility = instanceFlexibility;
@@ -74,6 +76,8 @@ namespace Azure.ResourceManager.Reservations.Models
             PurchaseOn = purchaseOn;
             SplitProperties = splitProperties;
             MergeProperties = mergeProperties;
+            SwapProperties = swapProperties;
+            AppliedScopeProperties = appliedScopeProperties;
             BillingScopeId = billingScopeId;
             IsRenewEnabled = isRenewEnabled;
             RenewSource = renewSource;
@@ -127,6 +131,10 @@ namespace Azure.ResourceManager.Reservations.Models
         public ReservationSplitProperties SplitProperties { get; }
         /// <summary> Gets the merge properties. </summary>
         public ReservationMergeProperties MergeProperties { get; }
+        /// <summary> Gets the swap properties. </summary>
+        public ReservationSwapProperties SwapProperties { get; }
+        /// <summary> Gets the applied scope properties. </summary>
+        public AppliedScopeProperties AppliedScopeProperties { get; }
         /// <summary> Subscription that will be charged for purchasing Reservation. </summary>
         public ResourceIdentifier BillingScopeId { get; }
         /// <summary> Setting this to true will automatically purchase a new reservation on the expiration date time. </summary>

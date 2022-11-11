@@ -37,6 +37,8 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<DateTimeOffset> purchaseDate = default;
             Optional<ReservationSplitProperties> splitProperties = default;
             Optional<ReservationMergeProperties> mergeProperties = default;
+            Optional<ReservationSwapProperties> swapProperties = default;
+            Optional<AppliedScopeProperties> appliedScopeProperties = default;
             Optional<ResourceIdentifier> billingScopeId = default;
             Optional<bool> renew = default;
             Optional<string> renewSource = default;
@@ -238,6 +240,26 @@ namespace Azure.ResourceManager.Reservations.Models
                     mergeProperties = ReservationMergeProperties.DeserializeReservationMergeProperties(property.Value);
                     continue;
                 }
+                if (property.NameEquals("swapProperties"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    swapProperties = ReservationSwapProperties.DeserializeReservationSwapProperties(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("appliedScopeProperties"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    appliedScopeProperties = AppliedScopeProperties.DeserializeAppliedScopeProperties(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("billingScopeId"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -309,7 +331,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new ReservationProperties(Optional.ToNullable(reservedResourceType), Optional.ToNullable(instanceFlexibility), displayName.Value, Optional.ToList(appliedScopes), Optional.ToNullable(appliedScopeType), Optional.ToNullable(archived), capabilities.Value, Optional.ToNullable(quantity), Optional.ToNullable(provisioningState), Optional.ToNullable(effectiveDateTime), Optional.ToNullable(benefitStartTime), Optional.ToNullable(lastUpdatedDateTime), Optional.ToNullable(expiryDate), skuDescription.Value, extendedStatusInfo.Value, Optional.ToNullable(billingPlan), displayProvisioningState.Value, provisioningSubState.Value, Optional.ToNullable(purchaseDate), splitProperties.Value, mergeProperties.Value, billingScopeId.Value, Optional.ToNullable(renew), renewSource.Value, renewDestination.Value, renewProperties.Value, Optional.ToNullable(term), userFriendlyAppliedScopeType.Value, userFriendlyRenewState.Value, utilization.Value);
+            return new ReservationProperties(Optional.ToNullable(reservedResourceType), Optional.ToNullable(instanceFlexibility), displayName.Value, Optional.ToList(appliedScopes), Optional.ToNullable(appliedScopeType), Optional.ToNullable(archived), capabilities.Value, Optional.ToNullable(quantity), Optional.ToNullable(provisioningState), Optional.ToNullable(effectiveDateTime), Optional.ToNullable(benefitStartTime), Optional.ToNullable(lastUpdatedDateTime), Optional.ToNullable(expiryDate), skuDescription.Value, extendedStatusInfo.Value, Optional.ToNullable(billingPlan), displayProvisioningState.Value, provisioningSubState.Value, Optional.ToNullable(purchaseDate), splitProperties.Value, mergeProperties.Value, swapProperties.Value, appliedScopeProperties.Value, billingScopeId.Value, Optional.ToNullable(renew), renewSource.Value, renewDestination.Value, renewProperties.Value, Optional.ToNullable(term), userFriendlyAppliedScopeType.Value, userFriendlyRenewState.Value, utilization.Value);
         }
     }
 }
