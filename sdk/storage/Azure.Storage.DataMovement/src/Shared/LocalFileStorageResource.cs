@@ -36,13 +36,7 @@ namespace Azure.Storage.DataMovement
         /// Defines whether the object can produce a SAS URL
         /// </summary>
         /// <returns></returns>
-        public override ProduceUriType CanProduceUri => ProduceUriType.ProducesUri;
-
-        /// <summary>
-        /// Does not require Commit List operation.
-        /// </summary>
-        /// <returns></returns>
-        public override RequiresCompleteTransferType RequiresCompleteTransfer => RequiresCompleteTransferType.None;
+        public override ProduceUriType CanProduceUri => ProduceUriType.NoUri;
 
         /// <summary>
         /// Constructor

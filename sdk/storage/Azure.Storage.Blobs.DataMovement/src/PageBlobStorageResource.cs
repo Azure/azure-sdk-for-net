@@ -42,12 +42,6 @@ namespace Azure.Storage.Blobs.DataMovement
         public override ProduceUriType CanProduceUri => ProduceUriType.ProducesUri;
 
         /// <summary>
-        /// Does not require Commit List operation.
-        /// </summary>
-        /// <returns></returns>
-        public override RequiresCompleteTransferType RequiresCompleteTransfer => RequiresCompleteTransferType.None;
-
-        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="blobClient"></param>
@@ -190,7 +184,8 @@ namespace Azure.Storage.Blobs.DataMovement
         /// </summary>
         public override Task CompleteTransferAsync(CancellationToken cancellationToken)
         {
-            throw new NotSupportedException();
+            // no-op for now
+            return Task.CompletedTask;
         }
     }
 }

@@ -42,13 +42,6 @@ namespace Azure.Storage.DataMovement
         public abstract ProduceUriType CanProduceUri { get; }
 
         /// <summary>
-        /// Determines whether or not the resource requires a commit block list (e.g. Commit Block List)
-        /// to determine which blocks will make up the resource.
-        /// </summary>
-        /// <returns><see cref="RequiresCompleteTransferType"/></returns>
-        public abstract RequiresCompleteTransferType RequiresCompleteTransfer { get; }
-
-        /// <summary>
         /// Produces readable stream to download
         /// </summary>
         /// <returns></returns>

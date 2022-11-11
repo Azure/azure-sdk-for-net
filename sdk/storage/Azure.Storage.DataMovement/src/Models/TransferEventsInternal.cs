@@ -11,17 +11,17 @@ namespace Azure.Storage.DataMovement.Models
 {
     internal class TransferEventsInternal
     {
-        public delegate Task InvokeTransferStatusEvent(TransferStatusEventArgs arg);
-        public delegate Task InvokeFailedEvent(TransferFailedEventArgs arg);
-
         /// <summary>
         /// If the transfer status of the job changes then the event will get added to this handler.
         /// </summary>
-        public InvokeTransferStatusEvent InvokeTransferStatus { get; set; }
+        public event SyncAsyncEventHandler<TransferStatusEventArgs> TransferStatusEventHandler;
+        internal SyncAsyncEventHandler<TransferStatusEventArgs> GetTransferStatus() => TransferStatusEventHandler;
 
         /// <summary>
         /// If the transfer has any failed events that occur the event will get added to this handler.
         /// </summary>
-        public InvokeFailedEvent InvokeFailedArg { get; set; }
+        public event SyncAsyncEventHandler<TransferFailedEventArgs> TransferFailedEventHandler;
+
+        internal SyncAsyncEventHandler<TransferFailedEventArgs> GetFailed() => TransferFailedEventHandler;
     }
 }

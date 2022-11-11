@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
+using Azure.Core;
 using Azure.Storage.DataMovement.Models;
 using System.Threading.Tasks;
 using System.IO;
@@ -36,7 +36,8 @@ namespace Azure.Storage.DataMovement
         /// <param name="errorHandling"></param>
         /// <param name="checkpointer"></param>
         /// <param name="uploadPool"></param>
-        /// <param name="events"></param>
+        /// <param name="statusEventHandler"></param>
+        /// <param name="failedEventHandler"></param>
         /// <param name="cancellationTokenSource"></param>
         public StreamToUriJobPart(
             DataTransfer dataTransfer,
@@ -47,7 +48,8 @@ namespace Azure.Storage.DataMovement
             ErrorHandlingOptions errorHandling,
             TransferCheckpointer checkpointer,
             ArrayPool<byte> uploadPool,
-            TransferEventsInternal events,
+            SyncAsyncEventHandler<TransferStatusEventArgs> statusEventHandler,
+            SyncAsyncEventHandler<TransferFailedEventArgs> failedEventHandler,
             CancellationTokenSource cancellationTokenSource)
             : base(dataTransfer,
                   sourceResource,
@@ -57,7 +59,8 @@ namespace Azure.Storage.DataMovement
                   errorHandling,
                   checkpointer,
                   uploadPool,
-                  events,
+                  statusEventHandler,
+                  failedEventHandler,
                   cancellationTokenSource)
         { }
 
@@ -112,14 +115,7 @@ namespace Azure.Storage.DataMovement
 
                     await QueueStageBlockRequests(commitBlockList).ConfigureAwait(false);
 
-                    if (RequiresCompleteTransferType.RequiresCompleteCall == _sourceResource.RequiresCompleteTransfer)
-                    {
-                        _commitBlockHandler = GetCommitController(
-                            expectedLength: fileLength.Value,
-                            commitBlockTask: async (cancellationToken) =>
-                                await _sourceResource.CompleteTransferAsync(cancellationToken).ConfigureAwait(false),
-                            this);
-                    }
+                    _commitBlockHandler = GetCommitController(expectedLength: fileLength.Value, this);
                 }
                 else
                 {
@@ -137,22 +133,18 @@ namespace Azure.Storage.DataMovement
         #region CommitChunkController
         internal static CommitChunkHandler GetCommitController(
             long expectedLength,
-            CommitBlockTaskInternal commitBlockTask,
             StreamToUriJobPart jobPart)
         => new CommitChunkHandler(
             expectedLength,
-            GetBlockListCommitHandlerBehaviors(commitBlockTask, jobPart));
+            GetBlockListCommitHandlerBehaviors(jobPart));
 
         internal static CommitChunkHandler.Behaviors GetBlockListCommitHandlerBehaviors(
-            CommitBlockTaskInternal commitBlockTask,
             StreamToUriJobPart jobPart)
         {
             return new CommitChunkHandler.Behaviors
             {
                 // TODO #27253
-                QueueCommitBlockTask = async () =>
-                        await commitBlockTask(
-                            jobPart._cancellationTokenSource.Token).ConfigureAwait(false),
+                QueueCommitBlockTask = async () => await jobPart.CompleteTransferAsync().ConfigureAwait(false),
                 ReportProgressInBytes = (long bytesWritten) =>
                     jobPart.ReportBytesWritten(bytesWritten),
                 InvokeFailedHandler = async (ex) => await jobPart.InvokeFailedArg(ex).ConfigureAwait(false),
@@ -194,20 +186,10 @@ namespace Azure.Storage.DataMovement
                     offset: offset,
                     length: blockLength,
                     cancellationToken: _cancellationTokenSource.Token).ConfigureAwait(false);
-                using (Stream stream = result.Content)
-                {
-                    //await OnTransferStatusChanged(StorageTransferStatus.InProgress, true).ConfigureAwait(false);
-                    slicedStream = await GetOffsetPartitionInternal(
-                        stream,
-                        (int)offset,
-                        (int)blockLength,
-                        _arrayPool,
-                        _cancellationTokenSource.Token).ConfigureAwait(false);
-                }
                 await _destinationResource.WriteStreamToOffsetAsync(
                         offset,
                         blockLength,
-                        slicedStream,
+                        result.Content,
                         default,
                         _cancellationTokenSource.Token).ConfigureAwait(false);
                 // Invoke event handler to keep track of all the stage blocks
@@ -227,6 +209,21 @@ namespace Azure.Storage.DataMovement
             {
                 // Job was cancelled
                 await TriggerCancellation().ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                await InvokeFailedArg(ex).ConfigureAwait(false);
+            }
+        }
+
+        internal async Task CompleteTransferAsync()
+        {
+            try
+            {
+                await _destinationResource.CompleteTransferAsync(_cancellationTokenSource.Token).ConfigureAwait(false);
+
+                // Set completion status to completed
+                await OnTransferStatusChanged(StorageTransferStatus.Completed).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

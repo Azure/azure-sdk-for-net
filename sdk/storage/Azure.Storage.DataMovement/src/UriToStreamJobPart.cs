@@ -35,7 +35,8 @@ namespace Azure.Storage.DataMovement
         /// <param name="errorHandling"></param>
         /// <param name="checkpointer"></param>
         /// <param name="uploadPool"></param>
-        /// <param name="events"></param>
+        /// <param name="statusEventHandler"></param>
+        /// <param name="failedEventHandler"></param>
         /// <param name="cancellationTokenSource"></param>
         public UriToStreamJobPart(
             DataTransfer dataTransfer,
@@ -46,7 +47,8 @@ namespace Azure.Storage.DataMovement
             ErrorHandlingOptions errorHandling,
             TransferCheckpointer checkpointer,
             ArrayPool<byte> uploadPool,
-            TransferEventsInternal events,
+            SyncAsyncEventHandler<TransferStatusEventArgs> statusEventHandler,
+            SyncAsyncEventHandler<TransferFailedEventArgs> failedEventHandler,
             CancellationTokenSource cancellationTokenSource)
             : base(dataTransfer,
                   sourceResource,
@@ -56,7 +58,8 @@ namespace Azure.Storage.DataMovement
                   errorHandling,
                   checkpointer,
                   uploadPool,
-                  events,
+                  statusEventHandler,
+                  failedEventHandler,
                   cancellationTokenSource){ }
 
         /// <summary>

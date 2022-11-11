@@ -259,7 +259,7 @@ namespace Azure.Storage.DataMovement
                 throw Errors.ArgumentNull(nameof(destinationResource));
             }
 
-            transferOptions = transferOptions == default ? new SingleTransferOptions() : transferOptions;
+            transferOptions ??= new SingleTransferOptions();
 
             // If the resource cannot produce a Uri, it means it can only produce a local path
             // From here we only support an upload job
@@ -349,7 +349,7 @@ namespace Azure.Storage.DataMovement
                 throw Errors.ArgumentNull(nameof(destinationResource));
             }
 
-            transferOptions = transferOptions == default ? new ContainerTransferOptions() : transferOptions;
+            transferOptions ??= new ContainerTransferOptions();
 
             // If the resource cannot produce a Uri, it means it can only produce a local path
             // From here we only support an upload job

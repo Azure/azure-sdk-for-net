@@ -243,7 +243,6 @@ namespace Azure.Storage.DataMovement.Tests
         {
             AutoResetEvent CompletedProgressBytesWait = new AutoResetEvent(false);
             SingleTransferOptions options = new SingleTransferOptions();
-            ;
 
             // Arrange
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
@@ -308,7 +307,11 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task StartTransfer_LocalToBlockBlobBlobSize(long fileSize, int waitTimeInSec)
         {
             AutoResetEvent InProgressWait = new AutoResetEvent(false);
-            SingleTransferOptions options = new SingleTransferOptions();
+            SingleTransferOptions options = new SingleTransferOptions()
+            {
+                InitialTransferSize = 10,
+                MaximumTransferChunkSize = 10,
+            };
 
             // Arrange
             var blobName = GetNewBlobName();

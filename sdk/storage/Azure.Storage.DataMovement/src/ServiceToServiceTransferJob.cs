@@ -98,7 +98,8 @@ namespace Azure.Storage.DataMovement
                     errorHandling: _errorHandling,
                     checkpointer: _checkpointer,
                     uploadPool: _arrayPool,
-                    events: _events,
+                    statusEventHandler: TransferStatusEventHandler,
+                    failedEventHandler: TransferFailedEventHandler,
                     cancellationTokenSource: _cancellationTokenSource);
                 _jobParts.Add(part);
                 yield return part;
@@ -120,17 +121,20 @@ namespace Azure.Storage.DataMovement
                         errorHandling: _errorHandling,
                         checkpointer: _checkpointer,
                         uploadPool: _arrayPool,
-                        events: _events,
+                        statusEventHandler: TransferStatusEventHandler,
+                        failedEventHandler: TransferFailedEventHandler,
                         cancellationTokenSource: _cancellationTokenSource);
                     _jobParts.Add(part);
                     yield return part;
                 }
             }
-            if (_jobParts.All((JobPartInternal x) => x.JobPartStatus == StorageTransferStatus.Completed))
+            if (_jobParts.All((JobPartInternal x) => x.JobPartStatus == StorageTransferStatus.Completed)
+                && TransferStatusEventHandler != default)
             {
-                await _events.InvokeTransferStatus(
-                new TransferStatusEventArgs(
-                transferId: _dataTransfer.Id,
+                // TODO: Change to RaiseAsync
+                await TransferStatusEventHandler.Invoke(
+                    new TransferStatusEventArgs(
+                        transferId: _dataTransfer.Id,
                         transferStatus: StorageTransferStatus.Completed,
                         isRunningSynchronously: true,
                         cancellationToken: _cancellationTokenSource.Token)).ConfigureAwait(false);

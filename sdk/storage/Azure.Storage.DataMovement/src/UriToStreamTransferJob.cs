@@ -88,16 +88,17 @@ namespace Azure.Storage.DataMovement
             if (_isSingleResource)
             {
                 // Single resource transfer, we can skip to chunking the job.
-                StreamToUriJobPart part = new StreamToUriJobPart(
+                UriToStreamJobPart part = new UriToStreamJobPart(
                     dataTransfer: _dataTransfer,
                     sourceResource: _sourceResource,
                     destinationResource: _destinationResource,
                     maximumTransferChunkSize: _maximumTransferChunkSize,
-                initialTransferSize: _initialTransferSize,
+                    initialTransferSize: _initialTransferSize,
                     errorHandling: _errorHandling,
                     checkpointer: _checkpointer,
                     uploadPool: _arrayPool,
-                    events: _events,
+                    statusEventHandler: TransferStatusEventHandler,
+                    failedEventHandler: TransferFailedEventHandler,
                     cancellationTokenSource: _cancellationTokenSource);
                 _jobParts.Add(part);
                 yield return part;
@@ -110,7 +111,7 @@ namespace Azure.Storage.DataMovement
                         cancellationToken: _cancellationTokenSource.Token).ConfigureAwait(false))
                 {
                     // Pass each storage resource found in each list call
-                    StreamToUriJobPart part = new StreamToUriJobPart(
+                    UriToStreamJobPart part = new UriToStreamJobPart(
                         dataTransfer: _dataTransfer,
                         sourceResource: resource,
                         destinationResource: _destinationResourceContainer.GetChildStorageResource(resource.Path),
@@ -119,17 +120,19 @@ namespace Azure.Storage.DataMovement
                         errorHandling: _errorHandling,
                         checkpointer: _checkpointer,
                         uploadPool: _arrayPool,
-                        events: _events,
+                        statusEventHandler: TransferStatusEventHandler,
+                        failedEventHandler: TransferFailedEventHandler,
                         cancellationTokenSource: _cancellationTokenSource);
                     _jobParts.Add(part);
                     yield return part;
                 }
             }
-            if (_jobParts.All((JobPartInternal x) => x.JobPartStatus == StorageTransferStatus.Completed))
+            if (_jobParts.All((JobPartInternal x) => x.JobPartStatus == StorageTransferStatus.Completed)
+                && TransferStatusEventHandler != default)
             {
-                await _events.InvokeTransferStatus(
-                new TransferStatusEventArgs(
-                transferId: _dataTransfer.Id,
+                await TransferStatusEventHandler.Invoke(
+                    new TransferStatusEventArgs(
+                        transferId: _dataTransfer.Id,
                         transferStatus: StorageTransferStatus.Completed,
                         isRunningSynchronously: true,
                         cancellationToken: _cancellationTokenSource.Token)).ConfigureAwait(false);

@@ -6,6 +6,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,7 +24,11 @@ namespace Azure.Storage.Blobs.DataMovement
     public class BlockBlobStorageResource : StorageResource
     {
         private BlockBlobClient _blobClient;
-        private List<string> _blocks;
+        /// <summary>
+        /// In order to ensure the block list is sent in the correct order
+        /// we will order them by the offset. {offset, block_id}
+        /// </summary>
+        private List<(long Offset, string BlockId)> _blocks;
         private BlockBlobStorageResourceOptions _options;
 
         /// <summary>
@@ -44,12 +49,6 @@ namespace Azure.Storage.Blobs.DataMovement
         public override ProduceUriType CanProduceUri => ProduceUriType.ProducesUri;
 
         /// <summary>
-        /// Does not require Commit List operation.
-        /// </summary>
-        /// <returns></returns>
-        public override RequiresCompleteTransferType RequiresCompleteTransfer => RequiresCompleteTransferType.RequiresCompleteCall;
-
-        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="blobClient"></param>
@@ -59,7 +58,7 @@ namespace Azure.Storage.Blobs.DataMovement
             BlockBlobStorageResourceOptions options = default)
         {
             _blobClient = blobClient;
-            _blocks = new List<string>();
+            _blocks = new List<(long,string)>();
             _options = options;
         }
 
@@ -72,9 +71,10 @@ namespace Azure.Storage.Blobs.DataMovement
             CancellationToken cancellationToken = default)
         {
             Response<BlobDownloadStreamingResult> response = await _blobClient.DownloadStreamingAsync(
-                new HttpRange(position ?? 0, Constants.LargeBufferSize), // TODO: convert to take in max size
-                default, // TODO: convert options to conditions
-                false,
+                new BlobDownloadOptions()
+                {
+                    Range = position.HasValue ? new HttpRange(position.Value) : default,
+                },
                 cancellationToken).ConfigureAwait(false);
             return response.Value.ToReadStreamStorageResourceInfo();
         }
@@ -96,9 +96,10 @@ namespace Azure.Storage.Blobs.DataMovement
             CancellationToken cancellationToken = default)
         {
             Response<BlobDownloadStreamingResult> response = await _blobClient.DownloadStreamingAsync(
-                new HttpRange(offset, length),
-                default, // TODO: convert options to conditions
-                false,
+                new BlobDownloadOptions()
+                {
+                    Range = new HttpRange(offset, length)
+                },
                 cancellationToken).ConfigureAwait(false);
             return response.Value.ToReadStreamStorageResourceInfo();
         }
@@ -114,7 +115,7 @@ namespace Azure.Storage.Blobs.DataMovement
             CancellationToken token = default)
         {
             // TODO: change depending on type of blob and type single shot or parallel transfer
-            await _blobClient.UploadAsync(stream, default, cancellationToken:token).ConfigureAwait(false);
+            await _blobClient.UploadAsync(stream, new BlobUploadOptions(), cancellationToken:token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -134,20 +135,11 @@ namespace Azure.Storage.Blobs.DataMovement
             CancellationToken cancellationToken = default)
         {
             string id = Shared.StorageExtensions.GenerateBlockId(offset);
-            _blocks.Add(id);
+            _blocks.Add((offset, id));
             await _blobClient.StageBlockAsync(
                 id,
                 stream,
-                // TODO #27253
-                //new BlockBlobStageBlockOptions()
-                //{
-                //    TransactionalHashingOptions = hashingOptions,
-                //    Conditions = conditions,
-                //    ProgressHandler = progressHandler
-                //},
-                transactionalContentHash: default,
-                default,
-                default,
+                new BlockBlobStageBlockOptions(),
                 cancellationToken).ConfigureAwait(false);
         }
 
@@ -182,7 +174,7 @@ namespace Azure.Storage.Blobs.DataMovement
             CancellationToken cancellationToken = default)
         {
             string id = options?.BlockId ?? Shared.StorageExtensions.GenerateBlockId(range.Offset);
-            _blocks.Add(id);
+            _blocks.Add((range.Offset, id));
             await _blobClient.StageBlockFromUriAsync(
                 sourceUri,
                 id,
@@ -206,8 +198,9 @@ namespace Azure.Storage.Blobs.DataMovement
         {
             if (_blocks != null && _blocks.Count > 0)
             {
+                _blocks.Sort( (a,b) => a.Offset.CompareTo(b.Offset) );
                 await _blobClient.CommitBlockListAsync(
-                    _blocks,
+                    _blocks.Select(x => x.BlockId).ToList(),
                     default,
                     cancellationToken).ConfigureAwait(false);
                 _blocks.Clear();

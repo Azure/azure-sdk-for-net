@@ -51,11 +51,6 @@ namespace Azure.Storage.DataMovement
         internal ErrorHandlingOptions _errorHandling;
 
         /// <summary>
-        /// Stores the delegates to invoke the transfer handlers
-        /// </summary>
-        internal TransferEventsInternal _events;
-
-        /// <summary>
         /// The maximum length of an transfer in bytes.
         ///
         /// On uploads, if the value is not set, it will be set at 4 MB if the total size is less than 100MB
@@ -79,6 +74,16 @@ namespace Azure.Storage.DataMovement
         public StorageTransferStatus JobPartStatus { get; set; }
 
         /// <summary>
+        /// If the transfer status of the job changes then the event will get added to this handler.
+        /// </summary>
+        public SyncAsyncEventHandler<TransferStatusEventArgs> TransferStatusEventHandler { get; internal set; }
+
+        /// <summary>
+        /// If the transfer has any failed events that occur the event will get added to this handler.
+        /// </summary>
+        public SyncAsyncEventHandler<TransferFailedEventArgs> TransferFailedEventHandler { get; internal set; }
+
+        /// <summary>
         /// Array pools for reading from streams to upload
         /// </summary>
         public ArrayPool<byte> UploadArrayPool => _arrayPool;
@@ -95,8 +100,9 @@ namespace Azure.Storage.DataMovement
             ErrorHandlingOptions errorHandling,
             TransferCheckpointer checkpointer,
             ArrayPool<byte> arrayPool,
-            TransferEventsInternal events,
-            CancellationTokenSource cancellationToken)
+            SyncAsyncEventHandler<TransferStatusEventArgs> statusEventHandler,
+            SyncAsyncEventHandler<TransferFailedEventArgs> failedEventHandler,
+            CancellationTokenSource cancellationTokenSource)
         {
             JobPartStatus = StorageTransferStatus.Queued;
             _dataTransfer = dataTransfer;
@@ -104,11 +110,12 @@ namespace Azure.Storage.DataMovement
             _destinationResource = destinationResource;
             _errorHandling = errorHandling;
             _checkpointer = checkpointer;
-            _cancellationTokenSource = cancellationToken;
+            _cancellationTokenSource = cancellationTokenSource;
             _maximumTransferChunkSize = maximumTransferChunkSize;
             _initialTransferSize = initialTransferSize;
             _arrayPool = arrayPool;
-            _events = events;
+            TransferStatusEventHandler = statusEventHandler;
+            TransferFailedEventHandler = failedEventHandler;
         }
 
         public void SetQueueChunkDelegate(QueueChunkDelegate chunkDelegate)
@@ -141,11 +148,15 @@ namespace Azure.Storage.DataMovement
             if (JobPartStatus != transferStatus)
             {
                 JobPartStatus = transferStatus;
-                await _events.InvokeTransferStatus(new TransferStatusEventArgs(
-                    _dataTransfer.Id,
-                    transferStatus,
-                    false,
-                    _cancellationTokenSource.Token)).ConfigureAwait(false);
+                // TODO: change to RaiseAsync
+                if (TransferFailedEventHandler != null)
+                {
+                    await TransferStatusEventHandler.Invoke(new TransferStatusEventArgs(
+                        _dataTransfer.Id,
+                        transferStatus,
+                        false,
+                        _cancellationTokenSource.Token)).ConfigureAwait(false);
+                }
             }
         }
 
@@ -163,13 +174,17 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         internal async Task InvokeFailedArg(Exception ex)
         {
-            await _events.InvokeFailedArg(new TransferFailedEventArgs(
-                _dataTransfer.Id,
-                _sourceResource,
-                _destinationResource,
-                ex,
-                false,
-                _cancellationTokenSource.Token)).ConfigureAwait(false);
+            if (TransferFailedEventHandler != null)
+            {
+                // TODO: change to RaiseAsync
+                await TransferFailedEventHandler.Invoke(new TransferFailedEventArgs(
+                    _dataTransfer.Id,
+                    _sourceResource,
+                    _destinationResource,
+                    ex,
+                    false,
+                    _cancellationTokenSource.Token)).ConfigureAwait(false);
+            }
             // Trigger job cancellation if the failed handler is enabled
             if (_errorHandling == ErrorHandlingOptions.StopOnAllFailures)
             {

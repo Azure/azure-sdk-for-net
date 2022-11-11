@@ -4,13 +4,11 @@
 using System;
 using System.Buffers;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Storage.Blobs.DataMovement.Models;
 using Azure.Storage.DataMovement.Models;
-using Azure.Storage.Shared;
-using static Azure.Storage.DataMovement.TransferJobInternal;
 
 namespace Azure.Storage.DataMovement
 {
@@ -36,7 +34,8 @@ namespace Azure.Storage.DataMovement
         /// <param name="errorHandling"></param>
         /// <param name="checkpointer"></param>
         /// <param name="uploadPool"></param>
-        /// <param name="events"></param>
+        /// <param name="statusEventHandler"></param>
+        /// <param name="failedEventHandler"></param>
         /// <param name="cancellationTokenSource"></param>
         public ServiceToServiceJobPart(
             DataTransfer dataTransfer,
@@ -47,7 +46,8 @@ namespace Azure.Storage.DataMovement
             ErrorHandlingOptions errorHandling,
             TransferCheckpointer checkpointer,
             ArrayPool<byte> uploadPool,
-            TransferEventsInternal events,
+            SyncAsyncEventHandler<TransferStatusEventArgs> statusEventHandler,
+            SyncAsyncEventHandler<TransferFailedEventArgs> failedEventHandler,
             CancellationTokenSource cancellationTokenSource)
             : base(dataTransfer,
                   sourceResource,
@@ -57,7 +57,8 @@ namespace Azure.Storage.DataMovement
                   errorHandling,
                   checkpointer,
                   uploadPool,
-                  events,
+                  statusEventHandler,
+                  failedEventHandler,
                   cancellationTokenSource)
         { }
 
@@ -108,14 +109,11 @@ namespace Azure.Storage.DataMovement
 
                     await QueueStageBlockRequests(commitBlockList).ConfigureAwait(false);
 
-                    if (RequiresCompleteTransferType.RequiresCompleteCall == _sourceResource.RequiresCompleteTransfer)
-                    {
-                        _commitBlockHandler = GetCommitController(
-                            expectedLength: fileLength.Value,
-                            commitBlockTask: async (cancellationToken) =>
-                                await _sourceResource.CompleteTransferAsync(cancellationToken).ConfigureAwait(false),
-                            this);
-                    }
+                    _commitBlockHandler = GetCommitController(
+                        expectedLength: fileLength.Value,
+                        commitBlockTask: async (cancellationToken) =>
+                            await _sourceResource.CompleteTransferAsync(cancellationToken).ConfigureAwait(false),
+                        this);
                 }
                 else
                 {

@@ -16,7 +16,7 @@ namespace Azure.Storage.DataMovement
 {
     internal abstract class TransferJobInternal
     {
-        #region QueueChannelTasks
+        #region Delegates
         public delegate Task QueueChunkTaskInternal(Func<Task> uploadTask);
         #endregion
         public QueueChunkTaskInternal QueueChunkTask { get; internal set; }
@@ -90,9 +90,14 @@ namespace Azure.Storage.DataMovement
         internal ErrorHandlingOptions _errorHandling;
 
         /// <summary>
-        /// Stores the delegates to invoke the transfer handlers
+        /// If the transfer status of the job changes then the event will get added to this handler.
         /// </summary>
-        internal TransferEventsInternal _events;
+        public SyncAsyncEventHandler<TransferStatusEventArgs> TransferStatusEventHandler { get; internal set; }
+
+        /// <summary>
+        /// If the transfer has any failed events that occur the event will get added to this handler.
+        /// </summary>
+        public SyncAsyncEventHandler<TransferFailedEventArgs> TransferFailedEventHandler { get; internal set; }
 
         /// <summary>
         /// Array pools for reading from streams to upload
@@ -116,7 +121,9 @@ namespace Azure.Storage.DataMovement
             QueueChunkTaskInternal queueChunkTask,
             TransferCheckpointer checkPointer,
             ErrorHandlingOptions errorHandling,
-            ArrayPool<byte> arrayPool)
+            ArrayPool<byte> arrayPool,
+            SyncAsyncEventHandler<TransferStatusEventArgs> statusEventHandler,
+            SyncAsyncEventHandler<TransferFailedEventArgs> failedEventHandler)
         {
             _dataTransfer = dataTransfer ?? throw Errors.ArgumentNull(nameof(dataTransfer));
             _errorHandling = errorHandling;
@@ -142,7 +149,8 @@ namespace Azure.Storage.DataMovement
             _arrayPool = arrayPool;
             _jobParts = new List<JobPartInternal>();
 
-            // Create event handler transfer status based on the part
+            TransferStatusEventHandler = statusEventHandler;
+            TransferFailedEventHandler = failedEventHandler;
         }
 
         /// <summary>
@@ -163,14 +171,13 @@ namespace Azure.Storage.DataMovement
                   queueChunkTask,
                   checkpointer,
                   errorHandling,
-                  arrayPool)
+                  arrayPool,
+                  transferOptions.GetTransferStatus(),
+                  transferOptions.GetFailed())
         {
             _sourceResource = sourceResource;
             _destinationResource = destinationResource;
             _isSingleResource = true;
-            _events = new TransferEventsInternal();
-            _events.InvokeTransferStatus += (args) => transferOptions?.GetTransferStatus().Invoke(args);
-            _events.InvokeFailedArg += (args) => transferOptions?.GetFailed().Invoke(args);
         }
 
         /// <summary>
@@ -191,17 +198,13 @@ namespace Azure.Storage.DataMovement
                   queueChunkTask,
                   checkpointer,
                   errorHandling,
-                  arrayPool)
+                  arrayPool,
+                  transferOptions.GetTransferStatus(),
+                  transferOptions.GetFailed())
         {
             _sourceResourceContainer = sourceResource;
             _destinationResourceContainer = destinationResource;
             _isSingleResource = false;
-            _events = new TransferEventsInternal();
-            if (transferOptions != default)
-            {
-                _events.InvokeTransferStatus = (args) => transferOptions.GetTransferStatus().Invoke(args);
-                _events.InvokeFailedArg = (args) => transferOptions.GetFailed().Invoke(args);
-            }
         }
 
         /// <summary>
