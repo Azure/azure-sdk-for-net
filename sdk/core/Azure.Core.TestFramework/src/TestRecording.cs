@@ -46,7 +46,7 @@ namespace Azure.Core.TestFramework
 
         internal async Task InitializeProxySettingsAsync()
         {
-            var assetsJson = _recordedTestBase.GetAssetsJson(_sessionFile);
+            var assetsJson = _recordedTestBase.AssetsJsonPath;
 
             switch (Mode)
             {

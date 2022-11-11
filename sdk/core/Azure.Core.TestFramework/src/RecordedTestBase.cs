@@ -47,6 +47,7 @@ namespace Azure.Core.TestFramework
 
         public const string SanitizeValue = "Sanitized";
         public const string AssetsJson = "assets.json";
+        public string AssetsJsonPath { get; set; }
 
         /// <summary>
         /// The list of JSON path sanitizers to use when sanitizing a JSON request or response body.
@@ -208,6 +209,7 @@ namespace Azure.Core.TestFramework
         protected RecordedTestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync)
         {
             Mode = mode ?? TestEnvironment.GlobalTestMode;
+            AssetsJsonPath = GetAssetsJson();
         }
 
         protected async Task<TestRecording> CreateTestRecordingAsync(RecordedTestMode mode, string sessionFile) =>
@@ -252,10 +254,17 @@ namespace Azure.Core.TestFramework
                 GetSessionFileDirectory(),
                 fileName);
 
-            return Regex.Replace(result.Replace(repoRoot, String.Empty), @"^[\\/]*", string.Empty);
+            if (!string.IsNullOrWhiteSpace(AssetsJsonPath))
+            {
+                return Regex.Replace(result.Replace(repoRoot, String.Empty), @"^[\\/]*", string.Empty);
+            }
+            else
+            {
+                return result;
+            }
         }
 
-        public string GetAssetsJson(string testFile)
+        private string GetAssetsJson()
         {
             var path = GetSessionFileDirectory();
 
