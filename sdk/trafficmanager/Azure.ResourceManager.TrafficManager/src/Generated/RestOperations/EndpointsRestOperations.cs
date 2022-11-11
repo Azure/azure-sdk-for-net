@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.TrafficManager.Models;
 
 namespace Azure.ResourceManager.TrafficManager
 {
@@ -69,11 +68,11 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> The name of the Traffic Manager profile. </param>
-        /// <param name="endpointType"> The type of the Traffic Manager endpoint to be updated. </param>
+        /// <param name="endpointType"> The type of the Traffic Manager endpoint to be updated. Only AzureEndpoints, ExternalEndpoints and NestedEndpoints are allowed here. </param>
         /// <param name="endpointName"> The name of the Traffic Manager endpoint to be updated. </param>
         /// <param name="data"> The Traffic Manager endpoint parameters supplied to the Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointType"/>, <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointType"/>, <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointType"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<TrafficManagerEndpointData>> UpdateAsync(string subscriptionId, string resourceGroupName, string profileName, string endpointType, string endpointName, TrafficManagerEndpointData data, CancellationToken cancellationToken = default)
         {
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> The name of the Traffic Manager profile. </param>
-        /// <param name="endpointType"> The type of the Traffic Manager endpoint to be updated. </param>
+        /// <param name="endpointType"> The type of the Traffic Manager endpoint to be updated. Only AzureEndpoints, ExternalEndpoints and NestedEndpoints are allowed here. </param>
         /// <param name="endpointName"> The name of the Traffic Manager endpoint to be updated. </param>
         /// <param name="data"> The Traffic Manager endpoint parameters supplied to the Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -163,7 +162,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> The name of the Traffic Manager profile. </param>
-        /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
+        /// <param name="endpointType"> The type of the Traffic Manager endpoint. Only AzureEndpoints, ExternalEndpoints and NestedEndpoints are allowed here. </param>
         /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointType"/> or <paramref name="endpointName"/> is null. </exception>
@@ -198,7 +197,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> The name of the Traffic Manager profile. </param>
-        /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
+        /// <param name="endpointType"> The type of the Traffic Manager endpoint. Only AzureEndpoints, ExternalEndpoints and NestedEndpoints are allowed here. </param>
         /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointType"/> or <paramref name="endpointName"/> is null. </exception>
@@ -261,7 +260,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> The name of the Traffic Manager profile. </param>
-        /// <param name="endpointType"> The type of the Traffic Manager endpoint to be created or updated. </param>
+        /// <param name="endpointType"> The type of the Traffic Manager endpoint to be created or updated. Only AzureEndpoints, ExternalEndpoints and NestedEndpoints are allowed here. </param>
         /// <param name="endpointName"> The name of the Traffic Manager endpoint to be created or updated. </param>
         /// <param name="data"> The Traffic Manager endpoint parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -297,7 +296,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> The name of the Traffic Manager profile. </param>
-        /// <param name="endpointType"> The type of the Traffic Manager endpoint to be created or updated. </param>
+        /// <param name="endpointType"> The type of the Traffic Manager endpoint to be created or updated. Only AzureEndpoints, ExternalEndpoints and NestedEndpoints are allowed here. </param>
         /// <param name="endpointName"> The name of the Traffic Manager endpoint to be created or updated. </param>
         /// <param name="data"> The Traffic Manager endpoint parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -357,7 +356,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> The name of the Traffic Manager profile. </param>
-        /// <param name="endpointType"> The type of the Traffic Manager endpoint to be deleted. </param>
+        /// <param name="endpointType"> The type of the Traffic Manager endpoint to be deleted. Only AzureEndpoints, ExternalEndpoints and NestedEndpoints are allowed here. </param>
         /// <param name="endpointName"> The name of the Traffic Manager endpoint to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointType"/> or <paramref name="endpointName"/> is null. </exception>
@@ -386,7 +385,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> The name of the Traffic Manager profile. </param>
-        /// <param name="endpointType"> The type of the Traffic Manager endpoint to be deleted. </param>
+        /// <param name="endpointType"> The type of the Traffic Manager endpoint to be deleted. Only AzureEndpoints, ExternalEndpoints and NestedEndpoints are allowed here. </param>
         /// <param name="endpointName"> The name of the Traffic Manager endpoint to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointType"/> or <paramref name="endpointName"/> is null. </exception>
