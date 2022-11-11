@@ -1,9 +1,0 @@
-using Cadl.Http;
-using Cadl.Rest;
-using Azure.Core;
-
-enum Clients {
-  SamplesClient,
-  SampleClassificationsClient,
-  ClassificationSchemasClient,
-}

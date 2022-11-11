@@ -1,3 +1,0 @@
-import "../../../common";
-import "./models.cadl";
-import "./operations.cadl";
