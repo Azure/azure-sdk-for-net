@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.1.0-beta.2 (2022-11-10)
 
 ### Features Added
 
@@ -17,12 +17,6 @@
   - `LoadSnapshot` and `LoadSnapshotAsync`
   - `UnassignDeploymentResources` and `UnassignDeploymentResourcesAsync`
 - Added an overload to `ConversationAuthoringClient.ExportProject` and `ExportProjectAsync` to add the `trainedModelLabel` parameter.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.1.0-beta.1 (2022-07-01)
 
