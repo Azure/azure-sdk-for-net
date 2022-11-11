@@ -5,14 +5,26 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedServiceIdentities
 {
-    public partial class FederatedIdentityCredentialData : ResourceData
+    public partial class FederatedIdentityCredentialData
     {
         /// <summary> The URL of the issuer to be trusted. </summary>
-        public string Issuer { get; set; }
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public string Issuer
+        {
+            get
+            {
+                return IssuerUri?.AbsoluteUri;
+            }
+            set
+            {
+                IssuerUri = new Uri(value);
+            }
+        }
     }
 }
