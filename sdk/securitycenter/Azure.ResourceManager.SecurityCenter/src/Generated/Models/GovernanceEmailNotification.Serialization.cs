@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisableManagerEmailNotification))
+            if (Optional.IsDefined(IsManagerEmailNotificationDisabled))
             {
                 writer.WritePropertyName("disableManagerEmailNotification");
-                writer.WriteBooleanValue(DisableManagerEmailNotification.Value);
+                writer.WriteBooleanValue(IsManagerEmailNotificationDisabled.Value);
             }
-            if (Optional.IsDefined(DisableOwnerEmailNotification))
+            if (Optional.IsDefined(IsOwnerEmailNotificationDisabled))
             {
                 writer.WritePropertyName("disableOwnerEmailNotification");
-                writer.WriteBooleanValue(DisableOwnerEmailNotification.Value);
+                writer.WriteBooleanValue(IsOwnerEmailNotificationDisabled.Value);
             }
             writer.WriteEndObject();
         }

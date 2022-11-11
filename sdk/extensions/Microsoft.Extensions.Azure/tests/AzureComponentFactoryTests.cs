@@ -54,7 +54,7 @@ namespace Azure.Core.Extensions.Tests
         }
 
         [Test]
-        public void UsesDefaultCredentialWhenNoneExists()
+        public void UsesSpecifiedCredentialFactoryWhenNoConfig()
         {
             var configuration = GetConfiguration();
 
@@ -66,6 +66,24 @@ namespace Azure.Core.Extensions.Tests
             TokenCredential credential = factory.CreateTokenCredential(configuration);
 
             Assert.IsInstanceOf<EnvironmentCredential>(credential);
+        }
+
+        [Test]
+        public void UsesDefaultAzureCredentialWithConfig()
+        {
+            var configuration = GetConfiguration(
+                new KeyValuePair<string, string>("TestClient:clientId", "ConfigurationClientId"),
+                new KeyValuePair<string, string>("TestClient:tenantId", "ConfigurationTenantId"));
+
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddAzureClients(builder => builder.UseCredential(new EnvironmentCredential()));
+
+            ServiceProvider provider = serviceCollection.BuildServiceProvider();
+            AzureComponentFactory factory = provider.GetService<AzureComponentFactory>();
+            TokenCredential credential = factory.CreateTokenCredential(configuration.GetSection("TestClient"));
+
+            // credential factory is not used because there is configuration specified
+            Assert.IsInstanceOf<DefaultAzureCredential>(credential);
         }
 
         [Test]

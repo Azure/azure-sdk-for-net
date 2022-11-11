@@ -10,14 +10,13 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The call connection properties. </summary>
     public class CallConnectionProperties
     {
-        internal CallConnectionProperties(string callConnectionId, string serverCallId, CallSource callSource, IEnumerable<CommunicationIdentifier> targets, CallConnectionState callConnectionState, string subject, Uri callbackEndpoint, string mediaSubscriptionId)
+        internal CallConnectionProperties(string callConnectionId, string serverCallId, CallSource callSource, IEnumerable<CommunicationIdentifier> targets, CallConnectionState callConnectionState, Uri callbackEndpoint, string mediaSubscriptionId)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
             CallSource = callSource;
             Targets = targets == null ? new List<CommunicationIdentifier>() : targets.ToList();
             CallConnectionState = callConnectionState == default(CallConnectionState) ? CallConnectionState.Unknown : callConnectionState;
-            Subject = subject;
             CallbackEndpoint = callbackEndpoint;
             MediaSubscriptionId = mediaSubscriptionId;
         }
@@ -39,7 +38,6 @@ namespace Azure.Communication.CallAutomation
                 CallConnectionState = callConnectionPropertiesDtoInternal.CallConnectionState.Value;
             }
 
-            Subject = callConnectionPropertiesDtoInternal.Subject;
             CallbackEndpoint = new Uri(callConnectionPropertiesDtoInternal.CallbackUri);
             MediaSubscriptionId = callConnectionPropertiesDtoInternal.MediaSubscriptionId;
         }
@@ -54,8 +52,6 @@ namespace Azure.Communication.CallAutomation
         public IReadOnlyList<CommunicationIdentifier> Targets { get; }
         /// <summary> The state of the call connection. </summary>
         public CallConnectionState CallConnectionState { get; }
-        /// <summary> The subject. </summary>
-        public string Subject { get; }
         /// <summary> The callback URI. </summary>
         public Uri CallbackEndpoint { get; }
         /// <summary> SubscriptionId for media streaming. </summary>

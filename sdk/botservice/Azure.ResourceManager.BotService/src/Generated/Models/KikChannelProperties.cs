@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
         public KikChannelProperties(string userName, bool isEnabled)
         {
-            if (userName == null)
-            {
-                throw new ArgumentNullException(nameof(userName));
-            }
+            Argument.AssertNotNull(userName, nameof(userName));
 
             UserName = userName;
             IsEnabled = isEnabled;

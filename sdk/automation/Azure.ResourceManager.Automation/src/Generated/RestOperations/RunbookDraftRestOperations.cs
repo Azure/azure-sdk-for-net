@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="runbookName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="runbookName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RunbookDraft>> GetAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string runbookName, CancellationToken cancellationToken = default)
+        public async Task<Response<AutomationRunbookDraft>> GetAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string runbookName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -248,9 +248,9 @@ namespace Azure.ResourceManager.Automation
             {
                 case 200:
                     {
-                        RunbookDraft value = default;
+                        AutomationRunbookDraft value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RunbookDraft.DeserializeRunbookDraft(document.RootElement);
+                        value = AutomationRunbookDraft.DeserializeAutomationRunbookDraft(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="runbookName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="runbookName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RunbookDraft> Get(string subscriptionId, string resourceGroupName, string automationAccountName, string runbookName, CancellationToken cancellationToken = default)
+        public Response<AutomationRunbookDraft> Get(string subscriptionId, string resourceGroupName, string automationAccountName, string runbookName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -279,9 +279,9 @@ namespace Azure.ResourceManager.Automation
             {
                 case 200:
                     {
-                        RunbookDraft value = default;
+                        AutomationRunbookDraft value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RunbookDraft.DeserializeRunbookDraft(document.RootElement);
+                        value = AutomationRunbookDraft.DeserializeAutomationRunbookDraft(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

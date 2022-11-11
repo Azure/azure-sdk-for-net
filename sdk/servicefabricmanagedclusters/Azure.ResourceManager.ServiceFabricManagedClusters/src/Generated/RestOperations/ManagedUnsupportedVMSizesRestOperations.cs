@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-06-01-preview";
+            _apiVersion = apiVersion ?? "2022-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="vmSize"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="vmSize"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ManagedVmSizeData>> GetAsync(string subscriptionId, AzureLocation location, string vmSize, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceFabricManagedUnsupportedVmSize>> GetAsync(string subscriptionId, AzureLocation location, string vmSize, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(vmSize, nameof(vmSize));
@@ -146,13 +146,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 case 200:
                     {
-                        ManagedVmSizeData value = default;
+                        ServiceFabricManagedUnsupportedVmSize value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ManagedVmSizeData.DeserializeManagedVmSizeData(document.RootElement);
+                        value = ServiceFabricManagedUnsupportedVmSize.DeserializeServiceFabricManagedUnsupportedVmSize(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((ManagedVmSizeData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -165,7 +163,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="vmSize"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="vmSize"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ManagedVmSizeData> Get(string subscriptionId, AzureLocation location, string vmSize, CancellationToken cancellationToken = default)
+        public Response<ServiceFabricManagedUnsupportedVmSize> Get(string subscriptionId, AzureLocation location, string vmSize, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(vmSize, nameof(vmSize));
@@ -176,13 +174,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 case 200:
                     {
-                        ManagedVmSizeData value = default;
+                        ServiceFabricManagedUnsupportedVmSize value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ManagedVmSizeData.DeserializeManagedVmSizeData(document.RootElement);
+                        value = ServiceFabricManagedUnsupportedVmSize.DeserializeServiceFabricManagedUnsupportedVmSize(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((ManagedVmSizeData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

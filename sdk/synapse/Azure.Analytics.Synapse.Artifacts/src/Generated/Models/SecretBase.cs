@@ -7,7 +7,11 @@
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> The base definition of a secret type. </summary>
+    /// <summary>
+    /// The base definition of a secret type.
+    /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+    /// </summary>
     public partial class SecretBase
     {
         /// <summary> Initializes a new instance of SecretBase. </summary>

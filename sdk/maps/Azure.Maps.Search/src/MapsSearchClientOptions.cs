@@ -24,14 +24,19 @@ namespace Azure.Maps.Search
 
         internal string Version { get; }
 
+        /// <summary> The Azure Maps endpoint for requests. </summary>
+        public Uri Endpoint { get; set; }
+
         /// <summary> Initializes new instance of SearchClientOptions. </summary>
-        public MapsSearchClientOptions(ServiceVersion version = LatestVersion)
+        public MapsSearchClientOptions(ServiceVersion version = LatestVersion, Uri endpoint = null)
         {
             Version = version switch
             {
                 ServiceVersion.V1_0 => "1.0",
                 _ => throw new NotSupportedException()
             };
+
+            Endpoint = endpoint;
         }
     }
 }

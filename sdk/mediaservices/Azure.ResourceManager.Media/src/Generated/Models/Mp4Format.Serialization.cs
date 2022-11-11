@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static Mp4Format DeserializeMp4Format(JsonElement element)
         {
-            Optional<IList<MultiBitrateOutputFile>> outputFiles = default;
+            Optional<IList<MediaOutputFile>> outputFiles = default;
             string odataType = default;
             string filenamePattern = default;
             foreach (var property in element.EnumerateObject())
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.Media.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MultiBitrateOutputFile> array = new List<MultiBitrateOutputFile>();
+                    List<MediaOutputFile> array = new List<MediaOutputFile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MultiBitrateOutputFile.DeserializeMultiBitrateOutputFile(item));
+                        array.Add(MediaOutputFile.DeserializeMediaOutputFile(item));
                     }
                     outputFiles = array;
                     continue;

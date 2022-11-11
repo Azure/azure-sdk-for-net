@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             ElasticSanVolumeData volumeData = new ElasticSanVolumeData()
             {
                 SizeGiB = 100,
-                CreationData = new Models.SourceCreationData()
+                CreationData = new Models.ElasticSanVolumeDataSourceInfo()
             };
             volumeData.CreationData.SourceUri = new Uri("http://abc.com");
             volumeData.Tags.Add("tag1", "value1");

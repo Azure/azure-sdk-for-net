@@ -29,7 +29,7 @@
             this.output = output;
         }
 
-        [Fact]
+        [Fact(Skip = "True")]
         public async Task ManagedCassandraCRUDTests()
         {
             using (var context = MockContext.Start(this.GetType()))

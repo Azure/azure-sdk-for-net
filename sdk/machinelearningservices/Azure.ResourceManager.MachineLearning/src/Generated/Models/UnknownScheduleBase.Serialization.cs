@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             Optional<DateTimeOffset?> endTime = default;
             Optional<ScheduleStatus> scheduleStatus = default;
-            ScheduleType scheduleType = default;
+            ScheduleType scheduleType = "Unknown";
             Optional<DateTimeOffset?> startTime = default;
             Optional<string> timeZone = default;
             foreach (var property in element.EnumerateObject())

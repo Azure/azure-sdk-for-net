@@ -8,7 +8,6 @@ csharp: true
 library-name: FrontDoor
 namespace: Azure.ResourceManager.FrontDoor
 require: https://github.com/Azure/azure-rest-api-specs/blob/aa8a23b8f92477d0fdce7af6ccffee1c604b3c56/specification/frontdoor/resource-manager/readme.md
-tag: package-2022-05
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -184,5 +183,57 @@ directive:
     where: $.definitions
     transform: >
       $.FrontendEndpointUpdateParameters.properties.sessionAffinityTtlSeconds['x-ms-client-name'] = 'SessionAffinityTtlInSeconds';
+  - from: swagger-document
+    where: $.definitions.ForwardingConfiguration.properties.cacheConfiguration
+    transform: >
+        $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.RoutingRuleUpdateParameters.properties.rulesEngine
+    transform: >
+        $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.FrontendEndpointUpdateParameters.properties.webApplicationFirewallPolicyLink
+    transform: >
+        $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.RoutingRuleUpdateParameters.properties.webApplicationFirewallPolicyLink
+    transform: >
+        $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.Backend.properties.privateLinkResourceId
+    transform: >
+        $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.Backend.properties.privateLinkLocation
+    transform: >
+        $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.Backend.properties.privateEndpointStatus
+    transform: >
+        $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.RulesEngineAction.properties.routeConfigurationOverride
+    transform: >
+        $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.RulesEngineRule.properties.matchConditions
+    transform: >
+        $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.RulesEngineRule.properties.matchProcessingBehavior
+    transform: >
+        $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.FrontendEndpointProperties.properties.customHttpsProvisioningState
+    transform: >
+        $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.FrontendEndpointProperties.properties.customHttpsProvisioningSubstate
+    transform: >
+        $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.FrontendEndpointProperties.properties.customHttpsConfiguration
+    transform: >
+        $["x-nullable"] = true;
 
 ```

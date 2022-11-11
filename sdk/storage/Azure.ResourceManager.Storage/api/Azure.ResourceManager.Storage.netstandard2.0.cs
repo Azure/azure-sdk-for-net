@@ -527,6 +527,7 @@ namespace Azure.ResourceManager.Storage
         protected StorageAccountRestoreBlobRangesOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string Id { get { throw null; } }
         public override Azure.ResourceManager.Storage.Models.BlobRestoreStatus Value { get { throw null; } }
         public virtual Azure.ResourceManager.Storage.Models.BlobRestoreStatus GetCurrentStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2402,6 +2403,8 @@ namespace Azure.ResourceManager.Storage.Models
     public partial class StorageTableAccessPolicy
     {
         public StorageTableAccessPolicy(string permission) { }
+        public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.DateTimeOffset? ExpiresOn { get { throw null; } set { } }
         public string Permission { get { throw null; } set { } }
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }

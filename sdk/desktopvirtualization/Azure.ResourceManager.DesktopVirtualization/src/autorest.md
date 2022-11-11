@@ -51,6 +51,7 @@ rename-rules:
 
 rename-mapping:
   Application: VirtualApplication
+  Application.properties.iconContent: -|any
   ApplicationType: VirtualApplicationType
   ApplicationGroup: VirtualApplicationGroup
   ApplicationGroup.properties.cloudPcResource: IsCloudPcResource
@@ -59,6 +60,7 @@ rename-mapping:
   ApplicationGroupType: VirtualApplicationGroupType
   CommandLineSetting: VirtualApplicationCommandLineSetting
   Desktop: VirtualDesktop
+  Desktop.properties.iconContent: -|any
   DesktopGroup: VirtualDesktopGroup
   Workspace: VirtualWorkspace
   HostPool.properties.cloudPcResource: IsCloudPcResource
@@ -92,6 +94,8 @@ rename-mapping:
   StartMenuItem: DesktopVirtualizationStartMenuItem
   StopHostsWhen: DesktopVirtualizationStopHostsWhen
   UpdateState: SessionHostUpdateState
+  MsixPackageApplications.rawIcon: -|any
+  MsixPackageApplications.rawPng: -|any
 
 directive:
 # remove this useless allOf so that we will not have a `ResourceModelWithAllowedPropertySetSku` type
@@ -105,4 +109,12 @@ directive:
   - from: swagger-document
     where: $.definitions.ApplicationGroupProperties.properties.workspaceArmPath
     transform: $["x-nullable"] = true
+# remove the format so that we can use rename-mapping to change the property type to BinaryData
+  - from: swagger-document
+    where: $.definitions
+    transform: >
+      delete $.MsixPackageApplications.properties.rawIcon['format'];
+      delete $.MsixPackageApplications.properties.rawPng['format'];
+      delete $.ApplicationProperties.properties.iconContent['format'];
+      delete $.DesktopProperties.properties.iconContent['format'];
 ```

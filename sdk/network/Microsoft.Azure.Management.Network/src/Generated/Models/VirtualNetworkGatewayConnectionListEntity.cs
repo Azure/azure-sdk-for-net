@@ -85,9 +85,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// include: 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="expressRouteGatewayBypass">Bypass ExpressRoute Gateway
         /// for data forwarding.</param>
+        /// <param name="enablePrivateLinkFastPath">Bypass the ExpressRoute
+        /// gateway when accessing private-links. ExpressRoute FastPath
+        /// (expressRouteGatewayBypass) must be enabled.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public VirtualNetworkGatewayConnectionListEntity(VirtualNetworkConnectionGatewayReference virtualNetworkGateway1, string connectionType, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string authorizationKey = default(string), VirtualNetworkConnectionGatewayReference virtualNetworkGateway2 = default(VirtualNetworkConnectionGatewayReference), VirtualNetworkConnectionGatewayReference localNetworkGateway2 = default(VirtualNetworkConnectionGatewayReference), string connectionProtocol = default(string), int? routingWeight = default(int?), string connectionMode = default(string), string sharedKey = default(string), string connectionStatus = default(string), IList<TunnelConnectionHealth> tunnelConnectionStatus = default(IList<TunnelConnectionHealth>), long? egressBytesTransferred = default(long?), long? ingressBytesTransferred = default(long?), SubResource peer = default(SubResource), bool? enableBgp = default(bool?), IList<GatewayCustomBgpIpAddressIpConfiguration> gatewayCustomBgpIpAddresses = default(IList<GatewayCustomBgpIpAddressIpConfiguration>), bool? usePolicyBasedTrafficSelectors = default(bool?), IList<IpsecPolicy> ipsecPolicies = default(IList<IpsecPolicy>), IList<TrafficSelectorPolicy> trafficSelectorPolicies = default(IList<TrafficSelectorPolicy>), string resourceGuid = default(string), string provisioningState = default(string), bool? expressRouteGatewayBypass = default(bool?), string etag = default(string))
+        public VirtualNetworkGatewayConnectionListEntity(VirtualNetworkConnectionGatewayReference virtualNetworkGateway1, string connectionType, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string authorizationKey = default(string), VirtualNetworkConnectionGatewayReference virtualNetworkGateway2 = default(VirtualNetworkConnectionGatewayReference), VirtualNetworkConnectionGatewayReference localNetworkGateway2 = default(VirtualNetworkConnectionGatewayReference), string connectionProtocol = default(string), int? routingWeight = default(int?), string connectionMode = default(string), string sharedKey = default(string), string connectionStatus = default(string), IList<TunnelConnectionHealth> tunnelConnectionStatus = default(IList<TunnelConnectionHealth>), long? egressBytesTransferred = default(long?), long? ingressBytesTransferred = default(long?), SubResource peer = default(SubResource), bool? enableBgp = default(bool?), IList<GatewayCustomBgpIpAddressIpConfiguration> gatewayCustomBgpIpAddresses = default(IList<GatewayCustomBgpIpAddressIpConfiguration>), bool? usePolicyBasedTrafficSelectors = default(bool?), IList<IpsecPolicy> ipsecPolicies = default(IList<IpsecPolicy>), IList<TrafficSelectorPolicy> trafficSelectorPolicies = default(IList<TrafficSelectorPolicy>), string resourceGuid = default(string), string provisioningState = default(string), bool? expressRouteGatewayBypass = default(bool?), bool? enablePrivateLinkFastPath = default(bool?), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             AuthorizationKey = authorizationKey;
@@ -112,6 +115,7 @@ namespace Microsoft.Azure.Management.Network.Models
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
             ExpressRouteGatewayBypass = expressRouteGatewayBypass;
+            EnablePrivateLinkFastPath = enablePrivateLinkFastPath;
             Etag = etag;
             CustomInit();
         }
@@ -262,6 +266,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.expressRouteGatewayBypass")]
         public bool? ExpressRouteGatewayBypass { get; set; }
+
+        /// <summary>
+        /// Gets or sets bypass the ExpressRoute gateway when accessing
+        /// private-links. ExpressRoute FastPath (expressRouteGatewayBypass)
+        /// must be enabled.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enablePrivateLinkFastPath")]
+        public bool? EnablePrivateLinkFastPath { get; set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource

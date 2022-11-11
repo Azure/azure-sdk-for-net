@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Describes the properties of a supported private link resource for the Azure Cognitive Search service. </param>
-        internal SearchPrivateLinkResource(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, SearchPrivateLinkResourceProperties properties) : base(id, name, resourceType, systemData)
+        internal SearchPrivateLinkResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SearchPrivateLinkResourceProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }

@@ -7,7 +7,7 @@ using Azure.Communication.Identity;
 using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
 
-namespace Azure.Communication.CallAutomation
+namespace Azure.Communication.CallAutomation.Tests.Infrastructure
 {
     internal class CallAutomationClientLiveTestsBase : RecordedTestBase<CallAutomationClientTestEnvironment>
     {
@@ -23,8 +23,8 @@ namespace Azure.Communication.CallAutomation
             UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainRegEx, "https://sanitized.skype.com"));
         }
 
-        public bool SkipCallingServerInteractionLiveTests
-            => TestEnvironment.Mode != RecordedTestMode.Playback && Environment.GetEnvironmentVariable("SKIP_CALLINGSERVER_INTERACTION_LIVE_TESTS")== "TRUE";
+        public bool SkipCallAutomationInteractionLiveTests
+            => TestEnvironment.Mode != RecordedTestMode.Playback && Environment.GetEnvironmentVariable("SKIP_CALLAUTOMATION_INTERACTION_LIVE_TESTS")== "TRUE";
 
         /// <summary>
         /// Creates a <see cref="CallAutomationClient" />

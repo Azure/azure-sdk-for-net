@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("beginDate");
                 writer.WriteStringValue(BeginOn.Value, "O");
             }
-            if (Optional.IsDefined(ExpiresOn))
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDate");
-                writer.WriteStringValue(ExpiresOn.Value, "O");
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (Optional.IsDefined(RelativeBeginDate))
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Media.Models
         internal static ContentKeyPolicyPlayReadyLicense DeserializeContentKeyPolicyPlayReadyLicense(JsonElement element)
         {
             bool allowTestDevices = default;
-            Optional<ContentKeyPolicyPlayReadySecurityLevel> securityLevel = default;
+            Optional<PlayReadySecurityLevel> securityLevel = default;
             Optional<DateTimeOffset> beginDate = default;
             Optional<DateTimeOffset> expirationDate = default;
             Optional<TimeSpan> relativeBeginDate = default;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Media.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    securityLevel = new ContentKeyPolicyPlayReadySecurityLevel(property.Value.GetString());
+                    securityLevel = new PlayReadySecurityLevel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("beginDate"))

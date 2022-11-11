@@ -7,6 +7,7 @@
 
 using System;
 using Azure.Communication.MediaComposition.Models;
+using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
 {
@@ -19,14 +20,8 @@ namespace Azure.Communication.MediaComposition
         /// <exception cref="ArgumentNullException"> <paramref name="presenterId"/> or <paramref name="supportId"/> is null. </exception>
         public PresenterLayout(string presenterId, string supportId)
         {
-            if (presenterId == null)
-            {
-                throw new ArgumentNullException(nameof(presenterId));
-            }
-            if (supportId == null)
-            {
-                throw new ArgumentNullException(nameof(supportId));
-            }
+            Argument.AssertNotNull(presenterId, nameof(presenterId));
+            Argument.AssertNotNull(supportId, nameof(supportId));
 
             PresenterId = presenterId;
             SupportId = supportId;

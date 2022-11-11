@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static CloudEdgeManagementRole DeserializeCloudEdgeManagementRole(JsonElement element)
         {
-            RoleType kind = default;
+            DataBoxEdgeRoleType kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 if (property.NameEquals("kind"))
                 {
-                    kind = new RoleType(property.Value.GetString());
+                    kind = new DataBoxEdgeRoleType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))

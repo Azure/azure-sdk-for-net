@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of MecRole. </summary>
         public MecRole()
         {
-            Kind = RoleType.Mec;
+            Kind = DataBoxEdgeRoleType.Mec;
         }
 
         /// <summary> Initializes a new instance of MecRole. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="controllerEndpoint"> Controller Endpoint. </param>
         /// <param name="resourceUniqueId"> Unique Id of the Resource. </param>
         /// <param name="roleStatus"> Role status. </param>
-        internal MecRole(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RoleType kind, AsymmetricEncryptedSecret connectionString, string controllerEndpoint, string resourceUniqueId, DataBoxEdgeRoleStatus? roleStatus) : base(id, name, resourceType, systemData, kind)
+        internal MecRole(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataBoxEdgeRoleType kind, AsymmetricEncryptedSecret connectionString, string controllerEndpoint, string resourceUniqueId, DataBoxEdgeRoleStatus? roleStatus) : base(id, name, resourceType, systemData, kind)
         {
             ConnectionString = connectionString;
             ControllerEndpoint = controllerEndpoint;

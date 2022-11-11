@@ -1,6 +1,19 @@
 # Release History
 
-## 3.2.0-preview.5 (Unreleased)
+## 3.2.0-preview.6 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 3.2.0-preview.5 (2022-10-05)
+### Bugs Fixed
+- Id attribute in labelled utterances stored as int could overflow
+- ExampleId attribute description typo
 
 ## 3.2.0-preview.4 (2021-02-25)
 ### Fixed

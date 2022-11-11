@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.AI.TextAnalytics;
+using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -20,20 +21,11 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="entities"> Recognized entities in the document. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="warnings"/> or <paramref name="entities"/> is null. </exception>
-        public EntitiesDocumentResult(string id, IEnumerable<DocumentWarning> warnings, IEnumerable<Entity> entities) : base(id, warnings)
+        public EntitiesDocumentResult(string id, IEnumerable<DocumentWarning> warnings, IEnumerable<EntityWithResolution> entities) : base(id, warnings)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (warnings == null)
-            {
-                throw new ArgumentNullException(nameof(warnings));
-            }
-            if (entities == null)
-            {
-                throw new ArgumentNullException(nameof(entities));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(warnings, nameof(warnings));
+            Argument.AssertNotNull(entities, nameof(entities));
 
             Entities = entities.ToList();
         }
@@ -43,12 +35,12 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
         /// <param name="entities"> Recognized entities in the document. </param>
-        internal EntitiesDocumentResult(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, IList<Entity> entities) : base(id, warnings, statistics)
+        internal EntitiesDocumentResult(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, IList<EntityWithResolution> entities) : base(id, warnings, statistics)
         {
             Entities = entities;
         }
 
         /// <summary> Recognized entities in the document. </summary>
-        public IList<Entity> Entities { get; }
+        public IList<EntityWithResolution> Entities { get; }
     }
 }

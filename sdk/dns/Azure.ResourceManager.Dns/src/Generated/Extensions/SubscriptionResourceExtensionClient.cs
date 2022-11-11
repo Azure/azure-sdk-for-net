@@ -56,11 +56,11 @@ namespace Azure.ResourceManager.Dns
         /// <param name="top"> The maximum number of DNS zones to return. If not specified, returns up to 100 zones. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DnsZoneResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DnsZoneResource> GetDnsZonesByDnszoneAsync(int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DnsZoneResource> GetDnsZonesAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<DnsZoneResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = DnsZoneZonesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDnsZonesByDnszone");
+                using var scope = DnsZoneZonesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDnsZones");
                 scope.Start();
                 try
                 {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Dns
             }
             async Task<Page<DnsZoneResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = DnsZoneZonesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDnsZonesByDnszone");
+                using var scope = DnsZoneZonesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDnsZones");
                 scope.Start();
                 try
                 {
@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.Dns
         /// <param name="top"> The maximum number of DNS zones to return. If not specified, returns up to 100 zones. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DnsZoneResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DnsZoneResource> GetDnsZonesByDnszone(int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<DnsZoneResource> GetDnsZones(int? top = null, CancellationToken cancellationToken = default)
         {
             Page<DnsZoneResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = DnsZoneZonesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDnsZonesByDnszone");
+                using var scope = DnsZoneZonesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDnsZones");
                 scope.Start();
                 try
                 {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Dns
             }
             Page<DnsZoneResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = DnsZoneZonesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDnsZonesByDnszone");
+                using var scope = DnsZoneZonesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDnsZones");
                 scope.Start();
                 try
                 {
@@ -141,9 +141,9 @@ namespace Azure.ResourceManager.Dns
         /// </summary>
         /// <param name="content"> Properties for dns resource reference request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DnsResourceReferenceResult>> GetByTargetResourcesDnsResourceReferenceAsync(DnsResourceReferenceContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DnsResourceReferenceResult>> GetDnsResourceReferencesByTargetResourcesAsync(DnsResourceReferenceContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = DnsResourceReferenceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetByTargetResourcesDnsResourceReference");
+            using var scope = DnsResourceReferenceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDnsResourceReferencesByTargetResources");
             scope.Start();
             try
             {
@@ -164,9 +164,9 @@ namespace Azure.ResourceManager.Dns
         /// </summary>
         /// <param name="content"> Properties for dns resource reference request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DnsResourceReferenceResult> GetByTargetResourcesDnsResourceReference(DnsResourceReferenceContent content, CancellationToken cancellationToken = default)
+        public virtual Response<DnsResourceReferenceResult> GetDnsResourceReferencesByTargetResources(DnsResourceReferenceContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = DnsResourceReferenceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetByTargetResourcesDnsResourceReference");
+            using var scope = DnsResourceReferenceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDnsResourceReferencesByTargetResources");
             scope.Start();
             try
             {

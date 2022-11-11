@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of SettingsList. </summary>
         internal SettingsList()
         {
-            Value = new ChangeTrackingList<SettingData>();
+            Value = new ChangeTrackingList<SecuritySettingData>();
         }
 
         /// <summary> Initializes a new instance of SettingsList. </summary>
         /// <param name="value">
         /// The settings list.
-        /// Please note <see cref="SettingData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AlertSyncSettings"/> and <see cref="DataExportSettings"/>.
+        /// Please note <see cref="SecuritySettingData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SecurityAlertSyncSettings"/> and <see cref="DataExportSettings"/>.
         /// </param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
-        internal SettingsList(IReadOnlyList<SettingData> value, string nextLink)
+        internal SettingsList(IReadOnlyList<SecuritySettingData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary>
         /// The settings list.
-        /// Please note <see cref="SettingData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AlertSyncSettings"/> and <see cref="DataExportSettings"/>.
+        /// Please note <see cref="SecuritySettingData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SecurityAlertSyncSettings"/> and <see cref="DataExportSettings"/>.
         /// </summary>
-        public IReadOnlyList<SettingData> Value { get; }
+        public IReadOnlyList<SecuritySettingData> Value { get; }
         /// <summary> The URI to fetch the next page. </summary>
         public string NextLink { get; }
     }

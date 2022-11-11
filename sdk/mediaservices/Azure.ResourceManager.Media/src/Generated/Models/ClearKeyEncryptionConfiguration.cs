@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Class to specify ClearKey configuration of common encryption schemes in Streaming Policy. </summary>
@@ -19,12 +17,12 @@ namespace Azure.ResourceManager.Media.Models
 
         /// <summary> Initializes a new instance of ClearKeyEncryptionConfiguration. </summary>
         /// <param name="customKeysAcquisitionUriTemplate"> Template for the URL of the custom service delivering content keys to end user players. Not required when using Azure Media Services for issuing licenses. The template supports replaceable tokens that the service will update at runtime with the value specific to the request.  The currently supported token value is {AlternativeMediaId}, which is replaced with the value of StreamingLocatorId.AlternativeMediaId. </param>
-        internal ClearKeyEncryptionConfiguration(Uri customKeysAcquisitionUriTemplate)
+        internal ClearKeyEncryptionConfiguration(string customKeysAcquisitionUriTemplate)
         {
             CustomKeysAcquisitionUriTemplate = customKeysAcquisitionUriTemplate;
         }
 
         /// <summary> Template for the URL of the custom service delivering content keys to end user players. Not required when using Azure Media Services for issuing licenses. The template supports replaceable tokens that the service will update at runtime with the value specific to the request.  The currently supported token value is {AlternativeMediaId}, which is replaced with the value of StreamingLocatorId.AlternativeMediaId. </summary>
-        public Uri CustomKeysAcquisitionUriTemplate { get; set; }
+        public string CustomKeysAcquisitionUriTemplate { get; set; }
     }
 }

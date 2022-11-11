@@ -1139,8 +1139,8 @@ namespace Azure.ResourceManager.ContainerService.Models
     }
     public partial class ManagedClusterServicePrincipalProfile
     {
-        public ManagedClusterServicePrincipalProfile(System.Guid clientId) { }
-        public System.Guid ClientId { get { throw null; } set { } }
+        public ManagedClusterServicePrincipalProfile(string clientId) { }
+        public string ClientId { get { throw null; } set { } }
         public string Secret { get { throw null; } set { } }
     }
     public partial class ManagedClusterSku

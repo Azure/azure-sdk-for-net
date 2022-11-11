@@ -1,6 +1,6 @@
 # Release History
 
-## 1.6.0-beta.1 (Unreleased)
+## 1.7.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,16 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.6.0 (2022-10-12)
+
+### Features Added
+
+- Support passing a semi-colon delimited list of additional tenants via the `additionallyAllowedTenants` config. See the [Azure.Identity Breaking Changes log](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/BREAKING_CHANGES.md#170) for more information about this setting.
+
+### Bugs Fixed
+
+- The `tenantId`, `clientId`, `managedIdentityResourceId`, and the newly added `additionallyAllowedTenants` will be passed onto the created `DefaultAzureCredential` if no `clientSecret` or `clientCertificate` is provided. Previously, these values would be ignored when falling back to the `DefaultAzureCredential` or the user-provided credential specified via  `AzureClientFactoryBuilder.UseCredential`.
 
 ## 1.5.0 (2022-08-24)
 

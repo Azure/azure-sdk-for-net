@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         internal static DenylistCustomAlertRule DeserializeDenylistCustomAlertRule(JsonElement element)
         {
             IList<string> denylistValues = default;
-            Optional<ValueType> valueType = default;
+            Optional<SecurityValueType> valueType = default;
             Optional<string> displayName = default;
             Optional<string> description = default;
             bool isEnabled = default;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    valueType = new ValueType(property.Value.GetString());
+                    valueType = new SecurityValueType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("displayName"))

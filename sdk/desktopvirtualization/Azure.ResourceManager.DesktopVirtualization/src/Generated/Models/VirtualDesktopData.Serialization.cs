@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             Optional<string> description = default;
             Optional<string> friendlyName = default;
             Optional<string> iconHash = default;
-            Optional<byte[]> iconContent = default;
+            Optional<BinaryData> iconContent = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            iconContent = property0.Value.GetBytesFromBase64("D");
+                            iconContent = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                     }

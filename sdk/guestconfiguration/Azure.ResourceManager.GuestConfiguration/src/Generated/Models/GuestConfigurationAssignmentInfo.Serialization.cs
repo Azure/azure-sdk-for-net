@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         internal static GuestConfigurationAssignmentInfo DeserializeGuestConfigurationAssignmentInfo(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<ConfigurationInfo> configuration = default;
+            Optional<GuestConfigurationInfo> configuration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    configuration = ConfigurationInfo.DeserializeConfigurationInfo(property.Value);
+                    configuration = GuestConfigurationInfo.DeserializeGuestConfigurationInfo(property.Value);
                     continue;
                 }
             }

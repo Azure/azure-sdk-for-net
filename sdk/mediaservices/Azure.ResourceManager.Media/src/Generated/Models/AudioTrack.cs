@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Represents an audio track in the asset. </summary>
-    public partial class AudioTrack : AssetTrackInfo
+    public partial class AudioTrack : MediaAssetTrackBase
     {
         /// <summary> Initializes a new instance of AudioTrack. </summary>
         public AudioTrack()
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="dashSettings"> The DASH specific setting for the audio track. </param>
         /// <param name="mpeg4TrackId"> The MPEG-4 audio track ID for the audio track. </param>
         /// <param name="bitRate"> The stream bit rate for the audio track. </param>
-        internal AudioTrack(string odataType, string fileName, string displayName, string languageCode, HlsSettings hlsSettings, DashSettings dashSettings, int? mpeg4TrackId, int? bitRate) : base(odataType)
+        internal AudioTrack(string odataType, string fileName, string displayName, string languageCode, HlsSettings hlsSettings, TrackDashSettings dashSettings, int? mpeg4TrackId, int? bitRate) : base(odataType)
         {
             FileName = fileName;
             DisplayName = displayName;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> The HLS specific setting for the audio track. </summary>
         public HlsSettings HlsSettings { get; set; }
         /// <summary> The DASH specific setting for the audio track. </summary>
-        internal DashSettings DashSettings { get; set; }
+        internal TrackDashSettings DashSettings { get; set; }
         /// <summary> The role for the DASH setting. </summary>
         public string DashRole
         {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Media.Models
             set
             {
                 if (DashSettings is null)
-                    DashSettings = new DashSettings();
+                    DashSettings = new TrackDashSettings();
                 DashSettings.Role = value;
             }
         }

@@ -41,7 +41,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
             {
                 if (RequestStatus == RequestStatusType.Failed)
                 {
-                    Response.MarkAsFailed(new Exception(String.IsNullOrEmpty(StatusMessage) ? AuthenticationEventResource.Ex_Gen_Failure : StatusMessage));
+                    Response.MarkAsFailed(new Exception(String.IsNullOrEmpty(StatusMessage) ? AuthenticationEventResource.Ex_Gen_Failure : StatusMessage), true);
                 }
 
                 if (RequestStatus == RequestStatusType.TokenInvalid)
@@ -51,18 +51,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
             }
             catch (Exception ex)
             {
-                return await Failed(ex).ConfigureAwait(false);
+                return await Failed(ex, true).ConfigureAwait(false);
             }
 
             return Response;
         }
 
-        /// <summary>Set the response to Failed mode.</summary>
-        /// <param name="exception">The exception to return in the response.</param>
-        /// <returns>The Underlying AuthEventResponse.</returns>
-        public override Task<AuthenticationEventResponse> Failed(Exception exception)
+        internal override Task<AuthenticationEventResponse> Failed(Exception exception, bool internalError)
         {
-            Response.MarkAsFailed(exception);
+            Response.MarkAsFailed(exception, internalError);
             return Task.FromResult<AuthenticationEventResponse>((TResponse)Response);
         }
     }

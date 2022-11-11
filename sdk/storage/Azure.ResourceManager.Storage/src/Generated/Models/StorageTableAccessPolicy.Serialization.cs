@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("startTime");
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(ExpiresOn))
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiryTime");
-                writer.WriteStringValue(ExpiresOn.Value, "O");
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             writer.WritePropertyName("permission");
             writer.WriteStringValue(Permission);

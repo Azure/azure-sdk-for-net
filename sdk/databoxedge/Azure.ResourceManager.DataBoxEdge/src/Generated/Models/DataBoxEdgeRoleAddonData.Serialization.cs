@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 switch (discriminator.GetString())
                 {
-                    case "ArcForKubernetes": return ArcAddon.DeserializeArcAddon(element);
-                    case "IotEdge": return IotAddon.DeserializeIotAddon(element);
+                    case "ArcForKubernetes": return EdgeArcAddon.DeserializeEdgeArcAddon(element);
+                    case "IotEdge": return EdgeIotAddon.DeserializeEdgeIotAddon(element);
                 }
             }
             AddonType kind = default;

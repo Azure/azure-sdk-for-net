@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public string Description { get { throw null; } set { } }
         public string FilePath { get { throw null; } set { } }
         public string FriendlyName { get { throw null; } set { } }
-        public byte[] IconContent { get { throw null; } }
+        public System.BinaryData IconContent { get { throw null; } }
         public string IconHash { get { throw null; } }
         public int? IconIndex { get { throw null; } set { } }
         public string IconPath { get { throw null; } set { } }
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public VirtualDesktopData() { }
         public string Description { get { throw null; } set { } }
         public string FriendlyName { get { throw null; } set { } }
-        public byte[] IconContent { get { throw null; } }
+        public System.BinaryData IconContent { get { throw null; } }
         public string IconHash { get { throw null; } }
         public string ObjectId { get { throw null; } }
     }
@@ -704,8 +704,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public string Description { get { throw null; } set { } }
         public string FriendlyName { get { throw null; } set { } }
         public string IconImageName { get { throw null; } set { } }
-        public byte[] RawIcon { get { throw null; } set { } }
-        public byte[] RawPng { get { throw null; } set { } }
+        public System.BinaryData RawIcon { get { throw null; } set { } }
+        public System.BinaryData RawPng { get { throw null; } set { } }
     }
     public partial class MsixPackageDependencies
     {

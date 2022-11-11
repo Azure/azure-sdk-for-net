@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static UnknownJobLimits DeserializeUnknownJobLimits(JsonElement element)
         {
-            JobLimitsType jobLimitsType = default;
+            JobLimitsType jobLimitsType = "Unknown";
             Optional<TimeSpan?> timeout = default;
             foreach (var property in element.EnumerateObject())
             {

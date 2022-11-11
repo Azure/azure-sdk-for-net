@@ -23,14 +23,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="entityTypeName"/> or <paramref name="expression"/> is null. </exception>
         internal KpiDefinition(EntityType entityType, string entityTypeName, CalculationWindowType calculationWindow, KpiFunction function, string expression)
         {
-            if (entityTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(entityTypeName));
-            }
-            if (expression == null)
-            {
-                throw new ArgumentNullException(nameof(expression));
-            }
+            Argument.AssertNotNull(entityTypeName, nameof(entityTypeName));
+            Argument.AssertNotNull(expression, nameof(expression));
 
             EntityType = entityType;
             EntityTypeName = entityTypeName;

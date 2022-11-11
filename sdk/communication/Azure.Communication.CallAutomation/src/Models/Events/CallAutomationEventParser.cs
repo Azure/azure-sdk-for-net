@@ -14,7 +14,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Parsing a CallAutomation event from a CloudEvent.
         /// </summary>
-        public const string EventPrefix = "Microsoft.Communication.";
+        private const string EventPrefix = "Microsoft.Communication.";
 
         /// <summary>
         /// Parsing a CallAutomation event from a CloudEvent.
@@ -106,16 +106,20 @@ namespace Azure.Communication.CallAutomation
                     return CallTransferFailed.Deserialize(eventData);
                 case nameof(ParticipantsUpdated):
                     return ParticipantsUpdated.Deserialize(eventData);
-                case nameof(CallRecordingStateChanged):
-                    return CallRecordingStateChanged.Deserialize(eventData);
+                case nameof(RecordingStateChanged):
+                    return RecordingStateChanged.Deserialize(eventData);
                 case nameof(PlayCompleted):
                     return PlayCompleted.Deserialize(eventData);
                 case nameof(PlayFailed):
                     return PlayFailed.Deserialize(eventData);
+                case nameof(PlayCanceled):
+                    return PlayCanceled.Deserialize(eventData);
                 case nameof(RecognizeCompleted):
                     return RecognizeCompleted.Deserialize(eventData);
                 case nameof(RecognizeFailed):
                     return RecognizeFailed.Deserialize(eventData);
+                case nameof(RecognizeCanceled):
+                    return RecognizeCanceled.Deserialize(eventData);
                 default:
                     return null;
             }

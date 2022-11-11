@@ -8,8 +8,7 @@ azure-arm: true
 csharp: true
 library-name: Avs
 namespace: Azure.ResourceManager.Avs
-require: https://github.com/Azure/azure-rest-api-specs/blob/80065490402157d0df0dd37ab347c651b22eb576/specification/vmware/resource-manager/readme.md
-tag: package-2021-12-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/2ecbe51762643c7f6b6c6d8dd604dd934a1cc808/specification/vmware/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -109,6 +108,9 @@ rename-mapping:
   EncryptionState: AvsEncryptionState
   EncryptionVersionType: AvsEncryptionVersionType
   ManagementCluster: AvsManagementCluster
+  NsxPublicIPQuotaRaisedEnum: NsxPublicIPQuotaRaisedStatus
+  AffinityStrength: VmHostPlacementPolicyAffinityStrength
+  ClusterZone: AvsClusterZone
 
 prepend-rp-prefix:
 - CloudLink
@@ -129,5 +131,12 @@ directive:
       $.VmHostPlacementPolicyProperties.properties.vmMembers.items['x-ms-format'] = 'arm-id';
       $.VmVmPlacementPolicyProperties.properties.vmMembers.items['x-ms-format'] = 'arm-id';
       $.ScriptCmdletProperties.properties.timeout['format'] = 'duration';
-
+  - from: vmware.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/clusters/{clusterName}/listZones'].post
+    transform: >
+      $['x-ms-pageable'] = {
+          'nextLinkName': null,
+          'itemName': 'zones'
+      }
+    reason: add this directive so that the return type could become pageable with flattening the item inside ClusterZoneList.
 ```

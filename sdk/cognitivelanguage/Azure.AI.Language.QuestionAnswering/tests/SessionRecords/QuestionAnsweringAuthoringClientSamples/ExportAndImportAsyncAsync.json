@@ -1,0 +1,266 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/query-knowledgebases/projects/TestProject1991642929?api-version=2021-10-01",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "171",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-4a63acebc28c6e6302870306c0e1f258-d8f1b40abf680277-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220922.1 (.NET 6.0.9; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b5279b9e1cb8559b4235ffd29db1c8ca",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "description": "This is the description for a test project",
+        "language": "en",
+        "multilingualResource": false,
+        "settings": {
+          "defaultAnswer": "No answer found for your question."
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "apim-request-id": "44edab40-8504-4792-b095-da33ed7c063f",
+        "Content-Length": "334",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Sep 2022 22:18:07 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "2109"
+      },
+      "ResponseBody": {
+        "projectName": "TestProject1991642929",
+        "description": "This is the description for a test project",
+        "language": "en",
+        "multilingualResource": false,
+        "createdDateTime": "2022-09-22T22:18:05Z",
+        "lastModifiedDateTime": "2022-09-22T22:18:05Z",
+        "settings": {
+          "defaultAnswer": "No answer found for your question."
+        }
+      }
+    },
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/query-knowledgebases/projects/TestProject1991642929/:export?api-version=2021-10-01\u0026format=json",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "0",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-2fb60224bf01be612dd240e0033c5f98-73d159a459d618ed-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220922.1 (.NET 6.0.9; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "d356004e8b960214363da76dc42b3ca6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "690e1f31-643b-4054-8f2c-69e828a4c3fa",
+        "Content-Length": "0",
+        "Date": "Thu, 22 Sep 2022 22:18:07 GMT",
+        "operation-location": "https://languagesdkresource.cognitiveservices.azure.com:443/language/query-knowledgebases/projects/TestProject1991642929/export/jobs/0bc11784-4080-4648-a5a7-5aca3c52c382?api-version=2021-10-01",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "26"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/query-knowledgebases/projects/TestProject1991642929/export/jobs/0bc11784-4080-4648-a5a7-5aca3c52c382?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-2fb60224bf01be612dd240e0033c5f98-e76d9c327dd5d63d-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220922.1 (.NET 6.0.9; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "f7e380d4f2e906833fe6c68f56e4bafb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "9753c923-7364-4b8e-b6a4-b68a249a1e4c",
+        "Content-Length": "236",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Sep 2022 22:18:07 GMT",
+        "Retry-After": "30",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "8"
+      },
+      "ResponseBody": {
+        "createdDateTime": "2022-09-22T22:18:07\u002B00:00",
+        "expirationDateTime": "2022-09-23T04:18:07\u002B00:00",
+        "jobId": "0bc11784-4080-4648-a5a7-5aca3c52c382",
+        "lastUpdatedDateTime": "2022-09-22T22:18:07\u002B00:00",
+        "status": "notStarted"
+      }
+    },
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/query-knowledgebases/projects/TestProject1991642929/export/jobs/0bc11784-4080-4648-a5a7-5aca3c52c382?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-2fb60224bf01be612dd240e0033c5f98-2e2115b2173c523b-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220922.1 (.NET 6.0.9; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "4e004f9996a1129b86247e7b752e9016",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "71592bf1-f921-4b34-9ed8-5af9d15d700d",
+        "Content-Length": "453",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Sep 2022 22:18:37 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "22"
+      },
+      "ResponseBody": {
+        "createdDateTime": "2022-09-22T22:18:07\u002B00:00",
+        "expirationDateTime": "2022-09-23T04:18:07\u002B00:00",
+        "jobId": "0bc11784-4080-4648-a5a7-5aca3c52c382",
+        "lastUpdatedDateTime": "2022-09-22T22:18:10\u002B00:00",
+        "status": "succeeded",
+        "resultUrl": "https://languagesdkresource.cognitiveservices.azure.com:443/language/query-knowledgebases/projects/TestProject1991642929/export/jobs/0bc11784-4080-4648-a5a7-5aca3c52c382/result?api-version=2021-10-01"
+      }
+    },
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/query-knowledgebases/projects/TestProject2135537144/:import?api-version=2021-10-01\u0026format=json",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "237",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-89de0b429adc4120163015633c279a93-385be91410bd467f-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220922.1 (.NET 6.0.9; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "ce1dfe58e0d07c5b5094b0c585ac5282",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "Metadata": {
+          "Description": "This is the description for a test project",
+          "Language": "en",
+          "DefaultAnswer": "No answer found for your question.",
+          "MultilingualResource": false,
+          "Settings": {
+            "DefaultAnswer": "No answer found for your question."
+          }
+        }
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "4b1308c2-1d0a-48bd-bafd-08ef38f4d962",
+        "Content-Length": "0",
+        "Date": "Thu, 22 Sep 2022 22:18:38 GMT",
+        "operation-location": "https://languagesdkresource.cognitiveservices.azure.com:443/language/query-knowledgebases/projects/TestProject2135537144/import/jobs/51e47a39-3312-41c9-b021-77b2a239bb89?api-version=2021-10-01",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "215"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/query-knowledgebases/projects/TestProject2135537144/import/jobs/51e47a39-3312-41c9-b021-77b2a239bb89?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-89de0b429adc4120163015633c279a93-69ab20b8879be49a-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220922.1 (.NET 6.0.9; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "2b74d4ab05ede43dd071c57408901155",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "88302321-e266-4666-a4e5-24a2c57a07df",
+        "Content-Length": "236",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Sep 2022 22:18:38 GMT",
+        "Retry-After": "30",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "9"
+      },
+      "ResponseBody": {
+        "createdDateTime": "2022-09-22T22:18:38\u002B00:00",
+        "expirationDateTime": "2022-09-23T04:18:38\u002B00:00",
+        "jobId": "51e47a39-3312-41c9-b021-77b2a239bb89",
+        "lastUpdatedDateTime": "2022-09-22T22:18:38\u002B00:00",
+        "status": "notStarted"
+      }
+    },
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/query-knowledgebases/projects/TestProject2135537144/import/jobs/51e47a39-3312-41c9-b021-77b2a239bb89?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-89de0b429adc4120163015633c279a93-3bc5b055be93e5ca-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220922.1 (.NET 6.0.9; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "e5fd96af2d9d6ec8a4d15101eb4d0078",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "43a4fc10-17bf-4a22-8ea8-f250a5bb9665",
+        "Content-Length": "235",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Sep 2022 22:19:08 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "13"
+      },
+      "ResponseBody": {
+        "createdDateTime": "2022-09-22T22:18:38\u002B00:00",
+        "expirationDateTime": "2022-09-23T04:18:38\u002B00:00",
+        "jobId": "51e47a39-3312-41c9-b021-77b2a239bb89",
+        "lastUpdatedDateTime": "2022-09-22T22:18:45\u002B00:00",
+        "status": "succeeded"
+      }
+    },
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/query-knowledgebases/projects/TestProject2135537144?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-0a6d5bd0e911de97da3bd746d67751d4-ee36ab4cd52e9b86-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220922.1 (.NET 6.0.9; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "59caf82beb1c530bc038fd5f1be774bf",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "40944dad-fba9-4975-9b2a-2db83b0dbfcd",
+        "Content-Length": "334",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Sep 2022 22:19:08 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "17"
+      },
+      "ResponseBody": {
+        "projectName": "TestProject2135537144",
+        "description": "This is the description for a test project",
+        "language": "en",
+        "multilingualResource": false,
+        "createdDateTime": "2022-09-22T22:18:42Z",
+        "lastModifiedDateTime": "2022-09-22T22:18:42Z",
+        "settings": {
+          "defaultAnswer": "No answer found for your question."
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "QUESTIONANSWERING_ENDPOINT": "https://languagesdkresource.cognitiveservices.azure.com/",
+    "QUESTIONANSWERING_KEY": "Sanitized",
+    "RandomSeed": "981905739"
+  }
+}

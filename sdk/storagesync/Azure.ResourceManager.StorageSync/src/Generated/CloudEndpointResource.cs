@@ -590,5 +590,49 @@ namespace Azure.ResourceManager.StorageSync
                 throw;
             }
         }
+
+        /// <summary>
+        /// Get the AFS file share metadata signing certificate public keys.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/syncGroups/{syncGroupName}/cloudEndpoints/{cloudEndpointName}/afsShareMetadataCertificatePublicKeys
+        /// Operation Id: CloudEndpoints_AfsShareMetadataCertificatePublicKeys
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<CloudEndpointAfsShareMetadataCertificatePublicKeys>> AfsShareMetadataCertificatePublicKeysAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _cloudEndpointClientDiagnostics.CreateScope("CloudEndpointResource.AfsShareMetadataCertificatePublicKeys");
+            scope.Start();
+            try
+            {
+                var response = await _cloudEndpointRestClient.AfsShareMetadataCertificatePublicKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the AFS file share metadata signing certificate public keys.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/syncGroups/{syncGroupName}/cloudEndpoints/{cloudEndpointName}/afsShareMetadataCertificatePublicKeys
+        /// Operation Id: CloudEndpoints_AfsShareMetadataCertificatePublicKeys
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<CloudEndpointAfsShareMetadataCertificatePublicKeys> AfsShareMetadataCertificatePublicKeys(CancellationToken cancellationToken = default)
+        {
+            using var scope = _cloudEndpointClientDiagnostics.CreateScope("CloudEndpointResource.AfsShareMetadataCertificatePublicKeys");
+            scope.Start();
+            try
+            {
+                var response = _cloudEndpointRestClient.AfsShareMetadataCertificatePublicKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

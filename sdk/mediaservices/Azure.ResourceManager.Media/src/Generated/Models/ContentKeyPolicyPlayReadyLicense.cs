@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -24,10 +25,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <exception cref="ArgumentNullException"> <paramref name="contentKeyLocation"/> is null. </exception>
         public ContentKeyPolicyPlayReadyLicense(bool allowTestDevices, ContentKeyPolicyPlayReadyLicenseType licenseType, ContentKeyPolicyPlayReadyContentKeyLocation contentKeyLocation, ContentKeyPolicyPlayReadyContentType contentType)
         {
-            if (contentKeyLocation == null)
-            {
-                throw new ArgumentNullException(nameof(contentKeyLocation));
-            }
+            Argument.AssertNotNull(contentKeyLocation, nameof(contentKeyLocation));
 
             AllowTestDevices = allowTestDevices;
             LicenseType = licenseType;
@@ -39,7 +37,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="allowTestDevices"> A flag indicating whether test devices can use the license. </param>
         /// <param name="securityLevel"> The security level. </param>
         /// <param name="beginOn"> The begin date of license. </param>
-        /// <param name="expiresOn"> The expiration date of license. </param>
+        /// <param name="expireOn"> The expiration date of license. </param>
         /// <param name="relativeBeginDate"> The relative begin date of license. </param>
         /// <param name="relativeExpirationDate"> The relative expiration date of license. </param>
         /// <param name="gracePeriod"> The grace period of license. </param>
@@ -51,12 +49,12 @@ namespace Azure.ResourceManager.Media.Models
         /// The available derived classes include <see cref="ContentKeyPolicyPlayReadyContentEncryptionKeyFromHeader"/> and <see cref="ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier"/>.
         /// </param>
         /// <param name="contentType"> The PlayReady content type. </param>
-        internal ContentKeyPolicyPlayReadyLicense(bool allowTestDevices, ContentKeyPolicyPlayReadySecurityLevel? securityLevel, DateTimeOffset? beginOn, DateTimeOffset? expiresOn, TimeSpan? relativeBeginDate, TimeSpan? relativeExpirationDate, TimeSpan? gracePeriod, ContentKeyPolicyPlayReadyPlayRight playRight, ContentKeyPolicyPlayReadyLicenseType licenseType, ContentKeyPolicyPlayReadyContentKeyLocation contentKeyLocation, ContentKeyPolicyPlayReadyContentType contentType)
+        internal ContentKeyPolicyPlayReadyLicense(bool allowTestDevices, PlayReadySecurityLevel? securityLevel, DateTimeOffset? beginOn, DateTimeOffset? expireOn, TimeSpan? relativeBeginDate, TimeSpan? relativeExpirationDate, TimeSpan? gracePeriod, ContentKeyPolicyPlayReadyPlayRight playRight, ContentKeyPolicyPlayReadyLicenseType licenseType, ContentKeyPolicyPlayReadyContentKeyLocation contentKeyLocation, ContentKeyPolicyPlayReadyContentType contentType)
         {
             AllowTestDevices = allowTestDevices;
             SecurityLevel = securityLevel;
             BeginOn = beginOn;
-            ExpiresOn = expiresOn;
+            ExpireOn = expireOn;
             RelativeBeginDate = relativeBeginDate;
             RelativeExpirationDate = relativeExpirationDate;
             GracePeriod = gracePeriod;
@@ -69,11 +67,11 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> A flag indicating whether test devices can use the license. </summary>
         public bool AllowTestDevices { get; set; }
         /// <summary> The security level. </summary>
-        public ContentKeyPolicyPlayReadySecurityLevel? SecurityLevel { get; set; }
+        public PlayReadySecurityLevel? SecurityLevel { get; set; }
         /// <summary> The begin date of license. </summary>
         public DateTimeOffset? BeginOn { get; set; }
         /// <summary> The expiration date of license. </summary>
-        public DateTimeOffset? ExpiresOn { get; set; }
+        public DateTimeOffset? ExpireOn { get; set; }
         /// <summary> The relative begin date of license. </summary>
         public TimeSpan? RelativeBeginDate { get; set; }
         /// <summary> The relative expiration date of license. </summary>

@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-05-01\u0026showStats=true",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-10-01-preview\u0026showStats=true",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "318",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-e453d5234f797ef337d7bdbe4db83bcf-ab9d126d03605aaf-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220721.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "a6c7dada0bfa946e296decbe63bd5873",
+        "traceparent": "00-f945a66b0c63b6b260f11fa8c968a365-22dbe3f4a2b00c65-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221014.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "83521286cb872ac8406fa55345ddc5a4",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -35,14 +35,15 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "394af0b4-db2d-44fa-b15f-33099ec6fdc2",
-        "Content-Length": "1226",
+        "apim-request-id": "81fc79f2-82cd-4c2f-9931-9c25487e7d36",
+        "Content-Length": "1219",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2,CognitiveServices.TextAnalytics.TextRecords=2",
-        "Date": "Thu, 21 Jul 2022 23:23:09 GMT",
+        "Date": "Fri, 14 Oct 2022 22:16:56 GMT",
+        "Set-Cookie": ".AspNetCore.Mvc.CookieTempDataProvider=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; samesite=lax; httponly",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "20"
+        "x-envoy-upstream-service-time": "23"
       },
       "ResponseBody": {
         "kind": "SentimentAnalysisResults",
@@ -62,17 +63,17 @@
                 "transactionsCount": 1
               },
               "confidenceScores": {
-                "positive": 0.97,
-                "neutral": 0.02,
-                "negative": 0.01
+                "positive": 0.99,
+                "neutral": 0.01,
+                "negative": 0.0
               },
               "sentences": [
                 {
                   "sentiment": "positive",
                   "confidenceScores": {
-                    "positive": 0.96,
-                    "neutral": 0.03,
-                    "negative": 0.01
+                    "positive": 0.99,
+                    "neutral": 0.01,
+                    "negative": 0.0
                   },
                   "offset": 0,
                   "length": 54,
@@ -81,9 +82,9 @@
                 {
                   "sentiment": "positive",
                   "confidenceScores": {
-                    "positive": 0.98,
+                    "positive": 0.99,
                     "neutral": 0.01,
-                    "negative": 0.01
+                    "negative": 0.0
                   },
                   "offset": 54,
                   "length": 25,
@@ -100,28 +101,28 @@
                 "transactionsCount": 1
               },
               "confidenceScores": {
-                "positive": 0.02,
-                "neutral": 0.02,
-                "negative": 0.96
+                "positive": 0.0,
+                "neutral": 0.22,
+                "negative": 0.77
               },
               "sentences": [
                 {
                   "sentiment": "negative",
                   "confidenceScores": {
-                    "positive": 0.01,
-                    "neutral": 0.01,
-                    "negative": 0.98
+                    "positive": 0.0,
+                    "neutral": 0.22,
+                    "negative": 0.77
                   },
                   "offset": 0,
                   "length": 25,
                   "text": "Esta comida no me gusta. "
                 },
                 {
-                  "sentiment": "negative",
+                  "sentiment": "neutral",
                   "confidenceScores": {
-                    "positive": 0.03,
-                    "neutral": 0.03,
-                    "negative": 0.94
+                    "positive": 0.04,
+                    "neutral": 0.5,
+                    "negative": 0.46
                   },
                   "offset": 25,
                   "length": 31,
@@ -132,13 +133,13 @@
             }
           ],
           "errors": [],
-          "modelVersion": "2022-06-01"
+          "modelVersion": "2022-10-01"
         }
       }
     }
   ],
   "Variables": {
-    "RandomSeed": "887913328",
+    "RandomSeed": "1971472576",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
     "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
   }

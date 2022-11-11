@@ -23,7 +23,7 @@ namespace Azure.AI.Language.Conversations
             Optional<DateTimeOffset> expirationDateTime = default;
             string jobId = default;
             DateTimeOffset lastUpdatedDateTime = default;
-            JobState status = default;
+            State status = default;
             Optional<IReadOnlyList<Error>> errors = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -75,7 +75,7 @@ namespace Azure.AI.Language.Conversations
                 }
                 if (property.NameEquals("status"))
                 {
-                    status = new JobState(property.Value.GetString());
+                    status = new State(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("errors"))

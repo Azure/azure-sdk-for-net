@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,28 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0 (2022-09-29)
+
+This is the first stable release of the Front Door Management library.
+
+### Breaking Changes
+
+Polishing since last public beta release:
+- Prepended `FrontDoor` prefix to all single / simple model names.
+- Corrected the format of all `ResourceIdentifier` type properties / parameters.
+- Corrected the format of all `Uri` type properties / parameters.
+- Corrected the format of all `AzureLocation` type properties / parameters.
+- Corrected all acronyms which not follow [.Net Naming Guidelines](https://docs.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
+- Corrected the suffix of `DateTimeOffset` properties / parameters.
+- Corrected the name of interval / duration properties / parameters which end with units.
+- Optimized the name of some models and functions.
+- Optimized the class `RouteConfiguration` to abstract class and changed its constructor from public to protected.
+
+### Other Changes
+
+- Upgraded dependent Azure.ResourceManager to 1.3.1.
+- Optimized the implementation of methods related to tag operations.
 
 ## 1.0.0-beta.1 (2022-08-18)
 

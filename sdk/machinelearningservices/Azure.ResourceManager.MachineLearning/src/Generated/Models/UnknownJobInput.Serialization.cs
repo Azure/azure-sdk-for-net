@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal static UnknownJobInput DeserializeUnknownJobInput(JsonElement element)
         {
             Optional<string> description = default;
-            JobInputType jobInputType = default;
+            JobInputType jobInputType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"))

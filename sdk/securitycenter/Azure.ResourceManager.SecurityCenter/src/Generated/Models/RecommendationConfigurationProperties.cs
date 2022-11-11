@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of RecommendationConfigurationProperties. </summary>
         /// <param name="recommendationType"> The type of IoT Security recommendation. </param>
         /// <param name="status"> Recommendation status. When the recommendation status is disabled recommendations are not generated. </param>
-        public RecommendationConfigurationProperties(RecommendationType recommendationType, RecommendationConfigStatus status)
+        public RecommendationConfigurationProperties(IotSecurityRecommendationType recommendationType, RecommendationConfigStatus status)
         {
             RecommendationType = recommendationType;
             Status = status;
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="recommendationType"> The type of IoT Security recommendation. </param>
         /// <param name="name"></param>
         /// <param name="status"> Recommendation status. When the recommendation status is disabled recommendations are not generated. </param>
-        internal RecommendationConfigurationProperties(RecommendationType recommendationType, string name, RecommendationConfigStatus status)
+        internal RecommendationConfigurationProperties(IotSecurityRecommendationType recommendationType, string name, RecommendationConfigStatus status)
         {
             RecommendationType = recommendationType;
             Name = name;
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> The type of IoT Security recommendation. </summary>
-        public RecommendationType RecommendationType { get; set; }
+        public IotSecurityRecommendationType RecommendationType { get; set; }
         /// <summary> Gets the name. </summary>
         public string Name { get; }
         /// <summary> Recommendation status. When the recommendation status is disabled recommendations are not generated. </summary>

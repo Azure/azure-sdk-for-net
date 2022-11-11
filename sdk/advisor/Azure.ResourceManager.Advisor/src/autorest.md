@@ -50,6 +50,12 @@ rename-rules:
 list-exception:
   - /{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}/suppressions/{name}
 
+override-operation-name:
+  Configurations_ListBySubscription: GetConfigurations
+  Configurations_ListByResourceGroup: GetConfigurations
+  Configurations_CreateInResourceGroup: CreateConfiguration
+  Configurations_CreateInSubscription: CreateConfiguration
+
 directive:
   - from: advisor.json
     where: $.paths..parameters[?(@.name === 'resourceUri')]

@@ -1220,11 +1220,11 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataBoxEdgeNode" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataBoxEdgeNode> GetNodesByDataBoxEdgeDeviceAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DataBoxEdgeNode> GetEdgeNodesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<DataBoxEdgeNode>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _nodesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.GetNodesByDataBoxEdgeDevice");
+                using var scope = _nodesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.GetEdgeNodes");
                 scope.Start();
                 try
                 {
@@ -1239,7 +1239,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             }
             async Task<Page<DataBoxEdgeNode>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _nodesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.GetNodesByDataBoxEdgeDevice");
+                using var scope = _nodesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.GetEdgeNodes");
                 scope.Start();
                 try
                 {
@@ -1262,11 +1262,11 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataBoxEdgeNode" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataBoxEdgeNode> GetNodesByDataBoxEdgeDevice(CancellationToken cancellationToken = default)
+        public virtual Pageable<DataBoxEdgeNode> GetEdgeNodes(CancellationToken cancellationToken = default)
         {
             Page<DataBoxEdgeNode> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _nodesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.GetNodesByDataBoxEdgeDevice");
+                using var scope = _nodesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.GetEdgeNodes");
                 scope.Start();
                 try
                 {
@@ -1281,7 +1281,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             }
             Page<DataBoxEdgeNode> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _nodesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.GetNodesByDataBoxEdgeDevice");
+                using var scope = _nodesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.GetEdgeNodes");
                 scope.Start();
                 try
                 {

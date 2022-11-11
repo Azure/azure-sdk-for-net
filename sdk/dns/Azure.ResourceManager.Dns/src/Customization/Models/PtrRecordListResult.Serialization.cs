@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Dns.Models
 {
     internal partial class PtrRecordListResult
     {
-        internal static PtrRecordListResult DeserializePtrRecordSetListResult(JsonElement element)
+        internal static PtrRecordListResult DeserializePtrRecordListResult(JsonElement element)
         {
             Optional<IReadOnlyList<PtrRecordData>> value = default;
             Optional<string> nextLink = default;

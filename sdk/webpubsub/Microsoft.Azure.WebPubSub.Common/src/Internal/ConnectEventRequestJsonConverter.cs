@@ -12,16 +12,17 @@ namespace Microsoft.Azure.WebPubSub.Common
     {
         public override ConnectEventRequest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            var element = JsonDocument.ParseValue(ref reader).RootElement;
+            using var jsonDocument = JsonDocument.ParseValue(ref reader);
+            var element = jsonDocument.RootElement;
 
             // tricky part to create a temp request
             return new ConnectEventRequest(
                 null,
                 element.ReadToObject<Dictionary<string, string[]>>(ConnectEventRequest.ClaimsProperty),
                 element.ReadToObject<Dictionary<string, string[]>>(ConnectEventRequest.QueryProperty),
-                element.ReadToObject<Dictionary<string, string[]>>(ConnectEventRequest.HeadersProperty),
                 element.ReadToObject<string[]>(ConnectEventRequest.SubprotocolsProperty),
-                element.ReadToObject<WebPubSubClientCertificate[]>(ConnectEventRequest.ClientCertificatesProperty));
+                element.ReadToObject<WebPubSubClientCertificate[]>(ConnectEventRequest.ClientCertificatesProperty),
+                element.ReadToObject<Dictionary<string, string[]>>(ConnectEventRequest.HeadersProperty));
         }
 
         public override void Write(Utf8JsonWriter writer, ConnectEventRequest value, JsonSerializerOptions options)

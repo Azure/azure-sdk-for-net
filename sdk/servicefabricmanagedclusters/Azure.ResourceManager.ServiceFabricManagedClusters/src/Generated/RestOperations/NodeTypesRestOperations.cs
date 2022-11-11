@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-06-01-preview";
+            _apiVersion = apiVersion ?? "2022-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             }
         }
 
-        internal HttpMessage CreateRestartRequest(string subscriptionId, string resourceGroupName, string clusterName, string nodeTypeName, NodeTypeActionParameters nodeTypeActionParameters)
+        internal HttpMessage CreateRestartRequest(string subscriptionId, string resourceGroupName, string clusterName, string nodeTypeName, NodeTypeActionContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -136,9 +136,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(nodeTypeActionParameters);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -148,19 +148,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="clusterName"> The name of the cluster resource. </param>
         /// <param name="nodeTypeName"> The name of the node type. </param>
-        /// <param name="nodeTypeActionParameters"> parameters for restart action. </param>
+        /// <param name="content"> parameters for restart action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="nodeTypeName"/> or <paramref name="nodeTypeActionParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="nodeTypeName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="nodeTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> RestartAsync(string subscriptionId, string resourceGroupName, string clusterName, string nodeTypeName, NodeTypeActionParameters nodeTypeActionParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> RestartAsync(string subscriptionId, string resourceGroupName, string clusterName, string nodeTypeName, NodeTypeActionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
             Argument.AssertNotNullOrEmpty(nodeTypeName, nameof(nodeTypeName));
-            Argument.AssertNotNull(nodeTypeActionParameters, nameof(nodeTypeActionParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateRestartRequest(subscriptionId, resourceGroupName, clusterName, nodeTypeName, nodeTypeActionParameters);
+            using var message = CreateRestartRequest(subscriptionId, resourceGroupName, clusterName, nodeTypeName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -177,19 +177,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="clusterName"> The name of the cluster resource. </param>
         /// <param name="nodeTypeName"> The name of the node type. </param>
-        /// <param name="nodeTypeActionParameters"> parameters for restart action. </param>
+        /// <param name="content"> parameters for restart action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="nodeTypeName"/> or <paramref name="nodeTypeActionParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="nodeTypeName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="nodeTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Restart(string subscriptionId, string resourceGroupName, string clusterName, string nodeTypeName, NodeTypeActionParameters nodeTypeActionParameters, CancellationToken cancellationToken = default)
+        public Response Restart(string subscriptionId, string resourceGroupName, string clusterName, string nodeTypeName, NodeTypeActionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
             Argument.AssertNotNullOrEmpty(nodeTypeName, nameof(nodeTypeName));
-            Argument.AssertNotNull(nodeTypeActionParameters, nameof(nodeTypeActionParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateRestartRequest(subscriptionId, resourceGroupName, clusterName, nodeTypeName, nodeTypeActionParameters);
+            using var message = CreateRestartRequest(subscriptionId, resourceGroupName, clusterName, nodeTypeName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             }
         }
 
-        internal HttpMessage CreateReimageRequest(string subscriptionId, string resourceGroupName, string clusterName, string nodeTypeName, NodeTypeActionParameters nodeTypeActionParameters)
+        internal HttpMessage CreateReimageRequest(string subscriptionId, string resourceGroupName, string clusterName, string nodeTypeName, NodeTypeActionContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -221,9 +221,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(nodeTypeActionParameters);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -233,19 +233,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="clusterName"> The name of the cluster resource. </param>
         /// <param name="nodeTypeName"> The name of the node type. </param>
-        /// <param name="nodeTypeActionParameters"> parameters for reimage action. </param>
+        /// <param name="content"> parameters for reimage action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="nodeTypeName"/> or <paramref name="nodeTypeActionParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="nodeTypeName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="nodeTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ReimageAsync(string subscriptionId, string resourceGroupName, string clusterName, string nodeTypeName, NodeTypeActionParameters nodeTypeActionParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> ReimageAsync(string subscriptionId, string resourceGroupName, string clusterName, string nodeTypeName, NodeTypeActionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
             Argument.AssertNotNullOrEmpty(nodeTypeName, nameof(nodeTypeName));
-            Argument.AssertNotNull(nodeTypeActionParameters, nameof(nodeTypeActionParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateReimageRequest(subscriptionId, resourceGroupName, clusterName, nodeTypeName, nodeTypeActionParameters);
+            using var message = CreateReimageRequest(subscriptionId, resourceGroupName, clusterName, nodeTypeName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -262,19 +262,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="clusterName"> The name of the cluster resource. </param>
         /// <param name="nodeTypeName"> The name of the node type. </param>
-        /// <param name="nodeTypeActionParameters"> parameters for reimage action. </param>
+        /// <param name="content"> parameters for reimage action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="nodeTypeName"/> or <paramref name="nodeTypeActionParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="nodeTypeName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="nodeTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Reimage(string subscriptionId, string resourceGroupName, string clusterName, string nodeTypeName, NodeTypeActionParameters nodeTypeActionParameters, CancellationToken cancellationToken = default)
+        public Response Reimage(string subscriptionId, string resourceGroupName, string clusterName, string nodeTypeName, NodeTypeActionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
             Argument.AssertNotNullOrEmpty(nodeTypeName, nameof(nodeTypeName));
-            Argument.AssertNotNull(nodeTypeActionParameters, nameof(nodeTypeActionParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateReimageRequest(subscriptionId, resourceGroupName, clusterName, nodeTypeName, nodeTypeActionParameters);
+            using var message = CreateReimageRequest(subscriptionId, resourceGroupName, clusterName, nodeTypeName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             }
         }
 
-        internal HttpMessage CreateDeleteNodeRequest(string subscriptionId, string resourceGroupName, string clusterName, string nodeTypeName, NodeTypeActionParameters nodeTypeActionParameters)
+        internal HttpMessage CreateDeleteNodeRequest(string subscriptionId, string resourceGroupName, string clusterName, string nodeTypeName, NodeTypeActionContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -306,9 +306,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(nodeTypeActionParameters);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -318,19 +318,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="clusterName"> The name of the cluster resource. </param>
         /// <param name="nodeTypeName"> The name of the node type. </param>
-        /// <param name="nodeTypeActionParameters"> parameters for delete action. </param>
+        /// <param name="content"> parameters for delete action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="nodeTypeName"/> or <paramref name="nodeTypeActionParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="nodeTypeName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="nodeTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteNodeAsync(string subscriptionId, string resourceGroupName, string clusterName, string nodeTypeName, NodeTypeActionParameters nodeTypeActionParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteNodeAsync(string subscriptionId, string resourceGroupName, string clusterName, string nodeTypeName, NodeTypeActionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
             Argument.AssertNotNullOrEmpty(nodeTypeName, nameof(nodeTypeName));
-            Argument.AssertNotNull(nodeTypeActionParameters, nameof(nodeTypeActionParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateDeleteNodeRequest(subscriptionId, resourceGroupName, clusterName, nodeTypeName, nodeTypeActionParameters);
+            using var message = CreateDeleteNodeRequest(subscriptionId, resourceGroupName, clusterName, nodeTypeName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -347,19 +347,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="clusterName"> The name of the cluster resource. </param>
         /// <param name="nodeTypeName"> The name of the node type. </param>
-        /// <param name="nodeTypeActionParameters"> parameters for delete action. </param>
+        /// <param name="content"> parameters for delete action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="nodeTypeName"/> or <paramref name="nodeTypeActionParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="nodeTypeName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="nodeTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response DeleteNode(string subscriptionId, string resourceGroupName, string clusterName, string nodeTypeName, NodeTypeActionParameters nodeTypeActionParameters, CancellationToken cancellationToken = default)
+        public Response DeleteNode(string subscriptionId, string resourceGroupName, string clusterName, string nodeTypeName, NodeTypeActionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
             Argument.AssertNotNullOrEmpty(nodeTypeName, nameof(nodeTypeName));
-            Argument.AssertNotNull(nodeTypeActionParameters, nameof(nodeTypeActionParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateDeleteNodeRequest(subscriptionId, resourceGroupName, clusterName, nodeTypeName, nodeTypeActionParameters);
+            using var message = CreateDeleteNodeRequest(subscriptionId, resourceGroupName, clusterName, nodeTypeName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="nodeTypeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="nodeTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NodeTypeData>> GetAsync(string subscriptionId, string resourceGroupName, string clusterName, string nodeTypeName, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceFabricManagedNodeTypeData>> GetAsync(string subscriptionId, string resourceGroupName, string clusterName, string nodeTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -414,13 +414,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 case 200:
                     {
-                        NodeTypeData value = default;
+                        ServiceFabricManagedNodeTypeData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NodeTypeData.DeserializeNodeTypeData(document.RootElement);
+                        value = ServiceFabricManagedNodeTypeData.DeserializeServiceFabricManagedNodeTypeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((NodeTypeData)null, message.Response);
+                    return Response.FromValue((ServiceFabricManagedNodeTypeData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="nodeTypeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="nodeTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NodeTypeData> Get(string subscriptionId, string resourceGroupName, string clusterName, string nodeTypeName, CancellationToken cancellationToken = default)
+        public Response<ServiceFabricManagedNodeTypeData> Get(string subscriptionId, string resourceGroupName, string clusterName, string nodeTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -447,19 +447,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 case 200:
                     {
-                        NodeTypeData value = default;
+                        ServiceFabricManagedNodeTypeData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NodeTypeData.DeserializeNodeTypeData(document.RootElement);
+                        value = ServiceFabricManagedNodeTypeData.DeserializeServiceFabricManagedNodeTypeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((NodeTypeData)null, message.Response);
+                    return Response.FromValue((ServiceFabricManagedNodeTypeData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string clusterName, string nodeTypeName, NodeTypeData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string clusterName, string nodeTypeName, ServiceFabricManagedNodeTypeData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="nodeTypeName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="nodeTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, string nodeTypeName, NodeTypeData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, string nodeTypeName, ServiceFabricManagedNodeTypeData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="nodeTypeName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="nodeTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string clusterName, string nodeTypeName, NodeTypeData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string clusterName, string nodeTypeName, ServiceFabricManagedNodeTypeData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string clusterName, string nodeTypeName, NodeTypePatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string clusterName, string nodeTypeName, ServiceFabricManagedNodeTypePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="nodeTypeName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="nodeTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NodeTypeData>> UpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, string nodeTypeName, NodeTypePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceFabricManagedNodeTypeData>> UpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, string nodeTypeName, ServiceFabricManagedNodeTypePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -592,9 +592,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 case 200:
                     {
-                        NodeTypeData value = default;
+                        ServiceFabricManagedNodeTypeData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NodeTypeData.DeserializeNodeTypeData(document.RootElement);
+                        value = ServiceFabricManagedNodeTypeData.DeserializeServiceFabricManagedNodeTypeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="nodeTypeName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="nodeTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NodeTypeData> Update(string subscriptionId, string resourceGroupName, string clusterName, string nodeTypeName, NodeTypePatch patch, CancellationToken cancellationToken = default)
+        public Response<ServiceFabricManagedNodeTypeData> Update(string subscriptionId, string resourceGroupName, string clusterName, string nodeTypeName, ServiceFabricManagedNodeTypePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -625,9 +625,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 case 200:
                     {
-                        NodeTypeData value = default;
+                        ServiceFabricManagedNodeTypeData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NodeTypeData.DeserializeNodeTypeData(document.RootElement);
+                        value = ServiceFabricManagedNodeTypeData.DeserializeServiceFabricManagedNodeTypeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

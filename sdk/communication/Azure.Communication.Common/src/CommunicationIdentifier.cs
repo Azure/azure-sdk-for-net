@@ -56,7 +56,7 @@ namespace Azure.Communication
 
             if (rawId.StartsWith("4:", StringComparison.OrdinalIgnoreCase))
             {
-                return new PhoneNumberIdentifier($"+{rawId.Substring("4:".Length)}");
+                return new PhoneNumberIdentifier(rawId.Substring("4:".Length));
             }
 
             var segments = rawId.Split(':');

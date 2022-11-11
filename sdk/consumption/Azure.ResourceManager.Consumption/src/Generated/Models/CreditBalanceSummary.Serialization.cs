@@ -14,9 +14,9 @@ namespace Azure.ResourceManager.Consumption.Models
     {
         internal static CreditBalanceSummary DeserializeCreditBalanceSummary(JsonElement element)
         {
-            Optional<Amount> estimatedBalance = default;
-            Optional<Amount> currentBalance = default;
-            Optional<AmountWithExchangeRate> estimatedBalanceInBillingCurrency = default;
+            Optional<ConsumptionAmount> estimatedBalance = default;
+            Optional<ConsumptionAmount> currentBalance = default;
+            Optional<ConsumptionAmountWithExchangeRate> estimatedBalanceInBillingCurrency = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("estimatedBalance"))
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    estimatedBalance = Amount.DeserializeAmount(property.Value);
+                    estimatedBalance = ConsumptionAmount.DeserializeConsumptionAmount(property.Value);
                     continue;
                 }
                 if (property.NameEquals("currentBalance"))
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    currentBalance = Amount.DeserializeAmount(property.Value);
+                    currentBalance = ConsumptionAmount.DeserializeConsumptionAmount(property.Value);
                     continue;
                 }
                 if (property.NameEquals("estimatedBalanceInBillingCurrency"))
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    estimatedBalanceInBillingCurrency = AmountWithExchangeRate.DeserializeAmountWithExchangeRate(property.Value);
+                    estimatedBalanceInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property.Value);
                     continue;
                 }
             }

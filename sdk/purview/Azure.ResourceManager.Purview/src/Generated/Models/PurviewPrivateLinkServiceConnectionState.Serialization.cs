@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Purview.Models
         {
             Optional<string> actionsRequired = default;
             Optional<string> description = default;
-            Optional<Status> status = default;
+            Optional<PurviewPrivateLinkServiceStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actionsRequired"))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Purview.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new Status(property.Value.GetString());
+                    status = new PurviewPrivateLinkServiceStatus(property.Value.GetString());
                     continue;
                 }
             }

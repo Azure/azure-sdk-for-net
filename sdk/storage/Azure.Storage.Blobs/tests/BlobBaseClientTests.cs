@@ -1216,7 +1216,7 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobDownloadStreamingResult> response = await blob.DownloadStreamingAsync(new BlobDownloadOptions
             {
                 Range = new HttpRange(offset, count),
-                TransferValidationOptions = new DownloadTransferValidationOptions
+                TransferValidation = new DownloadTransferValidationOptions
                 {
                     ChecksumAlgorithm = StorageChecksumAlgorithm.MD5,
                     AutoValidateChecksum = false

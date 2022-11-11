@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.ApplicationInsights.Query" />
+    <PackageReference Include="Azure.Monitor.Query" />
     <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.Authentication" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
 

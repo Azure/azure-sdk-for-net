@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    lastOutputEventTime = property.Value.GetDateTimeOffset();
+                    lastOutputEventTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("lastUpdateTime"))
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    lastUpdateTime = property.Value.GetDateTimeOffset();
+                    lastUpdateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }

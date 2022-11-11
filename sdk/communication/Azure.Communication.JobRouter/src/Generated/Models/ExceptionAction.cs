@@ -7,8 +7,12 @@
 
 namespace Azure.Communication.JobRouter
 {
-    /// <summary> The action to take when the exception is triggered. </summary>
-    public partial class ExceptionAction
+    /// <summary>
+    /// The action to take when the exception is triggered
+    /// Please note <see cref="ExceptionAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="CancelExceptionAction"/>, <see cref="ManualReclassifyExceptionAction"/> and <see cref="ReclassifyExceptionAction"/>.
+    /// </summary>
+    public abstract partial class ExceptionAction
     {
 
         /// <summary> Initializes a new instance of ExceptionAction. </summary>

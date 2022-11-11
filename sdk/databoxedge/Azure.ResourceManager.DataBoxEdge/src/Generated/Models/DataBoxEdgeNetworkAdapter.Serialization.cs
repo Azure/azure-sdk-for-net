@@ -17,18 +17,18 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         internal static DataBoxEdgeNetworkAdapter DeserializeDataBoxEdgeNetworkAdapter(JsonElement element)
         {
             Optional<string> adapterId = default;
-            Optional<NetworkAdapterPosition> adapterPosition = default;
+            Optional<DataBoxEdgeNetworkAdapterPosition> adapterPosition = default;
             Optional<int> index = default;
             Optional<Guid> nodeId = default;
             Optional<string> networkAdapterName = default;
             Optional<string> label = default;
             Optional<string> macAddress = default;
             Optional<long> linkSpeed = default;
-            Optional<NetworkAdapterStatus> status = default;
-            Optional<NetworkAdapterRdmaStatus> rdmaStatus = default;
-            Optional<NetworkAdapterDhcpStatus> dhcpStatus = default;
-            Optional<IPv4Config> ipv4Configuration = default;
-            Optional<IPv6Config> ipv6Configuration = default;
+            Optional<DataBoxEdgeNetworkAdapterStatus> status = default;
+            Optional<DataBoxEdgeNetworkAdapterRdmaStatus> rdmaStatus = default;
+            Optional<DataBoxEdgeNetworkAdapterDhcpStatus> dhcpStatus = default;
+            Optional<DataBoxEdgeIPv4Config> ipv4Configuration = default;
+            Optional<DataBoxEdgeIPv6Config> ipv6Configuration = default;
             Optional<string> ipv6LinkLocalAddress = default;
             Optional<IReadOnlyList<string>> dnsServers = default;
             foreach (var property in element.EnumerateObject())
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    adapterPosition = NetworkAdapterPosition.DeserializeNetworkAdapterPosition(property.Value);
+                    adapterPosition = DataBoxEdgeNetworkAdapterPosition.DeserializeDataBoxEdgeNetworkAdapterPosition(property.Value);
                     continue;
                 }
                 if (property.NameEquals("index"))
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new NetworkAdapterStatus(property.Value.GetString());
+                    status = new DataBoxEdgeNetworkAdapterStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("rdmaStatus"))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    rdmaStatus = new NetworkAdapterRdmaStatus(property.Value.GetString());
+                    rdmaStatus = new DataBoxEdgeNetworkAdapterRdmaStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dhcpStatus"))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dhcpStatus = new NetworkAdapterDhcpStatus(property.Value.GetString());
+                    dhcpStatus = new DataBoxEdgeNetworkAdapterDhcpStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ipv4Configuration"))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    ipv4Configuration = IPv4Config.DeserializeIPv4Config(property.Value);
+                    ipv4Configuration = DataBoxEdgeIPv4Config.DeserializeDataBoxEdgeIPv4Config(property.Value);
                     continue;
                 }
                 if (property.NameEquals("ipv6Configuration"))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    ipv6Configuration = IPv6Config.DeserializeIPv6Config(property.Value);
+                    ipv6Configuration = DataBoxEdgeIPv6Config.DeserializeDataBoxEdgeIPv6Config(property.Value);
                     continue;
                 }
                 if (property.NameEquals("ipv6LinkLocalAddress"))
