@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
@@ -17,6 +18,7 @@ namespace Azure.ResourceManager.Kusto.Tests
     public class KustoManagementTestBase : ManagementRecordedTestBase<KustoManagementTestEnvironment>
     {
         protected KustoManagementTestEnvironment TE => TestEnvironment;
+        protected AzureLocation Location;
         private ArmClient Client { get; set; }
         private SubscriptionResource Subscription { get; set; }
         protected ResourceGroupResource ResourceGroup { get; private set; }
@@ -35,6 +37,8 @@ namespace Azure.ResourceManager.Kusto.Tests
 
         protected async Task BaseSetUp(bool cluster = false, bool database = false)
         {
+            Location = new AzureLocation(TE.Location);
+
             Client = GetArmClient();
             Subscription = await Client.GetDefaultSubscriptionAsync();
 
@@ -72,16 +76,6 @@ namespace Azure.ResourceManager.Kusto.Tests
             string expectedFullResourceName, TS expectedResourceData, TS actualResourceData
         );
 
-        private static object GetResourceData(object resource)
-        {
-            return resource.GetType().GetProperty("Data")?.GetValue(resource, null);
-        }
-
-        private static string GetResourceName(object resource)
-        {
-            return ((ResourceData)GetResourceData(resource)).Name;
-        }
-
         protected static async Task CollectionTests<T, TS>(
             string expectedResourceName,
             string expectedFullResourceName,
@@ -96,36 +90,39 @@ namespace Azure.ResourceManager.Kusto.Tests
             where T : ArmResource
         {
             T resource;
+            TS resourceData = default;
 
             if (createOrUpdateAsync is not null && resourceDataCreate is not null)
             {
-                resource = (await createOrUpdateAsync(expectedResourceName, resourceDataCreate)).Value;
+                resourceData = resourceDataCreate;
+                resource = (await createOrUpdateAsync(expectedResourceName, resourceData)).Value;
                 validate(
-                    expectedResourceName, resourceDataCreate, (TS)GetResourceData(resource)
+                    expectedFullResourceName, resourceData, (TS)GetResourceData(resource)
                 );
             }
 
             if (createOrUpdateAsync is not null && resourceDataUpdate is not null)
             {
-                resource = (await createOrUpdateAsync(expectedResourceName, resourceDataUpdate)).Value;
+                resourceData = resourceDataUpdate;
+                resource = (await createOrUpdateAsync(expectedResourceName, resourceData)).Value;
                 validate(
-                    expectedResourceName, resourceDataUpdate, (TS)GetResourceData(resource)
+                    expectedFullResourceName, resourceData, (TS)GetResourceData(resource)
                 );
             }
 
             resource = (await getAsync(expectedResourceName)).Value;
             validate(
-                expectedResourceName, resourceDataUpdate, (TS)GetResourceData(resource)
+                expectedFullResourceName, resourceData, (TS)GetResourceData(resource)
             );
 
             resource = await getAllAsync().FirstOrDefaultAsync(r => expectedFullResourceName == GetResourceName(r));
             validate(
-                expectedFullResourceName, resourceDataUpdate, (TS)GetResourceData(resource)
+                expectedFullResourceName, resourceData, (TS)GetResourceData(resource)
             );
 
             var exists = (await existsAsync(expectedResourceName)).Value;
             Assert.IsTrue(exists);
-            exists = (await existsAsync(new Guid().ToString())).Value;
+            exists = (await existsAsync("nonExistent")).Value;
             Assert.IsFalse(exists);
         }
 
@@ -148,6 +145,16 @@ namespace Azure.ResourceManager.Kusto.Tests
         }
 
         // Utility Methods
+        private static object GetResourceData(object resource)
+        {
+            return resource.GetType().GetProperty("Data")?.GetValue(resource, null);
+        }
+
+        private static string GetResourceName(object resource)
+        {
+            return ((ResourceData)GetResourceData(resource)).Name;
+        }
+
         protected string GenerateAssetName(string prefix)
         {
             return prefix + TE.Id;
@@ -164,6 +171,18 @@ namespace Azure.ResourceManager.Kusto.Tests
             return GetFullClusterChildResourceName(
                 $"{databaseName ?? TE.DatabaseName}/{resourceName}", clusterName
             );
+        }
+
+        protected static void AssertEquality(object expectedData, object actualData)
+        {
+            if (expectedData is null)
+            {
+                Assert.IsTrue(actualData is null || string.IsNullOrEmpty(actualData.ToString()));
+            }
+            else
+            {
+                Assert.AreEqual(expectedData, expectedData);
+            }
         }
 
         protected static void AssertEquality<T>(T expected, T actual, Action<T, T> assertEquals)

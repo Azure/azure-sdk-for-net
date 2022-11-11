@@ -15,16 +15,11 @@ resource keyVault 'Microsoft.KeyVault/vaults@2022-07-01' = {
             {
                 objectId: cluster_object_id
                 permissions: {
-                    certificates: [ 'all' ]
-                    keys: [ 'all' ]
-                    secrets: [ 'all' ]
-                    storage: [ 'all' ]
+                    keys: [ 'get', 'list', 'wrapKey', 'unwrapKey' ]
                 }
                 tenantId: tenant().tenantId
             }
         ]
-        enablePurgeProtection: false
-        enableSoftDelete: false
     }
 }
 

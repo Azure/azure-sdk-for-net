@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
 
             var databaseDataCreate = new KustoReadWriteDatabase
             {
-                HotCachePeriod = _hotCachePeriod1, SoftDeletePeriod = _softDeletePeriod1
+                HotCachePeriod = _hotCachePeriod1, Location = Location, SoftDeletePeriod = _softDeletePeriod1
             };
 
             var databaseDataUpdate = new KustoReadWriteDatabase
             {
-                HotCachePeriod = _hotCachePeriod2, SoftDeletePeriod = _softDeletePeriod2
+                HotCachePeriod = _hotCachePeriod2, Location = Location, SoftDeletePeriod = _softDeletePeriod2
             };
 
             Task<ArmOperation<KustoDatabaseResource>> CreateOrUpdateDatabaseAsync(
@@ -73,11 +73,12 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             KustoReadWriteDatabase expectedDatabaseData, KustoReadWriteDatabase actualDatabaseData
         )
         {
-            Assert.AreEqual(expectedDatabaseData.HotCachePeriod, actualDatabaseData.HotCachePeriod);
+            AssertEquality(expectedDatabaseData.HotCachePeriod, actualDatabaseData.HotCachePeriod);
             Assert.IsFalse(actualDatabaseData.IsFollowed);
-            Assert.AreEqual(KustoKind.ReadWrite, actualDatabaseData.Kind);
-            Assert.AreEqual(expectedFullDatabaseName, actualDatabaseData.Name);
-            Assert.AreEqual(expectedDatabaseData.SoftDeletePeriod, actualDatabaseData.SoftDeletePeriod);
+            AssertEquality(KustoKind.ReadWrite, actualDatabaseData.Kind);
+            AssertEquality(expectedDatabaseData.Location, actualDatabaseData.Location);
+            AssertEquality(expectedFullDatabaseName, actualDatabaseData.Name);
+            AssertEquality(expectedDatabaseData.SoftDeletePeriod, actualDatabaseData.SoftDeletePeriod);
         }
     }
 }

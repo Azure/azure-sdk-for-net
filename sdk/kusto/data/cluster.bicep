@@ -1,4 +1,5 @@
 param id string
+param user_assigned_identity_id string
 param app_id string
 param location string
 
@@ -18,7 +19,10 @@ resource cluster 'Microsoft.Kusto/clusters@2022-07-07' = {
         tier: 'Standard'
     }
     identity: {
-        type: 'SystemAssigned'
+        type: 'SystemAssigned, UserAssigned'
+        userAssignedIdentities: {
+            '${user_assigned_identity_id}': {}
+        }
     }
 
     resource database 'databases' = {
@@ -45,6 +49,8 @@ resource cluster 'Microsoft.Kusto/clusters@2022-07-07' = {
     }
 }
 
+output CLUSTER_ID string = cluster.id
+output CLUSTER_OBJECT_ID string = cluster.identity.principalId
 output CLUSTER_NAME string = clusterName
 output DATABASE_NAME string = databaseName
 output TABLE_NAME string = tableName

@@ -31,7 +31,10 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
 
             var iotHubDataConnectionDataCreate = new KustoIotHubDataConnection
             {
-                ConsumerGroup = "$Default", IotHubResourceId = TE.IotHubId, SharedAccessPolicyName = "registryRead"
+                ConsumerGroup = "$Default",
+                IotHubResourceId = TE.IotHubId,
+                Location = Location,
+                SharedAccessPolicyName = "registryRead"
             };
 
             var iotHubDataConnectionDataUpdate = new KustoIotHubDataConnection
@@ -40,6 +43,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
                 DatabaseRouting = KustoDatabaseRouting.Multi,
                 DataFormat = KustoIotHubDataFormat.Csv,
                 IotHubResourceId = TE.IotHubId,
+                Location = Location,
                 SharedAccessPolicyName = "registryRead",
                 TableName = TE.TableName
             };
@@ -79,7 +83,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
 
             var eventHubDataConnectionDataCreate = new KustoEventHubDataConnection
             {
-                ConsumerGroup = "$Default", EventHubResourceId = TE.EventHubId
+                ConsumerGroup = "$Default", EventHubResourceId = TE.EventHubId, Location = Location,
             };
 
             var eventHubDataConnectionDataUpdate = new KustoEventHubDataConnection
@@ -88,6 +92,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
                 DatabaseRouting = KustoDatabaseRouting.Multi,
                 DataFormat = KustoEventHubDataFormat.Csv,
                 EventHubResourceId = TE.EventHubId,
+                Location = Location,
                 ManagedIdentityResourceId = TE.UserAssignedIdentityId,
                 TableName = TE.TableName
             };
@@ -129,6 +134,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             {
                 ConsumerGroup = "$Default",
                 EventHubResourceId = TE.EventHubId,
+                Location = Location,
                 StorageAccountResourceId = TE.StorageAccountId
             };
 
@@ -138,6 +144,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
                 DatabaseRouting = KustoDatabaseRouting.Multi,
                 DataFormat = KustoEventGridDataFormat.Csv,
                 EventHubResourceId = TE.EventHubId,
+                Location = Location,
                 ManagedIdentityResourceId = TE.UserAssignedIdentityId,
                 StorageAccountResourceId = TE.StorageAccountId,
                 TableName = TE.TableName
@@ -174,22 +181,20 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             KustoIotHubDataConnection actualIotHubDataConnectionData
         )
         {
-            Assert.AreEqual(
+            AssertEquality(
                 expectedIotHubDataConnectionData.ConsumerGroup, actualIotHubDataConnectionData.ConsumerGroup
             );
-            Assert.AreEqual(
+            AssertEquality(
                 expectedIotHubDataConnectionData.DatabaseRouting ?? KustoDatabaseRouting.Single,
                 actualIotHubDataConnectionData.DatabaseRouting
             );
-            Assert.AreEqual(
-                expectedIotHubDataConnectionData.DataFormat ?? string.Empty,
-                actualIotHubDataConnectionData.DataFormat
-            );
-            Assert.AreEqual(
+            AssertEquality(expectedIotHubDataConnectionData.DataFormat, actualIotHubDataConnectionData.DataFormat);
+            AssertEquality(
                 expectedIotHubDataConnectionData.IotHubResourceId, actualIotHubDataConnectionData.IotHubResourceId
             );
-            Assert.AreEqual(iotHubDataConnectionName, actualIotHubDataConnectionData.Name);
-            Assert.AreEqual(expectedIotHubDataConnectionData.TableName, actualIotHubDataConnectionData.TableName);
+            AssertEquality(expectedIotHubDataConnectionData.Location, actualIotHubDataConnectionData.Location);
+            AssertEquality(iotHubDataConnectionName, actualIotHubDataConnectionData.Name);
+            AssertEquality(expectedIotHubDataConnectionData.TableName, actualIotHubDataConnectionData.TableName);
         }
 
         private static void ValidateEventHubDataConnection(
@@ -198,64 +203,57 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             KustoEventHubDataConnection actualEventHubDataConnectionData
         )
         {
-            Assert.AreEqual(
-                expectedEventHubDataConnectionData.ConsumerGroup,
-                actualEventHubDataConnectionData.ConsumerGroup
+            AssertEquality(
+                expectedEventHubDataConnectionData.ConsumerGroup, actualEventHubDataConnectionData.ConsumerGroup
             );
-            Assert.AreEqual(
+            AssertEquality(
                 expectedEventHubDataConnectionData.DatabaseRouting ?? KustoDatabaseRouting.Single,
                 actualEventHubDataConnectionData.DatabaseRouting
             );
-            Assert.AreEqual(
-                expectedEventHubDataConnectionData.DataFormat ?? string.Empty,
-                actualEventHubDataConnectionData.DataFormat
-            );
-            Assert.AreEqual(
+            AssertEquality(expectedEventHubDataConnectionData.DataFormat, actualEventHubDataConnectionData.DataFormat);
+            AssertEquality(
                 expectedEventHubDataConnectionData.EventHubResourceId,
                 actualEventHubDataConnectionData.EventHubResourceId
             );
-            Assert.AreEqual(
+            AssertEquality(expectedEventHubDataConnectionData.Location, actualEventHubDataConnectionData.Location);
+            AssertEquality(
                 expectedEventHubDataConnectionData.ManagedIdentityResourceId,
                 actualEventHubDataConnectionData.ManagedIdentityResourceId
             );
-            Assert.AreEqual(eventHubDataConnectionName, actualEventHubDataConnectionData.Name);
-            Assert.AreEqual(expectedEventHubDataConnectionData.TableName, actualEventHubDataConnectionData.TableName);
+            AssertEquality(eventHubDataConnectionName, actualEventHubDataConnectionData.Name);
+            AssertEquality(expectedEventHubDataConnectionData.TableName, actualEventHubDataConnectionData.TableName);
         }
 
-        private void ValidateEventGridDataConnection(
+        private static void ValidateEventGridDataConnection(
             string eventGridDataConnectionName,
             KustoEventGridDataConnection expectedEventGridDataConnectionData,
             KustoEventGridDataConnection actualEventGridDataConnectionData
         )
         {
-            Assert.AreEqual(
+            AssertEquality(
                 expectedEventGridDataConnectionData.ConsumerGroup, actualEventGridDataConnectionData.ConsumerGroup
             );
-            Assert.AreEqual(
+            AssertEquality(
                 expectedEventGridDataConnectionData.DatabaseRouting ?? KustoDatabaseRouting.Single,
                 actualEventGridDataConnectionData.DatabaseRouting
             );
-            Assert.AreEqual(
-                expectedEventGridDataConnectionData.DataFormat ?? string.Empty,
-                actualEventGridDataConnectionData.DataFormat
-            );
-            Assert.AreEqual(
+            AssertEquality(expectedEventGridDataConnectionData.DataFormat,
+                actualEventGridDataConnectionData.DataFormat);
+            AssertEquality(
                 expectedEventGridDataConnectionData.EventHubResourceId,
                 actualEventGridDataConnectionData.EventHubResourceId
             );
-            Assert.AreEqual(
+            AssertEquality(expectedEventGridDataConnectionData.Location, actualEventGridDataConnectionData.Location);
+            AssertEquality(
                 expectedEventGridDataConnectionData.ManagedIdentityResourceId,
                 actualEventGridDataConnectionData.ManagedIdentityResourceId
             );
-            Assert.AreEqual(
-                GetFullDatabaseChildResourceName(eventGridDataConnectionName),
-                actualEventGridDataConnectionData.Name
-            );
-            Assert.AreEqual(
+            AssertEquality(eventGridDataConnectionName, actualEventGridDataConnectionData.Name);
+            AssertEquality(
                 expectedEventGridDataConnectionData.StorageAccountResourceId,
                 actualEventGridDataConnectionData.StorageAccountResourceId
             );
-            Assert.AreEqual(expectedEventGridDataConnectionData.TableName, actualEventGridDataConnectionData.TableName);
+            AssertEquality(expectedEventGridDataConnectionData.TableName, actualEventGridDataConnectionData.TableName);
         }
     }
 }

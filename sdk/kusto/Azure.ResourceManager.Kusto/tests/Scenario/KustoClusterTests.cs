@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
 {
     public class KustoClusterTests : KustoManagementTestBase
     {
-        private readonly KustoSku _sku1 = new(KustoSkuName.StandardD13V2, 2, KustoSkuTier.Basic);
+        private readonly KustoSku _sku1 = new(KustoSkuName.StandardD13V2, 2, KustoSkuTier.Standard);
         private readonly KustoSku _sku2 = new(KustoSkuName.StandardD14V2, 3, KustoSkuTier.Standard);
 
         public KustoClusterTests(bool isAsync)
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
 
             var clusterName = GenerateAssetName("sdkCluster") + "2";
 
-            var clusterDataCreate = new KustoClusterData(TE.Location, _sku1)
+            var clusterDataCreate = new KustoClusterData(Location, _sku1)
             {
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
             };
 
-            var clusterDataUpdate = new KustoClusterData(TE.Location, _sku2)
+            var clusterDataUpdate = new KustoClusterData(Location, _sku2)
             {
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssignedUserAssigned)
                 {
@@ -88,29 +88,29 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
 
             await cluster.StopAsync(WaitUntil.Completed);
             cluster = await clusterCollection.GetAsync(clusterName);
-            Assert.AreEqual(KustoClusterState.Stopped, cluster.Data.State);
+            AssertEquality(KustoClusterState.Stopped, cluster.Data.State);
 
             await cluster.StartAsync(WaitUntil.Completed);
             cluster = await clusterCollection.GetAsync(clusterName);
-            Assert.AreEqual(KustoClusterState.Running, cluster.Data.State);
+            AssertEquality(KustoClusterState.Running, cluster.Data.State);
         }
 
         private void ValidateCluster(
             string expectedFullClusterName, KustoClusterData expectedClusterData, KustoClusterData actualClusterData
         )
         {
-            Assert.AreEqual(
+            AssertEquality(
                 expectedClusterData.IsDiskEncryptionEnabled ?? false, actualClusterData.IsDiskEncryptionEnabled
             );
-            Assert.AreEqual(
+            AssertEquality(
                 expectedClusterData.IsStreamingIngestEnabled ?? false, actualClusterData.IsStreamingIngestEnabled
             );
-            Assert.AreEqual(expectedFullClusterName, actualClusterData.Name);
-            Assert.IsEmpty(actualClusterData.PrivateEndpointConnections);
-            Assert.AreEqual(
+            AssertEquality(expectedClusterData.Location, actualClusterData.Location);
+            AssertEquality(expectedFullClusterName, actualClusterData.Name);
+            AssertEquality(
                 expectedClusterData.PublicIPType ?? KustoClusterPublicIPType.IPv4, actualClusterData.PublicIPType
             );
-            Assert.AreEqual(KustoClusterState.Running, actualClusterData.State);
+            AssertEquality(KustoClusterState.Running, actualClusterData.State);
             Assert.IsNull(actualClusterData.VirtualClusterGraduationProperties);
 
             AssertEquality(expectedClusterData.Identity, actualClusterData.Identity, IdentityEquals);
@@ -119,6 +119,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
                 AssertOptimizedAutoscaleEquals
             );
             AssertEquality(expectedClusterData.Sku, actualClusterData.Sku, AssertSkuEquals);
+            AssertEquality(KustoClusterState.Running, actualClusterData.State);
             AssertEquality(
                 expectedClusterData.TrustedExternalTenants, actualClusterData.TrustedExternalTenants,
                 AssertTrustedExternalTenantsEquals
@@ -141,12 +142,12 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
                 Assert.IsNull(actual.PrincipalId);
             }
 
-            Assert.AreEqual(Guid.Parse(TE.TenantId), actual.TenantId);
-            Assert.AreEqual(expected.ManagedServiceIdentityType, actual.ManagedServiceIdentityType);
+            AssertEquality(Guid.Parse(TE.TenantId), actual.TenantId);
+            AssertEquality(expected.ManagedServiceIdentityType, actual.ManagedServiceIdentityType);
 
             CollectionAssert.AreEqual(
-                expected.UserAssignedIdentities.Keys.Select(rId => rId.ToString()).ToList(),
-                actual.UserAssignedIdentities.Keys.Select(rId => rId.ToString()).ToList()
+                expected.UserAssignedIdentities.Keys.Select(rId => rId.ToString().ToLower()).ToList(),
+                actual.UserAssignedIdentities.Keys.Select(rId => rId.ToString().ToLower()).ToList()
             );
             CollectionAssert.AllItemsAreNotNull(
                 actual.UserAssignedIdentities.Values.Select(identity => identity.ClientId)
@@ -158,38 +159,39 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
 
         private static void AssertOptimizedAutoscaleEquals(OptimizedAutoscale expected, OptimizedAutoscale actual)
         {
-            Assert.AreEqual(expected.Version, actual.Version);
-            Assert.AreEqual(expected.Minimum, actual.Minimum);
-            Assert.AreEqual(expected.Maximum, actual.Maximum);
-            Assert.AreEqual(expected.IsEnabled, actual.IsEnabled);
+            AssertEquality(expected.Version, actual.Version);
+            AssertEquality(expected.Minimum, actual.Minimum);
+            AssertEquality(expected.Maximum, actual.Maximum);
+            AssertEquality(expected.IsEnabled, actual.IsEnabled);
         }
 
         private static void AssertSkuEquals(KustoSku expected, KustoSku actual)
         {
-            Assert.AreEqual(expected.Name, actual.Name);
-            Assert.AreEqual(expected.Capacity, actual.Capacity);
-            Assert.AreEqual(expected.Tier, actual.Tier);
+            AssertEquality(expected.Name, actual.Name);
+            AssertEquality(expected.Capacity, actual.Capacity);
+            AssertEquality(expected.Tier, actual.Tier);
         }
 
         private static void AssertTrustedExternalTenantsEquals(
             IList<KustoClusterTrustedExternalTenant> expected, IList<KustoClusterTrustedExternalTenant> actual
         )
         {
-            Assert.AreEqual(expected.Count, actual.Count);
+            AssertEquality(expected.Count, actual.Count);
             CollectionAssert.AreEqual(
                 expected.Select(trustedExternalTenant => trustedExternalTenant.Value).ToList(),
                 actual.Select(trustedExternalTenant => trustedExternalTenant.Value).ToList()
             );
         }
 
+        // TODO
         // private static void AssertKeyVaultPropertiesEquals(
         //     KustoKeyVaultProperties keyVaultProperties1, KustoKeyVaultProperties keyVaultProperties2
         // )
         // {
-        //     Assert.AreEqual(keyVaultProperties1.KeyName, keyVaultProperties2.KeyName);
-        //     Assert.AreEqual(keyVaultProperties1.KeyVersion, keyVaultProperties2.KeyVersion);
-        //     Assert.AreEqual(keyVaultProperties1.KeyVaultUri, keyVaultProperties2.KeyVaultUri);
-        //     Assert.AreEqual(keyVaultProperties1.UserIdentity, keyVaultProperties2.UserIdentity);
+        //     AssertEquality(keyVaultProperties1.KeyName, keyVaultProperties2.KeyName);
+        //     AssertEquality(keyVaultProperties1.KeyVersion, keyVaultProperties2.KeyVersion);
+        //     AssertEquality(keyVaultProperties1.KeyVaultUri, keyVaultProperties2.KeyVaultUri);
+        //     AssertEquality(keyVaultProperties1.UserIdentity, keyVaultProperties2.UserIdentity);
         // }
     }
 }

@@ -31,7 +31,7 @@ output STORAGE_ACCOUNT_SAS_TOKEN string = storageAccount.listAccountSAS('2022-05
 }).accountSasToken
 
 var deploymentScriptName = 'sdkDeploymentScript${id}'
-var blobName = 'sdkBlob${id}'
+var blobName = 'sdkBlob${id}.txt'
 var tableName = 'sdkScriptUriTable${id}'
 
 var blobUploadScript = '".create table ${tableName} (Level:string, Timestamp:datetime, UserId:string, TraceId:string, Message:string, ProcessId:int32)" > ${blobName}; az storage blob upload -f ${blobName} -c ${containerName} -n ${blobName}'
@@ -58,4 +58,4 @@ resource deploymentScript 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
     }
 }
 
-output SCRIPT_URI string = 'https://${storageAccountName}.blob.core.windows.net/${containerName}/${blobName}'
+output SCRIPT_URI string = 'https://${storageAccountName}.blob.${environment().suffixes.storage}/${containerName}/${blobName}'

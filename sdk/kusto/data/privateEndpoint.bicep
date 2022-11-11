@@ -1,6 +1,6 @@
 param id string
 param location string
-param clusterId string
+param cluster_id string
 
 resource vnet 'Microsoft.Network/virtualNetworks@2021-05-01' = {
     name: 'sdkVnet${id}'
@@ -29,13 +29,11 @@ resource privateEndpoint 'Microsoft.Network/privateEndpoints@2021-05-01' = {
         subnet: {
             id: subnet.id
         }
-        manualPrivateLinkServiceConnections:[
-        ]
         privateLinkServiceConnections: [
             {
                 name: privateEndpointName
                 properties: {
-                    privateLinkServiceId: clusterId
+                    privateLinkServiceId: cluster_id
                     groupIds: ['cluster']
                 }
             }

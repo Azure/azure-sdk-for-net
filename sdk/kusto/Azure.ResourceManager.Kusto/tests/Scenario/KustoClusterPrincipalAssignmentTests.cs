@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Kusto.Models;
@@ -32,17 +31,16 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
 
             var clusterPrincipalAssignmentDataCreate = new KustoClusterPrincipalAssignmentData
             {
-                PrincipalId = TE.UserAssignedIdentityPrincipalId,
+                ClusterPrincipalId = TE.UserAssignedIdentityPrincipalId,
                 Role = KustoClusterPrincipalRole.AllDatabasesAdmin,
                 PrincipalType = KustoPrincipalAssignmentType.App
             };
 
             var clusterPrincipalAssignmentDataUpdate = new KustoClusterPrincipalAssignmentData
             {
-                PrincipalId = TE.UserAssignedIdentityPrincipalId,
+                ClusterPrincipalId = TE.UserAssignedIdentityPrincipalId,
                 Role = KustoClusterPrincipalRole.AllDatabasesViewer,
-                PrincipalType = KustoPrincipalAssignmentType.App,
-                TenantId = Guid.Parse(TE.TenantId)
+                PrincipalType = KustoPrincipalAssignmentType.App
             };
 
             Task<ArmOperation<KustoClusterPrincipalAssignmentResource>> CreateOrUpdateClusterPrincipalAssignmentAsync(
@@ -77,17 +75,15 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             KustoClusterPrincipalAssignmentData actualClusterPrincipalAssignmentData
         )
         {
-            Assert.AreEqual(expectedFullClusterPrincipalAssignmentName, actualClusterPrincipalAssignmentData.Name);
-            Assert.AreEqual(
-                expectedClusterPrincipalAssignmentData.PrincipalId, actualClusterPrincipalAssignmentData.PrincipalId
+            AssertEquality(
+                expectedClusterPrincipalAssignmentData.ClusterPrincipalId,
+                actualClusterPrincipalAssignmentData.ClusterPrincipalId
             );
-            Assert.AreEqual(
+            AssertEquality(expectedFullClusterPrincipalAssignmentName, actualClusterPrincipalAssignmentData.Name);
+            AssertEquality(
                 expectedClusterPrincipalAssignmentData.PrincipalType, actualClusterPrincipalAssignmentData.PrincipalType
             );
-            Assert.AreEqual(expectedClusterPrincipalAssignmentData.Role, actualClusterPrincipalAssignmentData.Role);
-            Assert.AreEqual(
-                expectedClusterPrincipalAssignmentData.TenantId, actualClusterPrincipalAssignmentData.TenantId
-            );
+            AssertEquality(expectedClusterPrincipalAssignmentData.Role, actualClusterPrincipalAssignmentData.Role);
         }
     }
 }

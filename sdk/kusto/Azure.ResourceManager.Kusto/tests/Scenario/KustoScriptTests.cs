@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
 
             var scriptDataUpdate = new KustoScriptData
             {
-                ForceUpdateTag = "tag1", ScriptUri = TE.ScriptUri, ScriptUriSasToken = TE.ScriptSasToken
+                ForceUpdateTag = "tag1", ScriptUri = TE.ScriptUri, ScriptUriSasToken = TE.StorageAccountSasToken
             };
 
             var scriptContent =
@@ -68,13 +68,12 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             string expectedFullScriptName, KustoScriptData expectedScriptData, KustoScriptData actualScriptData
         )
         {
-            Assert.AreEqual(expectedScriptData.ForceUpdateTag, actualScriptData.ForceUpdateTag);
-            Assert.AreEqual(expectedFullScriptName, actualScriptData.Name);
-            // TODO: why isn't scriptContent saved?
-            // Assert.AreEqual(expectedScriptData.ScriptContent, actualScriptData.ScriptContent);
-            Assert.AreEqual(expectedScriptData.ScriptUri, actualScriptData.ScriptUri);
-            Assert.AreEqual(expectedScriptData.ScriptUriSasToken, actualScriptData.ScriptUriSasToken);
-            Assert.AreEqual(expectedScriptData.ShouldContinueOnErrors, actualScriptData.ShouldContinueOnErrors);
+            AssertEquality(expectedScriptData.ForceUpdateTag, actualScriptData.ForceUpdateTag);
+            AssertEquality(expectedFullScriptName, actualScriptData.Name);
+            Assert.IsNull(actualScriptData.ScriptContent);
+            AssertEquality(expectedScriptData.ScriptUri, actualScriptData.ScriptUri);
+            Assert.IsNull(actualScriptData.ScriptUriSasToken);
+            AssertEquality(expectedScriptData.ShouldContinueOnErrors ?? false, actualScriptData.ShouldContinueOnErrors);
         }
     }
 }

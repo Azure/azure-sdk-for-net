@@ -42,8 +42,9 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             var attachedDatabaseConfigurationDataCreate = new KustoAttachedDatabaseConfigurationData
             {
                 ClusterResourceId = Cluster.Id,
-                DatabaseName = "*",
-                DefaultPrincipalsModificationKind = KustoDatabaseDefaultPrincipalsModificationKind.Replace
+                DatabaseName = TE.DatabaseName,
+                DefaultPrincipalsModificationKind = KustoDatabaseDefaultPrincipalsModificationKind.Replace,
+                Location = Location
             };
 
             var attachedDatabaseConfigurationDataUpdate = new KustoAttachedDatabaseConfigurationData
@@ -51,6 +52,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
                 ClusterResourceId = Cluster.Id,
                 DatabaseName = TE.DatabaseName,
                 DefaultPrincipalsModificationKind = KustoDatabaseDefaultPrincipalsModificationKind.Replace,
+                Location = Location,
                 TableLevelSharingProperties = new KustoDatabaseTableLevelSharingProperties(
                     new List<string> { "include" },
                     new List<string> { "exclude" },
@@ -84,13 +86,43 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             var followingDatabase = (await FollowingCluster.GetKustoDatabaseAsync(TE.DatabaseName)).Value;
             await ReadOnlyFollowingDatabaseResourceTests(followingDatabase);
 
-            await FollowerDatabaseActionTests(attachedDatabaseConfigurationName);
-
             await DeletionTest(
                 attachedDatabaseConfigurationName,
                 attachedDatabaseConfigurationCollection.GetAsync,
                 attachedDatabaseConfigurationCollection.ExistsAsync
             );
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task FollowerDatabaseActionTests()
+        {
+            var attachedDatabaseConfigurationCollection = FollowingCluster.GetKustoAttachedDatabaseConfigurations();
+
+            var attachedDatabaseConfigurationName =
+                GenerateAssetName("sdkAttachedDatabaseConfiguration");
+
+            await attachedDatabaseConfigurationCollection.CreateOrUpdateAsync(WaitUntil.Completed,
+                attachedDatabaseConfigurationName,
+                new KustoAttachedDatabaseConfigurationData
+                {
+                    ClusterResourceId = Cluster.Id,
+                    DatabaseName = TE.DatabaseName,
+                    DefaultPrincipalsModificationKind = KustoDatabaseDefaultPrincipalsModificationKind.Replace,
+                    Location = Location
+                });
+
+            var followerDatabaseDefinition = await Cluster.GetFollowerDatabasesAsync().FirstOrDefaultAsync();
+
+            ValidateFollowerDatabaseDefinition(followerDatabaseDefinition, attachedDatabaseConfigurationName);
+
+            await ValidateReadWriteDatabase(true);
+
+            await FollowingCluster.DetachFollowerDatabasesAsync(WaitUntil.Completed, followerDatabaseDefinition);
+
+            Assert.IsNull(await Cluster.GetFollowerDatabasesAsync().FirstOrDefaultAsync());
+
+            await ValidateReadWriteDatabase(false);
         }
 
         private async Task ReadOnlyFollowingDatabaseResourceTests(KustoDatabaseResource followingDatabase)
@@ -121,19 +153,23 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             KustoAttachedDatabaseConfigurationData actualAttachedDatabaseConfigurationData
         )
         {
-            Assert.AreEqual(
+            AssertEquality(
                 expectedAttachedDatabaseConfigurationData.ClusterResourceId,
                 actualAttachedDatabaseConfigurationData.ClusterResourceId
             );
-            Assert.AreEqual(
+            AssertEquality(
                 expectedAttachedDatabaseConfigurationData.DatabaseName,
                 actualAttachedDatabaseConfigurationData.DatabaseName
             );
-            Assert.AreEqual(
+            AssertEquality(
                 expectedAttachedDatabaseConfigurationData.DefaultPrincipalsModificationKind,
-                actualAttachedDatabaseConfigurationData.DefaultPrincipalsModificationKind);
-            Assert.AreEqual(
+                actualAttachedDatabaseConfigurationData.DefaultPrincipalsModificationKind
+            );
+            AssertEquality(
                 expectedFullAttachedDatabaseConfigurationName, actualAttachedDatabaseConfigurationData.Name
+            );
+            AssertEquality(
+                expectedAttachedDatabaseConfigurationData.Location, actualAttachedDatabaseConfigurationData.Location
             );
             AssertEquality(
                 expectedAttachedDatabaseConfigurationData.TableLevelSharingProperties,
@@ -154,31 +190,17 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             CollectionAssert.AreEqual(expected.MaterializedViewsToInclude, actual.MaterializedViewsToInclude);
         }
 
-        private static void ValidateReadOnlyFollowingDatabase(
+        private void ValidateReadOnlyFollowingDatabase(
             string expectedFullDatabaseName,
             TimeSpan? expectedHotCachePeriod, TimeSpan? expectedSoftDeletePeriod,
             KustoReadOnlyFollowingDatabase actualDatabaseData
         )
         {
-            Assert.AreEqual(expectedHotCachePeriod, actualDatabaseData.HotCachePeriod);
-            Assert.AreEqual(KustoKind.ReadOnlyFollowing, actualDatabaseData.Kind);
-            Assert.AreEqual(expectedFullDatabaseName, actualDatabaseData.Name);
-            Assert.AreEqual(expectedSoftDeletePeriod, actualDatabaseData.SoftDeletePeriod);
-        }
-
-        private async Task FollowerDatabaseActionTests(string attachedDatabaseConfigurationName)
-        {
-            var followerDatabaseDefinition = await Cluster.GetFollowerDatabasesAsync().FirstOrDefaultAsync();
-
-            ValidateFollowerDatabaseDefinition(followerDatabaseDefinition, attachedDatabaseConfigurationName);
-
-            await ValidateReadWriteDatabase(true);
-
-            await FollowingCluster.DetachFollowerDatabasesAsync(WaitUntil.Completed, followerDatabaseDefinition);
-
-            Assert.IsNull(await Cluster.GetFollowerDatabasesAsync().FirstOrDefaultAsync());
-
-            await ValidateReadWriteDatabase(false);
+            AssertEquality(expectedHotCachePeriod, actualDatabaseData.HotCachePeriod);
+            AssertEquality(KustoKind.ReadOnlyFollowing, actualDatabaseData.Kind);
+            AssertEquality(expectedFullDatabaseName, actualDatabaseData.Name);
+            AssertEquality(Location, actualDatabaseData.Location);
+            AssertEquality(expectedSoftDeletePeriod, actualDatabaseData.SoftDeletePeriod);
         }
 
         private void ValidateFollowerDatabaseDefinition(
@@ -186,12 +208,12 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
         )
         {
             Assert.IsNotNull(followerDatabaseDefinition);
-            Assert.AreEqual(
+            AssertEquality(
                 expectedAttachedDatabaseConfigurationName,
                 followerDatabaseDefinition.AttachedDatabaseConfigurationName
             );
-            Assert.AreEqual(FollowingCluster.Id, followerDatabaseDefinition.ClusterResourceId);
-            Assert.AreEqual(TE.DatabaseName, followerDatabaseDefinition.DatabaseName);
+            AssertEquality(FollowingCluster.Id, followerDatabaseDefinition.ClusterResourceId);
+            AssertEquality(TE.DatabaseName, followerDatabaseDefinition.DatabaseName);
         }
 
         private async Task ValidateReadWriteDatabase(bool isFollowed)
@@ -200,8 +222,8 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
                 await Cluster.GetKustoDatabaseAsync(TE.DatabaseName)
             ).Value.Data;
 
-            Assert.AreEqual(DatabaseData.HotCachePeriod, databaseData.HotCachePeriod);
-            Assert.AreEqual(isFollowed, databaseData.IsFollowed);
+            AssertEquality(DatabaseData.HotCachePeriod, databaseData.HotCachePeriod);
+            AssertEquality(isFollowed, databaseData.IsFollowed);
         }
     }
 }

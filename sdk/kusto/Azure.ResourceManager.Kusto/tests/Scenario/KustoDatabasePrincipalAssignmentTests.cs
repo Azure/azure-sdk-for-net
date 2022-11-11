@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Kusto.Models;
@@ -32,17 +31,16 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
 
             var databasePrincipalAssignmentDataCreate = new KustoDatabasePrincipalAssignmentData
             {
-                PrincipalId = Cluster.Data.Identity.PrincipalId,
+                DatabasePrincipalId = Cluster.Data.Identity.PrincipalId.ToString(),
                 PrincipalType = KustoPrincipalAssignmentType.App,
                 Role = KustoDatabasePrincipalRole.Admin
             };
 
             var databasePrincipalAssignmentDataUpdate = new KustoDatabasePrincipalAssignmentData
             {
-                PrincipalId = Cluster.Data.Identity.PrincipalId,
+                DatabasePrincipalId = Cluster.Data.Identity.PrincipalId.ToString(),
                 PrincipalType = KustoPrincipalAssignmentType.App,
-                Role = KustoDatabasePrincipalRole.Viewer,
-                TenantId = Guid.Parse(TE.TenantId)
+                Role = KustoDatabasePrincipalRole.Viewer
             };
 
             Task<ArmOperation<KustoDatabasePrincipalAssignmentResource>> CreateOrUpdateDatabasePrincipalAssignmentAsync(
@@ -77,20 +75,18 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             KustoDatabasePrincipalAssignmentData actualDatabasePrincipalAssignmentData
         )
         {
-            Assert.AreEqual(
-                expectedFullDatabasePrincipalAssignmentName, actualDatabasePrincipalAssignmentData.Name);
-            Assert.AreEqual(
-                expectedDatabasePrincipalAssignmentData.PrincipalId, actualDatabasePrincipalAssignmentData.PrincipalId
+            AssertEquality(
+                expectedDatabasePrincipalAssignmentData.DatabasePrincipalId,
+                actualDatabasePrincipalAssignmentData.DatabasePrincipalId
             );
-            Assert.AreEqual(
+            AssertEquality(
+                expectedFullDatabasePrincipalAssignmentName, actualDatabasePrincipalAssignmentData.Name);
+            AssertEquality(
                 expectedDatabasePrincipalAssignmentData.PrincipalType,
                 actualDatabasePrincipalAssignmentData.PrincipalType
             );
-            Assert.AreEqual(
+            AssertEquality(
                 expectedDatabasePrincipalAssignmentData.Role, actualDatabasePrincipalAssignmentData.Role
-            );
-            Assert.AreEqual(
-                expectedDatabasePrincipalAssignmentData.TenantId, actualDatabasePrincipalAssignmentData.TenantId
             );
         }
     }
