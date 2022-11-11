@@ -40,7 +40,11 @@ namespace Azure.AI.Language.Conversations
         public StringIndexType? StringIndexType { get; set; }
         /// <summary> The name of a target project to forward the request to. </summary>
         public string DirectTarget { get; set; }
-        /// <summary> A dictionary representing the parameters for each target project. </summary>
+        /// <summary>
+        /// A dictionary representing the parameters for each target project.
+        /// Please note <see cref="AnalysisParameters"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ConversationParameters"/>, <see cref="LuisParameters"/> and <see cref="QuestionAnsweringParameters"/>.
+        /// </summary>
         public IDictionary<string, AnalysisParameters> TargetProjectParameters { get; }
     }
 }

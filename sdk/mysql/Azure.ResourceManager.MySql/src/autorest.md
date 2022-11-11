@@ -88,7 +88,6 @@ prepend-rp-prefix:
   - MinimalTlsVersionEnum
   - GeoRedundantBackup
   - InfrastructureEncryption
-  - NameAvailabilityRequest
   - PerformanceTierListResult
   - PerformanceTierServiceLevelObjectives
   - PrivateEndpointProvisioningState
@@ -149,6 +148,7 @@ rename-mapping:
   ConfigurationListResult: MySqlConfigurations
   LogFile.properties.type: LogFileType
   ConfigurationListResult.value: Values
+  NameAvailabilityRequest: MySqlNameAvailabilityContent
 
 override-operation-name:
   ServerParameters_ListUpdateConfigurations: UpdateConfigurations
@@ -268,7 +268,7 @@ rename-mapping:
   CapabilityProperties: MySqlFlexibleServerCapabilityProperties
   CapabilitiesListResult: MySqlFlexibleServerCapabilitiesListResult
   GetPrivateDnsZoneSuffixResponse: MySqlFlexibleServerPrivateDnsZoneSuffixResponse
-  NameAvailabilityRequest: MySqlFlexibleServerNameAvailabilityRequest
+  NameAvailabilityRequest: MySqlFlexibleServerNameAvailabilityContent
   NameAvailability: MySqlFlexibleServerNameAvailabilityResult
   CreateMode: MySqlFlexibleServerCreateMode
   DataEncryptionType: MySqlFlexibleServerDataEncryptionType
@@ -277,7 +277,7 @@ rename-mapping:
   IsDynamicConfig: MySqlFlexibleServerConfigDynamicState
   IsConfigPendingRestart: MySqlFlexibleServerConfigPendingRestartState
   NameAvailability.nameAvailable: IsNameAvailable
-  
+
 override-operation-name:
   CheckNameAvailability_Execute: CheckMySqlFlexibleServerNameAvailability
   Configurations_BatchUpdate: UpdateConfigurations
@@ -289,7 +289,7 @@ directive:
       $.Identity['x-ms-client-flatten'] = false;
       $.Identity.properties.userAssignedIdentities.additionalProperties['$ref'] = '#/definitions/UserAssignedIdentity';
       delete $.Identity.properties.userAssignedIdentities.additionalProperties.items;
-  
+
   # Add a new mode for update operation
   - from: mysql.json
     where: $.definitions

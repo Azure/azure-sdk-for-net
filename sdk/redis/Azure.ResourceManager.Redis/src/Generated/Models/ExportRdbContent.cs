@@ -32,5 +32,7 @@ namespace Azure.ResourceManager.Redis.Models
         public string Prefix { get; }
         /// <summary> Container name to export to. </summary>
         public string Container { get; }
+        /// <summary> Preferred auth method to communicate to storage account used for data archive, specify SAS or ManagedIdentity, default value is SAS. </summary>
+        public string PreferredDataArchiveAuthMethod { get; set; }
     }
 }

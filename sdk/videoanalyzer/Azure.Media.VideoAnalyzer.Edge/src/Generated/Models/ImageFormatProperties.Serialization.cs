@@ -32,16 +32,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     case "#Microsoft.VideoAnalyzer.ImageFormatRaw": return ImageFormatRaw.DeserializeImageFormatRaw(element);
                 }
             }
-            string type = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("@type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new ImageFormatProperties(type);
+            return UnknownImageFormatProperties.DeserializeUnknownImageFormatProperties(element);
         }
     }
 }

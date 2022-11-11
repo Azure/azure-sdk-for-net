@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             Optional<ChannelMapping> channelMapping = default;
-            string odataType = default;
+            string odataType = "#Microsoft.Media.AudioTrackDescriptor";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("channelMapping"))

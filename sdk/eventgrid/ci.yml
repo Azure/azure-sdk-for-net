@@ -9,11 +9,10 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/eventgrid/ci.yml
-    - sdk/eventgrid/Azure.Messaging.EventGrid/
-    - sdk/eventgrid/Microsoft.Azure.EventGrid/
-    - sdk/eventgrid/Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents/
-    - sdk/eventgrid/Microsoft.Azure.WebJobs.Extensions.EventGrid/
+      - sdk/eventgrid/
+    exclude:
+      - sdk/eventgrid/Azure.ResourceManager.EventGrid/
+      - sdk/eventgrid/Microsoft.Azure.EventGrid/
 
 pr:
   branches:
@@ -24,11 +23,10 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/eventgrid/ci.yml
-    - sdk/eventgrid/Azure.Messaging.EventGrid/
-    - sdk/eventgrid/Microsoft.Azure.EventGrid/
-    - sdk/eventgrid/Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents/
-    - sdk/eventgrid/Microsoft.Azure.WebJobs.Extensions.EventGrid/
+      - sdk/eventgrid/
+    exclude:
+      - sdk/eventgrid/Azure.ResourceManager.EventGrid/
+      - sdk/eventgrid/Microsoft.Azure.EventGrid/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -39,8 +37,6 @@ extends:
     Artifacts:
     - name: Azure.Messaging.EventGrid
       safeName: AzureMessagingEventGrid
-    - name: Microsoft.Azure.EventGrid
-      safeName: MicrosoftAzureEventGrid
     - name: Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents
       safeName: MicrosoftAzureMessagingEventGridCloudNativeCloudEvents
     - name: Microsoft.Azure.WebJobs.Extensions.EventGrid

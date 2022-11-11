@@ -387,7 +387,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             }
             finally
             {
-                EventHubsEventSource.Log.EventReceiveComplete(EventHubName, ConsumerGroup, PartitionId, operationId, failedAttemptCount, receivedEventCount);
+                EventHubsEventSource.Log.EventReceiveComplete(EventHubName, ConsumerGroup, PartitionId, operationId, failedAttemptCount, receivedEventCount, stopWatch.GetElapsedTime().TotalSeconds);
             }
         }
 

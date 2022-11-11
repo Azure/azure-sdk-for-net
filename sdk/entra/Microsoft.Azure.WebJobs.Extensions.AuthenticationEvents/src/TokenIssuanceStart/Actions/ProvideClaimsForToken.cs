@@ -4,8 +4,10 @@
 using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
 using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.Validators;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Actions
 {
@@ -15,6 +17,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceS
         /// <summary>Gets or sets the claims.</summary>
         /// <value>The claims.</value>
         [JsonPropertyName("claims")]
+        [Required]
         public List<TokenClaim> Claims { get; } = new List<TokenClaim>();
 
         /// <summary>Gets the type of the action of ProvideClaimsForToken.</summary>
@@ -33,6 +36,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceS
             {
                 Claims.AddRange(claim);
             }
+            else
+            {
+                Claims = null;
+            }
         }
 
         /// <summary>Adds a claim to the collection.</summary>
@@ -48,9 +55,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceS
         internal override AuthenticationEventJsonElement BuildActionBody()
         {
             AuthenticationEventJsonElement jsonClaims = new AuthenticationEventJsonElement();
-            Claims.ForEach(c => jsonClaims.Properties.Add(c.Id, c.Values.Length == 1 ?
-                (object)c.Values[0] :
-                c.Values.Select(x => new AuthenticationEventJsonElement() { Value = x }).ToList()));
+            Claims.ForEach(c => jsonClaims.Properties.Add(c.Id,
+                c.Values == null ?
+                    null :
+                    c.Values.Length == 1 ?
+                        (object)c.Values[0] :
+                        c.Values.Select(x => new AuthenticationEventJsonElement() { Value = x, NullAsEmptyObject = false }).ToList()));
 
             return new AuthenticationEventJsonElement(new Dictionary<string, object> { { "claims", jsonClaims } });
         }
@@ -61,6 +71,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceS
         internal override void FromJson(AuthenticationEventJsonElement actionBody)
         {
             AuthenticationEventJsonElement claims = actionBody.FindFirstElementNamed("claims");
+
             if (claims != null)
             {
                 foreach (var key in claims.Properties.Keys)

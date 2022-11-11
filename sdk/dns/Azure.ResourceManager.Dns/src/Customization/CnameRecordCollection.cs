@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.Dns
     /// </summary>
     public partial class CnameRecordCollection : ArmCollection, IEnumerable<CnameRecordResource>, IAsyncEnumerable<CnameRecordResource>
     {
-        private readonly ClientDiagnostics _recordSetCnameRecordSetsClientDiagnostics;
-        private readonly RecordSetsRestOperations _recordSetCnameRecordSetsRestClient;
+        private readonly ClientDiagnostics _cnameRecordInfoRecordSetsClientDiagnostics;
+        private readonly CnameRecordRestOperations _cnameRecordInfoRecordSetsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="CnameRecordCollection"/> class for mocking. </summary>
         protected CnameRecordCollection()
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.Dns
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal CnameRecordCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _recordSetCnameRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", CnameRecordResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(CnameRecordResource.ResourceType, out string recordSetCnameRecordSetsApiVersion);
-            _recordSetCnameRecordSetsRestClient = new RecordSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, recordSetCnameRecordSetsApiVersion);
+            _cnameRecordInfoRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", CnameRecordResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(CnameRecordResource.ResourceType, out string cnameRecordInfoRecordSetsApiVersion);
+            _cnameRecordInfoRecordSetsRestClient = new CnameRecordRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cnameRecordInfoRecordSetsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -56,26 +56,26 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary>
         /// Creates or updates a record set within a DNS zone.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{cnameRecordName}
         /// Operation Id: RecordSets_CreateOrUpdate
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cnameRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<CnameRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string relativeRecordSetName, CnameRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="cnameRecordName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<CnameRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string cnameRecordName, CnameRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
+            Argument.AssertNotNull(cnameRecordName, nameof(cnameRecordName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _recordSetCnameRecordSetsClientDiagnostics.CreateScope("CnameRecordCollection.CreateOrUpdate");
+            using var scope = _cnameRecordInfoRecordSetsClientDiagnostics.CreateScope("CnameRecordCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _recordSetCnameRecordSetsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name,  relativeRecordSetName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _cnameRecordInfoRecordSetsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "CNAME".ToDnsRecordType(), cnameRecordName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
                 var operation = new DnsArmOperation<CnameRecordResource>(Response.FromValue(new CnameRecordResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -90,26 +90,26 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary>
         /// Creates or updates a record set within a DNS zone.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{cnameRecordName}
         /// Operation Id: RecordSets_CreateOrUpdate
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cnameRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<CnameRecordResource> CreateOrUpdate(WaitUntil waitUntil, string relativeRecordSetName, CnameRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="cnameRecordName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<CnameRecordResource> CreateOrUpdate(WaitUntil waitUntil, string cnameRecordName, CnameRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
+            Argument.AssertNotNull(cnameRecordName, nameof(cnameRecordName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _recordSetCnameRecordSetsClientDiagnostics.CreateScope("CnameRecordCollection.CreateOrUpdate");
+            using var scope = _cnameRecordInfoRecordSetsClientDiagnostics.CreateScope("CnameRecordCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _recordSetCnameRecordSetsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, data, ifMatch, ifNoneMatch, cancellationToken);
+                var response = _cnameRecordInfoRecordSetsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "CNAME".ToDnsRecordType(), cnameRecordName, data, ifMatch, ifNoneMatch, cancellationToken);
                 var operation = new DnsArmOperation<CnameRecordResource>(Response.FromValue(new CnameRecordResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
@@ -124,21 +124,21 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary>
         /// Gets a record set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{cnameRecordName}
         /// Operation Id: RecordSets_Get
         /// </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="cnameRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        public virtual async Task<Response<CnameRecordResource>> GetAsync(string relativeRecordSetName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="cnameRecordName"/> is null. </exception>
+        public virtual async Task<Response<CnameRecordResource>> GetAsync(string cnameRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
+            Argument.AssertNotNull(cnameRecordName, nameof(cnameRecordName));
 
-            using var scope = _recordSetCnameRecordSetsClientDiagnostics.CreateScope("CnameRecordCollection.Get");
+            using var scope = _cnameRecordInfoRecordSetsClientDiagnostics.CreateScope("CnameRecordCollection.Get");
             scope.Start();
             try
             {
-                var response = await _recordSetCnameRecordSetsRestClient.GetCnameRecordAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name,relativeRecordSetName, cancellationToken).ConfigureAwait(false);
+                var response = await _cnameRecordInfoRecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "CNAME".ToDnsRecordType(), cnameRecordName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CnameRecordResource(Client, response.Value), response.GetRawResponse());
@@ -152,21 +152,21 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary>
         /// Gets a record set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{cnameRecordName}
         /// Operation Id: RecordSets_Get
         /// </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="cnameRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        public virtual Response<CnameRecordResource> Get(string relativeRecordSetName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="cnameRecordName"/> is null. </exception>
+        public virtual Response<CnameRecordResource> Get(string cnameRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
+            Argument.AssertNotNull(cnameRecordName, nameof(cnameRecordName));
 
-            using var scope = _recordSetCnameRecordSetsClientDiagnostics.CreateScope("CnameRecordCollection.Get");
+            using var scope = _cnameRecordInfoRecordSetsClientDiagnostics.CreateScope("CnameRecordCollection.Get");
             scope.Start();
             try
             {
-                var response = _recordSetCnameRecordSetsRestClient.GetCnameRecord(Id.SubscriptionId, Id.ResourceGroupName, Id.Name,  relativeRecordSetName, cancellationToken);
+                var response = _cnameRecordInfoRecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "CNAME".ToDnsRecordType(), cnameRecordName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CnameRecordResource(Client, response.Value), response.GetRawResponse());
@@ -191,11 +191,11 @@ namespace Azure.ResourceManager.Dns
         {
             async Task<Page<CnameRecordResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _recordSetCnameRecordSetsClientDiagnostics.CreateScope("CnameRecordCollection.GetAll");
+                using var scope = _cnameRecordInfoRecordSetsClientDiagnostics.CreateScope("CnameRecordCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _recordSetCnameRecordSetsRestClient.ListCnameRecordByTypeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name,  top, recordsetnamesuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _cnameRecordInfoRecordSetsRestClient.ListByTypeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "CNAME".ToDnsRecordType(), top, recordsetnamesuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new CnameRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -206,11 +206,11 @@ namespace Azure.ResourceManager.Dns
             }
             async Task<Page<CnameRecordResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _recordSetCnameRecordSetsClientDiagnostics.CreateScope("CnameRecordCollection.GetAll");
+                using var scope = _cnameRecordInfoRecordSetsClientDiagnostics.CreateScope("CnameRecordCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _recordSetCnameRecordSetsRestClient.ListCnameRecordByTypeNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name,  top, recordsetnamesuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _cnameRecordInfoRecordSetsRestClient.ListByTypeNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "CNAME".ToDnsRecordType(), top, recordsetnamesuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new CnameRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -235,11 +235,11 @@ namespace Azure.ResourceManager.Dns
         {
             Page<CnameRecordResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _recordSetCnameRecordSetsClientDiagnostics.CreateScope("CnameRecordCollection.GetAll");
+                using var scope = _cnameRecordInfoRecordSetsClientDiagnostics.CreateScope("CnameRecordCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _recordSetCnameRecordSetsRestClient.ListCnameRecordByType(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken);
+                    var response = _cnameRecordInfoRecordSetsRestClient.ListByType(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "CNAME".ToDnsRecordType(), top, recordsetnamesuffix, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new CnameRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -250,11 +250,11 @@ namespace Azure.ResourceManager.Dns
             }
             Page<CnameRecordResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _recordSetCnameRecordSetsClientDiagnostics.CreateScope("CnameRecordCollection.GetAll");
+                using var scope = _cnameRecordInfoRecordSetsClientDiagnostics.CreateScope("CnameRecordCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _recordSetCnameRecordSetsRestClient.ListCnameRecordByTypeNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name,  top, recordsetnamesuffix, cancellationToken: cancellationToken);
+                    var response = _cnameRecordInfoRecordSetsRestClient.ListByTypeNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "CNAME".ToDnsRecordType(), top, recordsetnamesuffix, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new CnameRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -268,21 +268,21 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{cnameRecordName}
         /// Operation Id: RecordSets_Get
         /// </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="cnameRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string relativeRecordSetName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="cnameRecordName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string cnameRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
+            Argument.AssertNotNull(cnameRecordName, nameof(cnameRecordName));
 
-            using var scope = _recordSetCnameRecordSetsClientDiagnostics.CreateScope("CnameRecordCollection.Exists");
+            using var scope = _cnameRecordInfoRecordSetsClientDiagnostics.CreateScope("CnameRecordCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _recordSetCnameRecordSetsRestClient.GetCnameRecordAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name,  relativeRecordSetName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _cnameRecordInfoRecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "CNAME".ToDnsRecordType(), cnameRecordName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -294,21 +294,21 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{cnameRecordName}
         /// Operation Id: RecordSets_Get
         /// </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="cnameRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        public virtual Response<bool> Exists(string relativeRecordSetName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="cnameRecordName"/> is null. </exception>
+        public virtual Response<bool> Exists(string cnameRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
+            Argument.AssertNotNull(cnameRecordName, nameof(cnameRecordName));
 
-            using var scope = _recordSetCnameRecordSetsClientDiagnostics.CreateScope("CnameRecordCollection.Exists");
+            using var scope = _cnameRecordInfoRecordSetsClientDiagnostics.CreateScope("CnameRecordCollection.Exists");
             scope.Start();
             try
             {
-                var response = _recordSetCnameRecordSetsRestClient.GetCnameRecord(Id.SubscriptionId, Id.ResourceGroupName, Id.Name,  relativeRecordSetName, cancellationToken: cancellationToken);
+                var response = _cnameRecordInfoRecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "CNAME".ToDnsRecordType(), cnameRecordName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

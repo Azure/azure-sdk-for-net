@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
@@ -17,6 +18,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <summary>Gets or sets the actions.</summary>
         /// <value>The actions.</value>
         [JsonPropertyName("actions")]
+        [Required]
         public List<T> Actions { get; set; } = new List<T>();
 
         /// <summary>Invalidates this instance.

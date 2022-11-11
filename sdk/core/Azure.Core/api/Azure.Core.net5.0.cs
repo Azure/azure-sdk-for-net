@@ -516,7 +516,6 @@ namespace Azure.Core
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public System.Exception? LastException { get { throw null; } set { } }
         public int RetryNumber { get { throw null; } set { } }
         public System.DateTimeOffset StartTime { get { throw null; } set { } }
     }
@@ -601,13 +600,13 @@ namespace Azure.Core
     public partial class RequestUriBuilder
     {
         public RequestUriBuilder() { }
+        protected bool HasPath { get { throw null; } }
+        protected bool HasQuery { get { throw null; } }
         public string? Host { get { throw null; } set { } }
         public string Path { get { throw null; } set { } }
         public string PathAndQuery { get { throw null; } }
-        protected int PathLength { get { throw null; } }
         public int Port { get { throw null; } set { } }
         public string Query { get { throw null; } set { } }
-        protected int QueryLength { get { throw null; } }
         public string? Scheme { get { throw null; } set { } }
         public void AppendPath(System.ReadOnlySpan<char> value, bool escape) { }
         public void AppendPath(string value) { }
@@ -1052,8 +1051,8 @@ namespace Azure.Core.Pipeline
         protected internal virtual System.Threading.Tasks.ValueTask OnSendingRequestAsync(Azure.Core.HttpMessage message) { throw null; }
         public override void Process(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { throw null; }
-        protected internal virtual bool ShouldRetry(Azure.Core.HttpMessage message) { throw null; }
-        protected internal virtual System.Threading.Tasks.ValueTask<bool> ShouldRetryAsync(Azure.Core.HttpMessage message) { throw null; }
+        protected internal virtual bool ShouldRetry(Azure.Core.HttpMessage message, System.Exception? exception) { throw null; }
+        protected internal virtual System.Threading.Tasks.ValueTask<bool> ShouldRetryAsync(Azure.Core.HttpMessage message, System.Exception? exception) { throw null; }
     }
     public partial class ServerCertificateCustomValidationArgs
     {

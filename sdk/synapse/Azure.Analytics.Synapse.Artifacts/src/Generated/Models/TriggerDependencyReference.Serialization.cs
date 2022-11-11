@@ -35,7 +35,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             TriggerReference referenceTrigger = default;
-            string type = default;
+            string type = "TriggerDependencyReference";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("referenceTrigger"))

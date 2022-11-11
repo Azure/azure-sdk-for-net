@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -22,16 +21,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     case "OperationResultInfo": return OperationResultInfo.DeserializeOperationResultInfo(element);
                 }
             }
-            string objectType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("objectType"))
-                {
-                    objectType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownOperationResultInfoBase(objectType);
+            return UnknownOperationResultInfoBase.DeserializeUnknownOperationResultInfoBase(element);
         }
     }
 }

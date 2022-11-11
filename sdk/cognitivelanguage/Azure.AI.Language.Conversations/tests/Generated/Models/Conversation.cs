@@ -10,7 +10,11 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
-    /// <summary> A complete ordered set of utterances (spoken or written), by one or more speakers to be used for analysis. </summary>
+    /// <summary>
+    /// A complete ordered set of utterances (spoken or written), by one or more speakers to be used for analysis.
+    /// Please note <see cref="Conversation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="TextConversation"/> and <see cref="TranscriptConversation"/>.
+    /// </summary>
     public partial class Conversation
     {
         /// <summary> Initializes a new instance of Conversation. </summary>
