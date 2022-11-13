@@ -51,7 +51,39 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         }
 
         public TelemetryItem(TelemetryItem telemetryItem, ActivitySpanId activitySpanId, ActivityKind kind, DateTimeOffset activityEventTimeStamp) :
-                        this("Exception", FormatUtcTimestamp(activityEventTimeStamp.DateTime))
+                        this(telemetryItem, activitySpanId, kind, activityEventTimeStamp, false)
+        {
+        }
+
+        public TelemetryItem(TelemetryItem telemetryItem, ActivitySpanId activitySpanId, ActivityKind kind, DateTimeOffset activityEventTimeStamp, bool isAnEvent) :
+                        this(isAnEvent ? "Event" : "Exception", telemetryItem, activitySpanId, kind, activityEventTimeStamp)
+        {
+        }
+
+        public TelemetryItem (LogRecord logRecord, string roleName, string roleInstance, string instrumentationKey) :
+            this(logRecord.Exception != null ? "Exception" : "Message", FormatUtcTimestamp(logRecord.Timestamp))
+        {
+            if (logRecord.TraceId != default)
+            {
+                Tags[ContextTagKeys.AiOperationId.ToString()] = logRecord.TraceId.ToHexString();
+            }
+
+            if (logRecord.SpanId != default)
+            {
+                Tags[ContextTagKeys.AiOperationParentId.ToString()] = logRecord.SpanId.ToHexString();
+            }
+
+            InstrumentationKey = instrumentationKey;
+            SetResourceSdkVersionAndIkey(roleName, roleInstance, instrumentationKey);
+        }
+
+        public TelemetryItem(DateTime time, string roleName, string roleInstance, string instrumentationKey) : this("Metric", FormatUtcTimestamp(time))
+        {
+            SetResourceSdkVersionAndIkey(roleName, roleInstance, instrumentationKey);
+        }
+
+        private TelemetryItem(string name, TelemetryItem telemetryItem, ActivitySpanId activitySpanId, ActivityKind kind, DateTimeOffset activityEventTimeStamp) :
+             this(name, FormatUtcTimestamp(activityEventTimeStamp.DateTime))
         {
             Tags[ContextTagKeys.AiOperationParentId.ToString()] = activitySpanId.ToHexString();
             Tags[ContextTagKeys.AiOperationId.ToString()] = telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()];
@@ -75,28 +107,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.s_sdkVersion;
             InstrumentationKey = telemetryItem.InstrumentationKey;
             SampleRate = telemetryItem.SampleRate;
-        }
-
-        public TelemetryItem (LogRecord logRecord, string roleName, string roleInstance, string instrumentationKey) :
-            this(logRecord.Exception != null ? "Exception" : "Message", FormatUtcTimestamp(logRecord.Timestamp))
-        {
-            if (logRecord.TraceId != default)
-            {
-                Tags[ContextTagKeys.AiOperationId.ToString()] = logRecord.TraceId.ToHexString();
-            }
-
-            if (logRecord.SpanId != default)
-            {
-                Tags[ContextTagKeys.AiOperationParentId.ToString()] = logRecord.SpanId.ToHexString();
-            }
-
-            InstrumentationKey = instrumentationKey;
-            SetResourceSdkVersionAndIkey(roleName, roleInstance, instrumentationKey);
-        }
-
-        public TelemetryItem(DateTime time, string roleName, string roleInstance, string instrumentationKey) : this("Metric", FormatUtcTimestamp(time))
-        {
-            SetResourceSdkVersionAndIkey(roleName, roleInstance, instrumentationKey);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

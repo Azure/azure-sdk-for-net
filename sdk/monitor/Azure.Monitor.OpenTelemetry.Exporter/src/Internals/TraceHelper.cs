@@ -32,7 +32,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 // Check for Exceptions events
                 if (activity.Events.Any())
                 {
-                    AddExceptionTelemetryFromActivityExceptionEvents(activity, telemetryItem, telemetryItems);
+                    AddExceptionAndEventTelemetryFromActivityEvents(activity, telemetryItem, telemetryItems);
                 }
 
                 switch (activity.GetTelemetryType())
@@ -175,7 +175,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return activity.DisplayName;
         }
 
-        private static void AddExceptionTelemetryFromActivityExceptionEvents(Activity activity, TelemetryItem telemetryItem, List<TelemetryItem> telemetryItems)
+        private static void AddExceptionAndEventTelemetryFromActivityEvents(Activity activity, TelemetryItem telemetryItem, List<TelemetryItem> telemetryItems)
         {
             foreach (var evnt in activity.Events)
             {
@@ -185,7 +185,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     {
                         TryAddExceptionTelemetryFromActivityExceptionEvents(activity, telemetryItem, telemetryItems, evnt);
                     }
-                    else
+                    else if (!string.IsNullOrWhiteSpace(evnt.Name))
                     {
                         TryAddEventTelemetryFromActivityEvents(activity, telemetryItem, telemetryItems, evnt);
                     }
@@ -213,7 +213,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             var eventData = GetEventDataDetailsOnTelemetryItem(evnt.Name, evnt.Tags);
             if (eventData != null)
             {
-                var eventTelemetryItem = new TelemetryItem(telemetryItem, activity.SpanId, activity.Kind, evnt.Timestamp);
+                var eventTelemetryItem = new TelemetryItem(telemetryItem, activity.SpanId, activity.Kind, evnt.Timestamp, isAnEvent: true);
                 eventTelemetryItem.Data = eventData;
                 telemetryItems.Add(eventTelemetryItem);
             }
@@ -278,7 +278,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         internal static MonitorBase GetEventDataDetailsOnTelemetryItem(string eventName, IEnumerable<KeyValuePair<string, object>> activityEventTags)
         {
             var eventData = new TelemetryEventData(Version, eventName);
-            foreach(var tag in activityEventTags)
+            foreach (var tag in activityEventTags)
             {
                 eventData.Properties.Add(tag.Key, tag.Value.ToString());
             }
