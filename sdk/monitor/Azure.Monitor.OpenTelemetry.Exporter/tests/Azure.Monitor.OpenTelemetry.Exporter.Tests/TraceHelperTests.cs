@@ -296,6 +296,77 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("Request", (IEnumerable<char>)telemetryItems[0].Name);
         }
 
+        [Fact]
+        public void ActivityWithNonExceptionEventCreatesEventTelemetry()
+        {
+            var eventName = "My Custom Event";
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+               ActivityName,
+               ActivityKind.Server);
+
+            activity.AddEvent(new ActivityEvent(eventName));
+
+            Activity[] activityList = new Activity[1];
+            activityList[0] = activity;
+            Batch<Activity> batch = new Batch<Activity>(activityList, 1);
+
+            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, "roleName", "roleInstance", "00000000-0000-0000-0000-000000000000");
+
+            Assert.Equal(2, telemetryItems.Count());
+            Assert.Equal("Event", (IEnumerable<char>)telemetryItems[0].Name);
+            Assert.Equal("Request", (IEnumerable<char>)telemetryItems[1].Name);
+            Assert.Equal(eventName, (IEnumerable<char>)(telemetryItems[0].Data.BaseData as TelemetryEventData).Name);
+        }
+
+        [Fact]
+        public void ActivityWithNonExceptionEventDoesNotCreateEventTelemetryWhenNameIsNotPresent()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+               ActivityName,
+               ActivityKind.Server);
+
+            activity.AddEvent(new ActivityEvent());
+
+            Activity[] activityList = new Activity[1];
+            activityList[0] = activity;
+            Batch<Activity> batch = new Batch<Activity>(activityList, 1);
+
+            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, "roleName", "roleInstance", "00000000-0000-0000-0000-000000000000");
+
+            Assert.Single(telemetryItems);
+            Assert.Equal("Request", (IEnumerable<char>)telemetryItems[0].Name);
+        }
+
+        [Fact]
+        public void ActivityWithNonExceptionEventCreatesEventTelemetryWithTheEventTags()
+        {
+            var propertyName = "My Custom Property";
+            var propertyValue = "My Custom Property Value";
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+               ActivityName,
+               ActivityKind.Server);
+
+            var tagsCollection = new ActivityTagsCollection
+            {
+                { propertyName, propertyValue },
+            };
+            activity.AddEvent(new ActivityEvent("My Custom Event", DateTime.UtcNow, tagsCollection));
+
+            Activity[] activityList = new Activity[1];
+            activityList[0] = activity;
+            Batch<Activity> batch = new Batch<Activity>(activityList, 1);
+
+            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, "roleName", "roleInstance", "00000000-0000-0000-0000-000000000000");
+
+            Assert.Equal(2, telemetryItems.Count());
+            Assert.Equal("Event", (IEnumerable<char>)telemetryItems[0].Name);
+            Assert.Equal(propertyName, (IEnumerable<char>)(telemetryItems[0].Data.BaseData as TelemetryEventData).Properties.Keys.Single());
+            Assert.Equal(propertyValue, (IEnumerable<char>)(telemetryItems[0].Data.BaseData as TelemetryEventData).Properties.Values.Single());
+        }
+
         private string GetExpectedMSlinks(IEnumerable<ActivityLink> links)
         {
             if (links != null && links.Any())
