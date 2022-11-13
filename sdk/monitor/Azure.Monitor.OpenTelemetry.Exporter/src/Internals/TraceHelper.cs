@@ -179,23 +179,43 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             foreach (var evnt in activity.Events)
             {
-                if (evnt.Name == SemanticConventions.AttributeExceptionEventName)
+                try
                 {
-                    try
+                    if (evnt.Name == SemanticConventions.AttributeExceptionEventName)
                     {
-                        var exceptionData = GetExceptionDataDetailsOnTelemetryItem(evnt.Tags);
-                        if (exceptionData != null)
-                        {
-                            var exceptionTelemetryItem = new TelemetryItem(telemetryItem, activity.SpanId, activity.Kind, evnt.Timestamp);
-                            exceptionTelemetryItem.Data = exceptionData;
-                            telemetryItems.Add(exceptionTelemetryItem);
-                        }
+                        TryAddExceptionTelemetryFromActivityExceptionEvents(activity, telemetryItem, telemetryItems, evnt);
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        AzureMonitorExporterEventSource.Log.WriteWarning("FailedToExtractExceptionFromActivityEvent", ex);
+                        TryAddEventTelemetryFromActivityEvents(activity, telemetryItem, telemetryItems, evnt);
                     }
                 }
+                catch (Exception ex)
+                {
+                    AzureMonitorExporterEventSource.Log.WriteWarning("FailedToExtractExceptionFromActivityEvent", ex);
+                }
+            }
+        }
+
+        private static void TryAddExceptionTelemetryFromActivityExceptionEvents(Activity activity, TelemetryItem telemetryItem, List<TelemetryItem> telemetryItems, ActivityEvent evnt)
+        {
+            var exceptionData = GetExceptionDataDetailsOnTelemetryItem(evnt.Tags);
+            if (exceptionData != null)
+            {
+                var exceptionTelemetryItem = new TelemetryItem(telemetryItem, activity.SpanId, activity.Kind, evnt.Timestamp);
+                exceptionTelemetryItem.Data = exceptionData;
+                telemetryItems.Add(exceptionTelemetryItem);
+            }
+        }
+
+        private static void TryAddEventTelemetryFromActivityEvents(Activity activity, TelemetryItem telemetryItem, List<TelemetryItem> telemetryItems, ActivityEvent evnt)
+        {
+            var eventData = GetEventDataDetailsOnTelemetryItem(evnt.Name, evnt.Tags);
+            if (eventData != null)
+            {
+                var eventTelemetryItem = new TelemetryItem(telemetryItem, activity.SpanId, activity.Kind, evnt.Timestamp);
+                eventTelemetryItem.Data = eventData;
+                telemetryItems.Add(eventTelemetryItem);
             }
         }
 
@@ -252,6 +272,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 BaseType = "ExceptionData",
                 BaseData = exceptionData,
+            };
+        }
+
+        internal static MonitorBase GetEventDataDetailsOnTelemetryItem(string eventName, IEnumerable<KeyValuePair<string, object>> activityEventTags)
+        {
+            var eventData = new TelemetryEventData(Version, eventName);
+            foreach(var tag in activityEventTags)
+            {
+                eventData.Properties.Add(tag.Key, tag.Value.ToString());
+            }
+
+            return new MonitorBase
+            {
+                BaseType = "EventData",
+                BaseData = eventData
             };
         }
     }
