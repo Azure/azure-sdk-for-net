@@ -29,6 +29,16 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
+        /// Constructor to resume current jobs
+        /// </summary>
+        public DataTransferState(string id, long bytesTransferred)
+        {
+            _id = id;
+            _status = StorageTransferStatus.Queued;
+            _currentTransferredBytes = bytesTransferred;
+        }
+
+        /// <summary>
         /// Gets the identifier of the transfer state
         /// </summary>
         public string Id

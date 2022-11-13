@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Threading.Channels;
 using System.Buffers;
 using Azure.Storage.DataMovement.Models;
+using System.IO;
 
 namespace Azure.Storage.DataMovement
 {
@@ -68,6 +69,13 @@ namespace Azure.Storage.DataMovement
         internal List<DataTransfer> _dataTransfers;
 
         /// <summary>
+        /// Desginated checkpointer for the respective transfer manager.
+        ///
+        /// If unspecified will default to LocalTransferCheckpointer at {currentpath}/.azstoragedml
+        /// </summary>
+        internal TransferCheckpointer _checkpointer;
+
+        /// <summary>
         /// Array pools for reading from streams to upload
         /// </summary>
         internal ArrayPool<byte> UploadArrayPool => _arrayPool;
@@ -83,7 +91,7 @@ namespace Azure.Storage.DataMovement
         /// Constructor to create a DataController
         /// </summary>
         /// <param name="options"></param>
-        public TransferManager(TransferManagerOptions options)
+        public TransferManager(TransferManagerOptions options = default)
         {
             _jobsToProcessChannel = Channel.CreateUnbounded<TransferJobInternal>(
                 new UnboundedChannelOptions()
@@ -105,10 +113,11 @@ namespace Azure.Storage.DataMovement
             _currentTaskIsProcessingJob = Task.Run(() => NotifyOfPendingJobProcessing());
             _currentTaskIsProcessingJobPart = Task.Run(() => NotifyOfPendingJobPartProcessing());
             _currentTaskIsProcessingJobChunk = Task.Run(() => NotifyOfPendingJobChunkProcessing());
-            _options = options == default ? new TransferManagerOptions() : options;
+            _options = options != default ? options : new TransferManagerOptions();
             _maxJobChunkTasks = options?.MaximumConcurrency ?? Constants.DataMovement.MaxJobChunkTasks;
             _dataTransfers = new List<DataTransfer>();
             _arrayPool = ArrayPool<byte>.Shared;
+            _checkpointer = options?.Checkpointer != default ? options.Checkpointer : CreateDefaultCheckpointer();
         }
 
         #region Job Channel Management
@@ -239,7 +248,7 @@ namespace Azure.Storage.DataMovement
         #region Start Transfer
 
         /// <summary>
-        /// Intiate transfer
+        /// Initiate transfer
         /// </summary>
         /// <param name="sourceResource"></param>
         /// <param name="destinationResource"></param>
@@ -260,6 +269,19 @@ namespace Azure.Storage.DataMovement
             }
 
             transferOptions ??= new SingleTransferOptions();
+
+            // Check if this is a job that is being asked to resume
+            if (!string.IsNullOrEmpty(transferOptions.ResumeFromCheckpointId))
+            {
+                if (_checkpointer._ids.Contains(transferOptions.ResumeFromCheckpointId))
+                {
+                    // Grab plan file info to continue from the checkpointer
+                }
+                else
+                {
+                    throw new ArgumentException($"Cannot resume from id \"{transferOptions.ResumeFromCheckpointId}\". Could not load related checkpoint plan file.");
+                }
+            }
 
             // If the resource cannot produce a Uri, it means it can only produce a local path
             // From here we only support an upload job
@@ -329,7 +351,7 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Intiate transfer
+        /// Initiate transfer
         /// </summary>
         /// <param name="sourceResource"></param>
         /// <param name="destinationResource"></param>
@@ -383,18 +405,52 @@ namespace Azure.Storage.DataMovement
                 // Source is remote
                 if (destinationResource.CanProduceUri == ProduceUriType.ProducesUri)
                 {
-                    // Most likely a copy operation.
-                    throw new NotImplementedException();
+                    // Service to Service Job (Copy job)
+                    transferJobInternal = new ServiceToServiceTransferJob(
+                        dataTransfer: dataTransfer,
+                        sourceResource: sourceResource,
+                        destinationResource: destinationResource,
+                        transferOptions: transferOptions,
+                        queueChunkTask: QueueJobChunkAsync,
+                        checkpointer: Options?.Checkpointer,
+                        errorHandling: Options?.ErrorHandling ?? ErrorHandlingOptions.StopOnAllFailures,
+                        arrayPool: _arrayPool);
+                    // Queue Job
+                    await QueueJobAsync(transferJobInternal).ConfigureAwait(false);
+                    _dataTransfers.Add(dataTransfer);
                 }
                 else
                 {
                     // Download to local operation
-                    // BlobDownloadJob();
-                    throw new NotImplementedException();
+                    // Service to Local job (Download Job)
+                    transferJobInternal = new UriToStreamTransferJob(
+                        dataTransfer: dataTransfer,
+                        sourceResource: sourceResource,
+                        destinationResource: destinationResource,
+                        transferOptions: transferOptions,
+                        queueChunkTask: QueueJobChunkAsync,
+                        checkpointer: Options?.Checkpointer,
+                        errorHandling: Options?.ErrorHandling ?? ErrorHandlingOptions.StopOnAllFailures,
+                        arrayPool: _arrayPool);
+                    // Queue Job
+                    await QueueJobAsync(transferJobInternal).ConfigureAwait(false);
+                    _dataTransfers.Add(dataTransfer);
                 }
             }
             return dataTransfer;
         }
         #endregion
+
+        private static LocalTransferCheckpointer CreateDefaultCheckpointer()
+        {
+            // Make folder path
+            string defaultPath = string.Concat(Environment.CurrentDirectory, "/", Constants.DataMovement.DefaultTransferFilesPath);
+            // Create folder if it does not already exists. It's possible that this library could be run
+            // multiple times in the same directory without defining a checkpointer.
+            Directory.CreateDirectory(defaultPath);
+
+            // Return checkpointer
+            return new LocalTransferCheckpointer(defaultPath);
+        }
     }
 }

@@ -18,8 +18,7 @@ namespace Azure.Storage.DataMovement
     /// </summary>
     public class LocalFileStorageResource : StorageResource
     {
-        private List<string> _path;
-        private string _originalPath;
+        private string _path;
 
         /// <summary>
         /// Returns URL
@@ -30,13 +29,18 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Gets the path of the resource.
         /// </summary>
-        public override List<string> Path => _path;
+        public override string Path => _path;
 
         /// <summary>
-        /// Defines whether the object can produce a SAS URL
+        /// Cannot return a Url because this is a local path.
         /// </summary>
         /// <returns></returns>
         public override ProduceUriType CanProduceUri => ProduceUriType.NoUri;
+
+        /// <summary>
+        /// Cannot perform service to service copies. This respective resource is a local resource.
+        /// </summary>
+        public override TransferCopyMethod ServiceCopyMethod => TransferCopyMethod.None;
 
         /// <summary>
         /// Constructor
@@ -44,8 +48,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="path"></param>
         public LocalFileStorageResource(string path)
         {
-            _originalPath = path;
-            _path = path.Split('/').ToList();
+            _path = path;
         }
 
         /// <summary>
@@ -61,7 +64,7 @@ namespace Azure.Storage.DataMovement
         {
             // Appends incoming stream to the local file resource
             using (FileStream fileStream = new FileStream(
-                    _originalPath,
+                    _path,
                     FileMode.Append,
                     FileAccess.Write))
             {
@@ -93,7 +96,7 @@ namespace Azure.Storage.DataMovement
 
             // Appends incoming stream to the local file resource
             using (FileStream fileStream = new FileStream(
-                    _originalPath,
+                    _path,
                     FileMode.OpenOrCreate,
                     FileAccess.Write))
             {
@@ -109,12 +112,12 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Uploads/copy the blob from a url
         /// </summary>
-        /// <param name="sourceUri"></param>
+        /// <param name="sourceResource"></param>
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public override Task CopyFromUriAsync(
-            Uri sourceUri,
+            StorageResource sourceResource,
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
         {
@@ -124,13 +127,13 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Uploads/copy the blob from a url
         /// </summary>
-        /// <param name="sourceUri"></param>
+        /// <param name="sourceResource"></param>
         /// <param name="range"></param>
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public override Task CopyBlockFromUriAsync(
-            Uri sourceUri,
+            StorageResource sourceResource,
             HttpRange range,
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
@@ -144,7 +147,7 @@ namespace Azure.Storage.DataMovement
         /// <returns>Returns the lenght of the local file, however if the local file does not exist default will be returned.</returns>
         internal Task<long?> GetLength()
         {
-            FileInfo fileInfo = new FileInfo(_originalPath);
+            FileInfo fileInfo = new FileInfo(_path);
 
             if (fileInfo.Exists)
             {
@@ -163,7 +166,7 @@ namespace Azure.Storage.DataMovement
             long? position = default,
             CancellationToken cancellationToken = default)
         {
-            FileStream stream = new FileStream(_originalPath, FileMode.Open, FileAccess.Read);
+            FileStream stream = new FileStream(_path, FileMode.Open, FileAccess.Read);
             return Task.FromResult(new ReadStreamStorageResourceInfo(stream));
         }
 
@@ -183,7 +186,7 @@ namespace Azure.Storage.DataMovement
             long length,
             CancellationToken cancellationToken = default)
         {
-            FileStream stream = new FileStream(_originalPath, FileMode.Open, FileAccess.Read);
+            FileStream stream = new FileStream(_path, FileMode.Open, FileAccess.Read);
             stream.Position = offset;
             return Task.FromResult(new ReadStreamStorageResourceInfo(stream));
         }
@@ -194,7 +197,7 @@ namespace Azure.Storage.DataMovement
         /// <returns>Returns the length of the storage resource</returns>
         public override Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken)
         {
-            FileInfo fileInfo = new FileInfo(_originalPath);
+            FileInfo fileInfo = new FileInfo(_path);
             if (fileInfo.Exists)
             {
                 return Task.FromResult(fileInfo.ToStorageResourceProperties());
@@ -210,11 +213,11 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public override Task CompleteTransferAsync(CancellationToken cancellationToken)
         {
-            if (File.Exists(_originalPath))
+            if (File.Exists(_path))
             {
                 // Make file visible
-                FileAttributes attributes = File.GetAttributes(_originalPath);
-                File.SetAttributes(_originalPath, attributes | FileAttributes.Normal);
+                FileAttributes attributes = File.GetAttributes(_path);
+                File.SetAttributes(_path, attributes | FileAttributes.Normal);
             }
             return Task.CompletedTask;
         }

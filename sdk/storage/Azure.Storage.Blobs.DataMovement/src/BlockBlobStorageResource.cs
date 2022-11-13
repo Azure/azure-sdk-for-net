@@ -41,13 +41,21 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <summary>
         /// Gets the path of the resource.
         /// </summary>
-        public override List<string> Path => _blobClient.Name.Split('/').ToList();
+        public override string Path => _blobClient.Name;
 
         /// <summary>
         /// Defines whether the object can produce a SAS URL
         /// </summary>
         /// <returns></returns>
         public override ProduceUriType CanProduceUri => ProduceUriType.ProducesUri;
+
+        /// <summary>
+        /// Returns the preferred method of how to perform service to service
+        /// transfers. See <see cref="TransferCopyMethod"/>. This value can be set when specifying
+        /// the options bag, see <see cref="BlockBlobStorageResourceServiceCopyOptions.CopyMethod"/> in
+        /// <see cref="BlockBlobStorageResourceOptions.CopyOptions"/>.
+        /// </summary>
+        public override TransferCopyMethod ServiceCopyMethod => _options?.CopyOptions?.CopyMethod ?? TransferCopyMethod.SyncCopy;
 
         /// <summary>
         /// Constructor
@@ -115,7 +123,6 @@ namespace Azure.Storage.Blobs.DataMovement
             Stream stream,
             CancellationToken token = default)
         {
-            // TODO: change depending on type of blob and type single shot or parallel transfer
             await _blobClient.UploadAsync(stream, new BlobUploadOptions(), cancellationToken:token).ConfigureAwait(false);
         }
 
@@ -150,42 +157,61 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <summary>
         /// Consumes blob Url to upload / copy
         /// </summary>
-        /// <param name="sourceUri"></param>
+        /// <param name="sourceResource"></param>
         /// <param name="sourceAuthorization"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public override async Task CopyFromUriAsync(
-            Uri sourceUri,
+            StorageResource sourceResource,
             StorageResourceCopyFromUriOptions sourceAuthorization = default,
             CancellationToken cancellationToken = default)
         {
-            // Change depending on type of copy
-            await _blobClient.SyncUploadFromUriAsync(sourceUri, cancellationToken: cancellationToken).ConfigureAwait(false);
+            if (ServiceCopyMethod == TransferCopyMethod.AsyncCopy)
+            {
+                await _blobClient.StartCopyFromUriAsync(sourceResource.Uri, cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            else //(ServiceCopyMethod == TransferCopyMethod.SyncCopy)
+            {
+                // We use SyncUploadFromUri over SyncCopyUploadFromUri in this case because it accepts any blob type as the source.
+                // TODO: subject to change as we scale to suppport resource types outside of blobs.
+                await _blobClient.SyncUploadFromUriAsync(sourceResource.Uri, cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
         }
 
         /// <summary>
         /// Uploads/copy the blob from a url
         /// </summary>
-        /// <param name="sourceUri"></param>
+        /// <param name="sourceResource"></param>
         /// <param name="range"></param>
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public override async Task CopyBlockFromUriAsync(
-            Uri sourceUri,
+            StorageResource sourceResource,
             HttpRange range,
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            string id = options?.BlockId ?? Shared.StorageExtensions.GenerateBlockId(range.Offset);
-            if (!_blocks.TryAdd(range.Offset, id))
+            if (ServiceCopyMethod == TransferCopyMethod.SyncCopy)
             {
-                throw new ArgumentException($"Cannot Stage Block to the specific offset \"{range.Offset}\", it already exists in the existing list");
+                string id = options?.BlockId ?? Shared.StorageExtensions.GenerateBlockId(range.Offset);
+                if (!_blocks.TryAdd(range.Offset, id))
+                {
+                    throw new ArgumentException($"Cannot Stage Block to the specific offset \"{range.Offset}\", it already exists in the existing list");
+                }
+                await _blobClient.StageBlockFromUriAsync(
+                    sourceResource.Uri,
+                    id,
+                    options: new StageBlockFromUriOptions()
+                    {
+                        SourceRange = range,
+                    },
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
             }
-            await _blobClient.StageBlockFromUriAsync(
-                sourceUri,
-                id,
-                cancellationToken: cancellationToken).ConfigureAwait(false);
+            else
+            {
+                throw new NotSupportedException("TransferCopyMethod specified is not supported in this resource");
+            }
         }
 
         /// <summary>

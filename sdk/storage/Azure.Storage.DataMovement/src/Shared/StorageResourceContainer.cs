@@ -37,7 +37,7 @@ namespace Azure.Storage.DataMovement
         /// Gets path split up
         /// </summary>
         /// <returns></returns>
-        public abstract List<string> Path { get; }
+        public abstract string Path { get; }
 
         /// <summary>
         /// Lists all the child storage resources in the path.
@@ -51,13 +51,12 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        public abstract StorageResource GetChildStorageResource(List<string> path);
+        public abstract StorageResource GetChildStorageResource(string path);
 
         /// <summary>
         /// Returns storage resource container from the parent container
         /// </summary>
-        /// <param name="path"></param>
         /// <returns></returns>
-        public abstract StorageResourceContainer GetParentStorageResourceContainer(List<string> path);
+        public abstract StorageResourceContainer GetParentStorageResourceContainer();
     }
 }

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -22,7 +23,7 @@ namespace Azure.Storage.Blobs.DataMovement
     public class BlobDirectoryStorageResourceContainer : StorageResourceContainer
     {
         private BlobContainerClient _blobContainerClient;
-        private List<string> _directoryPrefix;
+        private string _directoryPrefix;
         private BlobDirectoryStorageResourceContainerOptions _options;
 
         /// <summary>
@@ -35,7 +36,7 @@ namespace Azure.Storage.Blobs.DataMovement
         /// Returns the path
         /// </summary>
         /// <returns></returns>
-        public override List<string> Path => _blobContainerClient.Uri.AbsolutePath.Split('/').ToList();
+        public override string Path => _directoryPrefix;
 
         /// <summary>
         /// Obtains the Uri of the blob directory resource, which means we can list
@@ -73,7 +74,7 @@ namespace Azure.Storage.Blobs.DataMovement
             Argument.AssertNotNull(containerClient, nameof(BlobContainerClient));
             Argument.AssertNotNullOrEmpty(directoryPrefix, nameof(directoryPrefix));
             _blobContainerClient = containerClient;
-            _directoryPrefix = directoryPrefix.Split('/').ToList();
+            _directoryPrefix = directoryPrefix;
             _options = options;
         }
 
@@ -87,7 +88,7 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <param name="directoryPrefix">
         /// The directory path of the blob virtual directory
         /// </param>
-        public BlobDirectoryStorageResourceContainer(BlobContainerClient containerClient, List<string> directoryPrefix)
+        public BlobDirectoryStorageResourceContainer(BlobContainerClient containerClient, string directoryPrefix)
         {
             _blobContainerClient = containerClient;
             _directoryPrefix = directoryPrefix;
@@ -101,25 +102,22 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <see cref="StorageResource"/> which represents the child blob client of
         /// this respective blob virtual directory resource.
         /// </returns>
-        public override StorageResource GetChildStorageResource(List<string> encodedPath)
+        public override StorageResource GetChildStorageResource(string encodedPath)
         {
             // Recreate the blobName using the existing parent directory path
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(_blobContainerClient.Uri);
-            blobUriBuilder.BlobName += String.Join("/", encodedPath);
+            blobUriBuilder.BlobName += string.Concat("/", encodedPath);
             return new BlockBlobStorageResource(new BlockBlobClient(blobUriBuilder.ToUri()));
         }
 
         /// <summary>
         /// Retrieves a directory blob resource based on this respective resource.
         /// </summary>
-        /// <param name="encodedPath"></param>
         /// <returns></returns>
-        public override StorageResourceContainer GetParentStorageResourceContainer(List<string> encodedPath)
+        public override StorageResourceContainer GetParentStorageResourceContainer()
         {
             // Recreate the blobName using the existing parent directory path
-            List<string> fullDirectoryPath = new List<string>(_directoryPrefix);
-            fullDirectoryPath.AddRange(encodedPath);
-            return new BlobDirectoryStorageResourceContainer(_blobContainerClient, fullDirectoryPath);
+            return new BlobDirectoryStorageResourceContainer(_blobContainerClient, _directoryPrefix.Substring(0, _directoryPrefix.LastIndexOf('/')));
         }
 
         /// <summary>
@@ -145,7 +143,7 @@ namespace Azure.Storage.Blobs.DataMovement
                 cancellationToken: cancellationToken);
             await foreach (BlobItem blobItem in pages.ConfigureAwait(false))
             {
-                yield return GetChildStorageResource(blobItem.Name.Split('/').ToList());
+                yield return GetChildStorageResource(blobItem.Name);
             }
         }
     }

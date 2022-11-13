@@ -26,42 +26,51 @@ namespace Azure.Storage.DataMovement
         private CommitChunkHandler _commitBlockHandler;
 
         /// <summary>
-        /// Constructs the StreamToUriJobPart
+        /// Creating job part based on a single transfer job
         /// </summary>
-        /// <param name="dataTransfer"></param>
+        /// <param name="job"></param>
+        /// <param name="partNumber"></param>
+        public StreamToUriJobPart(StreamToUriTransferJob job, int partNumber)
+            : base(job._dataTransfer,
+                  partNumber,
+                  job._sourceResource,
+                  job._destinationResource,
+                  job._maximumTransferChunkSize,
+                  job._initialTransferSize,
+                  job._errorHandling,
+                  job._createMode,
+                  job._checkpointer,
+                  job.UploadArrayPool,
+                  job.TransferStatusEventHandler,
+                  job.TransferFailedEventHandler,
+                  job._cancellationTokenSource)
+        { }
+
+        /// <summary>
+        /// Creating transfer job based on a storage resource created from listing.
+        /// </summary>
+        /// <param name="job"></param>
         /// <param name="sourceResource"></param>
         /// <param name="destinationResource"></param>
-        /// <param name="maximumTransferChunkSize"></param>
-        /// <param name="initialTransferSize"></param>
-        /// <param name="errorHandling"></param>
-        /// <param name="checkpointer"></param>
-        /// <param name="uploadPool"></param>
-        /// <param name="statusEventHandler"></param>
-        /// <param name="failedEventHandler"></param>
-        /// <param name="cancellationTokenSource"></param>
+        /// <param name="partNumber"></param>
         public StreamToUriJobPart(
-            DataTransfer dataTransfer,
+            StreamToUriTransferJob job,
+            int partNumber,
             StorageResource sourceResource,
-            StorageResource destinationResource,
-            long? maximumTransferChunkSize,
-            long initialTransferSize,
-            ErrorHandlingOptions errorHandling,
-            TransferCheckpointer checkpointer,
-            ArrayPool<byte> uploadPool,
-            SyncAsyncEventHandler<TransferStatusEventArgs> statusEventHandler,
-            SyncAsyncEventHandler<TransferFailedEventArgs> failedEventHandler,
-            CancellationTokenSource cancellationTokenSource)
-            : base(dataTransfer,
+            StorageResource destinationResource)
+            : base(job._dataTransfer,
+                  partNumber,
                   sourceResource,
                   destinationResource,
-                  maximumTransferChunkSize,
-                  initialTransferSize,
-                  errorHandling,
-                  checkpointer,
-                  uploadPool,
-                  statusEventHandler,
-                  failedEventHandler,
-                  cancellationTokenSource)
+                  job._maximumTransferChunkSize,
+                  job._initialTransferSize,
+                  job._errorHandling,
+                  job._createMode,
+                  job._checkpointer,
+                  job.UploadArrayPool,
+                  job.TransferStatusEventHandler,
+                  job.TransferFailedEventHandler,
+                  job._cancellationTokenSource)
         { }
 
         /// <summary>
@@ -181,18 +190,27 @@ namespace Azure.Storage.DataMovement
         {
             try
             {
+                await OnTransferStatusChanged(StorageTransferStatus.InProgress).ConfigureAwait(false);
                 Stream slicedStream = Stream.Null;
                 ReadStreamStorageResourceInfo result = await _sourceResource.ReadPartialStreamAsync(
                     offset: offset,
                     length: blockLength,
                     cancellationToken: _cancellationTokenSource.Token).ConfigureAwait(false);
-                using Stream stream = result.Content;
-                await _destinationResource.WriteStreamToOffsetAsync(
+                using (Stream stream = result.Content)
+                {
+                    slicedStream = await GetOffsetPartitionInternal(
+                        stream,
+                        (int)offset,
+                        (int)blockLength,
+                        UploadArrayPool,
+                        _cancellationTokenSource.Token).ConfigureAwait(false);
+                    await _destinationResource.WriteStreamToOffsetAsync(
                         offset,
                         blockLength,
-                        stream,
+                        slicedStream,
                         default,
                         _cancellationTokenSource.Token).ConfigureAwait(false);
+                }
                 // Invoke event handler to keep track of all the stage blocks
                 await _commitBlockHandler.InvokeEvent(
                     new StageChunkEventArgs(

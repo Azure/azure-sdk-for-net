@@ -17,14 +17,13 @@ namespace Azure.Storage.DataMovement
     /// </summary>
     public class LocalDirectoryStorageResourceContainer : StorageResourceContainer
     {
-        private List<string> _path;
-        private string _originalPath;
+        private string _path;
 
         /// <summary>
         /// Gets the path
         /// </summary>
         /// <returns></returns>
-        public override List<string> Path => _path;
+        public override string Path => _path;
 
         /// <summary>
         /// Cannot produce Uri
@@ -44,33 +43,28 @@ namespace Azure.Storage.DataMovement
         /// <param name="path"></param>
         public LocalDirectoryStorageResourceContainer(string path)
         {
-            _originalPath = path;
-            _path = path.Split('/').ToList();
+            _path = path;
         }
 
         /// <summary>
         /// Gets the storage Resource
         /// </summary>
-        /// <param name="path"></param>
+        /// <param name="childPath"></param>
         /// <returns></returns>
-        public override StorageResource GetChildStorageResource(List<string> path)
+        public override StorageResource GetChildStorageResource(string childPath)
         {
-            List<string> listPaths = new List<string>(_path.Count + path.Count);
-            listPaths.AddRange(_path);
-            listPaths.AddRange(path);
-            string concatPath = listPaths.ToLocalPathString();
+            string concatPath = string.Concat(_path, "/", childPath);
             return new LocalFileStorageResource(concatPath);
         }
 
         /// <summary>
-        /// Gets the storage container resources
+        /// Gets the parent directory path by one level.
         /// </summary>
-        /// <param name="path"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public override StorageResourceContainer GetParentStorageResourceContainer(List<string> path)
+        public override StorageResourceContainer GetParentStorageResourceContainer()
         {
-            throw new NotImplementedException();
+            return new LocalDirectoryStorageResourceContainer(_path.Substring(0, _path.LastIndexOf('/')));
         }
 
         /// <summary>
@@ -83,10 +77,10 @@ namespace Azure.Storage.DataMovement
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
-            PathScanner scanner = new PathScanner(_originalPath);
+            PathScanner scanner = new PathScanner(_path);
             foreach (FileSystemInfo fileSystemInfo in scanner.Scan(false))
             {
-                yield return GetChildStorageResource(fileSystemInfo.Name.Split('/').ToList());
+                yield return GetChildStorageResource(fileSystemInfo.FullName);
             }
         }
     }

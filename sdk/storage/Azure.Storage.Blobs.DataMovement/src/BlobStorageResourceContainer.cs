@@ -43,7 +43,7 @@ namespace Azure.Storage.Blobs.DataMovement
         /// Returns the path
         /// </summary>
         /// <returns></returns>
-        public override List<string> Path => _blobContainerClient.Uri.AbsolutePath.Split('/').ToList();
+        public override string Path => _blobContainerClient.Name;
 
         /// <summary>
         /// Obtains the Uri of the blob directory resource, which means we can list
@@ -56,7 +56,7 @@ namespace Azure.Storage.Blobs.DataMovement
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        public override StorageResource GetChildStorageResource(List<string> path)
+        public override StorageResource GetChildStorageResource(string path)
         {
             return new BlockBlobStorageResource(_blobContainerClient.GetBlockBlobClient(string.Join("/", path)));
         }
@@ -64,12 +64,10 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <summary>
         /// Not supported
         /// </summary>
-        /// <param name="encodedPath">
-        /// The path to append to the current directory prefix (if one exists)</param>
         /// <returns></returns>
-        public override StorageResourceContainer GetParentStorageResourceContainer(List<string> encodedPath)
+        public override StorageResourceContainer GetParentStorageResourceContainer()
         {
-            return new BlobDirectoryStorageResourceContainer(_blobContainerClient, encodedPath);
+            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -84,7 +82,7 @@ namespace Azure.Storage.Blobs.DataMovement
                 cancellationToken: cancellationToken);
             await foreach (BlobItem blobItem in pages.ConfigureAwait(false))
             {
-                yield return GetChildStorageResource(blobItem.Name.Split('/').ToList());
+                yield return GetChildStorageResource(blobItem.Name);
             }
         }
     }

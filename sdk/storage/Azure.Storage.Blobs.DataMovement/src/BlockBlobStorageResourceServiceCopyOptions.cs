@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.DataMovement;
 using Azure.Storage.DataMovement.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
@@ -10,7 +11,7 @@ namespace Azure.Storage.Blobs.DataMovement
 {
     /// <summary>
     /// Options for <see cref="BlockBlobStorageResource"/> when calling
-    /// <see cref="BlockBlobStorageResource.CopyBlockFromUriAsync(System.Uri, HttpRange, StorageResourceCopyFromUriOptions, System.Threading.CancellationToken)"/>.
+    /// <see cref="BlockBlobStorageResource.CopyBlockFromUriAsync(StorageResource, HttpRange, StorageResourceCopyFromUriOptions, System.Threading.CancellationToken)"/>.
     /// </summary>
     public class BlockBlobStorageResourceServiceCopyOptions
     {

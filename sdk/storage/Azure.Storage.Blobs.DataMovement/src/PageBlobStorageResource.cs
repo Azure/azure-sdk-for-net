@@ -33,13 +33,21 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <summary>
         /// Gets the path of the resource.
         /// </summary>
-        public override List<string> Path => _blobClient.Name.Split('/').ToList();
+        public override string Path => _blobClient.Name;
 
         /// <summary>
         /// Defines whether the object can produce a SAS URL
         /// </summary>
         /// <returns></returns>
         public override ProduceUriType CanProduceUri => ProduceUriType.ProducesUri;
+
+        /// <summary>
+        /// Returns the preferred method of how to perform service to service
+        /// transfers. See <see cref="TransferCopyMethod"/>. This value can be set when specifying
+        /// the options bag, see <see cref="PageBlobStorageResourceServiceCopyOptions.CopyMethod"/> in
+        /// <see cref="PageBlobStorageResourceOptions.CopyOptions"/>.
+        /// </summary>
+        public override TransferCopyMethod ServiceCopyMethod => _options?.CopyOptions?.CopyMethod ?? TransferCopyMethod.SyncCopy;
 
         /// <summary>
         /// Constructor
@@ -132,37 +140,37 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <summary>
         /// Consumes blob Url to upload / copy
         /// </summary>
-        /// <param name="sourceUri"></param>
+        /// <param name="sourceResource"></param>
         /// <param name="sourceAuthorization"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public override async Task CopyFromUriAsync(
-            Uri sourceUri,
+            StorageResource sourceResource,
             StorageResourceCopyFromUriOptions sourceAuthorization = default,
             CancellationToken cancellationToken = default)
         {
             // Change depending on type of copy
             await _blobClient.SyncCopyFromUriAsync(
-                sourceUri,
+                sourceResource.Uri,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Uploads/copy the blob from a url
         /// </summary>
-        /// <param name="sourceUri"></param>
+        /// <param name="sourceResource"></param>
         /// <param name="range"></param>
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public override async Task CopyBlockFromUriAsync(
-            Uri sourceUri,
+            StorageResource sourceResource,
             HttpRange range,
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
         {
             await _blobClient.UploadPagesFromUriAsync(
-                sourceUri,
+                sourceResource.Uri,
                 sourceRange: range,
                 range: range,
                 options: default, // TODO: convert options to conditions

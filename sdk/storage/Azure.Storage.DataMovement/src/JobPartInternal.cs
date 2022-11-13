@@ -17,6 +17,11 @@ namespace Azure.Storage.DataMovement
         public QueueChunkDelegate QueueChunk { get; internal set; }
 
         /// <summary>
+        /// Part Number
+        /// </summary>
+        public int PartNumber;
+
+        /// <summary>
         /// DataTransfer communicate when the transfer has finished and the progress
         /// </summary>
         internal DataTransfer _dataTransfer { get; set; }
@@ -49,6 +54,11 @@ namespace Azure.Storage.DataMovement
         /// The error handling options
         /// </summary>
         internal ErrorHandlingOptions _errorHandling;
+
+        /// <summary>
+        /// Determines how files are created or if they should be overwritten if they already exists
+        /// </summary>
+        internal StorageResourceCreateMode _createMode;
 
         /// <summary>
         /// The maximum length of an transfer in bytes.
@@ -93,11 +103,13 @@ namespace Azure.Storage.DataMovement
 
         internal JobPartInternal(
             DataTransfer dataTransfer,
+            int partNumber,
             StorageResource sourceResource,
             StorageResource destinationResource,
             long? maximumTransferChunkSize,
             long initialTransferSize,
             ErrorHandlingOptions errorHandling,
+            StorageResourceCreateMode createMode,
             TransferCheckpointer checkpointer,
             ArrayPool<byte> arrayPool,
             SyncAsyncEventHandler<TransferStatusEventArgs> statusEventHandler,
@@ -105,10 +117,12 @@ namespace Azure.Storage.DataMovement
             CancellationTokenSource cancellationTokenSource)
         {
             JobPartStatus = StorageTransferStatus.Queued;
+            PartNumber = partNumber;
             _dataTransfer = dataTransfer;
             _sourceResource = sourceResource;
             _destinationResource = destinationResource;
             _errorHandling = errorHandling;
+            _createMode = createMode;
             _checkpointer = checkpointer;
             _cancellationTokenSource = cancellationTokenSource;
             _maximumTransferChunkSize = maximumTransferChunkSize;
@@ -149,7 +163,7 @@ namespace Azure.Storage.DataMovement
             {
                 JobPartStatus = transferStatus;
                 // TODO: change to RaiseAsync
-                if (TransferFailedEventHandler != null)
+                if (TransferStatusEventHandler != null)
                 {
                     await TransferStatusEventHandler.Invoke(new TransferStatusEventArgs(
                         _dataTransfer.Id,

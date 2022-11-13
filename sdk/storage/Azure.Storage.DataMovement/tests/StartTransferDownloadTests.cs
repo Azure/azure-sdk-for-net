@@ -342,7 +342,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(Constants.KB, 10)]
         [TestCase(4 * Constants.MB, 20)]
         [TestCase(257 * Constants.MB, 200)]
-        [TestCase(Constants.GB, 1000)]
+        [TestCase(Constants.GB, 1500)]
         public async Task StartTransfer_BlockBlobToLocal_BlobSize(long size, int waitTimeInSec)
         {
             // Arrange

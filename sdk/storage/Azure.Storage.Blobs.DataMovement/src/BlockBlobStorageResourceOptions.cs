@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Azure.Storage.DataMovement;
 using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.Blobs.DataMovement
@@ -14,7 +15,7 @@ namespace Azure.Storage.Blobs.DataMovement
     public class BlockBlobStorageResourceOptions
     {
         /// <summary>
-        /// When calling <see cref="BlockBlobStorageResource.CopyBlockFromUriAsync(System.Uri, HttpRange, StorageResourceCopyFromUriOptions, System.Threading.CancellationToken)"/>
+        /// When calling <see cref="BlockBlobStorageResource.CopyBlockFromUriAsync(StorageResource, HttpRange, StorageResourceCopyFromUriOptions, System.Threading.CancellationToken)"/>
         /// </summary>
         public BlockBlobStorageResourceServiceCopyOptions CopyOptions { get; set; }
 

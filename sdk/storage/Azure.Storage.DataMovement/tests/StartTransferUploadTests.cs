@@ -299,19 +299,15 @@ namespace Azure.Storage.DataMovement.Tests
 
         [RecordedTest]
         [TestCase(0, 10)]
-        [TestCase(100, 10)]
-        [TestCase(Constants.KB, 10)]
-        [TestCase(4 * Constants.MB, 20)]
+        [TestCase(1000, 10)]
+        [TestCase(Constants.MB, 60)]
+        [TestCase(4 * Constants.MB, 60)]
         [TestCase(257 * Constants.MB, 200)]
-        [TestCase(Constants.GB, 500)]
+        [TestCase(Constants.GB, 1500)]
         public async Task StartTransfer_LocalToBlockBlobBlobSize(long fileSize, int waitTimeInSec)
         {
             AutoResetEvent InProgressWait = new AutoResetEvent(false);
-            SingleTransferOptions options = new SingleTransferOptions()
-            {
-                InitialTransferSize = 10,
-                MaximumTransferChunkSize = 10,
-            };
+            SingleTransferOptions options = new SingleTransferOptions();
 
             // Arrange
             var blobName = GetNewBlobName();

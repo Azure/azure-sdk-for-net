@@ -29,11 +29,20 @@ namespace Azure.Storage.DataMovement
         internal DataTransferState _state;
 
         /// <summary>
-        /// For mocking
+        /// Only to be created internally by the transfer manager
         /// </summary>
         internal DataTransfer()
         {
             _state = new DataTransferState();
+        }
+
+        /// <summary>
+        /// Only to be created internally by the transfer manager when someone
+        /// provides a valid job plan file to resume from.
+        /// </summary>
+        internal DataTransfer(string id, long bytesTransferred)
+        {
+            _state = new DataTransferState(id, bytesTransferred);
         }
     }
 }

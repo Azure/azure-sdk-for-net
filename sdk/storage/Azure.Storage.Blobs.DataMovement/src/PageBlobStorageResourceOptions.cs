@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Storage.DataMovement;
 using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.Blobs.DataMovement
@@ -12,7 +13,7 @@ namespace Azure.Storage.Blobs.DataMovement
     public class PageBlobStorageResourceOptions
     {
         /// <summary>
-        /// When calling <see cref="BlockBlobStorageResource.CopyBlockFromUriAsync(System.Uri, HttpRange, StorageResourceCopyFromUriOptions, System.Threading.CancellationToken)"/>
+        /// When calling <see cref="BlockBlobStorageResource.CopyBlockFromUriAsync(StorageResource, HttpRange, StorageResourceCopyFromUriOptions, System.Threading.CancellationToken)"/>
         /// </summary>
         public PageBlobStorageResourceServiceCopyOptions CopyOptions { get; set; }
 

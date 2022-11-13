@@ -25,42 +25,52 @@ namespace Azure.Storage.DataMovement
         private DownloadChunkHandler _downloadChunkHandler;
 
         /// <summary>
-        /// Constructs the StreamToUriJobPart
+        /// Creating job part based on a single transfer job
         /// </summary>
-        /// <param name="dataTransfer"></param>
+        /// <param name="job"></param>
+        /// <param name="partNumber"></param>
+        public UriToStreamJobPart(UriToStreamTransferJob job, int partNumber)
+            : base(job._dataTransfer,
+                  partNumber,
+                  job._sourceResource,
+                  job._destinationResource,
+                  job._maximumTransferChunkSize,
+                  job._initialTransferSize,
+                  job._errorHandling,
+                  job._createMode,
+                  job._checkpointer,
+                  job.UploadArrayPool,
+                  job.TransferStatusEventHandler,
+                  job.TransferFailedEventHandler,
+                  job._cancellationTokenSource)
+        { }
+
+        /// <summary>
+        /// Creating transfer job based on a storage resource created from listing.
+        /// </summary>
+        /// <param name="job"></param>
         /// <param name="sourceResource"></param>
         /// <param name="destinationResource"></param>
-        /// <param name="maximumTransferChunkSize"></param>
-        /// <param name="initialTransferSize"></param>
-        /// <param name="errorHandling"></param>
-        /// <param name="checkpointer"></param>
-        /// <param name="uploadPool"></param>
-        /// <param name="statusEventHandler"></param>
-        /// <param name="failedEventHandler"></param>
-        /// <param name="cancellationTokenSource"></param>
+        /// <param name="partNumber"></param>
         public UriToStreamJobPart(
-            DataTransfer dataTransfer,
+            UriToStreamTransferJob job,
+            int partNumber,
             StorageResource sourceResource,
-            StorageResource destinationResource,
-            long? maximumTransferChunkSize,
-            long initialTransferSize,
-            ErrorHandlingOptions errorHandling,
-            TransferCheckpointer checkpointer,
-            ArrayPool<byte> uploadPool,
-            SyncAsyncEventHandler<TransferStatusEventArgs> statusEventHandler,
-            SyncAsyncEventHandler<TransferFailedEventArgs> failedEventHandler,
-            CancellationTokenSource cancellationTokenSource)
-            : base(dataTransfer,
+            StorageResource destinationResource)
+            : base(job._dataTransfer,
+                  partNumber,
                   sourceResource,
                   destinationResource,
-                  maximumTransferChunkSize,
-                  initialTransferSize,
-                  errorHandling,
-                  checkpointer,
-                  uploadPool,
-                  statusEventHandler,
-                  failedEventHandler,
-                  cancellationTokenSource){ }
+                  job._maximumTransferChunkSize,
+                  job._initialTransferSize,
+                  job._errorHandling,
+                  job._createMode,
+                  job._checkpointer,
+                  job.UploadArrayPool,
+                  job.TransferStatusEventHandler,
+                  job.TransferFailedEventHandler,
+                  job._cancellationTokenSource)
+        { }
 
         /// <summary>
         /// Processes the job to job parts
@@ -82,7 +92,7 @@ namespace Azure.Storage.DataMovement
         {
             try
             {
-                string destinationPath = _destinationResource.Path.ToLocalPathString();
+                string destinationPath = _destinationResource.Path;
                 if (!File.Exists(destinationPath))
                 {
                     File.Create(destinationPath).Close();
@@ -134,31 +144,29 @@ namespace Azure.Storage.DataMovement
                 catch // TODO: only catch initial range error.
                 {
                     // Range not accepted, we need to attempt to use a default range
-                    initialResult = await _sourceResource.ReadPartialStreamAsync(
-                    offset: 0,
-                    length: _initialTransferSize,
-                    _cancellationTokenSource.Token)
+                    initialResult = await _sourceResource.ReadStreamAsync(
+                    cancellationToken: _cancellationTokenSource.Token)
                     .ConfigureAwait(false);
                 }
 
                 // If the initial request returned no content (i.e., a 304),
                 // we'll pass that back to the user immediately
-                if (initialResult != default)
+                long initialLength = initialResult.Properties.ContentLength;
+                if (initialResult == default || initialLength == 0 )
                 {
                     // Invoke event handler and progress handler
+                    await QueueChunk(
+                        async () =>
+                        await CompleteFileDownload().ConfigureAwait(false))
+                        .ConfigureAwait(false);
                     return;
                 }
 
-                // Check if that was the entire blob, if so finish now.
-                // If the first segment was the entire blob, we'll copy that to
-                // the output stream and finish now
-                StorageResourceProperties properties = await _sourceResource.GetPropertiesAsync(_cancellationTokenSource.Token).ConfigureAwait(false);
-                long totalLength = properties.ContentLength;
-
                 // TODO: Change to use buffer instead of converting to stream
-                await CopyToStreamInternal(initialResult.Content).ConfigureAwait(false);
-                ReportBytesWritten(initialResult.Content.Length);
-                if (initialResult.Content.Length == totalLength)
+                await CopyToStreamInternal(0, initialLength, initialResult.Content).ConfigureAwait(false);
+                ReportBytesWritten(initialLength);
+                long totalLength = ParseRangeTotalLength(initialResult.ContentRange);
+                if (totalLength == initialLength)
                 {
                     // Complete download since it was done in one go
                     await QueueChunk(
@@ -177,10 +185,10 @@ namespace Azure.Storage.DataMovement
                     }
 
                     // Get list of ranges of the blob
-                    IList<HttpRange> ranges = GetRangesList(initialResult.Content.Length, totalLength, rangeSize);
+                    IList<HttpRange> ranges = GetRangesList(initialLength, totalLength, rangeSize);
                     // Create Download Chunk event handler to manage when the ranges finish downloading
                     _downloadChunkHandler = GetDownloadChunkHandler(
-                        currentTranferred: initialResult.Content.Length,
+                        currentTranferred: initialLength,
                         expectedLength: totalLength,
                         ranges: ranges,
                         jobPart: this);
@@ -211,6 +219,7 @@ namespace Azure.Storage.DataMovement
             try
             {
                 await _destinationResource.CompleteTransferAsync(_cancellationTokenSource.Token).ConfigureAwait(false);
+                await OnTransferStatusChanged(StorageTransferStatus.Completed).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -219,8 +228,7 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        internal async Task DownloadStreamingInternal(
-            HttpRange range)
+        internal async Task DownloadStreamingInternal(HttpRange range)
         {
             try
             {
@@ -249,7 +257,7 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        public async Task CopyToStreamInternal(Stream source)
+        public async Task CopyToStreamInternal(long offset, long sourceLength, Stream source)
         {
             CancellationHelper.ThrowIfCancellationRequested(_cancellationTokenSource.Token);
 
@@ -257,8 +265,8 @@ namespace Azure.Storage.DataMovement
             {
                 // TODO: change to custom offset based on chunk offset
                 await _destinationResource.WriteStreamToOffsetAsync(
-                    0,
-                    source.Length,
+                    offset,
+                    sourceLength,
                     source,
                     default,
                     _cancellationTokenSource.Token).ConfigureAwait(false);
@@ -321,12 +329,12 @@ namespace Azure.Storage.DataMovement
         {
             return new DownloadChunkHandler.Behaviors()
             {
-                CopyToDestinationFile = (result) => job.CopyToStreamInternal(result),
+                CopyToDestinationFile = (offset, length, result) => job.CopyToStreamInternal(offset, length, result),
                 CopyToChunkFile = (chunkFilePath, source) => job.WriteChunkToTempFile(chunkFilePath, source),
+                ReportProgressInBytes= (progress) => job.ReportBytesWritten(progress),
                 InvokeFailedHandler = async (ex) => await job.InvokeFailedArg(ex).ConfigureAwait(false),
                 QueueCompleteFileDownload = () => job.QueueChunk(
-                    async () =>
-                    await job.CompleteFileDownload().ConfigureAwait(false))
+                    async () => await job.CompleteFileDownload().ConfigureAwait(false))
             };
         }
 

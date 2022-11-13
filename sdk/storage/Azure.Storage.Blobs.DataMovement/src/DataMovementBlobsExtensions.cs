@@ -45,7 +45,7 @@ namespace Azure.Storage.Blobs.DataMovement
                     Resource = BlobTransferType.ResourceType.BlobFolder,
                     Operation = BlobTransferType.OperationType.Upload,
                 },
-                SourceUri = new Uri(transferJob.SourceLocalPath.Path.ToLocalPathString()),
+                SourceUri = new Uri(transferJob.SourceLocalPath.Path),
                 DestinationUri = transferJob.DestinationBlobDirectoryClient.Uri,
             };
         }

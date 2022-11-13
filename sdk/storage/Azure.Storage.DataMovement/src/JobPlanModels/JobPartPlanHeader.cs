@@ -5,6 +5,7 @@ using System;
 using System.Runtime.InteropServices;
 using Azure.Core;
 using Azure.Storage.DataMovement.JobPlanModels;
+using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
 {
@@ -39,7 +40,7 @@ namespace Azure.Storage.DataMovement
         /// Size of a GUID
         /// </summary>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 16)]
-        public Guid TransferId;
+        public string TransferId;
 
         /// <summary>
         /// Job Part's part number (0+)
@@ -112,7 +113,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// True if the existing blobs needs to be overwritten.
         /// </summary>
-        public byte ForceWrite;
+        public bool ForceWrite;
 
         /// <summary>
         /// Supplements ForceWrite with an additional setting for Azure Files. If true, the read-only attribute will be cleared before we overwrite
@@ -148,7 +149,7 @@ namespace Azure.Storage.DataMovement
         ///
         /// TODO: change to struct for FolderPropertyOptions
         /// </summary>
-        public byte FolderPropertyOption;
+        public FolderPropertiesMode FolderPropertyOption;
 
         /// <summary>
         /// The number of transfers in the Job part
@@ -196,7 +197,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// DestLengthValidation represents whether the user wants to check if the destination has a different content-length
         /// </summary>
-        public bool DestLengthValidationl;
+        public bool DestLengthValidation;
 
         /// <summary>
         /// S2SInvalidMetadataHandleOption represents how user wants to handle invalid metadata.

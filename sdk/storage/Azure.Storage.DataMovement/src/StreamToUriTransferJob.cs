@@ -59,15 +59,6 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Gets the status of the transfer job
-        /// </summary>
-        /// <returns>StorageTransferStatus with the value of the status of the job</returns>
-        public override Task PauseTransferJobAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// Resume respective job
         /// </summary>
         /// <param name="sourceCredential"></param>
@@ -85,21 +76,13 @@ namespace Azure.Storage.DataMovement
         /// <returns>An IEnumerable that contains the job parts</returns>
         public override async IAsyncEnumerable<JobPartInternal> ProcessJobToJobPartAsync()
         {
+            InitializeJobPartStatusEvents();
+            await OnJobStatusChangedAsync(StorageTransferStatus.InProgress).ConfigureAwait(false);
+            int partNumber = 0;
             if (_isSingleResource)
             {
                 // Single resource transfer, we can skip to chunking the job.
-                StreamToUriJobPart part = new StreamToUriJobPart(
-                    dataTransfer: _dataTransfer,
-                    sourceResource: _sourceResource,
-                    destinationResource: _destinationResource,
-                    maximumTransferChunkSize: _maximumTransferChunkSize,
-                    initialTransferSize: _initialTransferSize,
-                    errorHandling: _errorHandling,
-                    checkpointer: _checkpointer,
-                    uploadPool: _arrayPool,
-                    statusEventHandler: TransferStatusEventHandler,
-                    failedEventHandler: TransferFailedEventHandler,
-                    cancellationTokenSource: _cancellationTokenSource);
+                StreamToUriJobPart part = new StreamToUriJobPart(this, partNumber);
                 _jobParts.Add(part);
                 yield return part;
             }
@@ -112,34 +95,19 @@ namespace Azure.Storage.DataMovement
                 {
                     // Pass each storage resource found in each list call
                     StreamToUriJobPart part = new StreamToUriJobPart(
-                        dataTransfer: _dataTransfer,
+                        job: this,
+                        partNumber: partNumber,
                         sourceResource: resource,
-                        destinationResource: _destinationResourceContainer.GetChildStorageResource(resource.Path),
-                        maximumTransferChunkSize: _maximumTransferChunkSize,
-                        initialTransferSize: _initialTransferSize,
-                        errorHandling: _errorHandling,
-                        checkpointer: _checkpointer,
-                        uploadPool: _arrayPool,
-                        statusEventHandler: TransferStatusEventHandler,
-                        failedEventHandler: TransferFailedEventHandler,
-                        cancellationTokenSource: _cancellationTokenSource);
+                        destinationResource: _destinationResourceContainer.GetChildStorageResource(resource.Path));
                     _jobParts.Add(part);
                     yield return part;
+                    partNumber++;
                 }
             }
             if (_jobParts.All((JobPartInternal x) => x.JobPartStatus == StorageTransferStatus.Completed)
                 && TransferStatusEventHandler != default)
             {
-                await TransferStatusEventHandler.Invoke(
-                    new TransferStatusEventArgs(
-                        transferId: _dataTransfer.Id,
-                        transferStatus: StorageTransferStatus.Completed,
-                        isRunningSynchronously: true,
-                        cancellationToken: _cancellationTokenSource.Token)).ConfigureAwait(false);
-            }
-            else
-            {
-                // Add event to keep track to make sure we update the main transfer status.
+                await OnJobStatusChangedAsync(StorageTransferStatus.Completed).ConfigureAwait(false);
             }
         }
     }

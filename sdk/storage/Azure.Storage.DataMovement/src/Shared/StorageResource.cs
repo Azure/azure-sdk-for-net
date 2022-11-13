@@ -33,7 +33,14 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Gets the path of the resource.
         /// </summary>
-        public abstract List<string> Path { get; }
+        public abstract string Path { get; }
+
+        /// <summary>
+        /// If applicable, returns the preferred method of how to perform service to service
+        /// transfers. See <see cref="TransferCopyMethod"/>. This value can be set when specifying
+        /// the options bag for service related storage resources.
+        /// </summary>
+        public abstract TransferCopyMethod ServiceCopyMethod { get; }
 
         /// <summary>
         /// Defines whether the object can generate a URL to consume
@@ -98,25 +105,25 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Uploads/copy the blob from a url
         /// </summary>
-        /// <param name="sourceUri"></param>
+        /// <param name="sourceResource"></param>
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public abstract Task CopyFromUriAsync(
-            Uri sourceUri,
+            StorageResource sourceResource,
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Uploads/copy the blob from a url
         /// </summary>
-        /// <param name="sourceUri"></param>
+        /// <param name="sourceResource"></param>
         /// <param name="range"></param>
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public abstract Task CopyBlockFromUriAsync(
-            Uri sourceUri,
+            StorageResource sourceResource,
             HttpRange range,
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default);

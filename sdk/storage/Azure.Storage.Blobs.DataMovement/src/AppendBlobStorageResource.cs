@@ -34,13 +34,21 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <summary>
         /// Gets the path of the resource.
         /// </summary>
-        public override List<string> Path => _blobClient.Name.Split('/').ToList();
+        public override string Path => _blobClient.Name;
 
         /// <summary>
         /// Defines whether the object can produce a SAS URL
         /// </summary>
         /// <returns></returns>
         public override ProduceUriType CanProduceUri => ProduceUriType.ProducesUri;
+
+        /// <summary>
+        /// Returns the preferred method of how to perform service to service
+        /// transfers. See <see cref="TransferCopyMethod"/>. This value can be set when specifying
+        /// the options bag, see <see cref="AppendBlobStorageResourceServiceCopyOptions.CopyMethod"/> in
+        /// <see cref="AppendBlobStorageResourceOptions.CopyOptions"/>.
+        /// </summary>
+        public override TransferCopyMethod ServiceCopyMethod => _options?.CopyOptions?.CopyMethod ?? TransferCopyMethod.SyncCopy;
 
         /// <summary>
         /// Constructor
@@ -131,17 +139,17 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <summary>
         /// Uploads/copy the blob from a url
         /// </summary>
-        /// <param name="sourceUri"></param>
+        /// <param name="sourceResource"></param>
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public override async Task CopyFromUriAsync(
-            Uri sourceUri,
+            StorageResource sourceResource,
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
         {
              await _blobClient.AppendBlockFromUriAsync(
-               sourceUri,
+               sourceResource.Uri,
                options: new AppendBlobAppendBlockFromUriOptions()
                {
                    SourceAuthentication = options.SourceAuthentication,
@@ -153,19 +161,19 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <summary>
         /// Uploads/copy the blob from a url
         /// </summary>
-        /// <param name="sourceUri"></param>
+        /// <param name="sourceResource"></param>
         /// <param name="range"></param>
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public override async Task CopyBlockFromUriAsync(
-            Uri sourceUri,
+            StorageResource sourceResource,
             HttpRange range,
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
         {
             await _blobClient.AppendBlockFromUriAsync(
-                sourceUri,
+                sourceResource.Uri,
                 options: new AppendBlobAppendBlockFromUriOptions()
                 {
                     SourceRange = range,

@@ -15,7 +15,7 @@ namespace Azure.Storage.DataMovement
     internal class DownloadChunkHandler
     {
         #region Delegate Definitions
-        public delegate Task CopyToDestinationFileInternal(Stream stream);
+        public delegate Task CopyToDestinationFileInternal(long offset, long length, Stream stream);
         public delegate Task CopyToChunkFileInternal(string chunkFilePath, Stream stream);
         public delegate void ReportProgressInBytes(long bytesWritten);
         public delegate Task QueueCompleteFileDownloadInternal();
@@ -158,7 +158,7 @@ namespace Azure.Storage.DataMovement
                         // on averages runs once.
                         using (Stream content = args.Result)
                         {
-                            await _copyToDestinationFile(content).ConfigureAwait(false);
+                            await _copyToDestinationFile(args.Offset, args.BytesTransferred, content).ConfigureAwait(false);
                         }
                         UpdateBytesAndRange(args.BytesTransferred);
 
@@ -215,7 +215,7 @@ namespace Azure.Storage.DataMovement
                         {
                             using (Stream content = File.OpenRead(chunkFilePath))
                             {
-                                await _copyToDestinationFile(content).ConfigureAwait(false);
+                                await _copyToDestinationFile(currentRange.Offset, (long) currentRange.Length, content).ConfigureAwait(false);
                             }
                             // Delete the temporary chunk file that's no longer needed
                             File.Delete(chunkFilePath);
