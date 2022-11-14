@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
@@ -35,16 +34,7 @@ namespace Azure.AI.Language.Conversations
                     case "WeightResolution": return WeightResolution.DeserializeWeightResolution(element);
                 }
             }
-            ResolutionKind resolutionKind = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("resolutionKind"))
-                {
-                    resolutionKind = new ResolutionKind(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new BaseResolution(resolutionKind);
+            return UnknownBaseResolution.DeserializeUnknownBaseResolution(element);
         }
     }
 }

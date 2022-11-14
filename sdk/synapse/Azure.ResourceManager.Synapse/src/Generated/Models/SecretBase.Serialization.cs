@@ -29,16 +29,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     case "SecureString": return SecureString.DeserializeSecureString(element);
                 }
             }
-            string type = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownSecretBase(type);
+            return UnknownSecretBase.DeserializeUnknownSecretBase(element);
         }
     }
 }

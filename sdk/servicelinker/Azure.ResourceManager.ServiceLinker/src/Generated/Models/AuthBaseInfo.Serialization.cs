@@ -33,16 +33,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     case "userAssignedIdentity": return UserAssignedIdentityAuthInfo.DeserializeUserAssignedIdentityAuthInfo(element);
                 }
             }
-            LinkerAuthType authType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("authType"))
-                {
-                    authType = new LinkerAuthType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownAuthBaseInfo(authType);
+            return UnknownAuthInfoBase.DeserializeUnknownAuthInfoBase(element);
         }
     }
 }

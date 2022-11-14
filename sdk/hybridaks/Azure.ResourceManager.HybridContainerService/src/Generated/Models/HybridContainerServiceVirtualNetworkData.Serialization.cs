@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.HybridContainerService
             writer.WriteEndObject();
         }
 
-        internal static HybridContainerServiceVirtualNetworkData DeserializeVirtualNetworkData(JsonElement element)
+        internal static HybridContainerServiceVirtualNetworkData DeserializeHybridContainerServiceVirtualNetworkData(JsonElement element)
         {
             Optional<VirtualNetworksProperties> properties = default;
             Optional<VirtualNetworksExtendedLocation> extendedLocation = default;

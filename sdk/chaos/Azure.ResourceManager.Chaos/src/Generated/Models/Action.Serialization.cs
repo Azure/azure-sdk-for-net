@@ -33,22 +33,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     case "discrete": return DiscreteAction.DeserializeDiscreteAction(element);
                 }
             }
-            string type = default;
-            string name = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownAction(type, name);
+            return UnknownAction.DeserializeUnknownAction(element);
         }
     }
 }

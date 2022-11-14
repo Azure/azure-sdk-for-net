@@ -31,16 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     case "IaasVMBackupRequest": return IaasVmBackupRequest.DeserializeIaasVmBackupRequest(element);
                 }
             }
-            string objectType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("objectType"))
-                {
-                    objectType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownBackupRequest(objectType);
+            return UnknownBackupRequest.DeserializeUnknownBackupRequest(element);
         }
     }
 }

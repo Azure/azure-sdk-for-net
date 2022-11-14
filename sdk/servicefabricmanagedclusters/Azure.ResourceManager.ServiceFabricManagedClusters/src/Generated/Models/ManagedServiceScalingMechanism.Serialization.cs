@@ -30,16 +30,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     case "ScalePartitionInstanceCount": return PartitionInstanceCountScalingMechanism.DeserializePartitionInstanceCountScalingMechanism(element);
                 }
             }
-            ServiceScalingMechanismKind kind = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("kind"))
-                {
-                    kind = new ServiceScalingMechanismKind(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownManagedServiceScalingMechanism(kind);
+            return UnknownScalingMechanism.DeserializeUnknownScalingMechanism(element);
         }
     }
 }

@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Batch
         }
 
         /// <summary>
-        /// Gets information about the specified certificate.
+        /// Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/certificates/{certificateName}
         /// Operation Id: Certificate_Get
         /// </summary>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Batch
         }
 
         /// <summary>
-        /// Gets information about the specified certificate.
+        /// Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/certificates/{certificateName}
         /// Operation Id: Certificate_Get
         /// </summary>

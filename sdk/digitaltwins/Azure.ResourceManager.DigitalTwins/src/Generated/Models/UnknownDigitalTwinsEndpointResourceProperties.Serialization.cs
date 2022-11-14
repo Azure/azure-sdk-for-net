@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
 
         internal static UnknownDigitalTwinsEndpointResourceProperties DeserializeUnknownDigitalTwinsEndpointResourceProperties(JsonElement element)
         {
-            EndpointType endpointType = default;
+            EndpointType endpointType = "Unknown";
             Optional<DigitalTwinsEndpointProvisioningState?> provisioningState = default;
             Optional<DateTimeOffset?> createdTime = default;
             Optional<DigitalTwinsAuthenticationType> authenticationType = default;

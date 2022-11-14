@@ -15,7 +15,7 @@ jobs:
   event-handler:
     permissions:
       statuses: write # to set status (azure/azure-sdk-actions)
-      pull-requests: read # to read pull requests (azure/azure-sdk-actions)
+      pull-requests: write # to read pull requests and write comments (azure/azure-sdk-actions)
       checks: read # to read check status (azure/azure-sdk-actions)
     name: Handle ${{ github.event_name }} ${{ github.event.action }} event
     runs-on: ubuntu-latest

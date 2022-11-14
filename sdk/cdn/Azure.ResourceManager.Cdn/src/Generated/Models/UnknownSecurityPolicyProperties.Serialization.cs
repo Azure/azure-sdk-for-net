@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static UnknownSecurityPolicyProperties DeserializeUnknownSecurityPolicyProperties(JsonElement element)
         {
-            SecurityPolicyType type = default;
+            SecurityPolicyType type = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))

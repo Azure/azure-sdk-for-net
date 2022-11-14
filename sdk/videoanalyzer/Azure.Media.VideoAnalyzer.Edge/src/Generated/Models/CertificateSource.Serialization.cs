@@ -29,16 +29,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     case "#Microsoft.VideoAnalyzer.PemCertificateList": return PemCertificateList.DeserializePemCertificateList(element);
                 }
             }
-            string type = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("@type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new CertificateSource(type);
+            return UnknownCertificateSource.DeserializeUnknownCertificateSource(element);
         }
     }
 }

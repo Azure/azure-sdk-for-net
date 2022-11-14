@@ -37,8 +37,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="authenticationType"> The authentication type to use. </param>
         /// <param name="url"> The url to connect TeamDesk source. Type: string (or Expression with resultType string). </param>
         /// <param name="userName"> The username of the TeamDesk source. Type: string (or Expression with resultType string). </param>
-        /// <param name="password"> The password of the TeamDesk source. </param>
-        /// <param name="apiToken"> The api token for the TeamDesk source. </param>
+        /// <param name="password">
+        /// The password of the TeamDesk source.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
+        /// <param name="apiToken">
+        /// The api token for the TeamDesk source.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
         internal TeamDeskLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, TeamDeskAuthenticationType authenticationType, object url, object userName, SecretBase password, SecretBase apiToken, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
@@ -57,9 +65,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object Url { get; set; }
         /// <summary> The username of the TeamDesk source. Type: string (or Expression with resultType string). </summary>
         public object UserName { get; set; }
-        /// <summary> The password of the TeamDesk source. </summary>
+        /// <summary>
+        /// The password of the TeamDesk source.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </summary>
         public SecretBase Password { get; set; }
-        /// <summary> The api token for the TeamDesk source. </summary>
+        /// <summary>
+        /// The api token for the TeamDesk source.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </summary>
         public SecretBase ApiToken { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public object EncryptedCredential { get; set; }

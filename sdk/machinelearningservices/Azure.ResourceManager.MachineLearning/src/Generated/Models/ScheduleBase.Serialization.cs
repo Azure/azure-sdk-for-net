@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -72,60 +71,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "Recurrence": return RecurrenceSchedule.DeserializeRecurrenceSchedule(element);
                 }
             }
-            Optional<DateTimeOffset?> endTime = default;
-            Optional<ScheduleStatus> scheduleStatus = default;
-            ScheduleType scheduleType = default;
-            Optional<DateTimeOffset?> startTime = default;
-            Optional<string> timeZone = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("endTime"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        endTime = null;
-                        continue;
-                    }
-                    endTime = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("scheduleStatus"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    scheduleStatus = new ScheduleStatus(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("scheduleType"))
-                {
-                    scheduleType = new ScheduleType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("startTime"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        startTime = null;
-                        continue;
-                    }
-                    startTime = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("timeZone"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        timeZone = null;
-                        continue;
-                    }
-                    timeZone = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownScheduleBase(Optional.ToNullable(endTime), Optional.ToNullable(scheduleStatus), scheduleType, Optional.ToNullable(startTime), timeZone.Value);
+            return UnknownScheduleBase.DeserializeUnknownScheduleBase(element);
         }
     }
 }
