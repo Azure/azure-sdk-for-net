@@ -10,24 +10,24 @@ using System.Threading.Tasks;
 namespace Azure.Messaging.WebPubSub.Clients
 {
     /// <summary>
-    /// WebPubSubClientCredential
+    /// The WebPubSubClientCredential
     /// </summary>
     public class WebPubSubClientCredential
     {
         private readonly Func<CancellationToken, ValueTask<Uri>> _clientAccessUriProvider;
 
         /// <summary>
-        /// Ctor
+        /// Initialize a WebPubSubClientCredential instance
         /// </summary>
-        /// <param name="clientAccessUri"></param>
+        /// <param name="clientAccessUri">The uri to be used to connect to the service</param>
         public WebPubSubClientCredential(Uri clientAccessUri): this(_ => new ValueTask<Uri>(clientAccessUri))
         {
         }
 
         /// <summary>
-        /// Ctor
+        /// Initialize a WebPubSubClientCredential instance
         /// </summary>
-        /// <param name="clientAccessUriProvider"></param>
+        /// <param name="clientAccessUriProvider">The uri to be used to connect to the service</param>
         public WebPubSubClientCredential(Func<CancellationToken, ValueTask<Uri>> clientAccessUriProvider)
         {
             _clientAccessUriProvider = clientAccessUriProvider;
@@ -36,7 +36,7 @@ namespace Azure.Messaging.WebPubSub.Clients
         /// <summary>
         /// GetClientAccessUri
         /// </summary>
-        /// <param name="token"></param>
+        /// <param name="token">The cancellation token used to cancel the operation.</param>
         /// <returns></returns>
         public ValueTask<Uri> GetClientAccessUriAsync(CancellationToken token = default)
         {
