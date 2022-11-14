@@ -11,6 +11,9 @@
 - Added `TextAnalyticsClient.StartExtractSummary` and `StartExtractSummaryAsync` to perform extractive summarization on a collection of documents.
 - Added `Script` property to `DetectedLanguage`.
 - Added `ScriptKind` enum.
+- Added the `CategorizedEntity.Resolutions` property.
+- Added the following classes: `AgeResolution`, `AreaResolution`, `BaseResolution`, `BooleanResolution`, `CurrencyResolution`, `DateTimeResolution`, `InformationResolution`, `LengthResolution`, `NumberResolution`, `NumericRangeResolution`, `OrdinalResolution`, `SpeedResolution`, `TemperatureResolution`, `TemporalSpanResolution` `VolumeResolution`, and `WeightResolution`.
+- Added the following enums: `AgeUnit`, `AreaUnit`, `DateTimeSubKind`, `InformationUnit`,`LengthUnit`, `NumberKind`, `RangeKind`, `RelativeTo`, `SpeedUnit`, `TemperatureUnit`,`TemporalModifier`, `VolumeUnit`, and `WeightUnit`.
 
 ### Breaking Changes
 

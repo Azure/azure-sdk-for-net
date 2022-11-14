@@ -74,6 +74,8 @@
     "overridden",
     "parallelization",
     "personalizer",
+    "petabit",
+    "picometer",
     "pkcs",
     "pstn",
     "pwsh",
@@ -924,7 +926,15 @@
       "words": [
         "Orgs"
       ]
-    }
+    },
+    {
+      "filename": "**/sdk/webpubsub/**/*.cs",
+      "words": [
+        "protobuf",
+        "Ackable",
+        "awps"
+        ]
+    }  
   ],
   "allowCompoundWords": true
 }
