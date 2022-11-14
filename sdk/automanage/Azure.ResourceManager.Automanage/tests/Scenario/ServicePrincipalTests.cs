@@ -12,7 +12,8 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
         [TestCase]
         public void CanGetServicePrincipal()
         {
-            var servicePrincipal = Subscription.GetServicePrincipal();
+            var resourceId = ServicePrincipalResource.CreateResourceIdentifier(Subscription.Id.Name);
+            var servicePrincipal = ArmClient.GetServicePrincipalResource(resourceId);
             Assert.IsNotNull(servicePrincipal);
         }
     }
