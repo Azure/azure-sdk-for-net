@@ -1,14 +1,9 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0 (2022-11-14)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- General availability of Microsoft.Azure.WebPubSub.AspNetCore 1.0.0.
 
 ## 1.0.0-beta.4 (2022-11-11)
 
