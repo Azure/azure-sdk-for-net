@@ -115,7 +115,7 @@ foreach($moniker in $monikers) {
     $servicePackages = $packagesForService.Values.Where({ $_.ServiceName -eq $service })
     $serviceReadmeBaseName = ServiceLevelReadmeNameStyle -serviceName $service
     # Github url for source code: e.g. https://github.com/Azure/azure-sdk-for-js
-    $serviceBaseName = ServiceLevelReadmeNameStyle $serviceName
+    $serviceBaseName = ServiceLevelReadmeNameStyle $service
     $author = GetPrimaryCodeOwner -TargetDirectory "/sdk/$serviceBaseName/"
     $msauthor = ""
     if (!$author) {
@@ -132,7 +132,7 @@ foreach($moniker in $monikers) {
     }
     # Add ability to override
     # Fetch the service readme name
-    $msService = GetDocsMsService -packageInfo $servicePackages[0] -serviceName $serviceName
+    $msService = GetDocsMsService -packageInfo $servicePackages[0] -serviceName $service
     generate-service-level-readme -docRepoLocation $DocRepoLocation -readmeBaseName $serviceReadmeBaseName -pathPrefix $ReadmeFolderRoot `
       -packageInfos $servicePackages -serviceName $service -moniker $moniker -author $author -msAuthor $msauthor -msService $msService
   }
