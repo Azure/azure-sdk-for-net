@@ -141,7 +141,7 @@ DeleteOption = DiskDeleteOptionType.Delete,
                     WindowsConfiguration = new WindowsConfiguration()
                     {
                         ProvisionVmAgent = true,
-                        EnableAutomaticUpdates = true,
+                        IsAutomaticUpdatesEnabled = true,
                         TimeZone = "aaaaaaaaaaaaaaaaaaaaaaaaaaa",
                         AdditionalUnattendContent =
 {

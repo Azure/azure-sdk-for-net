@@ -1254,7 +1254,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     WindowsConfiguration = new WindowsConfiguration()
                     {
                         ProvisionVmAgent = true,
-                        EnableAutomaticUpdates = true,
+                        IsAutomaticUpdatesEnabled = true,
                         PatchSettings = new PatchSettings()
                         {
                             AssessmentMode = WindowsPatchAssessmentMode.ImageDefault,
@@ -1339,7 +1339,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     WindowsConfiguration = new WindowsConfiguration()
                     {
                         ProvisionVmAgent = true,
-                        EnableAutomaticUpdates = true,
+                        IsAutomaticUpdatesEnabled = true,
                         PatchSettings = new PatchSettings()
                         {
                             PatchMode = WindowsVmGuestPatchMode.AutomaticByOS,
@@ -1424,7 +1424,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     WindowsConfiguration = new WindowsConfiguration()
                     {
                         ProvisionVmAgent = true,
-                        EnableAutomaticUpdates = true,
+                        IsAutomaticUpdatesEnabled = true,
                         PatchSettings = new PatchSettings()
                         {
                             PatchMode = WindowsVmGuestPatchMode.AutomaticByPlatform,
@@ -1511,7 +1511,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     WindowsConfiguration = new WindowsConfiguration()
                     {
                         ProvisionVmAgent = true,
-                        EnableAutomaticUpdates = true,
+                        IsAutomaticUpdatesEnabled = true,
                         PatchSettings = new PatchSettings()
                         {
                             PatchMode = WindowsVmGuestPatchMode.AutomaticByPlatform,
@@ -1597,7 +1597,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     WindowsConfiguration = new WindowsConfiguration()
                     {
                         ProvisionVmAgent = true,
-                        EnableAutomaticUpdates = true,
+                        IsAutomaticUpdatesEnabled = true,
                         PatchSettings = new PatchSettings()
                         {
                             PatchMode = WindowsVmGuestPatchMode.Manual,
@@ -1682,7 +1682,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     WindowsConfiguration = new WindowsConfiguration()
                     {
                         ProvisionVmAgent = true,
-                        EnableAutomaticUpdates = true,
+                        IsAutomaticUpdatesEnabled = true,
                         PatchSettings = new PatchSettings()
                         {
                             PatchMode = WindowsVmGuestPatchMode.AutomaticByPlatform,

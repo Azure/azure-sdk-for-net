@@ -237,6 +237,7 @@ rename-mapping:
   GalleryImageVersionSafetyProfile.reportedForPolicyViolation: IsReportedForPolicyViolation
   LinuxConfiguration.disablePasswordAuthentication: IsPasswordAuthenticationDisabled
   LinuxConfiguration.enableVMAgentPlatformUpdates: IsVMAgentPlatformUpdatesEnabled
+  WindowsConfiguration.enableAutomaticUpdates: IsAutomaticUpdatesEnabled
   WindowsConfiguration.enableVMAgentPlatformUpdates: IsVMAgentPlatformUpdatesEnabled
   PolicyViolation: GalleryImageVersionPolicyViolation
   PolicyViolationCategory: GalleryImageVersionPolicyViolationCategory

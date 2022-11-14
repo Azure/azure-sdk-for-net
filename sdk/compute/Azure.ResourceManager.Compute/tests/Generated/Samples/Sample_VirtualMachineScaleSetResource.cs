@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Compute
                         WindowsConfiguration = new WindowsConfiguration()
                         {
                             ProvisionVmAgent = true,
-                            EnableAutomaticUpdates = true,
+                            IsAutomaticUpdatesEnabled = true,
                             TimeZone = "aaaaaaaaaaaaaaaa",
                             AdditionalUnattendContent =
 {
