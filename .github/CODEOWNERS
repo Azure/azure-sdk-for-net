@@ -80,8 +80,9 @@
 #/<NotInRepo>/            @antcp @AzureAppServiceCLI
 
 # ServiceLabel: %Attestation %Service Attention
+# PRLabel: %Attestation
 /sdk/attestation/            @anilba06 @gkostal
-/sdk/attestation/azure-security-attestation                          @gkostal @Azure/azure-sdk-write-attestation @anilba06
+/sdk/attestation/azure-security-attestation                          @gkostal @Azure/azure-sdk-write-attestation @anilba06 @joseharriaga
 
 # ServiceLabel: %Authorization %Service Attention
 /sdk/authorization/Microsoft.Azure.Management.Authorization/            @darshanhs90 @AshishGargMicrosoft
@@ -163,7 +164,7 @@
 #/<NotInRepo>/            @swmachan
 
 # PRLabel: %Cognitive - Translator
-/sdk/translation/                @mshaban-msft
+/sdk/translation/               @joseharriaga @mshaban-msft
 
 # ServiceLabel: %Cognitive - Speech %Service Attention
 #/<NotInRepo>/            @robch @oscholz
@@ -175,7 +176,8 @@
 #/<NotInRepo>/            @swiftarrow11
 
 # ServiceLabel: %Cognitive - Personalizer %Service Attention
-/sdk/cognitiveservices/Personalizer/           @dwaijam
+# PRLabel: %Cognitive - Personalizer
+/sdk/cognitiveservices/Personalizer/           @annelo-msft
 
 # ServiceLabel: %Cognitive - Immersive Reader %Service Attention
 #/<NotInRepo>/            @metanMSFT
@@ -425,6 +427,10 @@ sdk/loadtestservice/            @abranj1219 @ninallam @NiveditJain @christothes
 # ServiceLabel: %Machine Learning Experimentation %Service Attention
 #/<NotInRepo>/            @aashishb
 
+
+# PRLabel: %Maps
+/sdk/maps/                                 @jsquire
+
 # ServiceLabel: %Managed Services %Service Attention
 /sdk/managedservices/Microsoft.Azure.Management.ManagedServices/            @Lighthouse-Azure
 
@@ -564,7 +570,8 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 /sdk/postgresql/Microsoft.Azure.Management.PostgreSQL/            @sunilagarwal @lfittl-msft @sr-msft @niklarin
 
 # ServiceLabel: %Quantum %Service Attention
-/sdk/quantum/Azure.Quantum.Jobs/           @xfield
+# PRLabel: %Quantum
+/sdk/quantum/Azure.Quantum.Jobs/           @xfield @joseharriaga @tg-msft
 
 # ServiceLabel: %Recovery Services Backup %Service Attention
 /sdk/recoveryservices-backup/Microsoft.Azure.Management.RecoveryServices.Backup/           @pvrk @Daya-Patil
@@ -580,6 +587,9 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 
 # ServiceLabel: %Reservations %Service Attention
 /sdk/reservations/Microsoft.Azure.Management.Reservations/            @corquiri
+
+# PRLabel: %Mixed Reality
+/sdk/remoterendering/                                 @crtreasu @rgarcia @JoshLove-msft
 
 # ServiceLabel: %Resource Authorization %Service Attention
 #/<NotInRepo>/            @darshanhs90 @AshishGargMicrosoft
@@ -701,7 +711,7 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 /sdk/webpubsub/  @vicancy @JialinXin @pallavit @KrzysztofCwalina
 
 # PRLabel: %WebPubSub %Functions
-/sdk/webpubsub/Microsoft.Azure.WebJobs.Extensions.WebPubSub/  @vicancy
+/sdk/webpubsub/Microsoft.Azure.WebJobs.Extensions.WebPubSub/  @vicancy @jsquire
 
 # ServiceLabel: %WebPubSub %Service Attention
 /sdk/webpubsub/  @vicancy @JialinXin
