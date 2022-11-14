@@ -280,7 +280,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             var eventData = new TelemetryEventData(Version, eventName);
             foreach (var tag in activityEventTags)
             {
-                eventData.Properties.Add(tag.Key, tag.Value.ToString());
+                if (double.TryParse(tag.Value.ToString(), out var value))
+                {
+                    eventData.Measurements.Add(tag.Key, value);
+                }
+                else
+                {
+                    eventData.Properties.Add(tag.Key, tag.Value.ToString());
+                }
             }
 
             return new MonitorBase
