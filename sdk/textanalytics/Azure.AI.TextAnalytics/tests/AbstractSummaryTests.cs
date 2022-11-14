@@ -245,7 +245,7 @@ namespace Azure.AI.TextAnalytics.Tests
                     Assert.AreEqual(0, result.Statistics.TransactionCount);
                 }
 
-                Assert.IsNotNull(result.Summaries.Warnings);
+                Assert.IsNotNull(result.Warnings);
                 Assert.Greater(result.Summaries.Count, 0);
 
                 foreach (AbstractiveSummary summary in result.Summaries)

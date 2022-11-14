@@ -504,15 +504,8 @@ namespace Azure.AI.TextAnalytics
 
         #region Abstract Summary
 
-        internal static List<AbstractiveSummary> ConvertToSummaryList(List<AbstractiveSummaryInternal> summaries)
+        internal static List<AbstractiveSummary> ConvertToSummaryList(IEnumerable<AbstractiveSummaryInternal> summaries)
             => summaries.Select((summary) => new AbstractiveSummary(summary)).ToList();
-
-        internal static SummaryCollection ConvertToSummaryCollection(AbstractiveSummarizationResultBaseDocumentsItem document)
-        {
-            return new SummaryCollection(
-                ConvertToSummaryList(document.Summaries.ToList()),
-                ConvertToWarnings(document.Warnings));
-        }
 
         internal static AbstractSummaryResultCollection ConvertToAbstractSummaryResultCollection(
             AbstractiveSummarizationResult results,
@@ -532,10 +525,11 @@ namespace Azure.AI.TextAnalytics
                 abstractSummaryResults.Add(new AbstractSummaryResult(
                     document.Id,
                     document.Statistics ?? default,
-                    ConvertToSummaryCollection(document)));
+                    ConvertToSummaryList(document.Summaries),
+                    ConvertToWarnings(document.Warnings)));
             }
 
-            abstractSummaryResults = abstractSummaryResults.OrderBy(result => idToIndexMap[result.Id]).ToList();
+            abstractSummaryResults = SortHeterogeneousCollection(abstractSummaryResults, idToIndexMap);
 
             return new AbstractSummaryResultCollection(abstractSummaryResults, results.Statistics, results.ModelVersion);
         }

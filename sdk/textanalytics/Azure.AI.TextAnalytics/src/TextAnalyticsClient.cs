@@ -2299,7 +2299,7 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="ArgumentNullException"><paramref name="documents"/> is null.</exception>
         public virtual AbstractSummaryOperation StartAbstractSummary(
             IEnumerable<TextDocumentInput> documents,
-            AbstractSummaryOptions options,
+            AbstractSummaryOptions options = default,
             CancellationToken cancellationToken = default)
         {
             options?.CheckSupported(ServiceVersion);
