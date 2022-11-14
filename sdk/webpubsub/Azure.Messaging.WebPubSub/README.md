@@ -101,6 +101,33 @@ Stream stream = BinaryData.FromString("Hello World!").ToStream();
 serviceClient.SendToAll(RequestContent.Create(stream), ContentType.ApplicationOctetStream);
 ```
 
+### Broadcast messages to clients using filter
+Azure Web PubSub supports OData filter syntax to filter out the connections to send messages to.
+
+Details about `filter` syntax please see [OData filter syntax for Azure Web PubSub](https://aka.ms/awps/filter-syntax).
+
+```C# Snippet:WebPubSubSendWithFilter
+var serviceClient = new WebPubSubServiceClient(connectionString, "some_hub");
+
+// Use filter to send text message to anonymous connections
+serviceClient.SendToAll(
+        RequestContent.Create("Hello World!"),
+        ContentType.TextPlain,
+        filter: SearchFilter.Create($"userId eq {null}"));
+
+// Use filter to send JSON message to connections in groupA but not in groupB
+var group1 = "GroupA";
+var group2 = "GroupB";
+serviceClient.SendToAll(RequestContent.Create(
+        new
+        {
+            Foo = "Hello World!",
+            Bar = 42
+        }),
+        ContentType.ApplicationJson,
+        filter: SearchFilter.Create($"{group1} in groups and not({group2} in groups)"));
+```
+
 ## Troubleshooting
 
 ### Setting up console logging
