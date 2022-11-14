@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
 using Azure.AI.FormRecognizer.Training;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 
 namespace Azure.AI.FormRecognizer.Samples
 {

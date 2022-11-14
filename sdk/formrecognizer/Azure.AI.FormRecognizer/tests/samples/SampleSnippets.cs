@@ -4,6 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 {

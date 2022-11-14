@@ -8,7 +8,10 @@ namespace Azure.AI.FormRecognizer.Samples
 {
     [LiveOnly]
     [IgnoreServiceError(200, "3014", Message = "Generic error during training.", Reason = "https://github.com/Azure/azure-sdk-for-net/issues/28913")]
-    public partial class FormRecognizerSamples : SamplesBase<FormRecognizerTestEnvironment>
+    public partial class FormRecognizerSamples : RecordedTestBase<FormRecognizerTestEnvironment>
     {
+        public FormRecognizerSamples(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        {
+        }
     }
 }
