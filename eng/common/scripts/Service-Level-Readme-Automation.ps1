@@ -43,7 +43,7 @@ param(
   [string]$ReadmeFolderRoot = "docs-ref-services"
 )
 . $PSScriptRoot/common.ps1
-. $PSScriptRoot/Service-Level-Readme-Automation-Functions.ps1
+. $PSScriptRoot/Helpers/Service-Level-Readme-Automation-Helpers.ps1
 . $PSScriptRoot/Helpers/Metadata-Helpers.ps1
 . $PSScriptRoot/Helpers/Package-Helpers.ps1
 
