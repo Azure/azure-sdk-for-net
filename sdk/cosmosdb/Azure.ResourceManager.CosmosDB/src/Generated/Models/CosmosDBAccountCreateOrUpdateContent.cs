@@ -22,10 +22,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="locations"/> is null. </exception>
         public CosmosDBAccountCreateOrUpdateContent(AzureLocation location, IEnumerable<CosmosDBAccountLocation> locations) : base(location)
         {
-            if (locations == null)
-            {
-                throw new ArgumentNullException(nameof(locations));
-            }
+            Argument.AssertNotNull(locations, nameof(locations));
 
             Locations = locations.ToList();
             DatabaseAccountOfferType = CosmosDBAccountOfferType.Standard;

@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Batch
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                allowedAuthenticationModes = null;
                                 continue;
                             }
                             List<BatchAuthenticationMode> array = new List<BatchAuthenticationMode>();

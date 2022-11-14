@@ -35,6 +35,8 @@ namespace Azure.ResourceManager.StorageSync
         protected CloudEndpointResource() { }
         public virtual Azure.ResourceManager.StorageSync.CloudEndpointData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.StorageSync.Models.CloudEndpointAfsShareMetadataCertificatePublicKeys> AfsShareMetadataCertificatePublicKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageSync.Models.CloudEndpointAfsShareMetadataCertificatePublicKeys>> AfsShareMetadataCertificatePublicKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -380,6 +382,12 @@ namespace Azure.ResourceManager.StorageSync.Models
         public static bool operator !=(Azure.ResourceManager.StorageSync.Models.ChangeDetectionMode left, Azure.ResourceManager.StorageSync.Models.ChangeDetectionMode right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class CloudEndpointAfsShareMetadataCertificatePublicKeys
+    {
+        internal CloudEndpointAfsShareMetadataCertificatePublicKeys() { }
+        public string FirstKey { get { throw null; } }
+        public string SecondKey { get { throw null; } }
+    }
     public partial class CloudEndpointBackupContent
     {
         public CloudEndpointBackupContent() { }
@@ -488,6 +496,30 @@ namespace Azure.ResourceManager.StorageSync.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.StorageSync.Models.FilesNotTieringError> Errors { get { throw null; } }
         public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
         public long? TotalFileCount { get { throw null; } }
+    }
+    public partial class CloudTieringLowDiskMode
+    {
+        internal CloudTieringLowDiskMode() { }
+        public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
+        public Azure.ResourceManager.StorageSync.Models.CloudTieringLowDiskModeState? State { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CloudTieringLowDiskModeState : System.IEquatable<Azure.ResourceManager.StorageSync.Models.CloudTieringLowDiskModeState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CloudTieringLowDiskModeState(string value) { throw null; }
+        public static Azure.ResourceManager.StorageSync.Models.CloudTieringLowDiskModeState Disabled { get { throw null; } }
+        public static Azure.ResourceManager.StorageSync.Models.CloudTieringLowDiskModeState Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.StorageSync.Models.CloudTieringLowDiskModeState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.StorageSync.Models.CloudTieringLowDiskModeState left, Azure.ResourceManager.StorageSync.Models.CloudTieringLowDiskModeState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.StorageSync.Models.CloudTieringLowDiskModeState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.StorageSync.Models.CloudTieringLowDiskModeState left, Azure.ResourceManager.StorageSync.Models.CloudTieringLowDiskModeState right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class CloudTieringSpaceSavings
     {
@@ -661,6 +693,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         public int? LastCloudTieringResult { get { throw null; } }
         public System.DateTimeOffset? LastSuccessTimestamp { get { throw null; } }
         public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
+        public Azure.ResourceManager.StorageSync.Models.CloudTieringLowDiskMode LowDiskMode { get { throw null; } }
         public Azure.ResourceManager.StorageSync.Models.CloudTieringSpaceSavings SpaceSavings { get { throw null; } }
         public Azure.ResourceManager.StorageSync.Models.CloudTieringVolumeFreeSpacePolicyStatus VolumeFreeSpacePolicyStatus { get { throw null; } }
     }

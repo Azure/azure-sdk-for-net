@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
             Optional<string> activityId = default;
-            string jobType = default;
+            string jobType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("entityFriendlyName"))

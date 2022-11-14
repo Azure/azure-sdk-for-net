@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("targetPort");
                 writer.WriteNumberValue(TargetPort.Value);
             }
+            if (Optional.IsDefined(ExposedPort))
+            {
+                writer.WritePropertyName("exposedPort");
+                writer.WriteNumberValue(ExposedPort.Value);
+            }
             if (Optional.IsDefined(Transport))
             {
                 writer.WritePropertyName("transport");
@@ -56,6 +61,16 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("allowInsecure");
                 writer.WriteBooleanValue(AllowInsecure.Value);
             }
+            if (Optional.IsCollectionDefined(IPSecurityRestrictions))
+            {
+                writer.WritePropertyName("ipSecurityRestrictions");
+                writer.WriteStartArray();
+                foreach (var item in IPSecurityRestrictions)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
         }
 
@@ -64,10 +79,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<string> fqdn = default;
             Optional<bool> external = default;
             Optional<int> targetPort = default;
+            Optional<int> exposedPort = default;
             Optional<IngressTransportMethod> transport = default;
             Optional<IList<TrafficWeight>> traffic = default;
             Optional<IList<CustomDomain>> customDomains = default;
             Optional<bool> allowInsecure = default;
+            Optional<IList<IPSecurityRestrictionRule>> ipSecurityRestrictions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fqdn"))
@@ -93,6 +110,16 @@ namespace Azure.ResourceManager.AppContainers.Models
                         continue;
                     }
                     targetPort = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("exposedPort"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    exposedPort = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("transport"))
@@ -145,8 +172,23 @@ namespace Azure.ResourceManager.AppContainers.Models
                     allowInsecure = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("ipSecurityRestrictions"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<IPSecurityRestrictionRule> array = new List<IPSecurityRestrictionRule>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(IPSecurityRestrictionRule.DeserializeIPSecurityRestrictionRule(item));
+                    }
+                    ipSecurityRestrictions = array;
+                    continue;
+                }
             }
-            return new IngressProvider(fqdn.Value, Optional.ToNullable(external), Optional.ToNullable(targetPort), Optional.ToNullable(transport), Optional.ToList(traffic), Optional.ToList(customDomains), Optional.ToNullable(allowInsecure));
+            return new IngressProvider(fqdn.Value, Optional.ToNullable(external), Optional.ToNullable(targetPort), Optional.ToNullable(exposedPort), Optional.ToNullable(transport), Optional.ToList(traffic), Optional.ToList(customDomains), Optional.ToNullable(allowInsecure), Optional.ToList(ipSecurityRestrictions));
         }
     }
 }

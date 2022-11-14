@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppUri"/> is null. </exception>
         public AzureFunctionLinkedService(BinaryData functionAppUri)
         {
-            if (functionAppUri == null)
-            {
-                throw new ArgumentNullException(nameof(functionAppUri));
-            }
+            Argument.AssertNotNull(functionAppUri, nameof(functionAppUri));
 
             FunctionAppUri = functionAppUri;
             LinkedServiceType = "AzureFunction";

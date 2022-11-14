@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             Optional<string> backupManagementType = default;
             Optional<string> workloadType = default;
-            string protectableItemType = default;
+            string protectableItemType = "Unknown";
             Optional<string> friendlyName = default;
             Optional<ProtectionStatus> protectionState = default;
             foreach (var property in element.EnumerateObject())

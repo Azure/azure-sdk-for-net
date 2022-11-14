@@ -86,10 +86,15 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
+- [Register the client with dependency injection](#register-the-client-with-dependency-injection)
 - [Upload custom logs](#upload-custom-logs)
 - [Verify logs](#verify-logs)
 
 You can familiarize yourself with different APIs using [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/monitor/Azure.Monitor.Ingestion/samples).
+
+### Register the client with dependency injection
+
+To register `LogsIngestionClient` with the dependency injection (DI) container, invoke the `AddLogsIngestionClient` method. For more information, see [Register client](https://learn.microsoft.com/dotnet/azure/sdk/dependency-injection#register-client).
 
 ### Upload custom logs
 

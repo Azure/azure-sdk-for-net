@@ -22,18 +22,9 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <exception cref="ArgumentNullException"> <paramref name="nodeSku"/>, <paramref name="osImage"/> or <paramref name="osDisk"/> is null. </exception>
         public SearchProfile(string nodeSku, OSImageProfile osImage, DiskInfo osDisk, SearchType searchType) : base(nodeSku, osImage, osDisk)
         {
-            if (nodeSku == null)
-            {
-                throw new ArgumentNullException(nameof(nodeSku));
-            }
-            if (osImage == null)
-            {
-                throw new ArgumentNullException(nameof(osImage));
-            }
-            if (osDisk == null)
-            {
-                throw new ArgumentNullException(nameof(osDisk));
-            }
+            Argument.AssertNotNull(nodeSku, nameof(nodeSku));
+            Argument.AssertNotNull(osImage, nameof(osImage));
+            Argument.AssertNotNull(osDisk, nameof(osDisk));
 
             SearchType = searchType;
         }

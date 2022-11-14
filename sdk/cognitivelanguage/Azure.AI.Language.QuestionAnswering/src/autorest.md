@@ -59,15 +59,6 @@ directive:
     $["summary"] = "Add Active Learning feedback";
 
 # Define HTTP 200 responses for LROs to document result model.
-- where-operation: QuestionAnsweringProjects_DeleteProject
-  transform: |
-    $.responses["200"] = {
-      description: "Project delete job status.",
-      schema: {
-        "$ref": "#/definitions/JobState"
-      }
-    };
-
 - where-operation: QuestionAnsweringProjects_DeployProject
   transform: |
     $.responses["200"] = {

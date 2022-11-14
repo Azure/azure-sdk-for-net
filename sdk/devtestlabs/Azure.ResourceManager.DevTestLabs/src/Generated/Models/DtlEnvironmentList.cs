@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of DtlEnvironmentList. </summary>
         internal DtlEnvironmentList()
         {
-            Value = new ChangeTrackingList<DtlEnvironmentData>();
+            Value = new ChangeTrackingList<DevTestLabEnvironmentData>();
         }
 
         /// <summary> Initializes a new instance of DtlEnvironmentList. </summary>
         /// <param name="value"> Results of the list operation. </param>
         /// <param name="nextLink"> Link for next set of results. </param>
-        internal DtlEnvironmentList(IReadOnlyList<DtlEnvironmentData> value, string nextLink)
+        internal DtlEnvironmentList(IReadOnlyList<DevTestLabEnvironmentData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Results of the list operation. </summary>
-        public IReadOnlyList<DtlEnvironmentData> Value { get; }
+        public IReadOnlyList<DevTestLabEnvironmentData> Value { get; }
         /// <summary> Link for next set of results. </summary>
         public string NextLink { get; }
     }

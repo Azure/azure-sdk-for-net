@@ -1,0 +1,40 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://atlas.microsoft.com/geolocation/ip/json?api-version=1.0\u0026ip=2001%3A4898%3A80e8%3Ab%3A%3A189",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-27cbfd2aaed06d31da11606f5d35de92-0aacf1bad9a41498-00",
+        "User-Agent": "azsdk-net-Maps.Geolocation/1.0.0-alpha.20221010.1 (.NET 6.0.9; Microsoft Windows 10.0.22621)",
+        "x-ms-client-id": "af2448e6-f867-486e-b7ae-2d463a73b282",
+        "x-ms-client-request-id": "6ecb2ad0531eb3327c3dfa64847f29e0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "70",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 10 Oct 2022 07:12:05 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-azuremaps-region": "West US 2",
+        "X-MSEdge-Ref": "Ref A: 885798BB040F4AF0A52E8D556AD4F566 Ref B: TPE30EDGE0908 Ref C: 2022-10-10T07:12:05Z"
+      },
+      "ResponseBody": {
+        "countryRegion": {
+          "isoCode": "US"
+        },
+        "ipAddress": "2001:4898:80e8:b::189"
+      }
+    }
+  ],
+  "Variables": {
+    "AZMAPS_CLIENT_ID": "af2448e6-f867-486e-b7ae-2d463a73b282",
+    "AZURE_AUTHORITY_HOST": null,
+    "RandomSeed": "1778256016"
+  }
+}

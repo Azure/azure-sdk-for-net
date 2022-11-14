@@ -86,9 +86,9 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<SystemData> systemData = default;
             Optional<string> hierarchyIdentifier = default;
             Optional<DateTimeOffset> hierarchyIdentifierTrialEndDate = default;
-            Optional<CloudName> environmentName = default;
-            Optional<IList<CloudOffering>> offerings = default;
-            Optional<EnvironmentData> environmentData = default;
+            Optional<SecurityCenterCloudName> environmentName = default;
+            Optional<IList<SecurityCenterCloudOffering>> offerings = default;
+            Optional<SecurityConnectorEnvironment> environmentData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.SecurityCenter
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            environmentName = new CloudName(property0.Value.GetString());
+                            environmentName = new SecurityCenterCloudName(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("offerings"))
@@ -192,10 +192,10 @@ namespace Azure.ResourceManager.SecurityCenter
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<CloudOffering> array = new List<CloudOffering>();
+                            List<SecurityCenterCloudOffering> array = new List<SecurityCenterCloudOffering>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CloudOffering.DeserializeCloudOffering(item));
+                                array.Add(SecurityCenterCloudOffering.DeserializeSecurityCenterCloudOffering(item));
                             }
                             offerings = array;
                             continue;
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.SecurityCenter
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            environmentData = EnvironmentData.DeserializeEnvironmentData(property0.Value);
+                            environmentData = SecurityConnectorEnvironment.DeserializeSecurityConnectorEnvironment(property0.Value);
                             continue;
                         }
                     }

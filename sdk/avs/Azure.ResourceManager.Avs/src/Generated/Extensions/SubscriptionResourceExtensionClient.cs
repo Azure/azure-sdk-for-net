@@ -54,14 +54,15 @@ namespace Azure.ResourceManager.Avs
         /// Operation Id: Locations_CheckTrialAvailability
         /// </summary>
         /// <param name="location"> Azure region. </param>
+        /// <param name="sku"> The sku to check for trial availability. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AvsSubscriptionTrialAvailabilityResult>> CheckAvsTrialAvailabilityAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AvsSubscriptionTrialAvailabilityResult>> CheckAvsTrialAvailabilityAsync(AzureLocation location, AvsSku sku = null, CancellationToken cancellationToken = default)
         {
             using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckAvsTrialAvailability");
             scope.Start();
             try
             {
-                var response = await LocationsRestClient.CheckTrialAvailabilityAsync(Id.SubscriptionId, location, cancellationToken).ConfigureAwait(false);
+                var response = await LocationsRestClient.CheckTrialAvailabilityAsync(Id.SubscriptionId, location, sku, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -77,14 +78,15 @@ namespace Azure.ResourceManager.Avs
         /// Operation Id: Locations_CheckTrialAvailability
         /// </summary>
         /// <param name="location"> Azure region. </param>
+        /// <param name="sku"> The sku to check for trial availability. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AvsSubscriptionTrialAvailabilityResult> CheckAvsTrialAvailability(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual Response<AvsSubscriptionTrialAvailabilityResult> CheckAvsTrialAvailability(AzureLocation location, AvsSku sku = null, CancellationToken cancellationToken = default)
         {
             using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckAvsTrialAvailability");
             scope.Start();
             try
             {
-                var response = LocationsRestClient.CheckTrialAvailability(Id.SubscriptionId, location, cancellationToken);
+                var response = LocationsRestClient.CheckTrialAvailability(Id.SubscriptionId, location, sku, cancellationToken);
                 return response;
             }
             catch (Exception e)

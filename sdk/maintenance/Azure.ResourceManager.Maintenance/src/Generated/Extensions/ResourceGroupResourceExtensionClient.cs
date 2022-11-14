@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.Maintenance
     {
         private ClientDiagnostics _applyUpdateClientDiagnostics;
         private ApplyUpdatesRestOperations _applyUpdateRestClient;
-        private ClientDiagnostics _applyUpdateApplyUpdateForResourceGroupClientDiagnostics;
-        private ApplyUpdateForResourceGroupRestOperations _applyUpdateApplyUpdateForResourceGroupRestClient;
+        private ClientDiagnostics _applyUpdateForResourceGroupClientDiagnostics;
+        private ApplyUpdateForResourceGroupRestOperations _applyUpdateForResourceGroupRestClient;
         private ClientDiagnostics _updatesClientDiagnostics;
         private UpdatesRestOperations _updatesRestClient;
 
@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.Maintenance
 
         private ClientDiagnostics ApplyUpdateClientDiagnostics => _applyUpdateClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance", ApplyUpdateResource.ResourceType.Namespace, Diagnostics);
         private ApplyUpdatesRestOperations ApplyUpdateRestClient => _applyUpdateRestClient ??= new ApplyUpdatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ApplyUpdateResource.ResourceType));
-        private ClientDiagnostics ApplyUpdateApplyUpdateForResourceGroupClientDiagnostics => _applyUpdateApplyUpdateForResourceGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance", ApplyUpdateResource.ResourceType.Namespace, Diagnostics);
-        private ApplyUpdateForResourceGroupRestOperations ApplyUpdateApplyUpdateForResourceGroupRestClient => _applyUpdateApplyUpdateForResourceGroupRestClient ??= new ApplyUpdateForResourceGroupRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ApplyUpdateResource.ResourceType));
+        private ClientDiagnostics ApplyUpdateForResourceGroupClientDiagnostics => _applyUpdateForResourceGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ApplyUpdateForResourceGroupRestOperations ApplyUpdateForResourceGroupRestClient => _applyUpdateForResourceGroupRestClient ??= new ApplyUpdateForResourceGroupRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics UpdatesClientDiagnostics => _updatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private UpdatesRestOperations UpdatesRestClient => _updatesRestClient ??= new UpdatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
@@ -193,11 +193,11 @@ namespace Azure.ResourceManager.Maintenance
         {
             async Task<Page<ApplyUpdateResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ApplyUpdateApplyUpdateForResourceGroupClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetApplyUpdates");
+                using var scope = ApplyUpdateForResourceGroupClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetApplyUpdates");
                 scope.Start();
                 try
                 {
-                    var response = await ApplyUpdateApplyUpdateForResourceGroupRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await ApplyUpdateForResourceGroupRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ApplyUpdateResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -220,11 +220,11 @@ namespace Azure.ResourceManager.Maintenance
         {
             Page<ApplyUpdateResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ApplyUpdateApplyUpdateForResourceGroupClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetApplyUpdates");
+                using var scope = ApplyUpdateForResourceGroupClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetApplyUpdates");
                 scope.Start();
                 try
                 {
-                    var response = ApplyUpdateApplyUpdateForResourceGroupRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = ApplyUpdateForResourceGroupRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ApplyUpdateResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)

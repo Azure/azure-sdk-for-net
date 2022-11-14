@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -18,16 +19,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="id"> Resource ID of the virtual machine that is linked to this policy. </param>
         /// <param name="ports"> Port configurations for the virtual machine. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="ports"/> is null. </exception>
-        public JitNetworkAccessPolicyVirtualMachine(string id, IEnumerable<JitNetworkAccessPortRule> ports)
+        public JitNetworkAccessPolicyVirtualMachine(ResourceIdentifier id, IEnumerable<JitNetworkAccessPortRule> ports)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (ports == null)
-            {
-                throw new ArgumentNullException(nameof(ports));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(ports, nameof(ports));
 
             Id = id;
             Ports = ports.ToList();
@@ -37,7 +32,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="id"> Resource ID of the virtual machine that is linked to this policy. </param>
         /// <param name="ports"> Port configurations for the virtual machine. </param>
         /// <param name="publicIPAddress"> Public IP address of the Azure Firewall that is linked to this policy, if applicable. </param>
-        internal JitNetworkAccessPolicyVirtualMachine(string id, IList<JitNetworkAccessPortRule> ports, string publicIPAddress)
+        internal JitNetworkAccessPolicyVirtualMachine(ResourceIdentifier id, IList<JitNetworkAccessPortRule> ports, string publicIPAddress)
         {
             Id = id;
             Ports = ports;
@@ -45,7 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Resource ID of the virtual machine that is linked to this policy. </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
         /// <summary> Port configurations for the virtual machine. </summary>
         public IList<JitNetworkAccessPortRule> Ports { get; }
         /// <summary> Public IP address of the Azure Firewall that is linked to this policy, if applicable. </summary>

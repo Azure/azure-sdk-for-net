@@ -7,7 +7,7 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The TransferCallResponse. </summary>
+    /// <summary> The response payload for transferring the call. </summary>
     public partial class TransferCallToParticipantResult
     {
         /// <summary> Initializes a new instance of TransferCallToParticipantResult. </summary>

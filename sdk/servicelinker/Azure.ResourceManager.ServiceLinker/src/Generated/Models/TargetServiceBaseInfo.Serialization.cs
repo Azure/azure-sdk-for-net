@@ -31,16 +31,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     case "ConfluentSchemaRegistry": return ConfluentSchemaRegistryInfo.DeserializeConfluentSchemaRegistryInfo(element);
                 }
             }
-            TargetServiceType type = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = new TargetServiceType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownTargetServiceBaseInfo(type);
+            return UnknownTargetServiceBase.DeserializeUnknownTargetServiceBase(element);
         }
     }
 }

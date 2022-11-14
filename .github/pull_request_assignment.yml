@@ -12,7 +12,7 @@
 - rule:
     # track 2 management
     paths:
-      - "sdk/**/Azure.ResourceManger*/**"
+      - "sdk/**/Azure.ResourceManager*/**"
     reviewers:
       - m-nash
       - fengzhou-msft
