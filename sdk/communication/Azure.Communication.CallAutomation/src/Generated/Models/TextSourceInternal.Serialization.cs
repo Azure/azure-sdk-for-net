@@ -17,45 +17,25 @@ namespace Azure.Communication.CallAutomation.Models
             writer.WriteStartObject();
             writer.WritePropertyName("text");
             writer.WriteStringValue(Text);
-            if (Optional.IsCollectionDefined(SourceLocale))
+            if (Optional.IsDefined(SourceLocale))
             {
                 writer.WritePropertyName("sourceLocale");
-                writer.WriteStartArray();
-                foreach (var item in SourceLocale)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WriteStringValue(SourceLocale);
             }
-            if (Optional.IsCollectionDefined(TargetLocale))
+            if (Optional.IsDefined(TargetLocale))
             {
                 writer.WritePropertyName("targetLocale");
-                writer.WriteStartArray();
-                foreach (var item in TargetLocale)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WriteStringValue(TargetLocale);
             }
-            if (Optional.IsCollectionDefined(Gender))
+            if (Optional.IsDefined(VoiceGender))
             {
-                writer.WritePropertyName("gender");
-                writer.WriteStartArray();
-                foreach (var item in Gender)
-                {
-                    writer.WriteStringValue(item.ToString());
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("voiceGender");
+                writer.WriteStringValue(VoiceGender.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(VoiceName))
+            if (Optional.IsDefined(VoiceName))
             {
                 writer.WritePropertyName("voiceName");
-                writer.WriteStartArray();
-                foreach (var item in VoiceName)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WriteStringValue(VoiceName);
             }
             writer.WriteEndObject();
         }

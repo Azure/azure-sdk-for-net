@@ -10,7 +10,7 @@ tag: package-2023-01-15-preview
 model-namespace: false
 
 input-file:
-  - ./swagger-v4.json
+  - ./swagger-v4-new.json
 title: Azure Communication Services
 
 generation1-convenience-client: true

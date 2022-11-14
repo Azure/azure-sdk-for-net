@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
+using Azure.Communication.CallAutomation;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation.Models
@@ -22,21 +22,17 @@ namespace Azure.Communication.CallAutomation.Models
             Argument.AssertNotNull(text, nameof(text));
 
             Text = text;
-            SourceLocale = new ChangeTrackingList<string>();
-            TargetLocale = new ChangeTrackingList<string>();
-            Gender = new ChangeTrackingList<GenderType>();
-            VoiceName = new ChangeTrackingList<string>();
         }
 
         /// <summary> Text for the cognitive service to be played. </summary>
         public string Text { get; }
         /// <summary> Source language locale to be played. </summary>
-        public IList<string> SourceLocale { get; }
+        public string SourceLocale { get; set; }
         /// <summary> Target language locale to be played. </summary>
-        public IList<string> TargetLocale { get; }
+        public string TargetLocale { get; set; }
         /// <summary> Voice gender type. </summary>
-        public IList<GenderType> Gender { get; }
-        /// <summary> Voice names to be played. </summary>
-        public IList<string> VoiceName { get; }
+        public GenderType? VoiceGender { get; set; }
+        /// <summary> Voice name to be played. </summary>
+        public string VoiceName { get; set; }
     }
 }

@@ -8,9 +8,9 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Communication.CallAutomation.Models
+namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The Gender. </summary>
+    /// <summary> Voice gender type. </summary>
     public readonly partial struct GenderType : IEquatable<GenderType>
     {
         private readonly string _value;
