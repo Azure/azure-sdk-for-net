@@ -10,7 +10,7 @@ using Azure.Core;
 namespace Azure.Messaging.WebPubSub.Clients
 {
     /// <summary>
-    /// The set of options that can be specified when creating <see cref="WebPubSubClient"/> instance.
+    /// The set of options that can be specified when creating a <see cref="WebPubSubClient"/> instance.
     /// </summary>
     public class WebPubSubClientOptions
     {
@@ -20,22 +20,26 @@ namespace Azure.Messaging.WebPubSub.Clients
         public WebPubSubProtocol Protocol { get; set; } = new WebPubSubJsonReliableProtocol();
 
         /// <summary>
-        /// Get or set whether to auto reconnect
+        /// Get or set whether to auto reconnect. If enabled, the client tries to reconnect after connection drop and unrecovered.
         /// </summary>
         public bool AutoReconnect { get; set; } = true;
 
         /// <summary>
-        /// Get or set whether to auto restore groups after reconnecting
+        /// Get or set whether to auto rejoin groups after reconnecting. Groups that have joined by client will be rejoined after reconnection
         /// </summary>
-        public bool AutoRestoreGroups { get; set; } = true;
+        public bool AutoRejoinGroups { get; set; } = true;
 
         /// <summary>
-        /// Get or set the retry options for operations like joining group and sending messages
+        /// Get or set the retry options for message-related client operations, including
+        /// <see cref="WebPubSubClient.JoinGroupAsync(string, ulong?, System.Threading.CancellationToken)"/>,
+        /// <see cref="WebPubSubClient.LeaveGroupAsync(string, ulong?, System.Threading.CancellationToken)"/>,
+        /// <see cref="WebPubSubClient.SendToGroupAsync(string, BinaryData, WebPubSubDataType, ulong?, bool, bool, System.Threading.CancellationToken)"/>,
+        /// <see cref="WebPubSubClient.SendEventAsync(string, BinaryData, WebPubSubDataType, ulong?, bool, System.Threading.CancellationToken)"/>.
         /// </summary>
         public RetryOptions MessageRetryOptions { get; }
 
         /// <summary>
-        /// Get or set the retry options for reconnecting
+        /// Get or set the retry options for client connection management.
         /// </summary>
         internal RetryOptions ReconnectRetryOptions { get; }
 

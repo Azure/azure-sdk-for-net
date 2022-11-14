@@ -33,12 +33,20 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
 #endregion
         }
 
+        public async ValueTask<Uri> FetchClientAccessTokenFromServerAsync(CancellationToken token)
+        {
+#region Snippet:WebPubSubClient_GenerateClientAccessUri
+            var serviceClient = new WebPubSubServiceClient("<< Connection String >>", "hub");
+            return await serviceClient.GetClientAccessUriAsync();
+#endregion
+        }
+
         public void WebPubSubClientSubscribeConnected(WebPubSubClient client)
         {
 #region Snippet:WebPubSubClient_Subscribe_Connected
-            client.Connected += e =>
+            client.Connected += eventArgs =>
             {
-                Console.WriteLine($"Connection {e.ConnectionId} is connected");
+                Console.WriteLine($"Connection {eventArgs.ConnectionId} is connected");
                 return Task.CompletedTask;
             };
 #endregion
@@ -47,7 +55,7 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
         public void WebPubSubClientSubscribeDisconnected(WebPubSubClient client)
         {
 #region Snippet:WebPubSubClient_Subscribe_Disconnected
-            client.Disconnected += e =>
+            client.Disconnected += eventArgs =>
             {
                 Console.WriteLine($"Connection is disconnected");
                 return Task.CompletedTask;
@@ -58,7 +66,7 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
         public void WebPubSubClientSubscribeStopped(WebPubSubClient client)
         {
 #region Snippet:WebPubSubClient_Subscribe_Stopped
-            client.Stopped += e =>
+            client.Stopped += eventArgs =>
             {
                 Console.WriteLine($"Client is stopped");
                 return Task.CompletedTask;
@@ -69,9 +77,9 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
         public void WebPubSubClientSubscribeServerMessage(WebPubSubClient client)
         {
 #region Snippet:WebPubSubClient_Subscribe_ServerMessage
-            client.ServerMessageReceived += e =>
+            client.ServerMessageReceived += eventArgs =>
             {
-                Console.WriteLine($"Receive message: {e.Message.Data}");
+                Console.WriteLine($"Receive message: {eventArgs.Message.Data}");
                 return Task.CompletedTask;
             };
 #endregion
@@ -80,9 +88,9 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
         public void WebPubSubClientSubscribeGroupMessage(WebPubSubClient client)
         {
 #region Snippet:WebPubSubClient_Subscribe_GroupMessage
-            client.GroupMessageReceived += e =>
+            client.GroupMessageReceived += eventArgs =>
             {
-                Console.WriteLine($"Receive group message from {e.Message.Group}: {e.Message.Data}");
+                Console.WriteLine($"Receive group message from {eventArgs.Message.Group}: {eventArgs.Message.Data}");
                 return Task.CompletedTask;
             };
 #endregion
@@ -91,7 +99,7 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
         public void WebPubSubClientSubscribeRestoreFailed(WebPubSubClient client)
         {
 #region Snippet:WebPubSubClient_Subscribe_RestoreFailed
-            client.RestoreGroupFailed += e =>
+            client.RejoinGroupFailed += eventArgs =>
             {
                 Console.WriteLine($"Restore group failed");
                 return Task.CompletedTask;
@@ -113,11 +121,6 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
             // Send custom event to server
             await client.SendEventAsync("testEvent", BinaryData.FromString("hello world"), WebPubSubDataType.Text);
 #endregion
-        }
-
-        private ValueTask<Uri> FetchClientAccessTokenFromServerAsync(CancellationToken token)
-        {
-            return default;
         }
     }
 }

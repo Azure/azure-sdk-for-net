@@ -9,12 +9,12 @@ using System.Text;
 namespace Azure.Messaging.WebPubSub.Clients
 {
     /// <summary>
-    /// The message representing the client is disconnected
+    /// The message representing a client disconnection
     /// </summary>
     public class DisconnectedMessage : WebPubSubMessage
     {
         /// <summary>
-        /// The reason of getting disconnected.
+        /// The reason for being disconnected.
         /// </summary>
         public string Reason { get; }
 

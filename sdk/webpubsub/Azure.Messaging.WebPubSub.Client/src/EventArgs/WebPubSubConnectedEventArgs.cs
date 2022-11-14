@@ -19,7 +19,7 @@ namespace Azure.Messaging.WebPubSub.Clients
         public string UserId { get; }
 
         /// <summary>
-        /// The connection id of the client
+        /// The connection ID of the client. The ID is assigned when the client connects.
         /// </summary>
         public string ConnectionId { get; }
 

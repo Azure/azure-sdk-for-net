@@ -23,26 +23,34 @@ namespace Azure.Messaging.WebPubSub.Clients
     /// </summary>
     [SuppressMessage("Usage", "AZC0007:DO provide a minimal constructor that takes only the parameters required to connect to the service.", Justification = "WebPubSub clients are Websocket based and don't use ClientOptions functionality")]
     [SuppressMessage("Usage", "AZC0004:DO provide both asynchronous and synchronous variants for all service methods.", Justification = "Synchronous methods doesn't make sense in the scenario of WebPubSub client")]
-    [SuppressMessage("Usage", "AZC0015:Unexpected client method return type.", Justification = "WebPubSubClient is a pure data plane client that don't need to return type as a management client does.")]
+    [SuppressMessage("Usage", "AZC0015:Unexpected client method return type.", Justification = "WebPubSubClient is not a HTTP-based client.")]
     [SuppressMessage("Design", "CA1001:Types that own disposable fields should be disposable", Justification = "We don't want user to use client within a using block")]
     public class WebPubSubClient
     {
         /// <summary>
-        /// The connection id of the client
+        /// The connection ID of the client. The ID is assigned when the client connects.
         /// </summary>
         public string ConnectionId { get; }
 
         /// <summary>
-        /// Initializes a PubSub client.
+        /// Initializes a Web PubSub client.
         /// </summary>
         /// <param name="clientAccessUri">The uri to connect to the service.</param>
-        /// <param name="options">A option for the client.</param>
-        public WebPubSubClient(Uri clientAccessUri, WebPubSubClientOptions options = null) : this(new WebPubSubClientCredential(clientAccessUri), options)
+        public WebPubSubClient(Uri clientAccessUri) : this(clientAccessUri, null)
         {
         }
 
         /// <summary>
-        /// Initializes a PubSub client.
+        /// Initializes a Web PubSub client.
+        /// </summary>
+        /// <param name="clientAccessUri">The uri to connect to the service.</param>
+        /// <param name="options">A option for the client.</param>
+        public WebPubSubClient(Uri clientAccessUri, WebPubSubClientOptions options) : this(new WebPubSubClientCredential(clientAccessUri), options)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a Web PubSub client.
         /// </summary>
         /// <param name="credential">A uri provider that will be called to return the uri for each connecting or reconnecting.</param>
         /// <param name="options">A option for the client.</param>
@@ -72,7 +80,9 @@ namespace Azure.Messaging.WebPubSub.Clients
         /// Stop the client.
         /// </summary>
         /// <returns></returns>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Task StopAsync()
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         {
             throw new NotImplementedException();
         }
@@ -82,7 +92,9 @@ namespace Azure.Messaging.WebPubSub.Clients
         /// </summary>
         /// <returns></returns>
 #pragma warning disable AZC0003 // DO make service methods virtual.
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public ValueTask DisposeAsync()
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
 #pragma warning restore AZC0003 // DO make service methods virtual.
         {
             throw new NotImplementedException();
@@ -177,8 +189,8 @@ namespace Azure.Messaging.WebPubSub.Clients
         public event Func<WebPubSubGroupMessageEventArgs, Task> GroupMessageReceived;
 
         /// <summary>
-        /// A event triggered when restore group failed in reconnection.
+        /// A event triggered when rejoin group failed in reconnection.
         /// </summary>
-        public event Func<WebPubSubRestoreGroupFailedEventArgs, Task> RestoreGroupFailed;
+        public event Func<WebPubSubRejoinGroupFailedEventArgs, Task> RejoinGroupFailed;
     }
 }

@@ -13,20 +13,20 @@ namespace Azure.Messaging.WebPubSub.Clients
     public enum WebPubSubDataType
     {
         /// <summary>
-        /// binary of content type application/octet-stream.
+        /// The data content is json.
         /// </summary>
-        Binary,
+        Json = 0,
         /// <summary>
-        /// json of content type application/json.
+        /// The data content is plain text.
         /// </summary>
-        Json,
+        Text = 1,
         /// <summary>
-        /// text of content type text/plain.
+        /// The data content is binary.
         /// </summary>
-        Text,
+        Binary = 2,
         /// <summary>
-        /// protobuf of content type application/x-protobuf.
+        /// The data content is protobuf.
         /// </summary>
-        Protobuf,
+        Protobuf = 3,
     }
 }

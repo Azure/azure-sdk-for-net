@@ -19,7 +19,7 @@ namespace Azure.Messaging.WebPubSub.Clients
         public string UserId { get; }
 
         /// <summary>
-        /// The connection id of the client
+        /// The connection ID of the client. The ID is assigned when the client connects.
         /// </summary>
         public string ConnectionId { get; }
 
@@ -32,7 +32,7 @@ namespace Azure.Messaging.WebPubSub.Clients
         /// Initializes a new instance of the <see cref="ConnectedMessage"/> class.
         /// </summary>
         /// <param name="userId">The user-id</param>
-        /// <param name="connectionId">The connection id of the client</param>
+        /// <param name="connectionId">The connection ID of the client</param>
         /// <param name="reconnectionToken">The reconnection token for recovering the connection. Only availble in reliable subprotocol.</param>
         public ConnectedMessage(string userId, string connectionId, string reconnectionToken)
         {

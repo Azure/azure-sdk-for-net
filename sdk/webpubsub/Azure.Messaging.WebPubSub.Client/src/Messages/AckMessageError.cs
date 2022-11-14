@@ -4,7 +4,7 @@
 namespace Azure.Messaging.WebPubSub.Clients
 {
     /// <summary>
-    /// The message error detail.
+    /// An error associated with a service acknowledgement.
     /// </summary>
     public class AckMessageError
     {
@@ -14,7 +14,7 @@ namespace Azure.Messaging.WebPubSub.Clients
         public string Name { get; }
 
         /// <summary>
-        /// The detailed message
+        /// The details of the error
         /// </summary>
         public string Message { get; }
 

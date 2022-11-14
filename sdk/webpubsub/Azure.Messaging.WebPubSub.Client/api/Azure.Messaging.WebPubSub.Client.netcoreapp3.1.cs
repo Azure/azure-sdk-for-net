@@ -85,12 +85,13 @@ namespace Azure.Messaging.WebPubSub.Clients
     {
         protected WebPubSubClient() { }
         public WebPubSubClient(Azure.Messaging.WebPubSub.Clients.WebPubSubClientCredential credential, Azure.Messaging.WebPubSub.Clients.WebPubSubClientOptions options = null) { }
-        public WebPubSubClient(System.Uri clientAccessUri, Azure.Messaging.WebPubSub.Clients.WebPubSubClientOptions options = null) { }
+        public WebPubSubClient(System.Uri clientAccessUri) { }
+        public WebPubSubClient(System.Uri clientAccessUri, Azure.Messaging.WebPubSub.Clients.WebPubSubClientOptions options) { }
         public string ConnectionId { get { throw null; } }
         public event System.Func<Azure.Messaging.WebPubSub.Clients.WebPubSubConnectedEventArgs, System.Threading.Tasks.Task> Connected { add { } remove { } }
         public event System.Func<Azure.Messaging.WebPubSub.Clients.WebPubSubDisconnectedEventArgs, System.Threading.Tasks.Task> Disconnected { add { } remove { } }
         public event System.Func<Azure.Messaging.WebPubSub.Clients.WebPubSubGroupMessageEventArgs, System.Threading.Tasks.Task> GroupMessageReceived { add { } remove { } }
-        public event System.Func<Azure.Messaging.WebPubSub.Clients.WebPubSubRestoreGroupFailedEventArgs, System.Threading.Tasks.Task> RestoreGroupFailed { add { } remove { } }
+        public event System.Func<Azure.Messaging.WebPubSub.Clients.WebPubSubRejoinGroupFailedEventArgs, System.Threading.Tasks.Task> RejoinGroupFailed { add { } remove { } }
         public event System.Func<Azure.Messaging.WebPubSub.Clients.WebPubSubServerMessageEventArgs, System.Threading.Tasks.Task> ServerMessageReceived { add { } remove { } }
         public event System.Func<Azure.Messaging.WebPubSub.Clients.WebPubSubStoppedEventArgs, System.Threading.Tasks.Task> Stopped { add { } remove { } }
         public System.Threading.Tasks.ValueTask DisposeAsync() { throw null; }
@@ -112,7 +113,7 @@ namespace Azure.Messaging.WebPubSub.Clients
     {
         public WebPubSubClientOptions() { }
         public bool AutoReconnect { get { throw null; } set { } }
-        public bool AutoRestoreGroups { get { throw null; } set { } }
+        public bool AutoRejoinGroups { get { throw null; } set { } }
         public Azure.Core.RetryOptions MessageRetryOptions { get { throw null; } }
         public Azure.Messaging.WebPubSub.Clients.WebPubSubProtocol Protocol { get { throw null; } set { } }
     }
@@ -125,9 +126,9 @@ namespace Azure.Messaging.WebPubSub.Clients
     }
     public enum WebPubSubDataType
     {
-        Binary = 0,
-        Json = 1,
-        Text = 2,
+        Json = 0,
+        Text = 1,
+        Binary = 2,
         Protobuf = 3,
     }
     public partial class WebPubSubDisconnectedEventArgs
@@ -182,9 +183,9 @@ namespace Azure.Messaging.WebPubSub.Clients
         Text = 0,
         Binary = 1,
     }
-    public partial class WebPubSubRestoreGroupFailedEventArgs
+    public partial class WebPubSubRejoinGroupFailedEventArgs
     {
-        internal WebPubSubRestoreGroupFailedEventArgs() { }
+        internal WebPubSubRejoinGroupFailedEventArgs() { }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } }
         public System.Exception Exception { get { throw null; } }
         public string Group { get { throw null; } }
