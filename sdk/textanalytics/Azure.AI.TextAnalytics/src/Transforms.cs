@@ -504,8 +504,8 @@ namespace Azure.AI.TextAnalytics
 
         #region Abstract Summary
 
-        internal static List<Summary> ConvertToSummaryList(List<AbstractiveSummary> summaries)
-            => summaries.Select((summary) => new Summary(summary)).ToList();
+        internal static List<AbstractiveSummary> ConvertToSummaryList(List<AbstractiveSummaryInternal> summaries)
+            => summaries.Select((summary) => new AbstractiveSummary(summary)).ToList();
 
         internal static SummaryCollection ConvertToSummaryCollection(AbstractiveSummarizationResultBaseDocumentsItem document)
         {
@@ -549,13 +549,7 @@ namespace Azure.AI.TextAnalytics
             {
                 return ConvertToAbstractSummaryResultCollection((task as AbstractiveSummarizationLROResult).Results, idToIndexMap);
             }
-
-            if (task.Kind == AnalyzeTextLROResultsKind.AbstractiveSummarizationLROResults)
-            {
-                return ConvertToAbstractSummaryResultCollection((task as AbstractiveSummarizationLROResult).Results, idToIndexMap);
-            }
-
-            throw new InvalidOperationException($"Invalid task executed. Expected a {nameof(AnalyzeTextLROResultsKind.AbstractiveSummarizationLROResults)} or {nameof(AnalyzeTextLROResultsKind.AbstractiveSummarizationLROResults)} but instead got {task.Kind}.");
+            throw new InvalidOperationException($"Invalid task executed. Expected a {nameof(AnalyzeTextLROResultsKind.AbstractiveSummarizationLROResults)} but instead got {task.Kind}.");
         }
 
         #endregion

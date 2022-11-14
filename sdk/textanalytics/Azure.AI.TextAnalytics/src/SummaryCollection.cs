@@ -12,9 +12,9 @@ namespace Azure.AI.TextAnalytics
     /// A collection of summaries produced from a given document.
     /// </summary>
     [DebuggerTypeProxy(typeof(SummaryCollectionDebugView))]
-    public class SummaryCollection : ReadOnlyCollection<Summary>
+    public class SummaryCollection : ReadOnlyCollection<AbstractiveSummary>
     {
-        internal SummaryCollection(IList<Summary> summaries, IList<TextAnalyticsWarning> warnings)
+        internal SummaryCollection(IList<AbstractiveSummary> summaries, IList<TextAnalyticsWarning> warnings)
             : base(summaries)
         {
             Warnings = new ReadOnlyCollection<TextAnalyticsWarning>(warnings);
@@ -38,7 +38,7 @@ namespace Azure.AI.TextAnalytics
             }
 
             [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
-            public List<Summary> Items
+            public List<AbstractiveSummary> Items
             {
                 get
                 {

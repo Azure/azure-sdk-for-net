@@ -884,7 +884,7 @@ namespace Azure.AI.TextAnalytics.Tests
             AbstractSummaryResult result = abstractSummaryDocumentsResults[0];
             Assert.Greater(result.Summaries.Count, 0);
 
-            Summary summary = result.Summaries[0];
+            AbstractiveSummary summary = result.Summaries[0];
             Assert.That(summary.Text, Is.Not.Null.And.Not.Empty);
             Assert.Less(summary.Text.Length, documents[0].Length);
             Assert.IsNotNull(summary.Contexts);

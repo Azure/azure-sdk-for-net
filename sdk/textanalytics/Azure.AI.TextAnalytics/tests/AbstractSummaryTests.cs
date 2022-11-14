@@ -248,7 +248,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 Assert.IsNotNull(result.Summaries.Warnings);
                 Assert.Greater(result.Summaries.Count, 0);
 
-                foreach (Summary summary in result.Summaries)
+                foreach (AbstractiveSummary summary in result.Summaries)
                 {
                     string originalDocument = s_batchDocuments.Where(document => document.Id == result.Id).FirstOrDefault().Text;
                     Assert.That(summary.Text, Is.Not.Null.And.Not.Empty);

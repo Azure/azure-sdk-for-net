@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class AbstractiveSummary : IUtf8JsonSerializable
+    internal partial class AbstractiveSummaryInternal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -31,7 +31,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteEndObject();
         }
 
-        internal static AbstractiveSummary DeserializeAbstractiveSummary(JsonElement element)
+        internal static AbstractiveSummaryInternal DeserializeAbstractiveSummaryInternal(JsonElement element)
         {
             string text = default;
             Optional<IList<SummaryContextInternal>> contexts = default;
@@ -58,7 +58,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new AbstractiveSummary(text, Optional.ToList(contexts));
+            return new AbstractiveSummaryInternal(text, Optional.ToList(contexts));
         }
     }
 }

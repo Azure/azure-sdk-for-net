@@ -1914,14 +1914,14 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="TextAnalytics.Summary"/> for mocking purposes.
+        /// Initializes a new instance of <see cref="TextAnalytics.AbstractiveSummary"/> for mocking purposes.
         /// </summary>
-        /// <param name="text">Sets the <see cref="Summary.Text"/> property.</param>
-        /// <param name="contexts">Sets the <see cref="Summary.Contexts"/> property.</param>
+        /// <param name="text">Sets the <see cref="AbstractiveSummary.Text"/> property.</param>
+        /// <param name="contexts">Sets the <see cref="AbstractiveSummary.Contexts"/> property.</param>
         /// <returns>
-        /// A new instance of <see cref="TextAnalytics.Summary"/> for mocking purposes.
+        /// A new instance of <see cref="TextAnalytics.AbstractiveSummary"/> for mocking purposes.
         /// </returns>
-        public static Summary Summary(string text, IList<SummaryContext> contexts)
+        public static AbstractiveSummary AbstractiveSummary(string text, IList<SummaryContext> contexts)
         {
             List<SummaryContextInternal> internalContexts = new();
             foreach (SummaryContext context in contexts)
@@ -1929,18 +1929,18 @@ namespace Azure.AI.TextAnalytics
                 internalContexts.Add(new SummaryContextInternal(context.Offset, context.Length));
             }
 
-            return new Summary(new AbstractiveSummary(text, internalContexts));
+            return new AbstractiveSummary(new AbstractiveSummaryInternal(text, internalContexts));
         }
 
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.SummaryCollection"/> for mocking purposes.
         /// </summary>
-        /// <param name="summaries">Sets the collection of <see cref="Summary"/>.</param>
+        /// <param name="summaries">Sets the collection of <see cref="AbstractiveSummary"/>.</param>
         /// <param name="warnings">Sets the <see cref="SummarySentenceCollection.Warnings"/> property.</param>
         /// <returns>
         /// A new instance of <see cref="TextAnalytics.SummaryCollection"/> for mocking purposes.
         /// </returns>
-        public static SummaryCollection SummaryCollection(IList<Summary> summaries, IList<TextAnalyticsWarning> warnings = default)
+        public static SummaryCollection SummaryCollection(IList<AbstractiveSummary> summaries, IList<TextAnalyticsWarning> warnings = default)
         {
             warnings ??= new List<TextAnalyticsWarning>();
             return new SummaryCollection(summaries, warnings);

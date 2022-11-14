@@ -1,5 +1,13 @@
 namespace Azure.AI.TextAnalytics
 {
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AbstractiveSummary
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.SummaryContext> Contexts { get { throw null; } }
+        public string Text { get { throw null; } }
+    }
     public partial class AbstractSummaryAction
     {
         public AbstractSummaryAction() { }
@@ -1348,17 +1356,9 @@ namespace Azure.AI.TextAnalytics
         public static bool operator !=(Azure.AI.TextAnalytics.SpeedUnit left, Azure.AI.TextAnalytics.SpeedUnit right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Summary
+    public partial class SummaryCollection : System.Collections.ObjectModel.ReadOnlyCollection<Azure.AI.TextAnalytics.AbstractiveSummary>
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.SummaryContext> Contexts { get { throw null; } }
-        public string Text { get { throw null; } }
-    }
-    public partial class SummaryCollection : System.Collections.ObjectModel.ReadOnlyCollection<Azure.AI.TextAnalytics.Summary>
-    {
-        internal SummaryCollection() : base (default(System.Collections.Generic.IList<Azure.AI.TextAnalytics.Summary>)) { }
+        internal SummaryCollection() : base (default(System.Collections.Generic.IList<Azure.AI.TextAnalytics.AbstractiveSummary>)) { }
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.TextAnalyticsWarning> Warnings { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1675,6 +1675,7 @@ namespace Azure.AI.TextAnalytics
     }
     public static partial class TextAnalyticsModelFactory
     {
+        public static Azure.AI.TextAnalytics.AbstractiveSummary AbstractiveSummary(string text, System.Collections.Generic.IList<Azure.AI.TextAnalytics.SummaryContext> contexts) { throw null; }
         public static Azure.AI.TextAnalytics.AbstractSummaryActionResult AbstractSummaryActionResult(Azure.AI.TextAnalytics.AbstractSummaryResultCollection result, string actionName, System.DateTimeOffset completedOn) { throw null; }
         public static Azure.AI.TextAnalytics.AbstractSummaryActionResult AbstractSummaryActionResult(string actionName, System.DateTimeOffset completedOn, string code, string message) { throw null; }
         public static Azure.AI.TextAnalytics.AbstractSummaryResult AbstractSummaryResult(string id, Azure.AI.TextAnalytics.TextDocumentStatistics statistics, Azure.AI.TextAnalytics.SummaryCollection summaries) { throw null; }
@@ -1815,8 +1816,7 @@ namespace Azure.AI.TextAnalytics
         public static Azure.AI.TextAnalytics.SingleLabelClassifyActionResult SingleLabelClassifyActionResult(System.DateTimeOffset completedOn, string code, string message) { throw null; }
         public static Azure.AI.TextAnalytics.SingleLabelClassifyActionResult SingleLabelClassifyActionResult(string actionName, System.DateTimeOffset completedOn, string code, string message) { throw null; }
         public static Azure.AI.TextAnalytics.SpeedResolution SpeedResolution(Azure.AI.TextAnalytics.SpeedUnit unit, double value) { throw null; }
-        public static Azure.AI.TextAnalytics.Summary Summary(string text, System.Collections.Generic.IList<Azure.AI.TextAnalytics.SummaryContext> contexts) { throw null; }
-        public static Azure.AI.TextAnalytics.SummaryCollection SummaryCollection(System.Collections.Generic.IList<Azure.AI.TextAnalytics.Summary> summaries, System.Collections.Generic.IList<Azure.AI.TextAnalytics.TextAnalyticsWarning> warnings = null) { throw null; }
+        public static Azure.AI.TextAnalytics.SummaryCollection SummaryCollection(System.Collections.Generic.IList<Azure.AI.TextAnalytics.AbstractiveSummary> summaries, System.Collections.Generic.IList<Azure.AI.TextAnalytics.TextAnalyticsWarning> warnings = null) { throw null; }
         public static Azure.AI.TextAnalytics.SummaryContext SummaryContext(int offset, int length) { throw null; }
         public static Azure.AI.TextAnalytics.SummarySentence SummarySentence(string text, double rankScore, int offset, int length) { throw null; }
         public static Azure.AI.TextAnalytics.SummarySentenceCollection SummarySentenceCollection(System.Collections.Generic.IList<Azure.AI.TextAnalytics.SummarySentence> sentences, System.Collections.Generic.IList<Azure.AI.TextAnalytics.TextAnalyticsWarning> warnings = null) { throw null; }

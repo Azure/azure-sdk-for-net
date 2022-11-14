@@ -9,9 +9,9 @@ namespace Azure.AI.TextAnalytics
     /// <summary>
     /// A summary produced by the service from a given document.
     /// </summary>
-    public readonly struct Summary
+    public readonly struct AbstractiveSummary
     {
-        internal Summary(AbstractiveSummary summary)
+        internal AbstractiveSummary(AbstractiveSummaryInternal summary)
         {
             Text = summary.Text;
 
