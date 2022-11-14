@@ -9,7 +9,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
     /// <summary>
     /// Metrics type representing the status of an Azure Queue.
     /// </summary>
-    public class QueueTriggerMetrics : ScaleMetrics
+    internal class QueueTriggerMetrics : ScaleMetrics
     {
         /// <summary>
         /// The current length of the queue.

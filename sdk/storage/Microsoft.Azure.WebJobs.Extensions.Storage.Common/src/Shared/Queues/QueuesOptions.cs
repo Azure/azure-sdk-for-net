@@ -20,9 +20,6 @@ namespace Microsoft.Azure.WebJobs.Host
     /// </summary>
     public class QueuesOptions : IOptionsFormatter
 #else
-    /// <summary>
-    /// Represents configuration for QueueTriggerAttribute.
-    /// </summary>
     internal class QueuesOptions : IOptionsFormatter
 #endif
     {
