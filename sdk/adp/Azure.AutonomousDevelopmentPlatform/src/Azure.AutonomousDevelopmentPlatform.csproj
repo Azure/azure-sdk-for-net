@@ -2,10 +2,11 @@
 
   <PropertyGroup>
     <Description>This is the Aure Autonomous Development Platform library for developing .NET applications with rich experience.</Description>
-    <AssemblyTitle>Azure Autonomous Developement Platform SDK</AssemblyTitle>
+    <AssemblyTitle>Azure Autonomous Development Platform SDK</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
-    <PackageTags>Azure FarmBeats</PackageTags>
+    <PackageTags>Azure Autonomous Development Platform</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <DefineConstants>$(DefineConstants);EXPERIMENTAL</DefineConstants>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 
