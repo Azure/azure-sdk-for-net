@@ -5,16 +5,11 @@ Generating CSharp code
 Executing AutoRest command
 cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/sql/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=D:\Projects\azure-sdk-for-net\sdk
 Autorest CSharp Version: 2.3.82
-2022-10-14 06:10:27 UTC
+2022-11-14 05:23:43 UTC
 Azure-rest-api-specs repository information
 GitHub fork: Azure
 Branch:      main
-Commit:      02892fba4474afacce6fc8a76c08d395dc5c8f26
+Commit:      4f2b947e69be7eb813b048c815f879101ee2bf2a
 AutoRest information
 Requested version: 2.0.4421
 Bootstrapper version:    autorest@2.0.4413
-npm notice 
-npm notice New minor version of npm available! 8.5.5 -> 8.19.2
-npm notice Changelog: <https://github.com/npm/cli/releases/tag/v8.19.2>
-npm notice Run `npm install -g npm@8.19.2` to update!
-npm notice

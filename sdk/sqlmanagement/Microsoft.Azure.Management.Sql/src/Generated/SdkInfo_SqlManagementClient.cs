@@ -175,15 +175,10 @@ namespace Microsoft.Azure.Management.Sql
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/sql/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=D:\\Projects\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "main";
-      public static readonly String GithubCommidId = "02892fba4474afacce6fc8a76c08d395dc5c8f26";
-      public static readonly String CodeGenerationErrors = "npm notice 
-npm notice New minor version of npm available! 8.5.5 -> 8.19.2
-npm notice Changelog: <https://github.com/npm/cli/releases/tag/v8.19.2>
-npm notice Run `npm install -g npm@8.19.2` to update!
-npm notice"
+      public static readonly String GithubCommidId = "4f2b947e69be7eb813b048c815f879101ee2bf2a";
+      public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
   }
 }
-
 
