@@ -20,7 +20,6 @@ public class Metrics
     ///
     public TelemetryClient Client;
 
-    // Environment statistics - Garbage Collection
 
     /// <summary>
     ///   This is the metric name used to collect metrics on generation zero
@@ -42,17 +41,6 @@ public class Metrics
     /// </summary>
     ///
     public const string GenerationTwoCollections = "GenerationTwoCollections";
-
-    // Dimension names
-
-    /// <summary>
-    ///   This is the dimension name used to hold which identifier is associated with a
-    ///   given processor.
-    /// </summary>
-    ///
-    public const string Identifier = "Identifier";
-
-    // Sender statistics
 
     /// <summary>
     ///   This is the metric name used to collect metrics on how many batches
@@ -81,8 +69,6 @@ public class Metrics
     /// </summary>
     ///
     public const string TotalSentSizeBytes = "TotalSentSizeBytes";
-
-    // Processor statistics
 
     /// <summary>
     ///   This is the metric name used to collect metrics on the number of times the event handler was
@@ -121,12 +107,6 @@ public class Metrics
     /// </summary>
     ///
     public const string DuplicateMessagesDiscarded = "DuplicateMessagesDiscarded";
-
-    /// <summary>
-    ///   This is the metric name used by the sender to collect metrics on the number of messages that failed to send.
-    /// </summary>
-    ///
-    public const string MessagesFailedToSend = "MessagesFailedToSend";
 
     /// <summary>
     ///   This is the property name used to send information about the application defined index to Application Insights for further
