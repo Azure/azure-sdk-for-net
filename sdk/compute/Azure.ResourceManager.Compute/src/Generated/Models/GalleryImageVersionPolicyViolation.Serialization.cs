@@ -10,11 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class PolicyViolation
+    public partial class GalleryImageVersionPolicyViolation
     {
-        internal static PolicyViolation DeserializePolicyViolation(JsonElement element)
+        internal static GalleryImageVersionPolicyViolation DeserializeGalleryImageVersionPolicyViolation(JsonElement element)
         {
-            Optional<PolicyViolationCategory> category = default;
+            Optional<GalleryImageVersionPolicyViolationCategory> category = default;
             Optional<string> details = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    category = new PolicyViolationCategory(property.Value.GetString());
+                    category = new GalleryImageVersionPolicyViolationCategory(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("details"))
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new PolicyViolation(Optional.ToNullable(category), details.Value);
+            return new GalleryImageVersionPolicyViolation(Optional.ToNullable(category), details.Value);
         }
     }
 }

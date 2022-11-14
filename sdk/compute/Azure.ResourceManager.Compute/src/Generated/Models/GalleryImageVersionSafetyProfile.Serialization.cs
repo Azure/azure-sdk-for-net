@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal static GalleryImageVersionSafetyProfile DeserializeGalleryImageVersionSafetyProfile(JsonElement element)
         {
             Optional<bool> reportedForPolicyViolation = default;
-            Optional<IReadOnlyList<PolicyViolation>> policyViolations = default;
+            Optional<IReadOnlyList<GalleryImageVersionPolicyViolation>> policyViolations = default;
             Optional<bool> allowDeletionOfReplicatedLocations = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PolicyViolation> array = new List<PolicyViolation>();
+                    List<GalleryImageVersionPolicyViolation> array = new List<GalleryImageVersionPolicyViolation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PolicyViolation.DeserializePolicyViolation(item));
+                        array.Add(GalleryImageVersionPolicyViolation.DeserializeGalleryImageVersionPolicyViolation(item));
                     }
                     policyViolations = array;
                     continue;

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class PriorityMixPolicy : IUtf8JsonSerializable
+    public partial class VirtualMachineScaleSetPriorityMixPolicy : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteEndObject();
         }
 
-        internal static PriorityMixPolicy DeserializePriorityMixPolicy(JsonElement element)
+        internal static VirtualMachineScaleSetPriorityMixPolicy DeserializeVirtualMachineScaleSetPriorityMixPolicy(JsonElement element)
         {
             Optional<int> baseRegularPriorityCount = default;
             Optional<int> regularPriorityPercentageAboveBase = default;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new PriorityMixPolicy(Optional.ToNullable(baseRegularPriorityCount), Optional.ToNullable(regularPriorityPercentageAboveBase));
+            return new VirtualMachineScaleSetPriorityMixPolicy(Optional.ToNullable(baseRegularPriorityCount), Optional.ToNullable(regularPriorityPercentageAboveBase));
         }
     }
 }

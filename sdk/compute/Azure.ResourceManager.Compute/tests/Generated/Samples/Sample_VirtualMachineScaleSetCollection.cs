@@ -753,7 +753,7 @@ new VirtualMachineScaleSetNetworkConfiguration("{nicConfig1-name}")
 {
 Primary = true,
 EnableAcceleratedNetworking = true,
-DisableTcpStateTracking = true,
+IsTcpStateTrackingDisabled = true,
 IPConfigurations =
 {
 new VirtualMachineScaleSetIPConfiguration("{vmss-name}")
@@ -766,7 +766,7 @@ EnableIPForwarding = true,
 {
 Primary = false,
 EnableAcceleratedNetworking = false,
-DisableTcpStateTracking = false,
+IsTcpStateTrackingDisabled = false,
 IPConfigurations =
 {
 new VirtualMachineScaleSetIPConfiguration("{nicConfig2-name}")
@@ -2783,7 +2783,7 @@ EnableIPForwarding = true,
                 },
                 SinglePlacementGroup = false,
                 OrchestrationMode = OrchestrationMode.Flexible,
-                PriorityMixPolicy = new PriorityMixPolicy()
+                PriorityMixPolicy = new VirtualMachineScaleSetPriorityMixPolicy()
                 {
                     BaseRegularPriorityCount = 4,
                     RegularPriorityPercentageAboveBase = 50,
@@ -3042,7 +3042,7 @@ EnableIPForwarding = true,
                         AdminUsername = "{your-username}",
                         LinuxConfiguration = new LinuxConfiguration()
                         {
-                            DisablePasswordAuthentication = true,
+                            IsPasswordAuthenticationDisabled = true,
                         },
                     },
                     StorageProfile = new VirtualMachineScaleSetStorageProfile()

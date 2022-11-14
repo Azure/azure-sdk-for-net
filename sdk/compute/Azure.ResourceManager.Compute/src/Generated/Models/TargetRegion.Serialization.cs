@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("encryption");
                 writer.WriteObjectValue(Encryption);
             }
-            if (Optional.IsDefined(ExcludeFromLatest))
+            if (Optional.IsDefined(IsExcludedFromLatest))
             {
                 writer.WritePropertyName("excludeFromLatest");
-                writer.WriteBooleanValue(ExcludeFromLatest.Value);
+                writer.WriteBooleanValue(IsExcludedFromLatest.Value);
             }
             writer.WriteEndObject();
         }

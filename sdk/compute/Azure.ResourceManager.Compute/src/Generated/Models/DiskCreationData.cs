@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="uploadSizeBytes"> If createOption is Upload, this is the size of the contents of the upload including the VHD footer. This value should be between 20972032 (20 MiB + 512 bytes for the VHD footer) and 35183298347520 bytes (32 TiB + 512 bytes for the VHD footer). </param>
         /// <param name="logicalSectorSize"> Logical sector size in bytes for Ultra disks. Supported values are 512 ad 4096. 4096 is the default. </param>
         /// <param name="securityDataUri"> If createOption is ImportSecure, this is the URI of a blob to be imported into VM guest state. </param>
-        /// <param name="performancePlus"> Set this flag to true to get a boost on the performance target of the disk deployed, see here on the respective performance target. This flag can only be set on disk creation time and cannot be disabled after enabled. </param>
-        internal DiskCreationData(DiskCreateOption createOption, ResourceIdentifier storageAccountId, ImageDiskReference imageReference, ImageDiskReference galleryImageReference, Uri sourceUri, ResourceIdentifier sourceResourceId, string sourceUniqueId, long? uploadSizeBytes, int? logicalSectorSize, Uri securityDataUri, bool? performancePlus)
+        /// <param name="isPerformancePlusEnabled"> Set this flag to true to get a boost on the performance target of the disk deployed, see here on the respective performance target. This flag can only be set on disk creation time and cannot be disabled after enabled. </param>
+        internal DiskCreationData(DiskCreateOption createOption, ResourceIdentifier storageAccountId, ImageDiskReference imageReference, ImageDiskReference galleryImageReference, Uri sourceUri, ResourceIdentifier sourceResourceId, string sourceUniqueId, long? uploadSizeBytes, int? logicalSectorSize, Uri securityDataUri, bool? isPerformancePlusEnabled)
         {
             CreateOption = createOption;
             StorageAccountId = storageAccountId;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Models
             UploadSizeBytes = uploadSizeBytes;
             LogicalSectorSize = logicalSectorSize;
             SecurityDataUri = securityDataUri;
-            PerformancePlus = performancePlus;
+            IsPerformancePlusEnabled = isPerformancePlusEnabled;
         }
 
         /// <summary> This enumerates the possible sources of a disk&apos;s creation. </summary>
@@ -68,6 +68,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> If createOption is ImportSecure, this is the URI of a blob to be imported into VM guest state. </summary>
         public Uri SecurityDataUri { get; set; }
         /// <summary> Set this flag to true to get a boost on the performance target of the disk deployed, see here on the respective performance target. This flag can only be set on disk creation time and cannot be disabled after enabled. </summary>
-        public bool? PerformancePlus { get; set; }
+        public bool? IsPerformancePlusEnabled { get; set; }
     }
 }

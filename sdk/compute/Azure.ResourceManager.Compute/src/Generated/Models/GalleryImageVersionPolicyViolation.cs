@@ -8,24 +8,24 @@
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> A policy violation reported against a gallery artifact. </summary>
-    public partial class PolicyViolation
+    public partial class GalleryImageVersionPolicyViolation
     {
-        /// <summary> Initializes a new instance of PolicyViolation. </summary>
-        internal PolicyViolation()
+        /// <summary> Initializes a new instance of GalleryImageVersionPolicyViolation. </summary>
+        internal GalleryImageVersionPolicyViolation()
         {
         }
 
-        /// <summary> Initializes a new instance of PolicyViolation. </summary>
+        /// <summary> Initializes a new instance of GalleryImageVersionPolicyViolation. </summary>
         /// <param name="category"> Describes the nature of the policy violation. </param>
         /// <param name="details"> Describes specific details about why this policy violation was reported. </param>
-        internal PolicyViolation(PolicyViolationCategory? category, string details)
+        internal GalleryImageVersionPolicyViolation(GalleryImageVersionPolicyViolationCategory? category, string details)
         {
             Category = category;
             Details = details;
         }
 
         /// <summary> Describes the nature of the policy violation. </summary>
-        public PolicyViolationCategory? Category { get; }
+        public GalleryImageVersionPolicyViolationCategory? Category { get; }
         /// <summary> Describes specific details about why this policy violation was reported. </summary>
         public string Details { get; }
     }

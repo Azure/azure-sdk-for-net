@@ -449,8 +449,10 @@ namespace Azure.ResourceManager.Compute
     {
         internal CommunityGalleryImageVersionData() { }
         public System.DateTimeOffset? EndOfLifeOn { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool? ExcludeFromLatest { get { throw null; } }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
+        public bool? IsExcludedFromLatest { get { throw null; } }
         public System.DateTimeOffset? PublishedOn { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.SharedGalleryImageVersionStorageProfile StorageProfile { get { throw null; } }
     }
@@ -1258,11 +1260,11 @@ namespace Azure.ResourceManager.Compute
         public Azure.ResourceManager.Compute.Models.EncryptionSettingsGroup EncryptionSettingsGroup { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.HyperVGeneration? HyperVGeneration { get { throw null; } set { } }
+        public bool? IsOptimizedForFrequentAttach { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ManagedBy { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> ManagedByExtended { get { throw null; } }
         public int? MaxShares { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.NetworkAccessPolicy? NetworkAccessPolicy { get { throw null; } set { } }
-        public bool? OptimizedForFrequentAttach { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.SupportedOperatingSystemType? OSType { get { throw null; } set { } }
         public string PropertyUpdatesInProgressTargetTier { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
@@ -1510,8 +1512,10 @@ namespace Azure.ResourceManager.Compute
     {
         internal SharedGalleryImageVersionData() { }
         public System.DateTimeOffset? EndOfLifeOn { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool? ExcludeFromLatest { get { throw null; } }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
+        public bool? IsExcludedFromLatest { get { throw null; } }
         public System.DateTimeOffset? PublishedOn { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.SharedGalleryImageVersionStorageProfile StorageProfile { get { throw null; } }
     }
@@ -1944,7 +1948,7 @@ namespace Azure.ResourceManager.Compute
         public bool? Overprovision { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ComputePlan Plan { get { throw null; } set { } }
         public int? PlatformFaultDomainCount { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.PriorityMixPolicy PriorityMixPolicy { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetPriorityMixPolicy PriorityMixPolicy { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier ProximityPlacementGroupId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ScaleInPolicy ScaleInPolicy { get { throw null; } set { } }
@@ -3184,8 +3188,8 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.DiskCreateOption CreateOption { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ImageDiskReference GalleryImageReference { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ImageDiskReference ImageReference { get { throw null; } set { } }
+        public bool? IsPerformancePlusEnabled { get { throw null; } set { } }
         public int? LogicalSectorSize { get { throw null; } set { } }
-        public bool? PerformancePlus { get { throw null; } set { } }
         public System.Uri SecurityDataUri { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceResourceId { get { throw null; } set { } }
         public string SourceUniqueId { get { throw null; } }
@@ -3462,9 +3466,9 @@ namespace Azure.ResourceManager.Compute.Models
         public GalleryApplicationCustomActionParameter(string name) { }
         public string DefaultValue { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
+        public bool? IsRequired { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.GalleryApplicationCustomActionParameterType? ParameterType { get { throw null; } set { } }
-        public bool? Required { get { throw null; } set { } }
     }
     public enum GalleryApplicationCustomActionParameterType
     {
@@ -3507,7 +3511,9 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public GalleryArtifactPublishingProfileBase() { }
         public System.DateTimeOffset? EndOfLifeOn { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool? ExcludeFromLatest { get { throw null; } set { } }
+        public bool? IsExcludedFromLatest { get { throw null; } set { } }
         public System.DateTimeOffset? PublishedOn { get { throw null; } }
         public int? ReplicaCount { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.GalleryReplicationMode? ReplicationMode { get { throw null; } set { } }
@@ -3638,6 +3644,32 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.GalleryImageVersionStorageProfile StorageProfile { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
+    public partial class GalleryImageVersionPolicyViolation
+    {
+        internal GalleryImageVersionPolicyViolation() { }
+        public Azure.ResourceManager.Compute.Models.GalleryImageVersionPolicyViolationCategory? Category { get { throw null; } }
+        public string Details { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct GalleryImageVersionPolicyViolationCategory : System.IEquatable<Azure.ResourceManager.Compute.Models.GalleryImageVersionPolicyViolationCategory>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public GalleryImageVersionPolicyViolationCategory(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.GalleryImageVersionPolicyViolationCategory CopyrightValidation { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.GalleryImageVersionPolicyViolationCategory ImageFlaggedUnsafe { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.GalleryImageVersionPolicyViolationCategory IPTheft { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.GalleryImageVersionPolicyViolationCategory Other { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.GalleryImageVersionPolicyViolationCategory other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.GalleryImageVersionPolicyViolationCategory left, Azure.ResourceManager.Compute.Models.GalleryImageVersionPolicyViolationCategory right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.GalleryImageVersionPolicyViolationCategory (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.GalleryImageVersionPolicyViolationCategory left, Azure.ResourceManager.Compute.Models.GalleryImageVersionPolicyViolationCategory right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class GalleryImageVersionPublishingProfile : Azure.ResourceManager.Compute.Models.GalleryArtifactPublishingProfileBase
     {
         public GalleryImageVersionPublishingProfile() { }
@@ -3645,8 +3677,8 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class GalleryImageVersionSafetyProfile : Azure.ResourceManager.Compute.Models.GalleryArtifactSafetyProfileBase
     {
         public GalleryImageVersionSafetyProfile() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.PolicyViolation> PolicyViolations { get { throw null; } }
-        public bool? ReportedForPolicyViolation { get { throw null; } }
+        public bool? IsReportedForPolicyViolation { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.GalleryImageVersionPolicyViolation> PolicyViolations { get { throw null; } }
     }
     public partial class GalleryImageVersionStorageProfile
     {
@@ -3944,8 +3976,12 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class LinuxConfiguration
     {
         public LinuxConfiguration() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool? DisablePasswordAuthentication { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool? EnableVmAgentPlatformUpdates { get { throw null; } set { } }
+        public bool? IsPasswordAuthenticationDisabled { get { throw null; } set { } }
+        public bool? IsVmAgentPlatformUpdatesEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.LinuxPatchSettings PatchSettings { get { throw null; } set { } }
         public bool? ProvisionVmAgent { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.SshPublicKeyConfiguration> SshPublicKeys { get { throw null; } }
@@ -4077,9 +4113,9 @@ namespace Azure.ResourceManager.Compute.Models
         public int? DiskSizeGB { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.DiskEncryption Encryption { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.EncryptionSettingsGroup EncryptionSettingsGroup { get { throw null; } set { } }
+        public bool? IsOptimizedForFrequentAttach { get { throw null; } set { } }
         public int? MaxShares { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.NetworkAccessPolicy? NetworkAccessPolicy { get { throw null; } set { } }
-        public bool? OptimizedForFrequentAttach { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.SupportedOperatingSystemType? OSType { get { throw null; } set { } }
         public string PropertyUpdatesInProgressTargetTier { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.DiskPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
@@ -4366,38 +4402,6 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal PirSharedGalleryResourceData() { }
         public string UniqueId { get { throw null; } }
-    }
-    public partial class PolicyViolation
-    {
-        internal PolicyViolation() { }
-        public Azure.ResourceManager.Compute.Models.PolicyViolationCategory? Category { get { throw null; } }
-        public string Details { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PolicyViolationCategory : System.IEquatable<Azure.ResourceManager.Compute.Models.PolicyViolationCategory>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public PolicyViolationCategory(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.PolicyViolationCategory CopyrightValidation { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.PolicyViolationCategory ImageFlaggedUnsafe { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.PolicyViolationCategory IPTheft { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.PolicyViolationCategory Other { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Models.PolicyViolationCategory other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Models.PolicyViolationCategory left, Azure.ResourceManager.Compute.Models.PolicyViolationCategory right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Models.PolicyViolationCategory (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Models.PolicyViolationCategory left, Azure.ResourceManager.Compute.Models.PolicyViolationCategory right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class PriorityMixPolicy
-    {
-        public PriorityMixPolicy() { }
-        public int? BaseRegularPriorityCount { get { throw null; } set { } }
-        public int? RegularPriorityPercentageAboveBase { get { throw null; } set { } }
     }
     public partial class ProximityPlacementGroupPatch : Azure.ResourceManager.Compute.Models.ComputeResourcePatch
     {
@@ -5081,7 +5085,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public TargetRegion(string name) { }
         public Azure.ResourceManager.Compute.Models.EncryptionImages Encryption { get { throw null; } set { } }
-        public bool? ExcludeFromLatest { get { throw null; } set { } }
+        public bool? IsExcludedFromLatest { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public int? RegionalReplicaCount { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ImageStorageAccountType? StorageAccountType { get { throw null; } set { } }
@@ -5405,13 +5409,13 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public VirtualMachineNetworkInterfaceConfiguration(string name) { }
         public Azure.ResourceManager.Compute.Models.ComputeDeleteOption? DeleteOption { get { throw null; } set { } }
-        public bool? DisableTcpStateTracking { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> DnsServers { get { throw null; } }
         public Azure.Core.ResourceIdentifier DscpConfigurationId { get { throw null; } set { } }
         public bool? EnableAcceleratedNetworking { get { throw null; } set { } }
         public bool? EnableFpga { get { throw null; } set { } }
         public bool? EnableIPForwarding { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineNetworkInterfaceIPConfiguration> IPConfigurations { get { throw null; } }
+        public bool? IsTcpStateTrackingDisabled { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier NetworkSecurityGroupId { get { throw null; } set { } }
         public bool? Primary { get { throw null; } set { } }
@@ -5683,12 +5687,12 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public VirtualMachineScaleSetNetworkConfiguration(string name) { }
         public Azure.ResourceManager.Compute.Models.ComputeDeleteOption? DeleteOption { get { throw null; } set { } }
-        public bool? DisableTcpStateTracking { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> DnsServers { get { throw null; } }
         public bool? EnableAcceleratedNetworking { get { throw null; } set { } }
         public bool? EnableFpga { get { throw null; } set { } }
         public bool? EnableIPForwarding { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetIPConfiguration> IPConfigurations { get { throw null; } }
+        public bool? IsTcpStateTrackingDisabled { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier NetworkSecurityGroupId { get { throw null; } set { } }
         public bool? Primary { get { throw null; } set { } }
@@ -5742,6 +5746,12 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.ComputeSku Sku { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpgradePolicy UpgradePolicy { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpdateVmProfile VirtualMachineProfile { get { throw null; } set { } }
+    }
+    public partial class VirtualMachineScaleSetPriorityMixPolicy
+    {
+        public VirtualMachineScaleSetPriorityMixPolicy() { }
+        public int? BaseRegularPriorityCount { get { throw null; } set { } }
+        public int? RegularPriorityPercentageAboveBase { get { throw null; } set { } }
     }
     public partial class VirtualMachineScaleSetPublicIPAddressConfiguration
     {
@@ -5824,12 +5834,12 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public VirtualMachineScaleSetUpdateNetworkConfiguration() { }
         public Azure.ResourceManager.Compute.Models.ComputeDeleteOption? DeleteOption { get { throw null; } set { } }
-        public bool? DisableTcpStateTracking { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> DnsServers { get { throw null; } }
         public bool? EnableAcceleratedNetworking { get { throw null; } set { } }
         public bool? EnableFpga { get { throw null; } set { } }
         public bool? EnableIPForwarding { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpdateIPConfiguration> IPConfigurations { get { throw null; } }
+        public bool? IsTcpStateTrackingDisabled { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier NetworkSecurityGroupId { get { throw null; } set { } }
         public bool? Primary { get { throw null; } set { } }
@@ -6317,7 +6327,7 @@ namespace Azure.ResourceManager.Compute.Models
         public WindowsConfiguration() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.AdditionalUnattendContent> AdditionalUnattendContent { get { throw null; } }
         public bool? EnableAutomaticUpdates { get { throw null; } set { } }
-        public bool? EnableVmAgentPlatformUpdates { get { throw null; } set { } }
+        public bool? IsVmAgentPlatformUpdatesEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.PatchSettings PatchSettings { get { throw null; } set { } }
         public bool? ProvisionVmAgent { get { throw null; } set { } }
         public string TimeZone { get { throw null; } set { } }

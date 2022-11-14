@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="regionalReplicaCount"> The number of replicas of the Image Version to be created per region. This property is updatable. </param>
         /// <param name="storageAccountType"> Specifies the storage account type to be used to store the image. This property is not updatable. </param>
         /// <param name="encryption"> Optional. Allows users to provide customer managed keys for encrypting the OS and data disks in the gallery artifact. </param>
-        /// <param name="excludeFromLatest"> Contains the flag setting to hide an image when users specify version=&apos;latest&apos;. </param>
-        internal TargetRegion(string name, int? regionalReplicaCount, ImageStorageAccountType? storageAccountType, EncryptionImages encryption, bool? excludeFromLatest)
+        /// <param name="isExcludedFromLatest"> Contains the flag setting to hide an image when users specify version=&apos;latest&apos;. </param>
+        internal TargetRegion(string name, int? regionalReplicaCount, ImageStorageAccountType? storageAccountType, EncryptionImages encryption, bool? isExcludedFromLatest)
         {
             Name = name;
             RegionalReplicaCount = regionalReplicaCount;
             StorageAccountType = storageAccountType;
             Encryption = encryption;
-            ExcludeFromLatest = excludeFromLatest;
+            IsExcludedFromLatest = isExcludedFromLatest;
         }
 
         /// <summary> The name of the region. </summary>
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Optional. Allows users to provide customer managed keys for encrypting the OS and data disks in the gallery artifact. </summary>
         public EncryptionImages Encryption { get; set; }
         /// <summary> Contains the flag setting to hide an image when users specify version=&apos;latest&apos;. </summary>
-        public bool? ExcludeFromLatest { get; set; }
+        public bool? IsExcludedFromLatest { get; set; }
     }
 }

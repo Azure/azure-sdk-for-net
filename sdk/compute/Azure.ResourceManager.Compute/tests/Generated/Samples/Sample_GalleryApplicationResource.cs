@@ -54,7 +54,7 @@ Parameters =
 {
 new GalleryApplicationCustomActionParameter("myCustomActionParameter")
 {
-Required = false,
+IsRequired = false,
 ParameterType = GalleryApplicationCustomActionParameterType.String,
 DefaultValue = "default value of parameter.",
 Description = "This is the description of the parameter",

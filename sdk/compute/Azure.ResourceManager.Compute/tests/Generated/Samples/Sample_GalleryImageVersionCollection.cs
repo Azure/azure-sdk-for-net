@@ -68,7 +68,7 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
 }
 },
 },
-ExcludeFromLatest = false,
+IsExcludedFromLatest = false,
 },new TargetRegion("East US")
 {
 RegionalReplicaCount = 2,
@@ -90,7 +90,7 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
 }
 },
 },
-ExcludeFromLatest = false,
+IsExcludedFromLatest = false,
 }
 },
                 },
@@ -167,7 +167,7 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
 }
 },
 },
-ExcludeFromLatest = false,
+IsExcludedFromLatest = false,
 },new TargetRegion("East US")
 {
 RegionalReplicaCount = 2,
@@ -189,7 +189,7 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
 }
 },
 },
-ExcludeFromLatest = false,
+IsExcludedFromLatest = false,
 }
 },
                 },
@@ -266,7 +266,7 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
 }
 },
 },
-ExcludeFromLatest = false,
+IsExcludedFromLatest = false,
 },new TargetRegion("East US")
 {
 RegionalReplicaCount = 2,
@@ -288,7 +288,7 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
 }
 },
 },
-ExcludeFromLatest = false,
+IsExcludedFromLatest = false,
 }
 },
                 },
@@ -362,7 +362,7 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
 }
 },
 },
-ExcludeFromLatest = false,
+IsExcludedFromLatest = false,
 },new TargetRegion("East US")
 {
 RegionalReplicaCount = 2,
@@ -381,7 +381,7 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
 }
 },
 },
-ExcludeFromLatest = false,
+IsExcludedFromLatest = false,
 }
 },
                 },
@@ -390,7 +390,7 @@ ExcludeFromLatest = false,
                     OSDiskImage = new GalleryOSDiskImage()
                     {
                         HostCaching = HostCaching.ReadOnly,
-                        Source = new GalleryArtifactVersionSource()
+                        GallerySource = new GalleryDiskImageSource()
                         {
                             Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/snapshots/{osSnapshotName}"),
                         },
@@ -400,7 +400,7 @@ ExcludeFromLatest = false,
 new GalleryDataDiskImage(1)
 {
 HostCaching = HostCaching.None,
-Source = new GalleryArtifactVersionSource()
+GallerySource = new GalleryDiskImageSource()
 {
 Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/disks/{dataDiskName}"),
 },
@@ -456,7 +456,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
 new TargetRegion("West US")
 {
 RegionalReplicaCount = 1,
-ExcludeFromLatest = false,
+IsExcludedFromLatest = false,
 }
 },
                     ReplicationMode = GalleryReplicationMode.Shallow,
@@ -534,7 +534,7 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
 }
 },
 },
-ExcludeFromLatest = false,
+IsExcludedFromLatest = false,
 },new TargetRegion("East US")
 {
 RegionalReplicaCount = 2,
@@ -556,7 +556,7 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
 }
 },
 },
-ExcludeFromLatest = false,
+IsExcludedFromLatest = false,
 }
 },
                 },
@@ -630,7 +630,7 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
 }
 },
 },
-ExcludeFromLatest = false,
+IsExcludedFromLatest = false,
 },new TargetRegion("East US")
 {
 RegionalReplicaCount = 2,
@@ -649,7 +649,7 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
 }
 },
 },
-ExcludeFromLatest = false,
+IsExcludedFromLatest = false,
 }
 },
                 },
@@ -658,7 +658,7 @@ ExcludeFromLatest = false,
                     OSDiskImage = new GalleryOSDiskImage()
                     {
                         HostCaching = HostCaching.ReadOnly,
-                        Source = new GalleryArtifactVersionSource()
+                        GallerySource = new GalleryDiskImageSource()
                         {
                             Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/snapshots/{osSnapshotName}"),
                         },
@@ -668,7 +668,7 @@ ExcludeFromLatest = false,
 new GalleryDataDiskImage(1)
 {
 HostCaching = HostCaching.None,
-Source = new GalleryArtifactVersionSource()
+GallerySource = new GalleryDiskImageSource()
 {
 Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/disks/{dataDiskName}"),
 },
@@ -738,12 +738,12 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
 }
 },
 },
-ExcludeFromLatest = false,
+IsExcludedFromLatest = false,
 },new TargetRegion("East US")
 {
 RegionalReplicaCount = 2,
 StorageAccountType = ImageStorageAccountType.StandardZrs,
-ExcludeFromLatest = false,
+IsExcludedFromLatest = false,
 }
 },
                 },
@@ -752,7 +752,7 @@ ExcludeFromLatest = false,
                     OSDiskImage = new GalleryOSDiskImage()
                     {
                         HostCaching = HostCaching.ReadOnly,
-                        Source = new GalleryArtifactVersionSource()
+                        GallerySource = new GalleryDiskImageSource()
                         {
                             Uri = new Uri("https://gallerysourcencus.blob.core.windows.net/myvhds/Windows-Server-2012-R2-20171216-en.us-128GB.vhd"),
                             Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Storage/storageAccounts/{storageAccount}"),
@@ -763,7 +763,7 @@ ExcludeFromLatest = false,
 new GalleryDataDiskImage(1)
 {
 HostCaching = HostCaching.None,
-Source = new GalleryArtifactVersionSource()
+GallerySource = new GalleryDiskImageSource()
 {
 Uri = new Uri("https://gallerysourcencus.blob.core.windows.net/myvhds/Windows-Server-2012-R2-20171216-en.us-128GB.vhd"),
 Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Storage/storageAccounts/{storageAccount}"),
@@ -837,7 +837,7 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
 }
 },
 },
-ExcludeFromLatest = false,
+IsExcludedFromLatest = false,
 },new TargetRegion("East US")
 {
 RegionalReplicaCount = 2,
@@ -859,7 +859,7 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
 }
 },
 },
-ExcludeFromLatest = false,
+IsExcludedFromLatest = false,
 }
 },
                 },

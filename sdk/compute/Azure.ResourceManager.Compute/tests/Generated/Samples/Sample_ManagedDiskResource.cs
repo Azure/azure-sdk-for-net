@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Compute
             // invoke the operation
             ManagedDiskPatch patch = new ManagedDiskPatch()
             {
-                OptimizedForFrequentAttach = false,
+                IsOptimizedForFrequentAttach = false,
             };
             ArmOperation<ManagedDiskResource> lro = await managedDisk.UpdateAsync(WaitUntil.Completed, patch);
             ManagedDiskResource result = lro.Value;

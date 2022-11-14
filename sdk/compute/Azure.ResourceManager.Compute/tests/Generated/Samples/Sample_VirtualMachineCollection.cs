@@ -3455,7 +3455,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     AdminUsername = "{your-username}",
                     LinuxConfiguration = new LinuxConfiguration()
                     {
-                        DisablePasswordAuthentication = true,
+                        IsPasswordAuthenticationDisabled = true,
                     },
                 },
                 NetworkProfile = new VirtualMachineNetworkProfile()

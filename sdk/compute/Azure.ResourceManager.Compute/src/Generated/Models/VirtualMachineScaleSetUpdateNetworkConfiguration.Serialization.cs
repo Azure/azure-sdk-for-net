@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("enableAcceleratedNetworking");
                 writer.WriteBooleanValue(EnableAcceleratedNetworking.Value);
             }
-            if (Optional.IsDefined(DisableTcpStateTracking))
+            if (Optional.IsDefined(IsTcpStateTrackingDisabled))
             {
                 writer.WritePropertyName("disableTcpStateTracking");
-                writer.WriteBooleanValue(DisableTcpStateTracking.Value);
+                writer.WriteBooleanValue(IsTcpStateTrackingDisabled.Value);
             }
             if (Optional.IsDefined(EnableFpga))
             {

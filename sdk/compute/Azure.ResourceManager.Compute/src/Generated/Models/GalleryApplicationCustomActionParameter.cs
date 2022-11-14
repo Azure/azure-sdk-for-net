@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of GalleryApplicationCustomActionParameter. </summary>
         /// <param name="name"> The name of the custom action.  Must be unique within the Gallery Application Version. </param>
-        /// <param name="required"> Indicates whether this parameter must be passed when running the custom action. </param>
+        /// <param name="isRequired"> Indicates whether this parameter must be passed when running the custom action. </param>
         /// <param name="parameterType"> Specifies the type of the custom action parameter. Possible values are: String, ConfigurationDataBlob or LogOutputBlob. </param>
         /// <param name="defaultValue"> The default value of the parameter.  Only applies to string types. </param>
         /// <param name="description"> A description to help users understand what this parameter means. </param>
-        internal GalleryApplicationCustomActionParameter(string name, bool? required, GalleryApplicationCustomActionParameterType? parameterType, string defaultValue, string description)
+        internal GalleryApplicationCustomActionParameter(string name, bool? isRequired, GalleryApplicationCustomActionParameterType? parameterType, string defaultValue, string description)
         {
             Name = name;
-            Required = required;
+            IsRequired = isRequired;
             ParameterType = parameterType;
             DefaultValue = defaultValue;
             Description = description;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The name of the custom action.  Must be unique within the Gallery Application Version. </summary>
         public string Name { get; set; }
         /// <summary> Indicates whether this parameter must be passed when running the custom action. </summary>
-        public bool? Required { get; set; }
+        public bool? IsRequired { get; set; }
         /// <summary> Specifies the type of the custom action parameter. Possible values are: String, ConfigurationDataBlob or LogOutputBlob. </summary>
         public GalleryApplicationCustomActionParameterType? ParameterType { get; set; }
         /// <summary> The default value of the parameter.  Only applies to string types. </summary>

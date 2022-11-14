@@ -146,7 +146,7 @@ Content = "aaaaaaaaaaaaaaaaaaaa",
                         },
                         LinuxConfiguration = new LinuxConfiguration()
                         {
-                            DisablePasswordAuthentication = true,
+                            IsPasswordAuthenticationDisabled = true,
                             ProvisionVmAgent = true,
                             PatchSettings = new LinuxPatchSettings()
                             {

@@ -50,7 +50,7 @@ new TargetRegion("West US")
 {
 RegionalReplicaCount = 1,
 StorageAccountType = ImageStorageAccountType.StandardLrs,
-ExcludeFromLatest = false,
+IsExcludedFromLatest = false,
 }
 },
                     ReplicaCount = 1,

@@ -51,10 +51,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("winRM");
                 writer.WriteObjectValue(WinRM);
             }
-            if (Optional.IsDefined(EnableVmAgentPlatformUpdates))
+            if (Optional.IsDefined(IsVmAgentPlatformUpdatesEnabled))
             {
                 writer.WritePropertyName("enableVMAgentPlatformUpdates");
-                writer.WriteBooleanValue(EnableVmAgentPlatformUpdates.Value);
+                writer.WriteBooleanValue(IsVmAgentPlatformUpdatesEnabled.Value);
             }
             writer.WriteEndObject();
         }

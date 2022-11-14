@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Required))
+            if (Optional.IsDefined(IsRequired))
             {
                 writer.WritePropertyName("required");
-                writer.WriteBooleanValue(Required.Value);
+                writer.WriteBooleanValue(IsRequired.Value);
             }
             if (Optional.IsDefined(ParameterType))
             {

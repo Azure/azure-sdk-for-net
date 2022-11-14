@@ -230,6 +230,24 @@ rename-mapping:
   VirtualMachineScaleSetVMExtension.properties.protectedSettingsFromKeyVault: KeyVaultProtectedSettings
   VirtualMachineExtensionUpdate.properties.protectedSettingsFromKeyVault: KeyVaultProtectedSettings
   VirtualMachineScaleSetVMExtensionUpdate.properties.protectedSettingsFromKeyVault: KeyVaultProtectedSettings
+  Disk.properties.optimizedForFrequentAttach: IsOptimizedForFrequentAttach
+  DiskUpdate.properties.optimizedForFrequentAttach: IsOptimizedForFrequentAttach
+  CreationData.performancePlus: IsPerformancePlusEnabled
+  GalleryApplicationCustomActionParameter.required: IsRequired
+  GalleryImageVersionSafetyProfile.reportedForPolicyViolation: IsReportedForPolicyViolation
+  LinuxConfiguration.disablePasswordAuthentication: IsPasswordAuthenticationDisabled
+  LinuxConfiguration.enableVMAgentPlatformUpdates: IsVMAgentPlatformUpdatesEnabled
+  WindowsConfiguration.enableVMAgentPlatformUpdates: IsVMAgentPlatformUpdatesEnabled
+  PolicyViolation: GalleryImageVersionPolicyViolation
+  PolicyViolationCategory: GalleryImageVersionPolicyViolationCategory
+  PriorityMixPolicy: VirtualMachineScaleSetPriorityMixPolicy
+  CommunityGalleryImageVersion.properties.excludeFromLatest: IsExcludedFromLatest
+  SharedGalleryImageVersion.properties.excludeFromLatest: IsExcludedFromLatest
+  GalleryArtifactPublishingProfileBase.excludeFromLatest: IsExcludedFromLatest
+  TargetRegion.excludeFromLatest: IsExcludedFromLatest
+  VirtualMachineNetworkInterfaceConfiguration.properties.disableTcpStateTracking: IsTcpStateTrackingDisabled
+  VirtualMachineScaleSetNetworkConfiguration.properties.disableTcpStateTracking: IsTcpStateTrackingDisabled
+  VirtualMachineScaleSetUpdateNetworkConfiguration.properties.disableTcpStateTracking: IsTcpStateTrackingDisabled
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced

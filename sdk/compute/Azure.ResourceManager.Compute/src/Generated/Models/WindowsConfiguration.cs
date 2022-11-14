@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="additionalUnattendContent"> Specifies additional base-64 encoded XML formatted information that can be included in the Unattend.xml file, which is used by Windows Setup. </param>
         /// <param name="patchSettings"> [Preview Feature] Specifies settings related to VM Guest Patching on Windows. </param>
         /// <param name="winRM"> Specifies the Windows Remote Management listeners. This enables remote Windows PowerShell. </param>
-        /// <param name="enableVmAgentPlatformUpdates"> Indicates whether VMAgent Platform Updates is enabled for the Windows virtual machine. Default value is false. </param>
-        internal WindowsConfiguration(bool? provisionVmAgent, bool? enableAutomaticUpdates, string timeZone, IList<AdditionalUnattendContent> additionalUnattendContent, PatchSettings patchSettings, WinRMConfiguration winRM, bool? enableVmAgentPlatformUpdates)
+        /// <param name="isVmAgentPlatformUpdatesEnabled"> Indicates whether VMAgent Platform Updates is enabled for the Windows virtual machine. Default value is false. </param>
+        internal WindowsConfiguration(bool? provisionVmAgent, bool? enableAutomaticUpdates, string timeZone, IList<AdditionalUnattendContent> additionalUnattendContent, PatchSettings patchSettings, WinRMConfiguration winRM, bool? isVmAgentPlatformUpdatesEnabled)
         {
             ProvisionVmAgent = provisionVmAgent;
             EnableAutomaticUpdates = enableAutomaticUpdates;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
             AdditionalUnattendContent = additionalUnattendContent;
             PatchSettings = patchSettings;
             WinRM = winRM;
-            EnableVmAgentPlatformUpdates = enableVmAgentPlatformUpdates;
+            IsVmAgentPlatformUpdatesEnabled = isVmAgentPlatformUpdatesEnabled;
         }
 
         /// <summary> Indicates whether virtual machine agent should be provisioned on the virtual machine. &lt;br&gt;&lt;br&gt; When this property is not specified in the request body, default behavior is to set it to true.  This will ensure that VM Agent is installed on the VM so that extensions can be added to the VM later. </summary>
@@ -62,6 +62,6 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Indicates whether VMAgent Platform Updates is enabled for the Windows virtual machine. Default value is false. </summary>
-        public bool? EnableVmAgentPlatformUpdates { get; set; }
+        public bool? IsVmAgentPlatformUpdatesEnabled { get; set; }
     }
 }

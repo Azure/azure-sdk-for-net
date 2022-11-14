@@ -8,17 +8,17 @@
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies the target splits for Spot and Regular priority VMs within a scale set with flexible orchestration mode. &lt;br&gt;&lt;br&gt;With this property the customer is able to specify the base number of regular priority VMs created as the VMSS flex instance scales out and the split between Spot and Regular priority VMs after this base target has been reached. </summary>
-    public partial class PriorityMixPolicy
+    public partial class VirtualMachineScaleSetPriorityMixPolicy
     {
-        /// <summary> Initializes a new instance of PriorityMixPolicy. </summary>
-        public PriorityMixPolicy()
+        /// <summary> Initializes a new instance of VirtualMachineScaleSetPriorityMixPolicy. </summary>
+        public VirtualMachineScaleSetPriorityMixPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of PriorityMixPolicy. </summary>
+        /// <summary> Initializes a new instance of VirtualMachineScaleSetPriorityMixPolicy. </summary>
         /// <param name="baseRegularPriorityCount"> The base number of regular priority VMs that will be created in this scale set as it scales out. </param>
         /// <param name="regularPriorityPercentageAboveBase"> The percentage of VM instances, after the base regular priority count has been reached, that are expected to use regular priority. </param>
-        internal PriorityMixPolicy(int? baseRegularPriorityCount, int? regularPriorityPercentageAboveBase)
+        internal VirtualMachineScaleSetPriorityMixPolicy(int? baseRegularPriorityCount, int? regularPriorityPercentageAboveBase)
         {
             BaseRegularPriorityCount = baseRegularPriorityCount;
             RegularPriorityPercentageAboveBase = regularPriorityPercentageAboveBase;

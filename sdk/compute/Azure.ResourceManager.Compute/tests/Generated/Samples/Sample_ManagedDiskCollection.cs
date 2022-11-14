@@ -645,7 +645,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CreationData = new DiskCreationData(DiskCreateOption.Empty),
                 DiskSizeGB = 200,
-                OptimizedForFrequentAttach = true,
+                IsOptimizedForFrequentAttach = true,
             };
             ArmOperation<ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);
             ManagedDiskResource result = lro.Value;
@@ -684,7 +684,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CreationData = new DiskCreationData(DiskCreateOption.Upload)
                 {
-                    PerformancePlus = true,
+                    IsPerformancePlusEnabled = true,
                 },
             };
             ArmOperation<ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);

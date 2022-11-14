@@ -56,7 +56,7 @@ Parameters =
 {
 new GalleryApplicationCustomActionParameter("myCustomActionParameter")
 {
-Required = false,
+IsRequired = false,
 ParameterType = GalleryApplicationCustomActionParameterType.String,
 DefaultValue = "default value of parameter.",
 Description = "This is the description of the parameter",
@@ -70,7 +70,7 @@ new TargetRegion("West US")
 {
 RegionalReplicaCount = 1,
 StorageAccountType = ImageStorageAccountType.StandardLrs,
-ExcludeFromLatest = false,
+IsExcludedFromLatest = false,
 }
 },
                     ReplicaCount = 1,

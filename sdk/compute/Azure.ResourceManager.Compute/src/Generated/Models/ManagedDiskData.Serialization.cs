@@ -165,10 +165,10 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("dataAccessAuthMode");
                 writer.WriteStringValue(DataAccessAuthMode.Value.ToString());
             }
-            if (Optional.IsDefined(OptimizedForFrequentAttach))
+            if (Optional.IsDefined(IsOptimizedForFrequentAttach))
             {
                 writer.WritePropertyName("optimizedForFrequentAttach");
-                writer.WriteBooleanValue(OptimizedForFrequentAttach.Value);
+                writer.WriteBooleanValue(IsOptimizedForFrequentAttach.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

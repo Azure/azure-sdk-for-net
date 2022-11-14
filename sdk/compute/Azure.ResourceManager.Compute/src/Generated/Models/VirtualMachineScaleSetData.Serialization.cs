@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Compute
             Optional<ScaleInPolicy> scaleInPolicy = default;
             Optional<OrchestrationMode> orchestrationMode = default;
             Optional<SpotRestorePolicy> spotRestorePolicy = default;
-            Optional<PriorityMixPolicy> priorityMixPolicy = default;
+            Optional<VirtualMachineScaleSetPriorityMixPolicy> priorityMixPolicy = default;
             Optional<DateTimeOffset> timeCreated = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            priorityMixPolicy = PriorityMixPolicy.DeserializePriorityMixPolicy(property0.Value);
+                            priorityMixPolicy = VirtualMachineScaleSetPriorityMixPolicy.DeserializeVirtualMachineScaleSetPriorityMixPolicy(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("timeCreated"))

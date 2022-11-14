@@ -58,10 +58,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("securityDataUri");
                 writer.WriteStringValue(SecurityDataUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(PerformancePlus))
+            if (Optional.IsDefined(IsPerformancePlusEnabled))
             {
                 writer.WritePropertyName("performancePlus");
-                writer.WriteBooleanValue(PerformancePlus.Value);
+                writer.WriteBooleanValue(IsPerformancePlusEnabled.Value);
             }
             writer.WriteEndObject();
         }

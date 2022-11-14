@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisablePasswordAuthentication))
+            if (Optional.IsDefined(IsPasswordAuthenticationDisabled))
             {
                 writer.WritePropertyName("disablePasswordAuthentication");
-                writer.WriteBooleanValue(DisablePasswordAuthentication.Value);
+                writer.WriteBooleanValue(IsPasswordAuthenticationDisabled.Value);
             }
             if (Optional.IsDefined(Ssh))
             {
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("patchSettings");
                 writer.WriteObjectValue(PatchSettings);
             }
-            if (Optional.IsDefined(EnableVmAgentPlatformUpdates))
+            if (Optional.IsDefined(IsVmAgentPlatformUpdatesEnabled))
             {
                 writer.WritePropertyName("enableVMAgentPlatformUpdates");
-                writer.WriteBooleanValue(EnableVmAgentPlatformUpdates.Value);
+                writer.WriteBooleanValue(IsVmAgentPlatformUpdatesEnabled.Value);
             }
             writer.WriteEndObject();
         }
