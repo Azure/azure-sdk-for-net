@@ -30,16 +30,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     case "ScheduleBasedTriggerContext": return ScheduleBasedBackupTriggerContext.DeserializeScheduleBasedBackupTriggerContext(element);
                 }
             }
-            string objectType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("objectType"))
-                {
-                    objectType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownDataProtectionBackupTriggerContext(objectType);
+            return UnknownTriggerContext.DeserializeUnknownTriggerContext(element);
         }
     }
 }

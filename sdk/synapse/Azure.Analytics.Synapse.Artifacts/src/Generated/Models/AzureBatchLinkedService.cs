@@ -42,7 +42,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="accountName"> The Azure Batch account name. Type: string (or Expression with resultType string). </param>
-        /// <param name="accessKey"> The Azure Batch account access key. </param>
+        /// <param name="accessKey">
+        /// The Azure Batch account access key.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
         /// <param name="batchUri"> The Azure Batch URI. Type: string (or Expression with resultType string). </param>
         /// <param name="poolName"> The Azure Batch pool name. Type: string (or Expression with resultType string). </param>
         /// <param name="linkedServiceName"> The Azure Storage linked service reference. </param>
@@ -60,7 +64,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> The Azure Batch account name. Type: string (or Expression with resultType string). </summary>
         public object AccountName { get; set; }
-        /// <summary> The Azure Batch account access key. </summary>
+        /// <summary>
+        /// The Azure Batch account access key.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </summary>
         public SecretBase AccessKey { get; set; }
         /// <summary> The Azure Batch URI. Type: string (or Expression with resultType string). </summary>
         public object BatchUri { get; set; }

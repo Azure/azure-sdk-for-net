@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
@@ -23,16 +22,7 @@ namespace Azure.AI.Language.Conversations
                     case "RegexKey": return RegexKey.DeserializeRegexKey(element);
                 }
             }
-            ExtraInformationKind extraInformationKind = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("extraInformationKind"))
-                {
-                    extraInformationKind = new ExtraInformationKind(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new BaseExtraInformation(extraInformationKind);
+            return UnknownBaseExtraInformation.DeserializeUnknownBaseExtraInformation(element);
         }
     }
 }

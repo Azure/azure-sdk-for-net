@@ -9,7 +9,11 @@ using System;
 
 namespace Azure.AI.Language.Conversations
 {
-    /// <summary> Container for results for all tasks in the conversation job. </summary>
+    /// <summary>
+    /// Container for results for all tasks in the conversation job.
+    /// Please note <see cref="AnalyzeConversationJobResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="AnalyzeConversationPIIResult"/>, <see cref="AnalyzeConversationSentimentResult"/> and <see cref="AnalyzeConversationSummarizationResult"/>.
+    /// </summary>
     public partial class AnalyzeConversationJobResult : TaskState
     {
         /// <summary> Initializes a new instance of AnalyzeConversationJobResult. </summary>

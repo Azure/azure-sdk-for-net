@@ -30,16 +30,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     case "SimpleRetentionPolicy": return SimpleRetentionPolicy.DeserializeSimpleRetentionPolicy(element);
                 }
             }
-            string retentionPolicyType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("retentionPolicyType"))
-                {
-                    retentionPolicyType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownRetentionPolicy(retentionPolicyType);
+            return UnknownRetentionPolicy.DeserializeUnknownRetentionPolicy(element);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static UnknownLinkedIntegrationRuntimeType DeserializeUnknownLinkedIntegrationRuntimeType(JsonElement element)
         {
-            string authorizationType = default;
+            string authorizationType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authorizationType"))

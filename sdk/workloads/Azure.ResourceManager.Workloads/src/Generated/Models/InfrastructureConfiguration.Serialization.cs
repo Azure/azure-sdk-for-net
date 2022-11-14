@@ -32,22 +32,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     case "ThreeTier": return ThreeTierConfiguration.DeserializeThreeTierConfiguration(element);
                 }
             }
-            SapDeploymentType deploymentType = default;
-            string appResourceGroup = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("deploymentType"))
-                {
-                    deploymentType = new SapDeploymentType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("appResourceGroup"))
-                {
-                    appResourceGroup = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownInfrastructureConfiguration(deploymentType, appResourceGroup);
+            return UnknownInfrastructureConfiguration.DeserializeUnknownInfrastructureConfiguration(element);
         }
     }
 }

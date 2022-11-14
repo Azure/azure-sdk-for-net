@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.Synapse
     /// A class representing the Database data model.
     /// Please note <see cref="DatabaseData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ReadOnlyFollowingDatabase"/> and <see cref="ReadWriteDatabase"/>.
+    /// Please note <see cref="DatabaseData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="ReadOnlyFollowingDatabase"/> and <see cref="ReadWriteDatabase"/>.
     /// </summary>
     public partial class DatabaseData : ResourceData
     {

@@ -32,16 +32,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     case "GithubScope": return GithubScopeEnvironment.DeserializeGithubScopeEnvironment(element);
                 }
             }
-            EnvironmentType environmentType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("environmentType"))
-                {
-                    environmentType = new EnvironmentType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownSecurityConnectorEnvironment(environmentType);
+            return UnknownEnvironmentData.DeserializeUnknownEnvironmentData(element);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         internal const string ES384Value = "ES384";
         internal const string ES512Value = "ES512";
         internal const string ES256KValue = "ES256K";
-        internal const string EdDSAValue = "EdDSA";
+        internal const string EdDsaValue = "EdDSA";
 
         private readonly string _value;
 
@@ -88,7 +88,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <summary>
         /// Gets an ECDSA with a secp256k1 curve <see cref="SignatureAlgorithm"/> as described in <see href="https://tools.ietf.org/html/rfc8032"/>.
         /// </summary>
-        public static SignatureAlgorithm EdDSA { get; } = new SignatureAlgorithm(EdDSAValue);
+        public static SignatureAlgorithm EdDsa { get; } = new SignatureAlgorithm(EdDsaValue);
 
         /// <summary>
         /// Determines if two <see cref="SignatureAlgorithm"/> values are the same.
@@ -134,7 +134,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 case PS256Value:
                 case ES256Value:
                 case ES256KValue:
-                case EdDSAValue:
+                case EdDsaValue:
                     return SHA256.Create();
 
                 case RS384Value:
@@ -160,7 +160,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 case PS256Value:
                 case ES256Value:
                 case ES256KValue:
-                case EdDSAValue:
+                case EdDsaValue:
                     return HashAlgorithmName.SHA256;
 
                 case RS384Value:
