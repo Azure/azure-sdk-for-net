@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             Optional<string> relativePath = default;
-            string type = default;
+            string type = "UploadedUserSourceInfo";
             Optional<string> version = default;
             foreach (var property in element.EnumerateObject())
             {

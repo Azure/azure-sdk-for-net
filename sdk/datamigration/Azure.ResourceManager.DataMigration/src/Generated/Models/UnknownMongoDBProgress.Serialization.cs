@@ -12,60 +12,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    internal partial class UnknownMongoDBProgress : IUtf8JsonSerializable
+    internal partial class UnknownMongoDBProgress
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("bytesCopied");
-            writer.WriteNumberValue(BytesCopied);
-            writer.WritePropertyName("documentsCopied");
-            writer.WriteNumberValue(DocumentsCopied);
-            writer.WritePropertyName("elapsedTime");
-            writer.WriteStringValue(ElapsedTime);
-            writer.WritePropertyName("errors");
-            writer.WriteStartObject();
-            foreach (var item in Errors)
-            {
-                writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
-            }
-            writer.WriteEndObject();
-            writer.WritePropertyName("eventsPending");
-            writer.WriteNumberValue(EventsPending);
-            writer.WritePropertyName("eventsReplayed");
-            writer.WriteNumberValue(EventsReplayed);
-            if (Optional.IsDefined(LastEventOn))
-            {
-                writer.WritePropertyName("lastEventTime");
-                writer.WriteStringValue(LastEventOn.Value, "O");
-            }
-            if (Optional.IsDefined(LastReplayOn))
-            {
-                writer.WritePropertyName("lastReplayTime");
-                writer.WriteStringValue(LastReplayOn.Value, "O");
-            }
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(QualifiedName))
-            {
-                writer.WritePropertyName("qualifiedName");
-                writer.WriteStringValue(QualifiedName);
-            }
-            writer.WritePropertyName("resultType");
-            writer.WriteStringValue(ResultType.ToString());
-            writer.WritePropertyName("state");
-            writer.WriteStringValue(State.ToString());
-            writer.WritePropertyName("totalBytes");
-            writer.WriteNumberValue(TotalBytes);
-            writer.WritePropertyName("totalDocuments");
-            writer.WriteNumberValue(TotalDocuments);
-            writer.WriteEndObject();
-        }
-
         internal static UnknownMongoDBProgress DeserializeUnknownMongoDBProgress(JsonElement element)
         {
             long bytesCopied = default;
@@ -78,7 +26,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<DateTimeOffset> lastReplayTime = default;
             Optional<string> name = default;
             Optional<string> qualifiedName = default;
-            MongoDBProgressResultType resultType = default;
+            MongoDBProgressResultType resultType = "Unknown";
             MongoDBMigrationState state = default;
             long totalBytes = default;
             long totalDocuments = default;

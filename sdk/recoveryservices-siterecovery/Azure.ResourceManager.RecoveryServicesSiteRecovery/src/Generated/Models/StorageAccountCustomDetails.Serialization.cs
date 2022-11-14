@@ -29,16 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     case "Existing": return ExistingStorageAccount.DeserializeExistingStorageAccount(element);
                 }
             }
-            string resourceType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("resourceType"))
-                {
-                    resourceType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownStorageAccountCustomDetails(resourceType);
+            return UnknownStorageAccountCustomDetails.DeserializeUnknownStorageAccountCustomDetails(element);
         }
     }
 }

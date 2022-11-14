@@ -32,16 +32,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     case "Microsoft.StreamAnalytics/JavascriptUdf": return JavaScriptFunctionBinding.DeserializeJavaScriptFunctionBinding(element);
                 }
             }
-            string type = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownStreamingJobFunctionBinding(type);
+            return UnknownFunctionBinding.DeserializeUnknownFunctionBinding(element);
         }
     }
 }

@@ -35,16 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "ServicePrincipal": return ServicePrincipalDatastoreCredentials.DeserializeServicePrincipalDatastoreCredentials(element);
                 }
             }
-            CredentialsType credentialsType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("credentialsType"))
-                {
-                    credentialsType = new CredentialsType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownDatastoreCredentials(credentialsType);
+            return UnknownDatastoreCredentials.DeserializeUnknownDatastoreCredentials(element);
         }
     }
 }

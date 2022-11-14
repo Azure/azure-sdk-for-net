@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
@@ -22,22 +21,7 @@ namespace Azure.AI.Language.Conversations
                     case "Conversation": return ConversationPrediction.DeserializeConversationPrediction(element);
                 }
             }
-            ProjectKind projectKind = default;
-            Optional<string> topIntent = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("projectKind"))
-                {
-                    projectKind = new ProjectKind(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("topIntent"))
-                {
-                    topIntent = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new BasePrediction(projectKind, topIntent.Value);
+            return UnknownBasePrediction.DeserializeUnknownBasePrediction(element);
         }
     }
 }

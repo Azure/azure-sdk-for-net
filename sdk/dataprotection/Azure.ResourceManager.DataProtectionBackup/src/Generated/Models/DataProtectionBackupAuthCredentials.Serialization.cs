@@ -29,16 +29,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     case "SecretStoreBasedAuthCredentials": return SecretStoreBasedAuthCredentials.DeserializeSecretStoreBasedAuthCredentials(element);
                 }
             }
-            string objectType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("objectType"))
-                {
-                    objectType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownDataProtectionBackupAuthCredentials(objectType);
+            return UnknownAuthCredentials.DeserializeUnknownAuthCredentials(element);
         }
     }
 }

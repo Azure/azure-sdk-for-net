@@ -38,6 +38,8 @@ namespace Azure.Containers.ContainerRegistry
         /// </summary>
         private void AddHeadersAndQueryParameters()
         {
+            Diagnostics.LoggedHeaderNames.Add("Range");
+            Diagnostics.LoggedHeaderNames.Add("Content-Range");
             Diagnostics.LoggedQueryParameters.Add("orderby");
             Diagnostics.LoggedQueryParameters.Add("n");
             Diagnostics.LoggedQueryParameters.Add("last");
