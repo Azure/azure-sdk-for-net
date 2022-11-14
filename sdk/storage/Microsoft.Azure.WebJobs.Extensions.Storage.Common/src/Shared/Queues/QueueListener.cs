@@ -453,7 +453,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
 
         public ITargetScaler GetTargetScaler()
         {
-            return _targetScaler != null ? _targetScaler.Value : null;
+            return _targetScaler.Value;
         }
 
         public IScaleMonitor GetMonitor()
