@@ -458,7 +458,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
 
         public IScaleMonitor GetMonitor()
         {
-            return _scaleMonitor != null ? _scaleMonitor.Value : null;
+            return _scaleMonitor.Value;
         }
     }
 }
