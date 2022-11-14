@@ -10,11 +10,11 @@ using System;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The result of the assessment. </summary>
-    public partial class SecurityAssessmentStatusResult : AssessmentStatus
+    public partial class SecurityAssessmentStatusResult : SecurityAssessmentStatus
     {
         /// <summary> Initializes a new instance of SecurityAssessmentStatusResult. </summary>
         /// <param name="code"> Programmatic code for the status of the assessment. </param>
-        public SecurityAssessmentStatusResult(AssessmentStatusCode code) : base(code)
+        public SecurityAssessmentStatusResult(SecurityAssessmentStatusCode code) : base(code)
         {
         }
 
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="description"> Human readable description of the assessment status. </param>
         /// <param name="firstEvaluatedOn"> The time that the assessment was created and first evaluated. Returned as UTC time in ISO 8601 format. </param>
         /// <param name="statusChangeOn"> The time that the status of the assessment last changed. Returned as UTC time in ISO 8601 format. </param>
-        internal SecurityAssessmentStatusResult(AssessmentStatusCode code, string cause, string description, DateTimeOffset? firstEvaluatedOn, DateTimeOffset? statusChangeOn) : base(code, cause, description)
+        internal SecurityAssessmentStatusResult(SecurityAssessmentStatusCode code, string cause, string description, DateTimeOffset? firstEvaluatedOn, DateTimeOffset? statusChangeOn) : base(code, cause, description)
         {
             FirstEvaluatedOn = firstEvaluatedOn;
             StatusChangeOn = statusChangeOn;

@@ -6,10 +6,15 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
-    /// <summary> A complete ordered set of utterances (spoken or written), by one or more speakers to be used for analysis. </summary>
+    /// <summary>
+    /// A complete ordered set of utterances (spoken or written), by one or more speakers to be used for analysis.
+    /// Please note <see cref="Conversation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="TextConversation"/> and <see cref="TranscriptConversation"/>.
+    /// </summary>
     public partial class Conversation
     {
         /// <summary> Initializes a new instance of Conversation. </summary>
@@ -18,14 +23,8 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="language"/> is null. </exception>
         public Conversation(string id, string language)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (language == null)
-            {
-                throw new ArgumentNullException(nameof(language));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(language, nameof(language));
 
             Id = id;
             Language = language;

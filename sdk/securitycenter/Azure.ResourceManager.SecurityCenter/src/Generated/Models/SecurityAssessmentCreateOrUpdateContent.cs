@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="resourceDetails">
         /// Details of the resource that was assessed
-        /// Please note <see cref="ResourceDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="SecurityCenterResourceDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureResourceDetails"/>, <see cref="OnPremiseResourceDetails"/> and <see cref="OnPremiseSqlResourceDetails"/>.
         /// </param>
         /// <param name="displayName"> User friendly display name of the assessment. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="metadata"> Describes properties of an assessment metadata. </param>
         /// <param name="partnersData"> Data regarding 3rd party partner integration. </param>
         /// <param name="status"> The result of the assessment. </param>
-        internal SecurityAssessmentCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceDetails resourceDetails, string displayName, IDictionary<string, string> additionalData, AssessmentLinks links, SecurityAssessmentMetadataProperties metadata, SecurityAssessmentPartner partnersData, AssessmentStatus status) : base(id, name, resourceType, systemData)
+        internal SecurityAssessmentCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityCenterResourceDetails resourceDetails, string displayName, IDictionary<string, string> additionalData, AssessmentLinks links, SecurityAssessmentMetadataProperties metadata, SecurityAssessmentPartner partnersData, SecurityAssessmentStatus status) : base(id, name, resourceType, systemData)
         {
             ResourceDetails = resourceDetails;
             DisplayName = displayName;
@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary>
         /// Details of the resource that was assessed
-        /// Please note <see cref="ResourceDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="SecurityCenterResourceDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureResourceDetails"/>, <see cref="OnPremiseResourceDetails"/> and <see cref="OnPremiseSqlResourceDetails"/>.
         /// </summary>
-        public ResourceDetails ResourceDetails { get; set; }
+        public SecurityCenterResourceDetails ResourceDetails { get; set; }
         /// <summary> User friendly display name of the assessment. </summary>
         public string DisplayName { get; }
         /// <summary> Additional data regarding the assessment. </summary>
@@ -71,6 +71,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Data regarding 3rd party partner integration. </summary>
         public SecurityAssessmentPartner PartnersData { get; set; }
         /// <summary> The result of the assessment. </summary>
-        public AssessmentStatus Status { get; set; }
+        public SecurityAssessmentStatus Status { get; set; }
     }
 }

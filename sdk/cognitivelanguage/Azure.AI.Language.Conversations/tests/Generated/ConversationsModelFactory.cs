@@ -69,7 +69,11 @@ namespace Azure.AI.Language.Conversations
         /// <param name="failed"> Count of tasks that failed. </param>
         /// <param name="inProgress"> Count of tasks in progress currently. </param>
         /// <param name="total"> Total count of tasks submitted as part of the job. </param>
-        /// <param name="items"> List of results from tasks (if available). </param>
+        /// <param name="items">
+        /// List of results from tasks (if available).
+        /// Please note <see cref="AnalyzeConversationJobResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AnalyzeConversationPIIResult"/>, <see cref="AnalyzeConversationSentimentResult"/> and <see cref="AnalyzeConversationSummarizationResult"/>.
+        /// </param>
         /// <returns> A new <see cref="Conversations.ConversationTasksStateTasks"/> instance for mocking. </returns>
         public static ConversationTasksStateTasks ConversationTasksStateTasks(int completed = default, int failed = default, int inProgress = default, int total = default, IEnumerable<AnalyzeConversationJobResult> items = null)
         {
@@ -98,7 +102,11 @@ namespace Azure.AI.Language.Conversations
         /// <summary> Initializes a new instance of AnalyzeConversationResult. </summary>
         /// <param name="query"> The conversation utterance given by the caller. </param>
         /// <param name="detectedLanguage"> The system detected language for the query in BCP 47 language representation.. </param>
-        /// <param name="prediction"> The prediction result of a conversation project. </param>
+        /// <param name="prediction">
+        /// The prediction result of a conversation project.
+        /// Please note <see cref="BasePrediction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="OrchestrationPrediction"/> and <see cref="ConversationPrediction"/>.
+        /// </param>
         /// <returns> A new <see cref="Conversations.AnalyzeConversationResult"/> instance for mocking. </returns>
         public static AnalyzeConversationResult AnalyzeConversationResult(string query = null, string detectedLanguage = null, BasePrediction prediction = null)
         {
@@ -170,8 +178,16 @@ namespace Azure.AI.Language.Conversations
         /// <param name="offset"> The starting index of this entity in the query. </param>
         /// <param name="length"> The length of the text. </param>
         /// <param name="confidence"> The entity confidence score. </param>
-        /// <param name="resolutions"> The collection of entity resolution objects. </param>
-        /// <param name="extraInformation"> The collection of entity extra information objects. </param>
+        /// <param name="resolutions">
+        /// The collection of entity resolution objects.
+        /// Please note <see cref="BaseResolution"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AgeResolution"/>, <see cref="AreaResolution"/>, <see cref="BooleanResolution"/>, <see cref="CurrencyResolution"/>, <see cref="DateTimeResolution"/>, <see cref="InformationResolution"/>, <see cref="LengthResolution"/>, <see cref="NumberResolution"/>, <see cref="NumericRangeResolution"/>, <see cref="OrdinalResolution"/>, <see cref="SpeedResolution"/>, <see cref="TemperatureResolution"/>, <see cref="TemporalSpanResolution"/>, <see cref="VolumeResolution"/> and <see cref="WeightResolution"/>.
+        /// </param>
+        /// <param name="extraInformation">
+        /// The collection of entity extra information objects.
+        /// Please note <see cref="BaseExtraInformation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="EntitySubtype"/>, <see cref="ListKey"/> and <see cref="RegexKey"/>.
+        /// </param>
         /// <returns> A new <see cref="Conversations.ConversationEntity"/> instance for mocking. </returns>
         public static ConversationEntity ConversationEntity(string category = null, string text = null, int offset = default, int length = default, float confidence = default, IEnumerable<BaseResolution> resolutions = null, IEnumerable<BaseExtraInformation> extraInformation = null)
         {
@@ -194,7 +210,11 @@ namespace Azure.AI.Language.Conversations
         /// <summary> Initializes a new instance of OrchestrationPrediction. </summary>
         /// <param name="projectKind"> The type of the project. </param>
         /// <param name="topIntent"> The intent with the highest score. </param>
-        /// <param name="intents"> A dictionary that contains all intents. A key is an intent name and a value is its confidence score and target type. The top intent&apos;s value also contains the actual response from the target project. </param>
+        /// <param name="intents">
+        /// A dictionary that contains all intents. A key is an intent name and a value is its confidence score and target type. The top intent&apos;s value also contains the actual response from the target project.
+        /// Please note <see cref="TargetIntentResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ConversationTargetIntentResult"/>, <see cref="LuisTargetIntentResult"/>, <see cref="NoneLinkedTargetIntentResult"/> and <see cref="QuestionAnsweringTargetIntentResult"/>.
+        /// </param>
         /// <returns> A new <see cref="Conversations.OrchestrationPrediction"/> instance for mocking. </returns>
         public static OrchestrationPrediction OrchestrationPrediction(ProjectKind projectKind = default, string topIntent = null, IReadOnlyDictionary<string, TargetIntentResult> intents = null)
         {

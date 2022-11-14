@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <exception cref="ArgumentNullException"> <paramref name="kustoPoolResourceId"/> or <paramref name="attachedDatabaseConfigurationName"/> is null. </exception>
         public FollowerDatabaseDefinition(string kustoPoolResourceId, string attachedDatabaseConfigurationName)
         {
-            if (kustoPoolResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(kustoPoolResourceId));
-            }
-            if (attachedDatabaseConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(attachedDatabaseConfigurationName));
-            }
+            Argument.AssertNotNull(kustoPoolResourceId, nameof(kustoPoolResourceId));
+            Argument.AssertNotNull(attachedDatabaseConfigurationName, nameof(attachedDatabaseConfigurationName));
 
             KustoPoolResourceId = kustoPoolResourceId;
             AttachedDatabaseConfigurationName = attachedDatabaseConfigurationName;

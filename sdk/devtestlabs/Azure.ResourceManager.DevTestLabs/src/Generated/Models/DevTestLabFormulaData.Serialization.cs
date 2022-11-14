@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DevTestLabs
             Optional<DevTestLabVmCreationContent> formulaContent = default;
             Optional<FormulaPropertiesFromVm> vm = default;
             Optional<string> provisioningState = default;
-            Optional<string> uniqueIdentifier = default;
+            Optional<Guid> uniqueIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -182,14 +182,19 @@ namespace Azure.ResourceManager.DevTestLabs
                         }
                         if (property0.NameEquals("uniqueIdentifier"))
                         {
-                            uniqueIdentifier = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            uniqueIdentifier = property0.Value.GetGuid();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new DevTestLabFormulaData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, author.Value, osType.Value, Optional.ToNullable(creationDate), formulaContent.Value, vm.Value, provisioningState.Value, uniqueIdentifier.Value);
+            return new DevTestLabFormulaData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, author.Value, osType.Value, Optional.ToNullable(creationDate), formulaContent.Value, vm.Value, provisioningState.Value, Optional.ToNullable(uniqueIdentifier));
         }
     }
 }

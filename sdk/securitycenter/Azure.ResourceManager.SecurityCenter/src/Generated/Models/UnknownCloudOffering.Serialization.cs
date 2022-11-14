@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static UnknownCloudOffering DeserializeUnknownCloudOffering(JsonElement element)
         {
-            OfferingType offeringType = default;
+            OfferingType offeringType = "Unknown";
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {

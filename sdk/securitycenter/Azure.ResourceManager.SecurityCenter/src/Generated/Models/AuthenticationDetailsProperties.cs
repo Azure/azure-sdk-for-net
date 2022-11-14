@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of AuthenticationDetailsProperties. </summary>
         protected AuthenticationDetailsProperties()
         {
-            GrantedPermissions = new ChangeTrackingList<PermissionProperty>();
+            GrantedPermissions = new ChangeTrackingList<SecurityCenterCloudPermission>();
         }
 
         /// <summary> Initializes a new instance of AuthenticationDetailsProperties. </summary>
         /// <param name="authenticationProvisioningState"> State of the multi-cloud connector. </param>
         /// <param name="grantedPermissions"> The permissions detected in the cloud account. </param>
         /// <param name="authenticationType"> Connect to your cloud account, for AWS use either account credentials or role-based authentication. For GCP use account organization credentials. </param>
-        internal AuthenticationDetailsProperties(AuthenticationProvisioningState? authenticationProvisioningState, IReadOnlyList<PermissionProperty> grantedPermissions, AuthenticationType authenticationType)
+        internal AuthenticationDetailsProperties(AuthenticationProvisioningState? authenticationProvisioningState, IReadOnlyList<SecurityCenterCloudPermission> grantedPermissions, AuthenticationType authenticationType)
         {
             AuthenticationProvisioningState = authenticationProvisioningState;
             GrantedPermissions = grantedPermissions;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> State of the multi-cloud connector. </summary>
         public AuthenticationProvisioningState? AuthenticationProvisioningState { get; }
         /// <summary> The permissions detected in the cloud account. </summary>
-        public IReadOnlyList<PermissionProperty> GrantedPermissions { get; }
+        public IReadOnlyList<SecurityCenterCloudPermission> GrantedPermissions { get; }
         /// <summary> Connect to your cloud account, for AWS use either account credentials or role-based authentication. For GCP use account organization credentials. </summary>
         internal AuthenticationType AuthenticationType { get; set; }
     }

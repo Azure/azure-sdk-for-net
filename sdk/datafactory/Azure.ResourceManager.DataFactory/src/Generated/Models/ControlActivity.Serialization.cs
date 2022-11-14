@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             string name = default;
-            string type = default;
+            string type = "Container";
             Optional<string> description = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<ActivityUserProperty>> userProperties = default;

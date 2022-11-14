@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of PathRecommendation. </summary>
         /// <param name="path"> The full path of the file, or an identifier of the application. </param>
         /// <param name="action"> The recommendation action of the machine or rule. </param>
-        /// <param name="recommendationType"> The type of IoT Security recommendation. </param>
+        /// <param name="iotSecurityRecommendationType"> The type of IoT Security recommendation. </param>
         /// <param name="publisherInfo"> Represents the publisher information of a process/rule. </param>
         /// <param name="isCommon"> Whether the application is commonly run on the machine. </param>
         /// <param name="userSids"></param>
         /// <param name="usernames"></param>
         /// <param name="fileType"> The type of the file (for Linux files - Executable is used). </param>
         /// <param name="configurationStatus"> The configuration status of the machines group or machine or rule. </param>
-        internal PathRecommendation(string path, RecommendationAction? action, RecommendationType? recommendationType, PublisherInfo publisherInfo, bool? isCommon, IList<string> userSids, IList<UserRecommendation> usernames, PathRecommendationFileType? fileType, ConfigurationStatus? configurationStatus)
+        internal PathRecommendation(string path, RecommendationAction? action, IotSecurityRecommendationType? iotSecurityRecommendationType, SecurityCenterPublisherInfo publisherInfo, bool? isCommon, IList<string> userSids, IList<UserRecommendation> usernames, PathRecommendationFileType? fileType, SecurityCenterConfigurationStatus? configurationStatus)
         {
             Path = path;
             Action = action;
-            RecommendationType = recommendationType;
+            IotSecurityRecommendationType = iotSecurityRecommendationType;
             PublisherInfo = publisherInfo;
             IsCommon = isCommon;
             UserSids = userSids;
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> The recommendation action of the machine or rule. </summary>
         public RecommendationAction? Action { get; set; }
         /// <summary> The type of IoT Security recommendation. </summary>
-        public RecommendationType? RecommendationType { get; set; }
+        public IotSecurityRecommendationType? IotSecurityRecommendationType { get; set; }
         /// <summary> Represents the publisher information of a process/rule. </summary>
-        public PublisherInfo PublisherInfo { get; set; }
+        public SecurityCenterPublisherInfo PublisherInfo { get; set; }
         /// <summary> Whether the application is commonly run on the machine. </summary>
         public bool? IsCommon { get; set; }
         /// <summary> Gets the user sids. </summary>
@@ -60,6 +60,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> The type of the file (for Linux files - Executable is used). </summary>
         public PathRecommendationFileType? FileType { get; set; }
         /// <summary> The configuration status of the machines group or machine or rule. </summary>
-        public ConfigurationStatus? ConfigurationStatus { get; set; }
+        public SecurityCenterConfigurationStatus? ConfigurationStatus { get; set; }
     }
 }

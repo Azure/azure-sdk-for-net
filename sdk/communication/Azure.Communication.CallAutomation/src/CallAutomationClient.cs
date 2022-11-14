@@ -110,6 +110,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="callbackUri"> The callback Uri to receive status notifications. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentException"><paramref name="callbackUri"/> callbackUri is not formatted correctly. </exception>
         /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
         public virtual async Task<Response<AnswerCallResult>> AnswerCallAsync(string incomingCallContext, Uri callbackUri, CancellationToken cancellationToken = default)
         {
@@ -125,6 +126,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="options"/> CallbackUri is not formatted correctly. </exception>
         /// <exception cref="ArgumentException"><paramref name="options"/> Repeatability headers are set incorrectly.</exception>
         /// <returns></returns>
         public virtual async Task<Response<AnswerCallResult>> AnswerCallAsync(AnswerCallOptions options, CancellationToken cancellationToken = default)
@@ -159,6 +161,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="callbackUri"> The callback Uri to receive status notifications. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentException"><paramref name="callbackUri"/> callbackUri is not formatted correctly. </exception>
         /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
         public virtual Response<AnswerCallResult> AnswerCall(string incomingCallContext, Uri callbackUri, CancellationToken cancellationToken = default)
         {
@@ -174,6 +177,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="cancellationToken">The cancellation token</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="options"/> CallbackUri is not formatted correctly. </exception>
         /// <exception cref="ArgumentException"><paramref name="options"/> Repeatability headers are set incorrectly.</exception>
         /// <returns></returns>
         public virtual Response<AnswerCallResult> AnswerCall(AnswerCallOptions options, CancellationToken cancellationToken = default)
@@ -204,6 +208,12 @@ namespace Azure.Communication.CallAutomation
 
         private static AnswerCallRequestInternal CreateAnswerCallRequest(AnswerCallOptions options)
         {
+            // validate callbackUri
+            if (!IsValidHttpsUri(options.CallbackUri))
+            {
+                throw new ArgumentException(CallAutomationErrorMessages.InvalidHttpsUriMessage);
+            }
+
             AnswerCallRequestInternal request = new AnswerCallRequestInternal(options.IncomingCallContext, options.CallbackUri.AbsoluteUri);
             request.MediaStreamingConfiguration = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
 
@@ -397,6 +407,8 @@ namespace Azure.Communication.CallAutomation
         /// <param name="options">Options for the CreateCall request.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"> CallSource.CallerId is null in <paramref name="options"/> when calling PSTN number.</exception>
+        /// <exception cref="ArgumentException"><paramref name="options"/> CallbackUri is not formatted correctly. </exception>
         /// <exception cref="ArgumentException"><paramref name="options"/> Repeatability headers are set incorrectly.</exception>
         /// <returns></returns>
         public virtual async Task<Response<CreateCallResult>> CreateCallAsync(CreateCallOptions options, CancellationToken cancellationToken = default)
@@ -434,6 +446,8 @@ namespace Azure.Communication.CallAutomation
         /// <param name="options">Options for the CreateCall request.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"> CallSource.CallerId is null in <paramref name="options"/> when calling PSTN number.</exception>
+        /// <exception cref="ArgumentException"><paramref name="options"/> CallbackUri is not formatted correctly. </exception>
         /// <exception cref="ArgumentException"><paramref name="options"/> Repeatability headers are set incorrectly.</exception>
         /// <returns></returns>
 
@@ -467,6 +481,21 @@ namespace Azure.Communication.CallAutomation
 
         private static CreateCallRequestInternal CreateCallRequest(CreateCallOptions options)
         {
+            // when create call to PSTN, the CallSource.CallerId must be provided.
+            if (options.Targets.Any(target => target is PhoneNumberIdentifier))
+            {
+                Argument.AssertNotNull(options.CallSource.CallerId, nameof(options.CallSource.CallerId));
+            }
+
+            // validate targets is not null or empty
+            Argument.AssertNotNullOrEmpty(options.Targets, nameof(options.Targets));
+
+            // validate callbackUri
+            if (!IsValidHttpsUri(options.CallbackUri))
+            {
+                throw new ArgumentException(CallAutomationErrorMessages.InvalidHttpsUriMessage, nameof(options));
+            }
+
             CallSourceInternal sourceDto = new CallSourceInternal(CommunicationIdentifierSerializer.Serialize(options.CallSource.Identifier));
             sourceDto.CallerId = options.CallSource.CallerId == null ? null : new PhoneNumberIdentifierModel(options.CallSource.CallerId.PhoneNumber);
             sourceDto.DisplayName = options.CallSource.DisplayName;
@@ -479,6 +508,18 @@ namespace Azure.Communication.CallAutomation
             request.MediaStreamingConfiguration = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
 
             return request;
+        }
+
+        /// <summary>
+        /// Validates an Https Uri.
+        /// </summary>
+        /// <param name="uri"></param>
+        /// <returns></returns>
+        private static bool IsValidHttpsUri(Uri uri) {
+            if (uri == null)
+                return false;
+            var uriString = uri.AbsoluteUri;
+            return Uri.IsWellFormedUriString(uriString, UriKind.Absolute) && new Uri(uriString).Scheme == Uri.UriSchemeHttps;
         }
 
         private static MediaStreamingOptionsInternal CreateMediaStreamingOptionsInternal(MediaStreamingOptions configuration)

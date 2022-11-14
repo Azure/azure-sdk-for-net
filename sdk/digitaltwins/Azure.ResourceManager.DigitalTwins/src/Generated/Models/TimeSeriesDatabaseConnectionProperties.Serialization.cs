@@ -29,27 +29,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     case "AzureDataExplorer": return DataExplorerConnectionProperties.DeserializeDataExplorerConnectionProperties(element);
                 }
             }
-            ConnectionType connectionType = default;
-            Optional<TimeSeriesDatabaseConnectionState> provisioningState = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("connectionType"))
-                {
-                    connectionType = new ConnectionType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("provisioningState"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    provisioningState = new TimeSeriesDatabaseConnectionState(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownTimeSeriesDatabaseConnectionProperties(connectionType, Optional.ToNullable(provisioningState));
+            return UnknownTimeSeriesDatabaseConnectionProperties.DeserializeUnknownTimeSeriesDatabaseConnectionProperties(element);
         }
     }
 }

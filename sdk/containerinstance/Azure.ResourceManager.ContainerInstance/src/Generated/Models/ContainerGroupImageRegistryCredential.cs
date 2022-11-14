@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <exception cref="ArgumentNullException"> <paramref name="server"/> or <paramref name="username"/> is null. </exception>
         public ContainerGroupImageRegistryCredential(string server, string username)
         {
-            if (server == null)
-            {
-                throw new ArgumentNullException(nameof(server));
-            }
-            if (username == null)
-            {
-                throw new ArgumentNullException(nameof(username));
-            }
+            Argument.AssertNotNull(server, nameof(server));
+            Argument.AssertNotNull(username, nameof(username));
 
             Server = server;
             Username = username;

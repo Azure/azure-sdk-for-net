@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="statusMessage"/> is null. </exception>
         internal CheckinManifestInfo(bool isCheckedIn, string statusMessage)
         {
-            if (statusMessage == null)
-            {
-                throw new ArgumentNullException(nameof(statusMessage));
-            }
+            Argument.AssertNotNull(statusMessage, nameof(statusMessage));
 
             IsCheckedIn = isCheckedIn;
             StatusMessage = statusMessage;

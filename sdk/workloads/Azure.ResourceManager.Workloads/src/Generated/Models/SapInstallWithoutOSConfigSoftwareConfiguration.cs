@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -19,18 +20,9 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <exception cref="ArgumentNullException"> <paramref name="bomUri"/>, <paramref name="sapBitsStorageAccountId"/> or <paramref name="softwareVersion"/> is null. </exception>
         public SapInstallWithoutOSConfigSoftwareConfiguration(Uri bomUri, string sapBitsStorageAccountId, string softwareVersion)
         {
-            if (bomUri == null)
-            {
-                throw new ArgumentNullException(nameof(bomUri));
-            }
-            if (sapBitsStorageAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(sapBitsStorageAccountId));
-            }
-            if (softwareVersion == null)
-            {
-                throw new ArgumentNullException(nameof(softwareVersion));
-            }
+            Argument.AssertNotNull(bomUri, nameof(bomUri));
+            Argument.AssertNotNull(sapBitsStorageAccountId, nameof(sapBitsStorageAccountId));
+            Argument.AssertNotNull(softwareVersion, nameof(softwareVersion));
 
             BomUri = bomUri;
             SapBitsStorageAccountId = sapBitsStorageAccountId;

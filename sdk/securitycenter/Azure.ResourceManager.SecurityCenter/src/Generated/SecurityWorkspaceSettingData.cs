@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="systemData"> The systemData. </param>
         /// <param name="workspaceId"> The full Azure ID of the workspace to save the data in. </param>
         /// <param name="scope"> All the VMs in this scope will send their security data to the mentioned workspace unless overridden by a setting with more specific scope. </param>
-        internal SecurityWorkspaceSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string workspaceId, string scope) : base(id, name, resourceType, systemData)
+        internal SecurityWorkspaceSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier workspaceId, string scope) : base(id, name, resourceType, systemData)
         {
             WorkspaceId = workspaceId;
             Scope = scope;
         }
 
         /// <summary> The full Azure ID of the workspace to save the data in. </summary>
-        public string WorkspaceId { get; set; }
+        public ResourceIdentifier WorkspaceId { get; set; }
         /// <summary> All the VMs in this scope will send their security data to the mentioned workspace unless overridden by a setting with more specific scope. </summary>
         public string Scope { get; set; }
     }

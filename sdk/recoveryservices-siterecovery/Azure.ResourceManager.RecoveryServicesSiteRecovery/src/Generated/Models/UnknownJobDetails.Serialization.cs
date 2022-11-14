@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static UnknownJobDetails DeserializeUnknownJobDetails(JsonElement element)
         {
-            string instanceType = default;
+            string instanceType = "Unknown";
             Optional<IReadOnlyDictionary<string, string>> affectedObjectDetails = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -17,19 +18,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="type"/> is null. </exception>
         public WebActivityAuthentication(string type)
         {
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
+            Argument.AssertNotNull(type, nameof(type));
 
             Type = type;
         }
 
         /// <summary> Initializes a new instance of WebActivityAuthentication. </summary>
         /// <param name="type"> Web activity authentication (Basic/ClientCertificate/MSI). </param>
-        /// <param name="pfx"> Base64-encoded contents of a PFX file. </param>
+        /// <param name="pfx">
+        /// Base64-encoded contents of a PFX file.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
         /// <param name="username"> Web activity authentication user name for basic authentication. </param>
-        /// <param name="password"> Password for the PFX file or basic authentication. </param>
+        /// <param name="password">
+        /// Password for the PFX file or basic authentication.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
         /// <param name="resource"> Resource for which Azure Auth token will be requested when using MSI Authentication. </param>
         internal WebActivityAuthentication(string type, SecretBase pfx, string username, SecretBase password, string resource)
         {
@@ -42,11 +48,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Web activity authentication (Basic/ClientCertificate/MSI). </summary>
         public string Type { get; set; }
-        /// <summary> Base64-encoded contents of a PFX file. </summary>
+        /// <summary>
+        /// Base64-encoded contents of a PFX file.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </summary>
         public SecretBase Pfx { get; set; }
         /// <summary> Web activity authentication user name for basic authentication. </summary>
         public string Username { get; set; }
-        /// <summary> Password for the PFX file or basic authentication. </summary>
+        /// <summary>
+        /// Password for the PFX file or basic authentication.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </summary>
         public SecretBase Password { get; set; }
         /// <summary> Resource for which Azure Auth token will be requested when using MSI Authentication. </summary>
         public string Resource { get; set; }

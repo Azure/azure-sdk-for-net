@@ -25,7 +25,12 @@ namespace Azure.Monitor.Ingestion
 
         // The size we use to determine whether to upload as a single PUT BLOB
         // request or stage as multiple blocks.
-        internal static int SingleUploadThreshold = 1000000; // 1 Mb in byte format
+        // 1 Mb in byte format
+        internal static int SingleUploadThreshold = 1000000;
+
+        // For test purposes only
+        // If Compression wants to be turned off (hard to generate 1 Mb data gzipped) set Compression to null
+        internal static string Compression = "gzip";
 
         // If no concurrency count is provided for a parallel upload, default to 5 workers.
         private const int DefaultParallelWorkerCount = 5;
@@ -40,20 +45,6 @@ namespace Azure.Monitor.Ingestion
 
             public List<T> LogsList { get; }
             public BinaryData LogsData { get; }
-        }
-
-        internal readonly struct BatchUpload
-        {
-            public BatchUpload(Response response, UploadLogsError error)
-            {
-                Response = response;
-                Error = error;
-            }
-
-            // The response from the upload
-            public Response Response { get; }
-            // Contains the error and the associated logs
-            public UploadLogsError Error { get; }
         }
 
         internal HttpMessage CreateUploadRequest(string ruleId, string streamName, RequestContent content, string contentEncoding = "gzip", RequestContext context = null)
@@ -188,7 +179,7 @@ namespace Azure.Monitor.Ingestion
         /// ]]></code>
         /// </example>
         /// <remarks> See error response code and error response message for more detail. </remarks>
-        public virtual Response<UploadLogsResult> Upload<T>(string ruleId, string streamName, IEnumerable<T> logs, UploadLogsOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response Upload<T>(string ruleId, string streamName, IEnumerable<T> logs, UploadLogsOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
             Argument.AssertNotNullOrEmpty(streamName, nameof(streamName));
@@ -196,37 +187,49 @@ namespace Azure.Monitor.Ingestion
 
             using var scope = ClientDiagnostics.CreateScope("LogsIngestionClient.Upload");
 
-            RequestContext requestContext = GenerateRequestContext(cancellationToken);
             Response response = null;
-            List<UploadLogsError> errors = new List<UploadLogsError>();
+            List<Exception> exceptions = null;
+
             scope.Start();
-            try
+            // Keep track of the number of failed logs across batches
+            int logsFailed = 0;
+
+            // Partition the stream into individual blocks
+            foreach (BatchedLogs<T> batch in Batch(logs, options))
             {
-                // Partition the stream into individual blocks
-                foreach (BatchedLogs<T> batch in Batch(logs, options))
+                try
                 {
                     // Because we are uploading in sequence, wait for each batch to upload before starting the next batch
-                    BatchUpload task = CommitBatchListSyncOrAsync(
+                    response = UploadBatchListSyncOrAsync(
                         batch,
                         ruleId,
                         streamName,
-                        false,
+                        async: false,
                         cancellationToken).EnsureCompleted();
 
-                    // If we have an error, add error from response into errors list which represents the errors from all the batches
-                    if (task.Error != null)
-                        errors.Add(task.Error);
+                    if (response.Status != 204)
+                    {
+                        throw new RequestFailedException(response);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    logsFailed += batch.LogsList.Count;
+                    // If we have an error, add Exception from response into exceptions list without throwing
+                    AddException(
+                        ref exceptions,
+                        ex);
                 }
             }
-            catch (Exception ex)
+            if (exceptions?.Count > 0)
             {
+                var ex = new AggregateException($"{logsFailed} out of the {logs.Count()} logs failed to upload. Please check the InnerExceptions for more details.", exceptions);
                 scope.Failed(ex);
-                throw;
+                throw ex;
             }
 
-            // Calculate the status using the helper method Status
-            UploadLogsResult finalResult = new UploadLogsResult(errors, GetStatus(logs, errors));
-            return Response.FromValue(finalResult, response);
+            // If no exceptions return response
+            return response; //204 - response of last batch with header
         }
 
         /// <summary> Ingestion API used to directly ingest data using Data Collection Rules. </summary>
@@ -255,7 +258,7 @@ namespace Azure.Monitor.Ingestion
         /// ]]></code>
         /// </example>
         /// <remarks> See error response code and error response message for more detail. </remarks>
-        public virtual async Task<Response<UploadLogsResult>> UploadAsync<T>(string ruleId, string streamName, IEnumerable<T> logs, UploadLogsOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UploadAsync<T>(string ruleId, string streamName, IEnumerable<T> logs, UploadLogsOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
             Argument.AssertNotNullOrEmpty(streamName, nameof(streamName));
@@ -266,141 +269,117 @@ namespace Azure.Monitor.Ingestion
             int _maxWorkerCount = (options == null || options.MaxConcurrency <= 0) ? DefaultParallelWorkerCount : options.MaxConcurrency;
             using var scope = ClientDiagnostics.CreateScope("LogsIngestionClient.Upload");
 
-            RequestContext requestContext = GenerateRequestContext(cancellationToken);
-            Response response = null;
-            List<UploadLogsError> errors = new List<UploadLogsError>();
+            List<Exception> exceptions = null;
             scope.Start();
-            try
+
+            // A list of tasks that are currently executing which will
+            // always be smaller than or equal to MaxWorkerCount
+            var runningTasks = new List<(Task<Response> CurrentTask, int LogsCount)>();
+            // Keep track of the number of failed logs across batches
+            int logsFailed = 0;
+
+            // Partition the stream into individual blocks
+            foreach (BatchedLogs<T> batch in Batch(logs, options))
             {
-                // A list of tasks that are currently executing which will
-                // always be smaller than or equal to MaxWorkerCount
-                List<Task<BatchUpload>> runningTasks = new();
-                // Partition the stream into individual blocks
-                foreach (BatchedLogs<T> batch in Batch(logs, options))
+                try
                 {
                     // Start staging the next batch (but don't await the Task!)
-                    Task<BatchUpload> task = CommitBatchListSyncOrAsync(
+                    Task<Response> task = UploadBatchListSyncOrAsync(
                         batch,
                         ruleId,
                         streamName,
-                        true,
+                        async: true,
                         cancellationToken);
 
                     // Add the block to our task and commit lists
-                    runningTasks.Add(task);
+                    runningTasks.Add((task, batch.LogsList.Count));
 
                     // If we run out of workers
                     if (runningTasks.Count >= _maxWorkerCount)
                     {
                         // Wait for at least one of them to finish
-                        await Task.WhenAny(runningTasks).ConfigureAwait(false);
+                        await Task.WhenAny(runningTasks.Select(_ => _.CurrentTask)).ConfigureAwait(false);
                         // Clear any completed blocks from the task list
                         for (int i = 0; i < runningTasks.Count; i++)
                         {
-                            Task<BatchUpload> runningTask = runningTasks[i];
+                            Task<Response> runningTask = runningTasks[i].CurrentTask;
                             if (!runningTask.IsCompleted)
                             {
                                 continue;
                             }
-
-                            // Before removing runningTask - check if it has any errors and add to error list
-                            if (runningTask.Result.Error != null)
-                                errors.Add(runningTask.Result.Error);
-
+                            // Check completed task for Exception/RequestFailedException and increase logsFailed count
+                            ProcessCompletedTask(runningTasks[i], ref exceptions, ref logsFailed);
                             // Remove completed task from task list
                             runningTasks.RemoveAt(i);
                             i--;
                         }
                     }
+
+                    // Wait for all the remaining blocks to finish uploading
+                    await Task.WhenAll(runningTasks.Select(_ => _.CurrentTask)).ConfigureAwait(false);
                 }
-
-                // Wait for all the remaining blocks to finish uploading
-                await Task.WhenAll(runningTasks).ConfigureAwait(false);
-
-                // Process all errors after tasks are done to determine status
-                // Will run on a single thread
-                foreach (Task<BatchUpload> task in runningTasks)
+                catch (Exception)
                 {
-                    // Go through errors from each task and if we have an error, add error from response into errors list which represents the errors from all the batches
-                    if (task.Result.Error != null)
-                        errors.Add(task.Result.Error);
+                    // We do not want to log exceptions here as we will loop through all the tasks later
                 }
             }
-            catch (Exception ex)
+
+            // At this point, all tasks have completed. Examine tasks to see if they have exceptions. If Status code != 204, add RequestFailedException to list of exceptions. Increment logsFailed accordingly
+            foreach (var task in runningTasks)
             {
+                ProcessCompletedTask(task, ref exceptions, ref logsFailed);
+            }
+            if (exceptions?.Count > 0)
+            {
+                var ex = new AggregateException($"{logsFailed} out of the {logs.Count()} logs failed to upload. Please check the InnerExceptions for more details.", exceptions);
                 scope.Failed(ex);
-                throw;
+                throw ex;
             }
 
-            // Calculate the status using the helper method Status
-            UploadLogsResult finalResult = new UploadLogsResult(errors, GetStatus(logs, errors));
-            return Response.FromValue(finalResult, response);
+            // If no exceptions return response
+            return runningTasks.Select(_ => _.CurrentTask).Last().Result; //204 - response of last batch with header
         }
 
-        private async Task<BatchUpload> CommitBatchListSyncOrAsync<T>(BatchedLogs<T> batch, string ruleId, string streamName, bool async, CancellationToken cancellationToken)
+        private static void ProcessCompletedTask((Task<Response> CurrentTask, int LogsCount) runningTask, ref List<Exception> exceptions, ref int logsFailed)
         {
-            UploadLogsError error = null;
-            RequestContext requestContext = GenerateRequestContext(cancellationToken);
-            Response response = null;
+            // If current task has an exception, log the exception and add number of logs in this task to failed logs
+            if (runningTask.CurrentTask.Exception != null)
+            {
+                AddException(
+                    ref exceptions,
+                    runningTask.CurrentTask.Exception);
+                logsFailed += runningTask.LogsCount;
+            }
+            // If current task returned a response that was not a success, log the exception and add number of logs in this task to failed logs
+            else if (runningTask.CurrentTask.Result.Status != 204)
+            {
+                AddException(
+                    ref exceptions,
+                    new RequestFailedException(runningTask.CurrentTask.Result));
+                logsFailed += runningTask.LogsCount;
+            }
+        }
 
-            using HttpMessage message = CreateUploadRequest(ruleId, streamName, batch.LogsData, "gzip", requestContext);
+        private async Task<Response> UploadBatchListSyncOrAsync<T>(BatchedLogs<T> batch, string ruleId, string streamName, bool async, CancellationToken cancellationToken)
+        {
+            using HttpMessage message = CreateUploadRequest(ruleId, streamName, batch.LogsData, Compression, null);
 
             if (async)
             {
-                response = await _pipeline.ProcessMessageAsync(message, requestContext, cancellationToken).ConfigureAwait(false);
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             }
             else
             {
-                response = _pipeline.ProcessMessage(message, requestContext, cancellationToken);
+                _pipeline.Send(message, cancellationToken);
             }
 
-            if (response.Status != 204) // if any error is thrown log it
-            {
-                RequestFailedException requestFailedException = new RequestFailedException(response);
-                ResponseError responseError = new ResponseError(requestFailedException.ErrorCode, requestFailedException.Message);
-                error = new UploadLogsError(responseError, (IReadOnlyList<BinaryData>)batch.LogsList);
-            }
-            return new BatchUpload(response, error);
+            return message.Response;
         }
 
-        private static RequestContext GenerateRequestContext(CancellationToken cancellationToken)
+        private static void AddException(ref List<Exception> exceptions, Exception ex)
         {
-            var requestContext = new RequestContext() { CancellationToken = cancellationToken };
-            requestContext.AddClassifier(500, false);
-            requestContext.AddClassifier(403, false);
-            requestContext.AddClassifier(413, false);
-            requestContext.AddClassifier(429, false);
-            requestContext.AddClassifier(503, false);
-            return requestContext;
-        }
-
-        private static UploadLogsStatus GetStatus<T>(IEnumerable<T> logEntries, List<UploadLogsError> errors)
-        {
-            UploadLogsStatus status;
-            // Errors holds the lists of all failed logs per batch so summing up these gives us the total number of failed logs
-            int totalLogsFailed = 0;
-            foreach (UploadLogsError error in errors)
-            {
-                totalLogsFailed += error.FailedLogs.Count;
-            }
-
-            // If there are no errors, all entries were successfully uploaded
-            if (totalLogsFailed == 0)
-            {
-                status = UploadLogsStatus.Success;
-            }
-            // If the number of total failed logs is equal to the logs count this means all the uploads failed
-            else if (totalLogsFailed == logEntries.Count())
-            {
-                status = UploadLogsStatus.Failure;
-            }
-            // At least one batch has failed, indicating a PartialFailure result
-            else
-            {
-                status = UploadLogsStatus.PartialFailure;
-            }
-
-            return status;
+            exceptions ??= new List<Exception>();
+            exceptions.Add(ex);
         }
 
         /// <summary> Ingestion API used to directly ingest data using Data Collection Rules. </summary>

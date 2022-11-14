@@ -7,6 +7,7 @@
 
 using System;
 using Azure;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -20,18 +21,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceInfo"/>, <paramref name="policyInfo"/> or <paramref name="objectType"/> is null. </exception>
         public DataProtectionBackupInstanceProperties(DataSourceInfo dataSourceInfo, BackupInstancePolicyInfo policyInfo, string objectType)
         {
-            if (dataSourceInfo == null)
-            {
-                throw new ArgumentNullException(nameof(dataSourceInfo));
-            }
-            if (policyInfo == null)
-            {
-                throw new ArgumentNullException(nameof(policyInfo));
-            }
-            if (objectType == null)
-            {
-                throw new ArgumentNullException(nameof(objectType));
-            }
+            Argument.AssertNotNull(dataSourceInfo, nameof(dataSourceInfo));
+            Argument.AssertNotNull(policyInfo, nameof(policyInfo));
+            Argument.AssertNotNull(objectType, nameof(objectType));
 
             DataSourceInfo = dataSourceInfo;
             PolicyInfo = policyInfo;

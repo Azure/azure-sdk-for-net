@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -16,32 +17,21 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <summary> Initializes a new instance of GrpcExtension. </summary>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
-        /// <param name="endpoint"> Endpoint details of the pipeline extension plugin. </param>
+        /// <param name="endpoint">
+        /// Endpoint details of the pipeline extension plugin.
+        /// Please note <see cref="EndpointBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="TlsEndpoint"/> and <see cref="UnsecuredEndpoint"/>.
+        /// </param>
         /// <param name="image"> Image transformations and formatting options to be applied to the video frame(s) prior submission to the pipeline extension plugin. </param>
         /// <param name="dataTransfer"> Specifies how media is transferred to the extension plugin. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="inputs"/>, <paramref name="endpoint"/>, <paramref name="image"/> or <paramref name="dataTransfer"/> is null. </exception>
         public GrpcExtension(string name, IEnumerable<NodeInput> inputs, EndpointBase endpoint, ImageProperties image, GrpcExtensionDataTransfer dataTransfer) : base(name, inputs, endpoint, image)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (inputs == null)
-            {
-                throw new ArgumentNullException(nameof(inputs));
-            }
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (image == null)
-            {
-                throw new ArgumentNullException(nameof(image));
-            }
-            if (dataTransfer == null)
-            {
-                throw new ArgumentNullException(nameof(dataTransfer));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(inputs, nameof(inputs));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(image, nameof(image));
+            Argument.AssertNotNull(dataTransfer, nameof(dataTransfer));
 
             DataTransfer = dataTransfer;
             Type = "#Microsoft.VideoAnalyzer.GrpcExtension";
@@ -51,7 +41,11 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
-        /// <param name="endpoint"> Endpoint details of the pipeline extension plugin. </param>
+        /// <param name="endpoint">
+        /// Endpoint details of the pipeline extension plugin.
+        /// Please note <see cref="EndpointBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="TlsEndpoint"/> and <see cref="UnsecuredEndpoint"/>.
+        /// </param>
         /// <param name="image"> Image transformations and formatting options to be applied to the video frame(s) prior submission to the pipeline extension plugin. </param>
         /// <param name="samplingOptions"> Media sampling parameters that define how often media is submitted to the extension plugin. </param>
         /// <param name="dataTransfer"> Specifies how media is transferred to the extension plugin. </param>

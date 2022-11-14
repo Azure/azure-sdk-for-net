@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DevTestLabs
             Optional<DevTestLabCustomImagePlan> customImagePlan = default;
             Optional<bool> isPlanAuthorized = default;
             Optional<string> provisioningState = default;
-            Optional<string> uniqueIdentifier = default;
+            Optional<Guid> uniqueIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -256,14 +256,19 @@ namespace Azure.ResourceManager.DevTestLabs
                         }
                         if (property0.NameEquals("uniqueIdentifier"))
                         {
-                            uniqueIdentifier = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            uniqueIdentifier = property0.Value.GetGuid();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new DevTestLabCustomImageData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, vm.Value, vhd.Value, description.Value, author.Value, Optional.ToNullable(creationDate), managedImageId.Value, managedSnapshotId.Value, Optional.ToList(dataDiskStorageInfo), customImagePlan.Value, Optional.ToNullable(isPlanAuthorized), provisioningState.Value, uniqueIdentifier.Value);
+            return new DevTestLabCustomImageData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, vm.Value, vhd.Value, description.Value, author.Value, Optional.ToNullable(creationDate), managedImageId.Value, managedSnapshotId.Value, Optional.ToList(dataDiskStorageInfo), customImagePlan.Value, Optional.ToNullable(isPlanAuthorized), provisioningState.Value, Optional.ToNullable(uniqueIdentifier));
         }
     }
 }

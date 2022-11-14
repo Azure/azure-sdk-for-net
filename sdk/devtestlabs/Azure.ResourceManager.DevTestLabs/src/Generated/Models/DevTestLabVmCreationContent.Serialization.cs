@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Optional<string> sshKey = default;
             Optional<bool> isAuthenticationWithSshKey = default;
             Optional<string> labSubnetName = default;
-            Optional<string> labVirtualNetworkId = default;
+            Optional<ResourceIdentifier> labVirtualNetworkId = default;
             Optional<bool> disallowPublicIPAddress = default;
             Optional<IList<DevTestLabArtifactInstallInfo>> artifacts = default;
             Optional<DevTestLabGalleryImageReference> galleryImageReference = default;
@@ -326,7 +326,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         }
                         if (property0.NameEquals("labVirtualNetworkId"))
                         {
-                            labVirtualNetworkId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            labVirtualNetworkId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("disallowPublicIpAddress"))

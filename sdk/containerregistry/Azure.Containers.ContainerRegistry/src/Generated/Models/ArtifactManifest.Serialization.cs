@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,11 +21,6 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 writer.WriteNumberValue(SchemaVersion.Value);
             }
             writer.WriteEndObject();
-        }
-
-        internal static ArtifactManifest DeserializeArtifactManifest(JsonElement element)
-        {
-            throw new NotSupportedException("Deserialization of abstract type 'global::Azure.Containers.ContainerRegistry.Specialized.ArtifactManifest' not supported.");
         }
     }
 }

@@ -33,16 +33,7 @@ namespace Azure.ResourceManager.Media.Models
                     case "#Microsoft.Media.JobInputs": return MediaJobInputs.DeserializeMediaJobInputs(element);
                 }
             }
-            string odataType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("@odata.type"))
-                {
-                    odataType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownMediaJobInputBasicProperties(odataType);
+            return UnknownJobInput.DeserializeUnknownJobInput(element);
         }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> or <paramref name="tag"/> is null. </exception>
         public IotEdgeAgentInfo(string imageName, string tag)
         {
-            if (imageName == null)
-            {
-                throw new ArgumentNullException(nameof(imageName));
-            }
-            if (tag == null)
-            {
-                throw new ArgumentNullException(nameof(tag));
-            }
+            Argument.AssertNotNull(imageName, nameof(imageName));
+            Argument.AssertNotNull(tag, nameof(tag));
 
             ImageName = imageName;
             Tag = tag;

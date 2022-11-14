@@ -9,7 +9,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The Defender for Servers GCP offering configurations. </summary>
     [CodeGenSuppress("IsEnabled")]
-    public partial class DefenderForServersGcpOffering : CloudOffering
+    public partial class DefenderForServersGcpOffering : SecurityCenterCloudOffering
     {
         /// <summary> Is arc auto provisioning enabled. </summary>
         public bool? IsArcAutoProvisioningEnabled

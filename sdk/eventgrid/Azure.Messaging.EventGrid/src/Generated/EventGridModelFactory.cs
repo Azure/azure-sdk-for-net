@@ -524,7 +524,11 @@ namespace Azure.Messaging.EventGrid
 
         /// <summary> Initializes a new instance of MediaJobOutputStateChangeEventData. </summary>
         /// <param name="previousState"> The previous state of the Job. </param>
-        /// <param name="output"> Gets the output. </param>
+        /// <param name="output">
+        /// Gets the output.
+        /// Please note <see cref="MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MediaJobOutputAsset"/>.
+        /// </param>
         /// <param name="jobCorrelationData"> Gets the Job correlation data. </param>
         /// <returns> A new <see cref="SystemEvents.MediaJobOutputStateChangeEventData"/> instance for mocking. </returns>
         public static MediaJobOutputStateChangeEventData MediaJobOutputStateChangeEventData(MediaJobState? previousState = null, MediaJobOutput output = null, IReadOnlyDictionary<string, string> jobCorrelationData = null)
@@ -538,7 +542,11 @@ namespace Azure.Messaging.EventGrid
         /// <param name="previousState"> The previous state of the Job. </param>
         /// <param name="state"> The new state of the Job. </param>
         /// <param name="correlationData"> Gets the Job correlation data. </param>
-        /// <param name="outputs"> Gets the Job outputs. </param>
+        /// <param name="outputs">
+        /// Gets the Job outputs.
+        /// Please note <see cref="MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MediaJobOutputAsset"/>.
+        /// </param>
         /// <returns> A new <see cref="SystemEvents.MediaJobFinishedEventData"/> instance for mocking. </returns>
         public static MediaJobFinishedEventData MediaJobFinishedEventData(MediaJobState? previousState = null, MediaJobState? state = null, IReadOnlyDictionary<string, string> correlationData = null, IEnumerable<MediaJobOutput> outputs = null)
         {
@@ -552,7 +560,11 @@ namespace Azure.Messaging.EventGrid
         /// <param name="previousState"> The previous state of the Job. </param>
         /// <param name="state"> The new state of the Job. </param>
         /// <param name="correlationData"> Gets the Job correlation data. </param>
-        /// <param name="outputs"> Gets the Job outputs. </param>
+        /// <param name="outputs">
+        /// Gets the Job outputs.
+        /// Please note <see cref="MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MediaJobOutputAsset"/>.
+        /// </param>
         /// <returns> A new <see cref="SystemEvents.MediaJobCanceledEventData"/> instance for mocking. </returns>
         public static MediaJobCanceledEventData MediaJobCanceledEventData(MediaJobState? previousState = null, MediaJobState? state = null, IReadOnlyDictionary<string, string> correlationData = null, IEnumerable<MediaJobOutput> outputs = null)
         {
@@ -566,7 +578,11 @@ namespace Azure.Messaging.EventGrid
         /// <param name="previousState"> The previous state of the Job. </param>
         /// <param name="state"> The new state of the Job. </param>
         /// <param name="correlationData"> Gets the Job correlation data. </param>
-        /// <param name="outputs"> Gets the Job outputs. </param>
+        /// <param name="outputs">
+        /// Gets the Job outputs.
+        /// Please note <see cref="MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MediaJobOutputAsset"/>.
+        /// </param>
         /// <returns> A new <see cref="SystemEvents.MediaJobErroredEventData"/> instance for mocking. </returns>
         public static MediaJobErroredEventData MediaJobErroredEventData(MediaJobState? previousState = null, MediaJobState? state = null, IReadOnlyDictionary<string, string> correlationData = null, IEnumerable<MediaJobOutput> outputs = null)
         {
@@ -1903,6 +1919,30 @@ namespace Azure.Messaging.EventGrid
         public static HealthcareFhirResourceDeletedEventData HealthcareFhirResourceDeletedEventData(HealthcareFhirResourceType? fhirResourceType = null, string fhirServiceHostName = null, string fhirResourceId = null, long? fhirResourceVersionId = null)
         {
             return new HealthcareFhirResourceDeletedEventData(fhirResourceType, fhirServiceHostName, fhirResourceId, fhirResourceVersionId);
+        }
+
+        /// <summary> Initializes a new instance of HealthcareDicomImageCreatedEventData. </summary>
+        /// <param name="imageStudyInstanceUid"> Unique identifier for the Study. </param>
+        /// <param name="imageSeriesInstanceUid"> Unique identifier for the Series. </param>
+        /// <param name="imageSopInstanceUid"> Unique identifier for the DICOM Image. </param>
+        /// <param name="serviceHostName"> Domain name of the DICOM account for this image. </param>
+        /// <param name="sequenceNumber"> Sequence number of the DICOM Service within Azure Health Data Services. It is unique for every image creation and deletion within the service. </param>
+        /// <returns> A new <see cref="SystemEvents.HealthcareDicomImageCreatedEventData"/> instance for mocking. </returns>
+        public static HealthcareDicomImageCreatedEventData HealthcareDicomImageCreatedEventData(string imageStudyInstanceUid = null, string imageSeriesInstanceUid = null, string imageSopInstanceUid = null, string serviceHostName = null, long? sequenceNumber = null)
+        {
+            return new HealthcareDicomImageCreatedEventData(imageStudyInstanceUid, imageSeriesInstanceUid, imageSopInstanceUid, serviceHostName, sequenceNumber);
+        }
+
+        /// <summary> Initializes a new instance of HealthcareDicomImageDeletedEventData. </summary>
+        /// <param name="imageStudyInstanceUid"> Unique identifier for the Study. </param>
+        /// <param name="imageSeriesInstanceUid"> Unique identifier for the Series. </param>
+        /// <param name="imageSopInstanceUid"> Unique identifier for the DICOM Image. </param>
+        /// <param name="serviceHostName"> Host name of the DICOM account for this image. </param>
+        /// <param name="sequenceNumber"> Sequence number of the DICOM Service within Azure Health Data Services. It is unique for every image creation and deletion within the service. </param>
+        /// <returns> A new <see cref="SystemEvents.HealthcareDicomImageDeletedEventData"/> instance for mocking. </returns>
+        public static HealthcareDicomImageDeletedEventData HealthcareDicomImageDeletedEventData(string imageStudyInstanceUid = null, string imageSeriesInstanceUid = null, string imageSopInstanceUid = null, string serviceHostName = null, long? sequenceNumber = null)
+        {
+            return new HealthcareDicomImageDeletedEventData(imageStudyInstanceUid, imageSeriesInstanceUid, imageSopInstanceUid, serviceHostName, sequenceNumber);
         }
     }
 }

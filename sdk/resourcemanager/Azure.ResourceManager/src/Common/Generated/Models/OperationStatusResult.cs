@@ -22,10 +22,7 @@ namespace Azure.ResourceManager.Models
         [InitializationConstructor]
         public OperationStatusResult(string status)
         {
-            if (status == null)
-            {
-                throw new ArgumentNullException(nameof(status));
-            }
+            Argument.AssertNotNull(status, nameof(status));
 
             Status = status;
             Operations = new ChangeTrackingList<OperationStatusResult>();

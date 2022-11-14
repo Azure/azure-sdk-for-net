@@ -30,16 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "Custom": return CustomSeasonality.DeserializeCustomSeasonality(element);
                 }
             }
-            SeasonalityMode mode = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("mode"))
-                {
-                    mode = new SeasonalityMode(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownSeasonality(mode);
+            return UnknownSeasonality.DeserializeUnknownSeasonality(element);
         }
     }
 }

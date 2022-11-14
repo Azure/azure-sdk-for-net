@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -21,22 +22,10 @@ namespace Azure.ResourceManager.Sql.Models
         /// <exception cref="ArgumentNullException"> <paramref name="storageKey"/>, <paramref name="storageUri"/>, <paramref name="administratorLogin"/> or <paramref name="administratorLoginPassword"/> is null. </exception>
         public DatabaseExportDefinition(StorageKeyType storageKeyType, string storageKey, Uri storageUri, string administratorLogin, string administratorLoginPassword)
         {
-            if (storageKey == null)
-            {
-                throw new ArgumentNullException(nameof(storageKey));
-            }
-            if (storageUri == null)
-            {
-                throw new ArgumentNullException(nameof(storageUri));
-            }
-            if (administratorLogin == null)
-            {
-                throw new ArgumentNullException(nameof(administratorLogin));
-            }
-            if (administratorLoginPassword == null)
-            {
-                throw new ArgumentNullException(nameof(administratorLoginPassword));
-            }
+            Argument.AssertNotNull(storageKey, nameof(storageKey));
+            Argument.AssertNotNull(storageUri, nameof(storageUri));
+            Argument.AssertNotNull(administratorLogin, nameof(administratorLogin));
+            Argument.AssertNotNull(administratorLoginPassword, nameof(administratorLoginPassword));
 
             StorageKeyType = storageKeyType;
             StorageKey = storageKey;

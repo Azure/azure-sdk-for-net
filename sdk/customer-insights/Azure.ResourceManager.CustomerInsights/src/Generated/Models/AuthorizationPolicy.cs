@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="permissions"/> is null. </exception>
         internal AuthorizationPolicy(IEnumerable<PermissionType> permissions)
         {
-            if (permissions == null)
-            {
-                throw new ArgumentNullException(nameof(permissions));
-            }
+            Argument.AssertNotNull(permissions, nameof(permissions));
 
             Permissions = permissions.ToList();
         }

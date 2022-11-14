@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="targetResourceId"> The resource ID to which the schedule belongs. </param>
         /// <param name="provisioningState"> The provisioning status of the resource. </param>
         /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
-        internal DevTestLabScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevTestLabEnableStatus? status, string taskType, DevTestLabWeekDetails weeklyRecurrence, DayDetails dailyRecurrence, HourDetails hourlyRecurrence, string timeZoneId, DevTestLabNotificationSettings notificationSettings, DateTimeOffset? createdOn, string targetResourceId, string provisioningState, string uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
+        internal DevTestLabScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevTestLabEnableStatus? status, string taskType, DevTestLabWeekDetails weeklyRecurrence, DayDetails dailyRecurrence, HourDetails hourlyRecurrence, string timeZoneId, DevTestLabNotificationSettings notificationSettings, DateTimeOffset? createdOn, string targetResourceId, string provisioningState, Guid? uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
         {
             Status = status;
             TaskType = taskType;
@@ -100,6 +100,6 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <summary> The provisioning status of the resource. </summary>
         public string ProvisioningState { get; }
         /// <summary> The unique immutable identifier of a resource (Guid). </summary>
-        public string UniqueIdentifier { get; }
+        public Guid? UniqueIdentifier { get; }
     }
 }
