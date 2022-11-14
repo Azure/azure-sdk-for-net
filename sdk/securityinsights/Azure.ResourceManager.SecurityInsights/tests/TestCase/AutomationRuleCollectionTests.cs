@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
     public class AutomationRuleCollectionTests : SecurityInsightsManagementTestBase
     {
         public AutomationRuleCollectionTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
         private async Task<ResourceGroupResource> GetResourceGroupAsync()
@@ -57,35 +57,6 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
         }
         #endregion
 
-        #region IntegrationAccount
-        private IntegrationAccountCollection GetIntegrationAccountCollectionAsync(ResourceGroupResource resourceGroup)
-        {
-            return resourceGroup.GetIntegrationAccounts();
-        }
-        private async Task<IntegrationAccountResource> GetIntegrationAccountResourceAsync(ResourceGroupResource resourceGroup, string accountName)
-        {
-            var accountCollection = GetIntegrationAccountCollectionAsync(resourceGroup);
-            var accountInput = ResourceDataHelpers.GetIntegrationAccountData(resourceGroup);
-            var lroo = await accountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, accountInput);
-            IntegrationAccountResource account = lroo.Value;
-            return account;
-        }
-        #endregion
-
-        #region logic workflow
-        private LogicWorkflowCollection GetLogicWorkflowCollectionAsync(ResourceGroupResource resourceGroup)
-        {
-            return resourceGroup.GetLogicWorkflows();
-        }
-        private async Task<LogicWorkflowResource> GetLogicWorkflowResourceAsync(ResourceGroupResource resourceGroup, ResourceIdentifier integrationAccountIdentifier, string workflowName)
-        {
-            var workflowCollection = GetLogicWorkflowCollectionAsync(resourceGroup);
-            var workflowInput = ResourceDataHelpers.GetWorkflowData(resourceGroup, integrationAccountIdentifier, workflowName);
-            var lroo = await workflowCollection.CreateOrUpdateAsync(WaitUntil.Completed, workflowName, workflowInput);
-            LogicWorkflowResource workflow = lroo.Value;
-            return workflow;
-        }
-        #endregion
         private AutomationRuleCollection GetAutomationRuleCollectionAsync(ResourceGroupResource resourceGroup, string workspaceName)
         {
             return resourceGroup.GetAutomationRules(workspaceName);
@@ -98,17 +69,12 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             var resourceGroup = await GetResourceGroupAsync();
             var workspace = await GetWorkspaceResourceAsync(resourceGroup);
             SentinelOnboardingStateResource sOS = await GetSentinelOnboardingStateResourceAsync(resourceGroup, workspace.Data.Name);
-            var workflowName = Recording.GenerateAssetName("workflow");
-            var accountName = Recording.GenerateAssetName("integrationaccount");
-            var integrationAccount = await GetIntegrationAccountResourceAsync(resourceGroup, accountName);
-            var integrationAccountIdentifier = integrationAccount.Data.Id;
-            var workflowResource = await GetLogicWorkflowResourceAsync(resourceGroup, integrationAccountIdentifier, workflowName);
             //1.CreateOrUpdate
             var collection = GetAutomationRuleCollectionAsync(resourceGroup, workspace.Data.Name);
-            var name = Recording.GenerateAssetName("AutomationRules-");
-            var name2 = Recording.GenerateAssetName("AutomationRules-");
-            var name3 = Recording.GenerateAssetName("AutomationRules-");
-            var input = ResourceDataHelpers.GetAutomationRuleData(resourceGroup.Data.Name, workflowName);
+            var name = Recording.GenerateAssetName("automationrules-");
+            var name2 = Recording.GenerateAssetName("automationrules-");
+            var name3 = Recording.GenerateAssetName("automationrules-");
+            var input = ResourceDataHelpers.GetAutomationRuleData(resourceGroup.Data.Name);
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             AutomationRuleResource automation1 = lro.Value;
             Assert.AreEqual(name, automation1.Data.Name);

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
     public class SourceControlResourceTests : SecurityInsightsManagementTestBase
     {
         public SourceControlResourceTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -64,6 +64,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             return lro.Value;
         }
 
+        [Ignore("Track1 doesn't cover")]
         [TestCase]
         public async Task SourceControlResourceApiTests()
         {

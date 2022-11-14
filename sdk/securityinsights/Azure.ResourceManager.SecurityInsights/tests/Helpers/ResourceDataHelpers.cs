@@ -75,30 +75,6 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
         }
         #endregion
 
-        #region IntegrationAccount
-        public static IntegrationAccountData GetIntegrationAccountData(ResourceGroupResource resourceGroup)
-        {
-            IntegrationAccountData data = new IntegrationAccountData(resourceGroup.Data.Location)
-            {
-                SkuName = IntegrationAccountSkuName.Standard,
-            };
-            return data;
-        }
-        #endregion
-
-        #region workflowData
-        public static LogicWorkflowData GetWorkflowData(ResourceGroupResource resourceGroup, ResourceIdentifier integrationAccountIdentifier, string logicWorkflowName)
-        {
-            byte[] definition = File.ReadAllBytes(@"/./AzureWork/GitHub/azure-sdk-for-net/sdk/securityinsights/Azure.ResourceManager.SecurityInsights/tests/TestData/WorkflowDefinition.json");
-            LogicWorkflowData data = new LogicWorkflowData(resourceGroup.Data.Location)
-            {
-                Definition = new BinaryData(definition),
-                IntegrationAccount = new LogicResourceReference() { Id = integrationAccountIdentifier },
-            };
-            return data;
-        }
-        #endregion
-
         #region AutomationRuleData
         public static void AssertAutomationRuleData(AutomationRuleData data1, AutomationRuleData data2)
         {
@@ -107,17 +83,27 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
             Assert.AreEqual(data1.Order, data2.Order);
             Assert.AreEqual(data1.LastModifiedTimeUtc, data2.LastModifiedTimeUtc);
         }
-        public static AutomationRuleData GetAutomationRuleData(string resourcegroup, string workflowName)
+        public static AutomationRuleData GetAutomationRuleData(string resourcegroup)
         {
-            var trigger = new AutomationRuleTriggeringLogic(false, TriggersOn.Alerts, TriggersWhen.Created);
-            IEnumerable<AutomationRuleRunPlaybookAction> action = new List<AutomationRuleRunPlaybookAction>()
+            var trigger = new AutomationRuleTriggeringLogic(false, TriggersOn.Incidents, TriggersWhen.Created);
+            IEnumerable<AutomationRuleModifyPropertiesAction> action = new List<AutomationRuleModifyPropertiesAction>()
             {
-                new AutomationRuleRunPlaybookAction(1)
+                /*new AutomationRuleRunPlaybookAction(1)
                 {
                     ActionConfiguration = new PlaybookActionProperties()
                     {
                         LogicAppResourceId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/" + resourcegroup + "/providers/Microsoft.Logic/workflows/" + workflowName,
-                        TenantId = Guid.Parse("d23e3eef-eed0-428f-a2d5-bc48c268e31d")
+                        TenantId = Guid.Parse("72f988bf-86f1-41af-91ab-2d7cd011db47")
+                    }
+                }*/
+                new AutomationRuleModifyPropertiesAction(1)
+                {
+                    ActionConfiguration = new IncidentPropertiesAction()
+                    {
+                        Labels =
+                        {
+                            new IncidentLabel("testlabel1")
+                        }
                     }
                 }
             };
