@@ -10,7 +10,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The source of the gallery artifact version. </summary>
-    public partial class GalleryArtifactVersionFullSource : GalleryArtifactVersionSourceBase
+    public partial class GalleryArtifactVersionFullSource : GalleryArtifactVersionSource
     {
         /// <summary> Initializes a new instance of GalleryArtifactVersionFullSource. </summary>
         public GalleryArtifactVersionFullSource()

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,16 +15,6 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Uri))
-            {
-                writer.WritePropertyName("uri");
-                writer.WriteStringValue(Uri.AbsoluteUri);
-            }
-            if (Optional.IsDefined(StorageAccountId))
-            {
-                writer.WritePropertyName("storageAccountId");
-                writer.WriteStringValue(StorageAccountId);
-            }
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
@@ -36,26 +25,9 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static GalleryArtifactVersionSource DeserializeGalleryArtifactVersionSource(JsonElement element)
         {
-            Optional<Uri> uri = default;
-            Optional<string> storageAccountId = default;
             Optional<ResourceIdentifier> id = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("uri"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        uri = null;
-                        continue;
-                    }
-                    uri = new Uri(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("storageAccountId"))
-                {
-                    storageAccountId = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("id"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -67,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new GalleryArtifactVersionSource(id.Value, uri.Value, storageAccountId.Value);
+            return new GalleryArtifactVersionSource(id.Value);
         }
     }
 }

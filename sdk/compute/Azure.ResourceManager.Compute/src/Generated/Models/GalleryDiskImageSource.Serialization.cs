@@ -5,68 +5,74 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class GalleryOSDiskImage : IUtf8JsonSerializable
+    public partial class GalleryDiskImageSource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(HostCaching))
+            if (Optional.IsDefined(Uri))
             {
-                writer.WritePropertyName("hostCaching");
-                writer.WriteStringValue(HostCaching.Value.ToSerialString());
+                writer.WritePropertyName("uri");
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Optional.IsDefined(GallerySource))
+            if (Optional.IsDefined(StorageAccountId))
             {
-                writer.WritePropertyName("source");
-                writer.WriteObjectValue(GallerySource);
+                writer.WritePropertyName("storageAccountId");
+                writer.WriteStringValue(StorageAccountId);
+            }
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
             }
             writer.WriteEndObject();
         }
 
-        internal static GalleryOSDiskImage DeserializeGalleryOSDiskImage(JsonElement element)
+        internal static GalleryDiskImageSource DeserializeGalleryDiskImageSource(JsonElement element)
         {
-            Optional<int> sizeInGB = default;
-            Optional<HostCaching> hostCaching = default;
-            Optional<GalleryDiskImageSource> source = default;
+            Optional<Uri> uri = default;
+            Optional<ResourceIdentifier> storageAccountId = default;
+            Optional<ResourceIdentifier> id = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sizeInGB"))
+                if (property.NameEquals("uri"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        uri = null;
                         continue;
                     }
-                    sizeInGB = property.Value.GetInt32();
+                    uri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("hostCaching"))
+                if (property.NameEquals("storageAccountId"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    hostCaching = property.Value.GetString().ToHostCaching();
+                    storageAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("source"))
+                if (property.NameEquals("id"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    source = GalleryDiskImageSource.DeserializeGalleryDiskImageSource(property.Value);
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }
-            return new GalleryOSDiskImage(Optional.ToNullable(sizeInGB), Optional.ToNullable(hostCaching), source.Value);
+            return new GalleryDiskImageSource(id.Value, uri.Value, storageAccountId.Value);
         }
     }
 }

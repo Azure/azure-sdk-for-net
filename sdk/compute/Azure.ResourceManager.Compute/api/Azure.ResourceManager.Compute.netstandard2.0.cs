@@ -3520,21 +3520,21 @@ namespace Azure.ResourceManager.Compute.Models
         public GalleryArtifactSafetyProfileBase() { }
         public bool? AllowDeletionOfReplicatedLocations { get { throw null; } set { } }
     }
-    public partial class GalleryArtifactVersionFullSource : Azure.ResourceManager.Compute.Models.GalleryArtifactVersionSourceBase
+    public partial class GalleryArtifactVersionFullSource : Azure.ResourceManager.Compute.Models.GalleryArtifactVersionSource
     {
         public GalleryArtifactVersionFullSource() { }
         public string CommunityGalleryImageId { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override Azure.Core.ResourceIdentifier StorageAccountId { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override System.Uri Uri { get { throw null; } set { } }
     }
-    public partial class GalleryArtifactVersionSource : Azure.ResourceManager.Compute.Models.GalleryArtifactVersionSourceBase
+    public partial class GalleryArtifactVersionSource
     {
         public GalleryArtifactVersionSource() { }
-        public string StorageAccountId { get { throw null; } set { } }
-        public System.Uri Uri { get { throw null; } set { } }
-    }
-    public partial class GalleryArtifactVersionSourceBase
-    {
-        public GalleryArtifactVersionSourceBase() { }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
+        public virtual Azure.Core.ResourceIdentifier StorageAccountId { get { throw null; } set { } }
+        public virtual System.Uri Uri { get { throw null; } set { } }
     }
     public partial class GalleryDataDiskImage : Azure.ResourceManager.Compute.Models.GalleryDiskImage
     {
@@ -3544,9 +3544,15 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class GalleryDiskImage
     {
         public GalleryDiskImage() { }
+        public Azure.ResourceManager.Compute.Models.GalleryDiskImageSource GallerySource { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.HostCaching? HostCaching { get { throw null; } set { } }
         public int? SizeInGB { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.Compute.Models.GalleryArtifactVersionSource Source { get { throw null; } set { } }
+    }
+    public partial class GalleryDiskImageSource : Azure.ResourceManager.Compute.Models.GalleryArtifactVersionSource
+    {
+        public GalleryDiskImageSource() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct GalleryExpand : System.IEquatable<Azure.ResourceManager.Compute.Models.GalleryExpand>

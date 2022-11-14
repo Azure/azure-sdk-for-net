@@ -220,8 +220,8 @@ rename-mapping:
   DiskSecurityProfile.secureVMDiskEncryptionSetId: -|arm-id
   ImageDiskReference.id: -|arm-id
   DiskImageEncryption.diskEncryptionSetId: -|arm-id
-  GalleryDiskImageSource: GalleryArtifactVersionSource # rotate the names here to avoid breaking changes
-  GalleryArtifactVersionSource: GalleryArtifactVersionSourceBase
+  GalleryDiskImage.source: GallerySource
+  GalleryDiskImageSource.storageAccountId: -|arm-id
   GalleryImageVersionStorageProfile.source: GallerySource
   GalleryArtifactVersionSource.id: -|arm-id
   VirtualMachineExtension.properties.protectedSettingsFromKeyVault: KeyVaultProtectedSettings

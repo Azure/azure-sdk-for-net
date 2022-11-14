@@ -29,9 +29,6 @@ namespace Azure.ResourceManager.Compute.Models
             OSDiskImage = osDiskImage;
             DataDiskImages = dataDiskImages;
         }
-
-        /// <summary> The source of the gallery artifact version. </summary>
-        public GalleryArtifactVersionFullSource GallerySource { get; set; }
         /// <summary> This is the OS disk image. </summary>
         public GalleryOSDiskImage OSDiskImage { get; set; }
         /// <summary> A list of data disk images. </summary>
