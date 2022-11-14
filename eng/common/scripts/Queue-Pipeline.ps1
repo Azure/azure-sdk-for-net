@@ -114,6 +114,5 @@ if ($VsoQueuedPipelines) {
   }else {
     "[$($resp.definition.name)]($($resp._links.web.href))"
   }
-  $QueuedPipelineLinks
   Write-Host "##vso[task.setvariable variable=$VsoQueuedPipelines]$QueuedPipelineLinks"
 }
