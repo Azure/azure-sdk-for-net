@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     case "indicator": return ThreatIntelligenceIndicatorData.DeserializeThreatIntelligenceIndicatorData(element);
                 }
             }
-            ThreatIntelligenceResourceKindEnum kind = default;
+            ThreatIntelligenceResourceInnerKind kind = default;
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (property.NameEquals("kind"))
                 {
-                    kind = new ThreatIntelligenceResourceKindEnum(property.Value.GetString());
+                    kind = new ThreatIntelligenceResourceInnerKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("etag"))

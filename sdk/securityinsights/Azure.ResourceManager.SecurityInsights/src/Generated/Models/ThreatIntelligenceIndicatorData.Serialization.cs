@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.SecurityInsights
 
         internal static ThreatIntelligenceIndicatorData DeserializeThreatIntelligenceIndicatorData(JsonElement element)
         {
-            ThreatIntelligenceResourceKindEnum kind = default;
+            ThreatIntelligenceResourceInnerKind kind = default;
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 if (property.NameEquals("kind"))
                 {
-                    kind = new ThreatIntelligenceResourceKindEnum(property.Value.GetString());
+                    kind = new ThreatIntelligenceResourceInnerKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("etag"))

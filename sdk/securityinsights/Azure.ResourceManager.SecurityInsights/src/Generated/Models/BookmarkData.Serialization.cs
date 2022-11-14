@@ -97,36 +97,6 @@ namespace Azure.ResourceManager.SecurityInsights
                 writer.WritePropertyName("incidentInfo");
                 writer.WriteObjectValue(IncidentInfo);
             }
-            if (Optional.IsCollectionDefined(EntityMappings))
-            {
-                writer.WritePropertyName("entityMappings");
-                writer.WriteStartArray();
-                foreach (var item in EntityMappings)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(Tactics))
-            {
-                writer.WritePropertyName("tactics");
-                writer.WriteStartArray();
-                foreach (var item in Tactics)
-                {
-                    writer.WriteStringValue(item.ToString());
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(Techniques))
-            {
-                writer.WritePropertyName("techniques");
-                writer.WriteStartArray();
-                foreach (var item in Techniques)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -151,9 +121,6 @@ namespace Azure.ResourceManager.SecurityInsights
             Optional<DateTimeOffset> queryStartTime = default;
             Optional<DateTimeOffset> queryEndTime = default;
             Optional<IncidentInfo> incidentInfo = default;
-            Optional<IList<BookmarkEntityMappings>> entityMappings = default;
-            Optional<IList<AttackTactic>> tactics = default;
-            Optional<IList<string>> techniques = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -315,56 +282,11 @@ namespace Azure.ResourceManager.SecurityInsights
                             incidentInfo = IncidentInfo.DeserializeIncidentInfo(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("entityMappings"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            List<BookmarkEntityMappings> array = new List<BookmarkEntityMappings>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(BookmarkEntityMappings.DeserializeBookmarkEntityMappings(item));
-                            }
-                            entityMappings = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("tactics"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            List<AttackTactic> array = new List<AttackTactic>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(new AttackTactic(item.GetString()));
-                            }
-                            tactics = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("techniques"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            techniques = array;
-                            continue;
-                        }
                     }
                     continue;
                 }
             }
-            return new BookmarkData(id, name, type, systemData.Value, Optional.ToNullable(created), createdBy.Value, displayName.Value, Optional.ToList(labels), notes.Value, query.Value, queryResult.Value, Optional.ToNullable(updated), updatedBy.Value, Optional.ToNullable(eventTime), Optional.ToNullable(queryStartTime), Optional.ToNullable(queryEndTime), incidentInfo.Value, Optional.ToList(entityMappings), Optional.ToList(tactics), Optional.ToList(techniques), Optional.ToNullable(etag));
+            return new BookmarkData(id, name, type, systemData.Value, Optional.ToNullable(created), createdBy.Value, displayName.Value, Optional.ToList(labels), notes.Value, query.Value, queryResult.Value, Optional.ToNullable(updated), updatedBy.Value, Optional.ToNullable(eventTime), Optional.ToNullable(queryStartTime), Optional.ToNullable(queryEndTime), incidentInfo.Value, Optional.ToNullable(etag));
         }
     }
 }

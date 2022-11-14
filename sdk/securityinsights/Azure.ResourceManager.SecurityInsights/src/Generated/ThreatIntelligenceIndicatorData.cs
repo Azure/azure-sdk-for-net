@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityInsights
             ObjectMarkingRefs = new ChangeTrackingList<string>();
             ThreatTypes = new ChangeTrackingList<string>();
             Extensions = new ChangeTrackingDictionary<string, BinaryData>();
-            Kind = ThreatIntelligenceResourceKindEnum.Indicator;
+            Kind = ThreatIntelligenceResourceInnerKind.Indicator;
         }
 
         /// <summary> Initializes a new instance of ThreatIntelligenceIndicatorData. </summary>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="created"> Created by. </param>
         /// <param name="modified"> Modified by. </param>
         /// <param name="extensions"> Extensions map. </param>
-        internal ThreatIntelligenceIndicatorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ThreatIntelligenceResourceKindEnum kind, ETag? etag, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, IList<string> threatIntelligenceTags, string lastUpdatedTimeUtc, string source, string displayName, string description, IList<string> indicatorTypes, string pattern, string patternType, string patternVersion, IList<ThreatIntelligenceKillChainPhase> killChainPhases, IList<ThreatIntelligenceParsedPattern> parsedPattern, string externalId, string createdByRef, bool? defanged, string externalLastUpdatedTimeUtc, IList<ThreatIntelligenceExternalReference> externalReferences, IList<ThreatIntelligenceGranularMarkingModel> granularMarkings, IList<string> labels, bool? revoked, int? confidence, IList<string> objectMarkingRefs, string language, IList<string> threatTypes, string validFrom, string validUntil, string created, string modified, IDictionary<string, BinaryData> extensions) : base(id, name, resourceType, systemData, kind, etag)
+        internal ThreatIntelligenceIndicatorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ThreatIntelligenceResourceInnerKind kind, ETag? etag, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, IList<string> threatIntelligenceTags, string lastUpdatedTimeUtc, string source, string displayName, string description, IList<string> indicatorTypes, string pattern, string patternType, string patternVersion, IList<ThreatIntelligenceKillChainPhase> killChainPhases, IList<ThreatIntelligenceParsedPattern> parsedPattern, string externalId, string createdByRef, bool? defanged, string externalLastUpdatedTimeUtc, IList<ThreatIntelligenceExternalReference> externalReferences, IList<ThreatIntelligenceGranularMarkingModel> granularMarkings, IList<string> labels, bool? revoked, int? confidence, IList<string> objectMarkingRefs, string language, IList<string> threatTypes, string validFrom, string validUntil, string created, string modified, IDictionary<string, BinaryData> extensions) : base(id, name, resourceType, systemData, kind, etag)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;

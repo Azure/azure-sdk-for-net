@@ -21,9 +21,6 @@ namespace Azure.ResourceManager.SecurityInsights
         public BookmarkData()
         {
             Labels = new ChangeTrackingList<string>();
-            EntityMappings = new ChangeTrackingList<BookmarkEntityMappings>();
-            Tactics = new ChangeTrackingList<AttackTactic>();
-            Techniques = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of BookmarkData. </summary>
@@ -44,11 +41,8 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="queryStartOn"> The start time for the query. </param>
         /// <param name="queryEndOn"> The end time for the query. </param>
         /// <param name="incidentInfo"> Describes an incident that relates to bookmark. </param>
-        /// <param name="entityMappings"> Describes the entity mappings of the bookmark. </param>
-        /// <param name="tactics"> A list of relevant mitre attacks. </param>
-        /// <param name="techniques"> A list of relevant mitre techniques. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
-        internal BookmarkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? created, UserInfo createdBy, string displayName, IList<string> labels, string notes, string query, string queryResult, DateTimeOffset? updatedOn, UserInfo updatedBy, DateTimeOffset? eventOn, DateTimeOffset? queryStartOn, DateTimeOffset? queryEndOn, IncidentInfo incidentInfo, IList<BookmarkEntityMappings> entityMappings, IList<AttackTactic> tactics, IList<string> techniques, ETag? etag) : base(id, name, resourceType, systemData)
+        internal BookmarkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? created, UserInfo createdBy, string displayName, IList<string> labels, string notes, string query, string queryResult, DateTimeOffset? updatedOn, UserInfo updatedBy, DateTimeOffset? eventOn, DateTimeOffset? queryStartOn, DateTimeOffset? queryEndOn, IncidentInfo incidentInfo, ETag? etag) : base(id, name, resourceType, systemData)
         {
             Created = created;
             CreatedBy = createdBy;
@@ -63,9 +57,6 @@ namespace Azure.ResourceManager.SecurityInsights
             QueryStartOn = queryStartOn;
             QueryEndOn = queryEndOn;
             IncidentInfo = incidentInfo;
-            EntityMappings = entityMappings;
-            Tactics = tactics;
-            Techniques = techniques;
             ETag = etag;
         }
 
@@ -95,12 +86,6 @@ namespace Azure.ResourceManager.SecurityInsights
         public DateTimeOffset? QueryEndOn { get; set; }
         /// <summary> Describes an incident that relates to bookmark. </summary>
         public IncidentInfo IncidentInfo { get; set; }
-        /// <summary> Describes the entity mappings of the bookmark. </summary>
-        public IList<BookmarkEntityMappings> EntityMappings { get; }
-        /// <summary> A list of relevant mitre attacks. </summary>
-        public IList<AttackTactic> Tactics { get; }
-        /// <summary> A list of relevant mitre techniques. </summary>
-        public IList<string> Techniques { get; }
         /// <summary> Etag of the azure resource. </summary>
         public ETag? ETag { get; set; }
     }

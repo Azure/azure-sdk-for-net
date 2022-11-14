@@ -39,7 +39,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string AccountObjectGuidValue = "AccountObjectGuid";
         private const string AccountUPNSuffixValue = "AccountUPNSuffix";
         private const string AlertProductNamesValue = "AlertProductNames";
-        private const string AlertAnalyticRuleIdsValue = "AlertAnalyticRuleIds";
         private const string AzureResourceResourceIdValue = "AzureResourceResourceId";
         private const string AzureResourceSubscriptionIdValue = "AzureResourceSubscriptionId";
         private const string CloudApplicationAppIdValue = "CloudApplicationAppId";
@@ -112,8 +111,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static AutomationRulePropertyConditionSupportedProperty AccountUPNSuffix { get; } = new AutomationRulePropertyConditionSupportedProperty(AccountUPNSuffixValue);
         /// <summary> The name of the product of the alert. </summary>
         public static AutomationRulePropertyConditionSupportedProperty AlertProductNames { get; } = new AutomationRulePropertyConditionSupportedProperty(AlertProductNamesValue);
-        /// <summary> The analytic rule ids of the alert. </summary>
-        public static AutomationRulePropertyConditionSupportedProperty AlertAnalyticRuleIds { get; } = new AutomationRulePropertyConditionSupportedProperty(AlertAnalyticRuleIdsValue);
         /// <summary> The Azure resource id. </summary>
         public static AutomationRulePropertyConditionSupportedProperty AzureResourceResourceId { get; } = new AutomationRulePropertyConditionSupportedProperty(AzureResourceResourceIdValue);
         /// <summary> The Azure resource subscription id. </summary>

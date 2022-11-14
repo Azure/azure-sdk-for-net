@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Gets the automation rule.
+        /// Gets the automation rule
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/automationRules/{automationRuleId}
         /// Operation Id: AutomationRules_Get
         /// </summary>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Gets the automation rule.
+        /// Gets the automation rule
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/automationRules/{automationRuleId}
         /// Operation Id: AutomationRules_Get
         /// </summary>
@@ -167,53 +167,6 @@ namespace Azure.ResourceManager.SecurityInsights
         public static Response<AutomationRuleResource> GetAutomationRule(this ResourceGroupResource resourceGroupResource, string workspaceName, string automationRuleId, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetAutomationRules(workspaceName).Get(automationRuleId, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of IncidentResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        /// <returns> An object representing collection of IncidentResources and their operations over a IncidentResource. </returns>
-        public static IncidentCollection GetIncidents(this ResourceGroupResource resourceGroupResource, string workspaceName)
-        {
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-
-            return GetExtensionClient(resourceGroupResource).GetIncidents(workspaceName);
-        }
-
-        /// <summary>
-        /// Gets an incident.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}
-        /// Operation Id: Incidents_Get
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="incidentId"> Incident ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="incidentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="incidentId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<IncidentResource>> GetIncidentAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, string incidentId, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetIncidents(workspaceName).GetAsync(incidentId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets an incident.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}
-        /// Operation Id: Incidents_Get
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="incidentId"> Incident ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="incidentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="incidentId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<IncidentResource> GetIncident(this ResourceGroupResource resourceGroupResource, string workspaceName, string incidentId, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetIncidents(workspaceName).Get(incidentId, cancellationToken);
         }
 
         /// <summary> Gets a collection of BookmarkResources in the ResourceGroupResource. </summary>
@@ -263,286 +216,98 @@ namespace Azure.ResourceManager.SecurityInsights
             return resourceGroupResource.GetBookmarks(workspaceName).Get(bookmarkId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of EntityResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of DataConnectorResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        /// <returns> An object representing collection of EntityResources and their operations over a EntityResource. </returns>
-        public static EntityCollection GetEntities(this ResourceGroupResource resourceGroupResource, string workspaceName)
+        /// <returns> An object representing collection of DataConnectorResources and their operations over a DataConnectorResource. </returns>
+        public static DataConnectorCollection GetDataConnectors(this ResourceGroupResource resourceGroupResource, string workspaceName)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            return GetExtensionClient(resourceGroupResource).GetEntities(workspaceName);
+            return GetExtensionClient(resourceGroupResource).GetDataConnectors(workspaceName);
         }
 
         /// <summary>
-        /// Gets an entity.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entities/{entityId}
-        /// Operation Id: Entities_Get
+        /// Gets a data connector.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectors/{dataConnectorId}
+        /// Operation Id: DataConnectors_Get
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="entityId"> entity ID. </param>
+        /// <param name="dataConnectorId"> Connector ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="entityId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="entityId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="dataConnectorId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="dataConnectorId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<EntityResource>> GetEntityAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, string entityId, CancellationToken cancellationToken = default)
+        public static async Task<Response<DataConnectorResource>> GetDataConnectorAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, string dataConnectorId, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetEntities(workspaceName).GetAsync(entityId, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetDataConnectors(workspaceName).GetAsync(dataConnectorId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets an entity.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entities/{entityId}
-        /// Operation Id: Entities_Get
+        /// Gets a data connector.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectors/{dataConnectorId}
+        /// Operation Id: DataConnectors_Get
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="entityId"> entity ID. </param>
+        /// <param name="dataConnectorId"> Connector ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="entityId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="entityId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="dataConnectorId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="dataConnectorId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<EntityResource> GetEntity(this ResourceGroupResource resourceGroupResource, string workspaceName, string entityId, CancellationToken cancellationToken = default)
+        public static Response<DataConnectorResource> GetDataConnector(this ResourceGroupResource resourceGroupResource, string workspaceName, string dataConnectorId, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetEntities(workspaceName).Get(entityId, cancellationToken);
+            return resourceGroupResource.GetDataConnectors(workspaceName).Get(dataConnectorId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of EntityQueryResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of IncidentResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        /// <returns> An object representing collection of EntityQueryResources and their operations over a EntityQueryResource. </returns>
-        public static EntityQueryCollection GetEntityQueries(this ResourceGroupResource resourceGroupResource, string workspaceName)
+        /// <returns> An object representing collection of IncidentResources and their operations over a IncidentResource. </returns>
+        public static IncidentCollection GetIncidents(this ResourceGroupResource resourceGroupResource, string workspaceName)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            return GetExtensionClient(resourceGroupResource).GetEntityQueries(workspaceName);
+            return GetExtensionClient(resourceGroupResource).GetIncidents(workspaceName);
         }
 
         /// <summary>
-        /// Gets an entity query.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entityQueries/{entityQueryId}
-        /// Operation Id: EntityQueries_Get
+        /// Gets a given incident.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}
+        /// Operation Id: Incidents_Get
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="entityQueryId"> entity query ID. </param>
+        /// <param name="incidentId"> Incident ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="entityQueryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="entityQueryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="incidentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="incidentId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<EntityQueryResource>> GetEntityQueryAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, string entityQueryId, CancellationToken cancellationToken = default)
+        public static async Task<Response<IncidentResource>> GetIncidentAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, string incidentId, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetEntityQueries(workspaceName).GetAsync(entityQueryId, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetIncidents(workspaceName).GetAsync(incidentId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets an entity query.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entityQueries/{entityQueryId}
-        /// Operation Id: EntityQueries_Get
+        /// Gets a given incident.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}
+        /// Operation Id: Incidents_Get
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="entityQueryId"> entity query ID. </param>
+        /// <param name="incidentId"> Incident ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="entityQueryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="entityQueryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="incidentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="incidentId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<EntityQueryResource> GetEntityQuery(this ResourceGroupResource resourceGroupResource, string workspaceName, string entityQueryId, CancellationToken cancellationToken = default)
+        public static Response<IncidentResource> GetIncident(this ResourceGroupResource resourceGroupResource, string workspaceName, string incidentId, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetEntityQueries(workspaceName).Get(entityQueryId, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of EntityQueryTemplateResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        /// <returns> An object representing collection of EntityQueryTemplateResources and their operations over a EntityQueryTemplateResource. </returns>
-        public static EntityQueryTemplateCollection GetEntityQueryTemplates(this ResourceGroupResource resourceGroupResource, string workspaceName)
-        {
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-
-            return GetExtensionClient(resourceGroupResource).GetEntityQueryTemplates(workspaceName);
-        }
-
-        /// <summary>
-        /// Gets an entity query.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entityQueryTemplates/{entityQueryTemplateId}
-        /// Operation Id: EntityQueryTemplates_Get
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="entityQueryTemplateId"> entity query template ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="entityQueryTemplateId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="entityQueryTemplateId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<EntityQueryTemplateResource>> GetEntityQueryTemplateAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, string entityQueryTemplateId, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetEntityQueryTemplates(workspaceName).GetAsync(entityQueryTemplateId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets an entity query.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entityQueryTemplates/{entityQueryTemplateId}
-        /// Operation Id: EntityQueryTemplates_Get
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="entityQueryTemplateId"> entity query template ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="entityQueryTemplateId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="entityQueryTemplateId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<EntityQueryTemplateResource> GetEntityQueryTemplate(this ResourceGroupResource resourceGroupResource, string workspaceName, string entityQueryTemplateId, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetEntityQueryTemplates(workspaceName).Get(entityQueryTemplateId, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of FileImportResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        /// <returns> An object representing collection of FileImportResources and their operations over a FileImportResource. </returns>
-        public static FileImportCollection GetFileImports(this ResourceGroupResource resourceGroupResource, string workspaceName)
-        {
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-
-            return GetExtensionClient(resourceGroupResource).GetFileImports(workspaceName);
-        }
-
-        /// <summary>
-        /// Gets a file import.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/fileImports/{fileImportId}
-        /// Operation Id: FileImports_Get
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="fileImportId"> File import ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="fileImportId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="fileImportId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<FileImportResource>> GetFileImportAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, string fileImportId, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetFileImports(workspaceName).GetAsync(fileImportId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a file import.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/fileImports/{fileImportId}
-        /// Operation Id: FileImports_Get
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="fileImportId"> File import ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="fileImportId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="fileImportId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<FileImportResource> GetFileImport(this ResourceGroupResource resourceGroupResource, string workspaceName, string fileImportId, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetFileImports(workspaceName).Get(fileImportId, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of MetadataModelResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        /// <returns> An object representing collection of MetadataModelResources and their operations over a MetadataModelResource. </returns>
-        public static MetadataModelCollection GetMetadataModels(this ResourceGroupResource resourceGroupResource, string workspaceName)
-        {
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-
-            return GetExtensionClient(resourceGroupResource).GetMetadataModels(workspaceName);
-        }
-
-        /// <summary>
-        /// Get a Metadata.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/metadata/{metadataName}
-        /// Operation Id: Metadata_Get
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="metadataName"> The Metadata name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="metadataName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="metadataName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<MetadataModelResource>> GetMetadataModelAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, string metadataName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetMetadataModels(workspaceName).GetAsync(metadataName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a Metadata.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/metadata/{metadataName}
-        /// Operation Id: Metadata_Get
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="metadataName"> The Metadata name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="metadataName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="metadataName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<MetadataModelResource> GetMetadataModel(this ResourceGroupResource resourceGroupResource, string workspaceName, string metadataName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetMetadataModels(workspaceName).Get(metadataName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of OfficeConsentResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        /// <returns> An object representing collection of OfficeConsentResources and their operations over a OfficeConsentResource. </returns>
-        public static OfficeConsentCollection GetOfficeConsents(this ResourceGroupResource resourceGroupResource, string workspaceName)
-        {
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-
-            return GetExtensionClient(resourceGroupResource).GetOfficeConsents(workspaceName);
-        }
-
-        /// <summary>
-        /// Gets an office365 consent.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/officeConsents/{consentId}
-        /// Operation Id: OfficeConsents_Get
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="consentId"> consent ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="consentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="consentId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<OfficeConsentResource>> GetOfficeConsentAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, string consentId, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetOfficeConsents(workspaceName).GetAsync(consentId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets an office365 consent.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/officeConsents/{consentId}
-        /// Operation Id: OfficeConsents_Get
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="consentId"> consent ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="consentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="consentId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<OfficeConsentResource> GetOfficeConsent(this ResourceGroupResource resourceGroupResource, string workspaceName, string consentId, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetOfficeConsents(workspaceName).Get(consentId, cancellationToken);
+            return resourceGroupResource.GetIncidents(workspaceName).Get(incidentId, cancellationToken);
         }
 
         /// <summary> Gets a collection of SentinelOnboardingStateResources in the ResourceGroupResource. </summary>
@@ -590,147 +355,6 @@ namespace Azure.ResourceManager.SecurityInsights
         public static Response<SentinelOnboardingStateResource> GetSentinelOnboardingState(this ResourceGroupResource resourceGroupResource, string workspaceName, string sentinelOnboardingStateName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetSentinelOnboardingStates(workspaceName).Get(sentinelOnboardingStateName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SecurityMLAnalyticsSettingResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        /// <returns> An object representing collection of SecurityMLAnalyticsSettingResources and their operations over a SecurityMLAnalyticsSettingResource. </returns>
-        public static SecurityMLAnalyticsSettingCollection GetSecurityMLAnalyticsSettings(this ResourceGroupResource resourceGroupResource, string workspaceName)
-        {
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-
-            return GetExtensionClient(resourceGroupResource).GetSecurityMLAnalyticsSettings(workspaceName);
-        }
-
-        /// <summary>
-        /// Gets the Security ML Analytics Settings.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/securityMLAnalyticsSettings/{settingsResourceName}
-        /// Operation Id: SecurityMLAnalyticsSettings_Get
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="settingsResourceName"> Security ML Analytics Settings resource name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="settingsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="settingsResourceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SecurityMLAnalyticsSettingResource>> GetSecurityMLAnalyticsSettingAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, string settingsResourceName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetSecurityMLAnalyticsSettings(workspaceName).GetAsync(settingsResourceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the Security ML Analytics Settings.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/securityMLAnalyticsSettings/{settingsResourceName}
-        /// Operation Id: SecurityMLAnalyticsSettings_Get
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="settingsResourceName"> Security ML Analytics Settings resource name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="settingsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="settingsResourceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<SecurityMLAnalyticsSettingResource> GetSecurityMLAnalyticsSetting(this ResourceGroupResource resourceGroupResource, string workspaceName, string settingsResourceName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetSecurityMLAnalyticsSettings(workspaceName).Get(settingsResourceName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SettingResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        /// <returns> An object representing collection of SettingResources and their operations over a SettingResource. </returns>
-        public static SettingCollection GetSettings(this ResourceGroupResource resourceGroupResource, string workspaceName)
-        {
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-
-            return GetExtensionClient(resourceGroupResource).GetSettings(workspaceName);
-        }
-
-        /// <summary>
-        /// Gets a setting.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/settings/{settingsName}
-        /// Operation Id: ProductSettings_Get
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="settingsName"> The setting name. Supports - Anomalies, EyesOn, EntityAnalytics, Ueba. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="settingsName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="settingsName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SettingResource>> GetSettingAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, string settingsName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetSettings(workspaceName).GetAsync(settingsName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a setting.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/settings/{settingsName}
-        /// Operation Id: ProductSettings_Get
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="settingsName"> The setting name. Supports - Anomalies, EyesOn, EntityAnalytics, Ueba. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="settingsName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="settingsName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<SettingResource> GetSetting(this ResourceGroupResource resourceGroupResource, string workspaceName, string settingsName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetSettings(workspaceName).Get(settingsName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SourceControlResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        /// <returns> An object representing collection of SourceControlResources and their operations over a SourceControlResource. </returns>
-        public static SourceControlCollection GetSourceControls(this ResourceGroupResource resourceGroupResource, string workspaceName)
-        {
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-
-            return GetExtensionClient(resourceGroupResource).GetSourceControls(workspaceName);
-        }
-
-        /// <summary>
-        /// Gets a source control byt its identifier.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/sourcecontrols/{sourceControlId}
-        /// Operation Id: SourceControls_Get
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="sourceControlId"> Source control Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="sourceControlId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="sourceControlId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SourceControlResource>> GetSourceControlAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, string sourceControlId, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetSourceControls(workspaceName).GetAsync(sourceControlId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a source control byt its identifier.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/sourcecontrols/{sourceControlId}
-        /// Operation Id: SourceControls_Get
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="sourceControlId"> Source control Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="sourceControlId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="sourceControlId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<SourceControlResource> GetSourceControl(this ResourceGroupResource resourceGroupResource, string workspaceName, string sourceControlId, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetSourceControls(workspaceName).Get(sourceControlId, cancellationToken);
         }
 
         /// <summary> Gets a collection of ThreatIntelligenceIndicatorResources in the ResourceGroupResource. </summary>
@@ -789,13 +413,13 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Gets a watchlist, without its watchlist items.
+        /// Get a watchlist, without its watchlist items.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}
         /// Operation Id: Watchlists_Get
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="watchlistAlias"> Watchlist Alias. </param>
+        /// <param name="watchlistAlias"> The watchlist alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="watchlistAlias"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="watchlistAlias"/> is null. </exception>
@@ -806,13 +430,13 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Gets a watchlist, without its watchlist items.
+        /// Get a watchlist, without its watchlist items.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}
         /// Operation Id: Watchlists_Get
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="watchlistAlias"> Watchlist Alias. </param>
+        /// <param name="watchlistAlias"> The watchlist alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="watchlistAlias"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="watchlistAlias"/> is null. </exception>
@@ -820,155 +444,6 @@ namespace Azure.ResourceManager.SecurityInsights
         public static Response<WatchlistResource> GetWatchlist(this ResourceGroupResource resourceGroupResource, string workspaceName, string watchlistAlias, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetWatchlists(workspaceName).Get(watchlistAlias, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of DataConnectorResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        /// <returns> An object representing collection of DataConnectorResources and their operations over a DataConnectorResource. </returns>
-        public static DataConnectorCollection GetDataConnectors(this ResourceGroupResource resourceGroupResource, string workspaceName)
-        {
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-
-            return GetExtensionClient(resourceGroupResource).GetDataConnectors(workspaceName);
-        }
-
-        /// <summary>
-        /// Gets a data connector.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectors/{dataConnectorId}
-        /// Operation Id: DataConnectors_Get
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="dataConnectorId"> Connector ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="dataConnectorId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="dataConnectorId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<DataConnectorResource>> GetDataConnectorAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, string dataConnectorId, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetDataConnectors(workspaceName).GetAsync(dataConnectorId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a data connector.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectors/{dataConnectorId}
-        /// Operation Id: DataConnectors_Get
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="dataConnectorId"> Connector ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="dataConnectorId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="dataConnectorId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<DataConnectorResource> GetDataConnector(this ResourceGroupResource resourceGroupResource, string workspaceName, string dataConnectorId, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetDataConnectors(workspaceName).Get(dataConnectorId, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get geodata for a single IP address
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityInsights/enrichment/ip/geodata
-        /// Operation Id: IPGeodata_Get
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="ipAddress"> IP address (v4 or v6) to be enriched. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipAddress"/> is null. </exception>
-        public static async Task<Response<EnrichmentIPGeodata>> GetIPGeodatumAsync(this ResourceGroupResource resourceGroupResource, string ipAddress, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(ipAddress, nameof(ipAddress));
-
-            return await GetExtensionClient(resourceGroupResource).GetIPGeodatumAsync(ipAddress, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get geodata for a single IP address
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityInsights/enrichment/ip/geodata
-        /// Operation Id: IPGeodata_Get
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="ipAddress"> IP address (v4 or v6) to be enriched. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipAddress"/> is null. </exception>
-        public static Response<EnrichmentIPGeodata> GetIPGeodatum(this ResourceGroupResource resourceGroupResource, string ipAddress, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(ipAddress, nameof(ipAddress));
-
-            return GetExtensionClient(resourceGroupResource).GetIPGeodatum(ipAddress, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get whois information for a single domain name
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityInsights/enrichment/domain/whois
-        /// Operation Id: DomainWhois_Get
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="domain"> Domain name to be enriched. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="domain"/> is null. </exception>
-        public static async Task<Response<EnrichmentDomainWhois>> GetDomainWhoisInformationAsync(this ResourceGroupResource resourceGroupResource, string domain, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(domain, nameof(domain));
-
-            return await GetExtensionClient(resourceGroupResource).GetDomainWhoisInformationAsync(domain, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get whois information for a single domain name
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityInsights/enrichment/domain/whois
-        /// Operation Id: DomainWhois_Get
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="domain"> Domain name to be enriched. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="domain"/> is null. </exception>
-        public static Response<EnrichmentDomainWhois> GetDomainWhoisInformation(this ResourceGroupResource resourceGroupResource, string domain, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(domain, nameof(domain));
-
-            return GetExtensionClient(resourceGroupResource).GetDomainWhoisInformation(domain, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of repositories metadata.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/listRepositories
-        /// Operation Id: SourceControl_listRepositories
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="repoType"> The repo type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="Repo" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Repo> GetRepositoriesSourceControlsAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, RepoType repoType, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-
-            return GetExtensionClient(resourceGroupResource).GetRepositoriesSourceControlsAsync(workspaceName, repoType, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of repositories metadata.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/listRepositories
-        /// Operation Id: SourceControl_listRepositories
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="repoType"> The repo type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        /// <returns> A collection of <see cref="Repo" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Repo> GetRepositoriesSourceControls(this ResourceGroupResource resourceGroupResource, string workspaceName, RepoType repoType, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-
-            return GetExtensionClient(resourceGroupResource).GetRepositoriesSourceControls(workspaceName, repoType, cancellationToken);
         }
 
         /// <summary>
@@ -1085,44 +560,6 @@ namespace Azure.ResourceManager.SecurityInsights
             return GetExtensionClient(resourceGroupResource).GetMetricsThreatIntelligenceIndicators(workspaceName, cancellationToken);
         }
 
-        /// <summary>
-        /// Get requirements state for a data connector type.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectorsCheckRequirements
-        /// Operation Id: DataConnectorsCheckRequirements_Post
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="dataConnectorsCheckRequirements"> The parameters for requirements check message. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="dataConnectorsCheckRequirements"/> is null. </exception>
-        public static async Task<Response<DataConnectorRequirementsState>> PostDataConnectorsCheckRequirementAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, DataConnectorsCheckRequirements dataConnectorsCheckRequirements, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNull(dataConnectorsCheckRequirements, nameof(dataConnectorsCheckRequirements));
-
-            return await GetExtensionClient(resourceGroupResource).PostDataConnectorsCheckRequirementAsync(workspaceName, dataConnectorsCheckRequirements, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get requirements state for a data connector type.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectorsCheckRequirements
-        /// Operation Id: DataConnectorsCheckRequirements_Post
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="dataConnectorsCheckRequirements"> The parameters for requirements check message. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="dataConnectorsCheckRequirements"/> is null. </exception>
-        public static Response<DataConnectorRequirementsState> PostDataConnectorsCheckRequirement(this ResourceGroupResource resourceGroupResource, string workspaceName, DataConnectorsCheckRequirements dataConnectorsCheckRequirements, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNull(dataConnectorsCheckRequirements, nameof(dataConnectorsCheckRequirements));
-
-            return GetExtensionClient(resourceGroupResource).PostDataConnectorsCheckRequirement(workspaceName, dataConnectorsCheckRequirements, cancellationToken);
-        }
-
         #region SecurityInsightsAlertRuleResource
         /// <summary>
         /// Gets an object representing a <see cref="SecurityInsightsAlertRuleResource" /> along with the instance operations that can be performed on it but with no data.
@@ -1199,25 +636,6 @@ namespace Azure.ResourceManager.SecurityInsights
         }
         #endregion
 
-        #region IncidentResource
-        /// <summary>
-        /// Gets an object representing an <see cref="IncidentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IncidentResource.CreateResourceIdentifier" /> to create an <see cref="IncidentResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IncidentResource" /> object. </returns>
-        public static IncidentResource GetIncidentResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                IncidentResource.ValidateResourceId(id);
-                return new IncidentResource(client, id);
-            }
-            );
-        }
-        #endregion
-
         #region BookmarkResource
         /// <summary>
         /// Gets an object representing a <see cref="BookmarkResource" /> along with the instance operations that can be performed on it but with no data.
@@ -1237,134 +655,39 @@ namespace Azure.ResourceManager.SecurityInsights
         }
         #endregion
 
-        #region BookmarkRelationResource
+        #region DataConnectorResource
         /// <summary>
-        /// Gets an object representing a <see cref="BookmarkRelationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BookmarkRelationResource.CreateResourceIdentifier" /> to create a <see cref="BookmarkRelationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataConnectorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataConnectorResource.CreateResourceIdentifier" /> to create a <see cref="DataConnectorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BookmarkRelationResource" /> object. </returns>
-        public static BookmarkRelationResource GetBookmarkRelationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataConnectorResource" /> object. </returns>
+        public static DataConnectorResource GetDataConnectorResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                BookmarkRelationResource.ValidateResourceId(id);
-                return new BookmarkRelationResource(client, id);
+                DataConnectorResource.ValidateResourceId(id);
+                return new DataConnectorResource(client, id);
             }
             );
         }
         #endregion
 
-        #region EntityRelationResource
+        #region IncidentResource
         /// <summary>
-        /// Gets an object representing an <see cref="EntityRelationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EntityRelationResource.CreateResourceIdentifier" /> to create an <see cref="EntityRelationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IncidentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IncidentResource.CreateResourceIdentifier" /> to create an <see cref="IncidentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EntityRelationResource" /> object. </returns>
-        public static EntityRelationResource GetEntityRelationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IncidentResource" /> object. </returns>
+        public static IncidentResource GetIncidentResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                EntityRelationResource.ValidateResourceId(id);
-                return new EntityRelationResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region IncidentRelationResource
-        /// <summary>
-        /// Gets an object representing an <see cref="IncidentRelationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IncidentRelationResource.CreateResourceIdentifier" /> to create an <see cref="IncidentRelationResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IncidentRelationResource" /> object. </returns>
-        public static IncidentRelationResource GetIncidentRelationResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                IncidentRelationResource.ValidateResourceId(id);
-                return new IncidentRelationResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region EntityResource
-        /// <summary>
-        /// Gets an object representing an <see cref="EntityResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EntityResource.CreateResourceIdentifier" /> to create an <see cref="EntityResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EntityResource" /> object. </returns>
-        public static EntityResource GetEntityResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                EntityResource.ValidateResourceId(id);
-                return new EntityResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region EntityQueryResource
-        /// <summary>
-        /// Gets an object representing an <see cref="EntityQueryResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EntityQueryResource.CreateResourceIdentifier" /> to create an <see cref="EntityQueryResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EntityQueryResource" /> object. </returns>
-        public static EntityQueryResource GetEntityQueryResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                EntityQueryResource.ValidateResourceId(id);
-                return new EntityQueryResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region EntityQueryTemplateResource
-        /// <summary>
-        /// Gets an object representing an <see cref="EntityQueryTemplateResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EntityQueryTemplateResource.CreateResourceIdentifier" /> to create an <see cref="EntityQueryTemplateResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EntityQueryTemplateResource" /> object. </returns>
-        public static EntityQueryTemplateResource GetEntityQueryTemplateResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                EntityQueryTemplateResource.ValidateResourceId(id);
-                return new EntityQueryTemplateResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region FileImportResource
-        /// <summary>
-        /// Gets an object representing a <see cref="FileImportResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FileImportResource.CreateResourceIdentifier" /> to create a <see cref="FileImportResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FileImportResource" /> object. </returns>
-        public static FileImportResource GetFileImportResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                FileImportResource.ValidateResourceId(id);
-                return new FileImportResource(client, id);
+                IncidentResource.ValidateResourceId(id);
+                return new IncidentResource(client, id);
             }
             );
         }
@@ -1389,39 +712,20 @@ namespace Azure.ResourceManager.SecurityInsights
         }
         #endregion
 
-        #region MetadataModelResource
+        #region RelationResource
         /// <summary>
-        /// Gets an object representing a <see cref="MetadataModelResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MetadataModelResource.CreateResourceIdentifier" /> to create a <see cref="MetadataModelResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="RelationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RelationResource.CreateResourceIdentifier" /> to create a <see cref="RelationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MetadataModelResource" /> object. </returns>
-        public static MetadataModelResource GetMetadataModelResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RelationResource" /> object. </returns>
+        public static RelationResource GetRelationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                MetadataModelResource.ValidateResourceId(id);
-                return new MetadataModelResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region OfficeConsentResource
-        /// <summary>
-        /// Gets an object representing an <see cref="OfficeConsentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="OfficeConsentResource.CreateResourceIdentifier" /> to create an <see cref="OfficeConsentResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OfficeConsentResource" /> object. </returns>
-        public static OfficeConsentResource GetOfficeConsentResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                OfficeConsentResource.ValidateResourceId(id);
-                return new OfficeConsentResource(client, id);
+                RelationResource.ValidateResourceId(id);
+                return new RelationResource(client, id);
             }
             );
         }
@@ -1441,63 +745,6 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 SentinelOnboardingStateResource.ValidateResourceId(id);
                 return new SentinelOnboardingStateResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region SecurityMLAnalyticsSettingResource
-        /// <summary>
-        /// Gets an object representing a <see cref="SecurityMLAnalyticsSettingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SecurityMLAnalyticsSettingResource.CreateResourceIdentifier" /> to create a <see cref="SecurityMLAnalyticsSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityMLAnalyticsSettingResource" /> object. </returns>
-        public static SecurityMLAnalyticsSettingResource GetSecurityMLAnalyticsSettingResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                SecurityMLAnalyticsSettingResource.ValidateResourceId(id);
-                return new SecurityMLAnalyticsSettingResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region SettingResource
-        /// <summary>
-        /// Gets an object representing a <see cref="SettingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SettingResource.CreateResourceIdentifier" /> to create a <see cref="SettingResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SettingResource" /> object. </returns>
-        public static SettingResource GetSettingResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                SettingResource.ValidateResourceId(id);
-                return new SettingResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region SourceControlResource
-        /// <summary>
-        /// Gets an object representing a <see cref="SourceControlResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SourceControlResource.CreateResourceIdentifier" /> to create a <see cref="SourceControlResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SourceControlResource" /> object. </returns>
-        public static SourceControlResource GetSourceControlResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                SourceControlResource.ValidateResourceId(id);
-                return new SourceControlResource(client, id);
             }
             );
         }
@@ -1555,25 +802,6 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 WatchlistItemResource.ValidateResourceId(id);
                 return new WatchlistItemResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region DataConnectorResource
-        /// <summary>
-        /// Gets an object representing a <see cref="DataConnectorResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataConnectorResource.CreateResourceIdentifier" /> to create a <see cref="DataConnectorResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataConnectorResource" /> object. </returns>
-        public static DataConnectorResource GetDataConnectorResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                DataConnectorResource.ValidateResourceId(id);
-                return new DataConnectorResource(client, id);
             }
             );
         }

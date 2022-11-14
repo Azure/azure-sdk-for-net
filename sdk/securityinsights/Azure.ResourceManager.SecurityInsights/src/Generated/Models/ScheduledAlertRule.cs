@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The kind of the alert rule. </param>
+        /// <param name="kind"> The alert rule kind. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="query"> The query that creates alerts for this rule. </param>
         /// <param name="queryFrequency"> The frequency (in ISO 8601 duration format) for this alert rule to run. </param>

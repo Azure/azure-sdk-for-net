@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="value">
         /// Array of data connectors.
         /// Please note <see cref="DataConnectorData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CodelessApiPollingDataConnector"/>, <see cref="AwsCloudTrailDataConnector"/>, <see cref="AwsS3DataConnector"/>, <see cref="AADDataConnector"/>, <see cref="AatpDataConnector"/>, <see cref="ASCDataConnector"/>, <see cref="Dynamics365DataConnector"/>, <see cref="CodelessUiDataConnector"/>, <see cref="IoTDataConnector"/>, <see cref="McasDataConnector"/>, <see cref="MdatpDataConnector"/>, <see cref="MstiDataConnector"/>, <see cref="MTPDataConnector"/>, <see cref="OfficeDataConnector"/>, <see cref="Office365ProjectDataConnector"/>, <see cref="OfficeATPDataConnector"/>, <see cref="OfficeIRMDataConnector"/>, <see cref="OfficePowerBIDataConnector"/>, <see cref="TIDataConnector"/> and <see cref="TiTaxiiDataConnector"/>.
+        /// The available derived classes include <see cref="AwsCloudTrailDataConnector"/>, <see cref="AADDataConnector"/>, <see cref="AatpDataConnector"/>, <see cref="ASCDataConnector"/>, <see cref="McasDataConnector"/>, <see cref="MdatpDataConnector"/>, <see cref="OfficeDataConnector"/> and <see cref="TIDataConnector"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DataConnectorList(IEnumerable<DataConnectorData> value)
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="value">
         /// Array of data connectors.
         /// Please note <see cref="DataConnectorData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CodelessApiPollingDataConnector"/>, <see cref="AwsCloudTrailDataConnector"/>, <see cref="AwsS3DataConnector"/>, <see cref="AADDataConnector"/>, <see cref="AatpDataConnector"/>, <see cref="ASCDataConnector"/>, <see cref="Dynamics365DataConnector"/>, <see cref="CodelessUiDataConnector"/>, <see cref="IoTDataConnector"/>, <see cref="McasDataConnector"/>, <see cref="MdatpDataConnector"/>, <see cref="MstiDataConnector"/>, <see cref="MTPDataConnector"/>, <see cref="OfficeDataConnector"/>, <see cref="Office365ProjectDataConnector"/>, <see cref="OfficeATPDataConnector"/>, <see cref="OfficeIRMDataConnector"/>, <see cref="OfficePowerBIDataConnector"/>, <see cref="TIDataConnector"/> and <see cref="TiTaxiiDataConnector"/>.
+        /// The available derived classes include <see cref="AwsCloudTrailDataConnector"/>, <see cref="AADDataConnector"/>, <see cref="AatpDataConnector"/>, <see cref="ASCDataConnector"/>, <see cref="McasDataConnector"/>, <see cref="MdatpDataConnector"/>, <see cref="OfficeDataConnector"/> and <see cref="TIDataConnector"/>.
         /// </param>
         internal DataConnectorList(string nextLink, IReadOnlyList<DataConnectorData> value)
         {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary>
         /// Array of data connectors.
         /// Please note <see cref="DataConnectorData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CodelessApiPollingDataConnector"/>, <see cref="AwsCloudTrailDataConnector"/>, <see cref="AwsS3DataConnector"/>, <see cref="AADDataConnector"/>, <see cref="AatpDataConnector"/>, <see cref="ASCDataConnector"/>, <see cref="Dynamics365DataConnector"/>, <see cref="CodelessUiDataConnector"/>, <see cref="IoTDataConnector"/>, <see cref="McasDataConnector"/>, <see cref="MdatpDataConnector"/>, <see cref="MstiDataConnector"/>, <see cref="MTPDataConnector"/>, <see cref="OfficeDataConnector"/>, <see cref="Office365ProjectDataConnector"/>, <see cref="OfficeATPDataConnector"/>, <see cref="OfficeIRMDataConnector"/>, <see cref="OfficePowerBIDataConnector"/>, <see cref="TIDataConnector"/> and <see cref="TiTaxiiDataConnector"/>.
+        /// The available derived classes include <see cref="AwsCloudTrailDataConnector"/>, <see cref="AADDataConnector"/>, <see cref="AatpDataConnector"/>, <see cref="ASCDataConnector"/>, <see cref="McasDataConnector"/>, <see cref="MdatpDataConnector"/>, <see cref="OfficeDataConnector"/> and <see cref="TIDataConnector"/>.
         /// </summary>
         public IReadOnlyList<DataConnectorData> Value { get; }
     }

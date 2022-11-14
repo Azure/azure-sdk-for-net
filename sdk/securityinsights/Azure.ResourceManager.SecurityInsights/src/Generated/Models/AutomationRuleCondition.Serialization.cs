@@ -27,8 +27,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 switch (discriminator.GetString())
                 {
                     case "Property": return PropertyConditionProperties.DeserializePropertyConditionProperties(element);
-                    case "PropertyArrayChanged": return PropertyArrayChangedConditionProperties.DeserializePropertyArrayChangedConditionProperties(element);
-                    case "PropertyChanged": return PropertyChangedConditionProperties.DeserializePropertyChangedConditionProperties(element);
                 }
             }
             ConditionType conditionType = default;

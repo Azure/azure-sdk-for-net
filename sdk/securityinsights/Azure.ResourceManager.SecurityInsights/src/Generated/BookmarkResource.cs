@@ -14,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
@@ -86,43 +85,6 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             if (id.ResourceType != ResourceType)
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of BookmarkRelationResources in the Bookmark. </summary>
-        /// <returns> An object representing collection of BookmarkRelationResources and their operations over a BookmarkRelationResource. </returns>
-        public virtual BookmarkRelationCollection GetBookmarkRelations()
-        {
-            return GetCachedClient(Client => new BookmarkRelationCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets a bookmark relation.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}/relations/{relationName}
-        /// Operation Id: BookmarkRelations_Get
-        /// </summary>
-        /// <param name="relationName"> Relation Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="relationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="relationName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<BookmarkRelationResource>> GetBookmarkRelationAsync(string relationName, CancellationToken cancellationToken = default)
-        {
-            return await GetBookmarkRelations().GetAsync(relationName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a bookmark relation.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}/relations/{relationName}
-        /// Operation Id: BookmarkRelations_Get
-        /// </summary>
-        /// <param name="relationName"> Relation Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="relationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="relationName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<BookmarkRelationResource> GetBookmarkRelation(string relationName, CancellationToken cancellationToken = default)
-        {
-            return GetBookmarkRelations().Get(relationName, cancellationToken);
         }
 
         /// <summary>
@@ -277,58 +239,6 @@ namespace Azure.ResourceManager.SecurityInsights
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Expand an bookmark
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}/expand
-        /// Operation Id: Bookmarks_Expand
-        /// </summary>
-        /// <param name="content"> The parameters required to execute an expand operation on the given bookmark. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<BookmarkExpandResponse>> ExpandAsync(BookmarkExpandContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _bookmarkClientDiagnostics.CreateScope("BookmarkResource.Expand");
-            scope.Start();
-            try
-            {
-                var response = await _bookmarkRestClient.ExpandAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Expand an bookmark
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}/expand
-        /// Operation Id: Bookmarks_Expand
-        /// </summary>
-        /// <param name="content"> The parameters required to execute an expand operation on the given bookmark. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<BookmarkExpandResponse> Expand(BookmarkExpandContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _bookmarkClientDiagnostics.CreateScope("BookmarkResource.Expand");
-            scope.Start();
-            try
-            {
-                var response = _bookmarkRestClient.Expand(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                return response;
             }
             catch (Exception e)
             {

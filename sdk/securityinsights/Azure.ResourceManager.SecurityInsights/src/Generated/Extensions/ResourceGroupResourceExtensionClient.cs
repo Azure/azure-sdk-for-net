@@ -19,16 +19,8 @@ namespace Azure.ResourceManager.SecurityInsights
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     internal partial class ResourceGroupResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _ipGeodataClientDiagnostics;
-        private IPGeodataRestOperations _ipGeodataRestClient;
-        private ClientDiagnostics _domainWhoisClientDiagnostics;
-        private DomainWhoisRestOperations _domainWhoisRestClient;
-        private ClientDiagnostics _sourceControlClientDiagnostics;
-        private SourceControlRestOperations _sourceControlRestClient;
         private ClientDiagnostics _threatIntelligenceIndicatorClientDiagnostics;
         private ThreatIntelligenceIndicatorsRestOperations _threatIntelligenceIndicatorRestClient;
-        private ClientDiagnostics _dataConnectorsCheckRequirementsClientDiagnostics;
-        private DataConnectorsCheckRequirementsRestOperations _dataConnectorsCheckRequirementsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ResourceGroupResourceExtensionClient"/> class for mocking. </summary>
         protected ResourceGroupResourceExtensionClient()
@@ -42,16 +34,8 @@ namespace Azure.ResourceManager.SecurityInsights
         {
         }
 
-        private ClientDiagnostics IPGeodataClientDiagnostics => _ipGeodataClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private IPGeodataRestOperations IPGeodataRestClient => _ipGeodataRestClient ??= new IPGeodataRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics DomainWhoisClientDiagnostics => _domainWhoisClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private DomainWhoisRestOperations DomainWhoisRestClient => _domainWhoisRestClient ??= new DomainWhoisRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics SourceControlClientDiagnostics => _sourceControlClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private SourceControlRestOperations SourceControlRestClient => _sourceControlRestClient ??= new SourceControlRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics ThreatIntelligenceIndicatorClientDiagnostics => _threatIntelligenceIndicatorClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ThreatIntelligenceIndicatorResource.ResourceType.Namespace, Diagnostics);
         private ThreatIntelligenceIndicatorsRestOperations ThreatIntelligenceIndicatorRestClient => _threatIntelligenceIndicatorRestClient ??= new ThreatIntelligenceIndicatorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ThreatIntelligenceIndicatorResource.ResourceType));
-        private ClientDiagnostics DataConnectorsCheckRequirementsClientDiagnostics => _dataConnectorsCheckRequirementsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private DataConnectorsCheckRequirementsRestOperations DataConnectorsCheckRequirementsRestClient => _dataConnectorsCheckRequirementsRestClient ??= new DataConnectorsCheckRequirementsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -83,14 +67,6 @@ namespace Azure.ResourceManager.SecurityInsights
             return new AutomationRuleCollection(Client, Id, workspaceName);
         }
 
-        /// <summary> Gets a collection of IncidentResources in the ResourceGroupResource. </summary>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <returns> An object representing collection of IncidentResources and their operations over a IncidentResource. </returns>
-        public virtual IncidentCollection GetIncidents(string workspaceName)
-        {
-            return new IncidentCollection(Client, Id, workspaceName);
-        }
-
         /// <summary> Gets a collection of BookmarkResources in the ResourceGroupResource. </summary>
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <returns> An object representing collection of BookmarkResources and their operations over a BookmarkResource. </returns>
@@ -99,52 +75,20 @@ namespace Azure.ResourceManager.SecurityInsights
             return new BookmarkCollection(Client, Id, workspaceName);
         }
 
-        /// <summary> Gets a collection of EntityResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of DataConnectorResources in the ResourceGroupResource. </summary>
         /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <returns> An object representing collection of EntityResources and their operations over a EntityResource. </returns>
-        public virtual EntityCollection GetEntities(string workspaceName)
+        /// <returns> An object representing collection of DataConnectorResources and their operations over a DataConnectorResource. </returns>
+        public virtual DataConnectorCollection GetDataConnectors(string workspaceName)
         {
-            return new EntityCollection(Client, Id, workspaceName);
+            return new DataConnectorCollection(Client, Id, workspaceName);
         }
 
-        /// <summary> Gets a collection of EntityQueryResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of IncidentResources in the ResourceGroupResource. </summary>
         /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <returns> An object representing collection of EntityQueryResources and their operations over a EntityQueryResource. </returns>
-        public virtual EntityQueryCollection GetEntityQueries(string workspaceName)
+        /// <returns> An object representing collection of IncidentResources and their operations over a IncidentResource. </returns>
+        public virtual IncidentCollection GetIncidents(string workspaceName)
         {
-            return new EntityQueryCollection(Client, Id, workspaceName);
-        }
-
-        /// <summary> Gets a collection of EntityQueryTemplateResources in the ResourceGroupResource. </summary>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <returns> An object representing collection of EntityQueryTemplateResources and their operations over a EntityQueryTemplateResource. </returns>
-        public virtual EntityQueryTemplateCollection GetEntityQueryTemplates(string workspaceName)
-        {
-            return new EntityQueryTemplateCollection(Client, Id, workspaceName);
-        }
-
-        /// <summary> Gets a collection of FileImportResources in the ResourceGroupResource. </summary>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <returns> An object representing collection of FileImportResources and their operations over a FileImportResource. </returns>
-        public virtual FileImportCollection GetFileImports(string workspaceName)
-        {
-            return new FileImportCollection(Client, Id, workspaceName);
-        }
-
-        /// <summary> Gets a collection of MetadataModelResources in the ResourceGroupResource. </summary>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <returns> An object representing collection of MetadataModelResources and their operations over a MetadataModelResource. </returns>
-        public virtual MetadataModelCollection GetMetadataModels(string workspaceName)
-        {
-            return new MetadataModelCollection(Client, Id, workspaceName);
-        }
-
-        /// <summary> Gets a collection of OfficeConsentResources in the ResourceGroupResource. </summary>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <returns> An object representing collection of OfficeConsentResources and their operations over a OfficeConsentResource. </returns>
-        public virtual OfficeConsentCollection GetOfficeConsents(string workspaceName)
-        {
-            return new OfficeConsentCollection(Client, Id, workspaceName);
+            return new IncidentCollection(Client, Id, workspaceName);
         }
 
         /// <summary> Gets a collection of SentinelOnboardingStateResources in the ResourceGroupResource. </summary>
@@ -153,30 +97,6 @@ namespace Azure.ResourceManager.SecurityInsights
         public virtual SentinelOnboardingStateCollection GetSentinelOnboardingStates(string workspaceName)
         {
             return new SentinelOnboardingStateCollection(Client, Id, workspaceName);
-        }
-
-        /// <summary> Gets a collection of SecurityMLAnalyticsSettingResources in the ResourceGroupResource. </summary>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <returns> An object representing collection of SecurityMLAnalyticsSettingResources and their operations over a SecurityMLAnalyticsSettingResource. </returns>
-        public virtual SecurityMLAnalyticsSettingCollection GetSecurityMLAnalyticsSettings(string workspaceName)
-        {
-            return new SecurityMLAnalyticsSettingCollection(Client, Id, workspaceName);
-        }
-
-        /// <summary> Gets a collection of SettingResources in the ResourceGroupResource. </summary>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <returns> An object representing collection of SettingResources and their operations over a SettingResource. </returns>
-        public virtual SettingCollection GetSettings(string workspaceName)
-        {
-            return new SettingCollection(Client, Id, workspaceName);
-        }
-
-        /// <summary> Gets a collection of SourceControlResources in the ResourceGroupResource. </summary>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <returns> An object representing collection of SourceControlResources and their operations over a SourceControlResource. </returns>
-        public virtual SourceControlCollection GetSourceControls(string workspaceName)
-        {
-            return new SourceControlCollection(Client, Id, workspaceName);
         }
 
         /// <summary> Gets a collection of ThreatIntelligenceIndicatorResources in the ResourceGroupResource. </summary>
@@ -192,194 +112,6 @@ namespace Azure.ResourceManager.SecurityInsights
         public virtual WatchlistCollection GetWatchlists(string workspaceName)
         {
             return new WatchlistCollection(Client, Id, workspaceName);
-        }
-
-        /// <summary> Gets a collection of DataConnectorResources in the ResourceGroupResource. </summary>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <returns> An object representing collection of DataConnectorResources and their operations over a DataConnectorResource. </returns>
-        public virtual DataConnectorCollection GetDataConnectors(string workspaceName)
-        {
-            return new DataConnectorCollection(Client, Id, workspaceName);
-        }
-
-        /// <summary>
-        /// Get geodata for a single IP address
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityInsights/enrichment/ip/geodata
-        /// Operation Id: IPGeodata_Get
-        /// </summary>
-        /// <param name="ipAddress"> IP address (v4 or v6) to be enriched. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<EnrichmentIPGeodata>> GetIPGeodatumAsync(string ipAddress, CancellationToken cancellationToken = default)
-        {
-            using var scope = IPGeodataClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetIPGeodatum");
-            scope.Start();
-            try
-            {
-                var response = await IPGeodataRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ipAddress, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get geodata for a single IP address
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityInsights/enrichment/ip/geodata
-        /// Operation Id: IPGeodata_Get
-        /// </summary>
-        /// <param name="ipAddress"> IP address (v4 or v6) to be enriched. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<EnrichmentIPGeodata> GetIPGeodatum(string ipAddress, CancellationToken cancellationToken = default)
-        {
-            using var scope = IPGeodataClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetIPGeodatum");
-            scope.Start();
-            try
-            {
-                var response = IPGeodataRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ipAddress, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get whois information for a single domain name
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityInsights/enrichment/domain/whois
-        /// Operation Id: DomainWhois_Get
-        /// </summary>
-        /// <param name="domain"> Domain name to be enriched. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<EnrichmentDomainWhois>> GetDomainWhoisInformationAsync(string domain, CancellationToken cancellationToken = default)
-        {
-            using var scope = DomainWhoisClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetDomainWhoisInformation");
-            scope.Start();
-            try
-            {
-                var response = await DomainWhoisRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, domain, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get whois information for a single domain name
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityInsights/enrichment/domain/whois
-        /// Operation Id: DomainWhois_Get
-        /// </summary>
-        /// <param name="domain"> Domain name to be enriched. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<EnrichmentDomainWhois> GetDomainWhoisInformation(string domain, CancellationToken cancellationToken = default)
-        {
-            using var scope = DomainWhoisClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetDomainWhoisInformation");
-            scope.Start();
-            try
-            {
-                var response = DomainWhoisRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, domain, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets a list of repositories metadata.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/listRepositories
-        /// Operation Id: SourceControl_listRepositories
-        /// </summary>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="repoType"> The repo type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Repo" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Repo> GetRepositoriesSourceControlsAsync(string workspaceName, RepoType repoType, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<Repo>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SourceControlClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetRepositoriesSourceControls");
-                scope.Start();
-                try
-                {
-                    var response = await SourceControlRestClient.ListRepositoriesAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, repoType, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<Repo>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SourceControlClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetRepositoriesSourceControls");
-                scope.Start();
-                try
-                {
-                    var response = await SourceControlRestClient.ListRepositoriesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, workspaceName, repoType, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Gets a list of repositories metadata.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/listRepositories
-        /// Operation Id: SourceControl_listRepositories
-        /// </summary>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="repoType"> The repo type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Repo" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Repo> GetRepositoriesSourceControls(string workspaceName, RepoType repoType, CancellationToken cancellationToken = default)
-        {
-            Page<Repo> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SourceControlClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetRepositoriesSourceControls");
-                scope.Start();
-                try
-                {
-                    var response = SourceControlRestClient.ListRepositories(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, repoType, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<Repo> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SourceControlClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetRepositoriesSourceControls");
-                scope.Start();
-                try
-                {
-                    var response = SourceControlRestClient.ListRepositoriesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, workspaceName, repoType, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary>
@@ -572,54 +304,6 @@ namespace Azure.ResourceManager.SecurityInsights
                 }
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary>
-        /// Get requirements state for a data connector type.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectorsCheckRequirements
-        /// Operation Id: DataConnectorsCheckRequirements_Post
-        /// </summary>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="dataConnectorsCheckRequirements"> The parameters for requirements check message. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DataConnectorRequirementsState>> PostDataConnectorsCheckRequirementAsync(string workspaceName, DataConnectorsCheckRequirements dataConnectorsCheckRequirements, CancellationToken cancellationToken = default)
-        {
-            using var scope = DataConnectorsCheckRequirementsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.PostDataConnectorsCheckRequirement");
-            scope.Start();
-            try
-            {
-                var response = await DataConnectorsCheckRequirementsRestClient.PostAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, dataConnectorsCheckRequirements, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get requirements state for a data connector type.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectorsCheckRequirements
-        /// Operation Id: DataConnectorsCheckRequirements_Post
-        /// </summary>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="dataConnectorsCheckRequirements"> The parameters for requirements check message. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DataConnectorRequirementsState> PostDataConnectorsCheckRequirement(string workspaceName, DataConnectorsCheckRequirements dataConnectorsCheckRequirements, CancellationToken cancellationToken = default)
-        {
-            using var scope = DataConnectorsCheckRequirementsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.PostDataConnectorsCheckRequirement");
-            scope.Start();
-            try
-            {
-                var response = DataConnectorsCheckRequirementsRestClient.Post(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, dataConnectorsCheckRequirements, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
     }
 }

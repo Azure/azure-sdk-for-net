@@ -9,18 +9,17 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents a cloud application entity. </summary>
-    public partial class CloudApplicationEntity : EntityData
+    public partial class CloudApplicationEntity : Entity
     {
         /// <summary> Initializes a new instance of CloudApplicationEntity. </summary>
         public CloudApplicationEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
-            Kind = EntityKind.CloudApplication;
+            Kind = EntityKindEnum.CloudApplication;
         }
 
         /// <summary> Initializes a new instance of CloudApplicationEntity. </summary>
@@ -34,7 +33,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="appId"> The technical identifier of the application. </param>
         /// <param name="appName"> The name of the related cloud application. </param>
         /// <param name="instanceName"> The user defined instance name of the cloud application. It is often used to distinguish between several applications of the same type that a customer has. </param>
-        internal CloudApplicationEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, int? appId, string appName, string instanceName) : base(id, name, resourceType, systemData, kind)
+        internal CloudApplicationEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityKindEnum kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, int? appId, string appName, string instanceName) : base(id, name, resourceType, systemData, kind)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The kind of the alert rule. </param>
+        /// <param name="kind"> The alert rule kind. </param>
         /// <param name="alertRulesCreatedByTemplateCount"> the number of alert rules that were created by this template. </param>
         /// <param name="createdDateUTC"> The time that this alert rule template has been added. </param>
         /// <param name="lastUpdatedDateUTC"> The time that this alert rule template was last updated. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="triggerOperator"> The operation against the threshold that triggers alert rule. </param>
         /// <param name="triggerThreshold"> The threshold triggers this alert rule. </param>
         /// <param name="tactics"> The tactics of the alert rule template. </param>
-        /// <param name="techniques"> The techniques of the alert rule. </param>
+        /// <param name="techniques"> The techniques of the alert rule template. </param>
         /// <param name="version"> The version of this template - in format &lt;a.b.c&gt;, where all are numbers. For example &lt;1.0.2&gt;. </param>
         /// <param name="eventGroupingSettings"> The event grouping settings. </param>
         /// <param name="customDetails"> Dictionary of string key-value pairs of columns to be attached to the alert. </param>
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public int? TriggerThreshold { get; set; }
         /// <summary> The tactics of the alert rule template. </summary>
         public IList<AttackTactic> Tactics { get; }
-        /// <summary> The techniques of the alert rule. </summary>
+        /// <summary> The techniques of the alert rule template. </summary>
         public IList<string> Techniques { get; }
         /// <summary> The version of this template - in format &lt;a.b.c&gt;, where all are numbers. For example &lt;1.0.2&gt;. </summary>
         public string Version { get; set; }

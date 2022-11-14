@@ -9,18 +9,17 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents a submission mail entity. </summary>
-    public partial class SubmissionMailEntity : EntityData
+    public partial class SubmissionMailEntity : Entity
     {
         /// <summary> Initializes a new instance of SubmissionMailEntity. </summary>
         public SubmissionMailEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
-            Kind = EntityKind.SubmissionMail;
+            Kind = EntityKindEnum.SubmissionMail;
         }
 
         /// <summary> Initializes a new instance of SubmissionMailEntity. </summary>
@@ -41,7 +40,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="senderIP"> The sender&apos;s IP. </param>
         /// <param name="subject"> The subject of submission mail. </param>
         /// <param name="reportType"> The submission type for the given instance. This maps to Junk, Phish, Malware or NotJunk. </param>
-        internal SubmissionMailEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, Guid? networkMessageId, Guid? submissionId, string submitter, DateTimeOffset? submissionOn, DateTimeOffset? timestamp, string recipient, string sender, string senderIP, string subject, string reportType) : base(id, name, resourceType, systemData, kind)
+        internal SubmissionMailEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityKindEnum kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, Guid? networkMessageId, Guid? submissionId, string submitter, DateTimeOffset? submissionOn, DateTimeOffset? timestamp, string recipient, string sender, string senderIP, string subject, string reportType) : base(id, name, resourceType, systemData, kind)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;

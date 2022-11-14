@@ -9,12 +9,11 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents a mail message entity. </summary>
-    public partial class MailMessageEntity : EntityData
+    public partial class MailMessageEntity : Entity
     {
         /// <summary> Initializes a new instance of MailMessageEntity. </summary>
         public MailMessageEntity()
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Urls = new ChangeTrackingList<string>();
             Threats = new ChangeTrackingList<string>();
             ThreatDetectionMethods = new ChangeTrackingList<string>();
-            Kind = EntityKind.MailMessage;
+            Kind = EntityKindEnum.MailMessage;
         }
 
         /// <summary> Initializes a new instance of MailMessageEntity. </summary>
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="antispamDirection"> The directionality of this mail message. </param>
         /// <param name="deliveryAction"> The delivery action of this mail message like Delivered, Blocked, Replaced etc. </param>
         /// <param name="deliveryLocation"> The delivery location of this mail message like Inbox, JunkFolder etc. </param>
-        internal MailMessageEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, IReadOnlyList<string> fileEntityIds, string recipient, IReadOnlyList<string> urls, IReadOnlyList<string> threats, string p1Sender, string p1SenderDisplayName, string p1SenderDomain, string senderIP, string p2Sender, string p2SenderDisplayName, string p2SenderDomain, DateTimeOffset? receiveOn, Guid? networkMessageId, string internetMessageId, string subject, string language, IReadOnlyList<string> threatDetectionMethods, int? bodyFingerprintBin1, int? bodyFingerprintBin2, int? bodyFingerprintBin3, int? bodyFingerprintBin4, int? bodyFingerprintBin5, AntispamMailDirection? antispamDirection, DeliveryAction? deliveryAction, DeliveryLocation? deliveryLocation) : base(id, name, resourceType, systemData, kind)
+        internal MailMessageEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityKindEnum kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, IReadOnlyList<string> fileEntityIds, string recipient, IReadOnlyList<string> urls, IReadOnlyList<string> threats, string p1Sender, string p1SenderDisplayName, string p1SenderDomain, string senderIP, string p2Sender, string p2SenderDisplayName, string p2SenderDomain, DateTimeOffset? receiveOn, Guid? networkMessageId, string internetMessageId, string subject, string language, IReadOnlyList<string> threatDetectionMethods, int? bodyFingerprintBin1, int? bodyFingerprintBin2, int? bodyFingerprintBin3, int? bodyFingerprintBin4, int? bodyFingerprintBin5, AntispamMailDirection? antispamDirection, DeliveryAction? deliveryAction, DeliveryLocation? deliveryLocation) : base(id, name, resourceType, systemData, kind)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;

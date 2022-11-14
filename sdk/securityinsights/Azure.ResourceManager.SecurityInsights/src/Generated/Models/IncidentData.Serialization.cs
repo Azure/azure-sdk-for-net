@@ -62,16 +62,6 @@ namespace Azure.ResourceManager.SecurityInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ProviderName))
-            {
-                writer.WritePropertyName("providerName");
-                writer.WriteStringValue(ProviderName);
-            }
-            if (Optional.IsDefined(ProviderIncidentId))
-            {
-                writer.WritePropertyName("providerIncidentId");
-                writer.WriteStringValue(ProviderIncidentId);
-            }
             if (Optional.IsDefined(LastActivityTimeUtc))
             {
                 writer.WritePropertyName("lastActivityTimeUtc");
@@ -91,11 +81,6 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 writer.WritePropertyName("status");
                 writer.WriteStringValue(Status.Value.ToString());
-            }
-            if (Optional.IsDefined(TeamInformation))
-            {
-                writer.WritePropertyName("teamInformation");
-                writer.WriteObjectValue(TeamInformation);
             }
             if (Optional.IsDefined(Title))
             {
@@ -123,15 +108,12 @@ namespace Azure.ResourceManager.SecurityInsights
             Optional<Uri> incidentUrl = default;
             Optional<int> incidentNumber = default;
             Optional<IList<IncidentLabel>> labels = default;
-            Optional<string> providerName = default;
-            Optional<string> providerIncidentId = default;
             Optional<DateTimeOffset> lastActivityTimeUtc = default;
             Optional<DateTimeOffset> lastModifiedTimeUtc = default;
             Optional<IncidentOwnerInfo> owner = default;
             Optional<IReadOnlyList<string>> relatedAnalyticRuleIds = default;
             Optional<IncidentSeverity> severity = default;
             Optional<IncidentStatus> status = default;
-            Optional<TeamInformation> teamInformation = default;
             Optional<string> title = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -274,16 +256,6 @@ namespace Azure.ResourceManager.SecurityInsights
                             labels = array;
                             continue;
                         }
-                        if (property0.NameEquals("providerName"))
-                        {
-                            providerName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("providerIncidentId"))
-                        {
-                            providerIncidentId = property0.Value.GetString();
-                            continue;
-                        }
                         if (property0.NameEquals("lastActivityTimeUtc"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -349,16 +321,6 @@ namespace Azure.ResourceManager.SecurityInsights
                             status = new IncidentStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("teamInformation"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            teamInformation = TeamInformation.DeserializeTeamInformation(property0.Value);
-                            continue;
-                        }
                         if (property0.NameEquals("title"))
                         {
                             title = property0.Value.GetString();
@@ -368,7 +330,7 @@ namespace Azure.ResourceManager.SecurityInsights
                     continue;
                 }
             }
-            return new IncidentData(id, name, type, systemData.Value, additionalData.Value, Optional.ToNullable(classification), classificationComment.Value, Optional.ToNullable(classificationReason), Optional.ToNullable(createdTimeUtc), description.Value, Optional.ToNullable(firstActivityTimeUtc), incidentUrl.Value, Optional.ToNullable(incidentNumber), Optional.ToList(labels), providerName.Value, providerIncidentId.Value, Optional.ToNullable(lastActivityTimeUtc), Optional.ToNullable(lastModifiedTimeUtc), owner.Value, Optional.ToList(relatedAnalyticRuleIds), Optional.ToNullable(severity), Optional.ToNullable(status), teamInformation.Value, title.Value, Optional.ToNullable(etag));
+            return new IncidentData(id, name, type, systemData.Value, additionalData.Value, Optional.ToNullable(classification), classificationComment.Value, Optional.ToNullable(classificationReason), Optional.ToNullable(createdTimeUtc), description.Value, Optional.ToNullable(firstActivityTimeUtc), incidentUrl.Value, Optional.ToNullable(incidentNumber), Optional.ToList(labels), Optional.ToNullable(lastActivityTimeUtc), Optional.ToNullable(lastModifiedTimeUtc), owner.Value, Optional.ToList(relatedAnalyticRuleIds), Optional.ToNullable(severity), Optional.ToNullable(status), title.Value, Optional.ToNullable(etag));
         }
     }
 }

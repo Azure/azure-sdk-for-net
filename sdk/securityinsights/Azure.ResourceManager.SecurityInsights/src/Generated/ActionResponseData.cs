@@ -24,21 +24,21 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> Etag of the action. </param>
         /// <param name="logicAppResourceId"> Logic App Resource Id, /subscriptions/{my-subscription}/resourceGroups/{my-resource-group}/providers/Microsoft.Logic/workflows/{my-workflow-id}. </param>
         /// <param name="workflowId"> The name of the logic app&apos;s workflow. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
-        internal ActionResponseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string logicAppResourceId, string workflowId, ETag? etag) : base(id, name, resourceType, systemData)
+        internal ActionResponseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string logicAppResourceId, string workflowId) : base(id, name, resourceType, systemData)
         {
+            ETag = etag;
             LogicAppResourceId = logicAppResourceId;
             WorkflowId = workflowId;
-            ETag = etag;
         }
 
+        /// <summary> Etag of the action. </summary>
+        public ETag? ETag { get; set; }
         /// <summary> Logic App Resource Id, /subscriptions/{my-subscription}/resourceGroups/{my-resource-group}/providers/Microsoft.Logic/workflows/{my-workflow-id}. </summary>
         public string LogicAppResourceId { get; set; }
         /// <summary> The name of the logic app&apos;s workflow. </summary>
         public string WorkflowId { get; set; }
-        /// <summary> Etag of the azure resource. </summary>
-        public ETag? ETag { get; set; }
     }
 }

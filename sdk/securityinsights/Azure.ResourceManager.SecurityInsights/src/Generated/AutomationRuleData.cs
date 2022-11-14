@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="order"> The order of execution of the automation rule. </param>
         /// <param name="triggeringLogic"> Describes automation rule triggering logic. </param>
         /// <param name="actions">
-        /// The actions to execute when the automation rule is triggered.
+        /// The actions to execute when the automation rule is triggered
         /// Please note <see cref="AutomationRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AutomationRuleModifyPropertiesAction"/> and <see cref="AutomationRuleRunPlaybookAction"/>.
         /// </param>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="order"> The order of execution of the automation rule. </param>
         /// <param name="triggeringLogic"> Describes automation rule triggering logic. </param>
         /// <param name="actions">
-        /// The actions to execute when the automation rule is triggered.
+        /// The actions to execute when the automation rule is triggered
         /// Please note <see cref="AutomationRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AutomationRuleModifyPropertiesAction"/> and <see cref="AutomationRuleRunPlaybookAction"/>.
         /// </param>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <summary> Describes automation rule triggering logic. </summary>
         public AutomationRuleTriggeringLogic TriggeringLogic { get; set; }
         /// <summary>
-        /// The actions to execute when the automation rule is triggered.
+        /// The actions to execute when the automation rule is triggered
         /// Please note <see cref="AutomationRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AutomationRuleModifyPropertiesAction"/> and <see cref="AutomationRuleRunPlaybookAction"/>.
         /// </summary>

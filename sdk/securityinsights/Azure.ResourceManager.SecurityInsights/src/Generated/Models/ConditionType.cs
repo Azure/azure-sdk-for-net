@@ -23,15 +23,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         private const string PropertyValue = "Property";
-        private const string PropertyChangedValue = "PropertyChanged";
-        private const string PropertyArrayChangedValue = "PropertyArrayChanged";
 
         /// <summary> Evaluate an object property value. </summary>
         public static ConditionType Property { get; } = new ConditionType(PropertyValue);
-        /// <summary> Evaluate an object property changed value. </summary>
-        public static ConditionType PropertyChanged { get; } = new ConditionType(PropertyChangedValue);
-        /// <summary> Evaluate an object array property changed value. </summary>
-        public static ConditionType PropertyArrayChanged { get; } = new ConditionType(PropertyArrayChangedValue);
         /// <summary> Determines if two <see cref="ConditionType"/> values are the same. </summary>
         public static bool operator ==(ConditionType left, ConditionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConditionType"/> values are not the same. </summary>

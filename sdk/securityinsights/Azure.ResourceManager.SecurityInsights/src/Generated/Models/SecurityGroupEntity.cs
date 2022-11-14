@@ -9,18 +9,17 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents a security group entity. </summary>
-    public partial class SecurityGroupEntity : EntityData
+    public partial class SecurityGroupEntity : Entity
     {
         /// <summary> Initializes a new instance of SecurityGroupEntity. </summary>
         public SecurityGroupEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
-            Kind = EntityKind.SecurityGroup;
+            Kind = EntityKindEnum.SecurityGroup;
         }
 
         /// <summary> Initializes a new instance of SecurityGroupEntity. </summary>
@@ -34,7 +33,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="distinguishedName"> The group distinguished name. </param>
         /// <param name="objectGuid"> A single-value attribute that is the unique identifier for the object, assigned by active directory. </param>
         /// <param name="sid"> The SID attribute is a single-value attribute that specifies the security identifier (SID) of the group. </param>
-        internal SecurityGroupEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string distinguishedName, Guid? objectGuid, string sid) : base(id, name, resourceType, systemData, kind)
+        internal SecurityGroupEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityKindEnum kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string distinguishedName, Guid? objectGuid, string sid) : base(id, name, resourceType, systemData, kind)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;

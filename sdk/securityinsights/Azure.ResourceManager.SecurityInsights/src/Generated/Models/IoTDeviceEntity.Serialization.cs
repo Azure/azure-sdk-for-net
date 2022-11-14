@@ -22,18 +22,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(Importance))
-            {
-                writer.WritePropertyName("importance");
-                writer.WriteStringValue(Importance.Value.ToString());
-            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static IoTDeviceEntity DeserializeIoTDeviceEntity(JsonElement element)
         {
-            EntityKind kind = default;
+            EntityKindEnum kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -57,22 +52,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<string> ipAddressEntityId = default;
             Optional<IReadOnlyList<ThreatIntelligence>> threatIntelligence = default;
             Optional<IReadOnlyList<string>> protocols = default;
-            Optional<IReadOnlyList<string>> owners = default;
-            Optional<IReadOnlyList<string>> nicEntityIds = default;
-            Optional<string> site = default;
-            Optional<string> zone = default;
-            Optional<string> sensor = default;
-            Optional<string> deviceSubType = default;
-            Optional<DeviceImportance> importance = default;
-            Optional<string> purdueLayer = default;
-            Optional<bool> isAuthorized = default;
-            Optional<bool> isProgramming = default;
-            Optional<bool> isScanner = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
                 {
-                    kind = new EntityKind(property.Value.GetString());
+                    kind = new EntityKindEnum(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -239,106 +223,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             protocols = array;
                             continue;
                         }
-                        if (property0.NameEquals("owners"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            owners = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("nicEntityIds"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            nicEntityIds = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("site"))
-                        {
-                            site = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("zone"))
-                        {
-                            zone = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("sensor"))
-                        {
-                            sensor = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("deviceSubType"))
-                        {
-                            deviceSubType = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("importance"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            importance = new DeviceImportance(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("purdueLayer"))
-                        {
-                            purdueLayer = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("isAuthorized"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            isAuthorized = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("isProgramming"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            isProgramming = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("isScanner"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            isScanner = property0.Value.GetBoolean();
-                            continue;
-                        }
                     }
                     continue;
                 }
             }
-            return new IoTDeviceEntity(id, name, type, systemData.Value, kind, Optional.ToDictionary(additionalData), friendlyName.Value, deviceId.Value, deviceName.Value, source.Value, Optional.ToNullable(iotSecurityAgentId), deviceType.Value, vendor.Value, edgeId.Value, macAddress.Value, model.Value, serialNumber.Value, firmwareVersion.Value, operatingSystem.Value, iotHubEntityId.Value, hostEntityId.Value, ipAddressEntityId.Value, Optional.ToList(threatIntelligence), Optional.ToList(protocols), Optional.ToList(owners), Optional.ToList(nicEntityIds), site.Value, zone.Value, sensor.Value, deviceSubType.Value, Optional.ToNullable(importance), purdueLayer.Value, Optional.ToNullable(isAuthorized), Optional.ToNullable(isProgramming), Optional.ToNullable(isScanner));
+            return new IoTDeviceEntity(id, name, type, systemData.Value, kind, Optional.ToDictionary(additionalData), friendlyName.Value, deviceId.Value, deviceName.Value, source.Value, Optional.ToNullable(iotSecurityAgentId), deviceType.Value, vendor.Value, edgeId.Value, macAddress.Value, model.Value, serialNumber.Value, firmwareVersion.Value, operatingSystem.Value, iotHubEntityId.Value, hostEntityId.Value, ipAddressEntityId.Value, Optional.ToList(threatIntelligence), Optional.ToList(protocols));
         }
     }
 }

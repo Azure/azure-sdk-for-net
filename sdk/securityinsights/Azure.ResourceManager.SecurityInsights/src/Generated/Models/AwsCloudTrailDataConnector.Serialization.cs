@@ -31,14 +31,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("awsRoleArn");
                 writer.WriteStringValue(AwsRoleArn);
             }
-            writer.WritePropertyName("dataTypes");
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Logs))
+            if (Optional.IsDefined(DataTypes))
             {
-                writer.WritePropertyName("logs");
-                writer.WriteObjectValue(Logs);
+                writer.WritePropertyName("dataTypes");
+                writer.WriteObjectValue(DataTypes);
             }
-            writer.WriteEndObject();
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -52,7 +49,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> awsRoleArn = default;
-            Optional<AwsCloudTrailDataConnectorDataTypesLogs> logs = default;
+            Optional<AwsCloudTrailDataConnectorDataTypes> dataTypes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -116,26 +113,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                if (property1.NameEquals("logs"))
-                                {
-                                    if (property1.Value.ValueKind == JsonValueKind.Null)
-                                    {
-                                        property1.ThrowNonNullablePropertyIsNull();
-                                        continue;
-                                    }
-                                    logs = AwsCloudTrailDataConnectorDataTypesLogs.DeserializeAwsCloudTrailDataConnectorDataTypesLogs(property1.Value);
-                                    continue;
-                                }
-                            }
+                            dataTypes = AwsCloudTrailDataConnectorDataTypes.DeserializeAwsCloudTrailDataConnectorDataTypes(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new AwsCloudTrailDataConnector(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), awsRoleArn.Value, logs.Value);
+            return new AwsCloudTrailDataConnector(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), awsRoleArn.Value, dataTypes.Value);
         }
     }
 }

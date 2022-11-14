@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -16,7 +15,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         internal static IncidentEntitiesResponse DeserializeIncidentEntitiesResponse(JsonElement element)
         {
-            Optional<IReadOnlyList<EntityData>> entities = default;
+            Optional<IReadOnlyList<Entity>> entities = default;
             Optional<IReadOnlyList<IncidentEntitiesResultsMetadata>> metaData = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +26,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<EntityData> array = new List<EntityData>();
+                    List<Entity> array = new List<Entity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EntityData.DeserializeEntityData(item));
+                        array.Add(Entity.DeserializeEntity(item));
                     }
                     entities = array;
                     continue;

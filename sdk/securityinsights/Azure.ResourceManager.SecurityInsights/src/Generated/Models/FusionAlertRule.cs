@@ -20,8 +20,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of FusionAlertRule. </summary>
         public FusionAlertRule()
         {
-            SourceSettings = new ChangeTrackingList<FusionSourceSettings>();
-            ScenarioExclusionPatterns = new ChangeTrackingList<FusionScenarioExclusionPattern>();
             Tactics = new ChangeTrackingList<AttackTactic>();
             Techniques = new ChangeTrackingList<string>();
             Kind = AlertRuleKind.Fusion;
@@ -32,26 +30,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The kind of the alert rule. </param>
+        /// <param name="kind"> The alert rule kind. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="alertRuleTemplateName"> The Name of the alert rule template used to create this rule. </param>
         /// <param name="description"> The description of the alert rule. </param>
         /// <param name="displayName"> The display name for alerts created by this alert rule. </param>
         /// <param name="enabled"> Determines whether this alert rule is enabled or disabled. </param>
-        /// <param name="sourceSettings"> Configuration for all supported source signals in fusion detection. </param>
-        /// <param name="scenarioExclusionPatterns"> Configuration to exclude scenarios in fusion detection. </param>
         /// <param name="lastModifiedUtc"> The last time that this alert has been modified. </param>
         /// <param name="severity"> The severity for alerts created by this alert rule. </param>
         /// <param name="tactics"> The tactics of the alert rule. </param>
         /// <param name="techniques"> The techniques of the alert rule. </param>
-        internal FusionAlertRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertRuleKind kind, ETag? etag, string alertRuleTemplateName, string description, string displayName, bool? enabled, IList<FusionSourceSettings> sourceSettings, IList<FusionScenarioExclusionPattern> scenarioExclusionPatterns, DateTimeOffset? lastModifiedUtc, AlertSeverity? severity, IReadOnlyList<AttackTactic> tactics, IReadOnlyList<string> techniques) : base(id, name, resourceType, systemData, kind, etag)
+        internal FusionAlertRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertRuleKind kind, ETag? etag, string alertRuleTemplateName, string description, string displayName, bool? enabled, DateTimeOffset? lastModifiedUtc, AlertSeverity? severity, IReadOnlyList<AttackTactic> tactics, IReadOnlyList<string> techniques) : base(id, name, resourceType, systemData, kind, etag)
         {
             AlertRuleTemplateName = alertRuleTemplateName;
             Description = description;
             DisplayName = displayName;
             Enabled = enabled;
-            SourceSettings = sourceSettings;
-            ScenarioExclusionPatterns = scenarioExclusionPatterns;
             LastModifiedUtc = lastModifiedUtc;
             Severity = severity;
             Tactics = tactics;
@@ -67,10 +61,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public string DisplayName { get; }
         /// <summary> Determines whether this alert rule is enabled or disabled. </summary>
         public bool? Enabled { get; set; }
-        /// <summary> Configuration for all supported source signals in fusion detection. </summary>
-        public IList<FusionSourceSettings> SourceSettings { get; }
-        /// <summary> Configuration to exclude scenarios in fusion detection. </summary>
-        public IList<FusionScenarioExclusionPattern> ScenarioExclusionPatterns { get; }
         /// <summary> The last time that this alert has been modified. </summary>
         public DateTimeOffset? LastModifiedUtc { get; }
         /// <summary> The severity for alerts created by this alert rule. </summary>

@@ -9,19 +9,18 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents a file entity. </summary>
-    public partial class FileEntity : EntityData
+    public partial class FileEntity : Entity
     {
         /// <summary> Initializes a new instance of FileEntity. </summary>
         public FileEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
             FileHashEntityIds = new ChangeTrackingList<string>();
-            Kind = EntityKind.File;
+            Kind = EntityKindEnum.File;
         }
 
         /// <summary> Initializes a new instance of FileEntity. </summary>
@@ -36,7 +35,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="fileHashEntityIds"> The file hash entity identifiers associated with this file. </param>
         /// <param name="fileName"> The file name without path (some alerts might not include path). </param>
         /// <param name="hostEntityId"> The Host entity id which the file belongs to. </param>
-        internal FileEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string directory, IReadOnlyList<string> fileHashEntityIds, string fileName, string hostEntityId) : base(id, name, resourceType, systemData, kind)
+        internal FileEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityKindEnum kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string directory, IReadOnlyList<string> fileHashEntityIds, string fileName, string hostEntityId) : base(id, name, resourceType, systemData, kind)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;
