@@ -12,23 +12,23 @@ using Azure.Core;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> An object representing a single summary with context for given document. </summary>
-    internal partial class AbstractiveSummary
+    internal partial class AbstractiveSummaryInternal
     {
-        /// <summary> Initializes a new instance of AbstractiveSummary. </summary>
+        /// <summary> Initializes a new instance of AbstractiveSummaryInternal. </summary>
         /// <param name="text"> The text of the summary. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        public AbstractiveSummary(string text)
+        public AbstractiveSummaryInternal(string text)
         {
             Argument.AssertNotNull(text, nameof(text));
 
             Text = text;
-            Contexts = new ChangeTrackingList<SummaryContext>();
+            Contexts = new ChangeTrackingList<SummaryContextInternal>();
         }
 
-        /// <summary> Initializes a new instance of AbstractiveSummary. </summary>
+        /// <summary> Initializes a new instance of AbstractiveSummaryInternal. </summary>
         /// <param name="text"> The text of the summary. </param>
         /// <param name="contexts"> The context list of the summary. </param>
-        internal AbstractiveSummary(string text, IList<SummaryContext> contexts)
+        internal AbstractiveSummaryInternal(string text, IList<SummaryContextInternal> contexts)
         {
             Text = text;
             Contexts = contexts;
@@ -37,6 +37,6 @@ namespace Azure.AI.TextAnalytics.Models
         /// <summary> The text of the summary. </summary>
         public string Text { get; set; }
         /// <summary> The context list of the summary. </summary>
-        public IList<SummaryContext> Contexts { get; }
+        public IList<SummaryContextInternal> Contexts { get; }
     }
 }
