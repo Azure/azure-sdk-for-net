@@ -61,7 +61,7 @@ namespace Compute.Tests
         }
 
         [Fact]
-        [Trait("Name", "TestCloudServiceScenarioOperations_ExtensionProfile")]
+        [Trait("Name", "TestCloudServiceScenarioOperations_AvailabilityZones")]
         public void TestCloudServiceScenarioOperations_AvailabilityZones()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
