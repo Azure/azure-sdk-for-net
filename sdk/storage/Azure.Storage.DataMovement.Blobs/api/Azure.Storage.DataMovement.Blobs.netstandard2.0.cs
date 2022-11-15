@@ -1,8 +1,8 @@
-namespace Azure.Storage.Blobs.DataMovement
+namespace Azure.Storage.DataMovement.Blobs
 {
     public partial class AppendBlobStorageResource : Azure.Storage.DataMovement.StorageResource
     {
-        public AppendBlobStorageResource(Azure.Storage.Blobs.Specialized.AppendBlobClient blobClient, Azure.Storage.Blobs.DataMovement.AppendBlobStorageResourceOptions options = null) { }
+        public AppendBlobStorageResource(Azure.Storage.Blobs.Specialized.AppendBlobClient blobClient, Azure.Storage.DataMovement.Blobs.AppendBlobStorageResourceOptions options = null) { }
         public override Azure.Storage.DataMovement.ProduceUriType CanProduceUri { get { throw null; } }
         public override string Path { get { throw null; } }
         public override Azure.Storage.DataMovement.Models.TransferCopyMethod ServiceCopyMethod { get { throw null; } }
@@ -19,9 +19,9 @@ namespace Azure.Storage.Blobs.DataMovement
     public partial class AppendBlobStorageResourceOptions
     {
         public AppendBlobStorageResourceOptions() { }
-        public Azure.Storage.Blobs.DataMovement.AppendBlobStorageResourceServiceCopyOptions CopyOptions { get { throw null; } set { } }
-        public Azure.Storage.Blobs.DataMovement.BlobStorageResourceDownloadOptions DownloadOptions { get { throw null; } set { } }
-        public Azure.Storage.Blobs.DataMovement.AppendBlobStorageResourceUploadOptions UploadOptions { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.Blobs.AppendBlobStorageResourceServiceCopyOptions CopyOptions { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.Blobs.BlobStorageResourceDownloadOptions DownloadOptions { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.Blobs.AppendBlobStorageResourceUploadOptions UploadOptions { get { throw null; } set { } }
     }
     public partial class AppendBlobStorageResourceServiceCopyOptions
     {
@@ -40,7 +40,7 @@ namespace Azure.Storage.Blobs.DataMovement
     public partial class BlobDirectoryStorageResourceContainer : Azure.Storage.DataMovement.StorageResourceContainer
     {
         public BlobDirectoryStorageResourceContainer(Azure.Storage.Blobs.BlobContainerClient containerClient, string directoryPrefix) { }
-        public BlobDirectoryStorageResourceContainer(Azure.Storage.Blobs.BlobContainerClient containerClient, string directoryPrefix, Azure.Storage.Blobs.DataMovement.BlobDirectoryStorageResourceContainerOptions options = null) { }
+        public BlobDirectoryStorageResourceContainer(Azure.Storage.Blobs.BlobContainerClient containerClient, string directoryPrefix, Azure.Storage.DataMovement.Blobs.BlobDirectoryStorageResourceContainerOptions options = null) { }
         public override Azure.Storage.DataMovement.ProduceUriType CanProduceUri { get { throw null; } }
         public override string Path { get { throw null; } }
         public override System.Uri Uri { get { throw null; } }
@@ -52,11 +52,11 @@ namespace Azure.Storage.Blobs.DataMovement
     public partial class BlobDirectoryStorageResourceContainerOptions
     {
         public BlobDirectoryStorageResourceContainerOptions() { }
-        public Azure.Storage.Blobs.DataMovement.BlockBlobStorageResourceServiceCopyOptions CopyOptions { get { throw null; } set { } }
-        public Azure.Storage.Blobs.DataMovement.BlobStorageResourceDownloadOptions DownloadOptions { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.Blobs.BlockBlobStorageResourceServiceCopyOptions CopyOptions { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.Blobs.BlobStorageResourceDownloadOptions DownloadOptions { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobStates States { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobTraits Traits { get { throw null; } set { } }
-        public Azure.Storage.Blobs.DataMovement.BlockBlobStorageResourceUploadOptions UploadOptions { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.Blobs.BlockBlobStorageResourceUploadOptions UploadOptions { get { throw null; } set { } }
     }
     public partial class BlobStorageResourceDownloadOptions
     {
@@ -66,7 +66,7 @@ namespace Azure.Storage.Blobs.DataMovement
     }
     public partial class BlockBlobStorageResource : Azure.Storage.DataMovement.StorageResource
     {
-        public BlockBlobStorageResource(Azure.Storage.Blobs.Specialized.BlockBlobClient blobClient, Azure.Storage.Blobs.DataMovement.BlockBlobStorageResourceOptions options = null) { }
+        public BlockBlobStorageResource(Azure.Storage.Blobs.Specialized.BlockBlobClient blobClient, Azure.Storage.DataMovement.Blobs.BlockBlobStorageResourceOptions options = null) { }
         public override Azure.Storage.DataMovement.ProduceUriType CanProduceUri { get { throw null; } }
         public override string Path { get { throw null; } }
         public override Azure.Storage.DataMovement.Models.TransferCopyMethod ServiceCopyMethod { get { throw null; } }
@@ -83,9 +83,9 @@ namespace Azure.Storage.Blobs.DataMovement
     public partial class BlockBlobStorageResourceOptions
     {
         public BlockBlobStorageResourceOptions() { }
-        public Azure.Storage.Blobs.DataMovement.BlockBlobStorageResourceServiceCopyOptions CopyOptions { get { throw null; } set { } }
-        public Azure.Storage.Blobs.DataMovement.BlobStorageResourceDownloadOptions DownloadOptions { get { throw null; } set { } }
-        public Azure.Storage.Blobs.DataMovement.BlockBlobStorageResourceUploadOptions UploadOptions { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.Blobs.BlockBlobStorageResourceServiceCopyOptions CopyOptions { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.Blobs.BlobStorageResourceDownloadOptions DownloadOptions { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.Blobs.BlockBlobStorageResourceUploadOptions UploadOptions { get { throw null; } set { } }
     }
     public partial class BlockBlobStorageResourceServiceCopyOptions
     {
@@ -114,7 +114,7 @@ namespace Azure.Storage.Blobs.DataMovement
     }
     public partial class PageBlobStorageResource : Azure.Storage.DataMovement.StorageResource
     {
-        public PageBlobStorageResource(Azure.Storage.Blobs.Specialized.PageBlobClient blobClient, Azure.Storage.Blobs.DataMovement.PageBlobStorageResourceOptions options = null) { }
+        public PageBlobStorageResource(Azure.Storage.Blobs.Specialized.PageBlobClient blobClient, Azure.Storage.DataMovement.Blobs.PageBlobStorageResourceOptions options = null) { }
         public override Azure.Storage.DataMovement.ProduceUriType CanProduceUri { get { throw null; } }
         public override string Path { get { throw null; } }
         public override Azure.Storage.DataMovement.Models.TransferCopyMethod ServiceCopyMethod { get { throw null; } }
@@ -131,9 +131,9 @@ namespace Azure.Storage.Blobs.DataMovement
     public partial class PageBlobStorageResourceOptions
     {
         public PageBlobStorageResourceOptions() { }
-        public Azure.Storage.Blobs.DataMovement.PageBlobStorageResourceServiceCopyOptions CopyOptions { get { throw null; } set { } }
-        public Azure.Storage.Blobs.DataMovement.BlobStorageResourceDownloadOptions DownloadOptions { get { throw null; } set { } }
-        public Azure.Storage.Blobs.DataMovement.PageBlobStorageResourceUploadOptions UploadOptions { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.Blobs.PageBlobStorageResourceServiceCopyOptions CopyOptions { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.Blobs.BlobStorageResourceDownloadOptions DownloadOptions { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.Blobs.PageBlobStorageResourceUploadOptions UploadOptions { get { throw null; } set { } }
     }
     public partial class PageBlobStorageResourceServiceCopyOptions
     {
