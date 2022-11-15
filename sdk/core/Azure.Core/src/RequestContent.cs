@@ -85,18 +85,19 @@ namespace Azure.Core
         /// <exception cref="NotImplementedException"></exception>
         public static dynamic CreateDynamic()
         {
-            throw new NotImplementedException();
+            return new JsonData();
         }
 
         /// <summary>
         /// </summary>
         /// <param name="serializable"></param>
-        /// <param name="serializer"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public static dynamic CreateDynamic(object serializable, ObjectSerializer? serializer = null)
+        public static dynamic CreateDynamic(object serializable /*, ObjectSerializer? serializer = null*/)
         {
-            throw new NotImplementedException();
+            // TODO: handle serialer - currently doesn't match JsonData API...
+            //return new JsonData(serializable, serializer);
+            return new JsonData(serializable);
         }
 
         /// <summary>

@@ -24,7 +24,7 @@ namespace Azure
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     [DebuggerTypeProxy(typeof(JsonDataDebuggerProxy))]
-    public class JsonData : IDynamicMetaObjectProvider, IEquatable<JsonData>
+    internal class JsonData : IDynamicMetaObjectProvider, IEquatable<JsonData>
     {
         private readonly JsonValueKind _kind;
 
@@ -98,6 +98,7 @@ namespace Azure
         private JsonData? this[int arrayIndex]
         {
             get => GetValueAt(arrayIndex);
+            set => SetValueAt(arrayIndex, value);
         }
 
         /// <summary>
@@ -111,6 +112,7 @@ namespace Azure
         private JsonData? this[string propertyName]
         {
             get => GetPropertyValue(propertyName);
+            set => SetValue(propertyName, value);
         }
 
         /// <summary>
@@ -164,6 +166,12 @@ namespace Azure
                     InitFromElement(e);
                     break;
             }
+        }
+
+        internal JsonData()
+        {
+            _kind = JsonValueKind.Object;
+            _objectRepresentation = new Dictionary<string, JsonData>(StringComparer.OrdinalIgnoreCase);
         }
 
         private JsonData(JsonElement element)
@@ -521,6 +529,62 @@ namespace Azure
             return null;
         }
 
+        private JsonData SetValueAt(int index, object? value)
+        {
+            if (!(value is JsonData json))
+            {
+                json = new JsonData(value);
+            }
+
+            EnsureArray()[index] = json;
+            return json;
+        }
+
+        private JsonData SetValue(string propertyName, object? value)
+        {
+            if (!(value is JsonData json))
+            {
+                json = new JsonData(value);
+            }
+
+            EnsureObject()[propertyName] = json;
+            return json;
+        }
+
+        /// <summary>
+        /// Inserts a new value at the end of an array.
+        /// </summary>
+        /// <param name="serializable">The value to insert into the array.</param>
+        /// <remarks>
+        /// If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Array"/> this method throws <see cref="InvalidOperationException"/>.
+        /// </remarks>
+        public JsonData Add(object? serializable)
+        {
+            JsonData value = new JsonData(serializable);
+            EnsureArray().Add(value);
+            return value;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="serializable"></param>
+        /// <returns></returns>
+        public bool Remove(object? serializable)
+        {
+            JsonData value = new JsonData(serializable);
+            return EnsureArray().Remove(value);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="index"></param>
+        public JsonData RemoveAt(int index)
+        {
+            JsonData item = EnsureArray()[index];
+            EnsureArray().RemoveAt(index);
+            return item;
+        }
+
         /// <returns>A new instance of <typeparamref name="T"/> constructed from the underlying JSON value.</returns>
         private T? To<T>()
         {
@@ -687,6 +751,7 @@ namespace Azure
             private static readonly PropertyInfo LengthProperty = typeof(JsonData).GetProperty(nameof(Length), BindingFlags.NonPublic | BindingFlags.Instance)!;
             private static readonly Dictionary<Type, PropertyInfo> Indexers = GetIndexers();
             private static readonly Dictionary<Type, MethodInfo> CastOperators = GetCastOperators();
+            private static readonly MethodInfo SetValueMethod = typeof(JsonData).GetMethod(nameof(SetValue), BindingFlags.NonPublic | BindingFlags.Instance)!;
 
             internal MetaObject(Expression parameter, IDynamicMetaObjectProvider value) : base(parameter, BindingRestrictions.Empty, value)
             {
@@ -708,6 +773,14 @@ namespace Azure
                         restrictions);
                 }
 
+                // Create the property as an object if it's missing :-o !!
+                // Note: carefully consider this - this will create data for typos on the
+                // read side - is there a way to address using read/write modality?
+                if (_value.GetPropertyValue(binder.Name) == null)
+                {
+                    _value.SetValue(binder.Name, new JsonData());
+                }
+
                 var arguments = new Expression[] { Expression.Constant(binder.Name) };
                 var getPropertyCall = Expression.Call(targetObject, GetPropertyMethod, arguments);
 
@@ -716,12 +789,24 @@ namespace Azure
 
             public override DynamicMetaObject BindGetIndex(GetIndexBinder binder, DynamicMetaObject[] indexes)
             {
-                var targetObject = Expression.Convert(Expression, LimitType);
+                var self = Expression.Convert(Expression, LimitType);
                 var arguments = indexes.Select(i => i.Expression);
-                var indexPropertyCall = Expression.Property(targetObject, Indexers[indexes[0].LimitType], arguments);
+                var indexerCall = Expression.Property(self, Indexers[indexes[0].LimitType], arguments);
 
                 var restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
-                return new DynamicMetaObject(indexPropertyCall, restrictions);
+                return new DynamicMetaObject(indexerCall, restrictions);
+            }
+
+            public override DynamicMetaObject BindSetIndex(SetIndexBinder binder, DynamicMetaObject[] indexes, DynamicMetaObject value)
+            {
+                // TODO: expand to handle dictionary assigment as well.
+
+                var self = Expression.Convert(Expression, LimitType);
+                var arguments = new Expression[] { indexes[0].Expression, Expression.Convert(value.Expression, typeof(object)) };
+                var setValueAtCall = Expression.Call(self, "SetValueAt", null, arguments);
+
+                var restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
+                return new DynamicMetaObject(setValueAtCall, restrictions);
             }
 
             public override DynamicMetaObject BindConvert(ConvertBinder binder)
@@ -745,6 +830,54 @@ namespace Azure
 
                 convertCall = Expression.Call(targetObject, nameof(To), new Type[] { binder.Type });
                 return new DynamicMetaObject(convertCall, restrictions);
+            }
+
+            public override DynamicMetaObject BindSetMember(SetMemberBinder binder, DynamicMetaObject value)
+            {
+                Expression targetObject = Expression.Convert(Expression, LimitType);
+                var arguments = new Expression[2] { Expression.Constant(binder.Name), Expression.Convert(value.Expression, typeof(object)) };
+
+                Expression setPropertyCall = Expression.Call(targetObject, SetValueMethod, arguments);
+                BindingRestrictions restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
+                return new DynamicMetaObject(setPropertyCall, restrictions);
+            }
+
+            public override DynamicMetaObject BindInvoke(InvokeBinder binder, DynamicMetaObject[] args)
+            {
+                return base.BindInvoke(binder, args);
+            }
+
+            public override DynamicMetaObject BindInvokeMember(InvokeMemberBinder binder, DynamicMetaObject[] args)
+            {
+                Expression self = Expression.Convert(Expression, LimitType);
+                BindingRestrictions restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
+
+                // Add item to array
+                if (_value.Kind == JsonValueKind.Array)
+                {
+                    if (binder.Name == "Add")
+                    {
+                        var arguments = new Expression[] { Expression.Convert(args[0].Expression, typeof(object)) };
+                        Expression methodCall = Expression.Call(self, binder.Name, null, arguments);
+                        return new DynamicMetaObject(methodCall, restrictions);
+                    }
+
+                    if (binder.Name == "Remove")
+                    {
+                        var arguments = new Expression[] { Expression.Convert(args[0].Expression, typeof(object)) };
+                        Expression methodCall = Expression.Convert(Expression.Call(self, binder.Name, null, arguments), typeof(object));
+                        return new DynamicMetaObject(methodCall, restrictions);
+                    }
+
+                    if (binder.Name == "RemoveAt")
+                    {
+                        var arguments = new Expression[] { args[0].Expression };
+                        Expression methodCall = Expression.Call(self, binder.Name, null, arguments);
+                        return new DynamicMetaObject(methodCall, restrictions);
+                    }
+                }
+
+                return base.BindInvokeMember(binder, args);
             }
 
             private static Dictionary<Type, PropertyInfo> GetIndexers()
