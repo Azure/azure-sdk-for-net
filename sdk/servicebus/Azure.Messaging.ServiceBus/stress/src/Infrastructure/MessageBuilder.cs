@@ -8,189 +8,110 @@ using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus;
 
 namespace Azure.Messaging.ServiceBus.Stress;
+internal static class MessageBuilder
 {
-    public static class MessageBuilder
+    /// <summary>The seed to use for initializing random number generated for a given thread-specific instance.</summary>
+    private static int s_randomSeed = Environment.TickCount;
+
+    /// <summary>The random number generator to use for a specific thread.</summary>
+    private static readonly ThreadLocal<Random> RandomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
+
+    internal static ReadOnlyMemory<byte> CreateRandomBody(long bodySizeBytes)
     {
-        /// <summary>The seed to use for initializing random number generated for a given thread-specific instance.</summary>
-        private static int s_randomSeed = Environment.TickCount;
+        var buffer = new byte[bodySizeBytes];
+        RandomNumberGenerator.Value.NextBytes(buffer);
 
-        /// <summary>The random number generator to use for a specific thread.</summary>
-        private static readonly ThreadLocal<Random> RandomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
+        return buffer;
+    }
 
-        /// <summary>
-        ///   Creates a buffer of read-only memory with random values to serve
-        ///   as the body of a Service Bus Message.
-        /// </summary>
-        ///
-        /// <param name="bodySizeBytes">The size of the body, in bytes.</param>
-        ///
-        /// <returns>A memory buffer of the requested size range containing randomized data.</returns>
-        ///
-        public static ReadOnlyMemory<byte> CreateRandomBody(long bodySizeBytes)
+    internal static IEnumerable<ServiceBusMessage> CreateMessages(int numberOfMessages,
+                                                        long maximumBatchSize,
+                                                        int largeMessageRandomFactor = 30,
+                                                        int minimumBodySize = 15,
+                                                        int maximumBodySize = 83886)
+    {
+        var totalBytesGenerated = 0;
+
+        if (RandomNumberGenerator.Value.Next(1, 100) < largeMessageRandomFactor)
         {
-            var buffer = new byte[bodySizeBytes];
-            RandomNumberGenerator.Value.NextBytes(buffer);
-
-            return buffer;
+            activeMinimumBodySize = (int)Math.Ceiling(maximumBodySize * 0.65);
+        }
+        else
+        {
+            activeMaximumBodySize = (int)Math.Floor((maximumBatchSize * 1.0f) / numberOfMessages);
         }
 
-        /// <summary>
-        ///   Creates a random set of messages with random data and random body size within the specified constraints.
-        /// </summary>
-        ///
-        /// <param name="maximumBatchSize">The maximum size of the batch.</param>
-        /// <param name="numberOfMessages">The number of messages to create.</param>
-        /// <param name="largeMessageRandomFactor">The percentage of events that should be large.</param>
-        /// <param name="minimumBodySize">The minimum size of the event body.</param>
-        /// <param name="maximumBodySize">The maximum size of the event body.</param>
-        ///
-        /// <returns>The requested set of events.</returns>
-        ///
-        public static IEnumerable<ServiceBusMessage> CreateMessages(int numberOfMessages,
-                                                          long maximumBatchSize,
-                                                          int largeMessageRandomFactor = 30,
-                                                          int minimumBodySize = 15,
-                                                          int maximumBodySize = 83886)
+        for (var index = 0; ((index < numberOfMessages) && (totalBytesGenerated <= maximumBatchSize)); ++index)
         {
-            var totalBytesGenerated = 0;
+            var buffer = new byte[RandomNumberGenerator.Value.Next(activeMinimumBodySize, activeMaximumBodySize)];
+            RandomNumberGenerator.Value.NextBytes(buffer);
+            totalBytesGenerated += buffer.Length;
 
-            if (RandomNumberGenerator.Value.Next(1, 100) < largeMessageRandomFactor)
+            yield return CreateMessageFromBody(buffer);
+        }
+    }
+
+    internal static IEnumerable<ServiceBusMessage> CreateSmallMessages(int numberOfMessages)
+    {
+        const int minimumBodySize = 5;
+        const int maximumBodySize = 25;
+
+        for (var index = 0; index < numberOfMessages; ++index)
+        {
+            var buffer = new byte[RandomNumberGenerator.Value.Next(minimumBodySize, maximumBodySize)];
+            RandomNumberGenerator.Value.NextBytes(buffer);
+
+            yield return CreateMessageFromBody(buffer);
+        }
+    }
+
+    internal static ServiceBusMessage CreateMessagefromBody(ReadOnlyMemory<byte> eventBody)
+    {
+        var id = Guid.NewGuid().ToString();
+
+        return new ServiceBusMessage(eventBody)
+        {
+            MessageId = id,
+            Properties = {{ IdPropertyName, id }}
+        };
+    }
+
+    internal static async Task<IEnumerable<ServiceBusMessageBatch>> BuildBatchesAsync(IEnumerable<ServiceBusMessage> messages,
+                                                                            ServiceBusSender sender,
+                                                                            CancellationToken cancellationToken = default)
+    {
+        ServiceBusMessage message;
+
+        var queuedMessages = new Queue<ServiceBusMessage>(messages);
+        var batches = new List<ServiceBusMessageBatch>();
+        var currentBatch = default(ServiceBusMessageBatch);
+
+        while (queuedMessages.Count > 0)
+        {
+            currentBatch ??= (await sender.CreateMessageBatchAsync(cancellationToken).ConfigureAwait(false));
+            serviceBusMessage = queuedMessages.Peek();
+
+            if (!currentBatch.TryAddMessage(serviceBusMessage))
             {
-                activeMinimumBodySize = (int)Math.Ceiling(maximumBodySize * 0.65);
+                if (currentBatch.Count == 0)
+                {
+                    throw new InvalidOperationException("There was an event too large to fit into a batch.");
+                }
+
+                batches.Add(currentBatch);
+                currentBatch = default;
             }
             else
             {
-                activeMaximumBodySize = (int)Math.Floor((maximumBatchSize * 1.0f) / numberOfMessages);
-            }
-
-            for (var index = 0; ((index < numberOfMessages) && (totalBytesGenerated <= maximumBatchSize)); ++index)
-            {
-                var buffer = new byte[RandomNumberGenerator.Value.Next(activeMinimumBodySize, activeMaximumBodySize)];
-                RandomNumberGenerator.Value.NextBytes(buffer);
-                totalBytesGenerated += buffer.Length;
-
-                yield return CreateMessageFromBody(buffer);
+                queuedMessages.Dequeue();
             }
         }
 
-        /// <summary>
-        ///   Creates a set of messages with random data and a small body size.
-        /// </summary>
-        ///
-        /// <param name="numberOfMessages">The number of events to create.</param>
-        ///
-        /// <returns>The requested set of events.</returns>
-        ///
-        public static IEnumerable<ServiceBusMessage> CreateSmallMessages(int numberOfMessages)
+        if ((currentBatch != default) && (currentBatch.Count > 0))
         {
-            const int minimumBodySize = 5;
-            const int maximumBodySize = 25;
-
-            for (var index = 0; index < numberOfMessages; ++index)
-            {
-                var buffer = new byte[RandomNumberGenerator.Value.Next(minimumBodySize, maximumBodySize)];
-                RandomNumberGenerator.Value.NextBytes(buffer);
-
-                yield return CreateMessageFromBody(buffer);
-            }
+            batches.Add(currentBatch);
         }
 
-        /// <summary>
-        ///   Creates and configures an <see cref="EventData" /> instance using the
-        ///   provided <paramref name="eventBody" /> as the embedded data.
-        /// </summary>
-        ///
-        /// <param name="eventBody">The set of bytes to use as the data body of the event.</param>
-        ///
-        /// <returns>The event that was created.</returns>
-        ///
-        public static EventData CreateEventFromBody(ReadOnlyMemory<byte> eventBody)
-        {
-            var id = Guid.NewGuid().ToString();
-
-            return new EventData(eventBody)
-            {
-                MessageId = id,
-                Properties = {{ IdPropertyName, id }}
-            };
-        }
-
-        /// <summary>
-        ///   Creates and configures an <see cref="EventData" /> instance using the
-        ///   provided <paramref name="eventBody" /> as the embedded data.
-        /// </summary>
-        ///
-        /// <param name="numberOfEvents">The number of events to create.</param>
-        /// <param name="eventBody">The set of bytes to use as the data body of the event.</param>
-        ///
-        /// <returns>The requested set of events.</returns>
-        ///
-        public static IEnumerable<EventData> CreateEventsFromBody(int numberOfEvents,
-                                                                  ReadOnlyMemory<byte> eventBody)
-        {
-            for (var index = 0; index < numberOfEvents; ++index)
-            {
-                yield return CreateEventFromBody(eventBody);
-            }
-        }
-
-        /// <summary>
-        ///   Builds a set of batches from the provided events.
-        /// </summary>
-        ///
-        /// <param name="events">The events to group into batches.</param>
-        /// <param name="producer">The producer to use for creating batches.</param>
-        /// <param name="batchEvents">A dictionary to which the events included in the batches should be tracked.</param>
-        /// <param name="batchOptions">The set of options to apply when creating batches.</param>
-        /// <param name="cancellationToken">The token used to signal a cancellation request.</param>
-        ///
-        /// <returns>The set of batches needed to contain the entire set of <paramref name="events"/>.</returns>
-        ///
-        /// <remarks>
-        ///   Callers are assumed to be responsible for taking ownership of the lifespan of the returned batches, including
-        ///   their disposal.
-        ///
-        ///   This method is intended for use within the test suite only; it is not hardened for general purpose use.
-        /// </remarks>
-        ///
-        public static async Task<IEnumerable<EventDataBatch>> BuildBatchesAsync(IEnumerable<EventData> events,
-                                                                                EventHubProducerClient producer,
-                                                                                CreateBatchOptions batchOptions = default,
-                                                                                CancellationToken cancellationToken = default)
-        {
-            EventData eventData;
-
-            var queuedEvents = new Queue<EventData>(events);
-            var batches = new List<EventDataBatch>();
-            var currentBatch = default(EventDataBatch);
-
-            while (queuedEvents.Count > 0)
-            {
-                currentBatch ??= (await producer.CreateBatchAsync(batchOptions, cancellationToken).ConfigureAwait(false));
-                eventData = queuedEvents.Peek();
-
-                if (!currentBatch.TryAdd(eventData))
-                {
-                    if (currentBatch.Count == 0)
-                    {
-                        throw new InvalidOperationException("There was an event too large to fit into a batch.");
-                    }
-
-                    batches.Add(currentBatch);
-                    currentBatch = default;
-                }
-                else
-                {
-                    queuedEvents.Dequeue();
-                }
-            }
-
-            if ((currentBatch != default) && (currentBatch.Count > 0))
-            {
-                batches.Add(currentBatch);
-            }
-
-            return batches;
-        }
+        return batches;
     }
 }
