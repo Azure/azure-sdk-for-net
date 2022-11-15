@@ -40,23 +40,7 @@ namespace Azure.ResourceManager.ContainerService
 
         internal ContainerServiceArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string id, string interimApiVersion = null)
         {
-            var lroDetails = BinaryData.FromBytes(Convert.FromBase64String(id)).ToObjectFromJson<Dictionary<string, string>>();
-            lroDetails.TryGetValue("NextRequestUri", out string nextRequestUri);
-
-            if (nextRequestUri == null)
-            {
-                IDictionary<string, object> responseObj = BinaryData.FromString(lroDetails["InitialResponse"]).ToObjectFromJson<IDictionary<string, object>>();
-                var content = BinaryData.FromObjectAsJson(responseObj["ContentStream"]);
-                var contentStream = new MemoryStream();
-                if (content != null)
-                    content.ToStream().CopyTo(contentStream);
-                Response response = new ContainerServiceArmOperation.ContainerServiceResponse(((JsonElement)responseObj["Status"]).GetInt32(), ((JsonElement)responseObj["ReasonPhrase"]).GetString(), contentStream, ((JsonElement)responseObj["ClientRequestId"]).GetString());
-                _operation = OperationInternal<T>.Succeeded(response, source.CreateResult(response, CancellationToken.None));
-                return;
-            }
-
-            var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, id, interimApiVersion);
-            _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, null, "ContainerServiceArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
+            _operation = OperationInternal<T>.Create(id, source, clientDiagnostics, pipeline, "ContainerServiceArmOperation", fallbackStrategy: new ExponentialDelayStrategy(), interimApiVersion: interimApiVersion);
         }
 
         /// <inheritdoc />

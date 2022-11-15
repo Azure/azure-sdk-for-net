@@ -31,13 +31,6 @@ namespace Azure.ResourceManager.Resources
 
         internal ResourcesArmOperation(Response<T> response)
         {
-            var serializeOptions = new JsonSerializerOptions { Converters = { new NextLinkOperationImplementation.StreamConverter() } };
-            var lroDetails = new Dictionary<string, string>()
-            {
-                ["InitialResponse"] = BinaryData.FromObjectAsJson<Response>(response.GetRawResponse(), serializeOptions).ToString()
-            };
-            var lroData = BinaryData.FromObjectAsJson(lroDetails);
-            Id = Convert.ToBase64String(lroData.ToArray());
             _operation = OperationInternal<T>.Succeeded(response.GetRawResponse(), response.Value);
         }
 

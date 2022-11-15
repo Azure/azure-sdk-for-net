@@ -79,7 +79,7 @@ namespace Azure.Core
                 Response response = async ? await operation.UpdateStatusAsync(cancellationToken).ConfigureAwait(false) : operation.UpdateStatus(cancellationToken);
                 if (operation.HasCompleted)
                 {
-                    return operation.RawResponse;
+                    return operation.RawResponse!;
                 }
 
                 await Delay(async, _delayStrategy.GetNextDelay(response, suggestedInterval), cancellationToken).ConfigureAwait(false);

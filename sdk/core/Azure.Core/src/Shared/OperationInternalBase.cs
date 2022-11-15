@@ -55,7 +55,7 @@ namespace Azure.Core
         /// </code>
         /// </example>
         /// </summary>
-        public abstract Response RawResponse { get; }
+        public abstract Response? RawResponse { get; }
 
         /// <summary>
         /// Returns <c>true</c> if the long-running operation has completed.

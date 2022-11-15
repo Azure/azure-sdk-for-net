@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ManagementGroups
         }
 
         /// <inheritdoc />
-        public override string Id { get; }
+        public override string Id => _operation.GetOperationId();
 
         /// <inheritdoc />
         public override T Value => _operation.Value;

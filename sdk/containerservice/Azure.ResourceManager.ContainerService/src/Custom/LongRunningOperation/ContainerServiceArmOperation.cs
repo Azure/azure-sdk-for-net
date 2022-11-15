@@ -41,19 +41,7 @@ namespace Azure.ResourceManager.ContainerService
 
         internal ContainerServiceArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string id, string interimApiVersion = null)
         {
-            var lroDetails = BinaryData.FromBytes(Convert.FromBase64String(id)).ToObjectFromJson<Dictionary<string, string>>();
-            lroDetails.TryGetValue("NextRequestUri", out string nextRequestUri);
-
-            if (nextRequestUri == null)
-            {
-                // TODO: should use deserialization directly
-                IDictionary<string, object> responseObj = BinaryData.FromString(lroDetails["InitialResponse"]).ToObjectFromJson<IDictionary<string, object>>();
-                Response response = new ContainerServiceResponse(((JsonElement)responseObj["Status"]).GetInt32(), ((JsonElement)responseObj["ReasonPhrase"]).GetString(), new MemoryStream(), ((JsonElement)responseObj["ClientRequestId"]).GetString());
-                _operation = OperationInternal.Succeeded(response);
-                return;
-            }
-            var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, id, interimApiVersion);
-            _operation = new OperationInternal(clientDiagnostics, nextLinkOperation, null, "ContainerServiceArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
+            _operation = OperationInternal.Create(id, clientDiagnostics, pipeline, "ContainerServiceArmOperation", fallbackStrategy: new ExponentialDelayStrategy(), interimApiVersion: interimApiVersion);
         }
 
         /// <inheritdoc />

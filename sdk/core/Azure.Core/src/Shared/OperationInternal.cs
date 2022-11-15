@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -86,7 +88,7 @@ namespace Azure.Core
         public OperationInternal(
             ClientDiagnostics clientDiagnostics,
             IOperation operation,
-            Response rawResponse,
+            Response? rawResponse,
             string? operationTypeName = null,
             IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
             DelayStrategy? fallbackStrategy = null)
@@ -101,6 +103,33 @@ namespace Azure.Core
             _internalOperation = finalState.HasSucceeded
                 ? OperationInternal<VoidValue>.Succeeded(finalState.RawResponse, default)
                 : OperationInternal<VoidValue>.Failed(finalState.RawResponse, finalState.OperationFailedException!);
+        }
+
+        public static OperationInternal Create(
+            string id,
+            ClientDiagnostics clientDiagnostics,
+            HttpPipeline pipeline,
+            string? operationTypeName = null,
+            IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
+            DelayStrategy? fallbackStrategy = null,
+            string? interimApiVersion = null)
+        {
+            var lroDetails = BinaryData.FromBytes(Convert.FromBase64String(id)).ToObjectFromJson<Dictionary<string, string>>();
+            lroDetails.TryGetValue("FinalResponse", out string? finalResponse);
+
+            if (finalResponse != null)
+            {
+                // TODO: should use deserialization directly
+                IDictionary<string, object> responseObj = BinaryData.FromString(finalResponse).ToObjectFromJson<IDictionary<string, object>>();
+                Response response = new OperationInternal<VoidValue>.DecodedResponse(((JsonElement)responseObj["Status"]).GetInt32(), ((JsonElement)responseObj["ReasonPhrase"]).GetString())
+                {
+                    ContentStream = new MemoryStream(),
+                    ClientRequestId = ((JsonElement)responseObj["ClientRequestId"]).GetString()
+                };
+                return OperationInternal.Succeeded(response);
+            }
+            var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, id, interimApiVersion);
+            return new OperationInternal(clientDiagnostics, nextLinkOperation, null, operationTypeName, scopeAttributes, fallbackStrategy);
         }
 
         public override Response RawResponse => _internalOperation.RawResponse;

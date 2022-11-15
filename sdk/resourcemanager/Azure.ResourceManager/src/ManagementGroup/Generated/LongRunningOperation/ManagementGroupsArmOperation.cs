@@ -29,12 +29,6 @@ namespace Azure.ResourceManager.ManagementGroups
 
         internal ManagementGroupsArmOperation(Response response)
         {
-            var lroDetails = new Dictionary<string, string>()
-            {
-                ["InitialResponse"] = response.ToString()
-            };
-            var lroData = BinaryData.FromObjectAsJson(lroDetails);
-            Id = Convert.ToBase64String(lroData.ToArray());
             _operation = OperationInternal.Succeeded(response);
         }
 
@@ -45,7 +39,7 @@ namespace Azure.ResourceManager.ManagementGroups
         }
 
         /// <inheritdoc />
-        public override string Id { get; }
+        public override string Id => _operation.GetOperationId();
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
