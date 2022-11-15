@@ -48,17 +48,29 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
         /// <returns>Returns a TargetScalerResult with a TargetWorkerCount.</returns>
         public async Task<TargetScalerResult> GetScaleResultAsync(TargetScalerContext context)
         {
-            var metrics = await _queueMetricsProvider.GetMetricsAsync().ConfigureAwait(false);
-            return GetScaleResultInternal(context, metrics);
+            try
+            {
+                QueueTriggerMetrics metrics = await _queueMetricsProvider.GetMetricsAsync().ConfigureAwait(false);
+                return GetScaleResultInternal(context, metrics.QueueLength);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                throw new NotSupportedException("Target scaler is not supported.", ex);
+            }
         }
 
-        internal TargetScalerResult GetScaleResultInternal(TargetScalerContext context, QueueTriggerMetrics metrics)
+        internal TargetScalerResult GetScaleResultInternal(TargetScalerContext context, long queueLength)
         {
             int concurrency = !context.InstanceConcurrency.HasValue ? _options.BatchSize : context.InstanceConcurrency.Value;
 
-            int targetWorkerCount = (int)Math.Ceiling(metrics.QueueLength / (decimal)concurrency);
+            if (concurrency < 0)
+            {
+                throw new ArgumentOutOfRangeException($"Concurrency value='{concurrency}' used for target based scale must be > 0");
+            }
 
-            _logger.LogInformation($"'Target worker count for function '{_functionId}' is '{targetWorkerCount}' (QueueLength ='{metrics.QueueLength}', Concurrecny='{concurrency}').");
+            int targetWorkerCount = (int)Math.Ceiling(queueLength / (decimal)concurrency);
+
+            _logger.LogInformation($"'Target worker count for function '{_functionId}' is '{targetWorkerCount}' (QueueLength ='{queueLength}', Concurrecny='{concurrency}').");
             return new TargetScalerResult
             {
                 TargetWorkerCount = targetWorkerCount
