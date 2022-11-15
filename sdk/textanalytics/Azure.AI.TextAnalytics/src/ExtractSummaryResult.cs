@@ -8,16 +8,14 @@ using System.Collections.ObjectModel;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// The result of the extractive text summarization operation on a given
-    /// document, containing a collection of the <see cref="SummarySentence"/>
-    /// objects extracted from that document.
+    /// A representation of the result of performing extractive summarization on a given document.
     /// </summary>
     public partial class ExtractSummaryResult : TextAnalyticsResult
     {
         private readonly IReadOnlyCollection<SummarySentence> _sentences;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ExtractSummaryResult"/> class.
+        /// Initializes a successful <see cref="ExtractSummaryResult"/>.
         /// </summary>
         internal ExtractSummaryResult(
             string id,
@@ -36,19 +34,17 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ExtractSummaryResult"/>.
+        /// Initializes an <see cref="ExtractSummaryResult"/> with an error.
         /// </summary>
-        /// <param name="id">Analyze operation id.</param>
-        /// <param name="error">Operation error object.</param>
         internal ExtractSummaryResult(string id, TextAnalyticsError error) : base(id, error) { }
 
         /// <summary>
-        /// The warnings encountered while processing the document.
+        /// The warnings that resulted from processing the document.
         /// </summary>
         public IReadOnlyCollection<TextAnalyticsWarning> Warnings { get; } = new List<TextAnalyticsWarning>();
 
         /// <summary>
-        /// The collection of summary sentences extracted from the document.
+        /// The collection of summary sentences extracted from the input document.
         /// </summary>
         public IReadOnlyCollection<SummarySentence> Sentences
         {
@@ -56,7 +52,8 @@ namespace Azure.AI.TextAnalytics
             {
                 if (HasError)
                 {
-                    throw new InvalidOperationException($"Cannot access result for document {Id}, due to error {Error.ErrorCode}: {Error.Message}");
+                    throw new InvalidOperationException(
+                        $"Cannot access result for document {Id}, due to error {Error.ErrorCode}: {Error.Message}");
                 }
                 return _sentences;
             }

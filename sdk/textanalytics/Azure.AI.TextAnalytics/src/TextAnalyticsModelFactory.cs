@@ -1784,7 +1784,7 @@ namespace Azure.AI.TextAnalytics
         #region Extract Summary
 
         /// <summary>
-        /// Initializes a new instance of <see cref="TextAnalytics.AnalyzeHealthcareEntitiesResult"/> for mocking purposes.
+        /// Initializes a new instance of <see cref="TextAnalytics.ExtractSummaryResult"/> for mocking purposes.
         /// </summary>
         /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
         /// <param name="statistics">Sets the <see cref="TextAnalyticsResult.Statistics"/> property.</param>

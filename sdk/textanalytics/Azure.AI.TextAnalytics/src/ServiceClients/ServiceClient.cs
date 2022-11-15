@@ -158,16 +158,16 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         #region Extract Summary
 
         public virtual ExtractSummaryOperation StartExtractSummary(IEnumerable<string> documents, string language = default, ExtractSummaryOptions options = default, CancellationToken cancellationToken = default) =>
-            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartExtractSummary)}", TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartExtractSummary)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
 
         public virtual ExtractSummaryOperation StartExtractSummary(IEnumerable<TextDocumentInput> documents, ExtractSummaryOptions options = default, CancellationToken cancellationToken = default) =>
-            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartExtractSummary)}", TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartExtractSummary)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
 
         public virtual Task<ExtractSummaryOperation> StartExtractSummaryAsync(IEnumerable<string> documents, string language = default, ExtractSummaryOptions options = default, CancellationToken cancellationToken = default) =>
-            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartExtractSummaryAsync)}", TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartExtractSummaryAsync)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
 
         public virtual Task<ExtractSummaryOperation> StartExtractSummaryAsync(IEnumerable<TextDocumentInput> documents, ExtractSummaryOptions options = default, CancellationToken cancellationToken = default) =>
-            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartExtractSummaryAsync)}", TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartExtractSummaryAsync)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
 
         #endregion
 
