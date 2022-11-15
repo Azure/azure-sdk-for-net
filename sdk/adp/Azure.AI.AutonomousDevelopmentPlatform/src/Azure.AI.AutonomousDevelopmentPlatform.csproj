@@ -14,6 +14,8 @@
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared" />
+    <!-- remove the below line after we figure out how to automatically pull in shared codes, right now it depends on whether you have autorest.md -->
+    <Compile Include="$(AutoRestSharedCodeDirectory)/**/*.cs" Link="Shared/AutoRest/%(RecursiveDir)/%(Filename)%(Extension)" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
