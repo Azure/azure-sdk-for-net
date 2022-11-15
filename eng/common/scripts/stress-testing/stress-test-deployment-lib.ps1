@@ -233,7 +233,9 @@ function DeployStressPackage(
                 $dockerBuildDir = Split-Path $dockerFilePath
             }
             $dockerBuildDir = [System.IO.Path]::GetFullPath($dockerBuildDir).Trim()
-            $dockerBuildConfigs += @{"dockerFilePath"=$dockerFilePath; "dockerBuildDir"=$dockerBuildDir}
+            $dockerBuildConfigs += @{"dockerFilePath"=$dockerFilePath;
+                                    "dockerBuildDir"=$dockerBuildDir;
+                                    "scenario"=$scenario}
         }
     }
     if ($pkg.Dockerfile -or $pkg.DockerBuildDir) {
@@ -256,8 +258,15 @@ function DeployStressPackage(
             Write-Host "Building and pushing stress test docker image '$imageTag'"
             $dockerFile = Get-ChildItem $dockerFilePath
 
-            Run docker build -t $imageTag -f $dockerFile $dockerBuildFolder
+            $dockerBuildCmd = @("docker"; "build"; "-t"; $imageTag;"-f";$dockerFile)
+            foreach ($envVar in $dockerBuildConfig.scenario.GetEnumerator()) {
+                $dockerBuildCmd += "--build-arg"
+                $dockerBuildCmd += "$($envVar.Key)=$($envVar.Value)"
+            }
+            $dockerBuildCmd += $dockerBuildFolder
 
+            Run @dockerBuildCmd
+            
             Write-Host "`nContainer image '$imageTag' successfully built. To run commands on the container locally:" -ForegroundColor Blue
             Write-Host "  docker run -it $imageTag" -ForegroundColor DarkBlue
             Write-Host "  docker run -it $imageTag <shell, e.g. 'bash' 'pwsh' 'sh'>" -ForegroundColor DarkBlue
