@@ -42,78 +42,11 @@ namespace Azure.ResourceManager.Resources
 
         internal ResourcesArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string id, string interimApiVersion = null)
         {
-            var lroDetails = BinaryData.FromBytes(Convert.FromBase64String(id)).ToObjectFromJson<Dictionary<string, string>>();
-            lroDetails.TryGetValue("NextRequestUri", out string nextRequestUri);
-            if (nextRequestUri == null)
-            {
-                IDictionary<string, object> responseObj = BinaryData.FromString(lroDetails["InitialResponse"]).ToObjectFromJson<IDictionary<string, object>>();
-                Response response = new ResourcesResponse(((JsonElement)responseObj["Status"]).GetInt32(), ((JsonElement)responseObj["ReasonPhrase"]).GetString(), new MemoryStream(), ((JsonElement)responseObj["ClientRequestId"]).GetString());
-                _operation = OperationInternal.Succeeded(response);
-                return;
-            }
-
-            var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, id, interimApiVersion);
-            _operation = new OperationInternal(clientDiagnostics, nextLinkOperation, null, "ResourcesArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
+            _operation = OperationInternal.Create(id, clientDiagnostics, pipeline, "ResourcesArmOperation", fallbackStrategy: new ExponentialDelayStrategy(), interimApiVersion: interimApiVersion);
         }
 
         /// <inheritdoc />
         public override string Id => _operation.GetOperationId();
-
-        internal class ResourcesResponse: Response
-        {
-            public ResourcesResponse()
-            {
-            }
-
-            internal ResourcesResponse(int status, string reasonPhase, Stream contentStream, string clientRequestId)//, ResponseHeaders headers, bool isError)
-            {
-                Status = status;
-                ReasonPhrase = reasonPhase;
-                ContentStream = contentStream;
-                ClientRequestId = clientRequestId;
-                // contentStream.Flush();
-                //Headers = headers;
-                //IsError = isError;
-            }
-
-            public override int Status { get; }
-
-            public override string ReasonPhrase { get; }
-
-            public override Stream ContentStream
-            {
-                get;
-                set;
-            }
-            public override string ClientRequestId { get; set; }
-            //public override ResponseHeaders Headers { get; }
-            //public new bool IsError { get; }
-
-            public override void Dispose()
-            {
-                throw new NotImplementedException();
-            }
-
-            protected override bool ContainsHeader(string name)
-            {
-                throw new NotImplementedException();
-            }
-
-            protected override IEnumerable<HttpHeader> EnumerateHeaders()
-            {
-                throw new NotImplementedException();
-            }
-
-            protected override bool TryGetHeader(string name, out string value)
-            {
-                throw new NotImplementedException();
-            }
-
-            protected override bool TryGetHeaderValues(string name, out IEnumerable<string> values)
-            {
-                throw new NotImplementedException();
-            }
-        }
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;

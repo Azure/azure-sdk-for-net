@@ -4,16 +4,12 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using System.Text.Json;
 
-[assembly:CodeGenSuppressType("ContainerServiceArmOperationOfT")]
+[assembly: CodeGenSuppressType("ContainerServiceArmOperationOfT")]
 namespace Azure.ResourceManager.ContainerService
 {
 #pragma warning disable SA1649 // File name should match first type name

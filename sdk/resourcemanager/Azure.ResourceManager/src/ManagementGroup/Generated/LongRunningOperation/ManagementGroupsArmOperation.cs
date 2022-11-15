@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -36,6 +35,11 @@ namespace Azure.ResourceManager.ManagementGroups
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia);
             _operation = new OperationInternal(clientDiagnostics, nextLinkOperation, response, "ManagementGroupsArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
+        }
+
+        internal ManagementGroupsArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string id, string interimApiVersion = null)
+        {
+            _operation = OperationInternal.Create(id, clientDiagnostics, pipeline, "ManagementGroupsArmOperation", fallbackStrategy: new ExponentialDelayStrategy(), interimApiVersion: interimApiVersion);
         }
 
         /// <inheritdoc />

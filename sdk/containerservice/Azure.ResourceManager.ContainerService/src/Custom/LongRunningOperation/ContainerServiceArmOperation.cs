@@ -4,17 +4,12 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
-[assembly:CodeGenSuppressType("ContainerServiceArmOperation")]
+[assembly: CodeGenSuppressType("ContainerServiceArmOperation")]
 namespace Azure.ResourceManager.ContainerService
 {
 #pragma warning disable SA1649 // File name should match first type name
@@ -70,58 +65,5 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <inheritdoc />
         public override ValueTask<Response> WaitForCompletionResponseAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionResponseAsync(pollingInterval, cancellationToken);
-
-        // TODO: use this class as a temporary workaround before https://github.com/Azure/autorest.csharp/issues/2231 is resolved so that we can deserialize to the original HttpWebResponseImplementation in LRO helper classes.
-        // No all methods and properties are implemented/populated as it's just for prototype.
-        internal class ContainerServiceResponse: Response
-        {
-            public ContainerServiceResponse()
-            {
-            }
-
-            internal ContainerServiceResponse(int status, string reasonPhase, Stream contentStream, string clientRequestId)
-            {
-                Status = status;
-                ReasonPhrase = reasonPhase;
-                ContentStream = contentStream;
-                ClientRequestId = clientRequestId;
-            }
-
-            public override int Status { get; }
-
-            public override string ReasonPhrase { get; }
-
-            public override Stream ContentStream
-            {
-                get;
-                set;
-            }
-            public override string ClientRequestId { get; set; }
-
-            public override void Dispose()
-            {
-                throw new NotImplementedException();
-            }
-
-            protected override bool ContainsHeader(string name)
-            {
-                throw new NotImplementedException();
-            }
-
-            protected override IEnumerable<HttpHeader> EnumerateHeaders()
-            {
-                throw new NotImplementedException();
-            }
-
-            protected override bool TryGetHeader(string name, out string value)
-            {
-                throw new NotImplementedException();
-            }
-
-            protected override bool TryGetHeaderValues(string name, out IEnumerable<string> values)
-            {
-                throw new NotImplementedException();
-            }
-        }
     }
 }
