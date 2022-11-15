@@ -52,7 +52,7 @@ namespace Azure.Storage.DataMovement
         /// Produces readable stream to download
         /// </summary>
         /// <returns></returns>
-        public abstract Task<ReadStreamStorageResourceInfo> ReadStreamAsync(
+        public abstract Task<ReadStreamStorageResourceResult> ReadStreamAsync(
             long? position = default,
             CancellationToken cancellationToken = default);
 
@@ -67,7 +67,7 @@ namespace Azure.Storage.DataMovement
         /// </param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public abstract Task<ReadStreamStorageResourceInfo> ReadPartialStreamAsync(
+        public abstract Task<ReadStreamStorageResourceResult> ReadPartialStreamAsync(
             long offset,
             long length,
             CancellationToken cancellationToken = default);

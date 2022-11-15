@@ -52,8 +52,9 @@ namespace Azure.Storage.DataMovement
         /// If the transfer id already exists, this method will throw.
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public override Task TryAddTransferAsync(string id)
+        public override Task TryAddTransferAsync(string id, CancellationToken cancellationToken = default)
         {
             if (!_memoryMappedFiles.ContainsKey(id))
             {
@@ -71,8 +72,14 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Creates a stream to the stored memory stored checkpointing information.
         /// </summary>
+        /// <param name="id"></param>
+        /// <param name="partNumber"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public override Task<Stream> ReadCheckPointStreamAsync(string id, int partNumber)
+        public override Task<Stream> ReadCheckPointStreamAsync(
+            string id,
+            int partNumber,
+            CancellationToken cancellationToken = default)
         {
             if (_memoryMappedFiles.TryGetValue(id, out Dictionary<int, MemoryMappedPlanFile> jobPartFiles))
             {
@@ -101,12 +108,12 @@ namespace Azure.Storage.DataMovement
         /// <returns></returns>
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="ArgumentNullException"></exception>
-        public override async Task WriteToCheckpointAsync(
+        internal override async Task WriteToCheckpointAsync(
             string id,
             int partNumber,
             long offset,
             byte[] buffer,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotDefault(ref partNumber, nameof(partNumber));
@@ -148,8 +155,9 @@ namespace Azure.Storage.DataMovement
         /// Removes transfer information of the respective id
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public override Task<bool> TryRemoveStoredTransferAsync(string id)
+        public override Task<bool> TryRemoveStoredTransferAsync(string id, CancellationToken cancellationToken = default)
         {
             bool result = true;
             Argument.AssertNotNullOrWhiteSpace(id, nameof(id));
@@ -183,8 +191,9 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Lists all the transfers contained in the checkpointer.
         /// </summary>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public override Task<List<string>> GetStoredTransfersAsync()
+        public override Task<List<string>> GetStoredTransfersAsync(CancellationToken cancellationToken = default)
         {
             return Task.FromResult(_memoryMappedFiles.Keys.ToList());
         }

@@ -37,7 +37,7 @@ namespace Azure.Storage.DataMovement
         /// <exception cref="System.ArgumentNullException">
         /// Thrown if <paramref name="transferId"/> is empty or null.
         /// </exception>
-        public StorageTransferEventArgs(
+        protected StorageTransferEventArgs(
             string transferId,
             bool isRunningSynchronously,
             CancellationToken cancellationToken)

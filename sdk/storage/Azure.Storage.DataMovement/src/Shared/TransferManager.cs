@@ -15,7 +15,7 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// Base class for data cotnroller
     /// </summary>
-    public class TransferManager
+    public class TransferManager : IAsyncDisposable
     {
         // Indicates whether the current thread is processing Jobs.
         private static Task _currentTaskIsProcessingJob;
@@ -451,6 +451,17 @@ namespace Azure.Storage.DataMovement
 
             // Return checkpointer
             return new LocalTransferCheckpointer(defaultPath);
+        }
+
+        /// <summary>
+        /// Disposes
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        async ValueTask IAsyncDisposable.DisposeAsync()
+        {
+            await TryPauseAllTransfersAsync().ConfigureAwait(false);
+            GC.SuppressFinalize(this);
         }
     }
 }

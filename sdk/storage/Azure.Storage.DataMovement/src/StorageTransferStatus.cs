@@ -36,5 +36,15 @@ namespace Azure.Storage.DataMovement
         /// The Job has completed.
         /// </summary>
         Completed = 3,
+
+        /// <summary>
+        /// The Job completed with at least one skipped transfer.
+        /// </summary>
+        CompletedWithSkippedTransfers = 4,
+
+        /// <summary>
+        /// The Job completed with at least one failed transfer.
+        /// </summary>
+        CompletedWithFailedTransfers = 5,
     };
 }

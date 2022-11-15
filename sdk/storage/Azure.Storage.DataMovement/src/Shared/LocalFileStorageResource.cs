@@ -162,12 +162,12 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public override Task<ReadStreamStorageResourceInfo> ReadStreamAsync(
+        public override Task<ReadStreamStorageResourceResult> ReadStreamAsync(
             long? position = default,
             CancellationToken cancellationToken = default)
         {
             FileStream stream = new FileStream(_path, FileMode.Open, FileAccess.Read);
-            return Task.FromResult(new ReadStreamStorageResourceInfo(stream));
+            return Task.FromResult(new ReadStreamStorageResourceResult(stream));
         }
 
         /// <summary>
@@ -181,14 +181,14 @@ namespace Azure.Storage.DataMovement
         /// </param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public override Task<ReadStreamStorageResourceInfo> ReadPartialStreamAsync(
+        public override Task<ReadStreamStorageResourceResult> ReadPartialStreamAsync(
             long offset,
             long length,
             CancellationToken cancellationToken = default)
         {
             FileStream stream = new FileStream(_path, FileMode.Open, FileAccess.Read);
             stream.Position = offset;
-            return Task.FromResult(new ReadStreamStorageResourceInfo(stream));
+            return Task.FromResult(new ReadStreamStorageResourceResult(stream));
         }
 
         /// <summary>

@@ -11,7 +11,7 @@ namespace Azure.Storage.DataMovement.Models
     /// <summary>
     /// The properties and content returned from downloading a storage resource
     /// </summary>
-    public class ReadStreamStorageResourceInfo
+    public class ReadStreamStorageResourceResult
     {
         /// <summary>
         /// Content
@@ -46,7 +46,7 @@ namespace Azure.Storage.DataMovement.Models
         /// </summary>
         internal StorageResourceProperties Properties { get; set; }
 
-        internal ReadStreamStorageResourceInfo() { }
+        internal ReadStreamStorageResourceResult() { }
 
         /// <summary>
         /// Constructor for ReadStreamStorageResourceInfo
@@ -56,7 +56,7 @@ namespace Azure.Storage.DataMovement.Models
         /// <param name="acceptRanges"></param>
         /// <param name="rangeContentHash"></param>
         /// <param name="properties"></param>
-        public ReadStreamStorageResourceInfo(
+        public ReadStreamStorageResourceResult(
             Stream content,
             string contentRange,
             string acceptRanges,
@@ -74,7 +74,7 @@ namespace Azure.Storage.DataMovement.Models
         /// Constructor for ReadStreamStorageResourceInfo
         /// </summary>
         /// <param name="content"></param>
-        public ReadStreamStorageResourceInfo(
+        public ReadStreamStorageResourceResult(
             Stream content)
         {
             Content = content;

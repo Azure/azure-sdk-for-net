@@ -95,14 +95,14 @@ namespace Azure.Storage.DataMovement.Models
         /// <summary>
         /// If the transfer status of the job changes then the event will get added to this handler.
         /// </summary>
-        public event SyncAsyncEventHandler<TransferStatusEventArgs> TransferStatusEventHandler;
-        internal SyncAsyncEventHandler<TransferStatusEventArgs> GetTransferStatus() => TransferStatusEventHandler;
+        public event SyncAsyncEventHandler<TransferStatusEventArgs> TransferStatus;
+        internal SyncAsyncEventHandler<TransferStatusEventArgs> GetTransferStatus() => TransferStatus;
 
         /// <summary>
         /// If the transfer has any failed events that occur the event will get added to this handler.
         /// </summary>
-        public event SyncAsyncEventHandler<TransferFailedEventArgs> TransferFailedEventHandler;
+        public event SyncAsyncEventHandler<TransferFailedEventArgs> TransferFailed;
 
-        internal SyncAsyncEventHandler<TransferFailedEventArgs> GetFailed() => TransferFailedEventHandler;
+        internal SyncAsyncEventHandler<TransferFailedEventArgs> GetFailed() => TransferFailed;
     }
 }

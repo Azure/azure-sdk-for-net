@@ -66,9 +66,9 @@ namespace Azure.Storage.Blobs.DataMovement
                 resourceType: blobProperties.BlobType.ToStorageResourceType());
         }
 
-        internal static ReadStreamStorageResourceInfo ToReadStreamStorageResourceInfo(this BlobDownloadStreamingResult result)
+        internal static ReadStreamStorageResourceResult ToReadStreamStorageResourceInfo(this BlobDownloadStreamingResult result)
         {
-            return new ReadStreamStorageResourceInfo(
+            return new ReadStreamStorageResourceResult(
                 content: result.Content,
                 contentRange: result.Details.ContentRange,
                 acceptRanges: result.Details.AcceptRanges,

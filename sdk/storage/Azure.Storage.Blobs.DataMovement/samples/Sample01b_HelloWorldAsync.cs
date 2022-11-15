@@ -295,7 +295,7 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                 // Create BlobDataController with event handler in Options bag
                 TransferManagerOptions options = new TransferManagerOptions();
                 ContainerTransferOptions containerTransferOptions = new ContainerTransferOptions();
-                containerTransferOptions.SingleTransferCompletedEventHandler += (SingleTransferCompletedEventArgs args) =>
+                containerTransferOptions.SingleTransferCompleted += (SingleTransferCompletedEventArgs args) =>
                 {
                     // Customers like logging their own exceptions in their production environments.
                     using (StreamWriter logStream = File.AppendText(logFile))
@@ -378,7 +378,7 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                 // Create BlobDataController with event handler in Options bag
                 TransferManagerOptions options = new TransferManagerOptions();
                 ContainerTransferOptions containerTransferOptions = new ContainerTransferOptions();
-                containerTransferOptions.TransferStatusEventHandler += (TransferStatusEventArgs args) =>
+                containerTransferOptions.TransferStatus += (TransferStatusEventArgs args) =>
                 {
                     if (args.StorageTransferStatus == StorageTransferStatus.Completed)
                     {
@@ -390,7 +390,7 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                     }
                     return Task.CompletedTask;
                 };
-                containerTransferOptions.TransferFailedEventHandler += (TransferFailedEventArgs args) =>
+                containerTransferOptions.TransferFailed += (TransferFailedEventArgs args) =>
                 {
                     // Customers like logging their own exceptions in their production environments.
                     using (StreamWriter logStream = File.AppendText(logFile))
@@ -474,7 +474,7 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                 // Create BlobDataController with event handler in Options bag
                 TransferManagerOptions options = new TransferManagerOptions();
                 ContainerTransferOptions downloadOptions = new ContainerTransferOptions();
-                downloadOptions.TransferFailedEventHandler += async (TransferFailedEventArgs args) =>
+                downloadOptions.TransferFailed += async (TransferFailedEventArgs args) =>
                 {
                     if (args.Exception.Message == "500")
                     {
@@ -618,7 +618,7 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                 TransferManager dataController = new TransferManager(default);
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
                 ContainerTransferOptions options = new ContainerTransferOptions();
-                options.TransferFailedEventHandler += async (TransferFailedEventArgs args) =>
+                options.TransferFailed += async (TransferFailedEventArgs args) =>
                 {
                     //await LogFailedFileAsync(args.SourceFileUri, args.DestinationFileClient.Uri, args.Exception.Message);
                 };
@@ -706,7 +706,7 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                 // Create transfer single blob upload job with transfer options concurrency specified
                 // i.e. it's a bigger blob so it maybe need more help uploading fast
                 ContainerTransferOptions downloadOptions = new ContainerTransferOptions();
-                downloadOptions.TransferFailedEventHandler += async (TransferFailedEventArgs args) =>
+                downloadOptions.TransferFailed += async (TransferFailedEventArgs args) =>
                 {
                     if (args.Exception.Message == "Permissions Denied")
                     {

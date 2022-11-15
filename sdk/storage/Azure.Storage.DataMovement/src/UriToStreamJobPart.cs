@@ -131,12 +131,12 @@ namespace Azure.Storage.DataMovement
 
             try
             {
-                Task<ReadStreamStorageResourceInfo> initialTask = _sourceResource.ReadPartialStreamAsync(
+                Task<ReadStreamStorageResourceResult> initialTask = _sourceResource.ReadPartialStreamAsync(
                     offset: 0,
                     length: _initialTransferSize,
                     _cancellationTokenSource.Token);
 
-                ReadStreamStorageResourceInfo initialResult = default;
+                ReadStreamStorageResourceResult initialResult = default;
                 try
                 {
                     initialResult = await initialTask.ConfigureAwait(false);
@@ -232,7 +232,7 @@ namespace Azure.Storage.DataMovement
         {
             try
             {
-                ReadStreamStorageResourceInfo result = await _sourceResource.ReadPartialStreamAsync(
+                ReadStreamStorageResourceResult result = await _sourceResource.ReadPartialStreamAsync(
                     range.Offset,
                     (long) range.Length,
                     _cancellationTokenSource.Token).ConfigureAwait(false);

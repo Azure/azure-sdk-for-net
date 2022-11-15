@@ -167,7 +167,7 @@ namespace Azure.Storage.DataMovement
         {
             try
             {
-                ReadStreamStorageResourceInfo result =  await _sourceResource.ReadStreamAsync().ConfigureAwait(false);
+                ReadStreamStorageResourceResult result =  await _sourceResource.ReadStreamAsync().ConfigureAwait(false);
 
                 using Stream stream = result.Content;
                 await _destinationResource.WriteFromStreamAsync(
@@ -192,7 +192,7 @@ namespace Azure.Storage.DataMovement
             {
                 await OnTransferStatusChanged(StorageTransferStatus.InProgress).ConfigureAwait(false);
                 Stream slicedStream = Stream.Null;
-                ReadStreamStorageResourceInfo result = await _sourceResource.ReadPartialStreamAsync(
+                ReadStreamStorageResourceResult result = await _sourceResource.ReadPartialStreamAsync(
                     offset: offset,
                     length: blockLength,
                     cancellationToken: _cancellationTokenSource.Token).ConfigureAwait(false);

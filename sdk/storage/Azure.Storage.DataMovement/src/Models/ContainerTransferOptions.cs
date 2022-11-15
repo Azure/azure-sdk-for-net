@@ -97,29 +97,29 @@ namespace Azure.Storage.DataMovement.Models
         /// <summary>
         /// If the transfer status of the job changes then the event will get added to this handler.
         /// </summary>
-        public event SyncAsyncEventHandler<TransferStatusEventArgs> TransferStatusEventHandler;
-        internal SyncAsyncEventHandler<TransferStatusEventArgs> GetTransferStatus() => TransferStatusEventHandler;
+        public event SyncAsyncEventHandler<TransferStatusEventArgs> TransferStatus;
+        internal SyncAsyncEventHandler<TransferStatusEventArgs> GetTransferStatus() => TransferStatus;
 
         /// <summary>
         /// If any single transfer has any failed events that occur the event will get added to this handler.
         /// </summary>
-        public event SyncAsyncEventHandler<TransferFailedEventArgs> TransferFailedEventHandler;
+        public event SyncAsyncEventHandler<TransferFailedEventArgs> TransferFailed;
 
-        internal SyncAsyncEventHandler<TransferFailedEventArgs> GetFailed() => TransferFailedEventHandler;
+        internal SyncAsyncEventHandler<TransferFailedEventArgs> GetFailed() => TransferFailed;
 
         /// <summary>
         /// If a single transfer within the resource contianer gets transferred successfully the event
         /// will get added to this handler
         /// </summary>
-        public event SyncAsyncEventHandler<SingleTransferCompletedEventArgs> SingleTransferCompletedEventHandler;
-        internal SyncAsyncEventHandler<SingleTransferCompletedEventArgs> GetCompleted() => SingleTransferCompletedEventHandler;
+        public event SyncAsyncEventHandler<SingleTransferCompletedEventArgs> SingleTransferCompleted;
+        internal SyncAsyncEventHandler<SingleTransferCompletedEventArgs> GetCompleted() => SingleTransferCompleted;
 
         /// <summary>
         /// Number of single transfers skipped during Transfer due to no overwrite allowed as specified in
         /// <see cref="CreateMode"/>
         /// </summary>
-        public event SyncAsyncEventHandler<TransferSkippedEventArgs> TransferSkippedEventHandler;
+        public event SyncAsyncEventHandler<TransferSkippedEventArgs> TransferSkipped;
 
-        internal SyncAsyncEventHandler<TransferSkippedEventArgs> GetSkipped() => TransferSkippedEventHandler;
+        internal SyncAsyncEventHandler<TransferSkippedEventArgs> GetSkipped() => TransferSkipped;
     }
 }

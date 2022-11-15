@@ -75,7 +75,7 @@ namespace Azure.Storage.Blobs.DataMovement
         /// Creates readable stream to download
         /// </summary>
         /// <returns></returns>
-        public override async Task<ReadStreamStorageResourceInfo> ReadStreamAsync(
+        public override async Task<ReadStreamStorageResourceResult> ReadStreamAsync(
             long? position = default,
             CancellationToken cancellationToken = default)
         {
@@ -99,7 +99,7 @@ namespace Azure.Storage.Blobs.DataMovement
         /// </param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public override async Task<ReadStreamStorageResourceInfo> ReadPartialStreamAsync(
+        public override async Task<ReadStreamStorageResourceResult> ReadPartialStreamAsync(
             long offset,
             long length,
             CancellationToken cancellationToken = default)

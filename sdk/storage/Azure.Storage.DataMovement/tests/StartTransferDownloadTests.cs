@@ -177,7 +177,7 @@ namespace Azure.Storage.DataMovement.Tests
 
                     // Set up event handler for the respective blob
                     AutoResetEvent completedStatusWait = new AutoResetEvent(false);
-                    options[i].TransferStatusEventHandler += (TransferStatusEventArgs args) =>
+                    options[i].TransferStatus += (TransferStatusEventArgs args) =>
                     {
                         // Assert
                         if (args.StorageTransferStatus == StorageTransferStatus.Completed)
@@ -186,7 +186,7 @@ namespace Azure.Storage.DataMovement.Tests
                         }
                         return Task.CompletedTask;
                     };
-                    options[i].TransferFailedEventHandler += (TransferFailedEventArgs args) =>
+                    options[i].TransferFailed += (TransferFailedEventArgs args) =>
                     {
                         if (args.Exception != null)
                         {
@@ -307,7 +307,7 @@ namespace Azure.Storage.DataMovement.Tests
             int waitTimeInSec = 10;
             AutoResetEvent InProgressWait = new AutoResetEvent(false);
             SingleTransferOptions options = new SingleTransferOptions();
-            options.TransferStatusEventHandler += (TransferStatusEventArgs args) =>
+            options.TransferStatus += (TransferStatusEventArgs args) =>
             {
                 // Assert
                 if (args.StorageTransferStatus == StorageTransferStatus.InProgress)
@@ -316,7 +316,7 @@ namespace Azure.Storage.DataMovement.Tests
                 }
                 return Task.CompletedTask;
             };
-            options.TransferFailedEventHandler += (TransferFailedEventArgs args) =>
+            options.TransferFailed += (TransferFailedEventArgs args) =>
             {
                 if (args.Exception != null)
                 {
@@ -350,7 +350,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             AutoResetEvent InProgressWait = new AutoResetEvent(false);
             SingleTransferOptions options = new SingleTransferOptions();
-            options.TransferStatusEventHandler += (TransferStatusEventArgs args) =>
+            options.TransferStatus += (TransferStatusEventArgs args) =>
             {
                 // Assert
                 if (args.StorageTransferStatus == StorageTransferStatus.InProgress)
@@ -359,7 +359,7 @@ namespace Azure.Storage.DataMovement.Tests
                 }
                 return Task.CompletedTask;
             };
-            options.TransferFailedEventHandler += (TransferFailedEventArgs args) =>
+            options.TransferFailed += (TransferFailedEventArgs args) =>
             {
                 if (args.Exception != null)
                 {

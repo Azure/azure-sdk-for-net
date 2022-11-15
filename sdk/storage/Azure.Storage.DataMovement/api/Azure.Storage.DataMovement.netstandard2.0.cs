@@ -3,13 +3,10 @@ namespace Azure.Storage.DataMovement
     public partial class DataTransfer
     {
         internal DataTransfer() { }
+        public bool HasCompleted { get { throw null; } }
         public string Id { get { throw null; } }
-        public bool IsCompleted { get { throw null; } }
-    }
-    public static partial class DataTransferExtensions
-    {
-        public static System.Threading.Tasks.Task AwaitCompletion(this Azure.Storage.DataMovement.DataTransfer dataTransfer, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public static void EnsureCompleted(this Azure.Storage.DataMovement.DataTransfer dataTransfer) { }
+        public System.Threading.Tasks.Task AwaitCompletion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public void EnsureCompleted(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
     }
     [System.FlagsAttribute]
     public enum ErrorHandlingOptions
@@ -38,19 +35,18 @@ namespace Azure.Storage.DataMovement
         public override System.Threading.Tasks.Task CopyBlockFromUriAsync(Azure.Storage.DataMovement.StorageResource sourceResource, Azure.HttpRange range, Azure.Storage.DataMovement.Models.StorageResourceCopyFromUriOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task CopyFromUriAsync(Azure.Storage.DataMovement.StorageResource sourceResource, Azure.Storage.DataMovement.Models.StorageResourceCopyFromUriOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task<Azure.Storage.DataMovement.Models.StorageResourceProperties> GetPropertiesAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
-        public override System.Threading.Tasks.Task<Azure.Storage.DataMovement.Models.ReadStreamStorageResourceInfo> ReadPartialStreamAsync(long offset, long length, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.Task<Azure.Storage.DataMovement.Models.ReadStreamStorageResourceInfo> ReadStreamAsync(long? position = default(long?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.Task<Azure.Storage.DataMovement.Models.ReadStreamStorageResourceResult> ReadPartialStreamAsync(long offset, long length, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.Task<Azure.Storage.DataMovement.Models.ReadStreamStorageResourceResult> ReadStreamAsync(long? position = default(long?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task WriteFromStreamAsync(System.IO.Stream stream, System.Threading.CancellationToken token = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task WriteStreamToOffsetAsync(long offset, long length, System.IO.Stream stream, Azure.Storage.DataMovement.Models.StorageResourceWriteToOffsetOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class LocalTransferCheckpointer : Azure.Storage.DataMovement.TransferCheckpointer
     {
         public LocalTransferCheckpointer(string folderPath) { }
-        public override System.Threading.Tasks.Task<System.Collections.Generic.List<string>> GetStoredTransfersAsync() { throw null; }
-        public override System.Threading.Tasks.Task<System.IO.Stream> ReadCheckPointStreamAsync(string id, int partNumber) { throw null; }
-        public override System.Threading.Tasks.Task TryAddTransferAsync(string id) { throw null; }
-        public override System.Threading.Tasks.Task<bool> TryRemoveStoredTransferAsync(string id) { throw null; }
-        public override System.Threading.Tasks.Task WriteToCheckpointAsync(string id, int partNumber, long offset, byte[] buffer, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public override System.Threading.Tasks.Task<System.Collections.Generic.List<string>> GetStoredTransfersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.Task<System.IO.Stream> ReadCheckPointStreamAsync(string id, int partNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.Task TryAddTransferAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.Task<bool> TryRemoveStoredTransferAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     [System.FlagsAttribute]
     public enum ProduceUriType
@@ -69,8 +65,8 @@ namespace Azure.Storage.DataMovement
         public abstract System.Threading.Tasks.Task CopyBlockFromUriAsync(Azure.Storage.DataMovement.StorageResource sourceResource, Azure.HttpRange range, Azure.Storage.DataMovement.Models.StorageResourceCopyFromUriOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         public abstract System.Threading.Tasks.Task CopyFromUriAsync(Azure.Storage.DataMovement.StorageResource sourceResource, Azure.Storage.DataMovement.Models.StorageResourceCopyFromUriOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         public abstract System.Threading.Tasks.Task<Azure.Storage.DataMovement.Models.StorageResourceProperties> GetPropertiesAsync(System.Threading.CancellationToken token);
-        public abstract System.Threading.Tasks.Task<Azure.Storage.DataMovement.Models.ReadStreamStorageResourceInfo> ReadPartialStreamAsync(long offset, long length, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        public abstract System.Threading.Tasks.Task<Azure.Storage.DataMovement.Models.ReadStreamStorageResourceInfo> ReadStreamAsync(long? position = default(long?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.Task<Azure.Storage.DataMovement.Models.ReadStreamStorageResourceResult> ReadPartialStreamAsync(long offset, long length, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.Task<Azure.Storage.DataMovement.Models.ReadStreamStorageResourceResult> ReadStreamAsync(long? position = default(long?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         public abstract System.Threading.Tasks.Task WriteFromStreamAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         public abstract System.Threading.Tasks.Task WriteStreamToOffsetAsync(long offset, long length, System.IO.Stream stream, Azure.Storage.DataMovement.Models.StorageResourceWriteToOffsetOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
@@ -99,7 +95,7 @@ namespace Azure.Storage.DataMovement
     }
     public abstract partial class StorageTransferEventArgs : Azure.SyncAsyncEventArgs
     {
-        public StorageTransferEventArgs(string transferId, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(bool), default(System.Threading.CancellationToken)) { }
+        protected StorageTransferEventArgs(string transferId, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(bool), default(System.Threading.CancellationToken)) { }
         public string TransferId { get { throw null; } }
     }
     public enum StorageTransferStatus
@@ -108,28 +104,25 @@ namespace Azure.Storage.DataMovement
         InProgress = 1,
         Paused = 2,
         Completed = 3,
-    }
-    [System.FlagsAttribute]
-    public enum StreamConsumableType
-    {
-        NotConsumable = 0,
-        Consumable = 1,
+        CompletedWithSkippedTransfers = 4,
+        CompletedWithFailedTransfers = 5,
     }
     public abstract partial class TransferCheckpointer
     {
         protected TransferCheckpointer() { }
-        public abstract System.Threading.Tasks.Task<System.Collections.Generic.List<string>> GetStoredTransfersAsync();
-        public abstract System.Threading.Tasks.Task<System.IO.Stream> ReadCheckPointStreamAsync(string id, int partNumber);
-        public abstract System.Threading.Tasks.Task TryAddTransferAsync(string id);
-        public abstract System.Threading.Tasks.Task<bool> TryRemoveStoredTransferAsync(string id);
-        public abstract System.Threading.Tasks.Task WriteToCheckpointAsync(string id, int partNumber, long offset, byte[] buffer, System.Threading.CancellationToken cancellationToken);
+        public abstract System.Threading.Tasks.Task<System.Collections.Generic.List<string>> GetStoredTransfersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.Task<System.IO.Stream> ReadCheckPointStreamAsync(string id, int partNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.Task TryAddTransferAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.Task<bool> TryRemoveStoredTransferAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        internal abstract System.Threading.Tasks.Task WriteToCheckpointAsync(string id, int partNumber, long offset, byte[] buffer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
-    public partial class TransferManager
+    public partial class TransferManager : System.IAsyncDisposable
     {
         protected TransferManager() { }
         public TransferManager(Azure.Storage.DataMovement.TransferManagerOptions options = null) { }
         public System.Threading.Tasks.Task<Azure.Storage.DataMovement.DataTransfer> StartTransferAsync(Azure.Storage.DataMovement.StorageResource sourceResource, Azure.Storage.DataMovement.StorageResource destinationResource, Azure.Storage.DataMovement.Models.SingleTransferOptions transferOptions = null) { throw null; }
         public System.Threading.Tasks.Task<Azure.Storage.DataMovement.DataTransfer> StartTransferAsync(Azure.Storage.DataMovement.StorageResourceContainer sourceResource, Azure.Storage.DataMovement.StorageResourceContainer destinationResource, Azure.Storage.DataMovement.Models.ContainerTransferOptions transferOptions = null) { throw null; }
+        System.Threading.Tasks.ValueTask System.IAsyncDisposable.DisposeAsync() { throw null; }
         public System.Threading.Tasks.Task<bool> TryPauseAllTransfersAsync() { throw null; }
         public System.Threading.Tasks.Task<bool> TryPauseTransferAsync(string id) { throw null; }
         public System.Threading.Tasks.Task<bool> TryRemoveTransferAsync(string id) { throw null; }
@@ -151,10 +144,10 @@ namespace Azure.Storage.DataMovement.Models
         public long? InitialTransferSize { get { throw null; } set { } }
         public long? MaximumTransferChunkSize { get { throw null; } set { } }
         public string ResumeFromCheckpointId { get { throw null; } set { } }
-        public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.DataMovement.Models.SingleTransferCompletedEventArgs> SingleTransferCompletedEventHandler { add { } remove { } }
-        public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.DataMovement.Models.TransferFailedEventArgs> TransferFailedEventHandler { add { } remove { } }
-        public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.DataMovement.Models.TransferSkippedEventArgs> TransferSkippedEventHandler { add { } remove { } }
-        public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.DataMovement.Models.TransferStatusEventArgs> TransferStatusEventHandler { add { } remove { } }
+        public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.DataMovement.Models.SingleTransferCompletedEventArgs> SingleTransferCompleted { add { } remove { } }
+        public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.DataMovement.Models.TransferFailedEventArgs> TransferFailed { add { } remove { } }
+        public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.DataMovement.Models.TransferSkippedEventArgs> TransferSkipped { add { } remove { } }
+        public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.DataMovement.Models.TransferStatusEventArgs> TransferStatus { add { } remove { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool Equals(Azure.Storage.DataMovement.Models.ContainerTransferOptions obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -166,10 +159,10 @@ namespace Azure.Storage.DataMovement.Models
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static bool operator !=(Azure.Storage.DataMovement.Models.ContainerTransferOptions left, Azure.Storage.DataMovement.Models.ContainerTransferOptions right) { throw null; }
     }
-    public partial class ReadStreamStorageResourceInfo
+    public partial class ReadStreamStorageResourceResult
     {
-        public ReadStreamStorageResourceInfo(System.IO.Stream content) { }
-        public ReadStreamStorageResourceInfo(System.IO.Stream content, string contentRange, string acceptRanges, byte[] rangeContentHash, Azure.Storage.DataMovement.Models.StorageResourceProperties properties) { }
+        public ReadStreamStorageResourceResult(System.IO.Stream content) { }
+        public ReadStreamStorageResourceResult(System.IO.Stream content, string contentRange, string acceptRanges, byte[] rangeContentHash, Azure.Storage.DataMovement.Models.StorageResourceProperties properties) { }
     }
     public enum ServiceCopyStatus
     {
@@ -191,8 +184,8 @@ namespace Azure.Storage.DataMovement.Models
         public long? InitialTransferSize { get { throw null; } set { } }
         public long? MaximumTransferChunkSize { get { throw null; } set { } }
         public string ResumeFromCheckpointId { get { throw null; } set { } }
-        public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.DataMovement.Models.TransferFailedEventArgs> TransferFailedEventHandler { add { } remove { } }
-        public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.DataMovement.Models.TransferStatusEventArgs> TransferStatusEventHandler { add { } remove { } }
+        public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.DataMovement.Models.TransferFailedEventArgs> TransferFailed { add { } remove { } }
+        public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.DataMovement.Models.TransferStatusEventArgs> TransferStatus { add { } remove { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool Equals(Azure.Storage.DataMovement.Models.SingleTransferOptions obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

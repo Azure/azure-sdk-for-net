@@ -19,7 +19,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Defines whether the DataTransfer has completed.
         /// </summary>
-        public bool IsCompleted => _state.IsCompleted;
+        public bool HasCompleted => _state.HasCompleted;
 
         /// <summary>
         /// DataTransfer Identification
@@ -51,13 +51,13 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Ensures completion of the DataTransfer and attempts to get result
         /// </summary>
-        public void EnsureCompleted()
+        public void EnsureCompleted(CancellationToken cancellationToken = default)
         {
 #if DEBUG
-            VerifyTaskCompleted(IsCompleted);
+            VerifyTaskCompleted(HasCompleted);
 #endif
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
-            AwaitCompletion(CancellationToken.None);
+            AwaitCompletion(cancellationToken);
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
         }
 
@@ -80,12 +80,12 @@ namespace Azure.Storage.DataMovement
         /// Waits until the data transfer itself has completed
         /// </summary>
         /// <param name="cancellationToken"></param>
-        public Task AwaitCompletion(CancellationToken cancellationToken)
+        public Task AwaitCompletion(CancellationToken cancellationToken = default)
         {
-            while (!IsCompleted)
+            while (!HasCompleted)
             {
 #if DEBUG
-                VerifyTaskCompleted(IsCompleted);
+                VerifyTaskCompleted(HasCompleted);
 #endif
                 CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             }
