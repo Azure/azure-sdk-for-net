@@ -20,10 +20,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         [JsonPropertyName("authenticationEventListenerId")]
         public Guid AuthenticationEventListenerId { get; set; }
 
-        /// <summary>Gets or sets the custom extension identifier.</summary>
-        /// <value>The custom extension identifier.</value>
-        [JsonPropertyName("AuthenticationEventsId")]
-        public Guid AuthenticationEventsId { get; set; }
+        /// <summary> Gets or sets the custom authentication extension identifier.</summary>
+        /// <value>The custom authentication extension identifier. </value>
+        [JsonPropertyName("customAuthenticationExtensionId")]
+        public Guid CustomAuthenticationExtensionId { get; set; }
 
         /// <summary>Gets the Json settings.
         /// Which is over-ridable for sub class.</summary>

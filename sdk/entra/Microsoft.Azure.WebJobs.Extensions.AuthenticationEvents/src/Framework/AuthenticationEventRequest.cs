@@ -29,9 +29,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <summary>Gets or sets the related EventData model.</summary>
         /// <value>The Json payload.</value>
         ///
-        [JsonPropertyName("payload")]
+        [JsonPropertyName("data")]
         [Required]
-        public TData Payload { get; set; }
+        public TData Data { get; set; }
 
         /// <summary>Validates the response and creates the IActionResult with the json payload based on the status of the request.</summary>
         /// <returns>IActionResult based on the EventStatus (UnauthorizedResult, BadRequestObjectResult or JsonResult).</returns>
