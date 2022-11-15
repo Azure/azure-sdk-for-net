@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Azure.AI.TextAnalytics
 {
@@ -12,15 +14,25 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public partial class ExtractSummaryResult : TextAnalyticsResult
     {
-        private readonly SummarySentenceCollection _sentences;
+        private readonly IReadOnlyCollection<SummarySentence> _sentences;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ExtractSummaryResult"/> class.
         /// </summary>
-        internal ExtractSummaryResult(string id, TextDocumentStatistics statistics, SummarySentenceCollection sentences)
+        internal ExtractSummaryResult(
+            string id,
+            TextDocumentStatistics statistics,
+            IList<SummarySentence> sentences,
+            IList<TextAnalyticsWarning> warnings)
             : base(id, statistics)
         {
-            _sentences = sentences;
+            _sentences = (sentences is not null)
+                ? new ReadOnlyCollection<SummarySentence>(sentences)
+                : new List<SummarySentence>();
+
+            Warnings = (warnings is not null)
+                ? new ReadOnlyCollection<TextAnalyticsWarning>(warnings)
+                : new List<TextAnalyticsWarning>();
         }
 
         /// <summary>
@@ -31,9 +43,14 @@ namespace Azure.AI.TextAnalytics
         internal ExtractSummaryResult(string id, TextAnalyticsError error) : base(id, error) { }
 
         /// <summary>
+        /// The warnings encountered while processing the document.
+        /// </summary>
+        public IReadOnlyCollection<TextAnalyticsWarning> Warnings { get; } = new List<TextAnalyticsWarning>();
+
+        /// <summary>
         /// The collection of summary sentences extracted from the document.
         /// </summary>
-        public SummarySentenceCollection Sentences
+        public IReadOnlyCollection<SummarySentence> Sentences
         {
             get
             {
