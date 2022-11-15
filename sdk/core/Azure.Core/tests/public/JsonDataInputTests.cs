@@ -91,5 +91,42 @@ namespace Azure.Core.Tests.Public
             Assert.AreEqual(5, input[0]);
             Assert.AreEqual(4, input[1]);
         }
+
+        [Test]
+        public void CanAddArrayValuesToProperties()
+        {
+            // Idea: mimic Collection interface.
+            dynamic input = RequestContent.CreateDynamic(/*optional serializer options*/);
+            input.ArrayProperty = new int[] { 1, 2, 3 };
+
+            input.ArrayProperty.Add(4);
+
+            // [ 1, 2, 3, 4 ]
+            Assert.AreEqual(4, input.ArrayProperty.Length);
+
+            input.ArrayProperty.Remove(2);
+
+            // [ 1, 3, 4 ]
+            Assert.AreEqual(3, input.ArrayProperty.Length);
+            Assert.AreEqual(1, input.ArrayProperty[0]);
+            Assert.AreEqual(3, input.ArrayProperty[1]);
+            Assert.AreEqual(4, input.ArrayProperty[2]);
+
+            input.ArrayProperty.RemoveAt(0);
+
+            // [ 3, 4 ]
+            Assert.AreEqual(2, input.ArrayProperty.Length);
+            Assert.AreEqual(3, input.ArrayProperty[0]);
+            Assert.AreEqual(4, input.ArrayProperty[1]);
+
+            input.ArrayProperty[0] = 5;
+
+            // [ 5, 4 ]
+            Assert.AreEqual(2, input.ArrayProperty.Length);
+            Assert.AreEqual(5, input.ArrayProperty[0]);
+            Assert.AreEqual(4, input.ArrayProperty[1]);
+        }
+
+        // TODO: Add negative tests, e.g. showing you can't call Add an array value to an Object.
     }
 }
