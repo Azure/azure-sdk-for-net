@@ -168,7 +168,8 @@ node_modules/
 # MSBuild binary log files
 msbuild.binlog
 
-# BenchmarkDotNet 
+# BenchmarkDotNet
 BenchmarkDotNet.Artifacts
 
 artifacts
+.assets
