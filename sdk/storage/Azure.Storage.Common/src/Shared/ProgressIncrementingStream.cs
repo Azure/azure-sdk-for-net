@@ -11,7 +11,7 @@ namespace Azure.Storage
     /// <summary>
     /// Wraps a stream, and reports position updates to a progress incrementer
     /// </summary>
-    internal sealed class ProgressIncrementingStream : Stream
+    internal class ProgressIncrementingStream : Stream
     {
         private readonly Stream _innerStream;
         private readonly AggregatingProgressIncrementer _incrementer;
