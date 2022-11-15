@@ -12,10 +12,10 @@
 # Start-AutoRestCodeGeneration -ResourceProvider "resources/resource-manager" -SdkRepoRootPath "$PSScriptRoot\..\..\..\.." -AutoRestVersion "v2" -AutoRestCodeGenerationFlags "--tag=package-subscriptions-2021-01" -SdkGenerationDirectory "$PSScriptRoot\Generated\Subscriptions"
 
 # # Generate package with policy tag
-# Start-AutoRestCodeGeneration -ResourceProvider "resources/resource-manager" -SdkRepoRootPath "$PSScriptRoot\..\..\..\.." -AutoRestVersion "v2" -AutoRestCodeGenerationFlags "--tag=package-policy-2021-06" -SdkGenerationDirectory "$PSScriptRoot\GeneratedPolicy202106"
+Start-AutoRestCodeGeneration -ResourceProvider "resources/resource-manager" -SdkRepoRootPath "$PSScriptRoot\..\..\..\.." -AutoRestVersion "v2" -AutoRestCodeGenerationFlags "--tag=package-policy-2022-06" -SdkGenerationDirectory "$PSScriptRoot\GeneratedPolicy202206"
 
 # Generate package with deployment scripts
 # Start-AutoRestCodeGeneration -ResourceProvider "resources/resource-manager" -SdkRepoRootPath "$PSScriptRoot\..\..\..\.." -AutoRestVersion "v2" -AutoRestCodeGenerationFlags "--tag=package-deploymentscripts-2019-10-preview" -SdkGenerationDirectory "$PSScriptRoot\Generated\DeploymentScripts"
 
 # Generate package with privatelink tag
-Start-AutoRestCodeGeneration -ResourceProvider "resources/resource-manager" -SdkRepoRootPath "$PSScriptRoot\..\..\..\.." -AutoRestVersion "v2" -AutoRestCodeGenerationFlags "--tag=package-privatelinks-2020-05" -SdkGenerationDirectory "$PSScriptRoot\Generated\PrivateLinks"
+# Start-AutoRestCodeGeneration -ResourceProvider "resources/resource-manager" -SdkRepoRootPath "$PSScriptRoot\..\..\..\.." -AutoRestVersion "v2" -AutoRestCodeGenerationFlags "--tag=package-privatelinks-2020-05" -SdkGenerationDirectory "$PSScriptRoot\Generated\PrivateLinks"

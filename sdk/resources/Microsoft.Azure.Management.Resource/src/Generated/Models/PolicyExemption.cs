@@ -52,13 +52,18 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <param name="metadata">The policy exemption metadata. Metadata is
         /// an open ended object and is typically a collection of key value
         /// pairs.</param>
+        /// <param name="resourceSelectors">The resource selector list to
+        /// filter policies by resource properties.</param>
+        /// <param name="assignmentScopeValidation">The option whether validate
+        /// the exemption is at or under the assignment scope. Possible values
+        /// include: 'Default', 'DoNotValidate'</param>
         /// <param name="systemData">Azure Resource Manager metadata containing
         /// createdBy and modifiedBy information.</param>
         /// <param name="id">The ID of the policy exemption.</param>
         /// <param name="name">The name of the policy exemption.</param>
         /// <param name="type">The type of the resource
         /// (Microsoft.Authorization/policyExemptions).</param>
-        public PolicyExemption(string policyAssignmentId, string exemptionCategory, IList<string> policyDefinitionReferenceIds = default(IList<string>), System.DateTime? expiresOn = default(System.DateTime?), string displayName = default(string), string description = default(string), object metadata = default(object), SystemData systemData = default(SystemData), string id = default(string), string name = default(string), string type = default(string))
+        public PolicyExemption(string policyAssignmentId, string exemptionCategory, IList<string> policyDefinitionReferenceIds = default(IList<string>), System.DateTime? expiresOn = default(System.DateTime?), string displayName = default(string), string description = default(string), object metadata = default(object), IList<ResourceSelector> resourceSelectors = default(IList<ResourceSelector>), string assignmentScopeValidation = default(string), SystemData systemData = default(SystemData), string id = default(string), string name = default(string), string type = default(string))
         {
             PolicyAssignmentId = policyAssignmentId;
             PolicyDefinitionReferenceIds = policyDefinitionReferenceIds;
@@ -67,6 +72,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
             DisplayName = displayName;
             Description = description;
             Metadata = metadata;
+            ResourceSelectors = resourceSelectors;
+            AssignmentScopeValidation = assignmentScopeValidation;
             SystemData = systemData;
             Id = id;
             Name = name;
@@ -127,6 +134,21 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.metadata")]
         public object Metadata { get; set; }
+
+        /// <summary>
+        /// Gets or sets the resource selector list to filter policies by
+        /// resource properties.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.resourceSelectors")]
+        public IList<ResourceSelector> ResourceSelectors { get; set; }
+
+        /// <summary>
+        /// Gets or sets the option whether validate the exemption is at or
+        /// under the assignment scope. Possible values include: 'Default',
+        /// 'DoNotValidate'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.assignmentScopeValidation")]
+        public string AssignmentScopeValidation { get; set; }
 
         /// <summary>
         /// Gets azure Resource Manager metadata containing createdBy and

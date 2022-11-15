@@ -72,11 +72,6 @@ namespace Microsoft.Azure.Management.ResourceManager
         public virtual IDataPolicyManifestsOperations DataPolicyManifests { get; private set; }
 
         /// <summary>
-        /// Gets the IPolicyAssignmentsOperations.
-        /// </summary>
-        public virtual IPolicyAssignmentsOperations PolicyAssignments { get; private set; }
-
-        /// <summary>
         /// Gets the IPolicyDefinitionsOperations.
         /// </summary>
         public virtual IPolicyDefinitionsOperations PolicyDefinitions { get; private set; }
@@ -87,9 +82,24 @@ namespace Microsoft.Azure.Management.ResourceManager
         public virtual IPolicySetDefinitionsOperations PolicySetDefinitions { get; private set; }
 
         /// <summary>
+        /// Gets the IPolicyAssignmentsOperations.
+        /// </summary>
+        public virtual IPolicyAssignmentsOperations PolicyAssignments { get; private set; }
+
+        /// <summary>
         /// Gets the IPolicyExemptionsOperations.
         /// </summary>
         public virtual IPolicyExemptionsOperations PolicyExemptions { get; private set; }
+
+        /// <summary>
+        /// Gets the IVariablesOperations.
+        /// </summary>
+        public virtual IVariablesOperations Variables { get; private set; }
+
+        /// <summary>
+        /// Gets the IVariableValuesOperations.
+        /// </summary>
+        public virtual IVariableValuesOperations VariableValues { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the PolicyClient class.
@@ -333,10 +343,12 @@ namespace Microsoft.Azure.Management.ResourceManager
         private void Initialize()
         {
             DataPolicyManifests = new DataPolicyManifestsOperations(this);
-            PolicyAssignments = new PolicyAssignmentsOperations(this);
             PolicyDefinitions = new PolicyDefinitionsOperations(this);
             PolicySetDefinitions = new PolicySetDefinitionsOperations(this);
+            PolicyAssignments = new PolicyAssignmentsOperations(this);
             PolicyExemptions = new PolicyExemptionsOperations(this);
+            Variables = new VariablesOperations(this);
+            VariableValues = new VariableValuesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

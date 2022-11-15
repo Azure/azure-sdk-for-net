@@ -221,6 +221,72 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
+            /// Updates a policy exemption.
+            /// </summary>
+            /// <remarks>
+            /// This operation updates a policy exemption with the given scope and name.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// The scope of the policy exemption. Valid scopes are: management group
+            /// (format:
+            /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
+            /// subscription (format: '/subscriptions/{subscriptionId}'), resource group
+            /// (format:
+            /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}', or
+            /// resource (format:
+            /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}'
+            /// </param>
+            /// <param name='policyExemptionName'>
+            /// The name of the policy exemption to delete.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters for policy exemption patch request.
+            /// </param>
+            public static PolicyExemption Update(this IPolicyExemptionsOperations operations, string scope, string policyExemptionName, PolicyExemptionUpdate parameters)
+            {
+                return operations.UpdateAsync(scope, policyExemptionName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates a policy exemption.
+            /// </summary>
+            /// <remarks>
+            /// This operation updates a policy exemption with the given scope and name.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// The scope of the policy exemption. Valid scopes are: management group
+            /// (format:
+            /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
+            /// subscription (format: '/subscriptions/{subscriptionId}'), resource group
+            /// (format:
+            /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}', or
+            /// resource (format:
+            /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}'
+            /// </param>
+            /// <param name='policyExemptionName'>
+            /// The name of the policy exemption to delete.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters for policy exemption patch request.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PolicyExemption> UpdateAsync(this IPolicyExemptionsOperations operations, string scope, string policyExemptionName, PolicyExemptionUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(scope, policyExemptionName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Retrieves all policy exemptions that apply to a subscription.
             /// </summary>
             /// <remarks>

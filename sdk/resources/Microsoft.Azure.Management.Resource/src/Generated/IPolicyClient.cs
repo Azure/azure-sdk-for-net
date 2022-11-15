@@ -69,11 +69,6 @@ namespace Microsoft.Azure.Management.ResourceManager
         IDataPolicyManifestsOperations DataPolicyManifests { get; }
 
         /// <summary>
-        /// Gets the IPolicyAssignmentsOperations.
-        /// </summary>
-        IPolicyAssignmentsOperations PolicyAssignments { get; }
-
-        /// <summary>
         /// Gets the IPolicyDefinitionsOperations.
         /// </summary>
         IPolicyDefinitionsOperations PolicyDefinitions { get; }
@@ -84,9 +79,24 @@ namespace Microsoft.Azure.Management.ResourceManager
         IPolicySetDefinitionsOperations PolicySetDefinitions { get; }
 
         /// <summary>
+        /// Gets the IPolicyAssignmentsOperations.
+        /// </summary>
+        IPolicyAssignmentsOperations PolicyAssignments { get; }
+
+        /// <summary>
         /// Gets the IPolicyExemptionsOperations.
         /// </summary>
         IPolicyExemptionsOperations PolicyExemptions { get; }
+
+        /// <summary>
+        /// Gets the IVariablesOperations.
+        /// </summary>
+        IVariablesOperations Variables { get; }
+
+        /// <summary>
+        /// Gets the IVariableValuesOperations.
+        /// </summary>
+        IVariableValuesOperations VariableValues { get; }
 
     }
 }

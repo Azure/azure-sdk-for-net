@@ -53,6 +53,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// include: 'Default', 'DoNotEnforce'</param>
         /// <param name="nonComplianceMessages">The messages that describe why
         /// a resource is non-compliant with the policy.</param>
+        /// <param name="resourceSelectors">The resource selector list to
+        /// filter policies by resource properties.</param>
+        /// <param name="overrides">The policy property value override.</param>
         /// <param name="id">The ID of the policy assignment.</param>
         /// <param name="type">The type of the policy assignment.</param>
         /// <param name="name">The name of the policy assignment.</param>
@@ -62,7 +65,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// policy assignment.</param>
         /// <param name="systemData">The system metadata relating to this
         /// resource.</param>
-        public PolicyAssignment(string displayName = default(string), string policyDefinitionId = default(string), string scope = default(string), IList<string> notScopes = default(IList<string>), IDictionary<string, ParameterValuesValue> parameters = default(IDictionary<string, ParameterValuesValue>), string description = default(string), object metadata = default(object), string enforcementMode = default(string), IList<NonComplianceMessage> nonComplianceMessages = default(IList<NonComplianceMessage>), string id = default(string), string type = default(string), string name = default(string), string location = default(string), Identity identity = default(Identity), SystemData systemData = default(SystemData))
+        public PolicyAssignment(string displayName = default(string), string policyDefinitionId = default(string), string scope = default(string), IList<string> notScopes = default(IList<string>), IDictionary<string, ParameterValuesValue> parameters = default(IDictionary<string, ParameterValuesValue>), string description = default(string), object metadata = default(object), string enforcementMode = default(string), IList<NonComplianceMessage> nonComplianceMessages = default(IList<NonComplianceMessage>), IList<ResourceSelector> resourceSelectors = default(IList<ResourceSelector>), IList<OverrideModel> overrides = default(IList<OverrideModel>), string id = default(string), string type = default(string), string name = default(string), string location = default(string), Identity identity = default(Identity), SystemData systemData = default(SystemData))
         {
             DisplayName = displayName;
             PolicyDefinitionId = policyDefinitionId;
@@ -73,6 +76,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
             Metadata = metadata;
             EnforcementMode = enforcementMode;
             NonComplianceMessages = nonComplianceMessages;
+            ResourceSelectors = resourceSelectors;
+            Overrides = overrides;
             Id = id;
             Type = type;
             Name = name;
@@ -147,6 +152,19 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.nonComplianceMessages")]
         public IList<NonComplianceMessage> NonComplianceMessages { get; set; }
+
+        /// <summary>
+        /// Gets or sets the resource selector list to filter policies by
+        /// resource properties.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.resourceSelectors")]
+        public IList<ResourceSelector> ResourceSelectors { get; set; }
+
+        /// <summary>
+        /// Gets or sets the policy property value override.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.overrides")]
+        public IList<OverrideModel> Overrides { get; set; }
 
         /// <summary>
         /// Gets the ID of the policy assignment.

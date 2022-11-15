@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.ResourceManager
     using System.Threading.Tasks;
 
     /// <summary>
-    /// PolicyExemptionsOperations operations.
+    /// VariablesOperations operations.
     /// </summary>
-    internal partial class PolicyExemptionsOperations : IServiceOperations<PolicyClient>, IPolicyExemptionsOperations
+    internal partial class VariablesOperations : IServiceOperations<PolicyClient>, IVariablesOperations
     {
         /// <summary>
-        /// Initializes a new instance of the PolicyExemptionsOperations class.
+        /// Initializes a new instance of the VariablesOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal PolicyExemptionsOperations(PolicyClient client)
+        internal VariablesOperations(PolicyClient client)
         {
             if (client == null)
             {
@@ -51,26 +51,15 @@ namespace Microsoft.Azure.Management.ResourceManager
         public PolicyClient Client { get; private set; }
 
         /// <summary>
-        /// Deletes a policy exemption.
+        /// Deletes a variable.
         /// </summary>
         /// <remarks>
-        /// This operation deletes a policy exemption, given its name and the scope it
-        /// was created in. The scope of a policy exemption is the part of its ID
-        /// preceding
-        /// '/providers/Microsoft.Authorization/policyExemptions/{policyExemptionName}'.
+        /// This operation deletes a variable, given its name and the subscription it
+        /// was created in. The scope of a variable is the part of its ID preceding
+        /// '/providers/Microsoft.Authorization/variables/{variableName}'.
         /// </remarks>
-        /// <param name='scope'>
-        /// The scope of the policy exemption. Valid scopes are: management group
-        /// (format:
-        /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-        /// subscription (format: '/subscriptions/{subscriptionId}'), resource group
-        /// (format:
-        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}', or
-        /// resource (format:
-        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}'
-        /// </param>
-        /// <param name='policyExemptionName'>
-        /// The name of the policy exemption to delete.
+        /// <param name='variableName'>
+        /// The name of the variable to operate on.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -90,17 +79,17 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string scope, string policyExemptionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string variableName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (scope == null)
+            if (Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "scope");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (policyExemptionName == null)
+            if (variableName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "policyExemptionName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "variableName");
             }
-            string apiVersion = "2022-07-01-preview";
+            string apiVersion = "2022-08-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -108,17 +97,16 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("scope", scope);
-                tracingParameters.Add("policyExemptionName", policyExemptionName);
+                tracingParameters.Add("variableName", variableName);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.Authorization/policyExemptions/{policyExemptionName}").ToString();
-            _url = _url.Replace("{scope}", scope);
-            _url = _url.Replace("{policyExemptionName}", System.Uri.EscapeDataString(policyExemptionName));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Authorization/variables/{variableName}").ToString();
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            _url = _url.Replace("{variableName}", System.Uri.EscapeDataString(variableName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -232,30 +220,18 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Creates or updates a policy exemption.
+        /// Creates or updates a variable.
         /// </summary>
         /// <remarks>
-        /// This operation creates or updates a policy exemption with the given scope
-        /// and name. Policy exemptions apply to all resources contained within their
-        /// scope. For example, when you create a policy exemption at resource group
-        /// scope for a policy assignment at the same or above level, the exemption
-        /// exempts to all applicable resources in the resource group.
+        /// This operation creates or updates a variable with the given subscription
+        /// and name. Policy variables can only be used by a policy definition at the
+        /// scope they are created or below.
         /// </remarks>
-        /// <param name='scope'>
-        /// The scope of the policy exemption. Valid scopes are: management group
-        /// (format:
-        /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-        /// subscription (format: '/subscriptions/{subscriptionId}'), resource group
-        /// (format:
-        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}', or
-        /// resource (format:
-        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}'
-        /// </param>
-        /// <param name='policyExemptionName'>
-        /// The name of the policy exemption to delete.
+        /// <param name='variableName'>
+        /// The name of the variable to operate on.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters for the policy exemption.
+        /// Parameters for the variable.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -278,15 +254,15 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PolicyExemption>> CreateOrUpdateWithHttpMessagesAsync(string scope, string policyExemptionName, PolicyExemption parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Variable>> CreateOrUpdateWithHttpMessagesAsync(string variableName, Variable parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (scope == null)
+            if (Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "scope");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (policyExemptionName == null)
+            if (variableName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "policyExemptionName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "variableName");
             }
             if (parameters == null)
             {
@@ -296,7 +272,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 parameters.Validate();
             }
-            string apiVersion = "2022-07-01-preview";
+            string apiVersion = "2022-08-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -304,8 +280,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("scope", scope);
-                tracingParameters.Add("policyExemptionName", policyExemptionName);
+                tracingParameters.Add("variableName", variableName);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -313,9 +288,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.Authorization/policyExemptions/{policyExemptionName}").ToString();
-            _url = _url.Replace("{scope}", scope);
-            _url = _url.Replace("{policyExemptionName}", System.Uri.EscapeDataString(policyExemptionName));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Authorization/variables/{variableName}").ToString();
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            _url = _url.Replace("{variableName}", System.Uri.EscapeDataString(variableName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -420,7 +395,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<PolicyExemption>();
+            var _result = new AzureOperationResponse<Variable>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -433,7 +408,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<PolicyExemption>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Variable>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -451,7 +426,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<PolicyExemption>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Variable>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -471,24 +446,14 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Retrieves a policy exemption.
+        /// Retrieves a variable.
         /// </summary>
         /// <remarks>
-        /// This operation retrieves a single policy exemption, given its name and the
-        /// scope it was created at.
+        /// This operation retrieves a single variable, given its name and the
+        /// subscription it was created at.
         /// </remarks>
-        /// <param name='scope'>
-        /// The scope of the policy exemption. Valid scopes are: management group
-        /// (format:
-        /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-        /// subscription (format: '/subscriptions/{subscriptionId}'), resource group
-        /// (format:
-        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}', or
-        /// resource (format:
-        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}'
-        /// </param>
-        /// <param name='policyExemptionName'>
-        /// The name of the policy exemption to delete.
+        /// <param name='variableName'>
+        /// The name of the variable to operate on.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -511,17 +476,17 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PolicyExemption>> GetWithHttpMessagesAsync(string scope, string policyExemptionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Variable>> GetWithHttpMessagesAsync(string variableName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (scope == null)
+            if (Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "scope");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (policyExemptionName == null)
+            if (variableName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "policyExemptionName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "variableName");
             }
-            string apiVersion = "2022-07-01-preview";
+            string apiVersion = "2022-08-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -529,17 +494,16 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("scope", scope);
-                tracingParameters.Add("policyExemptionName", policyExemptionName);
+                tracingParameters.Add("variableName", variableName);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.Authorization/policyExemptions/{policyExemptionName}").ToString();
-            _url = _url.Replace("{scope}", scope);
-            _url = _url.Replace("{policyExemptionName}", System.Uri.EscapeDataString(policyExemptionName));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Authorization/variables/{variableName}").ToString();
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            _url = _url.Replace("{variableName}", System.Uri.EscapeDataString(variableName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -638,7 +602,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<PolicyExemption>();
+            var _result = new AzureOperationResponse<Variable>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -651,7 +615,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<PolicyExemption>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Variable>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -671,26 +635,194 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Updates a policy exemption.
+        /// Deletes a variable.
         /// </summary>
         /// <remarks>
-        /// This operation updates a policy exemption with the given scope and name.
+        /// This operation deletes a variable, given its name and the management group
+        /// it was created in. The scope of a variable is the part of its ID preceding
+        /// '/providers/Microsoft.Authorization/variables/{variableName}'.
         /// </remarks>
-        /// <param name='scope'>
-        /// The scope of the policy exemption. Valid scopes are: management group
-        /// (format:
-        /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-        /// subscription (format: '/subscriptions/{subscriptionId}'), resource group
-        /// (format:
-        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}', or
-        /// resource (format:
-        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}'
+        /// <param name='managementGroupId'>
+        /// The ID of the management group.
         /// </param>
-        /// <param name='policyExemptionName'>
-        /// The name of the policy exemption to delete.
+        /// <param name='variableName'>
+        /// The name of the variable to operate on.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse> DeleteAtManagementGroupWithHttpMessagesAsync(string managementGroupId, string variableName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (managementGroupId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "managementGroupId");
+            }
+            if (variableName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "variableName");
+            }
+            string apiVersion = "2022-08-01-preview";
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("managementGroupId", managementGroupId);
+                tracingParameters.Add("variableName", variableName);
+                tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "DeleteAtManagementGroup", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/variables/{variableName}").ToString();
+            _url = _url.Replace("{managementGroupId}", System.Uri.EscapeDataString(managementGroupId));
+            _url = _url.Replace("{variableName}", System.Uri.EscapeDataString(variableName));
+            List<string> _queryParameters = new List<string>();
+            if (apiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("DELETE");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200 && (int)_statusCode != 204)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Creates or updates a variable.
+        /// </summary>
+        /// <remarks>
+        /// This operation creates or updates a variable with the given  management
+        /// group and name. Policy variables can only be used by a policy definition at
+        /// the scope they are created or below.
+        /// </remarks>
+        /// <param name='managementGroupId'>
+        /// The ID of the management group.
+        /// </param>
+        /// <param name='variableName'>
+        /// The name of the variable to operate on.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters for policy exemption patch request.
+        /// Parameters for the variable.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -713,21 +845,25 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PolicyExemption>> UpdateWithHttpMessagesAsync(string scope, string policyExemptionName, PolicyExemptionUpdate parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Variable>> CreateOrUpdateAtManagementGroupWithHttpMessagesAsync(string managementGroupId, string variableName, Variable parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (scope == null)
+            if (managementGroupId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "scope");
+                throw new ValidationException(ValidationRules.CannotBeNull, "managementGroupId");
             }
-            if (policyExemptionName == null)
+            if (variableName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "policyExemptionName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "variableName");
             }
             if (parameters == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            string apiVersion = "2022-07-01-preview";
+            if (parameters != null)
+            {
+                parameters.Validate();
+            }
+            string apiVersion = "2022-08-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -735,18 +871,18 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("scope", scope);
-                tracingParameters.Add("policyExemptionName", policyExemptionName);
-                tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("managementGroupId", managementGroupId);
+                tracingParameters.Add("variableName", variableName);
                 tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Update", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdateAtManagementGroup", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.Authorization/policyExemptions/{policyExemptionName}").ToString();
-            _url = _url.Replace("{scope}", scope);
-            _url = _url.Replace("{policyExemptionName}", System.Uri.EscapeDataString(policyExemptionName));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/variables/{variableName}").ToString();
+            _url = _url.Replace("{managementGroupId}", System.Uri.EscapeDataString(managementGroupId));
+            _url = _url.Replace("{variableName}", System.Uri.EscapeDataString(variableName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -759,7 +895,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PATCH");
+            _httpRequest.Method = new HttpMethod("PUT");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
@@ -816,7 +952,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200)
+            if ((int)_statusCode != 200 && (int)_statusCode != 201)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -851,7 +987,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<PolicyExemption>();
+            var _result = new AzureOperationResponse<Variable>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -864,7 +1000,25 @@ namespace Microsoft.Azure.Management.ResourceManager
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<PolicyExemption>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Variable>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 201)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Variable>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -884,760 +1038,17 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Retrieves all policy exemptions that apply to a subscription.
+        /// Retrieves a variable.
         /// </summary>
         /// <remarks>
-        /// This operation retrieves the list of all policy exemptions associated with
-        /// the given subscription that match the optional given $filter. Valid values
-        /// for $filter are: 'atScope()', 'atExactScope()', 'excludeExpired()' or
-        /// 'policyAssignmentId eq '{value}''. If $filter is not provided, the
-        /// unfiltered list includes all policy exemptions associated with the
-        /// subscription, including those that apply directly or from management groups
-        /// that contain the given subscription, as well as any applied to objects
-        /// contained within the subscription.
-        /// </remarks>
-        /// <param name='filter'>
-        /// The filter to apply on the operation. Valid values for $filter are:
-        /// 'atScope()', 'atExactScope()', 'excludeExpired()' or 'policyAssignmentId eq
-        /// '{value}''. If $filter is not provided, no filtering is performed. If
-        /// $filter is not provided, the unfiltered list includes all policy exemptions
-        /// associated with the scope, including those that apply directly or apply
-        /// from containing scopes. If $filter=atScope() is provided, the returned list
-        /// only includes all policy exemptions that apply to the scope, which is
-        /// everything in the unfiltered list except those applied to sub scopes
-        /// contained within the given scope. If $filter=atExactScope() is provided,
-        /// the returned list only includes all policy exemptions that at the given
-        /// scope. If $filter=excludeExpired() is provided, the returned list only
-        /// includes all policy exemptions that either haven't expired or didn't set
-        /// expiration date. If $filter=policyAssignmentId eq '{value}' is provided.
-        /// the returned list only includes all policy exemptions that are associated
-        /// with the give policyAssignmentId.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<AzureOperationResponse<IPage<PolicyExemption>>> ListWithHttpMessagesAsync(string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            string apiVersion = "2022-07-01-preview";
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("filter", filter);
-                tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policyExemptions").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            List<string> _queryParameters = new List<string>();
-            if (filter != null)
-            {
-                _queryParameters.Add(string.Format("$filter={0}", filter));
-            }
-            if (apiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            var _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
-            }
-            if (Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
-            }
-
-
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<IPage<PolicyExemption>>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<PolicyExemption>>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Retrieves all policy exemptions that apply to a resource group.
-        /// </summary>
-        /// <remarks>
-        /// This operation retrieves the list of all policy exemptions associated with
-        /// the given resource group in the given subscription that match the optional
-        /// given $filter. Valid values for $filter are: 'atScope()', 'atExactScope()',
-        /// 'excludeExpired()' or 'policyAssignmentId eq '{value}''. If $filter is not
-        /// provided, the unfiltered list includes all policy exemptions associated
-        /// with the resource group, including those that apply directly or apply from
-        /// containing scopes, as well as any applied to resources contained within the
-        /// resource group.
-        /// </remarks>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group containing the resource.
-        /// </param>
-        /// <param name='filter'>
-        /// The filter to apply on the operation. Valid values for $filter are:
-        /// 'atScope()', 'atExactScope()', 'excludeExpired()' or 'policyAssignmentId eq
-        /// '{value}''. If $filter is not provided, no filtering is performed. If
-        /// $filter is not provided, the unfiltered list includes all policy exemptions
-        /// associated with the scope, including those that apply directly or apply
-        /// from containing scopes. If $filter=atScope() is provided, the returned list
-        /// only includes all policy exemptions that apply to the scope, which is
-        /// everything in the unfiltered list except those applied to sub scopes
-        /// contained within the given scope. If $filter=atExactScope() is provided,
-        /// the returned list only includes all policy exemptions that at the given
-        /// scope. If $filter=excludeExpired() is provided, the returned list only
-        /// includes all policy exemptions that either haven't expired or didn't set
-        /// expiration date. If $filter=policyAssignmentId eq '{value}' is provided.
-        /// the returned list only includes all policy exemptions that are associated
-        /// with the give policyAssignmentId.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<AzureOperationResponse<IPage<PolicyExemption>>> ListForResourceGroupWithHttpMessagesAsync(string resourceGroupName, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (resourceGroupName != null)
-            {
-                if (resourceGroupName.Length > 90)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
-                }
-                if (resourceGroupName.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
-                }
-            }
-            string apiVersion = "2022-07-01-preview";
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("filter", filter);
-                tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListForResourceGroup", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Authorization/policyExemptions").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            List<string> _queryParameters = new List<string>();
-            if (filter != null)
-            {
-                _queryParameters.Add(string.Format("$filter={0}", filter));
-            }
-            if (apiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            var _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
-            }
-            if (Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
-            }
-
-
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<IPage<PolicyExemption>>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<PolicyExemption>>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Retrieves all policy exemptions that apply to a resource.
-        /// </summary>
-        /// <remarks>
-        /// This operation retrieves the list of all policy exemptions associated with
-        /// the specified resource in the given resource group and subscription that
-        /// match the optional given $filter. Valid values for $filter are:
-        /// 'atScope()', 'atExactScope()', 'excludeExpired()' or 'policyAssignmentId eq
-        /// '{value}''. If $filter is not provided, the unfiltered list includes all
-        /// policy exemptions associated with the resource, including those that apply
-        /// directly or from all containing scopes, as well as any applied to resources
-        /// contained within the resource. Three parameters plus the resource name are
-        /// used to identify a specific resource. If the resource is not part of a
-        /// parent resource (the more common case), the parent resource path should not
-        /// be provided (or provided as ''). For example a web app could be specified
-        /// as ({resourceProviderNamespace} == 'Microsoft.Web', {parentResourcePath} ==
-        /// '', {resourceType} == 'sites', {resourceName} == 'MyWebApp'). If the
-        /// resource is part of a parent resource, then all parameters should be
-        /// provided. For example a virtual machine DNS name could be specified as
-        /// ({resourceProviderNamespace} == 'Microsoft.Compute', {parentResourcePath}
-        /// == 'virtualMachines/MyVirtualMachine', {resourceType} == 'domainNames',
-        /// {resourceName} == 'MyComputerName'). A convenient alternative to providing
-        /// the namespace and type name separately is to provide both in the
-        /// {resourceType} parameter, format: ({resourceProviderNamespace} == '',
-        /// {parentResourcePath} == '', {resourceType} == 'Microsoft.Web/sites',
-        /// {resourceName} == 'MyWebApp').
-        /// </remarks>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group containing the resource.
-        /// </param>
-        /// <param name='resourceProviderNamespace'>
-        /// The namespace of the resource provider. For example, the namespace of a
-        /// virtual machine is Microsoft.Compute (from
-        /// Microsoft.Compute/virtualMachines)
-        /// </param>
-        /// <param name='parentResourcePath'>
-        /// The parent resource path. Use empty string if there is none.
-        /// </param>
-        /// <param name='resourceType'>
-        /// The resource type name. For example the type name of a web app is 'sites'
-        /// (from Microsoft.Web/sites).
-        /// </param>
-        /// <param name='resourceName'>
-        /// The name of the resource.
-        /// </param>
-        /// <param name='filter'>
-        /// The filter to apply on the operation. Valid values for $filter are:
-        /// 'atScope()', 'atExactScope()', 'excludeExpired()' or 'policyAssignmentId eq
-        /// '{value}''. If $filter is not provided, no filtering is performed. If
-        /// $filter is not provided, the unfiltered list includes all policy exemptions
-        /// associated with the scope, including those that apply directly or apply
-        /// from containing scopes. If $filter=atScope() is provided, the returned list
-        /// only includes all policy exemptions that apply to the scope, which is
-        /// everything in the unfiltered list except those applied to sub scopes
-        /// contained within the given scope. If $filter=atExactScope() is provided,
-        /// the returned list only includes all policy exemptions that at the given
-        /// scope. If $filter=excludeExpired() is provided, the returned list only
-        /// includes all policy exemptions that either haven't expired or didn't set
-        /// expiration date. If $filter=policyAssignmentId eq '{value}' is provided.
-        /// the returned list only includes all policy exemptions that are associated
-        /// with the give policyAssignmentId.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<AzureOperationResponse<IPage<PolicyExemption>>> ListForResourceWithHttpMessagesAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (resourceGroupName != null)
-            {
-                if (resourceGroupName.Length > 90)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
-                }
-                if (resourceGroupName.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
-                }
-            }
-            if (resourceProviderNamespace == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceProviderNamespace");
-            }
-            if (parentResourcePath == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "parentResourcePath");
-            }
-            if (resourceType == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceType");
-            }
-            if (resourceName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceName");
-            }
-            string apiVersion = "2022-07-01-preview";
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("resourceProviderNamespace", resourceProviderNamespace);
-                tracingParameters.Add("parentResourcePath", parentResourcePath);
-                tracingParameters.Add("resourceType", resourceType);
-                tracingParameters.Add("resourceName", resourceName);
-                tracingParameters.Add("filter", filter);
-                tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListForResource", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/policyExemptions").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{resourceProviderNamespace}", System.Uri.EscapeDataString(resourceProviderNamespace));
-            _url = _url.Replace("{parentResourcePath}", parentResourcePath);
-            _url = _url.Replace("{resourceType}", resourceType);
-            _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(resourceName));
-            List<string> _queryParameters = new List<string>();
-            if (filter != null)
-            {
-                _queryParameters.Add(string.Format("$filter={0}", filter));
-            }
-            if (apiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            var _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
-            }
-            if (Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
-            }
-
-
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<IPage<PolicyExemption>>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<PolicyExemption>>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Retrieves all policy exemptions that apply to a management group.
-        /// </summary>
-        /// <remarks>
-        /// This operation retrieves the list of all policy exemptions applicable to
-        /// the management group that match the given $filter. Valid values for $filter
-        /// are: 'atScope()', 'atExactScope()', 'excludeExpired()' or
-        /// 'policyAssignmentId eq '{value}''. If $filter=atScope() is provided, the
-        /// returned list includes all policy exemptions that are assigned to the
-        /// management group or the management group's ancestors.
+        /// This operation retrieves a single variable, given its name and the
+        /// management group it was created at.
         /// </remarks>
         /// <param name='managementGroupId'>
         /// The ID of the management group.
         /// </param>
-        /// <param name='filter'>
-        /// The filter to apply on the operation. Valid values for $filter are:
-        /// 'atScope()', 'atExactScope()', 'excludeExpired()' or 'policyAssignmentId eq
-        /// '{value}''. If $filter is not provided, no filtering is performed. If
-        /// $filter is not provided, the unfiltered list includes all policy exemptions
-        /// associated with the scope, including those that apply directly or apply
-        /// from containing scopes. If $filter=atScope() is provided, the returned list
-        /// only includes all policy exemptions that apply to the scope, which is
-        /// everything in the unfiltered list except those applied to sub scopes
-        /// contained within the given scope. If $filter=atExactScope() is provided,
-        /// the returned list only includes all policy exemptions that at the given
-        /// scope. If $filter=excludeExpired() is provided, the returned list only
-        /// includes all policy exemptions that either haven't expired or didn't set
-        /// expiration date. If $filter=policyAssignmentId eq '{value}' is provided.
-        /// the returned list only includes all policy exemptions that are associated
-        /// with the give policyAssignmentId.
+        /// <param name='variableName'>
+        /// The name of the variable to operate on.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1660,13 +1071,17 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<PolicyExemption>>> ListForManagementGroupWithHttpMessagesAsync(string managementGroupId, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Variable>> GetAtManagementGroupWithHttpMessagesAsync(string managementGroupId, string variableName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (managementGroupId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "managementGroupId");
             }
-            string apiVersion = "2022-07-01-preview";
+            if (variableName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "variableName");
+            }
+            string apiVersion = "2022-08-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1675,20 +1090,17 @@ namespace Microsoft.Azure.Management.ResourceManager
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("managementGroupId", managementGroupId);
-                tracingParameters.Add("filter", filter);
+                tracingParameters.Add("variableName", variableName);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListForManagementGroup", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetAtManagementGroup", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policyExemptions").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/variables/{variableName}").ToString();
             _url = _url.Replace("{managementGroupId}", System.Uri.EscapeDataString(managementGroupId));
+            _url = _url.Replace("{variableName}", System.Uri.EscapeDataString(variableName));
             List<string> _queryParameters = new List<string>();
-            if (filter != null)
-            {
-                _queryParameters.Add(string.Format("$filter={0}", filter));
-            }
             if (apiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
@@ -1786,7 +1198,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<PolicyExemption>>();
+            var _result = new AzureOperationResponse<Variable>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1799,7 +1211,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<PolicyExemption>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Variable>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1819,17 +1231,375 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Retrieves all policy exemptions that apply to a subscription.
+        /// Retrieves all variables that are at this subscription level.
         /// </summary>
         /// <remarks>
-        /// This operation retrieves the list of all policy exemptions associated with
-        /// the given subscription that match the optional given $filter. Valid values
-        /// for $filter are: 'atScope()', 'atExactScope()', 'excludeExpired()' or
-        /// 'policyAssignmentId eq '{value}''. If $filter is not provided, the
-        /// unfiltered list includes all policy exemptions associated with the
-        /// subscription, including those that apply directly or from management groups
-        /// that contain the given subscription, as well as any applied to objects
-        /// contained within the subscription.
+        /// This operation retrieves the list of all variables associated with the
+        /// given subscription.
+        /// </remarks>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<IPage<Variable>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            string apiVersion = "2022-08-01-preview";
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Authorization/variables").ToString();
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (apiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<IPage<Variable>>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Variable>>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Retrieves all variables that are at this management group level.
+        /// </summary>
+        /// <remarks>
+        /// This operation retrieves the list of all variables applicable to the
+        /// management group.
+        /// </remarks>
+        /// <param name='managementGroupId'>
+        /// The ID of the management group.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<IPage<Variable>>> ListForManagementGroupWithHttpMessagesAsync(string managementGroupId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (managementGroupId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "managementGroupId");
+            }
+            string apiVersion = "2022-08-01-preview";
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("managementGroupId", managementGroupId);
+                tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "ListForManagementGroup", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/variables").ToString();
+            _url = _url.Replace("{managementGroupId}", System.Uri.EscapeDataString(managementGroupId));
+            List<string> _queryParameters = new List<string>();
+            if (apiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<IPage<Variable>>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Variable>>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Retrieves all variables that are at this subscription level.
+        /// </summary>
+        /// <remarks>
+        /// This operation retrieves the list of all variables associated with the
+        /// given subscription.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1855,7 +1625,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<PolicyExemption>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<Variable>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -1969,7 +1739,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<PolicyExemption>>();
+            var _result = new AzureOperationResponse<IPage<Variable>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1982,7 +1752,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<PolicyExemption>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Variable>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -2002,17 +1772,11 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Retrieves all policy exemptions that apply to a resource group.
+        /// Retrieves all variables that are at this management group level.
         /// </summary>
         /// <remarks>
-        /// This operation retrieves the list of all policy exemptions associated with
-        /// the given resource group in the given subscription that match the optional
-        /// given $filter. Valid values for $filter are: 'atScope()', 'atExactScope()',
-        /// 'excludeExpired()' or 'policyAssignmentId eq '{value}''. If $filter is not
-        /// provided, the unfiltered list includes all policy exemptions associated
-        /// with the resource group, including those that apply directly or apply from
-        /// containing scopes, as well as any applied to resources contained within the
-        /// resource group.
+        /// This operation retrieves the list of all variables applicable to the
+        /// management group.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -2038,385 +1802,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<PolicyExemption>>> ListForResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (nextPageLink == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("nextPageLink", nextPageLink);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListForResourceGroupNext", tracingParameters);
-            }
-            // Construct URL
-            string _url = "{nextLink}";
-            _url = _url.Replace("{nextLink}", nextPageLink);
-            List<string> _queryParameters = new List<string>();
-            if (_queryParameters.Count > 0)
-            {
-                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            var _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
-            }
-            if (Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
-            }
-
-
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<IPage<PolicyExemption>>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<PolicyExemption>>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Retrieves all policy exemptions that apply to a resource.
-        /// </summary>
-        /// <remarks>
-        /// This operation retrieves the list of all policy exemptions associated with
-        /// the specified resource in the given resource group and subscription that
-        /// match the optional given $filter. Valid values for $filter are:
-        /// 'atScope()', 'atExactScope()', 'excludeExpired()' or 'policyAssignmentId eq
-        /// '{value}''. If $filter is not provided, the unfiltered list includes all
-        /// policy exemptions associated with the resource, including those that apply
-        /// directly or from all containing scopes, as well as any applied to resources
-        /// contained within the resource. Three parameters plus the resource name are
-        /// used to identify a specific resource. If the resource is not part of a
-        /// parent resource (the more common case), the parent resource path should not
-        /// be provided (or provided as ''). For example a web app could be specified
-        /// as ({resourceProviderNamespace} == 'Microsoft.Web', {parentResourcePath} ==
-        /// '', {resourceType} == 'sites', {resourceName} == 'MyWebApp'). If the
-        /// resource is part of a parent resource, then all parameters should be
-        /// provided. For example a virtual machine DNS name could be specified as
-        /// ({resourceProviderNamespace} == 'Microsoft.Compute', {parentResourcePath}
-        /// == 'virtualMachines/MyVirtualMachine', {resourceType} == 'domainNames',
-        /// {resourceName} == 'MyComputerName'). A convenient alternative to providing
-        /// the namespace and type name separately is to provide both in the
-        /// {resourceType} parameter, format: ({resourceProviderNamespace} == '',
-        /// {parentResourcePath} == '', {resourceType} == 'Microsoft.Web/sites',
-        /// {resourceName} == 'MyWebApp').
-        /// </remarks>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<AzureOperationResponse<IPage<PolicyExemption>>> ListForResourceNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (nextPageLink == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("nextPageLink", nextPageLink);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListForResourceNext", tracingParameters);
-            }
-            // Construct URL
-            string _url = "{nextLink}";
-            _url = _url.Replace("{nextLink}", nextPageLink);
-            List<string> _queryParameters = new List<string>();
-            if (_queryParameters.Count > 0)
-            {
-                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            var _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
-            }
-            if (Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
-            }
-
-
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<IPage<PolicyExemption>>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<PolicyExemption>>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Retrieves all policy exemptions that apply to a management group.
-        /// </summary>
-        /// <remarks>
-        /// This operation retrieves the list of all policy exemptions applicable to
-        /// the management group that match the given $filter. Valid values for $filter
-        /// are: 'atScope()', 'atExactScope()', 'excludeExpired()' or
-        /// 'policyAssignmentId eq '{value}''. If $filter=atScope() is provided, the
-        /// returned list includes all policy exemptions that are assigned to the
-        /// management group or the management group's ancestors.
-        /// </remarks>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<AzureOperationResponse<IPage<PolicyExemption>>> ListForManagementGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<Variable>>> ListForManagementGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -2530,7 +1916,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<PolicyExemption>>();
+            var _result = new AzureOperationResponse<IPage<Variable>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -2543,7 +1929,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<PolicyExemption>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Variable>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
