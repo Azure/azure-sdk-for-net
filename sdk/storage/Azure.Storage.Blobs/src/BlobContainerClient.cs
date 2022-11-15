@@ -468,42 +468,6 @@ namespace Azure.Storage.Blobs
         }
         #endregion ctor
 
-        #region protected static accessors for Azure.Storage.DataMovement.Blobs
-        /// <summary>
-        /// Get a <see cref="BlobContainerClient"/>'s <see cref="HttpPipeline"/>
-        /// for creating child clients.
-        /// </summary>
-        /// <param name="client">The BlobServiceClient.</param>
-        /// <returns>The BlobServiceClient's HttpPipeline.</returns>
-        protected static HttpPipeline GetHttpPipeline(BlobContainerClient client) =>
-            client.ClientConfiguration.Pipeline;
-
-        /// <summary>
-        /// Get a <see cref="BlobContainerClient"/>'s authentication
-        /// <see cref="HttpPipelinePolicy"/> for creating child clients.
-        /// </summary>
-        /// <param name="client">The BlobServiceClient.</param>
-        /// <returns>The BlobServiceClient's authentication policy.</returns>
-        protected static HttpPipelinePolicy GetAuthenticationPolicy(BlobContainerClient client) =>
-            client.AuthenticationPolicy;
-
-        /// <summary>
-        /// Get a <see cref="BlobContainerClient"/>'s <see cref="BlobClientOptions"/>
-        /// for creating child clients.
-        /// </summary>
-        /// <param name="client">The BlobServiceClient.</param>
-        /// <returns>The BlobServiceClient's BlobClientOptions.</returns>
-        protected static BlobClientOptions GetClientOptions(BlobContainerClient client) =>
-            new BlobClientOptions(client.ClientConfiguration.Version)
-            {
-                // We only use this for communicating diagnostics, at the moment
-                Diagnostics =
-                {
-                    IsDistributedTracingEnabled = client.ClientConfiguration.ClientDiagnostics.IsActivityEnabled
-                }
-            };
-        #endregion protected static accessors for Azure.Storage.DataMovement.Blobs
-
         /// <summary>
         /// Create a new <see cref="BlobBaseClient"/> object by appending
         /// <paramref name="blobName"/> to the end of <see cref="Uri"/>.  The
