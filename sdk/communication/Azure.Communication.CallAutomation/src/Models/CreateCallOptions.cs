@@ -23,6 +23,7 @@ namespace Azure.Communication.CallAutomation
             Targets = (IReadOnlyList<CommunicationIdentifier>)targets;
             CallSource = callSource;
             CallbackUri = callbackUri;
+            RepeatabilityHeaders = new RepeatabilityHeaders();
         }
 
         /// <summary>

@@ -93,11 +93,17 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param
         /// name="enableBgpRouteTranslationForNat">EnableBgpRouteTranslationForNat
         /// flag.</param>
+        /// <param name="allowVirtualWanTraffic">Configures this gateway to
+        /// accept traffic from remote Virtual WAN networks.</param>
+        /// <param name="allowRemoteVnetTraffic">Configure this gateway to
+        /// accept traffic from other Azure Virtual Networks. This
+        /// configuration does not support connectivity to Azure Virtual
+        /// WAN.</param>
         /// <param name="extendedLocation">The extended location of type local
         /// virtual network gateway.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public VirtualNetworkGateway(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<VirtualNetworkGatewayIPConfiguration> ipConfigurations = default(IList<VirtualNetworkGatewayIPConfiguration>), string gatewayType = default(string), string vpnType = default(string), string vpnGatewayGeneration = default(string), bool? enableBgp = default(bool?), bool? enablePrivateIpAddress = default(bool?), bool? activeActive = default(bool?), bool? disableIPSecReplayProtection = default(bool?), SubResource gatewayDefaultSite = default(SubResource), VirtualNetworkGatewaySku sku = default(VirtualNetworkGatewaySku), VpnClientConfiguration vpnClientConfiguration = default(VpnClientConfiguration), IList<VirtualNetworkGatewayPolicyGroup> virtualNetworkGatewayPolicyGroups = default(IList<VirtualNetworkGatewayPolicyGroup>), BgpSettings bgpSettings = default(BgpSettings), AddressSpace customRoutes = default(AddressSpace), string resourceGuid = default(string), string provisioningState = default(string), bool? enableDnsForwarding = default(bool?), string inboundDnsForwardingEndpoint = default(string), string vNetExtendedLocationResourceId = default(string), IList<VirtualNetworkGatewayNatRule> natRules = default(IList<VirtualNetworkGatewayNatRule>), bool? enableBgpRouteTranslationForNat = default(bool?), ExtendedLocation extendedLocation = default(ExtendedLocation), string etag = default(string))
+        public VirtualNetworkGateway(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<VirtualNetworkGatewayIPConfiguration> ipConfigurations = default(IList<VirtualNetworkGatewayIPConfiguration>), string gatewayType = default(string), string vpnType = default(string), string vpnGatewayGeneration = default(string), bool? enableBgp = default(bool?), bool? enablePrivateIpAddress = default(bool?), bool? activeActive = default(bool?), bool? disableIPSecReplayProtection = default(bool?), SubResource gatewayDefaultSite = default(SubResource), VirtualNetworkGatewaySku sku = default(VirtualNetworkGatewaySku), VpnClientConfiguration vpnClientConfiguration = default(VpnClientConfiguration), IList<VirtualNetworkGatewayPolicyGroup> virtualNetworkGatewayPolicyGroups = default(IList<VirtualNetworkGatewayPolicyGroup>), BgpSettings bgpSettings = default(BgpSettings), AddressSpace customRoutes = default(AddressSpace), string resourceGuid = default(string), string provisioningState = default(string), bool? enableDnsForwarding = default(bool?), string inboundDnsForwardingEndpoint = default(string), string vNetExtendedLocationResourceId = default(string), IList<VirtualNetworkGatewayNatRule> natRules = default(IList<VirtualNetworkGatewayNatRule>), bool? enableBgpRouteTranslationForNat = default(bool?), bool? allowVirtualWanTraffic = default(bool?), bool? allowRemoteVnetTraffic = default(bool?), ExtendedLocation extendedLocation = default(ExtendedLocation), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             IpConfigurations = ipConfigurations;
@@ -121,6 +127,8 @@ namespace Microsoft.Azure.Management.Network.Models
             VNetExtendedLocationResourceId = vNetExtendedLocationResourceId;
             NatRules = natRules;
             EnableBgpRouteTranslationForNat = enableBgpRouteTranslationForNat;
+            AllowVirtualWanTraffic = allowVirtualWanTraffic;
+            AllowRemoteVnetTraffic = allowRemoteVnetTraffic;
             ExtendedLocation = extendedLocation;
             Etag = etag;
             CustomInit();
@@ -275,6 +283,21 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.enableBgpRouteTranslationForNat")]
         public bool? EnableBgpRouteTranslationForNat { get; set; }
+
+        /// <summary>
+        /// Gets or sets configures this gateway to accept traffic from remote
+        /// Virtual WAN networks.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.allowVirtualWanTraffic")]
+        public bool? AllowVirtualWanTraffic { get; set; }
+
+        /// <summary>
+        /// Gets or sets configure this gateway to accept traffic from other
+        /// Azure Virtual Networks. This configuration does not support
+        /// connectivity to Azure Virtual WAN.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.allowRemoteVnetTraffic")]
+        public bool? AllowRemoteVnetTraffic { get; set; }
 
         /// <summary>
         /// Gets or sets the extended location of type local virtual network

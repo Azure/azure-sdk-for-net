@@ -17,6 +17,7 @@ namespace Azure.Communication.CallAutomation
         public HangUpOptions(bool forEveryone)
         {
             ForEveryone = forEveryone;
+            RepeatabilityHeaders = new RepeatabilityHeaders();
         }
 
         /// <summary>

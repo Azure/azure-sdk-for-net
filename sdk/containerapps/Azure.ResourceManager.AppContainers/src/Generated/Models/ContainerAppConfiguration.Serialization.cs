@@ -51,6 +51,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("dapr");
                 writer.WriteObjectValue(Dapr);
             }
+            if (Optional.IsDefined(MaxInactiveRevisions))
+            {
+                writer.WritePropertyName("maxInactiveRevisions");
+                writer.WriteNumberValue(MaxInactiveRevisions.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -61,6 +66,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<IngressProvider> ingress = default;
             Optional<IList<RegistryCredentials>> registries = default;
             Optional<DaprProvider> dapr = default;
+            Optional<int> maxInactiveRevisions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("secrets"))
@@ -123,8 +129,18 @@ namespace Azure.ResourceManager.AppContainers.Models
                     dapr = DaprProvider.DeserializeDaprProvider(property.Value);
                     continue;
                 }
+                if (property.NameEquals("maxInactiveRevisions"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    maxInactiveRevisions = property.Value.GetInt32();
+                    continue;
+                }
             }
-            return new ContainerAppConfiguration(Optional.ToList(secrets), Optional.ToNullable(activeRevisionsMode), ingress.Value, Optional.ToList(registries), dapr.Value);
+            return new ContainerAppConfiguration(Optional.ToList(secrets), Optional.ToNullable(activeRevisionsMode), ingress.Value, Optional.ToList(registries), dapr.Value, Optional.ToNullable(maxInactiveRevisions));
         }
     }
 }

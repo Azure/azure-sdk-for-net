@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         internal static DefenderForDatabasesGcpOffering DeserializeDefenderForDatabasesGcpOffering(JsonElement element)
         {
             Optional<DefenderForDatabasesGcpOfferingArcAutoProvisioning> arcAutoProvisioning = default;
-            Optional<DefenderForDatabasesGcpOfferingDefenderForDatabasesArcAutoProvisioning> defenderForDatabasesArcAutoProvisioning = default;
+            Optional<GcpDefenderForDatabasesArcAutoProvisioning> defenderForDatabasesArcAutoProvisioning = default;
             OfferingType offeringType = default;
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    defenderForDatabasesArcAutoProvisioning = DefenderForDatabasesGcpOfferingDefenderForDatabasesArcAutoProvisioning.DeserializeDefenderForDatabasesGcpOfferingDefenderForDatabasesArcAutoProvisioning(property.Value);
+                    defenderForDatabasesArcAutoProvisioning = GcpDefenderForDatabasesArcAutoProvisioning.DeserializeGcpDefenderForDatabasesArcAutoProvisioning(property.Value);
                     continue;
                 }
                 if (property.NameEquals("offeringType"))

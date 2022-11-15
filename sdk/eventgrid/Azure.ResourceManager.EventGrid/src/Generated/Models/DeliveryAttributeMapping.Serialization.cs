@@ -35,22 +35,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     case "Static": return StaticDeliveryAttributeMapping.DeserializeStaticDeliveryAttributeMapping(element);
                 }
             }
-            Optional<string> name = default;
-            DeliveryAttributeMappingType type = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"))
-                {
-                    type = new DeliveryAttributeMappingType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownDeliveryAttributeMapping(name.Value, type);
+            return UnknownDeliveryAttributeMapping.DeserializeUnknownDeliveryAttributeMapping(element);
         }
     }
 }

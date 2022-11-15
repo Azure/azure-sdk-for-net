@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Dns
     public partial class CaaRecordResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CaaRecordResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string zoneName, string caaRecordName)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/CAA/{relativeRecordSetName}";
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/CAA/{caaRecordName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _recordSetCaaRecordSetsClientDiagnostics;
-        private readonly RecordSetsRestOperations _recordSetCaaRecordSetsRestClient;
+        private readonly ClientDiagnostics _caaRecordInfoRecordSetsClientDiagnostics;
+        private readonly CaaRecordRestOperations _caaRecordInfoRecordSetsRestClient;
         private readonly CaaRecordData _data;
 
         /// <summary> Initializes a new instance of the <see cref="CaaRecordResource"/> class for mocking. </summary>
@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.Dns
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CaaRecordResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _recordSetCaaRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string recordSetCaaRecordSetsApiVersion);
-            _recordSetCaaRecordSetsRestClient = new RecordSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, recordSetCaaRecordSetsApiVersion);
+            _caaRecordInfoRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string caaRecordInfoRecordSetsApiVersion);
+            _caaRecordInfoRecordSetsRestClient = new CaaRecordRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, caaRecordInfoRecordSetsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CaaRecordResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _recordSetCaaRecordSetsClientDiagnostics.CreateScope("CaaRecordResource.Get");
+            using var scope = _caaRecordInfoRecordSetsClientDiagnostics.CreateScope("CaaRecordResource.Get");
             scope.Start();
             try
             {
-                var response = await _recordSetCaaRecordSetsRestClient.GetCaaRecordAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _caaRecordInfoRecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "CAA".ToDnsRecordType(), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CaaRecordResource(Client, response.Value), response.GetRawResponse());
@@ -119,11 +119,11 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CaaRecordResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _recordSetCaaRecordSetsClientDiagnostics.CreateScope("CaaRecordResource.Get");
+            using var scope = _caaRecordInfoRecordSetsClientDiagnostics.CreateScope("CaaRecordResource.Get");
             scope.Start();
             try
             {
-                var response = _recordSetCaaRecordSetsRestClient.GetCaaRecord(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name,  Id.Name, cancellationToken);
+                var response = _caaRecordInfoRecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "CAA".ToDnsRecordType(), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CaaRecordResource(Client, response.Value), response.GetRawResponse());
@@ -140,16 +140,16 @@ namespace Azure.ResourceManager.Dns
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}
         /// Operation Id: RecordSets_Delete
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always delete the current record set. Specify the last-seen etag value to prevent accidentally deleting any concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _recordSetCaaRecordSetsClientDiagnostics.CreateScope("CaaRecordResource.Delete");
+            using var scope = _caaRecordInfoRecordSetsClientDiagnostics.CreateScope("CaaRecordResource.Delete");
             scope.Start();
             try
             {
-                var response = await _recordSetCaaRecordSetsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "CAA".ToDnsRecordType(), Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _caaRecordInfoRecordSetsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "CAA".ToDnsRecordType(), Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
                 var operation = new DnsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -167,16 +167,16 @@ namespace Azure.ResourceManager.Dns
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}
         /// Operation Id: RecordSets_Delete
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always delete the current record set. Specify the last-seen etag value to prevent accidentally deleting any concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _recordSetCaaRecordSetsClientDiagnostics.CreateScope("CaaRecordResource.Delete");
+            using var scope = _caaRecordInfoRecordSetsClientDiagnostics.CreateScope("CaaRecordResource.Delete");
             scope.Start();
             try
             {
-                var response = _recordSetCaaRecordSetsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "CAA".ToDnsRecordType(), Id.Name, ifMatch, cancellationToken);
+                var response = _caaRecordInfoRecordSetsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "CAA".ToDnsRecordType(), Id.Name, ifMatch, cancellationToken);
                 var operation = new DnsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -202,11 +202,11 @@ namespace Azure.ResourceManager.Dns
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _recordSetCaaRecordSetsClientDiagnostics.CreateScope("CaaRecordResource.Update");
+            using var scope = _caaRecordInfoRecordSetsClientDiagnostics.CreateScope("CaaRecordResource.Update");
             scope.Start();
             try
             {
-                var response = await _recordSetCaaRecordSetsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _caaRecordInfoRecordSetsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "CAA".ToDnsRecordType(), Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CaaRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -229,11 +229,11 @@ namespace Azure.ResourceManager.Dns
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _recordSetCaaRecordSetsClientDiagnostics.CreateScope("CaaRecordResource.Update");
+            using var scope = _caaRecordInfoRecordSetsClientDiagnostics.CreateScope("CaaRecordResource.Update");
             scope.Start();
             try
             {
-                var response = _recordSetCaaRecordSetsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name,  Id.Name, data, ifMatch, cancellationToken);
+                var response = _caaRecordInfoRecordSetsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "CAA".ToDnsRecordType(), Id.Name, data, ifMatch, cancellationToken);
                 return Response.FromValue(new CaaRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

@@ -6,19 +6,20 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.TextAnalytics.Models;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
-    internal partial class CurrencyResolution : IUtf8JsonSerializable
+    public partial class CurrencyResolution : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ISO4217))
+            if (Optional.IsDefined(Iso4217))
             {
                 writer.WritePropertyName("ISO4217");
-                writer.WriteStringValue(ISO4217);
+                writer.WriteStringValue(Iso4217);
             }
             writer.WritePropertyName("unit");
             writer.WriteStringValue(Unit);

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static UnknownCustomSetupBase DeserializeUnknownCustomSetupBase(JsonElement element)
         {
-            string type = default;
+            string type = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))

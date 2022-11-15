@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="secrets"/> is null. </exception>
         public SasDatastoreCredentials(SasDatastoreSecrets secrets)
         {
-            if (secrets == null)
-            {
-                throw new ArgumentNullException(nameof(secrets));
-            }
+            Argument.AssertNotNull(secrets, nameof(secrets));
 
             Secrets = secrets;
             CredentialsType = CredentialsType.Sas;

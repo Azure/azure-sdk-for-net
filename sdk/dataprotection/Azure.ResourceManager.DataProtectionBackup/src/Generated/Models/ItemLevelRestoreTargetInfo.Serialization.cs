@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WritePropertyName("objectType");
             writer.WriteStringValue(ObjectType);
             writer.WritePropertyName("recoveryOption");
-            writer.WriteStringValue(RecoveryOption.ToString());
+            writer.WriteStringValue(RecoverySetting.ToString());
             if (Optional.IsDefined(RestoreLocation))
             {
                 writer.WritePropertyName("restoreLocation");
-                writer.WriteStringValue(RestoreLocation);
+                writer.WriteStringValue(RestoreLocation.Value);
             }
             writer.WriteEndObject();
         }

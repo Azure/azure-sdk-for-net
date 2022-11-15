@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -20,22 +21,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="resource"/>, <paramref name="operation"/> or <paramref name="description"/> is null. </exception>
         public OperationsDisplayDefinition(string provider, string resource, string operation, string description)
         {
-            if (provider == null)
-            {
-                throw new ArgumentNullException(nameof(provider));
-            }
-            if (resource == null)
-            {
-                throw new ArgumentNullException(nameof(resource));
-            }
-            if (operation == null)
-            {
-                throw new ArgumentNullException(nameof(operation));
-            }
-            if (description == null)
-            {
-                throw new ArgumentNullException(nameof(description));
-            }
+            Argument.AssertNotNull(provider, nameof(provider));
+            Argument.AssertNotNull(resource, nameof(resource));
+            Argument.AssertNotNull(operation, nameof(operation));
+            Argument.AssertNotNull(description, nameof(description));
 
             Provider = provider;
             Resource = resource;

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<PresenceStatus> hasFibreChannelAdapter = default;
             Optional<PresenceStatus> hasSharedVhd = default;
             Optional<string> hyperVHostId = default;
-            string instanceType = default;
+            string instanceType = "HyperVVirtualMachine";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceItemId"))

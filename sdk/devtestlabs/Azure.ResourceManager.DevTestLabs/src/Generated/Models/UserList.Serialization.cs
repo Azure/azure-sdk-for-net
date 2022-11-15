@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal static UserList DeserializeUserList(JsonElement element)
         {
-            Optional<IReadOnlyList<UserData>> value = default;
+            Optional<IReadOnlyList<DevTestLabUserData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<UserData> array = new List<UserData>();
+                    List<DevTestLabUserData> array = new List<DevTestLabUserData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UserData.DeserializeUserData(item));
+                        array.Add(DevTestLabUserData.DeserializeDevTestLabUserData(item));
                     }
                     value = array;
                     continue;

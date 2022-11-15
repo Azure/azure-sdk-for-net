@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             Optional<AssessmentSeverity> severity = default;
             Optional<string> description = default;
             Optional<string> remediation = default;
-            Optional<bool> isPass = default;
+            Optional<IsPass> isPass = default;
             Optional<string> policyId = default;
             Optional<IReadOnlyList<AssessmentResource>> resourceList = default;
             foreach (var property in element.EnumerateObject())
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    isPass = property.Value.GetBoolean();
+                    isPass = new IsPass(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("policyId"))

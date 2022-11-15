@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static UnknownSeasonality DeserializeUnknownSeasonality(JsonElement element)
         {
-            SeasonalityMode mode = default;
+            SeasonalityMode mode = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mode"))

@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -15,12 +17,14 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of CertificateProperties. </summary>
         public CertificateProperties()
         {
+            SubjectAlternativeNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of CertificateProperties. </summary>
         /// <param name="provisioningState"> Provisioning state of the certificate. </param>
         /// <param name="password"> Certificate password. </param>
         /// <param name="subjectName"> Subject name of the certificate. </param>
+        /// <param name="subjectAlternativeNames"> Subject alternative names the certificate applies to. </param>
         /// <param name="value"> PFX or PEM blob. </param>
         /// <param name="issuer"> Certificate issuer. </param>
         /// <param name="issueOn"> Certificate issue Date. </param>
@@ -28,11 +32,12 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="thumbprint"> Certificate thumbprint. </param>
         /// <param name="valid"> Is the certificate valid?. </param>
         /// <param name="publicKeyHash"> Public key hash. </param>
-        internal CertificateProperties(CertificateProvisioningState? provisioningState, string password, string subjectName, byte[] value, string issuer, DateTimeOffset? issueOn, DateTimeOffset? expireOn, string thumbprint, bool? valid, string publicKeyHash)
+        internal CertificateProperties(CertificateProvisioningState? provisioningState, string password, string subjectName, IReadOnlyList<string> subjectAlternativeNames, byte[] value, string issuer, DateTimeOffset? issueOn, DateTimeOffset? expireOn, string thumbprint, bool? valid, string publicKeyHash)
         {
             ProvisioningState = provisioningState;
             Password = password;
             SubjectName = subjectName;
+            SubjectAlternativeNames = subjectAlternativeNames;
             Value = value;
             Issuer = issuer;
             IssueOn = issueOn;
@@ -48,6 +53,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         public string Password { get; set; }
         /// <summary> Subject name of the certificate. </summary>
         public string SubjectName { get; }
+        /// <summary> Subject alternative names the certificate applies to. </summary>
+        public IReadOnlyList<string> SubjectAlternativeNames { get; }
         /// <summary> PFX or PEM blob. </summary>
         public byte[] Value { get; set; }
         /// <summary> Certificate issuer. </summary>

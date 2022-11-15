@@ -1,28 +1,29 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/global/prebuilt-entities?multilingual=true\u0026api-version=2022-05-01",
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/global/prebuilt-entities?multilingual=true\u0026api-version=2022-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-b7ee98bdeabd6bc6b15239648386deca-62e78131ae159511-00",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220616.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "30d21f01ab3bcb2fba618a98d7eda574",
+        "traceparent": "00-0c502156fd1aaaa7b20545b09e08a8e9-cfc59968ba0f6bde-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221019.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "25aa2ceab854aa500d0bcedf9de3adf2",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": "*",
-        "apim-request-id": "a0e17537-5cbe-46c5-9e8c-b3c20db5f6be",
-        "Content-Length": "1959",
+        "apim-request-id": "aff92257-edae-48f3-90a9-6c00196e5c2e",
+        "Content-Length": "2071",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 17 Jun 2022 00:17:26 GMT",
-        "request-id": "a0e17537-5cbe-46c5-9e8c-b3c20db5f6be",
+        "Date": "Thu, 20 Oct 2022 00:18:34 GMT",
+        "request-id": "aff92257-edae-48f3-90a9-6c00196e5c2e",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "50"
+        "x-envoy-upstream-service-time": "16",
+        "x-ms-region": "UK South"
       },
       "ResponseBody": {
         "value": [
@@ -30,6 +31,11 @@
             "category": "Person.Name",
             "description": "Name of an individual",
             "examples": "john, Sam, Lisa"
+          },
+          {
+            "category": "Geography.Location",
+            "description": "Name of a location",
+            "examples": "Tokyo, Asia, JFK, Ohio, India"
           },
           {
             "category": "General.Event",
@@ -114,6 +120,6 @@
   "Variables": {
     "CONVERSATIONS_ENDPOINT": "https://languagesdkresource.cognitiveservices.azure.com/",
     "CONVERSATIONS_KEY": "Sanitized",
-    "RandomSeed": "532900978"
+    "RandomSeed": "1216921552"
   }
 }

@@ -18,6 +18,11 @@ namespace Azure.ResourceManager.AppContainers
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Sku))
+            {
+                writer.WritePropertyName("sku");
+                writer.WriteObjectValue(Sku);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
@@ -58,12 +63,28 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("zoneRedundant");
                 writer.WriteBooleanValue(ZoneRedundant.Value);
             }
+            if (Optional.IsDefined(CustomDomainConfiguration))
+            {
+                writer.WritePropertyName("customDomainConfiguration");
+                writer.WriteObjectValue(CustomDomainConfiguration);
+            }
+            if (Optional.IsCollectionDefined(WorkloadProfiles))
+            {
+                writer.WritePropertyName("workloadProfiles");
+                writer.WriteStartArray();
+                foreach (var item in WorkloadProfiles)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static ManagedEnvironmentData DeserializeManagedEnvironmentData(JsonElement element)
         {
+            Optional<EnvironmentSkuProperties> sku = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -79,8 +100,21 @@ namespace Azure.ResourceManager.AppContainers
             Optional<string> staticIP = default;
             Optional<AppLogsConfiguration> appLogsConfiguration = default;
             Optional<bool> zoneRedundant = default;
+            Optional<CustomDomainConfiguration> customDomainConfiguration = default;
+            Optional<string> eventStreamEndpoint = default;
+            Optional<IList<WorkloadProfile>> workloadProfiles = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("sku"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    sku = EnvironmentSkuProperties.DeserializeEnvironmentSkuProperties(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("tags"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -200,11 +234,41 @@ namespace Azure.ResourceManager.AppContainers
                             zoneRedundant = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("customDomainConfiguration"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            customDomainConfiguration = CustomDomainConfiguration.DeserializeCustomDomainConfiguration(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("eventStreamEndpoint"))
+                        {
+                            eventStreamEndpoint = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("workloadProfiles"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<WorkloadProfile> array = new List<WorkloadProfile>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(WorkloadProfile.DeserializeWorkloadProfile(item));
+                            }
+                            workloadProfiles = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ManagedEnvironmentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), daprAIInstrumentationKey.Value, daprAIConnectionString.Value, vnetConfiguration.Value, deploymentErrors.Value, defaultDomain.Value, staticIP.Value, appLogsConfiguration.Value, Optional.ToNullable(zoneRedundant));
+            return new ManagedEnvironmentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(provisioningState), daprAIInstrumentationKey.Value, daprAIConnectionString.Value, vnetConfiguration.Value, deploymentErrors.Value, defaultDomain.Value, staticIP.Value, appLogsConfiguration.Value, Optional.ToNullable(zoneRedundant), customDomainConfiguration.Value, eventStreamEndpoint.Value, Optional.ToList(workloadProfiles));
         }
     }
 }

@@ -79,8 +79,10 @@ trigger:
     - sdk/hdinsight/Azure.ResourceManager.HDInsight
     - sdk/healthbot/Azure.ResourceManager.HealthBot
     - sdk/healthcareapis/Azure.ResourceManager.HealthcareApis
+    - sdk/hybridaks/Azure.ResourceManager.HybridContainerService
     - sdk/hybridcompute/Azure.ResourceManager.HybridCompute
     - sdk/hybridconnectivity/Azure.ResourceManager.HybridConnectivity
+    - sdk/hybriddatamanager/Azure.ResourceManager.HybridData
     - sdk/hybridkubernetes/Azure.ResourceManager.Kubernetes
     - sdk/iotcentral/Azure.ResourceManager.IotCentral
     - sdk/iothub/Azure.ResourceManager.IotHub
@@ -88,6 +90,7 @@ trigger:
     - sdk/kubernetesconfiguration/Azure.ResourceManager.KubernetesConfiguration
     - sdk/kusto/Azure.ResourceManager.Kusto
     - sdk/labservices/Azure.ResourceManager.LabServices
+    - sdk/loadtestservice/Azure.ResourceManager.LoadTestService
     - sdk/logic/Azure.ResourceManager.Logic
     - sdk/machinelearningcompute/Azure.ResourceManager.MachineLearningCompute
     - sdk/machinelearningservices/Azure.ResourceManager.MachineLearning
@@ -106,6 +109,7 @@ trigger:
     - sdk/netapp/Azure.ResourceManager.NetApp
     - sdk/network/Azure.ResourceManager.Network
     - sdk/networkfunction/Azure.ResourceManager.NetworkFunction
+    - sdk/nginx/Azure.ResourceManager.Nginx
     - sdk/notificationhubs/Azure.ResourceManager.NotificationHubs
     - sdk/openenergyplatform/Azure.ResourceManager.EnergyServices
     - sdk/operationalinsights/Azure.ResourceManager.OperationalInsights
@@ -234,8 +238,10 @@ pr:
     - sdk/hdinsight/Azure.ResourceManager.HDInsight
     - sdk/healthbot/Azure.ResourceManager.HealthBot
     - sdk/healthcareapis/Azure.ResourceManager.HealthcareApis
+    - sdk/hybridaks/Azure.ResourceManager.HybridContainerService
     - sdk/hybridcompute/Azure.ResourceManager.HybridCompute
     - sdk/hybridconnectivity/Azure.ResourceManager.HybridConnectivity
+    - sdk/hybriddatamanager/Azure.ResourceManager.HybridData
     - sdk/hybridkubernetes/Azure.ResourceManager.Kubernetes
     - sdk/iotcentral/Azure.ResourceManager.IotCentral
     - sdk/iothub/Azure.ResourceManager.IotHub
@@ -243,6 +249,7 @@ pr:
     - sdk/kubernetesconfiguration/Azure.ResourceManager.KubernetesConfiguration
     - sdk/kusto/Azure.ResourceManager.Kusto
     - sdk/labservices/Azure.ResourceManager.LabServices
+    - sdk/loadtestservice/Azure.ResourceManager.LoadTestService
     - sdk/logic/Azure.ResourceManager.Logic
     - sdk/machinelearningcompute/Azure.ResourceManager.MachineLearningCompute
     - sdk/machinelearningservices/Azure.ResourceManager.MachineLearning
@@ -261,6 +268,7 @@ pr:
     - sdk/netapp/Azure.ResourceManager.NetApp
     - sdk/network/Azure.ResourceManager.Network
     - sdk/networkfunction/Azure.ResourceManager.NetworkFunction
+    - sdk/nginx/Azure.ResourceManager.Nginx
     - sdk/notificationhubs/Azure.ResourceManager.NotificationHubs
     - sdk/openenergyplatform/Azure.ResourceManager.EnergyServices
     - sdk/operationalinsights/Azure.ResourceManager.OperationalInsights

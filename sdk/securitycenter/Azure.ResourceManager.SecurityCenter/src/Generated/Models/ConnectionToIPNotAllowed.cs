@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="allowlistValues"/> is null. </exception>
         public ConnectionToIPNotAllowed(bool isEnabled, IEnumerable<string> allowlistValues) : base(isEnabled, allowlistValues)
         {
-            if (allowlistValues == null)
-            {
-                throw new ArgumentNullException(nameof(allowlistValues));
-            }
+            Argument.AssertNotNull(allowlistValues, nameof(allowlistValues));
 
             RuleType = "ConnectionToIpNotAllowed";
         }
@@ -34,7 +32,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="ruleType"> The type of the custom alert rule. </param>
         /// <param name="valueType"> The value type of the items in the list. </param>
         /// <param name="allowlistValues"> The values to allow. The format of the values depends on the rule type. </param>
-        internal ConnectionToIPNotAllowed(string displayName, string description, bool isEnabled, string ruleType, ValueType? valueType, IList<string> allowlistValues) : base(displayName, description, isEnabled, ruleType, valueType, allowlistValues)
+        internal ConnectionToIPNotAllowed(string displayName, string description, bool isEnabled, string ruleType, SecurityValueType? valueType, IList<string> allowlistValues) : base(displayName, description, isEnabled, ruleType, valueType, allowlistValues)
         {
             RuleType = ruleType ?? "ConnectionToIpNotAllowed";
         }

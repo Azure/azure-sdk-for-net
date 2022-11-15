@@ -8,10 +8,10 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
     /// <summary> The speed Unit of measurement. </summary>
-    internal readonly partial struct SpeedUnit : IEquatable<SpeedUnit>
+    public readonly partial struct SpeedUnit : IEquatable<SpeedUnit>
     {
         private readonly string _value;
 
