@@ -38,6 +38,7 @@ namespace Azure.Identity
             Pipeline = pipeline;
             TenantId = tenantId;
             ClientId = clientId;
+            RegionalAuthority = options?.AzureRegionalAuthorityName;
             TokenCache = cacheOptions?.TokenCachePersistenceOptions == null ? null : new TokenCache(cacheOptions?.TokenCachePersistenceOptions);
             _clientAsyncLock = new AsyncLockWithValue<TClient>();
         }
@@ -47,6 +48,7 @@ namespace Azure.Identity
         internal string ClientId { get; }
 
         internal TokenCache TokenCache { get; }
+        internal string RegionalAuthority { get; }
 
         protected internal CredentialPipeline Pipeline { get; }
 

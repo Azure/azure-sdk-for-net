@@ -16,6 +16,7 @@ namespace Azure.Identity
     public class TokenCredentialOptions : ClientOptions
     {
         private Uri _authorityHost;
+        private String _azureRegionalAuthorityName;
 
         /// <summary>
         /// Constructs a new <see cref="TokenCredentialOptions"/> instance.
@@ -38,7 +39,10 @@ namespace Azure.Identity
         /// The name of the Azure Regional Authority used by ESTSR
         /// </summary>
         ///
-        public String AzureRegionalAuthorityName { get; set; }
+        public String AzureRegionalAuthorityName {
+            get { return _azureRegionalAuthorityName ?? EnvironmentVariables.AzureRegionalAuthorityName; }
+            set { _azureRegionalAuthorityName = value;  }
+        }
 
         /// <summary>
         /// Gets or sets value indicating if ETW logging that contains PII content should be logged.

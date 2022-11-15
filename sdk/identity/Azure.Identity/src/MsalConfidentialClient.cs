@@ -15,7 +15,6 @@ namespace Azure.Identity
     {
         private const string s_instanceMetadata = "{\"tenant_discovery_endpoint\":\"https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration\",\"api-version\":\"1.1\",\"metadata\":[{\"preferred_network\":\"login.microsoftonline.com\",\"preferred_cache\":\"login.windows.net\",\"aliases\":[\"login.microsoftonline.com\",\"login.windows.net\",\"login.microsoft.com\",\"sts.windows.net\"]}]}";
         internal readonly string _clientSecret;
-        internal readonly string _azureRegionalAuthorityName;
         internal readonly bool _includeX5CClaimHeader;
         internal readonly IX509Certificate2Provider _certificateProvider;
         private readonly Func<string> _assertionCallback;
@@ -54,17 +53,12 @@ namespace Azure.Identity
             : base(pipeline, tenantId, clientId, options)
         {
             _asyncAssertionCallback = assertionCallback;
-            _azureRegionalAuthorityName = options.AzureRegionalAuthorityName;
         }
 
         public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, Func<AppTokenProviderParameters, Task<AppTokenProviderResult>> appTokenProviderCallback, TokenCredentialOptions options)
             : base(pipeline, tenantId, clientId, options)
         {
             _appTokenProviderCallback = appTokenProviderCallback;
-        }
-
-        internal string RegionalAuthority {
-            get { return EnvironmentVariables.AzureRegionalAuthorityName ?? _azureRegionalAuthorityName; }
         }
 
         protected override async ValueTask<IConfidentialClientApplication> CreateClientAsync(bool async, CancellationToken cancellationToken)
