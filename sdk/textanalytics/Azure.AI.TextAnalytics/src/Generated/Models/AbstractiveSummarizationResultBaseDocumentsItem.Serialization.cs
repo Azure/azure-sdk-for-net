@@ -49,7 +49,7 @@ namespace Azure.AI.TextAnalytics.Models
         internal static AbstractiveSummarizationResultBaseDocumentsItem DeserializeAbstractiveSummarizationResultBaseDocumentsItem(JsonElement element)
         {
             Optional<DetectedLanguageInternal> detectedLanguage = default;
-            IList<AbstractiveSummary> summaries = default;
+            IList<AbstractiveSummaryInternal> summaries = default;
             string id = default;
             IList<DocumentWarning> warnings = default;
             Optional<TextDocumentStatistics> statistics = default;
@@ -67,10 +67,10 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("summaries"))
                 {
-                    List<AbstractiveSummary> array = new List<AbstractiveSummary>();
+                    List<AbstractiveSummaryInternal> array = new List<AbstractiveSummaryInternal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AbstractiveSummary.DeserializeAbstractiveSummary(item));
+                        array.Add(AbstractiveSummaryInternal.DeserializeAbstractiveSummaryInternal(item));
                     }
                     summaries = array;
                     continue;
