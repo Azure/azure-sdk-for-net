@@ -4,12 +4,12 @@ namespace Azure.Storage.Blobs.DataMovement
     {
         public AppendBlobStorageResource(Azure.Storage.Blobs.Specialized.AppendBlobClient blobClient, Azure.Storage.Blobs.DataMovement.AppendBlobStorageResourceOptions options = null) { }
         public override Azure.Storage.DataMovement.ProduceUriType CanProduceUri { get { throw null; } }
-        public override System.Collections.Generic.List<string> Path { get { throw null; } }
-        public override Azure.Storage.DataMovement.Models.RequiresCompleteTransferType RequiresCompleteTransfer { get { throw null; } }
+        public override string Path { get { throw null; } }
+        public override Azure.Storage.DataMovement.Models.TransferCopyMethod ServiceCopyMethod { get { throw null; } }
         public override System.Uri Uri { get { throw null; } }
         public override System.Threading.Tasks.Task CompleteTransferAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
-        public override System.Threading.Tasks.Task CopyBlockFromUriAsync(System.Uri sourceUri, Azure.HttpRange range, Azure.Storage.DataMovement.Models.StorageResourceCopyFromUriOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.Task CopyFromUriAsync(System.Uri sourceUri, Azure.Storage.DataMovement.Models.StorageResourceCopyFromUriOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.Task CopyBlockFromUriAsync(Azure.Storage.DataMovement.StorageResource sourceResource, Azure.HttpRange range, Azure.Storage.DataMovement.Models.StorageResourceCopyFromUriOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.Task CopyFromUriAsync(Azure.Storage.DataMovement.StorageResource sourceResource, Azure.Storage.DataMovement.Models.StorageResourceCopyFromUriOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task<Azure.Storage.DataMovement.Models.StorageResourceProperties> GetPropertiesAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
         public override System.Threading.Tasks.Task<Azure.Storage.DataMovement.Models.ReadStreamStorageResourceInfo> ReadPartialStreamAsync(long offset, long length, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task<Azure.Storage.DataMovement.Models.ReadStreamStorageResourceInfo> ReadStreamAsync(long? position = default(long?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -39,13 +39,13 @@ namespace Azure.Storage.Blobs.DataMovement
     }
     public partial class BlobDirectoryStorageResourceContainer : Azure.Storage.DataMovement.StorageResourceContainer
     {
-        public BlobDirectoryStorageResourceContainer(Azure.Storage.Blobs.BlobContainerClient containerClient, System.Collections.Generic.List<string> directoryPrefix) { }
+        public BlobDirectoryStorageResourceContainer(Azure.Storage.Blobs.BlobContainerClient containerClient, string directoryPrefix) { }
         public BlobDirectoryStorageResourceContainer(Azure.Storage.Blobs.BlobContainerClient containerClient, string directoryPrefix, Azure.Storage.Blobs.DataMovement.BlobDirectoryStorageResourceContainerOptions options = null) { }
         public override Azure.Storage.DataMovement.ProduceUriType CanProduceUri { get { throw null; } }
-        public override System.Collections.Generic.List<string> Path { get { throw null; } }
+        public override string Path { get { throw null; } }
         public override System.Uri Uri { get { throw null; } }
-        public override Azure.Storage.DataMovement.StorageResource GetChildStorageResource(System.Collections.Generic.List<string> encodedPath) { throw null; }
-        public override Azure.Storage.DataMovement.StorageResourceContainer GetParentStorageResourceContainer(System.Collections.Generic.List<string> encodedPath) { throw null; }
+        public override Azure.Storage.DataMovement.StorageResource GetChildStorageResource(string encodedPath) { throw null; }
+        public override Azure.Storage.DataMovement.StorageResourceContainer GetParentStorageResourceContainer() { throw null; }
         public Azure.Storage.DataMovement.StorageResourceContainer GetStorageResourceParentContainer() { throw null; }
         public override System.Collections.Generic.IAsyncEnumerable<Azure.Storage.DataMovement.StorageResource> GetStorageResources([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -68,12 +68,12 @@ namespace Azure.Storage.Blobs.DataMovement
     {
         public BlockBlobStorageResource(Azure.Storage.Blobs.Specialized.BlockBlobClient blobClient, Azure.Storage.Blobs.DataMovement.BlockBlobStorageResourceOptions options = null) { }
         public override Azure.Storage.DataMovement.ProduceUriType CanProduceUri { get { throw null; } }
-        public override System.Collections.Generic.List<string> Path { get { throw null; } }
-        public override Azure.Storage.DataMovement.Models.RequiresCompleteTransferType RequiresCompleteTransfer { get { throw null; } }
+        public override string Path { get { throw null; } }
+        public override Azure.Storage.DataMovement.Models.TransferCopyMethod ServiceCopyMethod { get { throw null; } }
         public override System.Uri Uri { get { throw null; } }
         public override System.Threading.Tasks.Task CompleteTransferAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
-        public override System.Threading.Tasks.Task CopyBlockFromUriAsync(System.Uri sourceUri, Azure.HttpRange range, Azure.Storage.DataMovement.Models.StorageResourceCopyFromUriOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.Task CopyFromUriAsync(System.Uri sourceUri, Azure.Storage.DataMovement.Models.StorageResourceCopyFromUriOptions sourceAuthorization = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.Task CopyBlockFromUriAsync(Azure.Storage.DataMovement.StorageResource sourceResource, Azure.HttpRange range, Azure.Storage.DataMovement.Models.StorageResourceCopyFromUriOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.Task CopyFromUriAsync(Azure.Storage.DataMovement.StorageResource sourceResource, Azure.Storage.DataMovement.Models.StorageResourceCopyFromUriOptions sourceAuthorization = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task<Azure.Storage.DataMovement.Models.StorageResourceProperties> GetPropertiesAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
         public override System.Threading.Tasks.Task<Azure.Storage.DataMovement.Models.ReadStreamStorageResourceInfo> ReadPartialStreamAsync(long offset, long length, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task<Azure.Storage.DataMovement.Models.ReadStreamStorageResourceInfo> ReadStreamAsync(long? position = default(long?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -116,12 +116,12 @@ namespace Azure.Storage.Blobs.DataMovement
     {
         public PageBlobStorageResource(Azure.Storage.Blobs.Specialized.PageBlobClient blobClient, Azure.Storage.Blobs.DataMovement.PageBlobStorageResourceOptions options = null) { }
         public override Azure.Storage.DataMovement.ProduceUriType CanProduceUri { get { throw null; } }
-        public override System.Collections.Generic.List<string> Path { get { throw null; } }
-        public override Azure.Storage.DataMovement.Models.RequiresCompleteTransferType RequiresCompleteTransfer { get { throw null; } }
+        public override string Path { get { throw null; } }
+        public override Azure.Storage.DataMovement.Models.TransferCopyMethod ServiceCopyMethod { get { throw null; } }
         public override System.Uri Uri { get { throw null; } }
         public override System.Threading.Tasks.Task CompleteTransferAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
-        public override System.Threading.Tasks.Task CopyBlockFromUriAsync(System.Uri sourceUri, Azure.HttpRange range, Azure.Storage.DataMovement.Models.StorageResourceCopyFromUriOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.Task CopyFromUriAsync(System.Uri sourceUri, Azure.Storage.DataMovement.Models.StorageResourceCopyFromUriOptions sourceAuthorization = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.Task CopyBlockFromUriAsync(Azure.Storage.DataMovement.StorageResource sourceResource, Azure.HttpRange range, Azure.Storage.DataMovement.Models.StorageResourceCopyFromUriOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.Task CopyFromUriAsync(Azure.Storage.DataMovement.StorageResource sourceResource, Azure.Storage.DataMovement.Models.StorageResourceCopyFromUriOptions sourceAuthorization = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task<Azure.Storage.DataMovement.Models.StorageResourceProperties> GetPropertiesAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
         public override System.Threading.Tasks.Task<Azure.Storage.DataMovement.Models.ReadStreamStorageResourceInfo> ReadPartialStreamAsync(long offset, long length, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task<Azure.Storage.DataMovement.Models.ReadStreamStorageResourceInfo> ReadStreamAsync(long? position = default(long?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

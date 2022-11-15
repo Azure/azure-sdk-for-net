@@ -3,8 +3,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 
 namespace Azure.Storage.DataMovement
 {
@@ -43,6 +46,51 @@ namespace Azure.Storage.DataMovement
         internal DataTransfer(string id, long bytesTransferred)
         {
             _state = new DataTransferState(id, bytesTransferred);
+        }
+
+        /// <summary>
+        /// Ensures completion of the DataTransfer and attempts to get result
+        /// </summary>
+        public void EnsureCompleted()
+        {
+#if DEBUG
+            VerifyTaskCompleted(IsCompleted);
+#endif
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
+            AwaitCompletion(CancellationToken.None);
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
+        }
+
+        [Conditional("DEBUG")]
+        private static void VerifyTaskCompleted(bool isCompleted)
+        {
+            if (!isCompleted)
+            {
+                if (Debugger.IsAttached)
+                {
+                    Debugger.Break();
+                }
+                // Throw an InvalidOperationException instead of using
+                // Debug.Assert because that brings down nUnit immediately
+                throw new InvalidOperationException("Data Transfer is not completed");
+            }
+        }
+
+        /// <summary>
+        /// Waits until the data transfer itself has completed
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        public Task AwaitCompletion(CancellationToken cancellationToken)
+        {
+            while (!IsCompleted)
+            {
+#if DEBUG
+                VerifyTaskCompleted(IsCompleted);
+#endif
+                CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+            }
+
+            return Task.CompletedTask;
         }
     }
 }
