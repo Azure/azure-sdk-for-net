@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class SummaryContext : IUtf8JsonSerializable
+    internal partial class SummaryContextInternal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,7 +22,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteEndObject();
         }
 
-        internal static SummaryContext DeserializeSummaryContext(JsonElement element)
+        internal static SummaryContextInternal DeserializeSummaryContextInternal(JsonElement element)
         {
             int offset = default;
             int length = default;
@@ -39,7 +39,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new SummaryContext(offset, length);
+            return new SummaryContextInternal(offset, length);
         }
     }
 }

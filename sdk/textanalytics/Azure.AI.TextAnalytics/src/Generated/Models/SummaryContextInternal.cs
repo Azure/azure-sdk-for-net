@@ -8,12 +8,12 @@
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The context of the summary. </summary>
-    internal partial class SummaryContext
+    internal partial class SummaryContextInternal
     {
-        /// <summary> Initializes a new instance of SummaryContext. </summary>
+        /// <summary> Initializes a new instance of SummaryContextInternal. </summary>
         /// <param name="offset"> Start position for the context. Use of different &apos;stringIndexType&apos; values can affect the offset returned. </param>
         /// <param name="length"> The length of the context. Use of different &apos;stringIndexType&apos; values can affect the length returned. </param>
-        public SummaryContext(int offset, int length)
+        public SummaryContextInternal(int offset, int length)
         {
             Offset = offset;
             Length = length;

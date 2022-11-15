@@ -21,7 +21,8 @@ namespace Azure.AI.TextAnalytics
             IReadOnlyCollection<SingleLabelClassifyActionResult> singleLabelClassifyActionResults,
             IReadOnlyCollection<MultiLabelClassifyActionResult> multiLabelClassifyActionResults,
             IReadOnlyCollection<AnalyzeHealthcareEntitiesActionResult> analyzeHealthcareEntitiesActionResults,
-            IReadOnlyCollection<ExtractSummaryActionResult> extractSummaryActionResults
+            IReadOnlyCollection<ExtractSummaryActionResult> extractSummaryActionResults,
+            IReadOnlyCollection<AbstractSummaryActionResult> abstractSummaryActionResults
             )
         {
             ExtractKeyPhrasesResults = extractKeyPhrasesActionResults;
@@ -34,6 +35,7 @@ namespace Azure.AI.TextAnalytics
             MultiLabelClassifyResults = multiLabelClassifyActionResults;
             AnalyzeHealthcareEntitiesResults = analyzeHealthcareEntitiesActionResults;
             ExtractSummaryResults = extractSummaryActionResults;
+            AbstractSummaryResults = abstractSummaryActionResults;
         }
 
         internal AnalyzeActionsResult(
@@ -54,6 +56,7 @@ namespace Azure.AI.TextAnalytics
             RecognizeCustomEntitiesResults = Array.Empty<RecognizeCustomEntitiesActionResult>();
             AnalyzeHealthcareEntitiesResults = Array.Empty<AnalyzeHealthcareEntitiesActionResult>();
             ExtractSummaryResults = Array.Empty<ExtractSummaryActionResult>();
+            AbstractSummaryResults = Array.Empty<AbstractSummaryActionResult>();
         }
 
         /// <summary>
@@ -105,5 +108,10 @@ namespace Azure.AI.TextAnalytics
         /// Determines the collection of <see cref="ExtractSummaryActionResult"/>.
         /// </summary>
         public IReadOnlyCollection<ExtractSummaryActionResult> ExtractSummaryResults { get; }
+
+        /// <summary>
+        /// Determines the collection of <see cref="AbstractSummaryActionResult"/>.
+        /// </summary>
+        public IReadOnlyCollection<AbstractSummaryActionResult> AbstractSummaryResults { get; }
     }
 }
