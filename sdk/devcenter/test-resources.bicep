@@ -12,8 +12,8 @@ var defaultDevCenterName = 'sdk-dc-${uniqueString('devcenter', baseName, resourc
 
 var defaultProjectName = 'sdk-default-project'
 var defaultPoolName = 'sdk-default-pool'
-var defaultNetworkConnectionName = 'sdk-default-networkconnection'
-var defaultNetworkConnection2Name = 'sdk-default-networkconnection2'
+var defaultNetworkConnectionName = 'sdk-networkconnection-${uniqueString('networkConnection', baseName, resourceGroup().name)}'
+var defaultNetworkConnection2Name = 'sdk-networkconnection2-${uniqueString('networkConnection', baseName, resourceGroup().name)}'
 var defaultMarketplaceDefinition = 'sdk-default-devboxdefinition'
 var defaultCatalogName = 'sdk-default-catalog'
 var defaultEnvironmentTypeName = 'sdk-default-environment-type'
