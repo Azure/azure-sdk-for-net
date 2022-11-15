@@ -141,13 +141,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager", "..
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\core\Azure.Core\src\Azure.Core.csproj", "{C04D725B-B025-4B41-BAF0-BEE3F8D087AB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.DataMovement", "Azure.Storage.Blobs.DataMovement\src\Azure.Storage.Blobs.DataMovement.csproj", "{9607DA57-CA64-4CE4-9BB4-938C3EBBC9D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.DataMovement.Blobs", "Azure.Storage.DataMovement.Blobs\src\Azure.Storage.DataMovement.Blobs.csproj", "{9607DA57-CA64-4CE4-9BB4-938C3EBBC9D9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.DataMovement", "Azure.Storage.DataMovement\src\Azure.Storage.DataMovement.csproj", "{85A1E33C-4E4C-4B18-B441-FA08404983F4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.DataMovement.Tests", "Azure.Storage.Blobs.DataMovement\tests\Azure.Storage.Blobs.DataMovement.Tests.csproj", "{86F3F4A7-483E-4316-8ECD-012F2B7CE84A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.DataMovement.Blobs.Tests", "Azure.Storage.DataMovement.Blobs\tests\Azure.Storage.DataMovement.Blobs.Tests.csproj", "{86F3F4A7-483E-4316-8ECD-012F2B7CE84A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.DataMovement.Samples.Tests", "Azure.Storage.Blobs.DataMovement\samples\Azure.Storage.Blobs.DataMovement.Samples.Tests.csproj", "{091717A8-A334-42CB-95D8-DABA4F46CD59}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.DataMovement.Blobs.Samples.Tests", "Azure.Storage.DataMovement.Blobs\samples\Azure.Storage.DataMovement.Blobs.Samples.Tests.csproj", "{091717A8-A334-42CB-95D8-DABA4F46CD59}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Common.AesGcm.Tests", "Azure.Storage.Common\tests\AesGcmTests\Azure.Storage.Common.AesGcm.Tests.csproj", "{955CECCE-61B1-4832-9A42-88E95CB9ACBD}"
 EndProject

@@ -7,13 +7,11 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Storage.Blobs.DataMovement.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs;
 using Azure.Storage.DataMovement.Models;
-using Castle.Core.Internal;
 using NUnit.Framework;
-using Azure.Storage.Blobs.DataMovement;
+using Azure.Storage.DataMovement.Blobs;
 
 namespace Azure.Storage.DataMovement.Tests
 {
@@ -207,7 +205,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task StartTransfer_BlockBlobToBlockBlob()
         {
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Blobs.Models.PublicAccessType.BlobContainer);
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
 
             // No Option Copy bag or manager options bag, plain Copy
             await CopyBlobsAndVerify(
@@ -247,7 +245,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task StartTransfer_BlockBlobToBlockBlob_EventHandler()
         {
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Blobs.Models.PublicAccessType.BlobContainer);
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
 
             int waitTimeInSec = 10;
             AutoResetEvent InProgressWait = new AutoResetEvent(false);
@@ -291,7 +289,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task StartTransfer_BlockBlobToBlockBlob_BlobSize(long size, int waitTimeInSec)
         {
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Blobs.Models.PublicAccessType.BlobContainer);
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
 
             AutoResetEvent InProgressWait = new AutoResetEvent(false);
             SingleTransferOptions options = new SingleTransferOptions();
@@ -336,7 +334,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task StartTransfer_BlockBlobToBlockBlob_Multiple(int blobCount, long size, int waitTimeInSec)
         {
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Blobs.Models.PublicAccessType.BlobContainer);
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
 
             await CopyBlobsAndVerify(
                 testContainer.Container,

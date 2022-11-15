@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using Azure.Storage.DataMovement;
 
-namespace Azure.Storage.Blobs.DataMovement.Models
+namespace Azure.Storage.DataMovement.Blobs.Models
 {
     /// <summary>
     /// This class is interchangable for

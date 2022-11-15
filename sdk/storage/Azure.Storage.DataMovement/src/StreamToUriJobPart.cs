@@ -8,7 +8,7 @@ using Azure.Storage.DataMovement.Models;
 using System.Threading.Tasks;
 using System.IO;
 using System.Threading;
-using Azure.Storage.Blobs.DataMovement.Models;
+using Azure.Storage.DataMovement.Blobs.Models;
 using System.Buffers;
 using Azure.Storage.Shared;
 

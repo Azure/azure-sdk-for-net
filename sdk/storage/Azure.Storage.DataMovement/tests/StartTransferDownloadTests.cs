@@ -10,7 +10,7 @@ using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.Blobs.DataMovement.Models;
+using Azure.Storage.DataMovement.Blobs.Models;
 using NUnit.Framework;
 using Azure.Storage.DataMovement;
 using System.Net;
@@ -22,7 +22,7 @@ using Castle.Core.Internal;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework.Internal;
 using Azure.Storage.DataMovement.Models;
-using Azure.Storage.Blobs.DataMovement;
+using Azure.Storage.DataMovement.Blobs;
 
 namespace Azure.Storage.DataMovement.Tests
 {
