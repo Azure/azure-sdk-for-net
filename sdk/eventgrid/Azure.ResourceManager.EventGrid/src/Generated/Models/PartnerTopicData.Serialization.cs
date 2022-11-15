@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
-                writer.WriteObjectValue(Identity);
+                JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WritePropertyName("eventTypeInfo");
                 writer.WriteObjectValue(EventTypeInfo);
             }
-            if (Optional.IsDefined(ExpirationTimeIfNotActivatedUtc))
+            if (Optional.IsDefined(ExpireOnIfNotActivated))
             {
                 writer.WritePropertyName("expirationTimeIfNotActivatedUtc");
-                writer.WriteStringValue(ExpirationTimeIfNotActivatedUtc.Value, "O");
+                writer.WriteStringValue(ExpireOnIfNotActivated.Value, "O");
             }
             if (Optional.IsDefined(ActivationState))
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.EventGrid
 
         internal static PartnerTopicData DeserializePartnerTopicData(JsonElement element)
         {
-            Optional<IdentityInfo> identity = default;
+            Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.EventGrid
             Optional<SystemData> systemData = default;
             Optional<Guid> partnerRegistrationImmutableId = default;
             Optional<string> source = default;
-            Optional<EventTypeInfo> eventTypeInfo = default;
+            Optional<PartnerTopicEventTypeInfo> eventTypeInfo = default;
             Optional<DateTimeOffset> expirationTimeIfNotActivatedUtc = default;
             Optional<PartnerTopicProvisioningState> provisioningState = default;
             Optional<PartnerTopicActivationState> activationState = default;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.EventGrid
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = IdentityInfo.DeserializeIdentityInfo(property.Value);
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.EventGrid
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            eventTypeInfo = EventTypeInfo.DeserializeEventTypeInfo(property0.Value);
+                            eventTypeInfo = PartnerTopicEventTypeInfo.DeserializePartnerTopicEventTypeInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("expirationTimeIfNotActivatedUtc"))
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.EventGrid
                     continue;
                 }
             }
-            return new PartnerTopicData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity.Value, Optional.ToNullable(partnerRegistrationImmutableId), source.Value, eventTypeInfo.Value, Optional.ToNullable(expirationTimeIfNotActivatedUtc), Optional.ToNullable(provisioningState), Optional.ToNullable(activationState), partnerTopicFriendlyDescription.Value, messageForActivation.Value);
+            return new PartnerTopicData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(partnerRegistrationImmutableId), source.Value, eventTypeInfo.Value, Optional.ToNullable(expirationTimeIfNotActivatedUtc), Optional.ToNullable(provisioningState), Optional.ToNullable(activationState), partnerTopicFriendlyDescription.Value, messageForActivation.Value);
         }
     }
 }

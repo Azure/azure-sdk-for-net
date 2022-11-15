@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static UnknownNCrossValidations DeserializeUnknownNCrossValidations(JsonElement element)
         {
-            NCrossValidationsMode mode = default;
+            NCrossValidationsMode mode = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mode"))

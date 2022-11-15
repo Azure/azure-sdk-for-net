@@ -6,61 +6,67 @@
 #nullable disable
 
 using System;
-using System.ComponentModel;
+using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
     /// <summary> The JobState. </summary>
-    public readonly partial struct JobState : IEquatable<JobState>
+    public partial class JobState
     {
-        private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="JobState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public JobState(string value)
+        /// <summary> Initializes a new instance of JobState. </summary>
+        /// <param name="createdDateTime"></param>
+        /// <param name="jobId"></param>
+        /// <param name="lastUpdatedDateTime"></param>
+        /// <param name="status"> The status of the task at the mentioned last update time. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        internal JobState(DateTimeOffset createdDateTime, string jobId, DateTimeOffset lastUpdatedDateTime, State status)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
+            CreatedDateTime = createdDateTime;
+            JobId = jobId;
+            LastUpdatedDateTime = lastUpdatedDateTime;
+            Status = status;
+            Errors = new ChangeTrackingList<Error>();
         }
 
-        private const string NotStartedValue = "notStarted";
-        private const string RunningValue = "running";
-        private const string SucceededValue = "succeeded";
-        private const string PartiallyCompletedValue = "partiallyCompleted";
-        private const string FailedValue = "failed";
-        private const string CancelledValue = "cancelled";
-        private const string CancellingValue = "cancelling";
+        /// <summary> Initializes a new instance of JobState. </summary>
+        /// <param name="displayName"></param>
+        /// <param name="createdDateTime"></param>
+        /// <param name="expirationDateTime"></param>
+        /// <param name="jobId"></param>
+        /// <param name="lastUpdatedDateTime"></param>
+        /// <param name="status"> The status of the task at the mentioned last update time. </param>
+        /// <param name="errors"></param>
+        /// <param name="nextLink"></param>
+        internal JobState(string displayName, DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, string jobId, DateTimeOffset lastUpdatedDateTime, State status, IReadOnlyList<Error> errors, string nextLink)
+        {
+            DisplayName = displayName;
+            CreatedDateTime = createdDateTime;
+            ExpirationDateTime = expirationDateTime;
+            JobId = jobId;
+            LastUpdatedDateTime = lastUpdatedDateTime;
+            Status = status;
+            Errors = errors;
+            NextLink = nextLink;
+        }
 
-        /// <summary> notStarted. </summary>
-        public static JobState NotStarted { get; } = new JobState(NotStartedValue);
-        /// <summary> running. </summary>
-        public static JobState Running { get; } = new JobState(RunningValue);
-        /// <summary> succeeded. </summary>
-        public static JobState Succeeded { get; } = new JobState(SucceededValue);
-        /// <summary> partiallyCompleted. </summary>
-        public static JobState PartiallyCompleted { get; } = new JobState(PartiallyCompletedValue);
-        /// <summary> failed. </summary>
-        public static JobState Failed { get; } = new JobState(FailedValue);
-        /// <summary> cancelled. </summary>
-        public static JobState Cancelled { get; } = new JobState(CancelledValue);
-        /// <summary> cancelling. </summary>
-        public static JobState Cancelling { get; } = new JobState(CancellingValue);
-        /// <summary> Determines if two <see cref="JobState"/> values are the same. </summary>
-        public static bool operator ==(JobState left, JobState right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="JobState"/> values are not the same. </summary>
-        public static bool operator !=(JobState left, JobState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="JobState"/>. </summary>
-        public static implicit operator JobState(string value) => new JobState(value);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is JobState other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(JobState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
-        /// <inheritdoc />
-        public override string ToString() => _value;
+        /// <summary> Gets the display name. </summary>
+        public string DisplayName { get; }
+        /// <summary> Gets the created date time. </summary>
+        public DateTimeOffset CreatedDateTime { get; }
+        /// <summary> Gets the expiration date time. </summary>
+        public DateTimeOffset? ExpirationDateTime { get; }
+        /// <summary> Gets the job id. </summary>
+        public string JobId { get; }
+        /// <summary> Gets the last updated date time. </summary>
+        public DateTimeOffset LastUpdatedDateTime { get; }
+        /// <summary> The status of the task at the mentioned last update time. </summary>
+        public State Status { get; }
+        /// <summary> Gets the errors. </summary>
+        public IReadOnlyList<Error> Errors { get; }
+        /// <summary> Gets the next link. </summary>
+        public string NextLink { get; }
     }
 }

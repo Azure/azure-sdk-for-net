@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of StorageEncryptedAssetDecryptionInfo. </summary>
         internal StorageEncryptedAssetDecryptionInfo()
         {
-            AssetFileEncryptionMetadata = new ChangeTrackingList<AssetFileEncryptionMetadata>();
+            AssetFileEncryptionMetadata = new ChangeTrackingList<MediaAssetFileEncryptionMetadata>();
         }
 
         /// <summary> Initializes a new instance of StorageEncryptedAssetDecryptionInfo. </summary>
         /// <param name="key"> The Asset File storage encryption key. </param>
         /// <param name="assetFileEncryptionMetadata"> Asset File encryption metadata. </param>
-        internal StorageEncryptedAssetDecryptionInfo(byte[] key, IReadOnlyList<AssetFileEncryptionMetadata> assetFileEncryptionMetadata)
+        internal StorageEncryptedAssetDecryptionInfo(byte[] key, IReadOnlyList<MediaAssetFileEncryptionMetadata> assetFileEncryptionMetadata)
         {
             Key = key;
             AssetFileEncryptionMetadata = assetFileEncryptionMetadata;
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> The Asset File storage encryption key. </summary>
         public byte[] Key { get; }
         /// <summary> Asset File encryption metadata. </summary>
-        public IReadOnlyList<AssetFileEncryptionMetadata> AssetFileEncryptionMetadata { get; }
+        public IReadOnlyList<MediaAssetFileEncryptionMetadata> AssetFileEncryptionMetadata { get; }
     }
 }

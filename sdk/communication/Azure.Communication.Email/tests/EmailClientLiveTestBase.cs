@@ -24,7 +24,7 @@ namespace Azure.Communication.Email.Tests
             //@@EmailClient client = new EmailClient(connectionString);
             #endregion Snippet:Azure_Communication_Email_CreateEmailClient
 
-            var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
+            var connectionString = TestEnvironment.CommunicationConnectionStringEmail;
             var client = new EmailClient(connectionString, CreateEmailClientOptionsWithCorrelationVectorLogs());
 
             return InstrumentClient(client);
@@ -32,7 +32,7 @@ namespace Azure.Communication.Email.Tests
 
         public EmailClient CreateSmsClientWithToken()
         {
-            Uri endpoint = TestEnvironment.LiveTestStaticEndpoint;
+            Uri endpoint = TestEnvironment.CommunicationEmailEndpoint;
             TokenCredential tokenCredential;
             if (Mode == RecordedTestMode.Playback)
             {

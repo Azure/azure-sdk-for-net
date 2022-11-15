@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetApp
             Optional<SystemData> systemData = default;
             Optional<string> provisioningState = default;
             Optional<NetAppVolumeGroupMetadata> groupMetaData = default;
-            Optional<IList<NetAppVolumeGroupData>> volumes = default;
+            Optional<IList<NetAppVolumeGroupVolume>> volumes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
@@ -122,10 +122,10 @@ namespace Azure.ResourceManager.NetApp
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<NetAppVolumeGroupData> array = new List<NetAppVolumeGroupData>();
+                            List<NetAppVolumeGroupVolume> array = new List<NetAppVolumeGroupVolume>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeserializeNetAppVolumeGroupData(item));
+                                array.Add(NetAppVolumeGroupVolume.DeserializeNetAppVolumeGroupVolume(item));
                             }
                             volumes = array;
                             continue;

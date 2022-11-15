@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.DataBox.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.DataBox.Models.DataImportDetails> DataImportDetails { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.PackageShippingDetails DeliveryPackage { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.DeviceErasureDetails DeviceErasureDetails { get { throw null; } }
-        public int? ExpectedDataSizeInTeraBytes { get { throw null; } set { } }
+        public int? ExpectedDataSizeInTerabytes { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.DataBoxJobStage> JobStages { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.DataBoxKeyEncryptionKey KeyEncryptionKey { get { throw null; } set { } }
         public Azure.ResourceManager.DataBox.Models.LastMitigationActionOnJob LastMitigationActionOnJob { get { throw null; } }
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.DataBox.Models
         private readonly int _dummyPrimitive;
         public DataBoxStageName(string value) { throw null; }
         public static Azure.ResourceManager.DataBox.Models.DataBoxStageName Aborted { get { throw null; } }
-        public static Azure.ResourceManager.DataBox.Models.DataBoxStageName AtAzureDC { get { throw null; } }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxStageName AtAzureDataCenter { get { throw null; } }
         public static Azure.ResourceManager.DataBox.Models.DataBoxStageName AwaitingShipmentDetails { get { throw null; } }
         public static Azure.ResourceManager.DataBox.Models.DataBoxStageName Cancelled { get { throw null; } }
         public static Azure.ResourceManager.DataBox.Models.DataBoxStageName Completed { get { throw null; } }
@@ -542,13 +542,13 @@ namespace Azure.ResourceManager.DataBox.Models
         public static Azure.ResourceManager.DataBox.Models.DataBoxStageName DeviceOrdered { get { throw null; } }
         public static Azure.ResourceManager.DataBox.Models.DataBoxStageName DevicePrepared { get { throw null; } }
         public static Azure.ResourceManager.DataBox.Models.DataBoxStageName Dispatched { get { throw null; } }
-        public static Azure.ResourceManager.DataBox.Models.DataBoxStageName FailedIssueDetectedAtAzureDC { get { throw null; } }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxStageName FailedIssueDetectedAtAzureDataCenter { get { throw null; } }
         public static Azure.ResourceManager.DataBox.Models.DataBoxStageName FailedIssueReportedAtCustomer { get { throw null; } }
         public static Azure.ResourceManager.DataBox.Models.DataBoxStageName PickedUp { get { throw null; } }
-        public static Azure.ResourceManager.DataBox.Models.DataBoxStageName PreparingToShipFromAzureDC { get { throw null; } }
-        public static Azure.ResourceManager.DataBox.Models.DataBoxStageName ReadyToDispatchFromAzureDC { get { throw null; } }
-        public static Azure.ResourceManager.DataBox.Models.DataBoxStageName ReadyToReceiveAtAzureDC { get { throw null; } }
-        public static Azure.ResourceManager.DataBox.Models.DataBoxStageName ShippedToAzureDC { get { throw null; } }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxStageName PreparingToShipFromAzureDataCenter { get { throw null; } }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxStageName ReadyToDispatchFromAzureDataCenter { get { throw null; } }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxStageName ReadyToReceiveAtAzureDataCenter { get { throw null; } }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxStageName ShippedToAzureDataCenter { get { throw null; } }
         public static Azure.ResourceManager.DataBox.Models.DataBoxStageName ShippedToCustomer { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBox.Models.DataBoxStageName other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -769,8 +769,8 @@ namespace Azure.ResourceManager.DataBox.Models
     }
     public partial class DiskScheduleAvailabilityContent : Azure.ResourceManager.DataBox.Models.ScheduleAvailabilityContent
     {
-        public DiskScheduleAvailabilityContent(Azure.Core.AzureLocation storageLocation, int expectedDataSizeInTeraBytes) : base (default(Azure.Core.AzureLocation)) { }
-        public int ExpectedDataSizeInTeraBytes { get { throw null; } }
+        public DiskScheduleAvailabilityContent(Azure.Core.AzureLocation storageLocation, int expectedDataSizeInTerabytes) : base (default(Azure.Core.AzureLocation)) { }
+        public int ExpectedDataSizeInTerabytes { get { throw null; } }
     }
     public partial class ExportDiskDetails
     {
@@ -829,13 +829,13 @@ namespace Azure.ResourceManager.DataBox.Models
     public abstract partial class JobSecrets
     {
         protected JobSecrets() { }
-        public Azure.ResourceManager.DataBox.Models.DataCenterAccessSecurityCode DcAccessSecurityCode { get { throw null; } }
+        public Azure.ResourceManager.DataBox.Models.DataCenterAccessSecurityCode DataCenterAccessSecurityCode { get { throw null; } }
         public Azure.ResponseError Error { get { throw null; } }
     }
     public partial class LastMitigationActionOnJob
     {
         internal LastMitigationActionOnJob() { }
-        public System.DateTimeOffset? ActionDateTimeInUtc { get { throw null; } }
+        public System.DateTimeOffset? ActionPerformedOn { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.CustomerResolutionCode? CustomerResolution { get { throw null; } }
         public bool? IsPerformedByCustomer { get { throw null; } }
     }
@@ -852,8 +852,8 @@ namespace Azure.ResourceManager.DataBox.Models
     }
     public partial class MarkDevicesShippedContent
     {
-        public MarkDevicesShippedContent(Azure.ResourceManager.DataBox.Models.PackageCarrierInfo deliverToDcPackageDetails) { }
-        public Azure.ResourceManager.DataBox.Models.PackageCarrierInfo DeliverToDcPackageDetails { get { throw null; } }
+        public MarkDevicesShippedContent(Azure.ResourceManager.DataBox.Models.PackageCarrierInfo deliverToDataCenterPackageDetails) { }
+        public Azure.ResourceManager.DataBox.Models.PackageCarrierInfo DeliverToDataCenterPackageDetails { get { throw null; } }
     }
     public partial class MitigateJobContent
     {
@@ -872,7 +872,7 @@ namespace Azure.ResourceManager.DataBox.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public NotificationStageName(string value) { throw null; }
-        public static Azure.ResourceManager.DataBox.Models.NotificationStageName AtAzureDC { get { throw null; } }
+        public static Azure.ResourceManager.DataBox.Models.NotificationStageName AtAzureDataCenter { get { throw null; } }
         public static Azure.ResourceManager.DataBox.Models.NotificationStageName Created { get { throw null; } }
         public static Azure.ResourceManager.DataBox.Models.NotificationStageName DataCopy { get { throw null; } }
         public static Azure.ResourceManager.DataBox.Models.NotificationStageName Delivered { get { throw null; } }

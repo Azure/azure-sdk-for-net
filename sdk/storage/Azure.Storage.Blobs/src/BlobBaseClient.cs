@@ -215,7 +215,7 @@ namespace Azure.Storage.Blobs.Specialized
                 customerProvidedKey: options.CustomerProvidedKey,
                 transferValidation: options.TransferValidation,
                 encryptionScope: options.EncryptionScope,
-                preserveBlobNameOuterSlashes: options.PreserveBlobNameSlashes);
+                trimBlobNameSlashes: options.TrimBlobNameSlashes);
 
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _blobRestClient = BuildBlobRestClient(_uri);
@@ -369,7 +369,7 @@ namespace Azure.Storage.Blobs.Specialized
                 customerProvidedKey: options.CustomerProvidedKey,
                 transferValidation: options.TransferValidation,
                 encryptionScope: options.EncryptionScope,
-                preserveBlobNameOuterSlashes: options.PreserveBlobNameSlashes);
+                trimBlobNameSlashes: options.TrimBlobNameSlashes);
 
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _blobRestClient = BuildBlobRestClient(blobUri);
@@ -429,7 +429,7 @@ namespace Azure.Storage.Blobs.Specialized
                 customerProvidedKey: options.CustomerProvidedKey,
                 transferValidation: options.TransferValidation,
                 encryptionScope: options.EncryptionScope,
-                preserveBlobNameOuterSlashes: options.PreserveBlobNameSlashes);
+                trimBlobNameSlashes: options.TrimBlobNameSlashes);
 
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _blobRestClient = BuildBlobRestClient(blobUri);
@@ -627,7 +627,7 @@ namespace Azure.Storage.Blobs.Specialized
         {
             if (_name == null || _containerName == null || _accountName == null)
             {
-                var builder = new BlobUriBuilder(Uri);
+                var builder = new BlobUriBuilder(Uri, ClientConfiguration.TrimBlobNameSlashes);
                 _name = builder.BlobName;
                 _containerName = builder.BlobContainerName;
                 _accountName = builder.AccountName;
@@ -1402,7 +1402,7 @@ namespace Azure.Storage.Blobs.Specialized
             return DownloadStreamingDirect(
                 options?.Range ?? default,
                 options?.Conditions,
-                options?.TransferValidationOptions,
+                options?.TransferValidation,
                 options?.ProgressHandler,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
                 async: false,
@@ -1449,7 +1449,7 @@ namespace Azure.Storage.Blobs.Specialized
             return await DownloadStreamingDirect(
                 options?.Range ?? default,
                 options?.Conditions,
-                options?.TransferValidationOptions,
+                options?.TransferValidation,
                 options?.ProgressHandler,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
                 async: true,
@@ -2201,7 +2201,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.Conditions,
                 options?.ProgressHandler,
                 options?.Range ?? default,
-                options?.TransferValidationOptions,
+                options?.TransferValidation,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -2252,7 +2252,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.Conditions,
                 options?.ProgressHandler,
                 options?.Range ?? default,
-                options?.TransferValidationOptions,
+                options?.TransferValidation,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -2509,7 +2509,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.Conditions,
                 options?.ProgressHandler,
                 options?.TransferOptions ?? default,
-                options?.TransferValidationOptions,
+                options?.TransferValidation,
                 async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
@@ -2548,7 +2548,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.Conditions,
                 options?.ProgressHandler,
                 options?.TransferOptions ?? default,
-                options?.TransferValidationOptions,
+                options?.TransferValidation,
                 async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
@@ -2586,7 +2586,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.Conditions,
                 options?.ProgressHandler,
                 options?.TransferOptions ?? default,
-                options?.TransferValidationOptions,
+                options?.TransferValidation,
                 async: true,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
@@ -2625,7 +2625,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.Conditions,
                 options?.ProgressHandler,
                 options?.TransferOptions ?? default,
-                options?.TransferValidationOptions,
+                options?.TransferValidation,
                 async: true,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
@@ -2845,7 +2845,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="StorageTransferOptions"/> to configure
         /// parallel transfer behavior.
         /// </param>
-        /// <param name="validationOptionsOverride">
+        /// <param name="transferValidationOverride">
         /// Override for client options on transfer validation.
         /// </param>
         /// <param name="async">
@@ -2867,11 +2867,11 @@ namespace Azure.Storage.Blobs.Specialized
             BlobRequestConditions conditions = default,
             IProgress<long> progressHandler = default,
             StorageTransferOptions transferOptions = default,
-            DownloadTransferValidationOptions validationOptionsOverride = default,
+            DownloadTransferValidationOptions transferValidationOverride = default,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-            DownloadTransferValidationOptions validationOptions = validationOptionsOverride ?? ClientConfiguration.TransferValidation.Download;
+            DownloadTransferValidationOptions validationOptions = transferValidationOverride ?? ClientConfiguration.TransferValidation.Download;
 
             PartitionedDownloader downloader = new PartitionedDownloader(this, transferOptions, validationOptions, progressHandler);
 
@@ -2916,7 +2916,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.BufferSize,
                 options?.Conditions,
                 allowModifications: options?.AllowModifications ?? false,
-                validationOptionsOverride: options?.TransferValidationOptions,
+                transferValidationOverride: options?.TransferValidation,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -2945,7 +2945,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.BufferSize,
                 options?.Conditions,
                 allowModifications: options?.AllowModifications ?? false,
-                validationOptionsOverride: options?.TransferValidationOptions,
+                transferValidationOverride: options?.TransferValidation,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -2986,7 +2986,7 @@ namespace Azure.Storage.Blobs.Specialized
                 bufferSize,
                 conditions,
                 allowModifications: false,
-                validationOptionsOverride: default,
+                transferValidationOverride: default,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -3064,7 +3064,7 @@ namespace Azure.Storage.Blobs.Specialized
                 bufferSize,
                 conditions,
                 allowModifications: false,
-                validationOptionsOverride: default,
+                transferValidationOverride: default,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -3125,7 +3125,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="allowModifications">
         /// Whether to allow modifications during the read.
         /// </param>
-        /// <param name="validationOptionsOverride">
+        /// <param name="transferValidationOverride">
         /// Optional override for settings in the client options.
         /// </param>
         /// <param name="async">
@@ -3146,13 +3146,13 @@ namespace Azure.Storage.Blobs.Specialized
             int? bufferSize,
             BlobRequestConditions conditions,
             bool allowModifications,
-            DownloadTransferValidationOptions validationOptionsOverride,
+            DownloadTransferValidationOptions transferValidationOverride,
 #pragma warning disable CA1801
             bool async,
             CancellationToken cancellationToken)
 #pragma warning restore CA1801
         {
-            DownloadTransferValidationOptions validationOptions = validationOptionsOverride ?? _clientConfiguration.TransferValidation.Download;
+            DownloadTransferValidationOptions validationOptions = transferValidationOverride ?? _clientConfiguration.TransferValidation.Download;
 
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {

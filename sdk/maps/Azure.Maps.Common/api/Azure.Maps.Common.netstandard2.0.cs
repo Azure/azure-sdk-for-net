@@ -6,24 +6,24 @@ namespace Azure.Maps
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public LocalizedMapView(string value) { throw null; }
-        public static Azure.Maps.LocalizedMapView AE { get { throw null; } }
-        public static Azure.Maps.LocalizedMapView AR { get { throw null; } }
+        public static Azure.Maps.LocalizedMapView Argentina { get { throw null; } }
         public static Azure.Maps.LocalizedMapView Auto { get { throw null; } }
-        public static Azure.Maps.LocalizedMapView BH { get { throw null; } }
-        public static Azure.Maps.LocalizedMapView IN { get { throw null; } }
-        public static Azure.Maps.LocalizedMapView IQ { get { throw null; } }
-        public static Azure.Maps.LocalizedMapView JO { get { throw null; } }
-        public static Azure.Maps.LocalizedMapView KW { get { throw null; } }
-        public static Azure.Maps.LocalizedMapView LB { get { throw null; } }
-        public static Azure.Maps.LocalizedMapView MA { get { throw null; } }
-        public static Azure.Maps.LocalizedMapView OM { get { throw null; } }
-        public static Azure.Maps.LocalizedMapView PK { get { throw null; } }
-        public static Azure.Maps.LocalizedMapView PS { get { throw null; } }
-        public static Azure.Maps.LocalizedMapView QA { get { throw null; } }
-        public static Azure.Maps.LocalizedMapView SA { get { throw null; } }
-        public static Azure.Maps.LocalizedMapView SY { get { throw null; } }
+        public static Azure.Maps.LocalizedMapView Bahrain { get { throw null; } }
+        public static Azure.Maps.LocalizedMapView India { get { throw null; } }
+        public static Azure.Maps.LocalizedMapView Iraq { get { throw null; } }
+        public static Azure.Maps.LocalizedMapView Jordan { get { throw null; } }
+        public static Azure.Maps.LocalizedMapView Kuwait { get { throw null; } }
+        public static Azure.Maps.LocalizedMapView Lebanon { get { throw null; } }
+        public static Azure.Maps.LocalizedMapView Morocco { get { throw null; } }
+        public static Azure.Maps.LocalizedMapView Oman { get { throw null; } }
+        public static Azure.Maps.LocalizedMapView Pakistan { get { throw null; } }
+        public static Azure.Maps.LocalizedMapView PalestinianAuthority { get { throw null; } }
+        public static Azure.Maps.LocalizedMapView Qatar { get { throw null; } }
+        public static Azure.Maps.LocalizedMapView SaudiArabia { get { throw null; } }
+        public static Azure.Maps.LocalizedMapView Syria { get { throw null; } }
         public static Azure.Maps.LocalizedMapView Unified { get { throw null; } }
-        public static Azure.Maps.LocalizedMapView YE { get { throw null; } }
+        public static Azure.Maps.LocalizedMapView UnitedArabEmirates { get { throw null; } }
+        public static Azure.Maps.LocalizedMapView Yemen { get { throw null; } }
         public bool Equals(Azure.Maps.LocalizedMapView other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }

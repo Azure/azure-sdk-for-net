@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Avs
     /// A Class representing a WorkloadNetworkGateway along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WorkloadNetworkGatewayResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetWorkloadNetworkGatewayResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PrivateCloudResource" /> using the GetWorkloadNetworkGateway method.
+    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource" /> using the GetWorkloadNetworkGateway method.
     /// </summary>
     public partial class WorkloadNetworkGatewayResource : ArmResource
     {

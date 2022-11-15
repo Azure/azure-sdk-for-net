@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateListRequest(QueryOptions queryOptions)
+        internal HttpMessage CreateListRequest(PolicyQuerySettings policyQuerySettings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -114,9 +114,9 @@ namespace Azure.ResourceManager.PolicyInsights
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/policyMetadata", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (queryOptions?.Top != null)
+            if (policyQuerySettings?.Top != null)
             {
-                uri.AppendQuery("$top", queryOptions.Top.Value, true);
+                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -125,11 +125,11 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary> Get a list of the policy metadata resources. </summary>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<Models.PolicyMetadataCollection>> ListAsync(QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<Models.PolicyMetadataCollection>> ListAsync(PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListRequest(queryOptions);
+            using var message = CreateListRequest(policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -146,11 +146,11 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary> Get a list of the policy metadata resources. </summary>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<Models.PolicyMetadataCollection> List(QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<Models.PolicyMetadataCollection> List(PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListRequest(queryOptions);
+            using var message = CreateListRequest(policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, QueryOptions queryOptions)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, PolicyQuerySettings policyQuerySettings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -182,14 +182,14 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary> Get a list of the policy metadata resources. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<Models.PolicyMetadataCollection>> ListNextPageAsync(string nextLink, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<Models.PolicyMetadataCollection>> ListNextPageAsync(string nextLink, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
 
-            using var message = CreateListNextPageRequest(nextLink, queryOptions);
+            using var message = CreateListNextPageRequest(nextLink, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -207,14 +207,14 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary> Get a list of the policy metadata resources. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<Models.PolicyMetadataCollection> ListNextPage(string nextLink, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<Models.PolicyMetadataCollection> ListNextPage(string nextLink, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
 
-            using var message = CreateListNextPageRequest(nextLink, queryOptions);
+            using var message = CreateListNextPageRequest(nextLink, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

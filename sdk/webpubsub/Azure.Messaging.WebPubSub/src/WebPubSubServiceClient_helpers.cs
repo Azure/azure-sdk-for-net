@@ -112,9 +112,10 @@ namespace Azure.Messaging.WebPubSub
                 var minutesToExpire = GetMinutesToExpire(expiresAt);
 
                 Response clientTokenResponse = async ?
-                    await GenerateClientTokenImplAsync(userId, roles, minutesToExpire, context).ConfigureAwait(false) :
-                    GenerateClientTokenImpl(userId, roles, minutesToExpire, context);
-                token = JsonDocument.Parse(clientTokenResponse.Content).RootElement.GetProperty(ClientTokenResponseTokenPropertyName).GetString();
+                    await GenerateClientTokenImplAsync(userId, roles, minutesToExpire, null, context).ConfigureAwait(false) :
+                    GenerateClientTokenImpl(userId, roles, minutesToExpire, null, context);
+                using var jsonDocument = JsonDocument.Parse(clientTokenResponse.Content);
+                token = jsonDocument.RootElement.GetProperty(ClientTokenResponseTokenPropertyName).GetString();
             }
             else if (_credential != null)
             {
@@ -149,12 +150,17 @@ namespace Azure.Messaging.WebPubSub
                 var minutesToExpire = GetMinutesToExpire(expireAfter);
 
                 Response clientTokenResponse = async ?
-                    await GenerateClientTokenImplAsync(userId, roles, minutesToExpire, context).ConfigureAwait(false) :
-                    GenerateClientTokenImpl(userId, roles, minutesToExpire, context);
-                token = JsonDocument.Parse(clientTokenResponse.Content).RootElement.GetProperty(ClientTokenResponseTokenPropertyName).GetString();
+                    await GenerateClientTokenImplAsync(userId, roles, minutesToExpire, null, context).ConfigureAwait(false) :
+                    GenerateClientTokenImpl(userId, roles, minutesToExpire, null, context);
+                using var jsonDocument = JsonDocument.Parse(clientTokenResponse.Content);
+                token = jsonDocument.RootElement.GetProperty(ClientTokenResponseTokenPropertyName).GetString();
             }
             else if (_credential != null)
             {
+                if (expireAfter == default)
+                {
+                    expireAfter = TimeSpan.FromHours(1);
+                }
                 token = GenerateTokenFromAzureKeyCredential(DateTimeOffset.UtcNow.Add(expireAfter), userId, roles);
             }
             else

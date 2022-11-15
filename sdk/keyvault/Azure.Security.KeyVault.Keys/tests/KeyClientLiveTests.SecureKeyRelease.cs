@@ -17,7 +17,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [IgnoreServiceError(403, "Forbidden", Message = "Target environment attestation statement cannot be verified.")] // TODO: Remove once the attestation issue is resolved: https://github.com/Azure/azure-sdk-for-net/issues/27957
         [IgnoreServiceError(400, "BadParameter")] // TODO: Remove once SKR is deployed to sovereign clouds.
         [PremiumOnly]
-        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3)]
+        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3, Max = KeyClientOptions.ServiceVersion.V7_3)] // TODO: Remove Max once https://github.com/Azure/azure-sdk-for-net/issues/32260 is resolved.
         public async Task ReleaseCreatedKey()
         {
             string keyName = Recording.GenerateId();
@@ -73,7 +73,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [IgnoreServiceError(403, "Forbidden", Message = "Target environment attestation statement cannot be verified.")] // TODO: Remove once the attestation issue is resolved: https://github.com/Azure/azure-sdk-for-net/issues/27957
         [IgnoreServiceError(400, "BadParameter")] // TODO: Remove once SKR is deployed to sovereign clouds.
         [PremiumOnly]
-        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3)]
+        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3, Max = KeyClientOptions.ServiceVersion.V7_3)] // TODO: Remove Max once https://github.com/Azure/azure-sdk-for-net/issues/32260 is resolved.
         public async Task UpdateReleasePolicy([Values] bool immutable)
         {
             string keyName = Recording.GenerateId();

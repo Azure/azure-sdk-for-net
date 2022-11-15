@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="groupIds"> GroupIds from the private link service resource. </param>
         /// <param name="connectionState"> Details about the state of the connection. </param>
         /// <param name="provisioningState"> Provisioning state of the Private Endpoint Connection. </param>
-        internal EventGridPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WritableSubResource privateEndpoint, IList<string> groupIds, ConnectionState connectionState, ResourceProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal EventGridPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WritableSubResource privateEndpoint, IList<string> groupIds, EventGridPrivateEndpointConnectionState connectionState, EventGridResourceProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             PrivateEndpoint = privateEndpoint;
             GroupIds = groupIds;
@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> GroupIds from the private link service resource. </summary>
         public IList<string> GroupIds { get; }
         /// <summary> Details about the state of the connection. </summary>
-        public ConnectionState ConnectionState { get; set; }
+        public EventGridPrivateEndpointConnectionState ConnectionState { get; set; }
         /// <summary> Provisioning state of the Private Endpoint Connection. </summary>
-        public ResourceProvisioningState? ProvisioningState { get; set; }
+        public EventGridResourceProvisioningState? ProvisioningState { get; set; }
     }
 }

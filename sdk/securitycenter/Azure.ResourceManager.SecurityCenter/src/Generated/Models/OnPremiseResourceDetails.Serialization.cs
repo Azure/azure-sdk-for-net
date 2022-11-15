@@ -38,16 +38,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     case "OnPremiseSql": return OnPremiseSqlResourceDetails.DeserializeOnPremiseSqlResourceDetails(element);
                 }
             }
-            string workspaceId = default;
+            ResourceIdentifier workspaceId = default;
             Guid vmuuid = default;
             string sourceComputerId = default;
             string machineName = default;
-            Source source = default;
+            Source source = "AutoRest.CSharp.Output.Models.Types.EnumTypeValue";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("workspaceId"))
                 {
-                    workspaceId = property.Value.GetString();
+                    workspaceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("vmuuid"))

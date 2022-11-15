@@ -116,7 +116,7 @@ namespace Azure.Storage.DataMovement.Tests
             List<SingleTransferOptions> options = default)
         {
             // Populate blobNames list for number of blobs to be created
-            if (blobNames.IsNullOrEmpty())
+            if (blobNames == default || blobNames?.Count < 0)
             {
                 blobNames ??= new List<string>();
                 for (int i = 0; i < blobCount; i++)
@@ -131,7 +131,7 @@ namespace Azure.Storage.DataMovement.Tests
             }
 
             // Populate blobNames list for number of blobs to be created
-            if (options.IsNullOrEmpty())
+            if (options == default || options?.Count < 0)
             {
                 options ??= new List<SingleTransferOptions>(blobCount);
                 for (int i = 0; i < blobCount; i++)

@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="domainName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DomainData>> GetAsync(string subscriptionId, string resourceGroupName, string domainName, CancellationToken cancellationToken = default)
+        public async Task<Response<EventGridDomainData>> GetAsync(string subscriptionId, string resourceGroupName, string domainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -76,13 +76,13 @@ namespace Azure.ResourceManager.EventGrid
             {
                 case 200:
                     {
-                        DomainData value = default;
+                        EventGridDomainData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DomainData.DeserializeDomainData(document.RootElement);
+                        value = EventGridDomainData.DeserializeEventGridDomainData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DomainData)null, message.Response);
+                    return Response.FromValue((EventGridDomainData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="domainName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DomainData> Get(string subscriptionId, string resourceGroupName, string domainName, CancellationToken cancellationToken = default)
+        public Response<EventGridDomainData> Get(string subscriptionId, string resourceGroupName, string domainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -107,19 +107,19 @@ namespace Azure.ResourceManager.EventGrid
             {
                 case 200:
                     {
-                        DomainData value = default;
+                        EventGridDomainData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DomainData.DeserializeDomainData(document.RootElement);
+                        value = EventGridDomainData.DeserializeEventGridDomainData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DomainData)null, message.Response);
+                    return Response.FromValue((EventGridDomainData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string domainName, DomainData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string domainName, EventGridDomainData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string domainName, DomainData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string domainName, EventGridDomainData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string domainName, DomainData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string domainName, EventGridDomainData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.EventGrid
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string domainName, DomainPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string domainName, EventGridDomainPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string domainName, DomainPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string domainName, EventGridDomainPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string domainName, DomainPatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string domainName, EventGridDomainPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="domainName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DomainSharedAccessKeys>> ListSharedAccessKeysAsync(string subscriptionId, string resourceGroupName, string domainName, CancellationToken cancellationToken = default)
+        public async Task<Response<EventGridDomainSharedAccessKeys>> ListSharedAccessKeysAsync(string subscriptionId, string resourceGroupName, string domainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -548,9 +548,9 @@ namespace Azure.ResourceManager.EventGrid
             {
                 case 200:
                     {
-                        DomainSharedAccessKeys value = default;
+                        EventGridDomainSharedAccessKeys value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DomainSharedAccessKeys.DeserializeDomainSharedAccessKeys(document.RootElement);
+                        value = EventGridDomainSharedAccessKeys.DeserializeEventGridDomainSharedAccessKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="domainName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DomainSharedAccessKeys> ListSharedAccessKeys(string subscriptionId, string resourceGroupName, string domainName, CancellationToken cancellationToken = default)
+        public Response<EventGridDomainSharedAccessKeys> ListSharedAccessKeys(string subscriptionId, string resourceGroupName, string domainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -577,9 +577,9 @@ namespace Azure.ResourceManager.EventGrid
             {
                 case 200:
                     {
-                        DomainSharedAccessKeys value = default;
+                        EventGridDomainSharedAccessKeys value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DomainSharedAccessKeys.DeserializeDomainSharedAccessKeys(document.RootElement);
+                        value = EventGridDomainSharedAccessKeys.DeserializeEventGridDomainSharedAccessKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.EventGrid
             }
         }
 
-        internal HttpMessage CreateRegenerateKeyRequest(string subscriptionId, string resourceGroupName, string domainName, DomainRegenerateKeyContent content)
+        internal HttpMessage CreateRegenerateKeyRequest(string subscriptionId, string resourceGroupName, string domainName, EventGridDomainRegenerateKeyContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -620,7 +620,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DomainSharedAccessKeys>> RegenerateKeyAsync(string subscriptionId, string resourceGroupName, string domainName, DomainRegenerateKeyContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<EventGridDomainSharedAccessKeys>> RegenerateKeyAsync(string subscriptionId, string resourceGroupName, string domainName, EventGridDomainRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -633,9 +633,9 @@ namespace Azure.ResourceManager.EventGrid
             {
                 case 200:
                     {
-                        DomainSharedAccessKeys value = default;
+                        EventGridDomainSharedAccessKeys value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DomainSharedAccessKeys.DeserializeDomainSharedAccessKeys(document.RootElement);
+                        value = EventGridDomainSharedAccessKeys.DeserializeEventGridDomainSharedAccessKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DomainSharedAccessKeys> RegenerateKey(string subscriptionId, string resourceGroupName, string domainName, DomainRegenerateKeyContent content, CancellationToken cancellationToken = default)
+        public Response<EventGridDomainSharedAccessKeys> RegenerateKey(string subscriptionId, string resourceGroupName, string domainName, EventGridDomainRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -664,9 +664,9 @@ namespace Azure.ResourceManager.EventGrid
             {
                 case 200:
                     {
-                        DomainSharedAccessKeys value = default;
+                        EventGridDomainSharedAccessKeys value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DomainSharedAccessKeys.DeserializeDomainSharedAccessKeys(document.RootElement);
+                        value = EventGridDomainSharedAccessKeys.DeserializeEventGridDomainSharedAccessKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

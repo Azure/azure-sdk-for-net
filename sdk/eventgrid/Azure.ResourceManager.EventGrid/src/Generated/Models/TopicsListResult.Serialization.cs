@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventGrid.Models
     {
         internal static TopicsListResult DeserializeTopicsListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<TopicData>> value = default;
+            Optional<IReadOnlyList<EventGridTopicData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.EventGrid.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<TopicData> array = new List<TopicData>();
+                    List<EventGridTopicData> array = new List<EventGridTopicData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TopicData.DeserializeTopicData(item));
+                        array.Add(EventGridTopicData.DeserializeEventGridTopicData(item));
                     }
                     value = array;
                     continue;

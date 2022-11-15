@@ -73,8 +73,8 @@ namespace Azure.ResourceManager.StorageCache
             Optional<SystemData> systemData = default;
             Optional<IList<NamespaceJunction>> junctions = default;
             Optional<StorageTargetType> targetType = default;
-            Optional<ProvisioningStateType> provisioningState = default;
-            Optional<OperationalStateType> state = default;
+            Optional<StorageCacheProvisioningStateType> provisioningState = default;
+            Optional<StorageTargetOperationalStateType> state = default;
             Optional<Nfs3Target> nfs3 = default;
             Optional<ClfsTarget> clfs = default;
             Optional<UnknownTarget> unknown = default;
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.StorageCache
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningStateType(property0.Value.GetString());
+                            provisioningState = new StorageCacheProvisioningStateType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("state"))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.StorageCache
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            state = new OperationalStateType(property0.Value.GetString());
+                            state = new StorageTargetOperationalStateType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("nfs3"))

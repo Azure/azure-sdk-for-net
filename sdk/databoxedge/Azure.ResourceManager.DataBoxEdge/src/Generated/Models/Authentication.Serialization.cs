@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static Authentication DeserializeAuthentication(JsonElement element)
         {
-            Optional<SymmetricKey> symmetricKey = default;
+            Optional<DataBoxEdgeSymmetricKey> symmetricKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("symmetricKey"))
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    symmetricKey = SymmetricKey.DeserializeSymmetricKey(property.Value);
+                    symmetricKey = DataBoxEdgeSymmetricKey.DeserializeDataBoxEdgeSymmetricKey(property.Value);
                     continue;
                 }
             }

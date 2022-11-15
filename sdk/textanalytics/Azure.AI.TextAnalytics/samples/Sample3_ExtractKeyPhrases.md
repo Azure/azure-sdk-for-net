@@ -19,7 +19,7 @@ var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(a
 To extract key phrases from a document, use the `ExtractKeyPhrases` method.  The returned value the collection of `KeyPhrases` that were extracted from the document.
 
 ```C# Snippet:ExtractKeyPhrases
-string document = @"My cat might need to see a veterinarian. It has been sneezing more than normal, and although my 
+string document = @"My cat might need to see a veterinarian. It has been sneezing more than normal, and although my
                     little sister thinks it is funny, I am worried it has the cold that I got last week.
                     We are going to call tomorrow and try to schedule an appointment for this week. Hopefully it
                     will be covered by the cat's insurance.

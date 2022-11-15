@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal static AlertList DeserializeAlertList(JsonElement element)
         {
-            Optional<IReadOnlyList<AlertData>> value = default;
+            Optional<IReadOnlyList<DataBoxEdgeAlertData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AlertData> array = new List<AlertData>();
+                    List<DataBoxEdgeAlertData> array = new List<DataBoxEdgeAlertData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AlertData.DeserializeAlertData(item));
+                        array.Add(DataBoxEdgeAlertData.DeserializeDataBoxEdgeAlertData(item));
                     }
                     value = array;
                     continue;

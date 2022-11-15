@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataBoxEdge
     /// A Class representing a MonitoringMetricConfiguration along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MonitoringMetricConfigurationResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetMonitoringMetricConfigurationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="RoleResource" /> using the GetMonitoringMetricConfiguration method.
+    /// Otherwise you can get one from its parent resource <see cref="DataBoxEdgeRoleResource" /> using the GetMonitoringMetricConfiguration method.
     /// </summary>
     public partial class MonitoringMetricConfigurationResource : ArmResource
     {

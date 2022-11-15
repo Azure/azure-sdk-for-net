@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            IList<MetricConfiguration> metricConfigurations = default;
+            IList<DataBoxEdgeMetricConfiguration> metricConfigurations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -76,10 +76,10 @@ namespace Azure.ResourceManager.DataBoxEdge
                     {
                         if (property0.NameEquals("metricConfigurations"))
                         {
-                            List<MetricConfiguration> array = new List<MetricConfiguration>();
+                            List<DataBoxEdgeMetricConfiguration> array = new List<DataBoxEdgeMetricConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MetricConfiguration.DeserializeMetricConfiguration(item));
+                                array.Add(DataBoxEdgeMetricConfiguration.DeserializeDataBoxEdgeMetricConfiguration(item));
                             }
                             metricConfigurations = array;
                             continue;

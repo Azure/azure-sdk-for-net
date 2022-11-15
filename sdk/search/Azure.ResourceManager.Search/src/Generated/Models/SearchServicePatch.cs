@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Search.Models
         public SearchServicePatch(AzureLocation location) : base(location)
         {
             PrivateEndpointConnections = new ChangeTrackingList<SearchPrivateEndpointConnectionData>();
-            SharedPrivateLinkResources = new ChangeTrackingList<SharedPrivateLinkResourceData>();
+            SharedPrivateLinkResources = new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of SearchServicePatch. </summary>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="networkRuleSet"> Network specific rules that determine how the Azure Cognitive Search service may be reached. </param>
         /// <param name="privateEndpointConnections"> The list of private endpoint connections to the Azure Cognitive Search service. </param>
         /// <param name="sharedPrivateLinkResources"> The list of shared private link resources managed by the Azure Cognitive Search service. </param>
-        internal SearchServicePatch(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SearchSku sku, ManagedServiceIdentity identity, int? replicaCount, int? partitionCount, HostingMode? hostingMode, PublicNetworkAccess? publicNetworkAccess, SearchServiceStatus? status, string statusDetails, ProvisioningState? provisioningState, NetworkRuleSet networkRuleSet, IReadOnlyList<SearchPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<SharedPrivateLinkResourceData> sharedPrivateLinkResources) : base(id, name, resourceType, systemData, tags, location)
+        internal SearchServicePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SearchSku sku, ManagedServiceIdentity identity, int? replicaCount, int? partitionCount, SearchServiceHostingMode? hostingMode, SearchServicePublicNetworkAccess? publicNetworkAccess, SearchServiceStatus? status, string statusDetails, SearchServiceProvisioningState? provisioningState, NetworkRuleSet networkRuleSet, IReadOnlyList<SearchPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Identity = identity;
@@ -79,19 +79,19 @@ namespace Azure.ResourceManager.Search.Models
         /// <summary> The number of partitions in the search service; if specified, it can be 1, 2, 3, 4, 6, or 12. Values greater than 1 are only valid for standard SKUs. For &apos;standard3&apos; services with hostingMode set to &apos;highDensity&apos;, the allowed values are between 1 and 3. </summary>
         public int? PartitionCount { get; set; }
         /// <summary> Applicable only for the standard3 SKU. You can set this property to enable up to 3 high density partitions that allow up to 1000 indexes, which is much higher than the maximum indexes allowed for any other SKU. For the standard3 SKU, the value is either &apos;default&apos; or &apos;highDensity&apos;. For all other SKUs, this value must be &apos;default&apos;. </summary>
-        public HostingMode? HostingMode { get; set; }
+        public SearchServiceHostingMode? HostingMode { get; set; }
         /// <summary> This value can be set to &apos;enabled&apos; to avoid breaking changes on existing customer resources and templates. If set to &apos;disabled&apos;, traffic over public interface is not allowed, and private endpoint connections would be the exclusive access method. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public SearchServicePublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> The status of the search service. Possible values include: &apos;running&apos;: The search service is running and no provisioning operations are underway. &apos;provisioning&apos;: The search service is being provisioned or scaled up or down. &apos;deleting&apos;: The search service is being deleted. &apos;degraded&apos;: The search service is degraded. This can occur when the underlying search units are not healthy. The search service is most likely operational, but performance might be slow and some requests might be dropped. &apos;disabled&apos;: The search service is disabled. In this state, the service will reject all API requests. &apos;error&apos;: The search service is in an error state. If your service is in the degraded, disabled, or error states, it means the Azure Cognitive Search team is actively investigating the underlying issue. Dedicated services in these states are still chargeable based on the number of search units provisioned. </summary>
         public SearchServiceStatus? Status { get; }
         /// <summary> The details of the search service status. </summary>
         public string StatusDetails { get; }
         /// <summary> The state of the last provisioning operation performed on the search service. Provisioning is an intermediate state that occurs while service capacity is being established. After capacity is set up, provisioningState changes to either &apos;succeeded&apos; or &apos;failed&apos;. Client applications can poll provisioning status (the recommended polling interval is from 30 seconds to one minute) by using the Get Search Service operation to see when an operation is completed. If you are using the free service, this value tends to come back as &apos;succeeded&apos; directly in the call to Create search service. This is because the free service uses capacity that is already set up. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public SearchServiceProvisioningState? ProvisioningState { get; }
         /// <summary> Network specific rules that determine how the Azure Cognitive Search service may be reached. </summary>
         internal NetworkRuleSet NetworkRuleSet { get; set; }
         /// <summary> A list of IP restriction rules that defines the inbound network(s) with allowing access to the search service endpoint. At the meantime, all other public IP networks are blocked by the firewall. These restriction rules are applied only when the &apos;publicNetworkAccess&apos; of the search service is &apos;enabled&apos;; otherwise, traffic over public interface is not allowed even with any public IP rules, and private endpoint connections would be the exclusive access method. </summary>
-        public IList<IPRule> IPRules
+        public IList<SearchServiceIPRule> IPRules
         {
             get
             {
@@ -104,6 +104,6 @@ namespace Azure.ResourceManager.Search.Models
         /// <summary> The list of private endpoint connections to the Azure Cognitive Search service. </summary>
         public IReadOnlyList<SearchPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> The list of shared private link resources managed by the Azure Cognitive Search service. </summary>
-        public IReadOnlyList<SharedPrivateLinkResourceData> SharedPrivateLinkResources { get; }
+        public IReadOnlyList<SharedSearchServicePrivateLinkResourceData> SharedPrivateLinkResources { get; }
     }
 }

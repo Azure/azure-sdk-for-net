@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <summary> Initializes a new instance of the <see cref = "GuestConfigurationVmssAssignmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal GuestConfigurationVmssAssignmentResource(ArmClient client, GuestConfigurationAssignmentData data) : this(client, new ResourceIdentifier(data.Id))
+        internal GuestConfigurationVmssAssignmentResource(ArmClient client, GuestConfigurationAssignmentData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -199,11 +199,11 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="GuestConfigurationAssignmentReport" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GuestConfigurationAssignmentReport> GetGuestConfigurationAssignmentReportsVMsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<GuestConfigurationAssignmentReport> GetReportsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<GuestConfigurationAssignmentReport>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _guestConfigurationAssignmentReportsVmSSClientDiagnostics.CreateScope("GuestConfigurationVmssAssignmentResource.GetGuestConfigurationAssignmentReportsVMs");
+                using var scope = _guestConfigurationAssignmentReportsVmSSClientDiagnostics.CreateScope("GuestConfigurationVmssAssignmentResource.GetReports");
                 scope.Start();
                 try
                 {
@@ -226,11 +226,11 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="GuestConfigurationAssignmentReport" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GuestConfigurationAssignmentReport> GetGuestConfigurationAssignmentReportsVMs(CancellationToken cancellationToken = default)
+        public virtual Pageable<GuestConfigurationAssignmentReport> GetReports(CancellationToken cancellationToken = default)
         {
             Page<GuestConfigurationAssignmentReport> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _guestConfigurationAssignmentReportsVmSSClientDiagnostics.CreateScope("GuestConfigurationVmssAssignmentResource.GetGuestConfigurationAssignmentReportsVMs");
+                using var scope = _guestConfigurationAssignmentReportsVmSSClientDiagnostics.CreateScope("GuestConfigurationVmssAssignmentResource.GetReports");
                 scope.Start();
                 try
                 {
@@ -255,11 +255,11 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public virtual async Task<Response<GuestConfigurationAssignmentReport>> GetGuestConfigurationAssignmentReportsVMSAsync(string id, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GuestConfigurationAssignmentReport>> GetReportAsync(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using var scope = _guestConfigurationAssignmentReportsVmSSClientDiagnostics.CreateScope("GuestConfigurationVmssAssignmentResource.GetGuestConfigurationAssignmentReportsVMS");
+            using var scope = _guestConfigurationAssignmentReportsVmSSClientDiagnostics.CreateScope("GuestConfigurationVmssAssignmentResource.GetReport");
             scope.Start();
             try
             {
@@ -282,11 +282,11 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public virtual Response<GuestConfigurationAssignmentReport> GetGuestConfigurationAssignmentReportsVMS(string id, CancellationToken cancellationToken = default)
+        public virtual Response<GuestConfigurationAssignmentReport> GetReport(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using var scope = _guestConfigurationAssignmentReportsVmSSClientDiagnostics.CreateScope("GuestConfigurationVmssAssignmentResource.GetGuestConfigurationAssignmentReportsVMS");
+            using var scope = _guestConfigurationAssignmentReportsVmSSClientDiagnostics.CreateScope("GuestConfigurationVmssAssignmentResource.GetReport");
             scope.Start();
             try
             {

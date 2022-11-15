@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<string> description = default;
             Optional<string> assessmentType = default;
             Optional<string> assessmentDetailsLink = default;
-            Optional<State> state = default;
+            Optional<RegulatoryComplianceState> state = default;
             Optional<int> passedResources = default;
             Optional<int> failedResources = default;
             Optional<int> skippedResources = default;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.SecurityCenter
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            state = new State(property0.Value.GetString());
+                            state = new RegulatoryComplianceState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("passedResources"))

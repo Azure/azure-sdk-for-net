@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <param name="properties">
         /// Properties of a specific time series database connection.
         /// Please note <see cref="TimeSeriesDatabaseConnectionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureDataExplorerConnectionProperties"/>.
+        /// The available derived classes include <see cref="DataExplorerConnectionProperties"/>.
         /// </param>
-        internal TimeSeriesDatabaseConnectionData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, TimeSeriesDatabaseConnectionProperties properties) : base(id, name, resourceType, systemData)
+        internal TimeSeriesDatabaseConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TimeSeriesDatabaseConnectionProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <summary>
         /// Properties of a specific time series database connection.
         /// Please note <see cref="TimeSeriesDatabaseConnectionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureDataExplorerConnectionProperties"/>.
+        /// The available derived classes include <see cref="DataExplorerConnectionProperties"/>.
         /// </summary>
         public TimeSeriesDatabaseConnectionProperties Properties { get; set; }
     }

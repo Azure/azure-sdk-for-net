@@ -44,7 +44,9 @@
         }
       },
       "OverrideFiles": {
-        "OverrideFiles": "3.txt"
+        "DependencyGroup3.txt": {
+          "OverrideFiles": "3.txt"
+        }
       }
     }
   ]

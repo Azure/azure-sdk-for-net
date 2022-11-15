@@ -1,0 +1,1591 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-7b9ab6a5eec1b64dba96d08cc8be24e2-0f8c81ee9d17a94f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "b4f930810f2a330fb5fdefaaaafa3a87",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "629",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 05 Sep 2022 12:24:36 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "aeea2dee-f96d-4079-8b37-b0f6fb7a1150",
+        "x-ms-ratelimit-remaining-subscription-reads": "11994",
+        "x-ms-request-id": "aeea2dee-f96d-4079-8b37-b0f6fb7a1150",
+        "x-ms-routing-request-id": "GERMANYWESTCENTRAL:20220905T122437Z:aeea2dee-f96d-4079-8b37-b0f6fb7a1150"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "avjerafi_tag1": "testing subscription-level alert 1",
+          "avjerafi_tag2": "testing subscription-level alert 2",
+          "avjerafi_tag3": "testing subscription-level alert 3",
+          "avjerafi_tag4": "testing subscription-level alert 4"
+        },
+        "subscriptionId": "042ebc40-492c-4e4e-a02a-c04b5ba7ee23",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": "Alerts_AMP_Playground_DEV_00",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/providers/Microsoft.AlertsManagement/alerts?alertState=New\u0026api-version=2019-05-05-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-786be77e7cf8aa4f8150b1955c995a83-49d7d5c6902fc642-00",
+        "User-Agent": "azsdk-net-ResourceManager.AlertsManagement/1.0.0-alpha.20220905.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "4995d0bf573bc836a9afa6564406cc3b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, no-cache",
+        "Content-Length": "53186",
+        "Content-Security-Policy": "script-src \u0027self\u0027",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 05 Sep 2022 12:24:37 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "29bb8a78-e59b-4494-9e93-2be75f4ffb45",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "999",
+        "x-ms-request-id": "0ced54d9-f541-45e7-a93d-8559238714e4",
+        "x-ms-routing-request-id": "GERMANYWESTCENTRAL:20220905T122437Z:29bb8a78-e59b-4494-9e93-2be75f4ffb45",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "nextLink": "https://management.azure.com:443/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/providers/Microsoft.AlertsManagement/alerts?alertState=New\u0026api-version=2019-05-05-preview\u0026ctoken=G%3b%5b%7b%22token%22%3a%22%2bRID%3a%7eQTw6ANtKHx4X%2bdUBAFBUBQ%3d%3d%23RT%3a1%23TRC%3a50%23RTD%3aYjHFq3YvGCgjIIKVE0XNBTMxMzMuMTouMTZVMjM7MzI7NDUvMjgxNTkyOlsA%23ISV%3a2%23IEO%3a65567%23QCF%3a8%22%2c%22range%22%3a%7b%22min%22%3a%2205C1E5C7A5B55E%22%2c%22max%22%3a%2205C1E5FB972B84%22%7d%7d%5d",
+        "value": [
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev3",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "Log Analytics",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/ilaizirg/providers/microsoft.operationalinsights/workspaces/teslalerts",
+                "targetResourceName": "teslalerts",
+                "targetResourceGroup": "ilaizirg",
+                "targetResourceType": "workspaces",
+                "sourceCreatedId": "9e04ca47-7860-46a2-a612-a38ed3761880",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/ilaiziRG/providers/microsoft.insights/scheduledqueryrules/lsaalerts",
+                "startDateTime": "2022-09-05T12:23:56.6748203Z",
+                "lastModifiedDateTime": "2022-09-05T12:23:56.6748203Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": ""
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/ilaizirg/providers/microsoft.operationalinsights/workspaces/teslalerts/providers/Microsoft.AlertsManagement/alerts/68776783-1004-eb77-c455-c8b9dcb0bb60",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "lsaalerts"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev3",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "Log Alerts V2",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/acme_retail_web_site/providers/microsoft.insights/components/acme-portal",
+                "targetResourceName": "acme-portal",
+                "targetResourceGroup": "acme_retail_web_site",
+                "targetResourceType": "components",
+                "sourceCreatedId": "fc3642f8-2274-4c20-94df-8752afed7674",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/ilaiziRG/providers/microsoft.insights/scheduledqueryrules/LogSearch1ActionGroup",
+                "startDateTime": "2022-09-05T12:23:53.1027598Z",
+                "lastModifiedDateTime": "2022-09-05T12:23:53.1027598Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": ""
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/acme_retail_web_site/providers/microsoft.insights/components/acme-portal/providers/Microsoft.AlertsManagement/alerts/2ff2ccad-48b6-953a-bea7-64a1d98c0637",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "LogSearch1ActionGroup"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev4",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "ActivityLog Administrative",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851",
+                "targetResourceName": "testrg6851",
+                "targetResourceGroup": "testrg6851",
+                "targetResourceType": "",
+                "sourceCreatedId": "3c03a106-12f1-4fe5-a4ba-76c0a393a4d4_c7bc851312bbb14328b8bd3a8f23c6a5",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/avjerafiRG/providers/microsoft.insights/activityLogAlerts/avjerafi_info_admin",
+                "startDateTime": "2022-09-05T12:23:34.5884153Z",
+                "lastModifiedDateTime": "2022-09-05T12:23:34.5884153Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": ""
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/Microsoft.AlertsManagement/alerts/16cc8401-615c-f62c-1187-2e8ee54b3b29",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "avjerafi_info_admin"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev4",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "ActivityLog Administrative",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851",
+                "targetResourceName": "testrg6851",
+                "targetResourceGroup": "testrg6851",
+                "targetResourceType": "",
+                "sourceCreatedId": "3c03a106-12f1-4fe5-a4ba-76c0a393a4d4_36cb746a57309b04ee4eb60c8feb4e7b",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/avhaddadResourceGroup/providers/microsoft.insights/activityLogAlerts/avhaddadalerttest",
+                "startDateTime": "2022-09-05T12:23:34.5884153Z",
+                "lastModifiedDateTime": "2022-09-05T12:23:34.5884153Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": "aviv haddad 9999"
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/Microsoft.AlertsManagement/alerts/a1e2373c-f5e6-a3bd-927a-ee5bbb997279",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "avhaddadalerttest"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev4",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "ActivityLog Administrative",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851",
+                "targetResourceName": "testrg6851",
+                "targetResourceGroup": "testrg6851",
+                "targetResourceType": "",
+                "sourceCreatedId": "3c03a106-12f1-4fe5-a4ba-76c0a393a4d4_b3a367ea880942779ff01973ebe7cf1d",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/acme_retail_web_site/providers/microsoft.insights/activityLogAlerts/delete",
+                "startDateTime": "2022-09-05T12:23:34.5727614Z",
+                "lastModifiedDateTime": "2022-09-05T12:23:34.5727614Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": ""
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/Microsoft.AlertsManagement/alerts/90e5284e-80a2-65ab-1800-676320bd1e55",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "delete"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev4",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "ActivityLog Administrative",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851",
+                "targetResourceName": "testrg6851",
+                "targetResourceGroup": "testrg6851",
+                "targetResourceType": "",
+                "sourceCreatedId": "3c03a106-12f1-4fe5-a4ba-76c0a393a4d4_86cb17f19480d0f5709ac71b65b9e4a7",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/AlertRG/providers/microsoft.insights/activityLogAlerts/E2E Validation",
+                "startDateTime": "2022-09-05T12:23:34.5727614Z",
+                "lastModifiedDateTime": "2022-09-05T12:23:34.5727614Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": ""
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/Microsoft.AlertsManagement/alerts/41e19230-be7c-f04c-177a-3f0a4bfc36e5",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "E2E Validation"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev3",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "Application Insights",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/acme_retail_web_site/providers/microsoft.insights/components/acme-portal",
+                "targetResourceName": "acme-portal",
+                "targetResourceGroup": "acme_retail_web_site",
+                "targetResourceType": "components",
+                "sourceCreatedId": "6a1acc57-9db5-47d6-8396-5d0d5274b66f",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/ilaiziRG/providers/microsoft.insights/scheduledqueryrules/Test dimensions",
+                "startDateTime": "2022-09-05T12:23:09.019133Z",
+                "lastModifiedDateTime": "2022-09-05T12:23:09.019133Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": ""
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/acme_retail_web_site/providers/microsoft.insights/components/acme-portal/providers/Microsoft.AlertsManagement/alerts/b5a3580e-a189-f513-8635-dea6c59cd0f9",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "Test dimensions"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev3",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "Application Insights",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/acme_retail_web_site/providers/microsoft.insights/components/acme-portal",
+                "targetResourceName": "acme-portal",
+                "targetResourceGroup": "acme_retail_web_site",
+                "targetResourceType": "components",
+                "sourceCreatedId": "da2aa978-c41d-46b3-89de-c4d136586cef",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/ACME_retail_web_site/providers/microsoft.insights/scheduledqueryrules/Test number of results",
+                "startDateTime": "2022-09-05T12:22:56.7417072Z",
+                "lastModifiedDateTime": "2022-09-05T12:22:56.7417072Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": ""
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/acme_retail_web_site/providers/microsoft.insights/components/acme-portal/providers/Microsoft.AlertsManagement/alerts/64a684a4-cf86-ab1d-ba21-88f399e3326e",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "Test number of results"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev3",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "Log Alerts V2",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/acme_retail_web_site/providers/microsoft.insights/components/acme-portal",
+                "targetResourceName": "acme-portal",
+                "targetResourceGroup": "acme_retail_web_site",
+                "targetResourceType": "components",
+                "sourceCreatedId": "3ffbd09d-07f5-4701-bcbf-8d2828c8876a",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/ilaiziRG/providers/microsoft.insights/scheduledqueryrules/LogserachSupressActionGroup",
+                "startDateTime": "2022-09-05T12:22:34.1918567Z",
+                "lastModifiedDateTime": "2022-09-05T12:22:34.1918567Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": true
+                },
+                "description": ""
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/acme_retail_web_site/providers/microsoft.insights/components/acme-portal/providers/Microsoft.AlertsManagement/alerts/2d931ceb-76c4-c68b-2bd8-c66bdc62aa9d",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "LogserachSupressActionGroup"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev4",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "ActivityLog Administrative",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/microsoft.alertsmanagement/actionrules/alertprocessingrule9567",
+                "targetResourceName": "alertprocessingrule9567",
+                "targetResourceGroup": "testrg6851",
+                "targetResourceType": "actionrules",
+                "sourceCreatedId": "50918b22-3c08-4335-ac1c-aeeea4bc03f9_c7bc851312bbb14328b8bd3a8f23c6a5",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/avjerafiRG/providers/microsoft.insights/activityLogAlerts/avjerafi_info_admin",
+                "startDateTime": "2022-09-05T12:22:28.5136594Z",
+                "lastModifiedDateTime": "2022-09-05T12:22:28.5136594Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": ""
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/microsoft.alertsmanagement/actionrules/alertprocessingrule9567/providers/Microsoft.AlertsManagement/alerts/e039c227-260e-9f46-203d-d5a366c53095",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "avjerafi_info_admin"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev4",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "ActivityLog Administrative",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/microsoft.alertsmanagement/actionrules/alertprocessingrule9567",
+                "targetResourceName": "alertprocessingrule9567",
+                "targetResourceGroup": "testrg6851",
+                "targetResourceType": "actionrules",
+                "sourceCreatedId": "50918b22-3c08-4335-ac1c-aeeea4bc03f9_86cb17f19480d0f5709ac71b65b9e4a7",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/AlertRG/providers/microsoft.insights/activityLogAlerts/E2E Validation",
+                "startDateTime": "2022-09-05T12:22:28.5136594Z",
+                "lastModifiedDateTime": "2022-09-05T12:22:28.5136594Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": ""
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/microsoft.alertsmanagement/actionrules/alertprocessingrule9567/providers/Microsoft.AlertsManagement/alerts/89a12214-c704-9282-c2ee-1bbcfcaec5fe",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "E2E Validation"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev4",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "ActivityLog Administrative",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/microsoft.alertsmanagement/actionrules/alertprocessingrule9567",
+                "targetResourceName": "alertprocessingrule9567",
+                "targetResourceGroup": "testrg6851",
+                "targetResourceType": "actionrules",
+                "sourceCreatedId": "50918b22-3c08-4335-ac1c-aeeea4bc03f9_36cb746a57309b04ee4eb60c8feb4e7b",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/avhaddadResourceGroup/providers/microsoft.insights/activityLogAlerts/avhaddadalerttest",
+                "startDateTime": "2022-09-05T12:22:28.5136594Z",
+                "lastModifiedDateTime": "2022-09-05T12:22:28.5136594Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": "aviv haddad 9999"
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/microsoft.alertsmanagement/actionrules/alertprocessingrule9567/providers/Microsoft.AlertsManagement/alerts/7fdbb788-e3a0-1acd-bed1-09e480314efc",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "avhaddadalerttest"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev4",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "ActivityLog Administrative",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/microsoft.alertsmanagement/actionrules/alertprocessingrule9567",
+                "targetResourceName": "alertprocessingrule9567",
+                "targetResourceGroup": "testrg6851",
+                "targetResourceType": "actionrules",
+                "sourceCreatedId": "50918b22-3c08-4335-ac1c-aeeea4bc03f9_b3a367ea880942779ff01973ebe7cf1d",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/acme_retail_web_site/providers/microsoft.insights/activityLogAlerts/delete",
+                "startDateTime": "2022-09-05T12:22:28.5136594Z",
+                "lastModifiedDateTime": "2022-09-05T12:22:28.5136594Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": ""
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/microsoft.alertsmanagement/actionrules/alertprocessingrule9567/providers/Microsoft.AlertsManagement/alerts/34e00524-bd8a-0e33-34e7-2a850d9ca085",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "delete"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev4",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "ActivityLog Administrative",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851",
+                "targetResourceName": "testrg6851",
+                "targetResourceGroup": "testrg6851",
+                "targetResourceType": "",
+                "sourceCreatedId": "3b9a00ef-7f31-4986-bf5f-ec9953500035_36cb746a57309b04ee4eb60c8feb4e7b",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/avhaddadResourceGroup/providers/microsoft.insights/activityLogAlerts/avhaddadalerttest",
+                "startDateTime": "2022-09-05T12:21:37.8780481Z",
+                "lastModifiedDateTime": "2022-09-05T12:21:37.8780481Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": "aviv haddad 9999"
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/Microsoft.AlertsManagement/alerts/c6b1cbb4-f3e1-dcdc-2da6-0281b2007828",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "avhaddadalerttest"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev4",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "ActivityLog Administrative",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851",
+                "targetResourceName": "testrg6851",
+                "targetResourceGroup": "testrg6851",
+                "targetResourceType": "",
+                "sourceCreatedId": "3b9a00ef-7f31-4986-bf5f-ec9953500035_ed9bcff9fe0107c17097d7696eaa69de",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/idsternRG/providers/microsoft.insights/activityLogAlerts/idsternTestPrimary",
+                "startDateTime": "2022-09-05T12:21:37.8780481Z",
+                "lastModifiedDateTime": "2022-09-05T12:21:37.8780481Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": "idsternTestPrimary ddd"
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/Microsoft.AlertsManagement/alerts/ed530fd1-81c2-bd31-6ec2-3308df413a90",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "idsternTestPrimary"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev4",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "ActivityLog Administrative",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851",
+                "targetResourceName": "testrg6851",
+                "targetResourceGroup": "testrg6851",
+                "targetResourceType": "",
+                "sourceCreatedId": "3b9a00ef-7f31-4986-bf5f-ec9953500035_8f2d3c839407eee6111c430489515af2",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/idsternRG/providers/microsoft.insights/activityLogAlerts/TestQuebecVersionAlertRule",
+                "startDateTime": "2022-09-05T12:21:37.8780481Z",
+                "lastModifiedDateTime": "2022-09-05T12:21:37.8780481Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": "TestQuebecVersionAlertRule"
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/Microsoft.AlertsManagement/alerts/3d9b76bb-ae30-3f17-22d0-df853ff8bf18",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "TestQuebecVersionAlertRule"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev4",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "ActivityLog Administrative",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851",
+                "targetResourceName": "testrg6851",
+                "targetResourceGroup": "testrg6851",
+                "targetResourceType": "",
+                "sourceCreatedId": "3b9a00ef-7f31-4986-bf5f-ec9953500035_2d7998ef612fc9d732047f3524271798",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/idsternRG/providers/microsoft.insights/activityLogAlerts/idsternTestPrimary-UAEC",
+                "startDateTime": "2022-09-05T12:21:37.8780481Z",
+                "lastModifiedDateTime": "2022-09-05T12:21:37.8780481Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": "idsternTestPrimary-UAEC"
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/Microsoft.AlertsManagement/alerts/757a8f8b-6c5d-367b-3ff5-2f69e0057c6a",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "idsternTestPrimary-UAEC"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev4",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "ActivityLog Administrative",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851",
+                "targetResourceName": "testrg6851",
+                "targetResourceGroup": "testrg6851",
+                "targetResourceType": "",
+                "sourceCreatedId": "3b9a00ef-7f31-4986-bf5f-ec9953500035_b3a367ea880942779ff01973ebe7cf1d",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/acme_retail_web_site/providers/microsoft.insights/activityLogAlerts/delete",
+                "startDateTime": "2022-09-05T12:21:37.8780481Z",
+                "lastModifiedDateTime": "2022-09-05T12:21:37.8780481Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": ""
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/Microsoft.AlertsManagement/alerts/35e7dea7-fb7e-554a-b400-53cbc9b72ad1",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "delete"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev4",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "ActivityLog Administrative",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851",
+                "targetResourceName": "testrg6851",
+                "targetResourceGroup": "testrg6851",
+                "targetResourceType": "",
+                "sourceCreatedId": "3b9a00ef-7f31-4986-bf5f-ec9953500035_c7bc851312bbb14328b8bd3a8f23c6a5",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/avjerafiRG/providers/microsoft.insights/activityLogAlerts/avjerafi_info_admin",
+                "startDateTime": "2022-09-05T12:21:37.8780481Z",
+                "lastModifiedDateTime": "2022-09-05T12:21:37.8780481Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": ""
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/Microsoft.AlertsManagement/alerts/e5648e7e-946a-a022-1455-1945d25e7972",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "avjerafi_info_admin"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev4",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "ActivityLog Administrative",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851",
+                "targetResourceName": "testrg6851",
+                "targetResourceGroup": "testrg6851",
+                "targetResourceType": "",
+                "sourceCreatedId": "3b9a00ef-7f31-4986-bf5f-ec9953500035_86cb17f19480d0f5709ac71b65b9e4a7",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/AlertRG/providers/microsoft.insights/activityLogAlerts/E2E Validation",
+                "startDateTime": "2022-09-05T12:21:37.8624546Z",
+                "lastModifiedDateTime": "2022-09-05T12:21:37.8624546Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": ""
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/Microsoft.AlertsManagement/alerts/29619444-ac7f-5ba0-cc6f-c1b272d9a746",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "E2E Validation"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev4",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "ActivityLog Administrative",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851",
+                "targetResourceName": "testrg6851",
+                "targetResourceGroup": "testrg6851",
+                "targetResourceType": "",
+                "sourceCreatedId": "780a2d47-eabe-4401-aa94-95523a73eac9_36cb746a57309b04ee4eb60c8feb4e7b",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/avhaddadResourceGroup/providers/microsoft.insights/activityLogAlerts/avhaddadalerttest",
+                "startDateTime": "2022-09-05T12:21:37.4204244Z",
+                "lastModifiedDateTime": "2022-09-05T12:21:37.4204244Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": "aviv haddad 9999"
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/Microsoft.AlertsManagement/alerts/0a20ad44-68ae-4762-a11a-c9302566420e",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "avhaddadalerttest"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev4",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "ActivityLog Administrative",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851",
+                "targetResourceName": "testrg6851",
+                "targetResourceGroup": "testrg6851",
+                "targetResourceType": "",
+                "sourceCreatedId": "780a2d47-eabe-4401-aa94-95523a73eac9_86cb17f19480d0f5709ac71b65b9e4a7",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/AlertRG/providers/microsoft.insights/activityLogAlerts/E2E Validation",
+                "startDateTime": "2022-09-05T12:21:37.4204244Z",
+                "lastModifiedDateTime": "2022-09-05T12:21:37.4204244Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": ""
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/Microsoft.AlertsManagement/alerts/c3b1a4a5-77f6-1d12-325d-0fbef7e80485",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "E2E Validation"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev4",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "ActivityLog Administrative",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851",
+                "targetResourceName": "testrg6851",
+                "targetResourceGroup": "testrg6851",
+                "targetResourceType": "",
+                "sourceCreatedId": "780a2d47-eabe-4401-aa94-95523a73eac9_b3a367ea880942779ff01973ebe7cf1d",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/acme_retail_web_site/providers/microsoft.insights/activityLogAlerts/delete",
+                "startDateTime": "2022-09-05T12:21:37.4204244Z",
+                "lastModifiedDateTime": "2022-09-05T12:21:37.4204244Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": ""
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/Microsoft.AlertsManagement/alerts/2435cc3c-cc9d-2105-5bef-eabfc02f5bae",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "delete"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev4",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "ActivityLog Administrative",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851",
+                "targetResourceName": "testrg6851",
+                "targetResourceGroup": "testrg6851",
+                "targetResourceType": "",
+                "sourceCreatedId": "780a2d47-eabe-4401-aa94-95523a73eac9_c7bc851312bbb14328b8bd3a8f23c6a5",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/avjerafiRG/providers/microsoft.insights/activityLogAlerts/avjerafi_info_admin",
+                "startDateTime": "2022-09-05T12:21:37.4204244Z",
+                "lastModifiedDateTime": "2022-09-05T12:21:37.4204244Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": ""
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/Microsoft.AlertsManagement/alerts/52850b62-ce63-e24c-23ec-55762c452662",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "avjerafi_info_admin"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev4",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "ActivityLog Administrative",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851",
+                "targetResourceName": "testrg6851",
+                "targetResourceGroup": "testrg6851",
+                "targetResourceType": "",
+                "sourceCreatedId": "a03087e7-f155-4cd6-8473-18f6088cde22_c7bc851312bbb14328b8bd3a8f23c6a5",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/avjerafiRG/providers/microsoft.insights/activityLogAlerts/avjerafi_info_admin",
+                "startDateTime": "2022-09-05T12:21:37.0331739Z",
+                "lastModifiedDateTime": "2022-09-05T12:21:37.0331739Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": ""
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/Microsoft.AlertsManagement/alerts/a84d2eb6-c95e-e6f0-d5e9-218a2e0e794e",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "avjerafi_info_admin"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev4",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "ActivityLog Administrative",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851",
+                "targetResourceName": "testrg6851",
+                "targetResourceGroup": "testrg6851",
+                "targetResourceType": "",
+                "sourceCreatedId": "a03087e7-f155-4cd6-8473-18f6088cde22_b3a367ea880942779ff01973ebe7cf1d",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/acme_retail_web_site/providers/microsoft.insights/activityLogAlerts/delete",
+                "startDateTime": "2022-09-05T12:21:37.0175478Z",
+                "lastModifiedDateTime": "2022-09-05T12:21:37.0175478Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": ""
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/Microsoft.AlertsManagement/alerts/ecade5fb-fa89-b918-2ebb-76afff9c926a",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "delete"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev4",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "ActivityLog Administrative",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851",
+                "targetResourceName": "testrg6851",
+                "targetResourceGroup": "testrg6851",
+                "targetResourceType": "",
+                "sourceCreatedId": "a03087e7-f155-4cd6-8473-18f6088cde22_86cb17f19480d0f5709ac71b65b9e4a7",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/AlertRG/providers/microsoft.insights/activityLogAlerts/E2E Validation",
+                "startDateTime": "2022-09-05T12:21:37.0175478Z",
+                "lastModifiedDateTime": "2022-09-05T12:21:37.0175478Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": ""
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/Microsoft.AlertsManagement/alerts/6febb07f-c132-3175-cdee-cebb45a42bc2",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "E2E Validation"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev4",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "ActivityLog Administrative",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851",
+                "targetResourceName": "testrg6851",
+                "targetResourceGroup": "testrg6851",
+                "targetResourceType": "",
+                "sourceCreatedId": "a03087e7-f155-4cd6-8473-18f6088cde22_36cb746a57309b04ee4eb60c8feb4e7b",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/avhaddadResourceGroup/providers/microsoft.insights/activityLogAlerts/avhaddadalerttest",
+                "startDateTime": "2022-09-05T12:21:37.0175478Z",
+                "lastModifiedDateTime": "2022-09-05T12:21:37.0175478Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": "aviv haddad 9999"
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/Microsoft.AlertsManagement/alerts/c883ed5c-122e-213e-05c6-9f3944396336",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "avhaddadalerttest"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev4",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "ActivityLog Administrative",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851",
+                "targetResourceName": "testrg6851",
+                "targetResourceGroup": "testrg6851",
+                "targetResourceType": "",
+                "sourceCreatedId": "d11f9b06-f298-452c-9572-90d4734c7a23_ed9bcff9fe0107c17097d7696eaa69de",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/idsternRG/providers/microsoft.insights/activityLogAlerts/idsternTestPrimary",
+                "startDateTime": "2022-09-05T12:21:36.1615604Z",
+                "lastModifiedDateTime": "2022-09-05T12:21:36.1615604Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": "idsternTestPrimary ddd"
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/Microsoft.AlertsManagement/alerts/66d20254-7b3c-bfde-ed5f-4c1450134d24",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "idsternTestPrimary"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev4",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "ActivityLog Administrative",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851",
+                "targetResourceName": "testrg6851",
+                "targetResourceGroup": "testrg6851",
+                "targetResourceType": "",
+                "sourceCreatedId": "d11f9b06-f298-452c-9572-90d4734c7a23_b3a367ea880942779ff01973ebe7cf1d",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/acme_retail_web_site/providers/microsoft.insights/activityLogAlerts/delete",
+                "startDateTime": "2022-09-05T12:21:36.1615604Z",
+                "lastModifiedDateTime": "2022-09-05T12:21:36.1615604Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": ""
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/Microsoft.AlertsManagement/alerts/5ebc821e-bee3-e293-9828-3acd28be9475",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "delete"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev4",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "ActivityLog Administrative",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851",
+                "targetResourceName": "testrg6851",
+                "targetResourceGroup": "testrg6851",
+                "targetResourceType": "",
+                "sourceCreatedId": "d11f9b06-f298-452c-9572-90d4734c7a23_36cb746a57309b04ee4eb60c8feb4e7b",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/avhaddadResourceGroup/providers/microsoft.insights/activityLogAlerts/avhaddadalerttest",
+                "startDateTime": "2022-09-05T12:21:36.1615604Z",
+                "lastModifiedDateTime": "2022-09-05T12:21:36.1615604Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": "aviv haddad 9999"
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/Microsoft.AlertsManagement/alerts/b8d35e4c-14ba-e843-9a61-3c60b3a3c7de",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "avhaddadalerttest"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev4",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "ActivityLog Administrative",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851",
+                "targetResourceName": "testrg6851",
+                "targetResourceGroup": "testrg6851",
+                "targetResourceType": "",
+                "sourceCreatedId": "d11f9b06-f298-452c-9572-90d4734c7a23_86cb17f19480d0f5709ac71b65b9e4a7",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/AlertRG/providers/microsoft.insights/activityLogAlerts/E2E Validation",
+                "startDateTime": "2022-09-05T12:21:36.1615604Z",
+                "lastModifiedDateTime": "2022-09-05T12:21:36.1615604Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": ""
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/Microsoft.AlertsManagement/alerts/fd5eb711-f76b-6543-ba26-c0a46f7acf3c",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "E2E Validation"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev4",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "ActivityLog Administrative",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851",
+                "targetResourceName": "testrg6851",
+                "targetResourceGroup": "testrg6851",
+                "targetResourceType": "",
+                "sourceCreatedId": "d11f9b06-f298-452c-9572-90d4734c7a23_2d7998ef612fc9d732047f3524271798",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/idsternRG/providers/microsoft.insights/activityLogAlerts/idsternTestPrimary-UAEC",
+                "startDateTime": "2022-09-05T12:21:36.1615604Z",
+                "lastModifiedDateTime": "2022-09-05T12:21:36.1615604Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": "idsternTestPrimary-UAEC"
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/Microsoft.AlertsManagement/alerts/7ad4f757-2dd2-9248-0bed-43b978a04683",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "idsternTestPrimary-UAEC"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev4",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "ActivityLog Administrative",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851",
+                "targetResourceName": "testrg6851",
+                "targetResourceGroup": "testrg6851",
+                "targetResourceType": "",
+                "sourceCreatedId": "d11f9b06-f298-452c-9572-90d4734c7a23_8f2d3c839407eee6111c430489515af2",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/idsternRG/providers/microsoft.insights/activityLogAlerts/TestQuebecVersionAlertRule",
+                "startDateTime": "2022-09-05T12:21:36.1615604Z",
+                "lastModifiedDateTime": "2022-09-05T12:21:36.1615604Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": "TestQuebecVersionAlertRule"
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/Microsoft.AlertsManagement/alerts/9a4d457a-b07a-f72d-19dc-b2432253efb9",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "TestQuebecVersionAlertRule"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev4",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "ActivityLog Administrative",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851",
+                "targetResourceName": "testrg6851",
+                "targetResourceGroup": "testrg6851",
+                "targetResourceType": "",
+                "sourceCreatedId": "d11f9b06-f298-452c-9572-90d4734c7a23_c7bc851312bbb14328b8bd3a8f23c6a5",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/avjerafiRG/providers/microsoft.insights/activityLogAlerts/avjerafi_info_admin",
+                "startDateTime": "2022-09-05T12:21:36.1615604Z",
+                "lastModifiedDateTime": "2022-09-05T12:21:36.1615604Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": ""
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/Microsoft.AlertsManagement/alerts/cac974ba-13da-c87f-a659-856efe8e935b",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "avjerafi_info_admin"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev4",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "ActivityLog Administrative",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851",
+                "targetResourceName": "testrg6851",
+                "targetResourceGroup": "testrg6851",
+                "targetResourceType": "",
+                "sourceCreatedId": "131d71e0-34f2-432a-838e-0808c88c1d27_b3a367ea880942779ff01973ebe7cf1d",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/acme_retail_web_site/providers/microsoft.insights/activityLogAlerts/delete",
+                "startDateTime": "2022-09-05T12:21:36.1302974Z",
+                "lastModifiedDateTime": "2022-09-05T12:21:36.1302974Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": ""
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/Microsoft.AlertsManagement/alerts/2f2b1089-c4da-5b81-d3c4-cec1c9513698",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "delete"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev4",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "ActivityLog Administrative",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851",
+                "targetResourceName": "testrg6851",
+                "targetResourceGroup": "testrg6851",
+                "targetResourceType": "",
+                "sourceCreatedId": "131d71e0-34f2-432a-838e-0808c88c1d27_86cb17f19480d0f5709ac71b65b9e4a7",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/AlertRG/providers/microsoft.insights/activityLogAlerts/E2E Validation",
+                "startDateTime": "2022-09-05T12:21:36.1302974Z",
+                "lastModifiedDateTime": "2022-09-05T12:21:36.1302974Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": ""
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/Microsoft.AlertsManagement/alerts/e833df5d-dc60-6025-04d5-6c62bbb73971",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "E2E Validation"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev4",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "ActivityLog Administrative",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851",
+                "targetResourceName": "testrg6851",
+                "targetResourceGroup": "testrg6851",
+                "targetResourceType": "",
+                "sourceCreatedId": "131d71e0-34f2-432a-838e-0808c88c1d27_36cb746a57309b04ee4eb60c8feb4e7b",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/avhaddadResourceGroup/providers/microsoft.insights/activityLogAlerts/avhaddadalerttest",
+                "startDateTime": "2022-09-05T12:21:36.1302974Z",
+                "lastModifiedDateTime": "2022-09-05T12:21:36.1302974Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": "aviv haddad 9999"
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/Microsoft.AlertsManagement/alerts/6bc24e08-4c38-2d1e-f3da-c5dbd24406a3",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "avhaddadalerttest"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev4",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "ActivityLog Administrative",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851",
+                "targetResourceName": "testrg6851",
+                "targetResourceGroup": "testrg6851",
+                "targetResourceType": "",
+                "sourceCreatedId": "131d71e0-34f2-432a-838e-0808c88c1d27_c7bc851312bbb14328b8bd3a8f23c6a5",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/avjerafiRG/providers/microsoft.insights/activityLogAlerts/avjerafi_info_admin",
+                "startDateTime": "2022-09-05T12:21:36.1302974Z",
+                "lastModifiedDateTime": "2022-09-05T12:21:36.1302974Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": ""
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/Microsoft.AlertsManagement/alerts/1aaa7e67-4cf4-d364-8a99-3ea4105a164f",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "avjerafi_info_admin"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev4",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "ActivityLog Administrative",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851",
+                "targetResourceName": "testrg6851",
+                "targetResourceGroup": "testrg6851",
+                "targetResourceType": "",
+                "sourceCreatedId": "512acd11-1319-41ea-9e1b-cef53a969f12_c7bc851312bbb14328b8bd3a8f23c6a5",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/avjerafiRG/providers/microsoft.insights/activityLogAlerts/avjerafi_info_admin",
+                "startDateTime": "2022-09-05T12:21:35.6228494Z",
+                "lastModifiedDateTime": "2022-09-05T12:21:35.6228494Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": ""
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/Microsoft.AlertsManagement/alerts/611e73a2-1bac-10c4-4d14-4a5a26dcd27d",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "avjerafi_info_admin"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev4",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "ActivityLog Administrative",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851",
+                "targetResourceName": "testrg6851",
+                "targetResourceGroup": "testrg6851",
+                "targetResourceType": "",
+                "sourceCreatedId": "512acd11-1319-41ea-9e1b-cef53a969f12_86cb17f19480d0f5709ac71b65b9e4a7",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/AlertRG/providers/microsoft.insights/activityLogAlerts/E2E Validation",
+                "startDateTime": "2022-09-05T12:21:35.6228494Z",
+                "lastModifiedDateTime": "2022-09-05T12:21:35.6228494Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": ""
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/Microsoft.AlertsManagement/alerts/f9684a5a-eda4-003e-e685-b2fb4c062724",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "E2E Validation"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev4",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "ActivityLog Administrative",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851",
+                "targetResourceName": "testrg6851",
+                "targetResourceGroup": "testrg6851",
+                "targetResourceType": "",
+                "sourceCreatedId": "512acd11-1319-41ea-9e1b-cef53a969f12_b3a367ea880942779ff01973ebe7cf1d",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/acme_retail_web_site/providers/microsoft.insights/activityLogAlerts/delete",
+                "startDateTime": "2022-09-05T12:21:35.6228494Z",
+                "lastModifiedDateTime": "2022-09-05T12:21:35.6228494Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": ""
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/Microsoft.AlertsManagement/alerts/b1fb67d7-9b2a-ff3a-b83c-db393dbec06d",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "delete"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev4",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "ActivityLog Administrative",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851",
+                "targetResourceName": "testrg6851",
+                "targetResourceGroup": "testrg6851",
+                "targetResourceType": "",
+                "sourceCreatedId": "512acd11-1319-41ea-9e1b-cef53a969f12_36cb746a57309b04ee4eb60c8feb4e7b",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/avhaddadResourceGroup/providers/microsoft.insights/activityLogAlerts/avhaddadalerttest",
+                "startDateTime": "2022-09-05T12:21:35.6228494Z",
+                "lastModifiedDateTime": "2022-09-05T12:21:35.6228494Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": "aviv haddad 9999"
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/Microsoft.AlertsManagement/alerts/ea9a6334-3d97-cffa-6420-621f84bf5c11",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "avhaddadalerttest"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev4",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "ActivityLog Administrative",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851",
+                "targetResourceName": "testrg6851",
+                "targetResourceGroup": "testrg6851",
+                "targetResourceType": "",
+                "sourceCreatedId": "edc2fe2a-c70e-4fbd-829d-20eefa346c01_86cb17f19480d0f5709ac71b65b9e4a7",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/AlertRG/providers/microsoft.insights/activityLogAlerts/E2E Validation",
+                "startDateTime": "2022-09-05T12:21:34.1704819Z",
+                "lastModifiedDateTime": "2022-09-05T12:21:34.1704819Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": ""
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/Microsoft.AlertsManagement/alerts/c7ed19d2-379d-3ec0-0a41-ab9d4147dffc",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "E2E Validation"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev4",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "ActivityLog Administrative",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851",
+                "targetResourceName": "testrg6851",
+                "targetResourceGroup": "testrg6851",
+                "targetResourceType": "",
+                "sourceCreatedId": "edc2fe2a-c70e-4fbd-829d-20eefa346c01_c7bc851312bbb14328b8bd3a8f23c6a5",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/avjerafiRG/providers/microsoft.insights/activityLogAlerts/avjerafi_info_admin",
+                "startDateTime": "2022-09-05T12:21:34.1704819Z",
+                "lastModifiedDateTime": "2022-09-05T12:21:34.1704819Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": ""
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/Microsoft.AlertsManagement/alerts/15a91b28-4fa2-a254-d829-73edb592cbe3",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "avjerafi_info_admin"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev4",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "ActivityLog Administrative",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851",
+                "targetResourceName": "testrg6851",
+                "targetResourceGroup": "testrg6851",
+                "targetResourceType": "",
+                "sourceCreatedId": "edc2fe2a-c70e-4fbd-829d-20eefa346c01_b3a367ea880942779ff01973ebe7cf1d",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/acme_retail_web_site/providers/microsoft.insights/activityLogAlerts/delete",
+                "startDateTime": "2022-09-05T12:21:34.1704819Z",
+                "lastModifiedDateTime": "2022-09-05T12:21:34.1704819Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": ""
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/Microsoft.AlertsManagement/alerts/19f8e917-fda3-937e-b7c0-039960f481e5",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "delete"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev4",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "ActivityLog Administrative",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851",
+                "targetResourceName": "testrg6851",
+                "targetResourceGroup": "testrg6851",
+                "targetResourceType": "",
+                "sourceCreatedId": "edc2fe2a-c70e-4fbd-829d-20eefa346c01_2d7998ef612fc9d732047f3524271798",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/idsternRG/providers/microsoft.insights/activityLogAlerts/idsternTestPrimary-UAEC",
+                "startDateTime": "2022-09-05T12:21:34.1704819Z",
+                "lastModifiedDateTime": "2022-09-05T12:21:34.1704819Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": "idsternTestPrimary-UAEC"
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/Microsoft.AlertsManagement/alerts/38249095-6809-2551-d3ab-30fb9de938df",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "idsternTestPrimary-UAEC"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev4",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "ActivityLog Administrative",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851",
+                "targetResourceName": "testrg6851",
+                "targetResourceGroup": "testrg6851",
+                "targetResourceType": "",
+                "sourceCreatedId": "edc2fe2a-c70e-4fbd-829d-20eefa346c01_ed9bcff9fe0107c17097d7696eaa69de",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/idsternRG/providers/microsoft.insights/activityLogAlerts/idsternTestPrimary",
+                "startDateTime": "2022-09-05T12:21:34.1704819Z",
+                "lastModifiedDateTime": "2022-09-05T12:21:34.1704819Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": "idsternTestPrimary ddd"
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/Microsoft.AlertsManagement/alerts/f3ab85f0-38b6-f629-c2c9-bcc6b17e4aed",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "idsternTestPrimary"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev4",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "ActivityLog Administrative",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851",
+                "targetResourceName": "testrg6851",
+                "targetResourceGroup": "testrg6851",
+                "targetResourceType": "",
+                "sourceCreatedId": "edc2fe2a-c70e-4fbd-829d-20eefa346c01_36cb746a57309b04ee4eb60c8feb4e7b",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/avhaddadResourceGroup/providers/microsoft.insights/activityLogAlerts/avhaddadalerttest",
+                "startDateTime": "2022-09-05T12:21:34.1704819Z",
+                "lastModifiedDateTime": "2022-09-05T12:21:34.1704819Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": "aviv haddad 9999"
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/Microsoft.AlertsManagement/alerts/27bad2af-130e-0c35-e74f-c084879a8b2d",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "avhaddadalerttest"
+          },
+          {
+            "properties": {
+              "essentials": {
+                "severity": "Sev4",
+                "signalType": "Log",
+                "alertState": "New",
+                "monitorCondition": "Fired",
+                "monitorService": "ActivityLog Administrative",
+                "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851",
+                "targetResourceName": "testrg6851",
+                "targetResourceGroup": "testrg6851",
+                "targetResourceType": "",
+                "sourceCreatedId": "edc2fe2a-c70e-4fbd-829d-20eefa346c01_8f2d3c839407eee6111c430489515af2",
+                "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/idsternRG/providers/microsoft.insights/activityLogAlerts/TestQuebecVersionAlertRule",
+                "startDateTime": "2022-09-05T12:21:34.1704819Z",
+                "lastModifiedDateTime": "2022-09-05T12:21:34.1704819Z",
+                "lastModifiedUserName": "System",
+                "actionStatus": {
+                  "isSuppressed": false
+                },
+                "description": "TestQuebecVersionAlertRule"
+              }
+            },
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/testrg6851/providers/Microsoft.AlertsManagement/alerts/832d4c5c-0263-b7b6-c4fb-20cef8b54f4f",
+            "type": "Microsoft.AlertsManagement/alerts",
+            "name": "TestQuebecVersionAlertRule"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/providers/Microsoft.AlertsManagement/alerts/68776783-1004-eb77-c455-c8b9dcb0bb60/changestate?api-version=2019-05-05-preview\u0026newState=Closed",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "0",
+        "traceparent": "00-6c1e5e9cb2e73a4a8fdfd8b5490b1e4a-18eaf20247ccf241-00",
+        "User-Agent": "azsdk-net-ResourceManager.AlertsManagement/1.0.0-alpha.20220905.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "89d77425c1305d13c037dee1fce1a126",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, no-cache",
+        "Content-Length": "3061",
+        "Content-Security-Policy": "script-src \u0027self\u0027",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 05 Sep 2022 12:24:38 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "b99962b5-5760-4a3d-8d3d-2792868112f8",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "7623a7f9-dff6-4183-8da9-e109e30d08b7",
+        "x-ms-routing-request-id": "GERMANYWESTCENTRAL:20220905T122439Z:b99962b5-5760-4a3d-8d3d-2792868112f8",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "properties": {
+          "essentials": {
+            "severity": "Sev3",
+            "signalType": "Log",
+            "alertState": "Closed",
+            "monitorCondition": "Fired",
+            "monitorService": "Log Analytics",
+            "targetResource": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/ilaizirg/providers/microsoft.operationalinsights/workspaces/teslalerts",
+            "targetResourceName": "teslalerts",
+            "targetResourceGroup": "ilaizirg",
+            "targetResourceType": "microsoft.operationalinsights/workspaces",
+            "sourceCreatedId": "9e04ca47-7860-46a2-a612-a38ed3761880",
+            "alertRule": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/ilaiziRG/providers/microsoft.insights/scheduledqueryrules/lsaalerts",
+            "startDateTime": "2022-09-05T12:23:56.6748203Z",
+            "lastModifiedDateTime": "2022-09-05T12:24:38.6221678Z",
+            "lastModifiedUserName": "User",
+            "actionStatus": {
+              "isSuppressed": false
+            },
+            "description": ""
+          },
+          "context": {
+            "AlertRuleName": "lsaalerts",
+            "SearchQuery": "Perf\n| take 0",
+            "AlertThresholdOperator": "Equals",
+            "AlertThresholdValue": 0,
+            "SearchIntervalStartTimeUtc": "2022-09-05T11:53:24Z",
+            "SearchIntervalEndtimeUtc": "2022-09-05T12:23:24Z",
+            "ResultCount": 0,
+            "SearchIntervalInSeconds": 1800,
+            "LinkToSearchResults": "https://portal.azure.com#@72f988bf-86f1-41af-91ab-2d7cd011db47/blade/Microsoft_Azure_Monitoring_Logs/LogsBlade/source/Alerts.EmailLinks/scope/%7B%22resources%22%3A%5B%7B%22resourceId%22%3A%22%2Fsubscriptions%2F042ebc40-492c-4e4e-a02a-c04b5ba7ee23%2Fresourcegroups%2FilaiziRG%2Fproviders%2FMicrosoft.OperationalInsights%2Fworkspaces%2Fteslalerts%22%7D%5D%7D/q/eJwLSC1K46pRKEnMTlUwAAA%3D/prettify/1/timespan/2022-09-05T11%3a53%3a24.0000000Z%2f2022-09-05T12%3a23%3a24.0000000Z",
+            "LinkToFilteredSearchResultsUI": "https://portal.azure.com#@72f988bf-86f1-41af-91ab-2d7cd011db47/blade/Microsoft_Azure_Monitoring_Logs/LogsBlade/source/Alerts.EmailLinks/scope/%7B%22resources%22%3A%5B%7B%22resourceId%22%3A%22%2Fsubscriptions%2F042ebc40-492c-4e4e-a02a-c04b5ba7ee23%2Fresourcegroups%2FilaiziRG%2Fproviders%2FMicrosoft.OperationalInsights%2Fworkspaces%2Fteslalerts%22%7D%5D%7D/q/eJwLSC1K46pRKEnMTlUwAAA%3D/prettify/1/timespan/2022-09-05T11%3a53%3a24.0000000Z%2f2022-09-05T12%3a23%3a24.0000000Z",
+            "LinkToSearchResultsAPI": "https://api.loganalytics.io/v1/workspaces/8c5d268f-35af-41cb-b4a4-8593ebf42edf/query?query=Perf%0A%7C%20take%200\u0026timespan=2022-09-05T11%3a53%3a24.0000000Z%2f2022-09-05T12%3a23%3a24.0000000Z",
+            "LinkToFilteredSearchResultsAPI": "https://api.loganalytics.io/v1/workspaces/8c5d268f-35af-41cb-b4a4-8593ebf42edf/query?query=Perf%0A%7C%20take%200\u0026timespan=2022-09-05T11%3a53%3a24.0000000Z%2f2022-09-05T12%3a23%3a24.0000000Z",
+            "Description": "",
+            "SeverityDescription": "Informational",
+            "SubscriptionId": "042ebc40-492c-4e4e-a02a-c04b5ba7ee23",
+            "WorkspaceId": "8c5d268f-35af-41cb-b4a4-8593ebf42edf",
+            "SearchIntervalDurationMin": "30",
+            "AffectedConfigurationItems": [],
+            "AlertType": "Number of results",
+            "IncludeSearchResults": true,
+            "Frequency": 5
+          }
+        },
+        "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/providers/Microsoft.AlertsManagement/alerts/68776783-1004-eb77-c455-c8b9dcb0bb60",
+        "type": "Microsoft.AlertsManagement/alerts",
+        "name": "lsaalerts"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/providers/Microsoft.AlertsManagement/alerts/68776783-1004-eb77-c455-c8b9dcb0bb60/history?api-version=2019-05-05-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-758812e0b199ea40ade174f2513e45bd-298228260cb13c4b-00",
+        "User-Agent": "azsdk-net-ResourceManager.AlertsManagement/1.0.0-alpha.20220905.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "866e50fe1a962a67fa310b7b68b9eeae",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, no-cache",
+        "Content-Length": "929",
+        "Content-Security-Policy": "script-src \u0027self\u0027",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 05 Sep 2022 12:24:39 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "00aac98f-0dc4-443e-b432-d1b8f7a7b41b",
+        "x-ms-ratelimit-remaining-subscription-reads": "11993",
+        "x-ms-request-id": "a19fed2a-d04a-4a87-85ec-6812b176bf5e",
+        "x-ms-routing-request-id": "GERMANYWESTCENTRAL:20220905T122440Z:00aac98f-0dc4-443e-b432-d1b8f7a7b41b",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "properties": {
+          "alertId": "68776783-1004-eb77-c455-c8b9dcb0bb60",
+          "modifications": [
+            {
+              "modificationEvent": "StateChange",
+              "oldValue": "New",
+              "newValue": "Closed",
+              "modifiedAt": "2022-09-05T12:24:38.7628008Z",
+              "modifiedBy": "User",
+              "comments": "",
+              "description": "State changed from \u0027New\u0027 to \u0027Closed\u0027 by \u0027User\u0027"
+            },
+            {
+              "modificationEvent": "ActionsTriggered",
+              "oldValue": "",
+              "newValue": "",
+              "modifiedAt": "2022-09-05T12:23:58.2268636Z",
+              "modifiedBy": "System",
+              "comments": "",
+              "description": "Action group test-sweden executed (alert processing rule: TestSwedenKhaled)"
+            },
+            {
+              "modificationEvent": "AlertCreated",
+              "oldValue": "",
+              "newValue": "",
+              "modifiedAt": "2022-09-05T12:23:56.6748203Z",
+              "modifiedBy": "System",
+              "comments": "",
+              "description": "Alert fired"
+            }
+          ]
+        },
+        "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/providers/Microsoft.AlertsManagement/alerts/68776783-1004-eb77-c455-c8b9dcb0bb60/history/default",
+        "type": "Microsoft.AlertsManagement/alerts",
+        "name": "lsaalerts"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "39139480",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "042ebc40-492c-4e4e-a02a-c04b5ba7ee23"
+  }
+}

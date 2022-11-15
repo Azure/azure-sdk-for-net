@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.Support.Models
         /// <summary> Initializes a new instance of QuotaTicketDetails. </summary>
         public QuotaTicketDetails()
         {
-            QuotaChangeRequests = new ChangeTrackingList<QuotaChangeRequest>();
+            QuotaChangeRequests = new ChangeTrackingList<SupportQuotaChangeContent>();
         }
 
         /// <summary> Initializes a new instance of QuotaTicketDetails. </summary>
         /// <param name="quotaChangeRequestSubType"> Required for certain quota types when there is a sub type, such as Batch, for which you are requesting a quota increase. </param>
         /// <param name="quotaChangeRequestVersion"> Quota change request version. </param>
         /// <param name="quotaChangeRequests"> This property is required for providing the region and new quota limits. </param>
-        internal QuotaTicketDetails(string quotaChangeRequestSubType, string quotaChangeRequestVersion, IList<QuotaChangeRequest> quotaChangeRequests)
+        internal QuotaTicketDetails(string quotaChangeRequestSubType, string quotaChangeRequestVersion, IList<SupportQuotaChangeContent> quotaChangeRequests)
         {
             QuotaChangeRequestSubType = quotaChangeRequestSubType;
             QuotaChangeRequestVersion = quotaChangeRequestVersion;
@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.Support.Models
         /// <summary> Quota change request version. </summary>
         public string QuotaChangeRequestVersion { get; set; }
         /// <summary> This property is required for providing the region and new quota limits. </summary>
-        public IList<QuotaChangeRequest> QuotaChangeRequests { get; }
+        public IList<SupportQuotaChangeContent> QuotaChangeRequests { get; }
     }
 }

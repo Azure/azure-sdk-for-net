@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DataShare.Models
 {
     /// <summary> A Blob data set mapping. </summary>
-    public partial class BlobDataSetMapping : DataSetMappingData
+    public partial class BlobDataSetMapping : ShareDataSetMappingData
     {
         /// <summary> Initializes a new instance of BlobDataSetMapping. </summary>
         /// <param name="containerName"> Container that has the file path. </param>
@@ -22,33 +22,14 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="resourceGroup"> Resource group of storage account. </param>
         /// <param name="storageAccountName"> Storage account name of the source data set. </param>
         /// <param name="subscriptionId"> Subscription id of storage account. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="dataSetId"/>, <paramref name="filePath"/>, <paramref name="resourceGroup"/>, <paramref name="storageAccountName"/> or <paramref name="subscriptionId"/> is null. </exception>
-        public BlobDataSetMapping(string containerName, string dataSetId, string filePath, string resourceGroup, string storageAccountName, string subscriptionId)
+        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="filePath"/>, <paramref name="resourceGroup"/>, <paramref name="storageAccountName"/> or <paramref name="subscriptionId"/> is null. </exception>
+        public BlobDataSetMapping(string containerName, Guid dataSetId, string filePath, string resourceGroup, string storageAccountName, string subscriptionId)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (dataSetId == null)
-            {
-                throw new ArgumentNullException(nameof(dataSetId));
-            }
-            if (filePath == null)
-            {
-                throw new ArgumentNullException(nameof(filePath));
-            }
-            if (resourceGroup == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroup));
-            }
-            if (storageAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountName));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(containerName, nameof(containerName));
+            Argument.AssertNotNull(filePath, nameof(filePath));
+            Argument.AssertNotNull(resourceGroup, nameof(resourceGroup));
+            Argument.AssertNotNull(storageAccountName, nameof(storageAccountName));
+            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
 
             ContainerName = containerName;
             DataSetId = dataSetId;
@@ -74,7 +55,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="resourceGroup"> Resource group of storage account. </param>
         /// <param name="storageAccountName"> Storage account name of the source data set. </param>
         /// <param name="subscriptionId"> Subscription id of storage account. </param>
-        internal BlobDataSetMapping(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetMappingKind kind, string containerName, string dataSetId, DataSetMappingStatus? dataSetMappingStatus, string filePath, OutputType? outputType, ProvisioningState? provisioningState, string resourceGroup, string storageAccountName, string subscriptionId) : base(id, name, resourceType, systemData, kind)
+        internal BlobDataSetMapping(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetMappingKind kind, string containerName, Guid dataSetId, DataSetMappingStatus? dataSetMappingStatus, string filePath, DataShareOutputType? outputType, DataShareProvisioningState? provisioningState, string resourceGroup, string storageAccountName, string subscriptionId) : base(id, name, resourceType, systemData, kind)
         {
             ContainerName = containerName;
             DataSetId = dataSetId;
@@ -91,15 +72,15 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <summary> Container that has the file path. </summary>
         public string ContainerName { get; set; }
         /// <summary> The id of the source data set. </summary>
-        public string DataSetId { get; set; }
+        public Guid DataSetId { get; set; }
         /// <summary> Gets the status of the data set mapping. </summary>
         public DataSetMappingStatus? DataSetMappingStatus { get; }
         /// <summary> File path within the source data set. </summary>
         public string FilePath { get; set; }
         /// <summary> File output type. </summary>
-        public OutputType? OutputType { get; set; }
+        public DataShareOutputType? OutputType { get; set; }
         /// <summary> Provisioning state of the data set mapping. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public DataShareProvisioningState? ProvisioningState { get; }
         /// <summary> Resource group of storage account. </summary>
         public string ResourceGroup { get; set; }
         /// <summary> Storage account name of the source data set. </summary>

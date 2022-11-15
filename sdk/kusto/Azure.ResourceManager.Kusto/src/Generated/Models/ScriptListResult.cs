@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> Initializes a new instance of ScriptListResult. </summary>
         internal ScriptListResult()
         {
-            Value = new ChangeTrackingList<ScriptData>();
+            Value = new ChangeTrackingList<KustoScriptData>();
         }
 
         /// <summary> Initializes a new instance of ScriptListResult. </summary>
         /// <param name="value"> The list of Kusto scripts. </param>
-        internal ScriptListResult(IReadOnlyList<ScriptData> value)
+        internal ScriptListResult(IReadOnlyList<KustoScriptData> value)
         {
             Value = value;
         }
 
         /// <summary> The list of Kusto scripts. </summary>
-        public IReadOnlyList<ScriptData> Value { get; }
+        public IReadOnlyList<KustoScriptData> Value { get; }
     }
 }

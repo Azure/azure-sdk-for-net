@@ -31,18 +31,18 @@ namespace Azure.ResourceManager.PolicyInsights
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of RemediationResources in the ArmResource. </summary>
-        /// <returns> An object representing collection of RemediationResources and their operations over a RemediationResource. </returns>
-        public virtual RemediationCollection GetRemediations()
+        /// <summary> Gets a collection of PolicyRemediationResources in the ArmResource. </summary>
+        /// <returns> An object representing collection of PolicyRemediationResources and their operations over a PolicyRemediationResource. </returns>
+        public virtual PolicyRemediationCollection GetPolicyRemediations()
         {
-            return GetCachedClient(Client => new RemediationCollection(Client, Id));
+            return GetCachedClient(Client => new PolicyRemediationCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of AttestationResources in the ArmResource. </summary>
-        /// <returns> An object representing collection of AttestationResources and their operations over a AttestationResource. </returns>
-        public virtual AttestationCollection GetAttestations()
+        /// <summary> Gets a collection of PolicyAttestationResources in the ArmResource. </summary>
+        /// <returns> An object representing collection of PolicyAttestationResources and their operations over a PolicyAttestationResource. </returns>
+        public virtual PolicyAttestationCollection GetPolicyAttestations()
         {
-            return GetCachedClient(Client => new AttestationCollection(Client, Id));
+            return GetCachedClient(Client => new PolicyAttestationCollection(Client, Id));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal static VirtualNetworkList DeserializeVirtualNetworkList(JsonElement element)
         {
-            Optional<IReadOnlyList<VirtualNetworkData>> value = default;
+            Optional<IReadOnlyList<DevTestLabVirtualNetworkData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<VirtualNetworkData> array = new List<VirtualNetworkData>();
+                    List<DevTestLabVirtualNetworkData> array = new List<DevTestLabVirtualNetworkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualNetworkData.DeserializeVirtualNetworkData(item));
+                        array.Add(DevTestLabVirtualNetworkData.DeserializeDevTestLabVirtualNetworkData(item));
                     }
                     value = array;
                     continue;

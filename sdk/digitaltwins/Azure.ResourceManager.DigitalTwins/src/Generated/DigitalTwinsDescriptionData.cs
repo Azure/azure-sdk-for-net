@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <param name="privateEndpointConnections"> The private endpoint connections. </param>
         /// <param name="publicNetworkAccess"> Public network access for the DigitalTwinsInstance. </param>
         /// <param name="identity"> The managed identity for the DigitalTwinsInstance. Current supported identity types: None, SystemAssigned. </param>
-        internal DigitalTwinsDescriptionData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, ProvisioningState? provisioningState, string hostName, IList<DigitalTwinsPrivateEndpointConnectionData> privateEndpointConnections, PublicNetworkAccess? publicNetworkAccess, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        internal DigitalTwinsDescriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, DigitalTwinsProvisioningState? provisioningState, string hostName, IList<DigitalTwinsPrivateEndpointConnectionData> privateEndpointConnections, DigitalTwinsPublicNetworkAccess? publicNetworkAccess, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             CreatedOn = createdOn;
             LastUpdatedOn = lastUpdatedOn;
@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <summary> Time when DigitalTwinsInstance was updated. </summary>
         public DateTimeOffset? LastUpdatedOn { get; }
         /// <summary> The provisioning state. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public DigitalTwinsProvisioningState? ProvisioningState { get; }
         /// <summary> Api endpoint to work with DigitalTwinsInstance. </summary>
         public string HostName { get; }
         /// <summary> The private endpoint connections. </summary>
         public IList<DigitalTwinsPrivateEndpointConnectionData> PrivateEndpointConnections { get; set; }
         /// <summary> Public network access for the DigitalTwinsInstance. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public DigitalTwinsPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> The managed identity for the DigitalTwinsInstance. Current supported identity types: None, SystemAssigned. </summary>
         public ManagedServiceIdentity Identity { get; set; }
     }

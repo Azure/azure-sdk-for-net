@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
 {
     /// <summary>
     /// A class representing a collection of <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="ProvisioningServiceDescriptionResource" />.
-    /// To get a <see cref="DeviceProvisioningServicesPrivateEndpointConnectionCollection" /> instance call the GetDeviceProvisioningServicesPrivateEndpointConnections method from an instance of <see cref="ProvisioningServiceDescriptionResource" />.
+    /// Each <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="DeviceProvisioningServiceResource" />.
+    /// To get a <see cref="DeviceProvisioningServicesPrivateEndpointConnectionCollection" /> instance call the GetDeviceProvisioningServicesPrivateEndpointConnections method from an instance of <see cref="DeviceProvisioningServiceResource" />.
     /// </summary>
     public partial class DeviceProvisioningServicesPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<DeviceProvisioningServicesPrivateEndpointConnectionResource>, IAsyncEnumerable<DeviceProvisioningServicesPrivateEndpointConnectionResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ProvisioningServiceDescriptionResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ProvisioningServiceDescriptionResource.ResourceType), nameof(id));
+            if (id.ResourceType != DeviceProvisioningServiceResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DeviceProvisioningServiceResource.ResourceType), nameof(id));
         }
 
         /// <summary>

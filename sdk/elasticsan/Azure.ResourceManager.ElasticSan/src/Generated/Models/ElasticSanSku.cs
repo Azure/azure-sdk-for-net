@@ -11,22 +11,24 @@ namespace Azure.ResourceManager.ElasticSan.Models
     public partial class ElasticSanSku
     {
         /// <summary> Initializes a new instance of ElasticSanSku. </summary>
-        public ElasticSanSku()
+        /// <param name="name"> The sku name. </param>
+        public ElasticSanSku(ElasticSanSkuName name)
         {
+            Name = name;
         }
 
         /// <summary> Initializes a new instance of ElasticSanSku. </summary>
         /// <param name="name"> The sku name. </param>
         /// <param name="tier"> The sku tier. </param>
-        internal ElasticSanSku(ElasticSanSkuName? name, ElasticSanTier? tier)
+        internal ElasticSanSku(ElasticSanSkuName name, ElasticSanSkuTier? tier)
         {
             Name = name;
             Tier = tier;
         }
 
         /// <summary> The sku name. </summary>
-        public ElasticSanSkuName? Name { get; set; }
+        public ElasticSanSkuName Name { get; set; }
         /// <summary> The sku tier. </summary>
-        public ElasticSanTier? Tier { get; set; }
+        public ElasticSanSkuTier? Tier { get; set; }
     }
 }

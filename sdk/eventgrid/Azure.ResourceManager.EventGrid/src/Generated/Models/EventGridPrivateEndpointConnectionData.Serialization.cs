@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.EventGrid
             Optional<SystemData> systemData = default;
             Optional<WritableSubResource> privateEndpoint = default;
             Optional<IList<string>> groupIds = default;
-            Optional<ConnectionState> privateLinkServiceConnectionState = default;
-            Optional<ResourceProvisioningState> provisioningState = default;
+            Optional<EventGridPrivateEndpointConnectionState> privateLinkServiceConnectionState = default;
+            Optional<EventGridResourceProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.EventGrid
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            privateLinkServiceConnectionState = ConnectionState.DeserializeConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = EventGridPrivateEndpointConnectionState.DeserializeEventGridPrivateEndpointConnectionState(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.EventGrid
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ResourceProvisioningState(property0.Value.GetString());
+                            provisioningState = new EventGridResourceProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }

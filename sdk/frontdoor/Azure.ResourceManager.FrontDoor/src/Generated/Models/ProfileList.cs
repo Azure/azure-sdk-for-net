@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> Initializes a new instance of ProfileList. </summary>
         internal ProfileList()
         {
-            Value = new ChangeTrackingList<ProfileData>();
+            Value = new ChangeTrackingList<FrontDoorNetworkExperimentProfileData>();
         }
 
         /// <summary> Initializes a new instance of ProfileList. </summary>
         /// <param name="value"> List of Profiles within a resource group. </param>
         /// <param name="nextLink"> URL to get the next set of Profile objects if there are any. </param>
-        internal ProfileList(IReadOnlyList<ProfileData> value, string nextLink)
+        internal ProfileList(IReadOnlyList<FrontDoorNetworkExperimentProfileData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of Profiles within a resource group. </summary>
-        public IReadOnlyList<ProfileData> Value { get; }
+        public IReadOnlyList<FrontDoorNetworkExperimentProfileData> Value { get; }
         /// <summary> URL to get the next set of Profile objects if there are any. </summary>
         public string NextLink { get; }
     }

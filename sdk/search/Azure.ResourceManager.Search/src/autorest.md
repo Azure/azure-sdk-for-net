@@ -9,12 +9,35 @@ csharp: true
 library-name: Search
 namespace: Azure.ResourceManager.Search
 require: https://github.com/Azure/azure-rest-api-specs/blob/6b08774c89877269e73e11ac3ecbd1bd4e14f5a0/specification/search/resource-manager/readme.md
-tag: package-2020-08
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+
+rename-mapping:
+  AdminKeyKind: SearchServiceAdminKeyKind
+  AdminKeyResult: SearchServiceAdminKeyResult
+  CheckNameAvailabilityInput: SearchServiceNameAvailabilityContent
+  CheckNameAvailabilityOutput: SearchServiceNameAvailabilityResult
+  HostingMode: SearchServiceHostingMode
+  IpRule: SearchServiceIPRule
+  PrivateEndpointConnectionProperties: SearchServicePrivateEndpointConnectionProperties
+  PrivateEndpointConnectionPropertiesPrivateLinkServiceConnectionState: SearchServicePrivateLinkServiceConnectionState
+  PrivateLinkServiceConnectionStatus: SearchServicePrivateLinkServiceConnectionStatus
+  ProvisioningState: SearchServiceProvisioningState
+  PublicNetworkAccess: SearchServicePublicNetworkAccess
+  QueryKey: SearchServiceQueryKey
+  ResourceType: SearchServiceResourceType
+  ShareablePrivateLinkResourceProperties: ShareableSearchServicePrivateLinkResourceProperties
+  ShareablePrivateLinkResourceType: ShareableSearchServicePrivateLinkResourceType
+  SharedPrivateLinkResource: SharedSearchServicePrivateLinkResource
+  SharedPrivateLinkResourceProperties: SharedSearchServicePrivateLinkResourceProperties
+  SharedPrivateLinkResourceProperties.privateLinkResourceId: -|arm-id
+  SharedPrivateLinkResourceProperties.resourceRegion: -|azure-location
+  SharedPrivateLinkResourceProvisioningState: SharedSearchServicePrivateLinkResourceProvisioningState
+  SharedPrivateLinkResourceStatus: SharedSearchServicePrivateLinkResourceStatus
+  UnavailableNameReason: SearchServiceNameUnavailableReason
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -45,5 +68,8 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+
+override-operation-name:
+  Services_CheckNameAvailability: CheckSearchServiceNameAvailability
 
 ```

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static LiveEventListResult DeserializeLiveEventListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<LiveEventData>> value = default;
+            Optional<IReadOnlyList<MediaLiveEventData>> value = default;
             Optional<int> odataCount = default;
             Optional<string> odataNextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Media.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<LiveEventData> array = new List<LiveEventData>();
+                    List<MediaLiveEventData> array = new List<MediaLiveEventData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LiveEventData.DeserializeLiveEventData(item));
+                        array.Add(MediaLiveEventData.DeserializeMediaLiveEventData(item));
                     }
                     value = array;
                     continue;

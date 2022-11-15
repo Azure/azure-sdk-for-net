@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal static UpdateDownloadProgress DeserializeUpdateDownloadProgress(JsonElement element)
         {
-            Optional<DownloadPhase> downloadPhase = default;
+            Optional<DataBoxEdgeDownloadPhase> downloadPhase = default;
             Optional<int> percentComplete = default;
             Optional<double> totalBytesToDownload = default;
             Optional<double> totalBytesDownloaded = default;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    downloadPhase = new DownloadPhase(property.Value.GetString());
+                    downloadPhase = new DataBoxEdgeDownloadPhase(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("percentComplete"))

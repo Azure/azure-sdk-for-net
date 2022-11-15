@@ -50,13 +50,16 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="provisioningState">The provisioning state of the web
         /// application firewall rule set. Possible values include:
         /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
-        public ApplicationGatewayFirewallRuleSet(string ruleSetType, string ruleSetVersion, IList<ApplicationGatewayFirewallRuleGroup> ruleGroups, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string))
+        /// <param name="tiers">Tier of an application gateway that support the
+        /// rule set.</param>
+        public ApplicationGatewayFirewallRuleSet(string ruleSetType, string ruleSetVersion, IList<ApplicationGatewayFirewallRuleGroup> ruleGroups, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), IList<string> tiers = default(IList<string>))
             : base(id, name, type, location, tags)
         {
             ProvisioningState = provisioningState;
             RuleSetType = ruleSetType;
             RuleSetVersion = ruleSetVersion;
             RuleGroups = ruleGroups;
+            Tiers = tiers;
             CustomInit();
         }
 
@@ -92,6 +95,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.ruleGroups")]
         public IList<ApplicationGatewayFirewallRuleGroup> RuleGroups { get; set; }
+
+        /// <summary>
+        /// Gets or sets tier of an application gateway that support the rule
+        /// set.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.tiers")]
+        public IList<string> Tiers { get; set; }
 
         /// <summary>
         /// Validate the object.

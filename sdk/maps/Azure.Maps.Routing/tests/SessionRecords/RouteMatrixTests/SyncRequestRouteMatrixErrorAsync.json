@@ -1,0 +1,60 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://atlas.microsoft.com/route/matrix/sync/json?api-version=1.0\u0026waitForResults=true",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "140",
+        "Content-Type": "application/json",
+        "traceparent": "00-1a4379a0499af05315015a451ef34729-056b5042f48cf3dd-00",
+        "User-Agent": "azsdk-net-Maps.Route/1.0.0-alpha.20220826.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-id": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
+        "x-ms-client-request-id": "240367b495b1f1c4a914b09d5d08306c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "origins": {
+          "coordinates": [
+            [
+              45.9375,
+              123.751
+            ],
+            [
+              45.96875,
+              123.791
+            ]
+          ],
+          "type": "MultiPoint"
+        },
+        "destinations": {
+          "coordinates": [],
+          "type": "MultiPoint"
+        }
+      },
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "Content-Length": "141",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 26 Aug 2022 09:22:49 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-azuremaps-region": "West US 2",
+        "X-MSEdge-Ref": "Ref A: A7802E27F1704698B40D61866A041FD2 Ref B: TYBEDGE0511 Ref C: 2022-08-26T09:22:49Z"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "400 BadRequest",
+          "message": "latitude value should be between -90 and 90 inclusive. Expected coordinate format: [lon,lat]."
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZMAPS_CLIENT_ID": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "RandomSeed": "2017880132"
+  }
+}

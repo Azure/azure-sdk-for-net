@@ -11,7 +11,6 @@ azure-arm: true
 library-name: AppService
 namespace: Azure.ResourceManager.AppService
 require: https://github.com/Azure/azure-rest-api-specs/blob/35f8a4df47aedc1ce185c854595cba6b83fa6c71/specification/web/resource-manager/readme.md
-tag: package-2021-02
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -105,9 +104,22 @@ override-operation-name:
   Domains_ListRecommendations: GetAppServiceDomainRecommendations
   Domains_CheckAvailability: CheckAppServiceDomainRegistrationAvailability
   Recommendations_DisableRecommendationForSubscription: DisableAppServiceRecommendation
-  ResourceHealthMetadata_ListByResourceGroup: GetAllResourceHealthMetadata
   WebApps_ListSnapshotsSlot: GetSlotSnapshots
   WebApps_ListSnapshotsFromDRSecondarySlot: GetSlotSnapshotsFromDRSecondary
+  # All bellowing operations should be EBNerver once the polymorphic change is ready
+  AppServiceEnvironments_ListWebApps: GetAllWebAppData
+  ResourceHealthMetadata_ListByResourceGroup: GetAllResourceHealthMetadataData
+  ListSiteIdentifiersAssignedToHostName: GetAllSiteIdentifierData
+  WebApps_ListConfigurations: GetAllConfigurationData
+  WebApps_ListHybridConnections: GetAllHybridConnectionData
+  WebApps_ListPremierAddOns: GetAllPremierAddOnData
+  WebApps_ListRelayServiceConnections: GetAllRelayServiceConnectionData
+  WebApps_ListSiteBackups: GetAllSiteBackupData
+  WebApps_ListConfigurationsSlot: GetAllConfigurationSlotData
+  WebApps_ListHybridConnectionsSlot: GetAllHybridConnectionSlotData
+  WebApps_ListPremierAddOnsSlot: GetAllPremierAddOnSlotData
+  WebApps_ListRelayServiceConnectionsSlot: GetAllRelayServiceConnectionSlotData
+  WebApps_ListSiteBackupsSlot: GetAllSiteBackupSlotData
 
 no-property-type-replacement:
 - ApiManagementConfig
@@ -119,6 +131,8 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
   'serverFarmId': 'arm-id'
+  'thumbprint': 'any'
+  '*Thumbprint': 'any'
 
 keep-plural-enums:
 - StackPreferredOS
@@ -146,8 +160,8 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
   Ipssl: IPSsl|ipSsl
-  WWW: Www
-  Ms: MS
+  Db: DB
+  SQL: Sql
 
 rename-mapping:
 # site and site related
@@ -161,7 +175,7 @@ rename-mapping:
   Site.properties.reserved: IsReserved
   Site.properties.suspendedTill: SuspendOn
   Site.properties.storageAccountRequired: IsStorageAccountRequired
-  Site.properties.serverFarmId: AppServicePlanId
+  Site.properties.serverFarmId: AppServicePlanId|arm-id
   SiteAvailabilityState: WebSiteAvailabilityState
   Certificate: AppCertificate
   AppServiceCertificateOrderPatchResource: AppServiceCertificateOrderPatch
@@ -169,18 +183,61 @@ rename-mapping:
   AppServiceEnvironmentPatchResource: AppServiceEnvironmentPatchContent
   AppserviceGithubToken: AppServiceGithubToken
   AppServicePlanPatchResource: AppServicePlanPatchContent
-  Contact: ContactInformation
-  Login: LoginInformation
-  MSDeploy: MsDeploy
-  MSDeployLog: MsDeployLog
-  MSDeployLogEntry: MsDeployLogEntry
-  Operation: OperationInformation
+  Contact: RegistrationContactInfo
+  Login: WebAppLoginInfo
   Recommendation: AppServiceRecommendation
   Resource: AppServiceResource
   DetectorResponse: AppServiceDetector
   ApiKVReference: ApiKeyVaultReference
   Domain: AppServiceDomain
 # rename property
+  Apple.enabled: IsEnabled
+  BackupRequest.properties.enabled: IsEnabled
+  BackupSchedule.keepAtLeastOneBackup: ShouldKeepAtLeastOneBackup
+  BackupSchedule.lastExecutionTime: LastExecutedOn
+  BillingMeter.properties.meterId: -|uuid
+  SiteConfig.properties.httpLoggingEnabled: IsHttpLoggingEnabled
+  SiteConfig.properties.scmIpSecurityRestrictionsUseMain: AllowIPSecurityRestrictionsForScmToUseMain
+  SiteConfigProperties.scmIpSecurityRestrictionsUseMain: AllowIPSecurityRestrictionsForScmToUseMain
+  SitePatchResource.properties.virtualNetworkSubnetId: -|arm-id
+  Site.properties.virtualNetworkSubnetId: -|arm-id
+  PrivateAccessVirtualNetwork.resourceId: -|arm-id
+  KubeEnvironmentPatchResource.properties.aksResourceID: -|arm-id
+  KubeEnvironment.properties.aksResourceID: -|arm-id
+  SiteConfigProperties.acrUseManagedIdentityCreds: UseManagedIdentityCreds
+  SkuDescription.locations: -|azure-location
+  GlobalCsmSkuDescription.locations: -|azure-location
+  Certificate.properties.keyVaultId: -|arm-id
+  AppServiceCertificateResource.properties.keyVaultId: -|arm-id
+  CertificatePatchResource.properties.keyVaultId: -|arm-id
+  AppServiceCertificatePatchResource.properties.keyVaultId: -|arm-id
+  AppServiceCertificate.keyVaultId: -|arm-id
+  SwiftVirtualNetwork.properties.subnetResourceId: -|arm-id
+  VnetParameters.properties.subnetResourceId: -|arm-id
+  IpSecurityRestriction.vnetSubnetResourceId: -|arm-id
+  AddressResponse.properties.internalIpAddress: -|ip-address
+  AddressResponse.properties.outboundIpAddresses: -|ip-address
+  AddressResponse.properties.serviceIpAddress: -|ip-address
+  EndpointDetail.ipAddress: -|ip-address
+  IpSecurityRestriction.ipAddress: IPAddressOrCidr
+  Operation.idL -|arm-id: -|arm-id
+  AseV3NetworkingConfiguration.properties.windowsOutboundIpAddresses: -|ip-address
+  AseV3NetworkingConfiguration.properties.linuxOutboundIpAddresses: -|ip-address
+  AseV3NetworkingConfiguration.properties.externalInboundIpAddresses: -|ip-address
+  AseV3NetworkingConfiguration.properties.internalInboundIpAddresses: -|ip-address
+  RemotePrivateEndpointConnectionARMResource.properties.ipAddresses: -|ip-address
+  RemotePrivateEndpointConnection.properties.ipAddresses: -|ip-address
+  Site.properties.scmSiteAlsoStopped: IsScmSiteAlsoStopped
+  AppServiceEnvironment.suspended: IsSuspended
+  SitePatchResource.properties.reserved: IsReserved
+  Domain.properties.privacy: IsDomainPrivacyEnabled
+  Domain.properties.readyForDnsRecordManagement: IsDnsRecordManagementReady
+  SiteLogsConfig.properties.detailedErrorMessages: IsDetailedErrorMessages  # The autogened name by safe flatten which can't be renamed by other configs
+  SiteLogsConfig.properties.failedRequestsTracing: IsFailedRequestsTracing  # The autogened name by safe flatten which can't be renamed by other configs
+  AppServiceEnvironment.zoneRedundant: IsZoneRedundant
+  CloningInfo.overwrite: CanOverwrite
+  RestoreRequest.properties.overwrite: CanOverwrite
+  SnapshotRestoreRequest.properties.overwrite: CanOverwrite
   ValidateResourceTypes.Site: WebSite
   CheckNameResourceTypes.Site: WebSite
   ApiKVReference.properties.identityType: Identity
@@ -188,11 +245,10 @@ rename-mapping:
   AppServiceCertificateOrder.properties.expirationTime: ExpireOn
   AppServiceCertificateOrder.properties.lastCertificateIssuanceTime: LastCertificateIssuedOn
   AppServiceCertificateOrder.properties.nextAutoRenewalTimeStamp: NextAutoRenewTimeStamp
-  Domain.properties.privacy: AppServiceHasPrivacy
   Domain.properties.expirationTime: ExpireOn
   Domain.properties.autoRenew: IsAutoRenew
   AppServicePlan.properties.elasticScaleEnabled: IsElasticScaleEnabled
-  AppServicePlan.properties.freeOfferExpirationTime: FreeOfferExpiredOn
+  AppServicePlan.properties.freeOfferExpirationTime: FreeOfferExpireOn
   AppServicePlan.properties.hyperV: IsHyperV
   AppServicePlan.properties.perSiteScaling: IsPerSiteScaling
   AppServicePlan.properties.reserved: IsReserved
@@ -211,7 +267,7 @@ rename-mapping:
   MSDeployStatus.properties.complete: IsComplete
   PrivateAccess.properties.enabled: IsEnabled
   ResourceHealthMetadata.properties.signalAvailability: IsSignalAvailable
-  SiteConfig.properties.acrUseManagedIdentityCreds: HasAcrUseManagedIdentityCreds
+  SiteConfig.properties.acrUseManagedIdentityCreds: UseManagedIdentityCreds
   SiteConfig.properties.alwaysOn: IsAlwaysOn
   SiteConfig.properties.autoHealEnabled: IsAutoHealEnabled
   SiteConfig.properties.detailedErrorLoggingEnabled: IsDetailedErrorLoggingEnabled
@@ -225,14 +281,14 @@ rename-mapping:
   SiteSourceControl.properties.deploymentRollbackEnabled: IsDeploymentRollbackEnabled
   StaticSiteBuildARMResource.properties.createdTimeUtc: CreatedOn
   SwiftVirtualNetwork.properties.swiftSupported: IsSwiftSupported
-  TopLevelDomain.properties.privacy: HasPrivacy
+  TopLevelDomain.properties.privacy: IsDomainPrivacySupported
   TriggeredWebJob.properties.using_sdk: IsUsingSdk
   VnetInfoResource.properties.resyncRequired: IsResyncRequired
   WebJob.properties.using_sdk: IsUsingSdk
   CsmPublishingProfileOptions.includeDisasterRecoveryEndpoints: IsIncludeDisasterRecoveryEndpoints
   AppServiceCertificateOrderPatchResource.properties.autoRenew: IsAutoRenew
   DomainPatchResource.properties.autoRenew: IsAutoRenew
-  DomainPatchResource.properties.privacy: HasPrivacy
+  DomainPatchResource.properties.privacy: IsDomainPrivacyEnabled
   DomainPatchResource.properties.readyForDnsRecordManagement: IsReadyForDnsRecordManagement
   AppServiceEnvironmentResource.properties.suspended: IsSuspended
   AppServiceEnvironmentResource.properties.zoneRedundant: IsZoneRedundant
@@ -245,10 +301,9 @@ rename-mapping:
   AppServicePlanPatchResource.properties.zoneRedundant: IsZoneRedundant
   AuthPlatform.enabled: IsEnabled
   AzureActiveDirectory.enabled: IsEnabled
-  AzureActiveDirectoryLogin.disableWWWAuthenticate: IsDisableWWWAuthenticate
+  AzureActiveDirectoryLogin.disableWWWAuthenticate: IsWwwAuthenticateDisabled
   AzureBlobStorageHttpLogsConfig.enabled: IsEnabled
   AzureStaticWebApps.enabled: IsEnabled
-  BackupRequest.properties.storageAccountUrl: IsEnabled
   CertificatePatchResource.properties.valid: IsValid
   CorsSettings.supportCredentials: IsCredentialsSupported
   CustomOpenIdConnectProvider.enabled: IsEnabled
@@ -260,7 +315,6 @@ rename-mapping:
   GitHub.enabled: IsEnabled
   GlobalValidation.requireAuthentication: IsAuthenticationRequired
   Google.enabled: IsEnabled
-  HostNameSslState.toUpdate: IsToUpdate
   HttpSettings.requireHttps: IsHttpsRequired
   KubeEnvironmentPatchResource.properties.internalLoadBalancerEnabled: IsInternalLoadBalancerEnabled
   LegacyMicrosoftAccount.enabled: IsEnabled
@@ -303,6 +357,11 @@ rename-mapping:
   VnetInfo.resyncRequired: IsResyncRequired
   VnetValidationFailureDetails.properties.failed: IsFailed
   WebAppRuntimeSettings.remoteDebuggingSupported: IsRemoteDebuggingSupported
+  BackupItem.properties.name: BackupName
+  ApplicationStackResource.properties.name: StackName
+  BillingMeter.properties.billingLocation: -|azure-location
+  AddressResponse.properties.vipMappings: VirtualIPMappings
+  CloningInfo.sourceWebAppLocation: -|azure-location
 # rename resource
   AppServiceCertificate: AppServiceCertificateProperties
   AppServiceCertificateResource: AppServiceCertificate
@@ -312,8 +371,7 @@ rename-mapping:
   StaticSiteUserProvidedFunctionAppARMResource: StaticSiteUserProvidedFunctionApp
   StaticSiteUserProvidedFunctionApp: StaticSiteUserProvidedFunctionAppProperties # just rename this to avoid collision, this class will be automatically removed
   StaticSiteCustomDomainRequestPropertiesARMResource: StaticSiteCustomDomainContent
-# same name in model
-#   VnetInfoResource: VnetInfo
+  User: PublishingUser
   WorkerPoolResource: WorkerPool
   CsmPublishingProfileOptions: CsmPublishingProfile
   StaticSiteTemplateOptions: StaticSiteTemplate
@@ -322,7 +380,7 @@ rename-mapping:
   AzureStoragePropertyDictionaryResource: AzureStoragePropertyDictionary
   ContainerThrottlingData: ContainerThrottlingInfo
   DeletedAppRestoreRequest: DeletedAppRestoreContent
-  DiagnosticData: DiagnosticInfo
+  DiagnosticData: DiagnosticDataset
   DomainControlCenterSsoRequest: DomainControlCenterSsoRequestInfo
   PerfMonResponse: PerfMonResponseInfo
   PrivateLinkConnectionApprovalRequestResource: PrivateLinkConnectionApprovalRequestInfo
@@ -348,9 +406,184 @@ rename-mapping:
   SkuDescription: AppServiceSkuDescription
   Snapshot: AppSnapshot
   AnalysisDefinition: WebSiteAnalysisDefinition
+  Address: RegistrationAddressInfo
+  AddressResponse: AppServiceEnvironmentAddressResult
+  AllowedPrincipals: AppServiceAadAllowedPrincipals
+  AnalysisData: AnalysisDetectorEvidences
+  Apple: AppServiceAppleProvider
+  AppleRegistration: AppServiceAppleRegistration
+  AzureActiveDirectory: AppServiceAadProvider
+  AzureActiveDirectoryLogin: AppServiceAadLoginFlow
+  AzureActiveDirectoryRegistration: AppServiceAadRegistration
+  AzureActiveDirectoryValidation: AppServiceAadValidation
+  AzureBlobStorageApplicationLogsConfig: AppServiceBlobStorageApplicationLogsConfig
+  AzureBlobStorageHttpLogsConfig: AppServiceBlobStorageHttpLogsConfig
+  AzureResourceType: AppServiceResourceType
+  AzureStaticWebApps: AppServiceStaticWebAppsProvider
+  AzureStaticWebAppsRegistration: AppServiceStaticWebAppsRegistration
+  AzureStorageInfoValue: AppServiceStorageAccessInfo
+  AzureStoragePropertyDictionary: AppServiceStorageDictionaryResourceData
+  AzureStorageState: AppServiceStorageAccountState
+  AzureStorageType: AppServiceStorageType
+  AzureTableStorageApplicationLogsConfig: AppServiceTableStorageApplicationLogsConfig
+  BackupItem: WebAppBackup
+  BackupItemStatus: WebAppBackupStatus
+  BackupRequest: WebAppBackupInfo
+  BackupSchedule: WebAppBackupSchedule
+  BuildStatus: StaticSiteBuildStatus
+  Capability: AppServiceSkuCapability
+  Channels: RecommendationChannel
+  ResponseMetaData: DetectorMetadata
+  DataSource: DetectorDataSource
+  Deployment: WebAppDeployment
+  Dimension: MetricDimension
+  EnabledConfig: WebAppEnabledConfig
+  Experiments: RoutingRuleExperiments
+  Facebook: AppServiceFacebookProvider
+  FrequencyUnit: BackupFrequencyUnit
+  GitHub: AppServiceGitHubProvider
+  Google: AppServiceGoogleProvider
+  HandlerMapping: HttpRequestHandlerMapping
+  HostKeys: FunctionAppHostKeys
+  Twitter: AppServiceTwitterProvider
+  InsightStatus: DetectorInsightStatus
+  LogLevel: WebAppLogLevel
+  MSDeploy: WebAppMSDeploy
+  MSDeployLog: WebAppMSDeployLog
+  MSDeployLogEntry: WebAppMSDeployLogEntry
+  MSDeployLogEntryType: WebAppMSDeployLogEntryType
+  NetworkTrace: WebAppNetworkTrace
+  Nonce: LoginFlowNonceSettings
+  PushSettings: WebAppPushSettings
+  Rendering: DiagnosticDataRendering
+  RenderingType: DiagnosticDataRenderingType
+  RouteType: AppServiceVirtualNetworkRouteType
+  Solution: DiagnosticSolution
+  SolutionType: DiagnosticSolutionType
+  SslState: HostNameBindingSslState
+  StorageType: ArtifactStorageType
+  StringList: StaticSiteStringList
+  StatusOptions: AppServicePlanStatus
+  TriggerTypes: FunctionTriggerType
+  CookieExpiration: WebAppCookieExpiration
+  KeyInfo: WebAppKeyInfo
+  KeyValuePairStringObject: DataProviderKeyValuePair
+  IssueType: DetectorIssueType
+  VnetInfo: AppServiceVirtualNetworkProperties
+  VnetInfoResource: AppServiceVirtualNetwork
+  VnetParameters: AppServiceVirtualNetworkValidationContent
+  VnetRoute: AppServiceVirtualNetworkRoute
+  VnetGateway: AppServiceVirtualNetworkGateway
+  SupportTopic: DetectorSupportTopic
+  SupportedTlsVersions: AppServiceSupportedTlsVersion
+  VnetValidationFailureDetails: VirtualNetworkValidationFailureDetails
+  VnetValidationTestFailure: VirtualNetworkValidationTestFailure
+  # All `Collection` models for pageable operation should be renamed to `ListResult`, https://github.com/Azure/autorest.csharp/issues/2756
+  DomainCollection: AppServiceDomainListResult
+  IdentifierCollection: AppServiceIdentifierListResult
+  DeletedWebAppCollection: DeletedWebAppListResult
+  DeploymentCollection: WebAppDeploymentListResult
+  BackupItemCollection: WebAppBackupItemListResult
+  BillingMeterCollection: AppServiceBillingMeterListResult
+  NameIdentifierCollection: AppServiceDomainNameIdentifierListResult
+  UsageCollection: AppServiceUsageListResult
+  ResourceCollection: AppServicePlanResourceListResult
+  SourceControlCollection: AppServiceSourceControlListResult
+  ApiKVReferenceCollection: AppServiceApiKeyVaultReferenceList
+  AppServicePlanCollection: AppServicePlanListResult
+  ApplicationStackCollection: ApplicationStackListResult
+  AppServiceCertificateCollection: AppServiceCertificateListResult
+  AppServiceCertificateOrderCollection: AppServiceCertificateOrderListResult
+  AppServiceEnvironmentCollection: AppServiceEnvironmentListResult
+  CertificateCollection: AppCertificateListResult
+  ContinuousWebJobCollection: ContinuousWebJobListResult
+  CsmOperationCollection: CsmOperationListResult
+  CsmUsageQuotaCollection: CsmUsageQuotaListResult
+  DetectorResponseCollection: AppServiceDetectorListResult
+  DiagnosticAnalysisCollection: WebSiteAnalysisDefinitionListResult
+  DiagnosticCategoryCollection: DiagnosticCategoryListResult
+  DiagnosticDetectorCollection: DiagnosticDetectorListResult
+  DomainOwnershipIdentifierCollection: DomainOwnershipIdentifierListResult
+  FunctionAppStackCollection: FunctionAppStackListResult
+  FunctionEnvelopeCollection: FunctionEnvelopeListResult
+  GeoRegionCollection: AppServiceGeoRegionListResult
+  HostNameBindingCollection: HostNameBindingListResult
+  HybridConnectionCollection: HybridConnectionListResult
+  InboundEnvironmentEndpointCollection: InboundEnvironmentEndpointListResult
+  KubeEnvironmentCollection: KubeEnvironmentListResult
+  OutboundEnvironmentEndpointCollection: OutboundEnvironmentEndpointListResult
+  PerfMonCounterCollection: PerfMonCounterListResult
+  PremierAddOnOfferCollection: PremierAddOnOfferListResult
+  PrivateEndpointConnectionCollection: RemotePrivateEndpointConnectionListResult
+  ProcessInfoCollection: ProcessInfoListResult
+  ProcessModuleInfoCollection: ProcessModuleInfoListResult
+  ProcessThreadInfoCollection: ProcessThreadInfoListResult
+  PublicCertificateCollection: PublicCertificateListResult
+  PublishingCredentialsPoliciesCollection: PublishingCredentialsPoliciesListResult
+  RecommendationCollection: AppServiceRecommendationListResult
+  ResourceHealthMetadataCollection: ResourceHealthMetadataListResult
+  ResourceMetricDefinitionCollection: ResourceMetricDefinitionListResult
+  SiteConfigResourceCollection: SiteConfigListResult
+  SiteConfigurationSnapshotInfoCollection: SiteConfigurationSnapshotInfoListResult
+  SiteExtensionInfoCollection: SiteExtensionInfoListResult
+  SkuInfoCollection: AppServicePoolSkuInfoListResult
+  SlotDifferenceCollection: SlotDifferenceListResult
+  SnapshotCollection: AppSnapshotListResult
+  StampCapacityCollection: StampCapacityListResult
+  StaticSiteBuildCollection: StaticSiteBuildListResult
+  StaticSiteCollection: StaticSiteListResult
+  StaticSiteCustomDomainOverviewCollection: StaticSiteCustomDomainOverviewListResult
+  StaticSiteFunctionOverviewCollection: StaticSiteFunctionOverviewListResult
+  StaticSiteUserCollection: StaticSiteUserListResult
+  StaticSiteUserProvidedFunctionAppsCollection: StaticSiteUserProvidedFunctionAppsListResult
+  TldLegalAgreementCollection: TldLegalAgreementListResult
+  TopLevelDomainCollection: TopLevelDomainListResult
+  TriggeredJobHistoryCollection: TriggeredJobHistoryListResult
+  TriggeredWebJobCollection: TriggeredWebJobListResult
+  WebAppCollection: WebAppListResult
+  WebAppInstanceStatusCollection: WebAppInstanceStatusListResult
+  WebAppStackCollection: WebAppStackListResult
+  WebJobCollection: WebJobCListResult
+  WorkerPoolCollection: AppServiceWorkerPoolListResult
 
-# mgmt-debug:
-#   show-serialized-names: true
+prepend-rp-prefix:
+  - ApiDefinitionInfo
+  - ApiKeyVaultReferenceData
+  - ArmPlan
+  - BillingMeter
+  - BlobStorageTokenStore
+  - TokenStore
+  - CertificateDetails
+  - CertificateEmail
+  - DatabaseBackupSetting
+  - DatabaseType
+  - DeploymentLocations
+  - GeoRegion
+  - DnsType
+  - DomainStatus
+  - DomainType
+  - EndpointDependency
+  - EndpointDetail
+  - FtpsState
+  - HostName
+  - HostNameType
+  - HostType
+  - HttpSettings
+  - HttpLogsConfig
+  - HttpSettingsRoutes
+  - Identifier
+  - IdentityProviders
+  - NameValuePair
+  - OperationStatus
+  - Operation
+  - UsageState
+  - CorsSettings
+  - SourceControl
+  - WorkerPool
+  - ForwardProxy
+  - IPSecurityRestriction
+  - IPFilterTag
+  - VirtualNetworkProfile
 
 directive:
 # operation removal - should be temporary
@@ -364,33 +597,8 @@ directive:
 # this operation is a LRO operation
   - remove-operation: Global_GetSubscriptionOperationWithAsyncResponse
 # ResourceId
-  - from: Certificates.json
-    where: $.definitions.Certificate.properties.properties.properties.serverFarmId
-    transform: $["x-ms-format"] = "arm-id"
-  - from: Certificates.json
-    where: $.definitions.Certificate.properties.properties.properties.keyVaultId
-    transform: $["x-ms-format"] = "arm-id"
-  - from: Certificates.json
-    where: $.definitions.CertificatePatchResource.properties.properties.properties.keyVaultId
-    transform: $["x-ms-format"] = "arm-id"
-  - from: Certificates.json
-    where: $.definitions.CertificatePatchResource.properties.properties.properties.serverFarmId
-    transform: $["x-ms-format"] = "arm-id"
-# not sure
-  - from: KubeEnvironments.json
-    where: $.definitions.KubeEnvironment.properties.properties.properties.aksResourceID
-    transform: $["x-ms-format"] = "arm-id"
   - from: KubeEnvironments.json
     where: $.definitions.StaticSiteUserProvidedFunctionAppARMResource.properties.properties.properties.functionAppResourceId
-    transform: $["x-ms-format"] = "arm-id"
-  - from: ResourceProvider.json
-    where: $.definitions.VnetParameters.properties.properties.properties.subnetResourceId
-    transform: $["x-ms-format"] = "arm-id"
-  - from: WebApps.json
-    where: $.definitions.SwiftVirtualNetwork.properties.properties.properties.subnetResourceId
-    transform: $["x-ms-format"] = "arm-id"
-  - from: WebApps.json
-    where: $.definitions.SwiftVirtualNetwork.properties.properties.properties.serverFarmId
     transform: $["x-ms-format"] = "arm-id"
   - from: CommonDefinitions.json
     where: $.definitions.VnetInfo.properties.vnetResourceId
@@ -437,9 +645,6 @@ directive:
   - from: ResourceProvider.json
     where: $.definitions.SkuInfos.properties.resourceType
     transform: $["x-ms-format"] = "resource-type"
-  - from: ResourceProvider.json
-    where: $.definitions.ValidateProperties.properties.serverFarmId
-    transform: $["x-ms-format"] = "arm-id"
   - from: AppServiceEnvironments.json
     where: $.definitions.SkuInfo.properties.resourceType
     transform: $["x-ms-format"] = "resource-type"
@@ -459,12 +664,6 @@ directive:
   - from: StaticSites.json
     where: $.definitions.StaticSiteBuildARMResource.properties.properties.properties.userProvidedFunctionApps.items
     transform: $["$ref"] = "#/definitions/StaticSiteUserProvidedFunctionAppARMResource"
-#   - from: StaticSites.json
-#     where: $.definitions.StaticSiteUserProvidedFunctionAppARMResource
-#     transform: $["x-ms-client-name"] = "StaticSiteUserProvidedFunctionApp"
-  - from: ResourceProvider.json
-    where: $.definitions.VnetParameters.properties.properties.properties.subnetResourceId
-    transform: $["x-ms-format"] = "arm-id"
 # Enum rename
   - from: swagger-document
     where: $.definitions.AppServiceCertificateOrder.properties.properties.properties.appServiceCertificateNotRenewableReasons.items

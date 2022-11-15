@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Avs.Models
     {
         internal static DatastoreList DeserializeDatastoreList(JsonElement element)
         {
-            Optional<IReadOnlyList<DatastoreData>> value = default;
+            Optional<IReadOnlyList<AvsPrivateCloudDatastoreData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Avs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DatastoreData> array = new List<DatastoreData>();
+                    List<AvsPrivateCloudDatastoreData> array = new List<AvsPrivateCloudDatastoreData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatastoreData.DeserializeDatastoreData(item));
+                        array.Add(AvsPrivateCloudDatastoreData.DeserializeAvsPrivateCloudDatastoreData(item));
                     }
                     value = array;
                     continue;

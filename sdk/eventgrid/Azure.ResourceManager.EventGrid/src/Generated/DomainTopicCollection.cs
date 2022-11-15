@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.EventGrid
 {
     /// <summary>
     /// A class representing a collection of <see cref="DomainTopicResource" /> and their operations.
-    /// Each <see cref="DomainTopicResource" /> in the collection will belong to the same instance of <see cref="DomainResource" />.
-    /// To get a <see cref="DomainTopicCollection" /> instance call the GetDomainTopics method from an instance of <see cref="DomainResource" />.
+    /// Each <see cref="DomainTopicResource" /> in the collection will belong to the same instance of <see cref="EventGridDomainResource" />.
+    /// To get a <see cref="DomainTopicCollection" /> instance call the GetDomainTopics method from an instance of <see cref="EventGridDomainResource" />.
     /// </summary>
     public partial class DomainTopicCollection : ArmCollection, IEnumerable<DomainTopicResource>, IAsyncEnumerable<DomainTopicResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.EventGrid
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != DomainResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DomainResource.ResourceType), nameof(id));
+            if (id.ResourceType != EventGridDomainResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, EventGridDomainResource.ResourceType), nameof(id));
         }
 
         /// <summary>

@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type");
-            writer.WriteStringValue(PolicyType.ToString());
+            writer.WriteStringValue(ServicePlacementPolicyType.ToString());
             writer.WriteEndObject();
         }
 
         internal static UnknownServicePlacementPolicy DeserializeUnknownServicePlacementPolicy(JsonElement element)
         {
-            ServicePlacementPolicyType type = default;
+            ServicePlacementPolicyType type = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))

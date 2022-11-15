@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -20,22 +21,10 @@ namespace Azure.ResourceManager.Batch.Models
         /// <exception cref="ArgumentNullException"> <paramref name="username"/>, <paramref name="source"/>, <paramref name="relativeMountPath"/> or <paramref name="password"/> is null. </exception>
         public BatchCifsMountConfiguration(string username, string source, string relativeMountPath, string password)
         {
-            if (username == null)
-            {
-                throw new ArgumentNullException(nameof(username));
-            }
-            if (source == null)
-            {
-                throw new ArgumentNullException(nameof(source));
-            }
-            if (relativeMountPath == null)
-            {
-                throw new ArgumentNullException(nameof(relativeMountPath));
-            }
-            if (password == null)
-            {
-                throw new ArgumentNullException(nameof(password));
-            }
+            Argument.AssertNotNull(username, nameof(username));
+            Argument.AssertNotNull(source, nameof(source));
+            Argument.AssertNotNull(relativeMountPath, nameof(relativeMountPath));
+            Argument.AssertNotNull(password, nameof(password));
 
             Username = username;
             Source = source;

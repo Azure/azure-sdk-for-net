@@ -32,7 +32,7 @@ namespace System
 
         private static bool TryLoadBinary(ref Utf8JsonReader input, out byte[] output)
         {
-            var doc = JsonDocument.ParseValue(ref input);
+            using var doc = JsonDocument.ParseValue(ref input);
             if (doc.RootElement.TryGetProperty("type", out var value) && value.GetString().Equals("Buffer", StringComparison.OrdinalIgnoreCase)
                 && doc.RootElement.TryGetProperty("data", out var data))
             {

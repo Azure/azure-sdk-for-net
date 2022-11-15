@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static UnknownSamplingAlgorithm DeserializeUnknownSamplingAlgorithm(JsonElement element)
         {
-            SamplingAlgorithmType samplingAlgorithmType = default;
+            SamplingAlgorithmType samplingAlgorithmType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("samplingAlgorithmType"))

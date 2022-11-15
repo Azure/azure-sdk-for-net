@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.EventGrid
 
         private readonly ClientDiagnostics _partnerTopicEventSubscriptionClientDiagnostics;
         private readonly PartnerTopicEventSubscriptionsRestOperations _partnerTopicEventSubscriptionRestClient;
-        private readonly EventSubscriptionData _data;
+        private readonly EventGridSubscriptionData _data;
 
         /// <summary> Initializes a new instance of the <see cref="PartnerTopicEventSubscriptionResource"/> class for mocking. </summary>
         protected PartnerTopicEventSubscriptionResource()
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> Initializes a new instance of the <see cref = "PartnerTopicEventSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PartnerTopicEventSubscriptionResource(ArmClient client, EventSubscriptionData data) : this(client, data.Id)
+        internal PartnerTopicEventSubscriptionResource(ArmClient client, EventGridSubscriptionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual EventSubscriptionData Data
+        public virtual EventGridSubscriptionData Data
         {
             get
             {
@@ -193,19 +193,19 @@ namespace Azure.ResourceManager.EventGrid
         /// Operation Id: PartnerTopicEventSubscriptions_Update
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="eventSubscriptionUpdateParameters"> Updated event subscription information. </param>
+        /// <param name="patch"> Updated event subscription information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionUpdateParameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<PartnerTopicEventSubscriptionResource>> UpdateAsync(WaitUntil waitUntil, EventSubscriptionUpdateParameters eventSubscriptionUpdateParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<ArmOperation<PartnerTopicEventSubscriptionResource>> UpdateAsync(WaitUntil waitUntil, EventGridSubscriptionPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(eventSubscriptionUpdateParameters, nameof(eventSubscriptionUpdateParameters));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _partnerTopicEventSubscriptionClientDiagnostics.CreateScope("PartnerTopicEventSubscriptionResource.Update");
             scope.Start();
             try
             {
-                var response = await _partnerTopicEventSubscriptionRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, eventSubscriptionUpdateParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new EventGridArmOperation<PartnerTopicEventSubscriptionResource>(new PartnerTopicEventSubscriptionOperationSource(Client), _partnerTopicEventSubscriptionClientDiagnostics, Pipeline, _partnerTopicEventSubscriptionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, eventSubscriptionUpdateParameters).Request, response, OperationFinalStateVia.Location);
+                var response = await _partnerTopicEventSubscriptionRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new EventGridArmOperation<PartnerTopicEventSubscriptionResource>(new PartnerTopicEventSubscriptionOperationSource(Client), _partnerTopicEventSubscriptionClientDiagnostics, Pipeline, _partnerTopicEventSubscriptionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -223,19 +223,19 @@ namespace Azure.ResourceManager.EventGrid
         /// Operation Id: PartnerTopicEventSubscriptions_Update
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="eventSubscriptionUpdateParameters"> Updated event subscription information. </param>
+        /// <param name="patch"> Updated event subscription information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionUpdateParameters"/> is null. </exception>
-        public virtual ArmOperation<PartnerTopicEventSubscriptionResource> Update(WaitUntil waitUntil, EventSubscriptionUpdateParameters eventSubscriptionUpdateParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual ArmOperation<PartnerTopicEventSubscriptionResource> Update(WaitUntil waitUntil, EventGridSubscriptionPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(eventSubscriptionUpdateParameters, nameof(eventSubscriptionUpdateParameters));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _partnerTopicEventSubscriptionClientDiagnostics.CreateScope("PartnerTopicEventSubscriptionResource.Update");
             scope.Start();
             try
             {
-                var response = _partnerTopicEventSubscriptionRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, eventSubscriptionUpdateParameters, cancellationToken);
-                var operation = new EventGridArmOperation<PartnerTopicEventSubscriptionResource>(new PartnerTopicEventSubscriptionOperationSource(Client), _partnerTopicEventSubscriptionClientDiagnostics, Pipeline, _partnerTopicEventSubscriptionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, eventSubscriptionUpdateParameters).Request, response, OperationFinalStateVia.Location);
+                var response = _partnerTopicEventSubscriptionRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                var operation = new EventGridArmOperation<PartnerTopicEventSubscriptionResource>(new PartnerTopicEventSubscriptionOperationSource(Client), _partnerTopicEventSubscriptionClientDiagnostics, Pipeline, _partnerTopicEventSubscriptionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -253,13 +253,13 @@ namespace Azure.ResourceManager.EventGrid
         /// Operation Id: PartnerTopicEventSubscriptions_GetFullUrl
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<EventSubscriptionFullUri>> GetFullUrlAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EventSubscriptionFullUri>> GetFullUriAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _partnerTopicEventSubscriptionClientDiagnostics.CreateScope("PartnerTopicEventSubscriptionResource.GetFullUrl");
+            using var scope = _partnerTopicEventSubscriptionClientDiagnostics.CreateScope("PartnerTopicEventSubscriptionResource.GetFullUri");
             scope.Start();
             try
             {
-                var response = await _partnerTopicEventSubscriptionRestClient.GetFullUrlAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _partnerTopicEventSubscriptionRestClient.GetFullUriAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -275,13 +275,13 @@ namespace Azure.ResourceManager.EventGrid
         /// Operation Id: PartnerTopicEventSubscriptions_GetFullUrl
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<EventSubscriptionFullUri> GetFullUrl(CancellationToken cancellationToken = default)
+        public virtual Response<EventSubscriptionFullUri> GetFullUri(CancellationToken cancellationToken = default)
         {
-            using var scope = _partnerTopicEventSubscriptionClientDiagnostics.CreateScope("PartnerTopicEventSubscriptionResource.GetFullUrl");
+            using var scope = _partnerTopicEventSubscriptionClientDiagnostics.CreateScope("PartnerTopicEventSubscriptionResource.GetFullUri");
             scope.Start();
             try
             {
-                var response = _partnerTopicEventSubscriptionRestClient.GetFullUrl(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _partnerTopicEventSubscriptionRestClient.GetFullUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)

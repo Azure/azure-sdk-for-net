@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <exception cref="ArgumentNullException"> <paramref name="install"/> or <paramref name="remove"/> is null. </exception>
         public UserArtifactManagement(string install, string @remove)
         {
-            if (install == null)
-            {
-                throw new ArgumentNullException(nameof(install));
-            }
-            if (@remove == null)
-            {
-                throw new ArgumentNullException(nameof(@remove));
-            }
+            Argument.AssertNotNull(install, nameof(install));
+            Argument.AssertNotNull(@remove, nameof(@remove));
 
             Install = install;
             Remove = @remove;

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStartArray();
                 foreach (var item in IPAddresses)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.AppService
             Optional<string> provisioningState = default;
             Optional<SubResource> privateEndpoint = default;
             Optional<PrivateLinkConnectionState> privateLinkServiceConnectionState = default;
-            Optional<IList<string>> ipAddresses = default;
+            Optional<IList<IPAddress>> ipAddresses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -134,10 +135,10 @@ namespace Azure.ResourceManager.AppService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<string> array = new List<string>();
+                            List<IPAddress> array = new List<IPAddress>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                array.Add(IPAddress.Parse(item.GetString()));
                             }
                             ipAddresses = array;
                             continue;

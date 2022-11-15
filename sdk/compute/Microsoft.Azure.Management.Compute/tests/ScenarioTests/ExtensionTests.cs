@@ -166,12 +166,14 @@ namespace Compute.Tests
         private void AddProtectedSettingsFromKeyVaultToExtension(VirtualMachineExtension vmExtension)
         {
             vmExtension.ProtectedSettings = null;
-            //string idValue = string.Format("subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.KeyVault/vaults/kvName", m_subId, resourceGroupName);
-            string idValue = string.Format("/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/RGforSDKtestResources/providers/Microsoft.KeyVault/vaults/keyVaultInSoutheastAsia");
-            string sourceVaultId = string.Format("\"id\": \"{0}\"", idValue);
-            string sourceVault = "{ " + sourceVaultId + " }";
-            string secret = string.Format("\"secretUrl\": \"{0}\"", "https://keyvaultinsoutheastasia.vault.azure.net/secrets/SecretForTest/2375df95e3da463c81c43c300f6506ab");
-            vmExtension.ProtectedSettingsFromKeyVault = new JRaw("{ " + string.Format("\"sourceVault\": {0},{1}", sourceVault, secret) + " }");
+            SubResource sourceVault = new SubResource();
+            sourceVault.Id = "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/RGforSDKtestResources/providers/Microsoft.KeyVault/vaults/keyVaultInSoutheastAsia";
+            string secret = "https://keyvaultinsoutheastasia.vault.azure.net/secrets/SecretForTest/2375df95e3da463c81c43c300f6506ab";
+            vmExtension.ProtectedSettingsFromKeyVault = new KeyVaultSecretReference()
+            {
+                SourceVault = sourceVault,
+                SecretUrl = secret
+            };
         }
     }
 }

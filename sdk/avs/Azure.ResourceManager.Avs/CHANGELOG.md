@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,28 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0 (2022-10-19)
+
+### Other Changes
+
+- Upgraded API version to 2022-05-01
+
+## 1.0.0 (2022-09-13)
+
+This is the first stable release of the Azure VMware Solution management library.
+
+### Breaking Changes
+
+Polishing since last public beta release:
+- Prepended `Avs` prefix to all single / simple model names.
+- Corrected the format of all `ResourceIdentifier` type properties / parameters.
+- Optimized the name of some models and functions.
+
+### Other Changes
+
+- Upgraded dependent Azure.ResourceManager to 1.3.1.
+- Optimized the implementation of methods related to tag operations.
 
 ## 1.0.0-beta.1 (2022-08-18)
 

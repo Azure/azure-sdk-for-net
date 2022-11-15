@@ -20,13 +20,27 @@ namespace Azure.ResourceManager.ResourceMover.Models
             writer.WriteStringValue(SourceId);
             if (Optional.IsDefined(ExistingTargetId))
             {
-                writer.WritePropertyName("existingTargetId");
-                writer.WriteStringValue(ExistingTargetId);
+                if (ExistingTargetId != null)
+                {
+                    writer.WritePropertyName("existingTargetId");
+                    writer.WriteStringValue(ExistingTargetId);
+                }
+                else
+                {
+                    writer.WriteNull("existingTargetId");
+                }
             }
             if (Optional.IsDefined(ResourceSettings))
             {
-                writer.WritePropertyName("resourceSettings");
-                writer.WriteObjectValue(ResourceSettings);
+                if (ResourceSettings != null)
+                {
+                    writer.WritePropertyName("resourceSettings");
+                    writer.WriteObjectValue(ResourceSettings);
+                }
+                else
+                {
+                    writer.WriteNull("resourceSettings");
+                }
             }
             if (Optional.IsCollectionDefined(DependsOnOverrides))
             {
@@ -75,7 +89,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        targetId = null;
                         continue;
                     }
                     targetId = new ResourceIdentifier(property.Value.GetString());
@@ -85,7 +99,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        existingTargetId = null;
                         continue;
                     }
                     existingTargetId = new ResourceIdentifier(property.Value.GetString());
@@ -95,7 +109,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        resourceSettings = null;
                         continue;
                     }
                     resourceSettings = MoverResourceSettings.DeserializeMoverResourceSettings(property.Value);
@@ -105,7 +119,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        sourceResourceSettings = null;
                         continue;
                     }
                     sourceResourceSettings = MoverResourceSettings.DeserializeMoverResourceSettings(property.Value);
@@ -165,7 +179,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        errors = null;
                         continue;
                     }
                     errors = MoveResourcePropertiesErrors.DeserializeMoveResourcePropertiesErrors(property.Value);

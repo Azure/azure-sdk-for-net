@@ -22,6 +22,11 @@ namespace Azure.Communication.Identity.Models
                 writer.WriteStringValue(item.ToString());
             }
             writer.WriteEndArray();
+            if (Optional.IsDefined(ExpiresInMinutes))
+            {
+                writer.WritePropertyName("expiresInMinutes");
+                writer.WriteNumberValue(ExpiresInMinutes.Value);
+            }
             writer.WriteEndObject();
         }
     }

@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Avs
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> displayName = default;
-            Optional<VmTypeEnum> vmType = default;
+            Optional<WorkloadNetworkVmType> vmType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Avs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            vmType = new VmTypeEnum(property0.Value.GetString());
+                            vmType = new WorkloadNetworkVmType(property0.Value.GetString());
                             continue;
                         }
                     }

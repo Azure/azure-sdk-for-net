@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> Initializes a new instance of ExperimentList. </summary>
         internal ExperimentList()
         {
-            Value = new ChangeTrackingList<ExperimentData>();
+            Value = new ChangeTrackingList<FrontDoorExperimentData>();
         }
 
         /// <summary> Initializes a new instance of ExperimentList. </summary>
         /// <param name="value"> List of Experiments within a resource group. </param>
         /// <param name="nextLink"> URL to get the next set of Experiment objects if there are any. </param>
-        internal ExperimentList(IReadOnlyList<ExperimentData> value, string nextLink)
+        internal ExperimentList(IReadOnlyList<FrontDoorExperimentData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of Experiments within a resource group. </summary>
-        public IReadOnlyList<ExperimentData> Value { get; }
+        public IReadOnlyList<FrontDoorExperimentData> Value { get; }
         /// <summary> URL to get the next set of Experiment objects if there are any. </summary>
         public string NextLink { get; }
     }

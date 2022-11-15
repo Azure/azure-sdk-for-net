@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.FrontDoor
             }
         }
 
-        internal HttpMessage CreateValidateCustomDomainRequest(string subscriptionId, string resourceGroupName, string frontDoorName, ValidateCustomDomainContent content)
+        internal HttpMessage CreateValidateCustomDomainRequest(string subscriptionId, string resourceGroupName, string frontDoorName, FrontDoorValidateCustomDomainContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="frontDoorName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="frontDoorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ValidateCustomDomainOutput>> ValidateCustomDomainAsync(string subscriptionId, string resourceGroupName, string frontDoorName, ValidateCustomDomainContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<FrontDoorValidateCustomDomainResult>> ValidateCustomDomainAsync(string subscriptionId, string resourceGroupName, string frontDoorName, FrontDoorValidateCustomDomainContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -455,9 +455,9 @@ namespace Azure.ResourceManager.FrontDoor
             {
                 case 200:
                     {
-                        ValidateCustomDomainOutput value = default;
+                        FrontDoorValidateCustomDomainResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ValidateCustomDomainOutput.DeserializeValidateCustomDomainOutput(document.RootElement);
+                        value = FrontDoorValidateCustomDomainResult.DeserializeFrontDoorValidateCustomDomainResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="frontDoorName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="frontDoorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ValidateCustomDomainOutput> ValidateCustomDomain(string subscriptionId, string resourceGroupName, string frontDoorName, ValidateCustomDomainContent content, CancellationToken cancellationToken = default)
+        public Response<FrontDoorValidateCustomDomainResult> ValidateCustomDomain(string subscriptionId, string resourceGroupName, string frontDoorName, FrontDoorValidateCustomDomainContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -486,9 +486,9 @@ namespace Azure.ResourceManager.FrontDoor
             {
                 case 200:
                     {
-                        ValidateCustomDomainOutput value = default;
+                        FrontDoorValidateCustomDomainResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ValidateCustomDomainOutput.DeserializeValidateCustomDomainOutput(document.RootElement);
+                        value = FrontDoorValidateCustomDomainResult.DeserializeFrontDoorValidateCustomDomainResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

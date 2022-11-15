@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,28 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0 (2022-11-02)
+
+### Features Added
+
+Supported following methods:
+- Get available SSL options info
+- Get specified SSL predefined policy
+- Get all SSL predefined policies
+
+## 1.0.1 (2022-09-13)
+
+### Breaking Changes
+
+Modified the following classes to abstract classes and changed their constructors from public to protected:
+- `FirewallPolicyRule`
+- `FirewallPolicyRuleCollectionInfo`
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.3.1.
+- Optimized the implementation of methods related to tag operations.
 
 ## 1.0.0 (2022-07-11)
 

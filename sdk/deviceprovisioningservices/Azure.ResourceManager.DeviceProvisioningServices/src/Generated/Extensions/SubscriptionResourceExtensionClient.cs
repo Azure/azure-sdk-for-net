@@ -20,10 +20,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _provisioningServiceDescriptionIotDpsResourceClientDiagnostics;
-        private IotDpsResourceRestOperations _provisioningServiceDescriptionIotDpsResourceRestClient;
-        private ClientDiagnostics _iotDpsResourceClientDiagnostics;
-        private IotDpsResourceRestOperations _iotDpsResourceRestClient;
+        private ClientDiagnostics _deviceProvisioningServiceIotDpsResourceClientDiagnostics;
+        private IotDpsResourceRestOperations _deviceProvisioningServiceIotDpsResourceRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -37,10 +35,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
         }
 
-        private ClientDiagnostics ProvisioningServiceDescriptionIotDpsResourceClientDiagnostics => _provisioningServiceDescriptionIotDpsResourceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices", ProvisioningServiceDescriptionResource.ResourceType.Namespace, Diagnostics);
-        private IotDpsResourceRestOperations ProvisioningServiceDescriptionIotDpsResourceRestClient => _provisioningServiceDescriptionIotDpsResourceRestClient ??= new IotDpsResourceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ProvisioningServiceDescriptionResource.ResourceType));
-        private ClientDiagnostics IotDpsResourceClientDiagnostics => _iotDpsResourceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private IotDpsResourceRestOperations IotDpsResourceRestClient => _iotDpsResourceRestClient ??= new IotDpsResourceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics DeviceProvisioningServiceIotDpsResourceClientDiagnostics => _deviceProvisioningServiceIotDpsResourceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices", DeviceProvisioningServiceResource.ResourceType.Namespace, Diagnostics);
+        private IotDpsResourceRestOperations DeviceProvisioningServiceIotDpsResourceRestClient => _deviceProvisioningServiceIotDpsResourceRestClient ??= new IotDpsResourceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DeviceProvisioningServiceResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -54,17 +50,17 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// Operation Id: IotDpsResource_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProvisioningServiceDescriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProvisioningServiceDescriptionResource> GetProvisioningServiceDescriptionsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DeviceProvisioningServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DeviceProvisioningServiceResource> GetDeviceProvisioningServicesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ProvisioningServiceDescriptionResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<DeviceProvisioningServiceResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ProvisioningServiceDescriptionIotDpsResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetProvisioningServiceDescriptions");
+                using var scope = DeviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDeviceProvisioningServices");
                 scope.Start();
                 try
                 {
-                    var response = await ProvisioningServiceDescriptionIotDpsResourceRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProvisioningServiceDescriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await DeviceProvisioningServiceIotDpsResourceRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DeviceProvisioningServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -72,14 +68,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                     throw;
                 }
             }
-            async Task<Page<ProvisioningServiceDescriptionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<DeviceProvisioningServiceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ProvisioningServiceDescriptionIotDpsResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetProvisioningServiceDescriptions");
+                using var scope = DeviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDeviceProvisioningServices");
                 scope.Start();
                 try
                 {
-                    var response = await ProvisioningServiceDescriptionIotDpsResourceRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProvisioningServiceDescriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await DeviceProvisioningServiceIotDpsResourceRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DeviceProvisioningServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -96,17 +92,17 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// Operation Id: IotDpsResource_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProvisioningServiceDescriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ProvisioningServiceDescriptionResource> GetProvisioningServiceDescriptions(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DeviceProvisioningServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DeviceProvisioningServiceResource> GetDeviceProvisioningServices(CancellationToken cancellationToken = default)
         {
-            Page<ProvisioningServiceDescriptionResource> FirstPageFunc(int? pageSizeHint)
+            Page<DeviceProvisioningServiceResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ProvisioningServiceDescriptionIotDpsResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetProvisioningServiceDescriptions");
+                using var scope = DeviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDeviceProvisioningServices");
                 scope.Start();
                 try
                 {
-                    var response = ProvisioningServiceDescriptionIotDpsResourceRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProvisioningServiceDescriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = DeviceProvisioningServiceIotDpsResourceRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DeviceProvisioningServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -114,14 +110,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                     throw;
                 }
             }
-            Page<ProvisioningServiceDescriptionResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<DeviceProvisioningServiceResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ProvisioningServiceDescriptionIotDpsResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetProvisioningServiceDescriptions");
+                using var scope = DeviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDeviceProvisioningServices");
                 scope.Start();
                 try
                 {
-                    var response = ProvisioningServiceDescriptionIotDpsResourceRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProvisioningServiceDescriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = DeviceProvisioningServiceIotDpsResourceRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DeviceProvisioningServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -137,15 +133,15 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Devices/checkProvisioningServiceNameAvailability
         /// Operation Id: IotDpsResource_CheckProvisioningServiceNameAvailability
         /// </summary>
-        /// <param name="arguments"> Set the name parameter in the OperationInputs structure to the name of the provisioning service to check. </param>
+        /// <param name="content"> Set the name parameter in the OperationInputs structure to the name of the provisioning service to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NameAvailabilityInfo>> CheckProvisioningServiceNameAvailabilityIotDpsResourceAsync(OperationInputs arguments, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeviceProvisioningServicesNameAvailabilityResult>> CheckDeviceProvisioningServicesNameAvailabilityAsync(DeviceProvisioningServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = IotDpsResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckProvisioningServiceNameAvailabilityIotDpsResource");
+            using var scope = DeviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckDeviceProvisioningServicesNameAvailability");
             scope.Start();
             try
             {
-                var response = await IotDpsResourceRestClient.CheckProvisioningServiceNameAvailabilityAsync(Id.SubscriptionId, arguments, cancellationToken).ConfigureAwait(false);
+                var response = await DeviceProvisioningServiceIotDpsResourceRestClient.CheckProvisioningServiceNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -160,15 +156,15 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Devices/checkProvisioningServiceNameAvailability
         /// Operation Id: IotDpsResource_CheckProvisioningServiceNameAvailability
         /// </summary>
-        /// <param name="arguments"> Set the name parameter in the OperationInputs structure to the name of the provisioning service to check. </param>
+        /// <param name="content"> Set the name parameter in the OperationInputs structure to the name of the provisioning service to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NameAvailabilityInfo> CheckProvisioningServiceNameAvailabilityIotDpsResource(OperationInputs arguments, CancellationToken cancellationToken = default)
+        public virtual Response<DeviceProvisioningServicesNameAvailabilityResult> CheckDeviceProvisioningServicesNameAvailability(DeviceProvisioningServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = IotDpsResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckProvisioningServiceNameAvailabilityIotDpsResource");
+            using var scope = DeviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckDeviceProvisioningServicesNameAvailability");
             scope.Start();
             try
             {
-                var response = IotDpsResourceRestClient.CheckProvisioningServiceNameAvailability(Id.SubscriptionId, arguments, cancellationToken);
+                var response = DeviceProvisioningServiceIotDpsResourceRestClient.CheckProvisioningServiceNameAvailability(Id.SubscriptionId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

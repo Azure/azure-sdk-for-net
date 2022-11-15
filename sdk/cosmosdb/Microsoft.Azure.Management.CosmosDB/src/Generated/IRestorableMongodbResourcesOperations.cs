@@ -59,6 +59,6 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<DatabaseRestoreResource>>> ListWithHttpMessagesAsync(string location, string instanceId, string restoreLocation = default(string), string restoreTimestampInUtc = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IEnumerable<RestorableMongodbResourcesGetResult>>> ListWithHttpMessagesAsync(string location, string instanceId, string restoreLocation = default(string), string restoreTimestampInUtc = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

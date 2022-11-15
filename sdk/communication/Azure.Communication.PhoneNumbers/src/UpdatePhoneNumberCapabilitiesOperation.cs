@@ -11,7 +11,7 @@ namespace Azure.Communication.PhoneNumbers
     {
         internal UpdatePhoneNumberCapabilitiesOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            var nextLinkOperation = NextLinkOperationImplementation.Create(this, pipeline, request.Method, request.Uri.ToUri(), response, OperationFinalStateVia.Location);
+            var nextLinkOperation = NextLinkOperationImplementation.Create(this, pipeline, request.Method, request.Uri.ToUri(), response, OperationFinalStateVia.LocationOverride);
             _operation = new OperationInternal<PurchasedPhoneNumber>(clientDiagnostics, nextLinkOperation, response, "UpdatePhoneNumberCapabilitiesOperation");
 
             if (response.Headers.TryGetValue<string>("operation-id", out var id))

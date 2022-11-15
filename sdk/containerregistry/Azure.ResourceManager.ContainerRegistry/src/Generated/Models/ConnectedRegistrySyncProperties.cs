@@ -19,10 +19,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <exception cref="ArgumentNullException"> <paramref name="tokenId"/> is null. </exception>
         public ConnectedRegistrySyncProperties(ResourceIdentifier tokenId, TimeSpan messageTtl)
         {
-            if (tokenId == null)
-            {
-                throw new ArgumentNullException(nameof(tokenId));
-            }
+            Argument.AssertNotNull(tokenId, nameof(tokenId));
 
             TokenId = tokenId;
             MessageTtl = messageTtl;

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -20,14 +21,8 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="storageConnectionString"/> or <paramref name="projections"/> is null. </exception>
         public KnowledgeStore(string storageConnectionString, IEnumerable<KnowledgeStoreProjection> projections)
         {
-            if (storageConnectionString == null)
-            {
-                throw new ArgumentNullException(nameof(storageConnectionString));
-            }
-            if (projections == null)
-            {
-                throw new ArgumentNullException(nameof(projections));
-            }
+            Argument.AssertNotNull(storageConnectionString, nameof(storageConnectionString));
+            Argument.AssertNotNull(projections, nameof(projections));
 
             StorageConnectionString = storageConnectionString;
             Projections = projections.ToList();

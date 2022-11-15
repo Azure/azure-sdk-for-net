@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -47,11 +47,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
-        }
-
-        internal static KnowledgeStoreProjectionSelector DeserializeKnowledgeStoreProjectionSelector(JsonElement element)
-        {
-            throw new NotSupportedException("Deserialization of abstract type 'global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreProjectionSelector' not supported.");
         }
     }
 }

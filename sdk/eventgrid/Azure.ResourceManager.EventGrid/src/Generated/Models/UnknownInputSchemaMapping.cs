@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> The UnknownInputSchemaMapping. </summary>
-    internal partial class UnknownInputSchemaMapping : InputSchemaMapping
+    internal partial class UnknownInputSchemaMapping : EventGridInputSchemaMapping
     {
         /// <summary> Initializes a new instance of UnknownInputSchemaMapping. </summary>
         /// <param name="inputSchemaMappingType"> Type of the custom mapping. </param>

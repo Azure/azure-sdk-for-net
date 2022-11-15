@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="location"> The location. </param>
         public FrontDoorData(AzureLocation location) : base(location)
         {
-            RoutingRules = new ChangeTrackingList<RoutingRule>();
-            LoadBalancingSettings = new ChangeTrackingList<LoadBalancingSettingsModel>();
-            HealthProbeSettings = new ChangeTrackingList<HealthProbeSettingsModel>();
-            BackendPools = new ChangeTrackingList<BackendPool>();
+            RoutingRules = new ChangeTrackingList<RoutingRuleData>();
+            LoadBalancingSettings = new ChangeTrackingList<FrontDoorLoadBalancingSettingsData>();
+            HealthProbeSettings = new ChangeTrackingList<FrontDoorHealthProbeSettingsData>();
+            BackendPools = new ChangeTrackingList<FrontDoorBackendPool>();
             FrontendEndpoints = new ChangeTrackingList<FrontendEndpointData>();
-            RulesEngines = new ChangeTrackingList<RulesEngineData>();
+            RulesEngines = new ChangeTrackingList<FrontDoorRulesEngineData>();
             ExtendedProperties = new ChangeTrackingDictionary<string, string>();
         }
 
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="frontdoorId"> The Id of the frontdoor. </param>
         /// <param name="rulesEngines"> Rules Engine Configurations available to routing rules. </param>
         /// <param name="extendedProperties"> Key-Value pair representing additional properties for frontdoor. </param>
-        internal FrontDoorData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string friendlyName, IList<RoutingRule> routingRules, IList<LoadBalancingSettingsModel> loadBalancingSettings, IList<HealthProbeSettingsModel> healthProbeSettings, IList<BackendPool> backendPools, IList<FrontendEndpointData> frontendEndpoints, BackendPoolsSettings backendPoolsSettings, FrontDoorEnabledState? enabledState, FrontDoorResourceState? resourceState, string provisioningState, string cname, string frontdoorId, IReadOnlyList<RulesEngineData> rulesEngines, IReadOnlyDictionary<string, string> extendedProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal FrontDoorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string friendlyName, IList<RoutingRuleData> routingRules, IList<FrontDoorLoadBalancingSettingsData> loadBalancingSettings, IList<FrontDoorHealthProbeSettingsData> healthProbeSettings, IList<FrontDoorBackendPool> backendPools, IList<FrontendEndpointData> frontendEndpoints, BackendPoolsSettings backendPoolsSettings, FrontDoorEnabledState? enabledState, FrontDoorResourceState? resourceState, string provisioningState, string cname, string frontdoorId, IReadOnlyList<FrontDoorRulesEngineData> rulesEngines, IReadOnlyDictionary<string, string> extendedProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             FriendlyName = friendlyName;
             RoutingRules = routingRules;
@@ -70,13 +70,13 @@ namespace Azure.ResourceManager.FrontDoor
         /// <summary> A friendly name for the frontDoor. </summary>
         public string FriendlyName { get; set; }
         /// <summary> Routing rules associated with this Front Door. </summary>
-        public IList<RoutingRule> RoutingRules { get; }
+        public IList<RoutingRuleData> RoutingRules { get; }
         /// <summary> Load balancing settings associated with this Front Door instance. </summary>
-        public IList<LoadBalancingSettingsModel> LoadBalancingSettings { get; }
+        public IList<FrontDoorLoadBalancingSettingsData> LoadBalancingSettings { get; }
         /// <summary> Health probe settings associated with this Front Door instance. </summary>
-        public IList<HealthProbeSettingsModel> HealthProbeSettings { get; }
+        public IList<FrontDoorHealthProbeSettingsData> HealthProbeSettings { get; }
         /// <summary> Backend pools available to routing rules. </summary>
-        public IList<BackendPool> BackendPools { get; }
+        public IList<FrontDoorBackendPool> BackendPools { get; }
         /// <summary> Frontend endpoints available to routing rules. </summary>
         public IList<FrontendEndpointData> FrontendEndpoints { get; }
         /// <summary> Settings for all backendPools. </summary>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <summary> The Id of the frontdoor. </summary>
         public string FrontdoorId { get; }
         /// <summary> Rules Engine Configurations available to routing rules. </summary>
-        public IReadOnlyList<RulesEngineData> RulesEngines { get; }
+        public IReadOnlyList<FrontDoorRulesEngineData> RulesEngines { get; }
         /// <summary> Key-Value pair representing additional properties for frontdoor. </summary>
         public IReadOnlyDictionary<string, string> ExtendedProperties { get; }
     }

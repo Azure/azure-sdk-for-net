@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.DataShare
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of AccountResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of AccountResources and their operations over a AccountResource. </returns>
-        public virtual AccountCollection GetAccounts()
+        /// <summary> Gets a collection of DataShareAccountResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of DataShareAccountResources and their operations over a DataShareAccountResource. </returns>
+        public virtual DataShareAccountCollection GetDataShareAccounts()
         {
-            return GetCachedClient(Client => new AccountCollection(Client, Id));
+            return GetCachedClient(Client => new DataShareAccountCollection(Client, Id));
         }
     }
 }

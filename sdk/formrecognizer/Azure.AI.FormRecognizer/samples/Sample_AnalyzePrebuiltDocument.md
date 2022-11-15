@@ -1,6 +1,6 @@
-# Analyze with the prebuilt document model
+# Analyze with the prebuilt general document model
 
-This sample demonstrates how to analyze key-value pairs, entities, tables, and selection marks from documents using the general prebuilt document model.
+This sample demonstrates how to analyze key-value pairs, tables, and selection marks from documents using the prebuilt general document model.
 
 To get started you'll need a Cognitive Services resource or a Form Recognizer resource.  See [README][README] for prerequisites and instructions.
 
@@ -17,7 +17,7 @@ var credential = new AzureKeyCredential(apiKey);
 var client = new DocumentAnalysisClient(new Uri(endpoint), credential);
 ```
 
-## Use the prebuilt document model to analyze a document from a URI
+## Use the prebuilt general document model to analyze a document from a URI
 
 To analyze a given file at a URI, use the `AnalyzeDocumentFromUri` method and pass `prebuilt-document` as the model ID. The returned value is an `AnalyzeResult` object containing data about the submitted document.
 
@@ -105,7 +105,7 @@ for (int i = 0; i < result.Tables.Count; i++)
 }
 ```
 
-## Use the prebuilt document model to analyze a document from a file stream
+## Use the prebuilt general document model to analyze a document from a file stream
 
 To analyze a given file at a file stream, use the `AnalyzeDocument` method and pass `prebuilt-document` as the model ID. The returned value is an `AnalyzeResult` object containing data about the submitted document.
 
@@ -196,7 +196,7 @@ for (int i = 0; i < result.Tables.Count; i++)
 
 To see the full example source files, see:
 
-* [Analyze with prebuilt document from URI](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_AnalyzePrebuiltDocumentFromUriAsync.cs)
-* [Analyze with prebuilt document from file](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_AnalyzePrebuiltDocumentFromFileAsync.cs)
+* [Analyze with prebuilt general document from URI](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_AnalyzePrebuiltDocumentFromUriAsync.cs)
+* [Analyze with prebuilt general document from file](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_AnalyzePrebuiltDocumentFromFileAsync.cs)
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started

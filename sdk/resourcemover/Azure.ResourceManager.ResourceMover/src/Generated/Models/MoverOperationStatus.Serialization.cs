@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    startTime = property.Value.GetDateTimeOffset();
+                    startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("endTime"))
@@ -61,14 +61,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    endTime = property.Value.GetDateTimeOffset();
+                    endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("error"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        error = null;
                         continue;
                     }
                     error = MoverOperationStatusError.DeserializeMoverOperationStatusError(property.Value);

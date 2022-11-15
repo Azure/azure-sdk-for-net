@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-05-01",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-10-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "139",
         "Content-Type": "application/json",
-        "traceparent": "00-b374d795f9c4683b98517ff4685dfb89-18445c7fe4557552-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220721.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "be0a4b3cc6e983d808810ac18448f7fb",
+        "traceparent": "00-d3163326b8bd6ee539b13724569604e5-ef1359bc1cc38a06-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221023.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "47ebfb9fe54af868dcbe4e99dbb0f010",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -27,14 +27,16 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "e5486ab6-bcfc-4ab1-b343-d0ab6ec838cc",
+        "apim-request-id": "6228b2a8-eda9-48a1-a5c5-3d09ab46a8fd",
         "Content-Length": "164",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1,CognitiveServices.TextAnalytics.TextRecords=1",
-        "Date": "Thu, 21 Jul 2022 23:23:14 GMT",
+        "Date": "Mon, 24 Oct 2022 20:14:27 GMT",
+        "Set-Cookie": ".AspNetCore.Mvc.CookieTempDataProvider=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; samesite=lax; httponly",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "11"
+        "x-envoy-upstream-service-time": "12",
+        "x-ms-region": "West US 2"
       },
       "ResponseBody": {
         "kind": "KeyPhraseExtractionResults",
@@ -50,14 +52,14 @@
             }
           ],
           "errors": [],
-          "modelVersion": "2022-07-01"
+          "modelVersion": "2022-10-01"
         }
       }
     }
   ],
   "Variables": {
-    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
-    "RandomSeed": "806354846",
+    "AZURE_AUTHORITY_HOST": null,
+    "RandomSeed": "1049057311",
     "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
   }
 }

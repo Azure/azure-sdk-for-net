@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AlertsManagement
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateMetaDataRequest(InformationIdentifier identifier)
+        internal HttpMessage CreateMetaDataRequest(RetrievedInformationIdentifier identifier)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <summary> List alerts meta data information based on value of identifier parameter. </summary>
         /// <param name="identifier"> Identification of the information to be retrieved by API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ServiceAlertsMetaData>> MetaDataAsync(InformationIdentifier identifier, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceAlertMetadata>> MetaDataAsync(RetrievedInformationIdentifier identifier, CancellationToken cancellationToken = default)
         {
             using var message = CreateMetaDataRequest(identifier);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -64,9 +64,9 @@ namespace Azure.ResourceManager.AlertsManagement
             {
                 case 200:
                     {
-                        ServiceAlertsMetaData value = default;
+                        ServiceAlertMetadata value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ServiceAlertsMetaData.DeserializeServiceAlertsMetaData(document.RootElement);
+                        value = ServiceAlertMetadata.DeserializeServiceAlertMetadata(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <summary> List alerts meta data information based on value of identifier parameter. </summary>
         /// <param name="identifier"> Identification of the information to be retrieved by API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ServiceAlertsMetaData> MetaData(InformationIdentifier identifier, CancellationToken cancellationToken = default)
+        public Response<ServiceAlertMetadata> MetaData(RetrievedInformationIdentifier identifier, CancellationToken cancellationToken = default)
         {
             using var message = CreateMetaDataRequest(identifier);
             _pipeline.Send(message, cancellationToken);
@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.AlertsManagement
             {
                 case 200:
                     {
-                        ServiceAlertsMetaData value = default;
+                        ServiceAlertMetadata value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ServiceAlertsMetaData.DeserializeServiceAlertsMetaData(document.RootElement);
+                        value = ServiceAlertMetadata.DeserializeServiceAlertMetadata(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AlertsManagement
             }
         }
 
-        internal HttpMessage CreateGetAllRequest(string subscriptionId, string targetResource, string targetResourceType, string targetResourceGroup, MonitorService? monitorService, MonitorCondition? monitorCondition, ServiceAlertSeverity? severity, AlertState? alertState, string alertRule, string smartGroupId, bool? includeContext, bool? includeEgressConfig, long? pageCount, AlertsSortByField? sortBy, SortOrder? sortOrder, string select, TimeRangeFilter? timeRange, string customTimeRange)
+        internal HttpMessage CreateGetAllRequest(string subscriptionId, string targetResource, string targetResourceType, string targetResourceGroup, MonitorServiceSourceForAlert? monitorService, MonitorCondition? monitorCondition, ServiceAlertSeverity? severity, ServiceAlertState? alertState, string alertRule, string smartGroupId, bool? includeContext, bool? includeEgressConfig, long? pageCount, ListServiceAlertsSortByField? sortBy, AlertsManagementQuerySortOrder? sortOrder, string select, TimeRangeFilter? timeRange, string customTimeRange)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ServiceAlertList>> GetAllAsync(string subscriptionId, string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorService? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, AlertState? alertState = null, string alertRule = null, string smartGroupId = null, bool? includeContext = null, bool? includeEgressConfig = null, long? pageCount = null, AlertsSortByField? sortBy = null, SortOrder? sortOrder = null, string select = null, TimeRangeFilter? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceAlertListResult>> GetAllAsync(string subscriptionId, string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorServiceSourceForAlert? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, ServiceAlertState? alertState = null, string alertRule = null, string smartGroupId = null, bool? includeContext = null, bool? includeEgressConfig = null, long? pageCount = null, ListServiceAlertsSortByField? sortBy = null, AlertsManagementQuerySortOrder? sortOrder = null, string select = null, TimeRangeFilter? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -212,9 +212,9 @@ namespace Azure.ResourceManager.AlertsManagement
             {
                 case 200:
                     {
-                        ServiceAlertList value = default;
+                        ServiceAlertListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ServiceAlertList.DeserializeServiceAlertList(document.RootElement);
+                        value = ServiceAlertListResult.DeserializeServiceAlertListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ServiceAlertList> GetAll(string subscriptionId, string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorService? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, AlertState? alertState = null, string alertRule = null, string smartGroupId = null, bool? includeContext = null, bool? includeEgressConfig = null, long? pageCount = null, AlertsSortByField? sortBy = null, SortOrder? sortOrder = null, string select = null, TimeRangeFilter? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default)
+        public Response<ServiceAlertListResult> GetAll(string subscriptionId, string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorServiceSourceForAlert? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, ServiceAlertState? alertState = null, string alertRule = null, string smartGroupId = null, bool? includeContext = null, bool? includeEgressConfig = null, long? pageCount = null, ListServiceAlertsSortByField? sortBy = null, AlertsManagementQuerySortOrder? sortOrder = null, string select = null, TimeRangeFilter? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -254,9 +254,9 @@ namespace Azure.ResourceManager.AlertsManagement
             {
                 case 200:
                     {
-                        ServiceAlertList value = default;
+                        ServiceAlertListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ServiceAlertList.DeserializeServiceAlertList(document.RootElement);
+                        value = ServiceAlertListResult.DeserializeServiceAlertListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.AlertsManagement
             }
         }
 
-        internal HttpMessage CreateGetByIdRequest(string subscriptionId, string alertId)
+        internal HttpMessage CreateGetByIdRequest(string subscriptionId, Guid alertId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -286,12 +286,11 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="alertId"> Unique ID of an alert instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="alertId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="alertId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ServiceAlertData>> GetByIdAsync(string subscriptionId, string alertId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ServiceAlertData>> GetByIdAsync(string subscriptionId, Guid alertId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
 
             using var message = CreateGetByIdRequest(subscriptionId, alertId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -315,12 +314,11 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="alertId"> Unique ID of an alert instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="alertId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="alertId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ServiceAlertData> GetById(string subscriptionId, string alertId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ServiceAlertData> GetById(string subscriptionId, Guid alertId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
 
             using var message = CreateGetByIdRequest(subscriptionId, alertId);
             _pipeline.Send(message, cancellationToken);
@@ -340,7 +338,7 @@ namespace Azure.ResourceManager.AlertsManagement
             }
         }
 
-        internal HttpMessage CreateChangeStateRequest(string subscriptionId, string alertId, AlertState newState, string comment)
+        internal HttpMessage CreateChangeStateRequest(string subscriptionId, Guid alertId, ServiceAlertState newState, string comment)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -373,12 +371,11 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="newState"> New state of the alert. </param>
         /// <param name="comment"> reason of change alert state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="alertId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="alertId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ServiceAlertData>> ChangeStateAsync(string subscriptionId, string alertId, AlertState newState, string comment = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ServiceAlertData>> ChangeStateAsync(string subscriptionId, Guid alertId, ServiceAlertState newState, string comment = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
 
             using var message = CreateChangeStateRequest(subscriptionId, alertId, newState, comment);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -402,12 +399,11 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="newState"> New state of the alert. </param>
         /// <param name="comment"> reason of change alert state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="alertId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="alertId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ServiceAlertData> ChangeState(string subscriptionId, string alertId, AlertState newState, string comment = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ServiceAlertData> ChangeState(string subscriptionId, Guid alertId, ServiceAlertState newState, string comment = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
 
             using var message = CreateChangeStateRequest(subscriptionId, alertId, newState, comment);
             _pipeline.Send(message, cancellationToken);
@@ -425,7 +421,7 @@ namespace Azure.ResourceManager.AlertsManagement
             }
         }
 
-        internal HttpMessage CreateGetHistoryRequest(string subscriptionId, string alertId)
+        internal HttpMessage CreateGetHistoryRequest(string subscriptionId, Guid alertId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -448,12 +444,11 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="alertId"> Unique ID of an alert instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="alertId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="alertId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ServiceAlertModification>> GetHistoryAsync(string subscriptionId, string alertId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ServiceAlertModification>> GetHistoryAsync(string subscriptionId, Guid alertId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
 
             using var message = CreateGetHistoryRequest(subscriptionId, alertId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -475,12 +470,11 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="alertId"> Unique ID of an alert instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="alertId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="alertId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ServiceAlertModification> GetHistory(string subscriptionId, string alertId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ServiceAlertModification> GetHistory(string subscriptionId, Guid alertId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
 
             using var message = CreateGetHistoryRequest(subscriptionId, alertId);
             _pipeline.Send(message, cancellationToken);
@@ -498,7 +492,7 @@ namespace Azure.ResourceManager.AlertsManagement
             }
         }
 
-        internal HttpMessage CreateGetSummaryRequest(string subscriptionId, AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount, string targetResource, string targetResourceType, string targetResourceGroup, MonitorService? monitorService, MonitorCondition? monitorCondition, ServiceAlertSeverity? severity, AlertState? alertState, string alertRule, TimeRangeFilter? timeRange, string customTimeRange)
+        internal HttpMessage CreateGetSummaryRequest(string subscriptionId, AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount, string targetResource, string targetResourceType, string targetResourceGroup, MonitorServiceSourceForAlert? monitorService, MonitorCondition? monitorCondition, ServiceAlertSeverity? severity, ServiceAlertState? alertState, string alertRule, TimeRangeFilter? timeRange, string customTimeRange)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -577,7 +571,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ServiceAlertsSummary>> GetSummaryAsync(string subscriptionId, AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount = null, string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorService? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, AlertState? alertState = null, string alertRule = null, TimeRangeFilter? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceAlertSummary>> GetSummaryAsync(string subscriptionId, AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount = null, string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorServiceSourceForAlert? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, ServiceAlertState? alertState = null, string alertRule = null, TimeRangeFilter? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -587,9 +581,9 @@ namespace Azure.ResourceManager.AlertsManagement
             {
                 case 200:
                     {
-                        ServiceAlertsSummary value = default;
+                        ServiceAlertSummary value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ServiceAlertsSummary.DeserializeServiceAlertsSummary(document.RootElement);
+                        value = ServiceAlertSummary.DeserializeServiceAlertSummary(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -614,7 +608,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ServiceAlertsSummary> GetSummary(string subscriptionId, AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount = null, string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorService? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, AlertState? alertState = null, string alertRule = null, TimeRangeFilter? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default)
+        public Response<ServiceAlertSummary> GetSummary(string subscriptionId, AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount = null, string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorServiceSourceForAlert? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, ServiceAlertState? alertState = null, string alertRule = null, TimeRangeFilter? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -624,9 +618,9 @@ namespace Azure.ResourceManager.AlertsManagement
             {
                 case 200:
                     {
-                        ServiceAlertsSummary value = default;
+                        ServiceAlertSummary value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ServiceAlertsSummary.DeserializeServiceAlertsSummary(document.RootElement);
+                        value = ServiceAlertSummary.DeserializeServiceAlertSummary(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -634,7 +628,7 @@ namespace Azure.ResourceManager.AlertsManagement
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string subscriptionId, string targetResource, string targetResourceType, string targetResourceGroup, MonitorService? monitorService, MonitorCondition? monitorCondition, ServiceAlertSeverity? severity, AlertState? alertState, string alertRule, string smartGroupId, bool? includeContext, bool? includeEgressConfig, long? pageCount, AlertsSortByField? sortBy, SortOrder? sortOrder, string select, TimeRangeFilter? timeRange, string customTimeRange)
+        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string subscriptionId, string targetResource, string targetResourceType, string targetResourceGroup, MonitorServiceSourceForAlert? monitorService, MonitorCondition? monitorCondition, ServiceAlertSeverity? severity, ServiceAlertState? alertState, string alertRule, string smartGroupId, bool? includeContext, bool? includeEgressConfig, long? pageCount, ListServiceAlertsSortByField? sortBy, AlertsManagementQuerySortOrder? sortOrder, string select, TimeRangeFilter? timeRange, string customTimeRange)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -671,7 +665,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ServiceAlertList>> GetAllNextPageAsync(string nextLink, string subscriptionId, string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorService? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, AlertState? alertState = null, string alertRule = null, string smartGroupId = null, bool? includeContext = null, bool? includeEgressConfig = null, long? pageCount = null, AlertsSortByField? sortBy = null, SortOrder? sortOrder = null, string select = null, TimeRangeFilter? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceAlertListResult>> GetAllNextPageAsync(string nextLink, string subscriptionId, string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorServiceSourceForAlert? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, ServiceAlertState? alertState = null, string alertRule = null, string smartGroupId = null, bool? includeContext = null, bool? includeEgressConfig = null, long? pageCount = null, ListServiceAlertsSortByField? sortBy = null, AlertsManagementQuerySortOrder? sortOrder = null, string select = null, TimeRangeFilter? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -682,9 +676,9 @@ namespace Azure.ResourceManager.AlertsManagement
             {
                 case 200:
                     {
-                        ServiceAlertList value = default;
+                        ServiceAlertListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ServiceAlertList.DeserializeServiceAlertList(document.RootElement);
+                        value = ServiceAlertListResult.DeserializeServiceAlertListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -715,7 +709,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ServiceAlertList> GetAllNextPage(string nextLink, string subscriptionId, string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorService? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, AlertState? alertState = null, string alertRule = null, string smartGroupId = null, bool? includeContext = null, bool? includeEgressConfig = null, long? pageCount = null, AlertsSortByField? sortBy = null, SortOrder? sortOrder = null, string select = null, TimeRangeFilter? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default)
+        public Response<ServiceAlertListResult> GetAllNextPage(string nextLink, string subscriptionId, string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorServiceSourceForAlert? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, ServiceAlertState? alertState = null, string alertRule = null, string smartGroupId = null, bool? includeContext = null, bool? includeEgressConfig = null, long? pageCount = null, ListServiceAlertsSortByField? sortBy = null, AlertsManagementQuerySortOrder? sortOrder = null, string select = null, TimeRangeFilter? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -726,9 +720,9 @@ namespace Azure.ResourceManager.AlertsManagement
             {
                 case 200:
                     {
-                        ServiceAlertList value = default;
+                        ServiceAlertListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ServiceAlertList.DeserializeServiceAlertList(document.RootElement);
+                        value = ServiceAlertListResult.DeserializeServiceAlertListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

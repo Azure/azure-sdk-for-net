@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The containers GCP offering. </summary>
-    public partial class DefenderForContainersGcpOffering : CloudOffering
+    public partial class DefenderForContainersGcpOffering : SecurityCenterCloudOffering
     {
         /// <summary> Initializes a new instance of DefenderForContainersGcpOffering. </summary>
         public DefenderForContainersGcpOffering()
@@ -21,16 +21,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="description"> The offering description. </param>
         /// <param name="nativeCloudConnection"> The native cloud connection configuration. </param>
         /// <param name="dataPipelineNativeCloudConnection"> The native cloud connection configuration. </param>
-        /// <param name="auditLogsAutoProvisioningFlag"> Is audit logs data collection enabled. </param>
-        /// <param name="defenderAgentAutoProvisioningFlag"> Is Microsoft Defender for Cloud Kubernetes agent auto provisioning enabled. </param>
-        /// <param name="policyAgentAutoProvisioningFlag"> Is Policy Kubernetes agent auto provisioning enabled. </param>
-        internal DefenderForContainersGcpOffering(OfferingType offeringType, string description, DefenderForContainersGcpOfferingNativeCloudConnection nativeCloudConnection, DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection dataPipelineNativeCloudConnection, bool? auditLogsAutoProvisioningFlag, bool? defenderAgentAutoProvisioningFlag, bool? policyAgentAutoProvisioningFlag) : base(offeringType, description)
+        /// <param name="isAuditLogsAutoProvisioningEnabled"> Is audit logs data collection enabled. </param>
+        /// <param name="isDefenderAgentAutoProvisioningEnabled"> Is Microsoft Defender for Cloud Kubernetes agent auto provisioning enabled. </param>
+        /// <param name="isPolicyAgentAutoProvisioningEnabled"> Is Policy Kubernetes agent auto provisioning enabled. </param>
+        internal DefenderForContainersGcpOffering(OfferingType offeringType, string description, DefenderForContainersGcpOfferingNativeCloudConnection nativeCloudConnection, DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection dataPipelineNativeCloudConnection, bool? isAuditLogsAutoProvisioningEnabled, bool? isDefenderAgentAutoProvisioningEnabled, bool? isPolicyAgentAutoProvisioningEnabled) : base(offeringType, description)
         {
             NativeCloudConnection = nativeCloudConnection;
             DataPipelineNativeCloudConnection = dataPipelineNativeCloudConnection;
-            AuditLogsAutoProvisioningFlag = auditLogsAutoProvisioningFlag;
-            DefenderAgentAutoProvisioningFlag = defenderAgentAutoProvisioningFlag;
-            PolicyAgentAutoProvisioningFlag = policyAgentAutoProvisioningFlag;
+            IsAuditLogsAutoProvisioningEnabled = isAuditLogsAutoProvisioningEnabled;
+            IsDefenderAgentAutoProvisioningEnabled = isDefenderAgentAutoProvisioningEnabled;
+            IsPolicyAgentAutoProvisioningEnabled = isPolicyAgentAutoProvisioningEnabled;
             OfferingType = offeringType;
         }
 
@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> The native cloud connection configuration. </summary>
         public DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection DataPipelineNativeCloudConnection { get; set; }
         /// <summary> Is audit logs data collection enabled. </summary>
-        public bool? AuditLogsAutoProvisioningFlag { get; set; }
+        public bool? IsAuditLogsAutoProvisioningEnabled { get; set; }
         /// <summary> Is Microsoft Defender for Cloud Kubernetes agent auto provisioning enabled. </summary>
-        public bool? DefenderAgentAutoProvisioningFlag { get; set; }
+        public bool? IsDefenderAgentAutoProvisioningEnabled { get; set; }
         /// <summary> Is Policy Kubernetes agent auto provisioning enabled. </summary>
-        public bool? PolicyAgentAutoProvisioningFlag { get; set; }
+        public bool? IsPolicyAgentAutoProvisioningEnabled { get; set; }
     }
 }

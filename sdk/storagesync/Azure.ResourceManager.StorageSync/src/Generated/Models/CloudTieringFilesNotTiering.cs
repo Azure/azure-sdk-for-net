@@ -21,18 +21,18 @@ namespace Azure.ResourceManager.StorageSync.Models
         }
 
         /// <summary> Initializes a new instance of CloudTieringFilesNotTiering. </summary>
-        /// <param name="lastUpdatedTimestamp"> Last updated timestamp. </param>
+        /// <param name="lastUpdatedOn"> Last updated timestamp. </param>
         /// <param name="totalFileCount"> Last cloud tiering result (HResult). </param>
         /// <param name="errors"> Array of tiering errors. </param>
-        internal CloudTieringFilesNotTiering(DateTimeOffset? lastUpdatedTimestamp, long? totalFileCount, IReadOnlyList<FilesNotTieringError> errors)
+        internal CloudTieringFilesNotTiering(DateTimeOffset? lastUpdatedOn, long? totalFileCount, IReadOnlyList<FilesNotTieringError> errors)
         {
-            LastUpdatedTimestamp = lastUpdatedTimestamp;
+            LastUpdatedOn = lastUpdatedOn;
             TotalFileCount = totalFileCount;
             Errors = errors;
         }
 
         /// <summary> Last updated timestamp. </summary>
-        public DateTimeOffset? LastUpdatedTimestamp { get; }
+        public DateTimeOffset? LastUpdatedOn { get; }
         /// <summary> Last cloud tiering result (HResult). </summary>
         public long? TotalFileCount { get; }
         /// <summary> Array of tiering errors. </summary>

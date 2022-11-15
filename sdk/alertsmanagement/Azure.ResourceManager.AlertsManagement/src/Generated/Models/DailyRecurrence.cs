@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="recurrenceType"> Specifies when the recurrence should be applied. </param>
         /// <param name="startOn"> Start time for recurrence. </param>
         /// <param name="endOn"> End time for recurrence. </param>
-        internal DailyRecurrence(RecurrenceType recurrenceType, DateTimeOffset? startOn, DateTimeOffset? endOn) : base(recurrenceType, startOn, endOn)
+        internal DailyRecurrence(RecurrenceType recurrenceType, TimeSpan? startOn, TimeSpan? endOn) : base(recurrenceType, startOn, endOn)
         {
             RecurrenceType = recurrenceType;
         }

@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.LabServices.Models
     {
         internal static AvailableLabServicesSkuRestrictions DeserializeAvailableLabServicesSkuRestrictions(JsonElement element)
         {
-            Optional<RestrictionType> type = default;
+            Optional<LabServicesSkuRestrictionType> type = default;
             Optional<IReadOnlyList<string>> values = default;
-            Optional<RestrictionReasonCode> reasonCode = default;
+            Optional<LabServicesSkuRestrictionReasonCode> reasonCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.LabServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = new RestrictionType(property.Value.GetString());
+                    type = new LabServicesSkuRestrictionType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("values"))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.LabServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    reasonCode = new RestrictionReasonCode(property.Value.GetString());
+                    reasonCode = new LabServicesSkuRestrictionReasonCode(property.Value.GetString());
                     continue;
                 }
             }

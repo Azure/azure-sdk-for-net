@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Avs
             Optional<SystemData> systemData = default;
             Optional<string> displayName = default;
             Optional<IList<string>> members = default;
-            Optional<VmGroupStatusEnum> status = default;
+            Optional<WorkloadNetworkVmGroupStatus> status = default;
             Optional<WorkloadNetworkVmGroupProvisioningState> provisioningState = default;
             Optional<long> revision = default;
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Avs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            status = new VmGroupStatusEnum(property0.Value.GetString());
+                            status = new WorkloadNetworkVmGroupStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))

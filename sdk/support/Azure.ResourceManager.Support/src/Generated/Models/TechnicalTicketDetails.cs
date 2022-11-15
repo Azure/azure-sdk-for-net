@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Support.Models
 {
     /// <summary> Additional information for technical support ticket. </summary>
@@ -17,12 +19,12 @@ namespace Azure.ResourceManager.Support.Models
 
         /// <summary> Initializes a new instance of TechnicalTicketDetails. </summary>
         /// <param name="resourceId"> This is the resource Id of the Azure service resource (For example: A virtual machine resource or an HDInsight resource) for which the support ticket is created. </param>
-        internal TechnicalTicketDetails(string resourceId)
+        internal TechnicalTicketDetails(ResourceIdentifier resourceId)
         {
             ResourceId = resourceId;
         }
 
         /// <summary> This is the resource Id of the Azure service resource (For example: A virtual machine resource or an HDInsight resource) for which the support ticket is created. </summary>
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
     }
 }

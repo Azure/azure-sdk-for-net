@@ -8,6 +8,8 @@ trigger:
   paths:
     include:
     - sdk/purview/
+    exclude:
+    - sdk/purview/Azure.ResourceManager.Purview/
 
 pr:
   branches:
@@ -19,6 +21,8 @@ pr:
   paths:
     include:
     - sdk/purview/
+    exclude:
+    - sdk/purview/Azure.ResourceManager.Purview/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -37,5 +41,3 @@ extends:
       safeName: AzureAnalyticsPurviewCatalog
     - name: Azure.Analytics.Purview.Scanning
       safeName: AzureAnalyticsPurviewScanning
-    - name: Azure.ResourceManager.Purview
-      safeName: AzureResourceManagerPurview

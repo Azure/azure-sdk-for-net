@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading;
 
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
-
+using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using Microsoft.AspNetCore.Mvc.Testing;
 
 using Xunit;
@@ -53,7 +53,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.TestFramework
 
             // Tags
             Assert.Contains("ai.operation.id", telemetryItem.Tags.Keys);
-            Assert.Contains("ai.user.userAgent", telemetryItem.Tags.Keys);
             Assert.Contains("ai.operation.name", telemetryItem.Tags.Keys);
             Assert.Contains("ai.location.ip", telemetryItem.Tags.Keys);
             Assert.Contains("ai.cloud.role", telemetryItem.Tags.Keys);

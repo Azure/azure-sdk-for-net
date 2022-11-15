@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -14,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// Please note <see cref="OnPremiseResourceDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="OnPremiseSqlResourceDetails"/>.
     /// </summary>
-    public partial class OnPremiseResourceDetails : ResourceDetails
+    public partial class OnPremiseResourceDetails : SecurityCenterResourceDetails
     {
         /// <summary> Initializes a new instance of OnPremiseResourceDetails. </summary>
         /// <param name="workspaceId"> Azure resource Id of the workspace the machine is attached to. </param>
@@ -22,20 +23,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="sourceComputerId"> The oms agent Id installed on the machine. </param>
         /// <param name="machineName"> The name of the machine. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/>, <paramref name="sourceComputerId"/> or <paramref name="machineName"/> is null. </exception>
-        public OnPremiseResourceDetails(string workspaceId, Guid vmUuid, string sourceComputerId, string machineName)
+        public OnPremiseResourceDetails(ResourceIdentifier workspaceId, Guid vmUuid, string sourceComputerId, string machineName)
         {
-            if (workspaceId == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceId));
-            }
-            if (sourceComputerId == null)
-            {
-                throw new ArgumentNullException(nameof(sourceComputerId));
-            }
-            if (machineName == null)
-            {
-                throw new ArgumentNullException(nameof(machineName));
-            }
+            Argument.AssertNotNull(workspaceId, nameof(workspaceId));
+            Argument.AssertNotNull(sourceComputerId, nameof(sourceComputerId));
+            Argument.AssertNotNull(machineName, nameof(machineName));
 
             WorkspaceId = workspaceId;
             VmUuid = vmUuid;
@@ -50,7 +42,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="vmUuid"> The unique Id of the machine. </param>
         /// <param name="sourceComputerId"> The oms agent Id installed on the machine. </param>
         /// <param name="machineName"> The name of the machine. </param>
-        internal OnPremiseResourceDetails(Source source, string workspaceId, Guid vmUuid, string sourceComputerId, string machineName) : base(source)
+        internal OnPremiseResourceDetails(Source source, ResourceIdentifier workspaceId, Guid vmUuid, string sourceComputerId, string machineName) : base(source)
         {
             WorkspaceId = workspaceId;
             VmUuid = vmUuid;
@@ -60,7 +52,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Azure resource Id of the workspace the machine is attached to. </summary>
-        public string WorkspaceId { get; set; }
+        public ResourceIdentifier WorkspaceId { get; set; }
         /// <summary> The unique Id of the machine. </summary>
         public Guid VmUuid { get; set; }
         /// <summary> The oms agent Id installed on the machine. </summary>

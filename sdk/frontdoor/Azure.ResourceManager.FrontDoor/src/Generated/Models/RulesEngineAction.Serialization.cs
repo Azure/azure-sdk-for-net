@@ -38,16 +38,23 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             if (Optional.IsDefined(RouteConfigurationOverride))
             {
-                writer.WritePropertyName("routeConfigurationOverride");
-                writer.WriteObjectValue(RouteConfigurationOverride);
+                if (RouteConfigurationOverride != null)
+                {
+                    writer.WritePropertyName("routeConfigurationOverride");
+                    writer.WriteObjectValue(RouteConfigurationOverride);
+                }
+                else
+                {
+                    writer.WriteNull("routeConfigurationOverride");
+                }
             }
             writer.WriteEndObject();
         }
 
         internal static RulesEngineAction DeserializeRulesEngineAction(JsonElement element)
         {
-            Optional<IList<HeaderAction>> requestHeaderActions = default;
-            Optional<IList<HeaderAction>> responseHeaderActions = default;
+            Optional<IList<RulesEngineHeaderAction>> requestHeaderActions = default;
+            Optional<IList<RulesEngineHeaderAction>> responseHeaderActions = default;
             Optional<RouteConfiguration> routeConfigurationOverride = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -58,10 +65,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<HeaderAction> array = new List<HeaderAction>();
+                    List<RulesEngineHeaderAction> array = new List<RulesEngineHeaderAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HeaderAction.DeserializeHeaderAction(item));
+                        array.Add(RulesEngineHeaderAction.DeserializeRulesEngineHeaderAction(item));
                     }
                     requestHeaderActions = array;
                     continue;
@@ -73,10 +80,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<HeaderAction> array = new List<HeaderAction>();
+                    List<RulesEngineHeaderAction> array = new List<RulesEngineHeaderAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HeaderAction.DeserializeHeaderAction(item));
+                        array.Add(RulesEngineHeaderAction.DeserializeRulesEngineHeaderAction(item));
                     }
                     responseHeaderActions = array;
                     continue;
@@ -85,7 +92,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        routeConfigurationOverride = null;
                         continue;
                     }
                     routeConfigurationOverride = RouteConfiguration.DeserializeRouteConfiguration(property.Value);

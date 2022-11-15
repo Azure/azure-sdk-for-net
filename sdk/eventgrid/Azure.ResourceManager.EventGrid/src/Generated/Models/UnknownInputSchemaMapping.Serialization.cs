@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static UnknownInputSchemaMapping DeserializeUnknownInputSchemaMapping(JsonElement element)
         {
-            InputSchemaMappingType inputSchemaMappingType = default;
+            InputSchemaMappingType inputSchemaMappingType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("inputSchemaMappingType"))

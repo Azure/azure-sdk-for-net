@@ -67,7 +67,7 @@ var credential = new DefaultAzureCredential();
 var client = new PurviewAccountClient(new Uri("https://<my-account-name>.purview.azure.com"), credential);
 
 var Response response = await client.GetAccountPropertiesAsync();
-var responseDocument = JsonDocument.Parse(response.Content);
+using var responseDocument = JsonDocument.Parse(response.Content);
 Console.WriteLine(responseDocument.RootElement.GetProperty("name"));
 ```
 
@@ -80,7 +80,8 @@ var client = new PurviewMetadataRolesClient(new Uri("https://<my-account-name>.p
 AsyncPageable<BinaryData> fetchResponse = client.GetMetadataRolesAsync(new());
 await foreach (BinaryData item in fetchResponse)
 {
-    JsonElement fetchBodyJson = JsonDocument.Parse(item).RootElement;
+    using var jsonDocument = JsonDocument.Parse(item);
+    JsonElement fetchBodyJson = jsonDocument.RootElement;
     Console.WriteLine(fetchBodyJson.GetProperty("id"));
 }
 ```

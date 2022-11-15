@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.DataBoxEdge.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeviceCapacityInfoData>> GetDeviceCapacityInfoAsync(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataBoxEdgeDeviceCapacityInfo>> GetDeviceCapacityInfoAsync(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -76,13 +77,11 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 case 200:
                     {
-                        DeviceCapacityInfoData value = default;
+                        DataBoxEdgeDeviceCapacityInfo value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DeviceCapacityInfoData.DeserializeDeviceCapacityInfoData(document.RootElement);
+                        value = DataBoxEdgeDeviceCapacityInfo.DeserializeDataBoxEdgeDeviceCapacityInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((DeviceCapacityInfoData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeviceCapacityInfoData> GetDeviceCapacityInfo(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
+        public Response<DataBoxEdgeDeviceCapacityInfo> GetDeviceCapacityInfo(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -107,13 +106,11 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 case 200:
                     {
-                        DeviceCapacityInfoData value = default;
+                        DataBoxEdgeDeviceCapacityInfo value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DeviceCapacityInfoData.DeserializeDeviceCapacityInfoData(document.RootElement);
+                        value = DataBoxEdgeDeviceCapacityInfo.DeserializeDataBoxEdgeDeviceCapacityInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((DeviceCapacityInfoData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -20,10 +21,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="expression"/> is null. </exception>
         public CronSchedule(string expression)
         {
-            if (expression == null)
-            {
-                throw new ArgumentNullException(nameof(expression));
-            }
+            Argument.AssertNotNull(expression, nameof(expression));
 
             Expression = expression;
             ScheduleType = ScheduleType.Cron;

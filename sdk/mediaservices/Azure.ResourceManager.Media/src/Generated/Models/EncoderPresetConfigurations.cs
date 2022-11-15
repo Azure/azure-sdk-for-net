@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="maxLayers"> The maximum number of output video layers. Example: set MaxLayers as 4 to make sure at most 4 output layers are produced to control the overall cost of the encoding job. </param>
         /// <param name="minBitrateBps"> The minimum bitrate in bits per second (threshold for the bottom video layer). Example: set MinBitrateBps as 200000 to have a bottom layer that covers users with low network bandwidth. </param>
         /// <param name="minHeight"> The minimum height of output video layers. Example: set MinHeight as 360 to avoid output layers of smaller resolutions like 180P. </param>
-        internal EncoderPresetConfigurations(EncoderComplexitySetting? complexity, InterleaveOutput? interleaveOutput, float? keyFrameIntervalInSeconds, int? maxBitrateBps, int? maxHeight, int? maxLayers, int? minBitrateBps, int? minHeight)
+        internal EncoderPresetConfigurations(EncodingComplexity? complexity, InterleaveOutput? interleaveOutput, float? keyFrameIntervalInSeconds, int? maxBitrateBps, int? maxHeight, int? maxLayers, int? minBitrateBps, int? minHeight)
         {
             Complexity = complexity;
             InterleaveOutput = interleaveOutput;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Media.Models
         }
 
         /// <summary> Allows you to configure the encoder settings to control the balance between speed and quality. Example: set Complexity as Speed for faster encoding but less compression efficiency. </summary>
-        public EncoderComplexitySetting? Complexity { get; set; }
+        public EncodingComplexity? Complexity { get; set; }
         /// <summary> Sets the interleave mode of the output to control how audio and video are stored in the container format. Example: set InterleavedOutput as NonInterleavedOutput to produce audio-only and video-only outputs in separate MP4 files. </summary>
         public InterleaveOutput? InterleaveOutput { get; set; }
         /// <summary> The key frame interval in seconds. Example: set KeyFrameIntervalInSeconds as 2 to reduce the playback buffering for some players. </summary>

@@ -8,6 +8,9 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Storage.Tests.Helpers;
 using Azure.ResourceManager.Storage.Models;
 using System.Collections.Generic;
+using System.Linq;
+using System.Xml.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Tests
 {
@@ -18,7 +21,7 @@ namespace Azure.ResourceManager.Storage.Tests
         private FileServiceResource _fileService;
         private FileShareCollection _fileShareCollection;
 
-        public FileShareTests(bool async) : base(async)
+        public FileShareTests(bool async) : base(async)//, RecordedTestMode.Record)
         {
         }
 
@@ -54,6 +57,11 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task CreateDeleteFileShare()
         {
             //create file share
+            string accountName = Recording.GenerateAssetName("account");
+            var content = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.StandardGrs), StorageKind.StorageV2, AzureLocation.EastUS2);
+            var account = (await _resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(WaitUntil.Completed, accountName, content)).Value;
+
+            _fileShareCollection = (await account.GetFileService().GetAsync()).Value.GetFileShares();
             string fileShareName = Recording.GenerateAssetName("testfileshare");
             FileShareResource share1 = (await _fileShareCollection.CreateOrUpdateAsync(WaitUntil.Completed, fileShareName, new FileShareData())).Value;
             Assert.AreEqual(share1.Id.Name, fileShareName);
@@ -65,6 +73,25 @@ namespace Azure.ResourceManager.Storage.Tests
             AssertFileShareEqual(share1, share2);
             Assert.IsTrue(await _fileShareCollection.ExistsAsync(fileShareName));
             Assert.IsFalse(await _fileShareCollection.ExistsAsync(fileShareName + "1"));
+
+            string shareName2 = Recording.GenerateAssetName("share");
+            var data = new FileShareData()
+            {
+                Metadata = { { "metadata1", "true" }, { "metadata2", "value2" } },
+                ShareQuota = 500,
+                AccessTier = FileShareAccessTier.Hot
+            };
+            share2 = (await _fileShareCollection.CreateOrUpdateAsync(WaitUntil.Completed, shareName2, data)).Value;
+            Assert.AreEqual(2, share2.Data.Metadata.Count);
+            Assert.AreEqual("metadata1", share2.Data.Metadata.FirstOrDefault().Key);
+            Assert.AreEqual(500, share2.Data.ShareQuota);
+            Assert.AreEqual(FileShareAccessTier.Hot, share2.Data.AccessTier);
+
+            share2 = (await _fileShareCollection.GetAsync(shareName2)).Value;
+            Assert.AreEqual(2, share2.Data.Metadata.Count);
+            Assert.AreEqual("metadata1", share2.Data.Metadata.FirstOrDefault().Key);
+            Assert.AreEqual(500, share2.Data.ShareQuota);
+            Assert.AreEqual(FileShareAccessTier.Hot, share2.Data.AccessTier);
 
             //delete file share
             await share1.DeleteAsync(WaitUntil.Completed);
@@ -182,6 +209,12 @@ namespace Azure.ResourceManager.Storage.Tests
         [RecordedTest]
         public async Task UpdateFileService()
         {
+            //create file share
+            string accountName = Recording.GenerateAssetName("account");
+            var content = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.PremiumLrs), StorageKind.FileStorage, AzureLocation.EastUS2);
+            var account = (await _resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(WaitUntil.Completed, accountName, content)).Value;
+            _fileService = account.GetFileService();
+
             //update service property
             FileServiceData parameter = new FileServiceData()
             {
@@ -196,6 +229,43 @@ namespace Azure.ResourceManager.Storage.Tests
             //validate
             Assert.IsTrue(_fileService.Data.ShareDeleteRetentionPolicy.IsEnabled);
             Assert.AreEqual(_fileService.Data.ShareDeleteRetentionPolicy.Days, 5);
+
+            // Get after account create
+            var service = (await _fileService.GetAsync()).Value;
+            Assert.AreEqual(0, service.Data.Cors.CorsRules.Count);
+
+            //Set and validated
+            var data = new FileServiceData()
+            {
+                ProtocolSettings = new ProtocolSettings()
+                {
+                    SmbSetting = new SmbSetting()
+                    {
+                        Multichannel = new Multichannel()
+                        {
+                            IsMultiChannelEnabled = true
+                        },
+                        Versions = "SMB2.1;SMB3.0;SMB3.1.1",
+                        AuthenticationMethods = "NTLMv2;Kerberos",
+                        KerberosTicketEncryption = "RC4-HMAC;AES-256",
+                        ChannelEncryption = "AES-128-CCM;AES-128-GCM;AES-256-GCM"
+                    }
+                }
+            };
+            service = (await _fileService.CreateOrUpdateAsync(WaitUntil.Completed, data)).Value;
+            Assert.IsTrue(service.Data.ProtocolSettings.SmbSetting.Multichannel.IsMultiChannelEnabled);
+            Assert.AreEqual("SMB2.1;SMB3.0;SMB3.1.1", service.Data.ProtocolSettings.SmbSetting.Versions);
+            Assert.AreEqual("NTLMv2;Kerberos", service.Data.ProtocolSettings.SmbSetting.AuthenticationMethods);
+            Assert.AreEqual("RC4-HMAC;AES-256", service.Data.ProtocolSettings.SmbSetting.KerberosTicketEncryption);
+            Assert.AreEqual("AES-128-CCM;AES-128-GCM;AES-256-GCM", service.Data.ProtocolSettings.SmbSetting.ChannelEncryption);
+
+            // Get and validate
+            service = (await _fileService.GetAsync()).Value;
+            Assert.IsTrue(service.Data.ProtocolSettings.SmbSetting.Multichannel.IsMultiChannelEnabled);
+            Assert.AreEqual("SMB2.1;SMB3.0;SMB3.1.1", service.Data.ProtocolSettings.SmbSetting.Versions);
+            Assert.AreEqual("NTLMv2;Kerberos", service.Data.ProtocolSettings.SmbSetting.AuthenticationMethods);
+            Assert.AreEqual("RC4-HMAC;AES-256", service.Data.ProtocolSettings.SmbSetting.KerberosTicketEncryption);
+            Assert.AreEqual("AES-128-CCM;AES-128-GCM;AES-256-GCM", service.Data.ProtocolSettings.SmbSetting.ChannelEncryption);
         }
 
         [Test]

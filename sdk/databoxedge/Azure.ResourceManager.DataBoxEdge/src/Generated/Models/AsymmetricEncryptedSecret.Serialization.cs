@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         {
             string value = default;
             Optional<string> encryptionCertThumbprint = default;
-            EncryptionAlgorithm encryptionAlgorithm = default;
+            DataBoxEdgeEncryptionAlgorithm encryptionAlgorithm = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (property.NameEquals("encryptionAlgorithm"))
                 {
-                    encryptionAlgorithm = new EncryptionAlgorithm(property.Value.GetString());
+                    encryptionAlgorithm = new DataBoxEdgeEncryptionAlgorithm(property.Value.GetString());
                     continue;
                 }
             }

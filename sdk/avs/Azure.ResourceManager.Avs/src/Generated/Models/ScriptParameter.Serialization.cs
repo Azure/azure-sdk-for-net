@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Avs.Models
             Optional<ScriptParameterType> type = default;
             Optional<string> name = default;
             Optional<string> description = default;
-            Optional<VisibilityParameterEnum> visibility = default;
-            Optional<OptionalParamEnum> optional = default;
+            Optional<ParameterVisibilityStatus> visibility = default;
+            Optional<ParameterOptionalityStatus> optional = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Avs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    visibility = new VisibilityParameterEnum(property.Value.GetString());
+                    visibility = new ParameterVisibilityStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("optional"))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Avs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    optional = new OptionalParamEnum(property.Value.GetString());
+                    optional = new ParameterOptionalityStatus(property.Value.GetString());
                     continue;
                 }
             }

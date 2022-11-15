@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.DigitalTwins.Models
 
         internal static UnknownDigitalTwinsEndpointResourceProperties DeserializeUnknownDigitalTwinsEndpointResourceProperties(JsonElement element)
         {
-            EndpointType endpointType = default;
-            Optional<EndpointProvisioningState?> provisioningState = default;
+            EndpointType endpointType = "Unknown";
+            Optional<DigitalTwinsEndpointProvisioningState?> provisioningState = default;
             Optional<DateTimeOffset?> createdTime = default;
-            Optional<AuthenticationType> authenticationType = default;
+            Optional<DigitalTwinsAuthenticationType> authenticationType = default;
             Optional<string> deadLetterSecret = default;
             Optional<Uri> deadLetterUri = default;
             foreach (var property in element.EnumerateObject())
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                         provisioningState = null;
                         continue;
                     }
-                    provisioningState = new EndpointProvisioningState(property.Value.GetString());
+                    provisioningState = new DigitalTwinsEndpointProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("createdTime"))
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    authenticationType = new AuthenticationType(property.Value.GetString());
+                    authenticationType = new DigitalTwinsAuthenticationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("deadLetterSecret"))

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <summary> Properties for the DigitalTwinsInstance. </summary>
         internal DigitalTwinsPatchProperties Properties { get; set; }
         /// <summary> Public network access for the DigitalTwinsInstance. </summary>
-        public PublicNetworkAccess? DigitalTwinsPatchPublicNetworkAccess
+        public DigitalTwinsPublicNetworkAccess? DigitalTwinsPatchPublicNetworkAccess
         {
             get => Properties is null ? default : Properties.PublicNetworkAccess;
             set

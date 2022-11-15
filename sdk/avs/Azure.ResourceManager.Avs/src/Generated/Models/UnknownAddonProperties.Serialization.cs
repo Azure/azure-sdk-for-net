@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static UnknownAddonProperties DeserializeUnknownAddonProperties(JsonElement element)
         {
-            AddonType addonType = default;
+            AddonType addonType = "Unknown";
             Optional<AddonProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {

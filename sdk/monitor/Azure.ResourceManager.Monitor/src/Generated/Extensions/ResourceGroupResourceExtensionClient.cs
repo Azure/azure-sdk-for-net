@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.Monitor
             return GetCachedClient(Client => new MetricAlertCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of LogSearchRuleResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of LogSearchRuleResources and their operations over a LogSearchRuleResource. </returns>
-        public virtual LogSearchRuleCollection GetLogSearchRules()
+        /// <summary> Gets a collection of ScheduledQueryRuleResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ScheduledQueryRuleResources and their operations over a ScheduledQueryRuleResource. </returns>
+        public virtual ScheduledQueryRuleCollection GetScheduledQueryRules()
         {
-            return GetCachedClient(Client => new LogSearchRuleCollection(Client, Id));
+            return GetCachedClient(Client => new ScheduledQueryRuleCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of MonitorPrivateLinkScopeResources in the ResourceGroupResource. </summary>

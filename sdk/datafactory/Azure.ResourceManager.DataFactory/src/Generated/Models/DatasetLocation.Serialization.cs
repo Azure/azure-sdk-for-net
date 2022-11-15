@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -70,42 +68,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "SftpLocation": return SftpLocation.DeserializeSftpLocation(element);
                 }
             }
-            string type = default;
-            Optional<BinaryData> folderPath = default;
-            Optional<BinaryData> fileName = default;
-            IDictionary<string, BinaryData> additionalProperties = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("folderPath"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    folderPath = BinaryData.FromString(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("fileName"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    fileName = BinaryData.FromString(property.Value.GetRawText());
-                    continue;
-                }
-                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-            }
-            additionalProperties = additionalPropertiesDictionary;
-            return new DatasetLocation(type, folderPath.Value, fileName.Value, additionalProperties);
+            return UnknownDatasetLocation.DeserializeUnknownDatasetLocation(element);
         }
     }
 }

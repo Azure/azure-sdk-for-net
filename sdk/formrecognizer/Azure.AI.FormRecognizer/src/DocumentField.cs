@@ -25,17 +25,17 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     public partial class DocumentField
     {
         /// <summary> Initializes a new instance of DocumentField. </summary>
-        /// <param name="fieldType"> Data type of the field value. </param>
-        internal DocumentField(DocumentFieldType fieldType)
+        /// <param name="expectedFieldType"> Data type of the field value. </param>
+        internal DocumentField(DocumentFieldType expectedFieldType)
         {
-            FieldType = fieldType;
-            Value = new DocumentFieldValue(fieldType);
+            ExpectedFieldType = expectedFieldType;
+            Value = new DocumentFieldValue(expectedFieldType);
             BoundingRegions = new ChangeTrackingList<BoundingRegion>();
             Spans = new ChangeTrackingList<DocumentSpan>();
         }
 
         /// <summary> Initializes a new instance of DocumentField. </summary>
-        /// <param name="fieldType"> Data type of the field value. </param>
+        /// <param name="expectedFieldType"> Data type of the field value. </param>
         /// <param name="valueString"> String value. </param>
         /// <param name="valueDate"> Date value in YYYY-MM-DD format (ISO 8601). </param>
         /// <param name="valueTime"> Time value in hh:mm:ss format (ISO 8601). </param>
@@ -53,10 +53,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="boundingRegions"> Bounding regions covering the field. </param>
         /// <param name="spans"> Location of the field in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the field. </param>
-        internal DocumentField(DocumentFieldType fieldType, string valueString, DateTimeOffset? valueDate, TimeSpan? valueTime, string valuePhoneNumber, double? valueNumber, long? valueInteger, V3SelectionMarkState? valueSelectionMarkPrivate, DocumentSignatureType? valueSignature, string valueCountryRegion, IReadOnlyList<DocumentField> valueArray, IReadOnlyDictionary<string, DocumentField> valueObject, CurrencyValue? valueCurrency, AddressValue valueAddress, string content, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, float? confidence)
+        internal DocumentField(DocumentFieldType expectedFieldType, string valueString, DateTimeOffset? valueDate, TimeSpan? valueTime, string valuePhoneNumber, double? valueNumber, long? valueInteger, V3SelectionMarkState? valueSelectionMarkPrivate, DocumentSignatureType? valueSignature, string valueCountryRegion, IReadOnlyList<DocumentField> valueArray, IReadOnlyDictionary<string, DocumentField> valueObject, CurrencyValue? valueCurrency, AddressValue valueAddress, string content, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, float? confidence)
         {
-            FieldType = fieldType;
-            Value = new DocumentFieldValue(fieldType, valueString, valueDate, valueTime, valuePhoneNumber, valueNumber, valueInteger, valueSelectionMarkPrivate, valueSignature, valueCountryRegion, valueArray, valueObject, valueCurrency, valueAddress);
+            ExpectedFieldType = expectedFieldType;
+            Value = new DocumentFieldValue(expectedFieldType, valueString, valueDate, valueTime, valuePhoneNumber, valueNumber, valueInteger, valueSelectionMarkPrivate, valueSignature, valueCountryRegion, valueArray, valueObject, valueCurrency, valueAddress);
             Content = content;
             BoundingRegions = boundingRegions;
             Spans = spans;
@@ -66,9 +66,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary>
         /// Initializes a new instance of DocumentField. Used by the <see cref="DocumentAnalysisModelFactory"/>.
         /// </summary>
-        internal DocumentField(DocumentFieldType fieldType, DocumentFieldValue value, string content, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, float? confidence)
+        internal DocumentField(DocumentFieldType expectedFieldType, DocumentFieldValue value, string content, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, float? confidence)
         {
-            FieldType = fieldType;
+            ExpectedFieldType = expectedFieldType;
             Value = value;
             Content = content;
             BoundingRegions = boundingRegions;
@@ -77,10 +77,19 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         }
 
         /// <summary>
-        /// The data type of the field value.
+        /// The data type of the field value. If <see cref="DocumentFieldType.Unknown"/>,
+        /// it means the value of the field could not be parsed by the service. The expected
+        /// field type can be checked at <see cref="ExpectedFieldType"/>. Consider using
+        /// <see cref="Content"/> to get a textual representation of the field and parsing it
+        /// manually in this case.
+        /// </summary>
+        public DocumentFieldType FieldType => Value.FieldType;
+
+        /// <summary>
+        /// The expected data type of the field value according to the document model used for analysis.
         /// </summary>
         [CodeGenMember("Type")]
-        public DocumentFieldType FieldType { get; }
+        public DocumentFieldType ExpectedFieldType { get; }
 
         /// <summary>
         /// The value of this <see cref="DocumentField"/>.

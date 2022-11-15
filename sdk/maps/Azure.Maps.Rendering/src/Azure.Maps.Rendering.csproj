@@ -1,0 +1,46 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Azure Maps Azure.Maps.Rendering</Description>
+    <AssemblyTitle>Azure Maps Azure.Maps.Rendering</AssemblyTitle>
+    <Version>1.0.0-beta.2</Version>
+    <PackageTags>Azure;Azure Maps;Maps Azure.Maps.Rendering</PackageTags>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <NoWarn>$(NoWarn);AZC0001;AZC0012</NoWarn>
+    <AzureMapsSharedSources>$(RepoRoot)/sdk/maps/Azure.Maps.Common/src/</AzureMapsSharedSources>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" />
+    <PackageReference Include="System.Text.Json" />
+  </ItemGroup>
+
+  <!-- Shared source from Azure.Core -->
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" Link="Shared%(RecursiveDir)%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)AsyncLockWithValue.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" Link="Shared%(RecursiveDir)%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)ConstantDelayStrategy.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)DelayStrategy.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)ExponentialDelayStrategy.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)OperationInternal.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)OperationInternalBase.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)OperationInternalOfT.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)OperationPoller.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)RetryAfterDelayStrategy.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)VoidValue.cs" LinkBase="Shared/Core" />
+  </ItemGroup>
+
+  <!-- Shared source from Azure.Maps -->
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Maps.Common\src\Azure.Maps.Common.csproj" />
+  </ItemGroup>
+
+</Project>

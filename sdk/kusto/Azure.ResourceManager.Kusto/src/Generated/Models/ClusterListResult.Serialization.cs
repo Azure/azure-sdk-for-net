@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Kusto.Models
     {
         internal static ClusterListResult DeserializeClusterListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ClusterData>> value = default;
+            Optional<IReadOnlyList<KustoClusterData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Kusto.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ClusterData> array = new List<ClusterData>();
+                    List<KustoClusterData> array = new List<KustoClusterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterData.DeserializeClusterData(item));
+                        array.Add(KustoClusterData.DeserializeKustoClusterData(item));
                     }
                     value = array;
                     continue;

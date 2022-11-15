@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DigitalTwins
             DigitalTwinsEndpointResourceProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
-            Core.ResourceType type = default;
+            ResourceType type = default;
             Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DigitalTwins
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = new Core.ResourceType(property.Value.GetString());
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))

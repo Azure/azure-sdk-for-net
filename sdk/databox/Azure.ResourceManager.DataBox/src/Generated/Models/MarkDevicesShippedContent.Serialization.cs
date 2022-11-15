@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataBox.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("deliverToDcPackageDetails");
-            writer.WriteObjectValue(DeliverToDcPackageDetails);
+            writer.WriteObjectValue(DeliverToDataCenterPackageDetails);
             writer.WriteEndObject();
         }
     }

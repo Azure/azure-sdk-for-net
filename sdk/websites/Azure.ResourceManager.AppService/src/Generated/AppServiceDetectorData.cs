@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of AppServiceDetectorData. </summary>
         public AppServiceDetectorData()
         {
-            Dataset = new ChangeTrackingList<DiagnosticInfo>();
+            Dataset = new ChangeTrackingList<DiagnosticDataset>();
             DataProvidersMetadata = new ChangeTrackingList<DataProviderMetadata>();
         }
 
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="dataProvidersMetadata"> Additional configuration for different data providers to be used by the UI. </param>
         /// <param name="suggestedUtterances"> Suggested utterances where the detector can be applicable. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal AppServiceDetectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DetectorInfo metadata, IList<DiagnosticInfo> dataset, AppServiceStatusInfo status, IList<DataProviderMetadata> dataProvidersMetadata, QueryUtterancesResults suggestedUtterances, string kind) : base(id, name, resourceType, systemData)
+        internal AppServiceDetectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DetectorInfo metadata, IList<DiagnosticDataset> dataset, AppServiceStatusInfo status, IList<DataProviderMetadata> dataProvidersMetadata, QueryUtterancesResults suggestedUtterances, string kind) : base(id, name, resourceType, systemData)
         {
             Metadata = metadata;
             Dataset = dataset;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> metadata for the detector. </summary>
         public DetectorInfo Metadata { get; set; }
         /// <summary> Data Set. </summary>
-        public IList<DiagnosticInfo> Dataset { get; }
+        public IList<DiagnosticDataset> Dataset { get; }
         /// <summary> Indicates status of the most severe insight. </summary>
         public AppServiceStatusInfo Status { get; set; }
         /// <summary> Additional configuration for different data providers to be used by the UI. </summary>

@@ -22,19 +22,26 @@ namespace Microsoft.Azure.Management.Security
                 new Tuple<string, string, string>("Security", "AdaptiveApplicationControls", "2020-01-01"),
                 new Tuple<string, string, string>("Security", "AdaptiveNetworkHardenings", "2020-01-01"),
                 new Tuple<string, string, string>("Security", "AdvancedThreatProtection", "2019-01-01"),
-                new Tuple<string, string, string>("Security", "Alerts", "2021-01-01"),
+                new Tuple<string, string, string>("Security", "Alerts", "2022-01-01"),
                 new Tuple<string, string, string>("Security", "AlertsSuppressionRules", "2019-01-01-preview"),
                 new Tuple<string, string, string>("Security", "AllowedConnections", "2020-01-01"),
-                new Tuple<string, string, string>("Security", "Assessments", "2020-01-01"),
-                new Tuple<string, string, string>("Security", "AssessmentsMetadata", "2020-01-01"),
+                new Tuple<string, string, string>("Security", "Application", "2022-07-01-preview"),
+                new Tuple<string, string, string>("Security", "Applications", "2022-07-01-preview"),
+                new Tuple<string, string, string>("Security", "Assessments", "2021-06-01"),
+                new Tuple<string, string, string>("Security", "AssessmentsMetadata", "2021-06-01"),
                 new Tuple<string, string, string>("Security", "AutoProvisioningSettings", "2017-08-01-preview"),
                 new Tuple<string, string, string>("Security", "Automations", "2019-01-01-preview"),
                 new Tuple<string, string, string>("Security", "ComplianceResults", "2017-08-01"),
                 new Tuple<string, string, string>("Security", "Compliances", "2017-08-01-preview"),
                 new Tuple<string, string, string>("Security", "Connectors", "2020-01-01-preview"),
+                new Tuple<string, string, string>("Security", "CustomAssessmentAutomations", "2021-07-01-preview"),
+                new Tuple<string, string, string>("Security", "CustomEntityStoreAssignments", "2021-07-01-preview"),
                 new Tuple<string, string, string>("Security", "DeviceSecurityGroups", "2019-08-01"),
                 new Tuple<string, string, string>("Security", "DiscoveredSecuritySolutions", "2020-01-01"),
                 new Tuple<string, string, string>("Security", "ExternalSecuritySolutions", "2020-01-01"),
+                new Tuple<string, string, string>("Security", "GovernanceAssignments", "2022-01-01-preview"),
+                new Tuple<string, string, string>("Security", "GovernanceRule", "2022-01-01-preview"),
+                new Tuple<string, string, string>("Security", "GovernanceRules", "2022-01-01-preview"),
                 new Tuple<string, string, string>("Security", "InformationProtectionPolicies", "2017-08-01-preview"),
                 new Tuple<string, string, string>("Security", "IngestionSettings", "2021-01-15-preview"),
                 new Tuple<string, string, string>("Security", "IotSecuritySolution", "2019-08-01"),
@@ -43,24 +50,32 @@ namespace Microsoft.Azure.Management.Security
                 new Tuple<string, string, string>("Security", "IotSecuritySolutionsAnalyticsRecommendation", "2019-08-01"),
                 new Tuple<string, string, string>("Security", "JitNetworkAccessPolicies", "2020-01-01"),
                 new Tuple<string, string, string>("Security", "Locations", "2015-06-01-preview"),
+                new Tuple<string, string, string>("Security", "MdeOnboardings", "2021-10-01-preview"),
                 new Tuple<string, string, string>("Security", "Operations", "2015-06-01-preview"),
-                new Tuple<string, string, string>("Security", "Pricings", "2018-06-01"),
+                new Tuple<string, string, string>("Security", "Pricings", "2022-03-01"),
                 new Tuple<string, string, string>("Security", "RegulatoryComplianceAssessments", "2019-01-01-preview"),
                 new Tuple<string, string, string>("Security", "RegulatoryComplianceControls", "2019-01-01-preview"),
                 new Tuple<string, string, string>("Security", "RegulatoryComplianceStandards", "2019-01-01-preview"),
                 new Tuple<string, string, string>("Security", "SecureScoreControlDefinitions", "2020-01-01"),
                 new Tuple<string, string, string>("Security", "SecureScoreControls", "2020-01-01"),
                 new Tuple<string, string, string>("Security", "SecureScores", "2020-01-01"),
-                new Tuple<string, string, string>("Security", "SecurityContacts", "2017-08-01-preview"),
+                new Tuple<string, string, string>("Security", "SecurityConnectorApplication", "2022-07-01-preview"),
+                new Tuple<string, string, string>("Security", "SecurityConnectorApplications", "2022-07-01-preview"),
+                new Tuple<string, string, string>("Security", "SecurityConnectorGovernanceRule", "2022-01-01-preview"),
+                new Tuple<string, string, string>("Security", "SecurityConnectorGovernanceRules", "2022-01-01-preview"),
+                new Tuple<string, string, string>("Security", "SecurityConnectorGovernanceRulesExecuteStatus", "2022-01-01-preview"),
+                new Tuple<string, string, string>("Security", "SecurityConnectors", "2022-08-01-preview"),
+                new Tuple<string, string, string>("Security", "SecurityContacts", "2020-01-01-preview"),
                 new Tuple<string, string, string>("Security", "SecuritySolutions", "2020-01-01"),
                 new Tuple<string, string, string>("Security", "SecuritySolutionsReferenceData", "2020-01-01"),
                 new Tuple<string, string, string>("Security", "ServerVulnerabilityAssessment", "2020-01-01"),
-                new Tuple<string, string, string>("Security", "Settings", "2021-07-01"),
+                new Tuple<string, string, string>("Security", "Settings", "2022-05-01"),
                 new Tuple<string, string, string>("Security", "SoftwareInventories", "2021-05-01-preview"),
                 new Tuple<string, string, string>("Security", "SqlVulnerabilityAssessmentBaselineRules", "2020-07-01-preview"),
                 new Tuple<string, string, string>("Security", "SqlVulnerabilityAssessmentScanResults", "2020-07-01-preview"),
                 new Tuple<string, string, string>("Security", "SqlVulnerabilityAssessmentScans", "2020-07-01-preview"),
                 new Tuple<string, string, string>("Security", "SubAssessments", "2019-01-01-preview"),
+                new Tuple<string, string, string>("Security", "SubscriptionGovernanceRulesExecuteStatus", "2022-01-01-preview"),
                 new Tuple<string, string, string>("Security", "Tasks", "2015-06-01-preview"),
                 new Tuple<string, string, string>("Security", "Topology", "2020-01-01"),
                 new Tuple<string, string, string>("Security", "WorkspaceSettings", "2017-08-01-preview"),
@@ -69,12 +84,12 @@ namespace Microsoft.Azure.Management.Security
           }
       }
       // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "v2";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/security/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\code\\azure-sdk-for-net\\sdk";
+      public static readonly String AutoRestVersion = "2.0.4421";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@3.5.1";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/security/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=C:\\OneRepo\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "c981b81aa26ad4d0d156e034e6782853b4e747a1";
+      public static readonly String GithubBranchName = "main";
+      public static readonly String GithubCommidId = "54613501aab35c1850355ca6b280efbe7e69b5e7";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

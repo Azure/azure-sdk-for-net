@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static IotSecuritySolutionsList DeserializeIotSecuritySolutionsList(JsonElement element)
         {
-            IReadOnlyList<IotSecuritySolutionModelData> value = default;
+            IReadOnlyList<IotSecuritySolutionData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<IotSecuritySolutionModelData> array = new List<IotSecuritySolutionModelData>();
+                    List<IotSecuritySolutionData> array = new List<IotSecuritySolutionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotSecuritySolutionModelData.DeserializeIotSecuritySolutionModelData(item));
+                        array.Add(IotSecuritySolutionData.DeserializeIotSecuritySolutionData(item));
                     }
                     value = array;
                     continue;

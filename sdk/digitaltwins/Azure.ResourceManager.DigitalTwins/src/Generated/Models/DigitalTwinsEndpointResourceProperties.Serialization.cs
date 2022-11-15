@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -56,76 +55,12 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "EventGrid": return EventGrid.DeserializeEventGrid(element);
-                    case "EventHub": return EventHub.DeserializeEventHub(element);
-                    case "ServiceBus": return ServiceBus.DeserializeServiceBus(element);
+                    case "EventGrid": return DigitalTwinsEventGridProperties.DeserializeDigitalTwinsEventGridProperties(element);
+                    case "EventHub": return DigitalTwinsEventHubProperties.DeserializeDigitalTwinsEventHubProperties(element);
+                    case "ServiceBus": return DigitalTwinsServiceBusProperties.DeserializeDigitalTwinsServiceBusProperties(element);
                 }
             }
-            EndpointType endpointType = default;
-            Optional<EndpointProvisioningState?> provisioningState = default;
-            Optional<DateTimeOffset?> createdTime = default;
-            Optional<AuthenticationType> authenticationType = default;
-            Optional<string> deadLetterSecret = default;
-            Optional<Uri> deadLetterUri = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("endpointType"))
-                {
-                    endpointType = new EndpointType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("provisioningState"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        provisioningState = null;
-                        continue;
-                    }
-                    provisioningState = new EndpointProvisioningState(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("createdTime"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        createdTime = null;
-                        continue;
-                    }
-                    createdTime = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("authenticationType"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    authenticationType = new AuthenticationType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("deadLetterSecret"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        deadLetterSecret = null;
-                        continue;
-                    }
-                    deadLetterSecret = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("deadLetterUri"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        deadLetterUri = null;
-                        continue;
-                    }
-                    deadLetterUri = new Uri(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownDigitalTwinsEndpointResourceProperties(endpointType, Optional.ToNullable(provisioningState), Optional.ToNullable(createdTime), Optional.ToNullable(authenticationType), deadLetterSecret.Value, deadLetterUri.Value);
+            return UnknownDigitalTwinsEndpointResourceProperties.DeserializeUnknownDigitalTwinsEndpointResourceProperties(element);
         }
     }
 }

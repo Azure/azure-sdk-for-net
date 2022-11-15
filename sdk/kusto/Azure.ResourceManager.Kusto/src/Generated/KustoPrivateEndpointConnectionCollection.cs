@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Kusto
 {
     /// <summary>
     /// A class representing a collection of <see cref="KustoPrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="KustoPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="ClusterResource" />.
-    /// To get a <see cref="KustoPrivateEndpointConnectionCollection" /> instance call the GetKustoPrivateEndpointConnections method from an instance of <see cref="ClusterResource" />.
+    /// Each <see cref="KustoPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="KustoClusterResource" />.
+    /// To get a <see cref="KustoPrivateEndpointConnectionCollection" /> instance call the GetKustoPrivateEndpointConnections method from an instance of <see cref="KustoClusterResource" />.
     /// </summary>
     public partial class KustoPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<KustoPrivateEndpointConnectionResource>, IAsyncEnumerable<KustoPrivateEndpointConnectionResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Kusto
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ClusterResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ClusterResource.ResourceType), nameof(id));
+            if (id.ResourceType != KustoClusterResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, KustoClusterResource.ResourceType), nameof(id));
         }
 
         /// <summary>

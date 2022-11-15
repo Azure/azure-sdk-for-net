@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: PolicyInsights
 namespace: Azure.ResourceManager.PolicyInsights
-require: https://github.com/Azure/azure-rest-api-specs/blob/aa8a23b8f92477d0fdce7af6ccffee1c604b3c56/specification/policyinsights/resource-manager/readme.md
-tag: package-2022-03
+require: https://github.com/Azure/azure-rest-api-specs/blob/05a9cdab363b8ec824094ee73950c04594325172/specification/policyinsights/resource-manager/readme.md
+tag: package-2022-09
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -19,6 +19,12 @@ modelerfour:
 request-path-to-parent:
   /providers/Microsoft.PolicyInsights/policyMetadata: /providers/Microsoft.PolicyInsights/policyMetadata/{resourceName}
 
+partial-resources:
+  /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}: SubscriptionPolicySetDefinition
+  /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}: SubscriptionPolicyDefinition
+  /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}: SubscriptionPolicyAssignment
+  /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}: ResourceGroupPolicyAssignment
+
 override-operation-name:
   PolicyMetadata_List: GetAll
   PolicyRestrictions_CheckAtManagementGroupScope: CheckPolicyRestrictions
@@ -27,14 +33,31 @@ override-operation-name:
   PolicyEvents_ListQueryResultsForSubscription: GetPolicyEventQueryResults
   PolicyEvents_ListQueryResultsForResourceGroup: GetPolicyEventQueryResults
   PolicyEvents_ListQueryResultsForManagementGroup: GetPolicyEventQueryResults
+#  PolicyEvents_ListQueryResultsForPolicySetDefinition: GetPolicyEventQueryResults
+#  PolicyEvents_ListQueryResultsForPolicyDefinition: GetPolicyEventQueryResults
+#  PolicyEvents_ListQueryResultsForSubscriptionLevelPolicyAssignment: GetPolicyEventQueryResults
+#  PolicyEvents_ListQueryResultsForResourceGroupLevelPolicyAssignment: GetPolicyEventQueryResults
   PolicyStates_ListQueryResultsForSubscription: GetPolicyStateQueryResults
   PolicyStates_ListQueryResultsForResourceGroup: GetPolicyStateQueryResults
   PolicyStates_ListQueryResultsForManagementGroup: GetPolicyStateQueryResults
-  PolicyStates_SummarizeForManagementGroup: SummarizePolicyState
-  PolicyStates_SummarizeForSubscription: SummarizePolicyState
+#  PolicyStates_ListQueryResultsForPolicySetDefinition: GetPolicyStateQueryResults
+#  PolicyStates_ListQueryResultsForPolicyDefinition: GetPolicyStateQueryResults
+#  PolicyStates_ListQueryResultsForSubscriptionLevelPolicyAssignment: GetPolicyStateQueryResults
+#  PolicyStates_ListQueryResultsForResourceGroupLevelPolicyAssignment: GetPolicyStateQueryResults
+  PolicyStates_SummarizeForManagementGroup: SummarizePolicyStates
+  PolicyStates_SummarizeForSubscription: SummarizePolicyStates
+  PolicyStates_SummarizeForResourceGroup: SummarizePolicyStates
+#  PolicyStates_SummarizeForPolicySetDefinition: SummarizePolicyStates
+#  PolicyStates_SummarizeForPolicyDefinition: SummarizePolicyStates
+#  PolicyStates_SummarizeForSubscriptionLevelPolicyAssignment: SummarizePolicyStates
+#  PolicyStates_SummarizeForResourceGroupLevelPolicyAssignment: SummarizePolicyStates
   PolicyStates_TriggerResourceGroupEvaluation: TriggerPolicyStateEvaluation
   PolicyStates_TriggerSubscriptionEvaluation: TriggerPolicyStateEvaluation
   Remediations_ListDeploymentsAtResource: GetDeployments
+  Remediations_CancelAtResource: Cancel
+  PolicyTrackedResources_ListQueryResultsForSubscription: GetPolicyTrackedResourceQueryResults
+  PolicyTrackedResources_ListQueryResultsForResourceGroup: GetPolicyTrackedResourceQueryResults
+  PolicyTrackedResources_ListQueryResultsForManagementGroup: GetPolicyTrackedResourceQueryResults
 
 operation-positions:
   PolicyMetadata_List: collection
@@ -69,9 +92,13 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  Odata: OData|odata
+  QueryOptions: PolicyQuerySettings|policyQuerySettings
 
 rename-mapping:
   ComplianceState: PolicyComplianceState
+  Attestation: PolicyAttestation
+  Remediation: PolicyRemediation
   Attestation.properties.expiresOn: ExpireOn
   Attestation.properties.policyAssignmentId: -|arm-id
   Remediation.properties.policyAssignmentId: -|arm-id
@@ -91,6 +118,7 @@ rename-mapping:
   PolicyEvent.resourceId: -|arm-id
   PolicyEvent.policySetDefinitionId: -|arm-id
   PolicyEvent.resourceLocation: -|azure-location
+  PolicyEvent.resourceType: ResourceTypeString
   PolicyEventsResourceType: PolicyEventType
   PolicyReference.policyDefinitionId: -|arm-id
   PolicyReference.policySetDefinitionId: -|arm-id
@@ -100,8 +128,19 @@ rename-mapping:
   PolicyState.policyDefinitionId: -|arm-id
   PolicyState.policySetDefinitionId: -|arm-id
   PolicyState.resourceLocation: -|azure-location
+  PolicyState.resourceType: ResourceTypeString
   PolicyStatesResource: PolicyStateType
   PolicyStatesSummaryResourceType: PolicyStateSummaryType
+  IfNotExistsEvaluationDetails.resourceId: -|arm-id
+  PolicyDefinitionSummary.policyDefinitionId: -|arm-id
+  PolicyTrackedResource: PolicyTrackedResourceRecord
+  PolicyTrackedResource.lastUpdateUtc: LastUpdateOn
+  PolicyTrackedResource.trackedResourceId: -|arm-id
+  RemediationDeployment.remediatedResourceId: -|arm-id
+  RemediationDeployment.deploymentId: -|arm-id
+  RemediationDeployment.resourceLocation: -|azure-location
+  TrackedResourceModificationDetails.deploymentId: -|arm-id
+  PolicyTrackedResourcesResourceType: PolicyTrackedResourceType
 
 directive:
   # TODO: Autorest.csharp should combine these redundancy methods into the scope one automatically.
@@ -146,4 +185,17 @@ directive:
     transform: >
       $.ErrorResponse['x-ms-client-name'] = 'PolicyMetadataErrorResponse';
       $.ErrorDefinition['x-ms-client-name'] = 'PolicyMetadataErrorDefinition';
+  - from: policyEvents.json
+    where: $.parameters
+    transform: >
+      $.policyEventsResourceParameter['x-ms-client-name'] = 'policyEventType';
+  - from: policyStates.json
+    where: $.parameters
+    transform: >
+      $.policyStatesResourceParameter['x-ms-client-name'] = 'policyStateType';
+      $.policyStatesSummaryResourceParameter['x-ms-client-name'] = 'policyStateSummaryType';
+  - from: policyTrackedResources.json
+    where: $.parameters
+    transform: >
+      $.policyTrackedResourcesResourceParameter['x-ms-client-name'] = 'policyTrackedResourceType';
 ```
