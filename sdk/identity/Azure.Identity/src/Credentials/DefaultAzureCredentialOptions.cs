@@ -269,7 +269,8 @@ namespace Azure.Identity
                 ExcludeVisualStudioCredential = ExcludeVisualStudioCredential,
                 ExcludeVisualStudioCodeCredential = ExcludeVisualStudioCodeCredential,
                 ExcludeAzurePowerShellCredential = ExcludeAzurePowerShellCredential,
-                AuthorityHost = AuthorityHost
+                AuthorityHost = AuthorityHost,
+                AzureRegionalAuthorityName = AzureRegionalAuthorityName
             };
 
             foreach (var addlTenant in AdditionallyAllowedTenants)

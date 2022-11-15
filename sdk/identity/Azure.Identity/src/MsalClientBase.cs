@@ -38,7 +38,7 @@ namespace Azure.Identity
             Pipeline = pipeline;
             TenantId = tenantId;
             ClientId = clientId;
-            RegionalAuthority = options?.AzureRegionalAuthorityName;
+            RegionalAuthority = options?.AzureRegionalAuthorityName ?? EnvironmentVariables.AzureRegionalAuthorityName;
             TokenCache = cacheOptions?.TokenCachePersistenceOptions == null ? null : new TokenCache(cacheOptions?.TokenCachePersistenceOptions);
             _clientAsyncLock = new AsyncLockWithValue<TClient>();
         }
