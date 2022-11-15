@@ -61,7 +61,7 @@ namespace Azure.Storage.Blobs.Test
         {
             var accountName = "accountName";
             var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
-            var blobEndpoint = new Uri("http://account.dfs.core.gov.net" + accountName);//new Uri("http://127.0.0.1/" + accountName);
+            var blobEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var credentials = new StorageSharedKeyCredential(accountName, accountKey);
 
             BlobServiceClient service1 = InstrumentClient(new BlobServiceClient(blobEndpoint, credentials));
