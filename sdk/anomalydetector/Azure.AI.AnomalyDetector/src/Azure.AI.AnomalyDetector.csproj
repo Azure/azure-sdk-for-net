@@ -17,6 +17,7 @@
 
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
+    <Compile Include="$(AutoRestSharedCodeDirectory)\*.cs" LinkBase="Shared\AutoRest" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
