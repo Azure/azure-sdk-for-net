@@ -7,7 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
-- Removed client side validation which prevented `GetEntity` and `GetEntityAsync` from getting an entity with an empty string as its RowKey value. ([#32447](https://github.com/Azure/azure-sdk-for-net/issues/32447))
+- Removed client side validation which prevented `GetEntity` and `GetEntityAsync` from getting an entity with an empty string as its RowKey or PartitionKey value. ([#32447](https://github.com/Azure/azure-sdk-for-net/issues/32447))
 
 ### Other Changes
 
