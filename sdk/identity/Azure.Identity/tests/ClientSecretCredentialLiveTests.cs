@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -100,7 +101,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void VerifyMsalClientRegionalAuthority()
+        public void VerifyMsalClientRegionalAuthorityFromEnvironmentVariable()
         {
             string[] authorities = { null, ConfidentialClientApplication.AttemptRegionDiscovery, "westus" };
 
@@ -116,6 +117,25 @@ namespace Azure.Identity.Tests
 
                     Assert.AreEqual(regionalAuthority, cred.Client.RegionalAuthority);
                 }
+            }
+        }
+
+        [Test]
+        public void VerifyMsalClientRegionalAuthorityFromOptions()
+        {
+            string[] authorities = { null, ConfidentialClientApplication.AttemptRegionDiscovery, "westus" };
+
+            foreach (string regionalAuthority in authorities)
+            {
+                var options = new TokenCredentialOptions();
+                options.AzureRegionalAuthorityName = regionalAuthority;
+                var expectedTenantId = Guid.NewGuid().ToString();
+                var expectedClientId = Guid.NewGuid().ToString();
+                var expectedClientSecret = Guid.NewGuid().ToString();
+
+                var cred = new ClientSecretCredential(expectedTenantId, expectedClientId, expectedClientSecret, options);
+
+                Assert.AreEqual(regionalAuthority, cred.Client.RegionalAuthority);
             }
         }
     }
