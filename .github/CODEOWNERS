@@ -708,10 +708,10 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 #/<NotInRepo>/            @AzureAppServiceCLI @antcp
 
 # PRLabel: %WebPubSub
-/sdk/webpubsub/  @vicancy @JialinXin @pallavit @KrzysztofCwalina
+/sdk/webpubsub/  @vicancy @JialinXin @@jsquire @pallavit @KrzysztofCwalina
 
 # PRLabel: %WebPubSub %Functions
-/sdk/webpubsub/Microsoft.Azure.WebJobs.Extensions.WebPubSub/  @vicancy @jsquire
+/sdk/webpubsub/Microsoft.Azure.WebJobs.Extensions.WebPubSub/  @vicancy
 
 # ServiceLabel: %WebPubSub %Service Attention
 /sdk/webpubsub/  @vicancy @JialinXin
