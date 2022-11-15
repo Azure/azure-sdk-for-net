@@ -29,7 +29,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://seanmcccanary3.dfs.core.windows.net/test-filesystem-ea9c2963-2839-c646-c150-86e014c505b4?sv=2021-12-02\u0026st=2022-02-03T20%3A11%3A34Z\u0026se=2022-02-03T22%3A11%3A34Z\u0026sr=c\u0026sp=racwdlmeop\u0026sig=Sanitized\u0026resource=filesystem\u0026recursive=false\u0026upn=false",
+      "RequestUri": "http://seanmcccanary3.dfs.core.windows.net/test-filesystem-ea9c2963-2839-c646-c150-86e014c505b4?sv=2022-11-02\u0026st=2022-02-03T20%3A11%3A34Z\u0026se=2022-02-03T22%3A11%3A34Z\u0026sr=c\u0026sp=racwdlmeop\u0026sig=Sanitized\u0026resource=filesystem\u0026recursive=false\u0026upn=false",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",

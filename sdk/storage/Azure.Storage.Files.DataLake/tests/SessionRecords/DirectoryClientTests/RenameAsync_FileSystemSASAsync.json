@@ -57,14 +57,14 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://mroxscnapby3pev24a.dfs.preprod.core.windows.net/test-filesystem-a675a9bb-86fb-df15-88ea-cd5a41a5db0f/test-directory-f7e624f2-9e2c-8a48-8660-20145adeeb22?sv=2021-12-02\u0026st=2022-07-05T14%3A54%3A45Z\u0026se=2022-07-05T18%3A54%3A45Z\u0026sr=c\u0026sp=racwdlmeop\u0026sig=Sanitized\u0026mode=legacy",
+      "RequestUri": "https://mroxscnapby3pev24a.dfs.preprod.core.windows.net/test-filesystem-a675a9bb-86fb-df15-88ea-cd5a41a5db0f/test-directory-f7e624f2-9e2c-8a48-8660-20145adeeb22?sv=2022-11-02\u0026st=2022-07-05T14%3A54%3A45Z\u0026se=2022-07-05T18%3A54%3A45Z\u0026sr=c\u0026sp=racwdlmeop\u0026sig=Sanitized\u0026mode=legacy",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "0",
         "User-Agent": "azsdk-net-Storage.Files.DataLake/12.11.0-alpha.20220705.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
         "x-ms-client-request-id": "a1180e20-ab94-2c90-6340-819feae45ecf",
-        "x-ms-rename-source": "/test-filesystem-a675a9bb-86fb-df15-88ea-cd5a41a5db0f/test-directory-3669dcba-283b-b1e9-9d42-44e65190fb1e?sv=2021-12-02\u0026st=2022-07-05T15%3A54%3A45Z\u0026se=2022-07-05T17%3A54%3A45Z\u0026sr=c\u0026sp=racwdlmeop\u0026sig=Sanitized",
+        "x-ms-rename-source": "/test-filesystem-a675a9bb-86fb-df15-88ea-cd5a41a5db0f/test-directory-3669dcba-283b-b1e9-9d42-44e65190fb1e?sv=2022-11-02\u0026st=2022-07-05T15%3A54%3A45Z\u0026se=2022-07-05T17%3A54%3A45Z\u0026sr=c\u0026sp=racwdlmeop\u0026sig=Sanitized",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2021-10-04"
       },
@@ -82,7 +82,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://mroxscnapby3pev24a.blob.preprod.core.windows.net/test-filesystem-a675a9bb-86fb-df15-88ea-cd5a41a5db0f/test-directory-f7e624f2-9e2c-8a48-8660-20145adeeb22?sv=2021-12-02\u0026st=2022-07-05T14%3A54%3A45Z\u0026se=2022-07-05T18%3A54%3A45Z\u0026sr=c\u0026sp=racwdlmeop\u0026sig=Sanitized",
+      "RequestUri": "https://mroxscnapby3pev24a.blob.preprod.core.windows.net/test-filesystem-a675a9bb-86fb-df15-88ea-cd5a41a5db0f/test-directory-f7e624f2-9e2c-8a48-8660-20145adeeb22?sv=2022-11-02\u0026st=2022-07-05T14%3A54%3A45Z\u0026se=2022-07-05T18%3A54%3A45Z\u0026sr=c\u0026sp=racwdlmeop\u0026sig=Sanitized",
       "RequestMethod": "HEAD",
       "RequestHeaders": {
         "Accept": "application/xml",

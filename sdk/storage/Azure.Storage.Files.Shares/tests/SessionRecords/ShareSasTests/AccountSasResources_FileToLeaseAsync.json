@@ -75,7 +75,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://amandadev3.file.core.windows.net/test-share-72f86e68-c401-4834-811d-192db4d220ae/test-directory-427800b4-0539-d5ae-becb-b43320e967b6/test-file-5ec5233e-eb77-9fce-dcc1-bb3a054c1e9e?sv=2021-12-02\u0026ss=bqtf\u0026srt=soc\u0026se=2022-08-06T23%3A06%3A54Z\u0026sp=racwdlxyuptf\u0026sig=Sanitized",
+      "RequestUri": "https://amandadev3.file.core.windows.net/test-share-72f86e68-c401-4834-811d-192db4d220ae/test-directory-427800b4-0539-d5ae-becb-b43320e967b6/test-file-5ec5233e-eb77-9fce-dcc1-bb3a054c1e9e?sv=2022-11-02\u0026ss=bqtf\u0026srt=soc\u0026se=2022-08-06T23%3A06%3A54Z\u0026sp=racwdlxyuptf\u0026sig=Sanitized",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -118,7 +118,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://amandadev3.file.core.windows.net/test-share-72f86e68-c401-4834-811d-192db4d220ae/test-directory-427800b4-0539-d5ae-becb-b43320e967b6/test-file-5ec5233e-eb77-9fce-dcc1-bb3a054c1e9e?sv=2021-12-02\u0026ss=bqtf\u0026srt=soc\u0026se=2022-08-06T23%3A06%3A54Z\u0026sp=racwdlxyuptf\u0026sig=Sanitized\u0026comp=lease",
+      "RequestUri": "https://amandadev3.file.core.windows.net/test-share-72f86e68-c401-4834-811d-192db4d220ae/test-directory-427800b4-0539-d5ae-becb-b43320e967b6/test-file-5ec5233e-eb77-9fce-dcc1-bb3a054c1e9e?sv=2022-11-02\u0026ss=bqtf\u0026srt=soc\u0026se=2022-08-06T23%3A06%3A54Z\u0026sp=racwdlxyuptf\u0026sig=Sanitized\u0026comp=lease",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -150,7 +150,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://amandadev3.file.core.windows.net/test-share-72f86e68-c401-4834-811d-192db4d220ae/test-directory-427800b4-0539-d5ae-becb-b43320e967b6/test-file-5ec5233e-eb77-9fce-dcc1-bb3a054c1e9e?sv=2021-12-02\u0026ss=bqtf\u0026srt=soc\u0026se=2022-08-06T23%3A06%3A54Z\u0026sp=racwdlxyuptf\u0026sig=Sanitized\u0026comp=lease",
+      "RequestUri": "https://amandadev3.file.core.windows.net/test-share-72f86e68-c401-4834-811d-192db4d220ae/test-directory-427800b4-0539-d5ae-becb-b43320e967b6/test-file-5ec5233e-eb77-9fce-dcc1-bb3a054c1e9e?sv=2022-11-02\u0026ss=bqtf\u0026srt=soc\u0026se=2022-08-06T23%3A06%3A54Z\u0026sp=racwdlxyuptf\u0026sig=Sanitized\u0026comp=lease",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",

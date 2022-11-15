@@ -28,7 +28,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://1ycxscnapbl2prdev19a.dfs.preprod.core.windows.net/test-filesystem-8296303d-0698-6694-fbb7-daf39c6b9919/test-directory-38e4f5b8-b029-7121-4085-d1b56ee6ada8?sv=2021-12-02\u0026ss=bfqt\u0026srt=sco\u0026se=2021-08-07T19:10:23Z\u0026sp=w\u0026ses=scope-1\u0026sig=Sanitized\u0026resource=directory",
+      "RequestUri": "https://1ycxscnapbl2prdev19a.dfs.preprod.core.windows.net/test-filesystem-8296303d-0698-6694-fbb7-daf39c6b9919/test-directory-38e4f5b8-b029-7121-4085-d1b56ee6ada8?sv=2022-11-02\u0026ss=bfqt\u0026srt=sco\u0026se=2021-08-07T19:10:23Z\u0026sp=w\u0026ses=scope-1\u0026sig=Sanitized\u0026resource=directory",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
