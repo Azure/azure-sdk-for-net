@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> virtualNetworkName = default;
-            Optional<VnetInfo> virtualNetworkConnection = default;
+            Optional<AppServiceVirtualNetworkProperties> virtualNetworkConnection = default;
             Optional<IReadOnlyList<RelayServiceConnectionEntityData>> hybridConnections = default;
             Optional<IReadOnlyList<HybridConnectionData>> hybridConnectionsV2 = default;
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            virtualNetworkConnection = VnetInfo.DeserializeVnetInfo(property0.Value);
+                            virtualNetworkConnection = AppServiceVirtualNetworkProperties.DeserializeAppServiceVirtualNetworkProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("hybridConnections"))

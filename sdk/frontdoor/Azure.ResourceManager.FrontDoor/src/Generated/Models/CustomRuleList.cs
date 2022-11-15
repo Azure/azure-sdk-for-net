@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> Initializes a new instance of CustomRuleList. </summary>
         public CustomRuleList()
         {
-            Rules = new ChangeTrackingList<CustomRule>();
+            Rules = new ChangeTrackingList<WebApplicationCustomRule>();
         }
 
         /// <summary> Initializes a new instance of CustomRuleList. </summary>
         /// <param name="rules"> List of rules. </param>
-        internal CustomRuleList(IList<CustomRule> rules)
+        internal CustomRuleList(IList<WebApplicationCustomRule> rules)
         {
             Rules = rules;
         }
 
         /// <summary> List of rules. </summary>
-        public IList<CustomRule> Rules { get; }
+        public IList<WebApplicationCustomRule> Rules { get; }
     }
 }

@@ -17,6 +17,11 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(DetectedLanguage))
+            {
+                writer.WritePropertyName("detectedLanguage");
+                writer.WriteObjectValue(DetectedLanguage.Value);
+            }
             writer.WritePropertyName("redactedText");
             writer.WriteStringValue(RedactedText);
             writer.WritePropertyName("entities");
@@ -45,6 +50,7 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static PiiResultDocumentsItem DeserializePiiResultDocumentsItem(JsonElement element)
         {
+            Optional<DetectedLanguageInternal> detectedLanguage = default;
             string redactedText = default;
             IList<Entity> entities = default;
             string id = default;
@@ -52,6 +58,16 @@ namespace Azure.AI.TextAnalytics.Models
             Optional<TextDocumentStatistics> statistics = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("detectedLanguage"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    detectedLanguage = DetectedLanguageInternal.DeserializeDetectedLanguageInternal(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("redactedText"))
                 {
                     redactedText = property.Value.GetString();
@@ -93,7 +109,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new PiiResultDocumentsItem(id, warnings, Optional.ToNullable(statistics), redactedText, entities);
+            return new PiiResultDocumentsItem(id, warnings, Optional.ToNullable(statistics), redactedText, entities, Optional.ToNullable(detectedLanguage));
         }
     }
 }

@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of DiskList. </summary>
         internal DiskList()
         {
-            Value = new ChangeTrackingList<DiskData>();
+            Value = new ChangeTrackingList<DevTestLabDiskData>();
         }
 
         /// <summary> Initializes a new instance of DiskList. </summary>
         /// <param name="value"> Results of the list operation. </param>
         /// <param name="nextLink"> Link for next set of results. </param>
-        internal DiskList(IReadOnlyList<DiskData> value, string nextLink)
+        internal DiskList(IReadOnlyList<DevTestLabDiskData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Results of the list operation. </summary>
-        public IReadOnlyList<DiskData> Value { get; }
+        public IReadOnlyList<DevTestLabDiskData> Value { get; }
         /// <summary> Link for next set of results. </summary>
         public string NextLink { get; }
     }

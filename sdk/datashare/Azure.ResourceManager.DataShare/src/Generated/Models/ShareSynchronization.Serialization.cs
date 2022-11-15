@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.DataShare.Models
                 writer.WritePropertyName("consumerTenantName");
                 writer.WriteStringValue(ConsumerTenantName);
             }
-            if (Optional.IsDefined(DurationMs))
+            if (Optional.IsDefined(DurationInMilliSeconds))
             {
                 writer.WritePropertyName("durationMs");
-                writer.WriteNumberValue(DurationMs.Value);
+                writer.WriteNumberValue(DurationInMilliSeconds.Value);
             }
             if (Optional.IsDefined(EndOn))
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataShare.Models
             if (Optional.IsDefined(SynchronizationId))
             {
                 writer.WritePropertyName("synchronizationId");
-                writer.WriteStringValue(SynchronizationId);
+                writer.WriteStringValue(SynchronizationId.Value);
             }
             writer.WriteEndObject();
         }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataShare.Models
             Optional<string> message = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<string> status = default;
-            Optional<string> synchronizationId = default;
+            Optional<Guid> synchronizationId = default;
             Optional<SynchronizationMode> synchronizationMode = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -135,7 +135,12 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
                 if (property.NameEquals("synchronizationId"))
                 {
-                    synchronizationId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    synchronizationId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("synchronizationMode"))
@@ -149,7 +154,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     continue;
                 }
             }
-            return new ShareSynchronization(consumerEmail.Value, consumerName.Value, consumerTenantName.Value, Optional.ToNullable(durationMs), Optional.ToNullable(endTime), message.Value, Optional.ToNullable(startTime), status.Value, synchronizationId.Value, Optional.ToNullable(synchronizationMode));
+            return new ShareSynchronization(consumerEmail.Value, consumerName.Value, consumerTenantName.Value, Optional.ToNullable(durationMs), Optional.ToNullable(endTime), message.Value, Optional.ToNullable(startTime), status.Value, Optional.ToNullable(synchronizationId), Optional.ToNullable(synchronizationMode));
         }
     }
 }

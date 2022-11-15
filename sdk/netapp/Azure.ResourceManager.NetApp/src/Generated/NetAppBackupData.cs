@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="failureReason"> Failure reason. </param>
         /// <param name="volumeName"> Volume name. </param>
         /// <param name="useExistingSnapshot"> Manual backup an already existing snapshot. This will always be false for scheduled backups and true/false for manual backups. </param>
-        internal NetAppBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation location, Guid? backupId, DateTimeOffset? createdOn, string provisioningState, long? size, string label, NetAppBackupType? backupType, string failureReason, string volumeName, bool? useExistingSnapshot) : base(id, name, resourceType, systemData)
+        internal NetAppBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation location, string backupId, DateTimeOffset? createdOn, string provisioningState, long? size, string label, NetAppBackupType? backupType, string failureReason, string volumeName, bool? useExistingSnapshot) : base(id, name, resourceType, systemData)
         {
             Location = location;
             BackupId = backupId;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.NetApp
         /// <summary> Resource location. </summary>
         public AzureLocation Location { get; set; }
         /// <summary> UUID v4 used to identify the Backup. </summary>
-        public Guid? BackupId { get; }
+        public string BackupId { get; }
         /// <summary> The creation date of the backup. </summary>
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Azure lifecycle management. </summary>

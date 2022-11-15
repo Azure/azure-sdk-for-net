@@ -1,19 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/:query-text?api-version=2021-10-01",
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/:query-text?api-version=2021-10-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "690",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-7b688589f90578439abfa6c7727c6164-7b4a93eb2dd4d744-00",
-        "User-Agent": [
-          "azsdk-net-AI.Language.QuestionAnswering/1.0.0-alpha.20211028.1",
-          "(.NET 5.0.11; Microsoft Windows 10.0.22000)"
-        ],
-        "x-ms-client-request-id": "34bae169faa320cf3811494e7fefda37",
+        "traceparent": "00-c76f4ad9d3864eb0d9678c9a7a9e7c41-c5e1fc3bfa3765a3-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220921.1 (.NET 6.0.9; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "97ad53995d4bf850f73daa823bb457df",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -33,65 +30,63 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "4b9b1366-86c3-47db-9cd6-bbfe7a601620",
-        "Content-Length": "1479",
+        "apim-request-id": "7e12a1a8-56b5-4ea7-8b60-60a72ac142cb",
+        "Content-Length": "1476",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.QuestionAnsweringTextRecords=2",
-        "Date": "Thu, 28 Oct 2021 20:05:12 GMT",
+        "Date": "Thu, 22 Sep 2022 00:25:23 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "409"
+        "x-envoy-upstream-service-time": "502"
       },
-      "ResponseBody": [
-        "{\n",
-        "  \u0022answers\u0022: [\n",
-        "    {\n",
-        "      \u0022answer\u0022: \u0022Power and charging. It takes two to four hours to charge the Surface Pro 4 battery fully from an empty state. It can take longer if you\u2019re using your Surface for power-intensive activities like gaming or video streaming while you\u2019re charging it.\u0022,\n",
-        "      \u0022confidenceScore\u0022: 0.9298818707466125,\n",
-        "      \u0022id\u0022: \u00221\u0022,\n",
-        "      \u0022answerSpan\u0022: {\n",
-        "        \u0022text\u0022: \u0022two to four hours\u0022,\n",
-        "        \u0022confidenceScore\u0022: 0.98579097,\n",
-        "        \u0022offset\u0022: 28,\n",
-        "        \u0022length\u0022: 18\n",
-        "      },\n",
-        "      \u0022offset\u0022: 0,\n",
-        "      \u0022length\u0022: 245\n",
-        "    },\n",
-        "    {\n",
-        "      \u0022answer\u0022: \u0022It takes two to four hours to charge the Surface Pro 4 battery fully from an empty state. It can take longer if you\u2019re using your Surface for power-intensive activities like gaming or video streaming while you\u2019re charging it.\u0022,\n",
-        "      \u0022confidenceScore\u0022: 0.9254359602928162,\n",
-        "      \u0022id\u0022: \u00221\u0022,\n",
-        "      \u0022answerSpan\u0022: {\n",
-        "        \u0022text\u0022: \u0022two to four hours\u0022,\n",
-        "        \u0022confidenceScore\u0022: 0.98562825,\n",
-        "        \u0022offset\u0022: 8,\n",
-        "        \u0022length\u0022: 18\n",
-        "      },\n",
-        "      \u0022offset\u0022: 20,\n",
-        "      \u0022length\u0022: 225\n",
-        "    },\n",
-        "    {\n",
-        "      \u0022answer\u0022: \u0022It can take longer if you\u2019re using your Surface for power-intensive activities like gaming or video streaming while you\u2019re charging it.\u0022,\n",
-        "      \u0022confidenceScore\u0022: 0.05503518134355545,\n",
-        "      \u0022id\u0022: \u00221\u0022,\n",
-        "      \u0022answerSpan\u0022: {\n",
-        "        \u0022text\u0022: \u0022longer\u0022,\n",
-        "        \u0022confidenceScore\u0022: 0.624118,\n",
-        "        \u0022offset\u0022: 11,\n",
-        "        \u0022length\u0022: 7\n",
-        "      },\n",
-        "      \u0022offset\u0022: 110,\n",
-        "      \u0022length\u0022: 135\n",
-        "    }\n",
-        "  ]\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "answers": [
+          {
+            "answer": "Power and charging. It takes two to four hours to charge the Surface Pro 4 battery fully from an empty state. It can take longer if you\u2019re using your Surface for power-intensive activities like gaming or video streaming while you\u2019re charging it.",
+            "confidenceScore": 0.930730938911438,
+            "id": "1",
+            "answerSpan": {
+              "text": "two to four hours",
+              "confidenceScore": 0.994789,
+              "offset": 28,
+              "length": 18
+            },
+            "offset": 0,
+            "length": 245
+          },
+          {
+            "answer": "It takes two to four hours to charge the Surface Pro 4 battery fully from an empty state. It can take longer if you\u2019re using your Surface for power-intensive activities like gaming or video streaming while you\u2019re charging it.",
+            "confidenceScore": 0.92386794090271,
+            "id": "1",
+            "answerSpan": {
+              "text": "two to four hours",
+              "confidenceScore": 0.99445844,
+              "offset": 8,
+              "length": 18
+            },
+            "offset": 20,
+            "length": 225
+          },
+          {
+            "answer": "It can take longer if you\u2019re using your Surface for power-intensive activities like gaming or video streaming while you\u2019re charging it.",
+            "confidenceScore": 0.11520536988973618,
+            "id": "1",
+            "answerSpan": {
+              "text": "longer",
+              "confidenceScore": 0.68131536,
+              "offset": 11,
+              "length": 7
+            },
+            "offset": 110,
+            "length": 135
+          }
+        ]
+      }
     }
   ],
   "Variables": {
-    "QUESTIONANSWERING_ENDPOINT": "https://wuppe.api.cognitive.microsoft.com",
+    "QUESTIONANSWERING_ENDPOINT": "https://languagesdkresource.cognitiveservices.azure.com/",
     "QUESTIONANSWERING_KEY": "Sanitized",
-    "RandomSeed": "713474829"
+    "RandomSeed": "1250324171"
   }
 }

@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.Media
         /// <param name="systemData"> The systemData. </param>
         /// <param name="track">
         /// Detailed information about a track in the asset.
-        /// Please note <see cref="AssetTrackInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="MediaAssetTrackBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AudioTrack"/>, <see cref="TextTrack"/> and <see cref="VideoTrack"/>.
         /// </param>
         /// <param name="provisioningState"> Provisioning state of the asset track. </param>
-        internal MediaAssetTrackData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AssetTrackInfo track, MediaProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal MediaAssetTrackData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MediaAssetTrackBase track, MediaServicesProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             Track = track;
             ProvisioningState = provisioningState;
@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Detailed information about a track in the asset.
-        /// Please note <see cref="AssetTrackInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="MediaAssetTrackBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AudioTrack"/>, <see cref="TextTrack"/> and <see cref="VideoTrack"/>.
         /// </summary>
-        public AssetTrackInfo Track { get; set; }
+        public MediaAssetTrackBase Track { get; set; }
         /// <summary> Provisioning state of the asset track. </summary>
-        public MediaProvisioningState? ProvisioningState { get; }
+        public MediaServicesProvisioningState? ProvisioningState { get; }
     }
 }

@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DigitalTwins
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly Core.ResourceType ResourceType = "Microsoft.DigitalTwins/digitalTwinsInstances";
+        public static readonly ResourceType ResourceType = "Microsoft.DigitalTwins/digitalTwinsInstances";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -126,11 +126,11 @@ namespace Azure.ResourceManager.DigitalTwins
             return GetDigitalTwinsEndpointResources().Get(endpointName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of GroupIdInformationResources in the DigitalTwinsDescription. </summary>
-        /// <returns> An object representing collection of GroupIdInformationResources and their operations over a GroupIdInformationResource. </returns>
-        public virtual GroupIdInformationCollection GetAllGroupIdInformation()
+        /// <summary> Gets a collection of DigitalTwinsPrivateLinkResources in the DigitalTwinsDescription. </summary>
+        /// <returns> An object representing collection of DigitalTwinsPrivateLinkResources and their operations over a DigitalTwinsPrivateLinkResource. </returns>
+        public virtual DigitalTwinsPrivateLinkResourceCollection GetDigitalTwinsPrivateLinkResources()
         {
-            return GetCachedClient(Client => new GroupIdInformationCollection(Client, Id));
+            return GetCachedClient(Client => new DigitalTwinsPrivateLinkResourceCollection(Client, Id));
         }
 
         /// <summary>
@@ -143,9 +143,9 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <exception cref="ArgumentException"> <paramref name="resourceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<GroupIdInformationResource>> GetGroupIdInformationAsync(string resourceId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DigitalTwinsPrivateLinkResource>> GetDigitalTwinsPrivateLinkResourceAsync(string resourceId, CancellationToken cancellationToken = default)
         {
-            return await GetAllGroupIdInformation().GetAsync(resourceId, cancellationToken).ConfigureAwait(false);
+            return await GetDigitalTwinsPrivateLinkResources().GetAsync(resourceId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -158,9 +158,9 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <exception cref="ArgumentException"> <paramref name="resourceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<GroupIdInformationResource> GetGroupIdInformation(string resourceId, CancellationToken cancellationToken = default)
+        public virtual Response<DigitalTwinsPrivateLinkResource> GetDigitalTwinsPrivateLinkResource(string resourceId, CancellationToken cancellationToken = default)
         {
-            return GetAllGroupIdInformation().Get(resourceId, cancellationToken);
+            return GetDigitalTwinsPrivateLinkResources().Get(resourceId, cancellationToken);
         }
 
         /// <summary> Gets a collection of DigitalTwinsPrivateEndpointConnectionResources in the DigitalTwinsDescription. </summary>

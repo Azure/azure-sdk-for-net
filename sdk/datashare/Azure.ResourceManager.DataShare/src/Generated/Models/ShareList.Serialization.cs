@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataShare.Models
         internal static ShareList DeserializeShareList(JsonElement element)
         {
             Optional<string> nextLink = default;
-            IReadOnlyList<ShareData> value = default;
+            IReadOnlyList<DataShareData> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"))
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
                 if (property.NameEquals("value"))
                 {
-                    List<ShareData> array = new List<ShareData>();
+                    List<DataShareData> array = new List<DataShareData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ShareData.DeserializeShareData(item));
+                        array.Add(DataShareData.DeserializeDataShareData(item));
                     }
                     value = array;
                     continue;

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventGrid.Models
     {
         internal static TopicTypesListResult DeserializeTopicTypesListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<TopicTypeInfoData>> value = default;
+            Optional<IReadOnlyList<TopicTypeData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.EventGrid.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<TopicTypeInfoData> array = new List<TopicTypeInfoData>();
+                    List<TopicTypeData> array = new List<TopicTypeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TopicTypeInfoData.DeserializeTopicTypeInfoData(item));
+                        array.Add(TopicTypeData.DeserializeTopicTypeData(item));
                     }
                     value = array;
                     continue;

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static UnknownScalingMechanism DeserializeUnknownScalingMechanism(JsonElement element)
         {
-            ServiceScalingMechanismKind kind = default;
+            ServiceScalingMechanismKind kind = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))

@@ -10,6 +10,20 @@
 
 ### Other Changes
 
+## 1.0.1 (2022-09-13)
+
+### Breaking Changes
+
+Changed the constructors of following classes from public to protected:
+- `AuthBaseInfo`
+- `AzureResourceBaseProperties`
+- `SecretBaseInfo`
+- `TargetServiceBaseInfo`
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.3.1.
+
 ## 1.0.0 (2022-07-21)
 
 This is the first stable release of the Azure Service Linker management library.

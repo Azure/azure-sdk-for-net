@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static CustomRuleList DeserializeCustomRuleList(JsonElement element)
         {
-            Optional<IList<CustomRule>> rules = default;
+            Optional<IList<WebApplicationCustomRule>> rules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rules"))
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<CustomRule> array = new List<CustomRule>();
+                    List<WebApplicationCustomRule> array = new List<WebApplicationCustomRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomRule.DeserializeCustomRule(item));
+                        array.Add(WebApplicationCustomRule.DeserializeWebApplicationCustomRule(item));
                     }
                     rules = array;
                     continue;

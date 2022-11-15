@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.DataShare.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> dataSetId = default;
+            Optional<Guid> dataSetId = default;
             string fileSystem = default;
             string folderPath = default;
             string resourceGroup = default;
@@ -90,7 +91,12 @@ namespace Azure.ResourceManager.DataShare.Models
                     {
                         if (property0.NameEquals("dataSetId"))
                         {
-                            dataSetId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            dataSetId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("fileSystem"))
@@ -122,7 +128,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     continue;
                 }
             }
-            return new AdlsGen2FolderDataSet(id, name, type, systemData.Value, kind, dataSetId.Value, fileSystem, folderPath, resourceGroup, storageAccountName, subscriptionId);
+            return new AdlsGen2FolderDataSet(id, name, type, systemData.Value, kind, Optional.ToNullable(dataSetId), fileSystem, folderPath, resourceGroup, storageAccountName, subscriptionId);
         }
     }
 }

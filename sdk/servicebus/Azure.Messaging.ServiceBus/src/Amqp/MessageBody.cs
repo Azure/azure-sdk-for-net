@@ -79,38 +79,24 @@ namespace Azure.Messaging.ServiceBus.Amqp
             private IList<ReadOnlyMemory<byte>> _segments;
             private IEnumerable<ReadOnlyMemory<byte>> _lazySegments;
 
+            internal CopyingOnConversionMessageBody(IEnumerable<ReadOnlyMemory<byte>> dataSegments)
+            {
+                _lazySegments = dataSegments;
+            }
+
             protected override ReadOnlyMemory<byte> WrittenMemory
             {
                 get
                 {
                     if (_lazySegments != null)
                     {
-                        foreach (var segment in _lazySegments)
-                        {
-                            Append(segment);
-                        }
-
+                        // fields are lazy initialized to not occupy unnecessary memory when there are no data segments
+                        Segments.Append(_lazySegments,  ref _writer, ref _segments);
                         _lazySegments = null;
                     }
 
                     return _writer?.WrittenMemory ?? ReadOnlyMemory<byte>.Empty;
                 }
-            }
-
-            internal CopyingOnConversionMessageBody(IEnumerable<ReadOnlyMemory<byte>> dataSegments)
-            {
-                _lazySegments = dataSegments;
-            }
-
-            private void Append(ReadOnlyMemory<byte> segment)
-            {
-                _writer ??= new ArrayBufferWriter<byte>();
-                _segments ??= new List<ReadOnlyMemory<byte>>();
-
-                var memory = _writer.GetMemory(segment.Length);
-                segment.CopyTo(memory);
-                _writer.Advance(segment.Length);
-                _segments.Add(memory.Slice(0, segment.Length));
             }
 
             public override IEnumerator<ReadOnlyMemory<byte>> GetEnumerator()
@@ -125,15 +111,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         private sealed class EagerCopyingMessageBody : MessageBody
         {
-            private ArrayBufferWriter<byte> _writer;
-            private IList<ReadOnlyMemory<byte>> _segments;
+            private readonly ArrayBufferWriter<byte> _writer;
+            private readonly IList<ReadOnlyMemory<byte>> _segments;
 
             internal EagerCopyingMessageBody(IEnumerable<Data> dataSegments)
             {
-                foreach (var segment in dataSegments)
-                {
-                    Append(segment);
-                }
+                // fields are lazy initialized to not occupy unnecessary memory when there are no data segments
+                Segments.Append(dataSegments, ref _writer, ref _segments);
             }
 
             protected override ReadOnlyMemory<byte> WrittenMemory => _writer?.WrittenMemory ?? ReadOnlyMemory<byte>.Empty;
@@ -142,24 +126,58 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 return _segments.GetEnumerator();
             }
+        }
 
-            private void Append(Data segment)
+        private static class Segments
+        {
+            public static void Append<T>(IEnumerable<T> dataSegments, ref ArrayBufferWriter<byte> refWriter,
+                ref IList<ReadOnlyMemory<byte>> refSegments)
             {
-                // fields are lazy initialized to not occupy unnecessary memory when there are no data segments
-                _writer ??= new ArrayBufferWriter<byte>();
-                _segments ??= new List<ReadOnlyMemory<byte>>();
-
-                ReadOnlyMemory<byte> dataToAppend = segment.Value switch
+                int length = 0;
+                int numberOfSegments = 0;
+                List<ReadOnlyMemory<byte>> segments = null;
+                foreach (var segment in dataSegments)
                 {
-                    byte[] byteArray => byteArray,
-                    ArraySegment<byte> arraySegment => arraySegment,
-                    _ => ReadOnlyMemory<byte>.Empty
-                };
+                    segments ??= dataSegments is IReadOnlyCollection<Data> readOnlyList
+                        ? new List<ReadOnlyMemory<byte>>(readOnlyList.Count)
+                        : new List<ReadOnlyMemory<byte>>();
+                    ReadOnlyMemory<byte> dataToAppend = segment switch
+                    {
+                        ReadOnlyMemory<byte> romSegment => romSegment,
+                        Data data => data.Value switch
+                        {
+                            byte[] byteArray => byteArray,
+                            ArraySegment<byte> arraySegment => arraySegment,
+                            _ => ReadOnlyMemory<byte>.Empty
+                        },
+                        _ => ThrowArgumentOutOfRange(nameof(segment))
+                    };
+                    length += dataToAppend.Length;
+                    numberOfSegments++;
+                    segments.Add(dataToAppend);
+                }
 
-                var memory = _writer.GetMemory(dataToAppend.Length);
-                dataToAppend.CopyTo(memory);
-                _writer.Advance(dataToAppend.Length);
-                _segments.Add(memory.Slice(0, dataToAppend.Length));
+                if (segments == null)
+                {
+                    return;
+                }
+
+                refWriter = length > 0 ? new ArrayBufferWriter<byte>(length) : new ArrayBufferWriter<byte>();
+                refSegments = segments;
+
+                for (var i = 0; i < numberOfSegments; i++)
+                {
+                    var dataToAppend = segments[i];
+                    var memory = refWriter.GetMemory(dataToAppend.Length);
+                    dataToAppend.CopyTo(memory);
+                    refWriter.Advance(dataToAppend.Length);
+                    segments[i] = memory.Slice(0, dataToAppend.Length);
+                }
+            }
+
+            private static ReadOnlyMemory<byte> ThrowArgumentOutOfRange(string paramName)
+            {
+                throw new ArgumentOutOfRangeException(paramName, "Provided data segment is not compatible.");
             }
         }
     }

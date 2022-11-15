@@ -22,10 +22,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         {
         }
 
-        // TODO: why is it modeled as a string in v3? Consider linking supported locales if kept as string.
         /// <summary>
         /// Sets the locale information for the document.
-        /// Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US.
+        /// See the <see href="https://aka.ms/azsdk/formrecognizer/supportedlocales">service documentation</see> for a complete list of supported locales.
         /// </summary>
         public string Locale { get; set; }
 

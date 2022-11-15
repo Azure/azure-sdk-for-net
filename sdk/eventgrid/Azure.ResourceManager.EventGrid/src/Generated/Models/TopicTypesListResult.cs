@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of TopicTypesListResult. </summary>
         internal TopicTypesListResult()
         {
-            Value = new ChangeTrackingList<TopicTypeInfoData>();
+            Value = new ChangeTrackingList<TopicTypeData>();
         }
 
         /// <summary> Initializes a new instance of TopicTypesListResult. </summary>
         /// <param name="value"> A collection of topic types. </param>
-        internal TopicTypesListResult(IReadOnlyList<TopicTypeInfoData> value)
+        internal TopicTypesListResult(IReadOnlyList<TopicTypeData> value)
         {
             Value = value;
         }
 
         /// <summary> A collection of topic types. </summary>
-        public IReadOnlyList<TopicTypeInfoData> Value { get; }
+        public IReadOnlyList<TopicTypeData> Value { get; }
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.EventGrid
     /// A Class representing a DomainTopic along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DomainTopicResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetDomainTopicResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DomainResource" /> using the GetDomainTopic method.
+    /// Otherwise you can get one from its parent resource <see cref="EventGridDomainResource" /> using the GetDomainTopic method.
     /// </summary>
     public partial class DomainTopicResource : ArmResource
     {

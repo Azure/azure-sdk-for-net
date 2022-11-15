@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataShare
     /// A Class representing a ProviderShareSubscription along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ProviderShareSubscriptionResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetProviderShareSubscriptionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ShareResource" /> using the GetProviderShareSubscription method.
+    /// Otherwise you can get one from its parent resource <see cref="DataShareResource" /> using the GetProviderShareSubscription method.
     /// </summary>
     public partial class ProviderShareSubscriptionResource : ArmResource
     {

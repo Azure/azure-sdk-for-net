@@ -74,6 +74,8 @@
     "overridden",
     "parallelization",
     "personalizer",
+    "petabit",
+    "picometer",
     "pkcs",
     "pstn",
     "pwsh",
@@ -125,7 +127,8 @@
     {
       "filename": "**/sdk/automation/**/*.cs",
       "words": [
-        "tfvc"
+        "tfvc",
+        "updation"
       ]
     },
     {
@@ -151,6 +154,14 @@
       "filename": "**/sdk/batch/**/*.cs",
       "words": [
         "cifs"
+      ]
+    },
+    {
+      "filename": "**/sdk/botservice/**/*.cs",
+      "words": [
+        "Alexa",
+        "Cmek",
+        "Omnichannel"
       ]
     },
     {
@@ -230,6 +241,12 @@
       ]
     },
     {
+      "filename": "**/sdk/customer-insights/**/*.cs",
+      "words": [
+        "kpis"
+      ]
+    },
+    {
       "filename": "**/sdk/databox/**/*.cs",
       "words": [
         "errored"
@@ -247,10 +264,49 @@
       ]
     },
     {
+      "filename": "**/sdk/datadog/**/*.cs",
+      "words": [
+        "liftr"
+      ]
+    },
+    {
+      "filename": "**/sdk/datalake-analytics/**/*.cs",
+      "words": [
+        "undeleting"
+      ]
+    },
+    {
+      "filename": "**/sdk/datalake-store/**/*.cs",
+      "words": [
+        "undeleting"
+      ]
+    },
+    {
+      "filename": "**/sdk/datamigration/**/*.cs",
+      "words": [
+        "regen",
+        "ssis",
+        "sybase",
+        "initialiazing"
+      ]
+    },
+    {
+      "filename": "**/sdk/dataprotection/**/*.cs",
+      "words": [
+        "Undelete"
+      ]
+    },
+    {
       "filename": "**/sdk/datashare/**/*.cs",
       "words": [
         "adls",
         "kusto"
+      ]
+    },
+    {
+      "filename": "**/sdk/devspaces/**/*.cs",
+      "words": [
+        "kube"
       ]
     },
     {
@@ -307,6 +363,12 @@
       ]
     },
     {
+      "filename": "**/sdk/elastic/**/*.cs",
+      "words": [
+        "liftr"
+      ]
+    },
+    {
       "filename": "**/sdk/elasticsan/**/*.cs",
       "words": [
         "iscsi",
@@ -346,6 +408,32 @@
       "words": [
         "dicom",
         "fhir"
+      ]
+    },
+    {
+      "filename": "**/sdk/hybriddatamanager/**/*.cs",
+      "words": [
+        "Oaep"
+      ]
+    },
+    {
+      "filename": "**/sdk/hybridaks/**/*.cs",
+      "words": [
+        "Vmip",
+        "Kubevirt"
+      ]
+    },
+    {
+      "filename": "**/sdk/hybridkubernetes/**/*.cs",
+      "words": [
+        "kubeconfigs"
+      ]
+    },
+    {
+      "filename": "**/sdk/kubernetesconfiguration/**/*.cs",
+      "words": [
+        "kustomization",
+        "kustomizations"
       ]
     },
     {
@@ -485,6 +573,12 @@
       ]
     },
     {
+      "filename": "**/sdk/operationalinsights/**/*.cs",
+      "words": [
+        "itsm"
+      ]
+    },
+    {
       "filename": "**/sdk/orbital/**/*.cs",
       "words": [
         "eirpd",
@@ -516,10 +610,24 @@
       ]
     },
     {
+      "filename": "**/sdk/powerbidedicated/**/*.cs",
+      "words": [
+        "vcore",
+		"pbie"
+      ]
+    },
+    {
       "filename": "**/sdk/privatedns/**/*.cs",
       "words": [
         "cname",
         "ptrdname"
+      ]
+    },
+    {
+      "filename": "**/sdk/providerhub/**/*.cs",
+      "words": [
+        "checkin",
+		"regionality"
       ]
     },
     {
@@ -528,6 +636,39 @@
         "hana",
         "msrp",
         "unprovisioning"
+      ]
+    },
+    {
+      "filename": "**/sdk/recoveryservices-backup/**/*.cs",
+      "words": [
+        "xsmb",
+        "kpis",
+        "hana",
+        "dedup",
+        "xcool",
+        "vmilr",
+        "reregister",
+        "rehydrated",
+        "mab",
+        "dpm"
+      ]
+    },
+    {
+      "filename": "**/sdk/recoveryservices-siterecovery/**/*.cs",
+      "words": [
+        "vcenter",
+        "reassociate",
+        "reprotect",
+        "orignal",
+        "nics",
+        "distro",
+        "bcdr",
+        "vmware",
+        "ahub",
+        "payg",
+        "vcpus",
+        "seleted",
+        "dras"
       ]
     },
     {
@@ -577,7 +718,8 @@
         "Aatp",
         "Puid",
         "Stix",
-        "Whois"
+        "Whois",
+        "Nlstext"
       ]
     },
     {
@@ -684,13 +826,29 @@
         "updation",
         "usql",
         "vertica",
-        "xero"
+        "xero",
+        "Asana",
+        "Twilio"
       ]
     },
     {
       "filename": "**/sdk/synapse/**/*.md",
       "words": [
         "abfss"
+      ]
+    },
+    {
+      "filename": "**/sdk/synapse/**/*.cs",
+      "words": [
+        "kusto",
+        "nchar",
+        "ntext",
+        "nvarchar",
+        "apacheavro",
+        "scsv",
+        "tsve",
+        "sohsv",
+        "exprired"
       ]
     },
     {
@@ -748,14 +906,35 @@
         "Rscript",
         "VCPUs"
         ]
-    },  
+    },
+    {
+      "filename": "**/sdk/machinelearningcompute/**/*.cs",
+      "words": [
+        "cname",
+        "kube"
+        ]
+    },
     {
       "filename": "**/sdk/reservations/**/*.cs",
       "words": [
         "Msrp",
         "Hana"
         ]
-    }
+    },
+    {
+      "filename": "**/sdk/securitydevops/**/*.cs",
+      "words": [
+        "Orgs"
+      ]
+    },
+    {
+      "filename": "**/sdk/webpubsub/**/*.cs",
+      "words": [
+        "protobuf",
+        "Ackable",
+        "awps"
+        ]
+    }  
   ],
   "allowCompoundWords": true
 }

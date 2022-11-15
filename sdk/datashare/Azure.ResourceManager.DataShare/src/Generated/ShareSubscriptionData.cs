@@ -18,18 +18,8 @@ namespace Azure.ResourceManager.DataShare
         /// <summary> Initializes a new instance of ShareSubscriptionData. </summary>
         /// <param name="invitationId"> The invitation id. </param>
         /// <param name="sourceShareLocation"> Source share location. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="invitationId"/> or <paramref name="sourceShareLocation"/> is null. </exception>
-        public ShareSubscriptionData(string invitationId, string sourceShareLocation)
+        public ShareSubscriptionData(Guid invitationId, AzureLocation sourceShareLocation)
         {
-            if (invitationId == null)
-            {
-                throw new ArgumentNullException(nameof(invitationId));
-            }
-            if (sourceShareLocation == null)
-            {
-                throw new ArgumentNullException(nameof(sourceShareLocation));
-            }
-
             InvitationId = invitationId;
             SourceShareLocation = sourceShareLocation;
         }
@@ -54,7 +44,7 @@ namespace Azure.ResourceManager.DataShare
         /// <param name="sourceShareLocation"> Source share location. </param>
         /// <param name="userEmail"> Email of the user who created the resource. </param>
         /// <param name="userName"> Name of the user who created the resource. </param>
-        internal ShareSubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, DateTimeOffset? expireOn, string invitationId, string providerEmail, string providerName, string providerTenantName, ProvisioningState? provisioningState, string shareDescription, ShareKind? shareKind, string shareName, ShareSubscriptionStatus? shareSubscriptionStatus, string shareTerms, string sourceShareLocation, string userEmail, string userName) : base(id, name, resourceType, systemData)
+        internal ShareSubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, DateTimeOffset? expireOn, Guid invitationId, string providerEmail, string providerName, string providerTenantName, DataShareProvisioningState? provisioningState, string shareDescription, DataShareKind? shareKind, string shareName, ShareSubscriptionStatus? shareSubscriptionStatus, string shareTerms, AzureLocation sourceShareLocation, string userEmail, string userName) : base(id, name, resourceType, systemData)
         {
             CreatedOn = createdOn;
             ExpireOn = expireOn;
@@ -78,7 +68,7 @@ namespace Azure.ResourceManager.DataShare
         /// <summary> The expiration date of the share subscription. </summary>
         public DateTimeOffset? ExpireOn { get; set; }
         /// <summary> The invitation id. </summary>
-        public string InvitationId { get; set; }
+        public Guid InvitationId { get; set; }
         /// <summary> Email of the provider who created the resource. </summary>
         public string ProviderEmail { get; }
         /// <summary> Name of the provider who created the resource. </summary>
@@ -86,11 +76,11 @@ namespace Azure.ResourceManager.DataShare
         /// <summary> Tenant name of the provider who created the resource. </summary>
         public string ProviderTenantName { get; }
         /// <summary> Provisioning state of the share subscription. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public DataShareProvisioningState? ProvisioningState { get; }
         /// <summary> Description of share. </summary>
         public string ShareDescription { get; }
         /// <summary> Kind of share. </summary>
-        public ShareKind? ShareKind { get; }
+        public DataShareKind? ShareKind { get; }
         /// <summary> Name of the share. </summary>
         public string ShareName { get; }
         /// <summary> Gets the current status of share subscription. </summary>
@@ -98,7 +88,7 @@ namespace Azure.ResourceManager.DataShare
         /// <summary> Terms of a share. </summary>
         public string ShareTerms { get; }
         /// <summary> Source share location. </summary>
-        public string SourceShareLocation { get; set; }
+        public AzureLocation SourceShareLocation { get; set; }
         /// <summary> Email of the user who created the resource. </summary>
         public string UserEmail { get; }
         /// <summary> Name of the user who created the resource. </summary>

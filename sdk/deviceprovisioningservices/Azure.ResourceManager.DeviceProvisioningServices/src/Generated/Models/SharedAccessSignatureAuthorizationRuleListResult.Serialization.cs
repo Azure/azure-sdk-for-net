@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     {
         internal static SharedAccessSignatureAuthorizationRuleListResult DeserializeSharedAccessSignatureAuthorizationRuleListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<SharedAccessSignatureAuthorizationRuleAccessRightsDescription>> value = default;
+            Optional<IReadOnlyList<DeviceProvisioningServicesSharedAccessKey>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SharedAccessSignatureAuthorizationRuleAccessRightsDescription> array = new List<SharedAccessSignatureAuthorizationRuleAccessRightsDescription>();
+                    List<DeviceProvisioningServicesSharedAccessKey> array = new List<DeviceProvisioningServicesSharedAccessKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SharedAccessSignatureAuthorizationRuleAccessRightsDescription.DeserializeSharedAccessSignatureAuthorizationRuleAccessRightsDescription(item));
+                        array.Add(DeviceProvisioningServicesSharedAccessKey.DeserializeDeviceProvisioningServicesSharedAccessKey(item));
                     }
                     value = array;
                     continue;

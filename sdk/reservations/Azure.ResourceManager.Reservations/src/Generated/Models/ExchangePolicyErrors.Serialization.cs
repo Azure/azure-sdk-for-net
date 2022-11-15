@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        policyErrors = null;
                         continue;
                     }
                     List<ExchangePolicyError> array = new List<ExchangePolicyError>();

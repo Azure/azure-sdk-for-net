@@ -11,13 +11,15 @@ using Azure.Data.Tables;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
-    internal class PocoToTableEntityConverter<TInput>: IConverter<TInput, TableEntity>
+    internal class PocoToTableEntityConverter<TInput> : IConverter<TInput, TableEntity>
     {
         private readonly TypeBinder<TableEntity>.BoundTypeInfo _info;
 
         public PocoToTableEntityConverter()
         {
-            _info = PocoTypeBinder.Shared.GetBinderInfo(typeof(TInput));
+            _info = typeof(ITableEntity).IsAssignableFrom(typeof(TInput)) ?
+              PocoTypeBinder.Shared.GetBinderInfo(typeof(TInput), typeof(ITableEntity)) :
+              PocoTypeBinder.Shared.GetBinderInfo(typeof(TInput));
             ValidateGetter("PartitionKey", PocoTypeBinder.PartitionKeyTypes);
             ValidateGetter("RowKey", PocoTypeBinder.RowKeyTypes);
             ValidateGetter("ETag", PocoTypeBinder.ETagTypes);

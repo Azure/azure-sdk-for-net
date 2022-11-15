@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="defaultState"> Describes the default state for the managed rule. </param>
         /// <param name="defaultAction"> Describes the default action to be applied when the managed rule matches. </param>
         /// <param name="description"> Describes the functionality of the managed rule. </param>
-        internal ManagedRuleDefinition(string ruleId, ManagedRuleEnabledState? defaultState, ActionType? defaultAction, string description)
+        internal ManagedRuleDefinition(string ruleId, ManagedRuleEnabledState? defaultState, RuleMatchActionType? defaultAction, string description)
         {
             RuleId = ruleId;
             DefaultState = defaultState;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> Describes the default state for the managed rule. </summary>
         public ManagedRuleEnabledState? DefaultState { get; }
         /// <summary> Describes the default action to be applied when the managed rule matches. </summary>
-        public ActionType? DefaultAction { get; }
+        public RuleMatchActionType? DefaultAction { get; }
         /// <summary> Describes the functionality of the managed rule. </summary>
         public string Description { get; }
     }

@@ -20,8 +20,15 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStringValue(Issuer);
             writer.WritePropertyName("audience");
             writer.WriteStringValue(Audience);
-            writer.WritePropertyName("primaryVerificationKey");
-            writer.WriteObjectValue(PrimaryVerificationKey);
+            if (PrimaryVerificationKey != null)
+            {
+                writer.WritePropertyName("primaryVerificationKey");
+                writer.WriteObjectValue(PrimaryVerificationKey);
+            }
+            else
+            {
+                writer.WriteNull("primaryVerificationKey");
+            }
             if (Optional.IsCollectionDefined(AlternateVerificationKeys))
             {
                 writer.WritePropertyName("alternateVerificationKeys");
@@ -78,6 +85,11 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 if (property.NameEquals("primaryVerificationKey"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        primaryVerificationKey = null;
+                        continue;
+                    }
                     primaryVerificationKey = ContentKeyPolicyRestrictionTokenKey.DeserializeContentKeyPolicyRestrictionTokenKey(property.Value);
                     continue;
                 }

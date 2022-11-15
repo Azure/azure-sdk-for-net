@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <exception cref="ArgumentNullException"> <paramref name="configurationFilters"/> is null. </exception>
         public ConfigurationsContent(IEnumerable<ConfigurationFilters> configurationFilters)
         {
-            if (configurationFilters == null)
-            {
-                throw new ArgumentNullException(nameof(configurationFilters));
-            }
+            Argument.AssertNotNull(configurationFilters, nameof(configurationFilters));
 
             ConfigurationFilters = configurationFilters.ToList();
         }

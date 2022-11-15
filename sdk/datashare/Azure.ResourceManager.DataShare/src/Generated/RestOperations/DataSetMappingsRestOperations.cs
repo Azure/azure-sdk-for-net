@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataShare
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="shareSubscriptionName"/> or <paramref name="dataSetMappingName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="shareSubscriptionName"/> or <paramref name="dataSetMappingName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DataSetMappingData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string shareSubscriptionName, string dataSetMappingName, CancellationToken cancellationToken = default)
+        public async Task<Response<ShareDataSetMappingData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string shareSubscriptionName, string dataSetMappingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -84,13 +84,13 @@ namespace Azure.ResourceManager.DataShare
             {
                 case 200:
                     {
-                        DataSetMappingData value = default;
+                        ShareDataSetMappingData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DataSetMappingData.DeserializeDataSetMappingData(document.RootElement);
+                        value = ShareDataSetMappingData.DeserializeShareDataSetMappingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DataSetMappingData)null, message.Response);
+                    return Response.FromValue((ShareDataSetMappingData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataShare
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="shareSubscriptionName"/> or <paramref name="dataSetMappingName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="shareSubscriptionName"/> or <paramref name="dataSetMappingName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DataSetMappingData> Get(string subscriptionId, string resourceGroupName, string accountName, string shareSubscriptionName, string dataSetMappingName, CancellationToken cancellationToken = default)
+        public Response<ShareDataSetMappingData> Get(string subscriptionId, string resourceGroupName, string accountName, string shareSubscriptionName, string dataSetMappingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -119,19 +119,19 @@ namespace Azure.ResourceManager.DataShare
             {
                 case 200:
                     {
-                        DataSetMappingData value = default;
+                        ShareDataSetMappingData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DataSetMappingData.DeserializeDataSetMappingData(document.RootElement);
+                        value = ShareDataSetMappingData.DeserializeShareDataSetMappingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DataSetMappingData)null, message.Response);
+                    return Response.FromValue((ShareDataSetMappingData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string accountName, string shareSubscriptionName, string dataSetMappingName, DataSetMappingData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string accountName, string shareSubscriptionName, string dataSetMappingName, ShareDataSetMappingData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DataShare
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="shareSubscriptionName"/>, <paramref name="dataSetMappingName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="shareSubscriptionName"/> or <paramref name="dataSetMappingName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DataSetMappingData>> CreateAsync(string subscriptionId, string resourceGroupName, string accountName, string shareSubscriptionName, string dataSetMappingName, DataSetMappingData data, CancellationToken cancellationToken = default)
+        public async Task<Response<ShareDataSetMappingData>> CreateAsync(string subscriptionId, string resourceGroupName, string accountName, string shareSubscriptionName, string dataSetMappingName, ShareDataSetMappingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -185,9 +185,9 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                 case 201:
                     {
-                        DataSetMappingData value = default;
+                        ShareDataSetMappingData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DataSetMappingData.DeserializeDataSetMappingData(document.RootElement);
+                        value = ShareDataSetMappingData.DeserializeShareDataSetMappingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.DataShare
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="shareSubscriptionName"/>, <paramref name="dataSetMappingName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="shareSubscriptionName"/> or <paramref name="dataSetMappingName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DataSetMappingData> Create(string subscriptionId, string resourceGroupName, string accountName, string shareSubscriptionName, string dataSetMappingName, DataSetMappingData data, CancellationToken cancellationToken = default)
+        public Response<ShareDataSetMappingData> Create(string subscriptionId, string resourceGroupName, string accountName, string shareSubscriptionName, string dataSetMappingName, ShareDataSetMappingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -221,9 +221,9 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                 case 201:
                     {
-                        DataSetMappingData value = default;
+                        ShareDataSetMappingData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DataSetMappingData.DeserializeDataSetMappingData(document.RootElement);
+                        value = ShareDataSetMappingData.DeserializeShareDataSetMappingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

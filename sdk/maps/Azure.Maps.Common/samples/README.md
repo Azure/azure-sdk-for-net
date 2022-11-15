@@ -1,9 +1,10 @@
-eng\scripts\CodeChecks.ps1 -ServiceDirectory maps---
+---
 page_type: sample
 languages:
 - csharp
 products:
 - azure
+- azure-maps
 name: Azure.Maps.Common samples for .NET
 description: Samples for the Azure.Maps.Common client library.
 ---

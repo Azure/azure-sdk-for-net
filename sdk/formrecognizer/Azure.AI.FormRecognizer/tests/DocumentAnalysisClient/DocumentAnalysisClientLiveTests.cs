@@ -261,7 +261,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.IsNotEmpty(document.DocumentType);
             Assert.AreEqual(2200, page.Height);
             Assert.AreEqual(1, page.PageNumber);
-            Assert.AreEqual(LengthUnit.Pixel, page.Unit);
+            Assert.AreEqual(DocumentPageLengthUnit.Pixel, page.Unit);
             Assert.AreEqual(1700, page.Width);
 
             Assert.IsNotNull(document.Fields);
@@ -304,7 +304,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var name = "AMEX_SELECTION_MARK";
             Assert.IsNotNull(document.Fields[name]);
             Assert.AreEqual(DocumentFieldType.SelectionMark, document.Fields[name].FieldType);
-            Assert.AreEqual(SelectionMarkState.Selected, document.Fields[name].Value.AsSelectionMarkState());
+            Assert.AreEqual(DocumentSelectionMarkState.Selected, document.Fields[name].Value.AsSelectionMarkState());
         }
 
         [RecordedTest]
@@ -438,10 +438,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var fields = result.Documents.Single().Fields;
 
             // Verify that we got back at least one missing field to make sure we hit the code path we want to test.
-            // The missing field is returned with its value set to null.
+            // The missing field is returned with its type set to Unknown.
 
             Assert.IsTrue(fields.Values.Any(field =>
-                field.FieldType == DocumentFieldType.String && field.Value.AsString() == null));
+                field.FieldType == DocumentFieldType.Unknown && field.ExpectedFieldType == DocumentFieldType.String));
         }
 
         [RecordedTest]
@@ -597,7 +597,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the form. We are not testing the service here, but the SDK.
 
-            Assert.AreEqual(LengthUnit.Pixel, page.Unit);
+            Assert.AreEqual(DocumentPageLengthUnit.Pixel, page.Unit);
             Assert.AreEqual(1700, page.Width);
             Assert.AreEqual(2200, page.Height);
             Assert.AreEqual(0, page.Angle);
@@ -1072,7 +1072,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the form. We are not testing the service here, but the SDK.
 
-            Assert.AreEqual(LengthUnit.Inch, page.Unit);
+            Assert.AreEqual(DocumentPageLengthUnit.Inch, page.Unit);
             Assert.AreEqual(8.5, page.Width);
             Assert.AreEqual(11, page.Height);
             Assert.AreEqual(0, page.Angle);
@@ -1259,7 +1259,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the form. We are not testing the service here, but the SDK.
 
-            Assert.AreEqual(LengthUnit.Inch, page.Unit);
+            Assert.AreEqual(DocumentPageLengthUnit.Inch, page.Unit);
             Assert.AreEqual(8.5, page.Width);
             Assert.AreEqual(11, page.Height);
             Assert.AreEqual(0, page.Angle);
@@ -1486,6 +1486,61 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.AreEqual(0, blankPage.Words.Count);
         }
 
+        #endregion
+
+        #region Other
+        [RecordedTest]
+        public async Task DocumentLineGetWordsExtractsAllWords()
+        {
+            var client = CreateDocumentAnalysisClient();
+            AnalyzeDocumentOperation operation;
+
+            using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.Form1);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", stream);
+            }
+
+            Assert.IsTrue(operation.HasValue);
+
+            AnalyzeResult result = operation.Value;
+
+            DocumentLine line = result.Pages[0].Lines[45];
+            IReadOnlyList<DocumentWord> words = line.GetWords();
+
+            Assert.AreEqual("Do not Jostle Box. Unpack carefully. Enjoy.", line.Content);
+            Assert.AreEqual(7, words.Count);
+            Assert.AreEqual("Do", words[0].Content);
+            Assert.AreEqual("not", words[1].Content);
+            Assert.AreEqual("Jostle", words[2].Content);
+            Assert.AreEqual("Box.", words[3].Content);
+            Assert.AreEqual("Unpack", words[4].Content);
+            Assert.AreEqual("carefully.", words[5].Content);
+            Assert.AreEqual("Enjoy.", words[6].Content);
+
+            line = result.Pages[0].Lines[46];
+            words = line.GetWords();
+
+            Assert.AreEqual("Jupiter Book Supply will refund you 50% per book if returned within 60 days of reading and", line.Content);
+            Assert.AreEqual(17, words.Count);
+            Assert.AreEqual("Jupiter", words[0].Content);
+            Assert.AreEqual("Book", words[1].Content);
+            Assert.AreEqual("Supply", words[2].Content);
+            Assert.AreEqual("will", words[3].Content);
+            Assert.AreEqual("refund", words[4].Content);
+            Assert.AreEqual("you", words[5].Content);
+            Assert.AreEqual("50%", words[6].Content);
+            Assert.AreEqual("per", words[7].Content);
+            Assert.AreEqual("book", words[8].Content);
+            Assert.AreEqual("if", words[9].Content);
+            Assert.AreEqual("returned", words[10].Content);
+            Assert.AreEqual("within", words[11].Content);
+            Assert.AreEqual("60", words[12].Content);
+            Assert.AreEqual("days", words[13].Content);
+            Assert.AreEqual("of", words[14].Content);
+            Assert.AreEqual("reading", words[15].Content);
+            Assert.AreEqual("and", words[16].Content);
+        }
         #endregion
 
         #region Common
@@ -1777,6 +1832,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 Assert.AreEqual(4, line.BoundingPolygon.Count);
             }
 
+            ValidateSpanListsAreSortedAndDontOverlap(page.Lines.Select(l => l.Spans).ToList());
+
             Assert.NotNull(page.Words);
 
             foreach (DocumentWord word in page.Words)
@@ -1787,6 +1844,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 Assert.That(word.Confidence, Is.GreaterThanOrEqualTo(0.0).Within(0.01));
                 Assert.That(word.Confidence, Is.LessThanOrEqualTo(1.0).Within(0.01));
             }
+
+            ValidateSpansAreSortedAndDontOverlap(page.Words.Select(w => w.Span).ToList());
 
             Assert.NotNull(page.SelectionMarks);
 
@@ -1822,6 +1881,36 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 Assert.GreaterOrEqual(cell.ColumnSpan, 1);
                 Assert.GreaterOrEqual(cell.RowSpan, 1);
                 Assert.NotNull(cell.Content);
+            }
+        }
+
+        private void ValidateSpansAreSortedAndDontOverlap(IReadOnlyList<DocumentSpan> spans)
+        {
+            for (int i = 0; i < spans.Count - 1; i++)
+            {
+                Assert.GreaterOrEqual(spans[i + 1].Index, spans[i].Index + spans[i].Length);
+            }
+        }
+
+        private void ValidateSpanListsAreSortedAndDontOverlap(IReadOnlyList<IReadOnlyList<DocumentSpan>> spanLists)
+        {
+            for (int i = 0; i < spanLists.Count - 1; i++)
+            {
+                IReadOnlyList<DocumentSpan> currentSpans = spanLists[i];
+                IReadOnlyList<DocumentSpan> nextSpans = spanLists[i + 1];
+
+                ValidateSpansAreSortedAndDontOverlap(currentSpans);
+
+                DocumentSpan lastCurrentSpan = currentSpans.Last();
+                DocumentSpan firstNextSpan = nextSpans.First();
+
+                Assert.GreaterOrEqual(firstNextSpan.Index, lastCurrentSpan.Index + lastCurrentSpan.Length);
+            }
+
+            // Could be empty if document page contained no lines, for example.
+            if (spanLists.Count > 0)
+            {
+                ValidateSpansAreSortedAndDontOverlap(spanLists.Last());
             }
         }
 

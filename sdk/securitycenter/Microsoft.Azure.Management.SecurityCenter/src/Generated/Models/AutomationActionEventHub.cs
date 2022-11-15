@@ -15,8 +15,8 @@ namespace Microsoft.Azure.Management.Security.Models
 
     /// <summary>
     /// The target Event Hub to which event data will be exported. To learn
-    /// more about Security Center continuous export capabilities, visit
-    /// https://aka.ms/ASCExportLearnMore
+    /// more about Microsoft Defender for Cloud continuous export capabilities,
+    /// visit https://aka.ms/ASCExportLearnMore
     /// </summary>
     [Newtonsoft.Json.JsonObject("EventHub")]
     public partial class AutomationActionEventHub : AutomationAction

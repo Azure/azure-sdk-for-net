@@ -21,10 +21,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="aggregations"/> is null. </exception>
         internal TimelineResultsMetadata(int totalCount, IEnumerable<TimelineAggregation> aggregations)
         {
-            if (aggregations == null)
-            {
-                throw new ArgumentNullException(nameof(aggregations));
-            }
+            Argument.AssertNotNull(aggregations, nameof(aggregations));
 
             TotalCount = totalCount;
             Aggregations = aggregations.ToList();

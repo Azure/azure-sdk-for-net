@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Kusto.Models
     {
         internal static DatabasePrincipalAssignmentListResult DeserializeDatabasePrincipalAssignmentListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<DatabasePrincipalAssignmentData>> value = default;
+            Optional<IReadOnlyList<KustoDatabasePrincipalAssignmentData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Kusto.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DatabasePrincipalAssignmentData> array = new List<DatabasePrincipalAssignmentData>();
+                    List<KustoDatabasePrincipalAssignmentData> array = new List<KustoDatabasePrincipalAssignmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatabasePrincipalAssignmentData.DeserializeDatabasePrincipalAssignmentData(item));
+                        array.Add(KustoDatabasePrincipalAssignmentData.DeserializeKustoDatabasePrincipalAssignmentData(item));
                     }
                     value = array;
                     continue;

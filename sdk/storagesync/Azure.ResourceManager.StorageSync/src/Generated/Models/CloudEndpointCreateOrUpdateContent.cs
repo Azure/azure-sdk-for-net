@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="azureFileShareName"> Azure file share name. </param>
         /// <param name="storageAccountTenantId"> Storage Account Tenant Id. </param>
         /// <param name="friendlyName"> Friendly Name. </param>
-        internal CloudEndpointCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string storageAccountResourceId, string azureFileShareName, string storageAccountTenantId, string friendlyName) : base(id, name, resourceType, systemData)
+        internal CloudEndpointCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier storageAccountResourceId, string azureFileShareName, Guid? storageAccountTenantId, string friendlyName) : base(id, name, resourceType, systemData)
         {
             StorageAccountResourceId = storageAccountResourceId;
             AzureFileShareName = azureFileShareName;
@@ -36,11 +37,11 @@ namespace Azure.ResourceManager.StorageSync.Models
         }
 
         /// <summary> Storage Account Resource Id. </summary>
-        public string StorageAccountResourceId { get; set; }
+        public ResourceIdentifier StorageAccountResourceId { get; set; }
         /// <summary> Azure file share name. </summary>
         public string AzureFileShareName { get; set; }
         /// <summary> Storage Account Tenant Id. </summary>
-        public string StorageAccountTenantId { get; set; }
+        public Guid? StorageAccountTenantId { get; set; }
         /// <summary> Friendly Name. </summary>
         public string FriendlyName { get; set; }
     }

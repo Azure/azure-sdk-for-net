@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="eventSubscriptionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<EventSubscriptionData>> GetAsync(string scope, string eventSubscriptionName, CancellationToken cancellationToken = default)
+        public async Task<Response<EventGridSubscriptionData>> GetAsync(string scope, string eventSubscriptionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
@@ -72,13 +72,13 @@ namespace Azure.ResourceManager.EventGrid
             {
                 case 200:
                     {
-                        EventSubscriptionData value = default;
+                        EventGridSubscriptionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EventSubscriptionData.DeserializeEventSubscriptionData(document.RootElement);
+                        value = EventGridSubscriptionData.DeserializeEventGridSubscriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((EventSubscriptionData)null, message.Response);
+                    return Response.FromValue((EventGridSubscriptionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="eventSubscriptionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<EventSubscriptionData> Get(string scope, string eventSubscriptionName, CancellationToken cancellationToken = default)
+        public Response<EventGridSubscriptionData> Get(string scope, string eventSubscriptionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
@@ -101,19 +101,19 @@ namespace Azure.ResourceManager.EventGrid
             {
                 case 200:
                     {
-                        EventSubscriptionData value = default;
+                        EventGridSubscriptionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EventSubscriptionData.DeserializeEventSubscriptionData(document.RootElement);
+                        value = EventGridSubscriptionData.DeserializeEventGridSubscriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((EventSubscriptionData)null, message.Response);
+                    return Response.FromValue((EventGridSubscriptionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string scope, string eventSubscriptionName, EventSubscriptionData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string scope, string eventSubscriptionName, EventGridSubscriptionData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="eventSubscriptionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string scope, string eventSubscriptionName, EventSubscriptionData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string scope, string eventSubscriptionName, EventGridSubscriptionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="eventSubscriptionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string scope, string eventSubscriptionName, EventSubscriptionData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string scope, string eventSubscriptionName, EventGridSubscriptionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.EventGrid
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string scope, string eventSubscriptionName, EventSubscriptionUpdateParameters eventSubscriptionUpdateParameters)
+        internal HttpMessage CreateUpdateRequest(string scope, string eventSubscriptionName, EventGridSubscriptionPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.EventGrid
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(eventSubscriptionUpdateParameters);
+            content.JsonWriter.WriteObjectValue(patch);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -273,17 +273,17 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> Asynchronously updates an existing event subscription. </summary>
         /// <param name="scope"> The scope of existing event subscription. The scope can be a subscription, or a resource group, or a top level resource belonging to a resource provider namespace, or an EventGrid topic. For example, use &apos;/subscriptions/{subscriptionId}/&apos; for a subscription, &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}&apos; for a resource group, and &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}&apos; for a resource, and &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/topics/{topicName}&apos; for an EventGrid topic. </param>
         /// <param name="eventSubscriptionName"> Name of the event subscription to be updated. </param>
-        /// <param name="eventSubscriptionUpdateParameters"> Updated event subscription information. </param>
+        /// <param name="patch"> Updated event subscription information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="eventSubscriptionName"/> or <paramref name="eventSubscriptionUpdateParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="eventSubscriptionName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string scope, string eventSubscriptionName, EventSubscriptionUpdateParameters eventSubscriptionUpdateParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string scope, string eventSubscriptionName, EventGridSubscriptionPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
-            Argument.AssertNotNull(eventSubscriptionUpdateParameters, nameof(eventSubscriptionUpdateParameters));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(scope, eventSubscriptionName, eventSubscriptionUpdateParameters);
+            using var message = CreateUpdateRequest(scope, eventSubscriptionName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -297,17 +297,17 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> Asynchronously updates an existing event subscription. </summary>
         /// <param name="scope"> The scope of existing event subscription. The scope can be a subscription, or a resource group, or a top level resource belonging to a resource provider namespace, or an EventGrid topic. For example, use &apos;/subscriptions/{subscriptionId}/&apos; for a subscription, &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}&apos; for a resource group, and &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}&apos; for a resource, and &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/topics/{topicName}&apos; for an EventGrid topic. </param>
         /// <param name="eventSubscriptionName"> Name of the event subscription to be updated. </param>
-        /// <param name="eventSubscriptionUpdateParameters"> Updated event subscription information. </param>
+        /// <param name="patch"> Updated event subscription information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="eventSubscriptionName"/> or <paramref name="eventSubscriptionUpdateParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="eventSubscriptionName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string scope, string eventSubscriptionName, EventSubscriptionUpdateParameters eventSubscriptionUpdateParameters, CancellationToken cancellationToken = default)
+        public Response Update(string scope, string eventSubscriptionName, EventGridSubscriptionPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
-            Argument.AssertNotNull(eventSubscriptionUpdateParameters, nameof(eventSubscriptionUpdateParameters));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(scope, eventSubscriptionName, eventSubscriptionUpdateParameters);
+            using var message = CreateUpdateRequest(scope, eventSubscriptionName, patch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.EventGrid
             }
         }
 
-        internal HttpMessage CreateGetFullUrlRequest(string scope, string eventSubscriptionName)
+        internal HttpMessage CreateGetFullUriRequest(string scope, string eventSubscriptionName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -343,12 +343,12 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="eventSubscriptionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<EventSubscriptionFullUri>> GetFullUrlAsync(string scope, string eventSubscriptionName, CancellationToken cancellationToken = default)
+        public async Task<Response<EventSubscriptionFullUri>> GetFullUriAsync(string scope, string eventSubscriptionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
 
-            using var message = CreateGetFullUrlRequest(scope, eventSubscriptionName);
+            using var message = CreateGetFullUriRequest(scope, eventSubscriptionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -370,12 +370,12 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="eventSubscriptionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<EventSubscriptionFullUri> GetFullUrl(string scope, string eventSubscriptionName, CancellationToken cancellationToken = default)
+        public Response<EventSubscriptionFullUri> GetFullUri(string scope, string eventSubscriptionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
 
-            using var message = CreateGetFullUrlRequest(scope, eventSubscriptionName);
+            using var message = CreateGetFullUriRequest(scope, eventSubscriptionName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

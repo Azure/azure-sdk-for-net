@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Avs.Models;
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="description"> Description of the scripts functionality. </param>
         /// <param name="timeout"> Recommended time limit for execution. </param>
         /// <param name="parameters"> Parameters the script will accept. </param>
-        internal ScriptCmdletData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string timeout, IReadOnlyList<ScriptParameter> parameters) : base(id, name, resourceType, systemData)
+        internal ScriptCmdletData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, TimeSpan? timeout, IReadOnlyList<ScriptParameter> parameters) : base(id, name, resourceType, systemData)
         {
             Description = description;
             Timeout = timeout;
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.Avs
         /// <summary> Description of the scripts functionality. </summary>
         public string Description { get; }
         /// <summary> Recommended time limit for execution. </summary>
-        public string Timeout { get; }
+        public TimeSpan? Timeout { get; }
         /// <summary> Parameters the script will accept. </summary>
         public IReadOnlyList<ScriptParameter> Parameters { get; }
     }

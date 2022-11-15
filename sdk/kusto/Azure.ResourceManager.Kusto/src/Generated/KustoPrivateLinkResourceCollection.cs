@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Kusto
 {
     /// <summary>
     /// A class representing a collection of <see cref="KustoPrivateLinkResource" /> and their operations.
-    /// Each <see cref="KustoPrivateLinkResource" /> in the collection will belong to the same instance of <see cref="ClusterResource" />.
-    /// To get a <see cref="KustoPrivateLinkResourceCollection" /> instance call the GetKustoPrivateLinkResources method from an instance of <see cref="ClusterResource" />.
+    /// Each <see cref="KustoPrivateLinkResource" /> in the collection will belong to the same instance of <see cref="KustoClusterResource" />.
+    /// To get a <see cref="KustoPrivateLinkResourceCollection" /> instance call the GetKustoPrivateLinkResources method from an instance of <see cref="KustoClusterResource" />.
     /// </summary>
     public partial class KustoPrivateLinkResourceCollection : ArmCollection, IEnumerable<KustoPrivateLinkResource>, IAsyncEnumerable<KustoPrivateLinkResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Kusto
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ClusterResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ClusterResource.ResourceType), nameof(id));
+            if (id.ResourceType != KustoClusterResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, KustoClusterResource.ResourceType), nameof(id));
         }
 
         /// <summary>

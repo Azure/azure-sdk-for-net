@@ -18,28 +18,17 @@ namespace Azure.ResourceManager.DataBoxEdge
     public partial class BandwidthScheduleData : ResourceData
     {
         /// <summary> Initializes a new instance of BandwidthScheduleData. </summary>
-        /// <param name="start"> The start time of the schedule in UTC. </param>
-        /// <param name="stop"> The stop time of the schedule in UTC. </param>
+        /// <param name="startOn"> The start time of the schedule in UTC. </param>
+        /// <param name="stopOn"> The stop time of the schedule in UTC. </param>
         /// <param name="rateInMbps"> The bandwidth rate in Mbps. </param>
         /// <param name="days"> The days of the week when this schedule is applicable. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="start"/>, <paramref name="stop"/> or <paramref name="days"/> is null. </exception>
-        public BandwidthScheduleData(string start, string stop, int rateInMbps, IEnumerable<Models.DayOfWeek> days)
+        /// <exception cref="ArgumentNullException"> <paramref name="days"/> is null. </exception>
+        public BandwidthScheduleData(TimeSpan startOn, TimeSpan stopOn, int rateInMbps, IEnumerable<DataBoxEdgeDayOfWeek> days)
         {
-            if (start == null)
-            {
-                throw new ArgumentNullException(nameof(start));
-            }
-            if (stop == null)
-            {
-                throw new ArgumentNullException(nameof(stop));
-            }
-            if (days == null)
-            {
-                throw new ArgumentNullException(nameof(days));
-            }
+            Argument.AssertNotNull(days, nameof(days));
 
-            Start = start;
-            Stop = stop;
+            StartOn = startOn;
+            StopOn = stopOn;
             RateInMbps = rateInMbps;
             Days = days.ToList();
         }
@@ -49,25 +38,25 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="start"> The start time of the schedule in UTC. </param>
-        /// <param name="stop"> The stop time of the schedule in UTC. </param>
+        /// <param name="startOn"> The start time of the schedule in UTC. </param>
+        /// <param name="stopOn"> The stop time of the schedule in UTC. </param>
         /// <param name="rateInMbps"> The bandwidth rate in Mbps. </param>
         /// <param name="days"> The days of the week when this schedule is applicable. </param>
-        internal BandwidthScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string start, string stop, int rateInMbps, IList<Models.DayOfWeek> days) : base(id, name, resourceType, systemData)
+        internal BandwidthScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TimeSpan startOn, TimeSpan stopOn, int rateInMbps, IList<DataBoxEdgeDayOfWeek> days) : base(id, name, resourceType, systemData)
         {
-            Start = start;
-            Stop = stop;
+            StartOn = startOn;
+            StopOn = stopOn;
             RateInMbps = rateInMbps;
             Days = days;
         }
 
         /// <summary> The start time of the schedule in UTC. </summary>
-        public string Start { get; set; }
+        public TimeSpan StartOn { get; set; }
         /// <summary> The stop time of the schedule in UTC. </summary>
-        public string Stop { get; set; }
+        public TimeSpan StopOn { get; set; }
         /// <summary> The bandwidth rate in Mbps. </summary>
         public int RateInMbps { get; set; }
         /// <summary> The days of the week when this schedule is applicable. </summary>
-        public IList<Models.DayOfWeek> Days { get; }
+        public IList<DataBoxEdgeDayOfWeek> Days { get; }
     }
 }

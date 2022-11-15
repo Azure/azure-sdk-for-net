@@ -1,24 +1,24 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://adu-sdk-testing.api.adu.microsoft.com/deviceUpdate/sdkinstance/management/devices?api-version=2022-07-01-preview",
+      "RequestUri": "https://adu-sdk-testing.api.adu.microsoft.com/deviceUpdate/sdkinstance/management/devices?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-c667986211b1e945849d310f0f4feb6e-c44c6af81f8f394a-00",
-        "User-Agent": "azsdk-net-IoT.DeviceUpdate/1.0.0-alpha.20220701.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "d2bc905817f2c20bef292c2edb7a16a3",
+        "traceparent": "00-ddd17874850d77478b8189a660db0410-27712fb1a98a9147-00",
+        "User-Agent": "azsdk-net-IoT.DeviceUpdate/1.0.0-alpha.20220901.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "13e3cdbd83d64eff3fb14dbb63f3ca1e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "1161",
+        "Content-Length": "1163",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 01 Jul 2022 21:47:59 GMT",
-        "mise-correlation-id": "c9c12d2a-4a60-4393-b83c-f499e6c4eaf0",
-        "traceparent": "00-c667986211b1e945849d310f0f4feb6e-c44c6af81f8f394a-00"
+        "Date": "Thu, 01 Sep 2022 20:25:52 GMT",
+        "mise-correlation-id": "765ae8e8-e3be-414d-9b94-527120ef7a47",
+        "traceparent": "00-ddd17874850d77478b8189a660db0410-27712fb1a98a9147-00"
       },
       "ResponseBody": {
         "value": [
@@ -70,14 +70,14 @@
               "updateId": {
                 "provider": "fabrikam",
                 "name": "vacuum",
-                "version": "2022.608.554.1"
+                "version": "2022.809.1238.32"
               }
             },
             "deploymentStatus": "Failed",
-            "lastDeploymentId": "test0609070108",
+            "lastDeploymentId": "test0809074302",
             "lastInstallResult": {
               "resultCode": 0,
-              "extendedResultCode": 805306371,
+              "extendedResultCode": 805306472,
               "resultDetails": ""
             }
           }
@@ -86,8 +86,9 @@
     }
   ],
   "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "DEVICEUPDATE_ACCOUNT_ENDPOINT": "adu-sdk-testing.api.adu.microsoft.com",
     "DEVICEUPDATE_INSTANCE_ID": "sdkinstance",
-    "RandomSeed": "1654190939"
+    "RandomSeed": "82638469"
   }
 }

@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.Avs
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-12-01";
+            _apiVersion = apiVersion ?? "2022-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCheckTrialAvailabilityRequest(string subscriptionId, AzureLocation location)
+        internal HttpMessage CreateCheckTrialAvailabilityRequest(string subscriptionId, AzureLocation location, AvsSku sku)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -52,6 +52,13 @@ namespace Azure.ResourceManager.Avs
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            if (sku != null)
+            {
+                request.Headers.Add("Content-Type", "application/json");
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(sku);
+                request.Content = content;
+            }
             _userAgent.Apply(message);
             return message;
         }
@@ -59,22 +66,23 @@ namespace Azure.ResourceManager.Avs
         /// <summary> Return trial status for subscription by region. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="location"> Azure region. </param>
+        /// <param name="sku"> The sku to check for trial availability. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Trial>> CheckTrialAvailabilityAsync(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
+        public async Task<Response<AvsSubscriptionTrialAvailabilityResult>> CheckTrialAvailabilityAsync(string subscriptionId, AzureLocation location, AvsSku sku = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateCheckTrialAvailabilityRequest(subscriptionId, location);
+            using var message = CreateCheckTrialAvailabilityRequest(subscriptionId, location, sku);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        Trial value = default;
+                        AvsSubscriptionTrialAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Trial.DeserializeTrial(document.RootElement);
+                        value = AvsSubscriptionTrialAvailabilityResult.DeserializeAvsSubscriptionTrialAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -85,22 +93,23 @@ namespace Azure.ResourceManager.Avs
         /// <summary> Return trial status for subscription by region. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="location"> Azure region. </param>
+        /// <param name="sku"> The sku to check for trial availability. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Trial> CheckTrialAvailability(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
+        public Response<AvsSubscriptionTrialAvailabilityResult> CheckTrialAvailability(string subscriptionId, AzureLocation location, AvsSku sku = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateCheckTrialAvailabilityRequest(subscriptionId, location);
+            using var message = CreateCheckTrialAvailabilityRequest(subscriptionId, location, sku);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        Trial value = default;
+                        AvsSubscriptionTrialAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Trial.DeserializeTrial(document.RootElement);
+                        value = AvsSubscriptionTrialAvailabilityResult.DeserializeAvsSubscriptionTrialAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -133,7 +142,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Quota>> CheckQuotaAvailabilityAsync(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
+        public async Task<Response<AvsSubscriptionQuotaAvailabilityResult>> CheckQuotaAvailabilityAsync(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -143,9 +152,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        Quota value = default;
+                        AvsSubscriptionQuotaAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Quota.DeserializeQuota(document.RootElement);
+                        value = AvsSubscriptionQuotaAvailabilityResult.DeserializeAvsSubscriptionQuotaAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -159,7 +168,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Quota> CheckQuotaAvailability(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
+        public Response<AvsSubscriptionQuotaAvailabilityResult> CheckQuotaAvailability(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -169,9 +178,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        Quota value = default;
+                        AvsSubscriptionQuotaAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Quota.DeserializeQuota(document.RootElement);
+                        value = AvsSubscriptionQuotaAvailabilityResult.DeserializeAvsSubscriptionQuotaAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

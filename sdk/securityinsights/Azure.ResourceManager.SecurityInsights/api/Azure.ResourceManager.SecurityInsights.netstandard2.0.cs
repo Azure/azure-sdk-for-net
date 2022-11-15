@@ -2417,9 +2417,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public EntityQueryCreateOrUpdateContent() { }
         public Azure.ETag? ETag { get { throw null; } set { } }
     }
-    public partial class EntityQueryItem : Azure.ResourceManager.Models.ResourceData
+    public abstract partial class EntityQueryItem : Azure.ResourceManager.Models.ResourceData
     {
-        internal EntityQueryItem() { }
+        protected EntityQueryItem() { }
     }
     public partial class EntityQueryItemProperties
     {

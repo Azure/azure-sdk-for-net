@@ -65,9 +65,9 @@ namespace Azure.AI.TextAnalytics.Tests
         };
 
         [RecordedTest]
-        public async Task RecognizeCustomEntitiesWithADDTest()
+        public async Task RecognizeCustomEntitiesWithAADTest()
         {
-            TextAnalyticsClient client = GetClient(useTokenCredential: true);
+            TextAnalyticsClient client = GetClient(useTokenCredential: true, useStaticResource: true);
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
@@ -91,7 +91,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [RecordedTest]
         public async Task RecognizeCustomEntitiesTest()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
@@ -115,7 +115,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [RecordedTest]
         public async Task RecognizeCustomEntitiesWithLanguageTest()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
@@ -144,7 +144,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [RecordedTest]
         public async Task RecognizeCustomEntitiesBatchWithErrorTest()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
             var documents = new List<string>
             {
                 "Microsoft was founded by Bill Gates and Paul Allen.",
@@ -179,7 +179,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [RecordedTest]
         public async Task RecognizeCustomEntitiesBatchConvenienceTest()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
                 RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>()
@@ -207,7 +207,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [RecordedTest]
         public async Task RecognizeCustomEntitiesBatchTest()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
                 RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>()
@@ -235,7 +235,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [RecordedTest]
         public void RecognizeCustomEntitiesBatchWithNullIdTest()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
             var documents = new List<TextDocumentInput> { new TextDocumentInput(null, "Hello world") };
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
@@ -254,7 +254,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [Ignore("Issue https://github.com/Azure/azure-sdk-for-net/issues/25152")]
         public async Task RecognizeCustomEntitiesWithMultipleActions()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
@@ -291,11 +291,36 @@ namespace Azure.AI.TextAnalytics.Tests
         [RecordedTest]
         public async Task StartRecognizeCustomEntities()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
             RecognizeCustomEntitiesOperation operation = await client.StartRecognizeCustomEntitiesAsync(s_batchDocuments, TestEnvironment.RecognizeCustomEntitiesProjectName, TestEnvironment.RecognizeCustomEntitiesDeploymentName);
 
             await PollUntilTimeout(operation);
             Assert.IsTrue(operation.HasCompleted);
+
+            // Take the first page.
+            RecognizeCustomEntitiesResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+
+            var expectedOutput = new Dictionary<string, List<string>>()
+            {
+                { "1", e_document1ExpectedOutput },
+                { "2", s_document1ExpectedOutput },
+            };
+
+            ValidateBatchDocumentsResult(resultCollection, expectedOutput);
+        }
+
+        [RecordedTest]
+        public async Task StartRecognizeCustomEntitiesWithName()
+        {
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
+            RecognizeCustomEntitiesOperation operation = await client.StartRecognizeCustomEntitiesAsync(s_batchDocuments, TestEnvironment.RecognizeCustomEntitiesProjectName, TestEnvironment.RecognizeCustomEntitiesDeploymentName, new RecognizeCustomEntitiesOptions
+            {
+                DisplayName = "StartRecognizeCustomEntitiesWithName",
+            });
+
+            await PollUntilTimeout(operation);
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.AreEqual("StartRecognizeCustomEntitiesWithName", operation.DisplayName);
 
             // Take the first page.
             RecognizeCustomEntitiesResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
@@ -334,6 +359,8 @@ namespace Azure.AI.TextAnalytics.Tests
                 {
                     Assert.IsNotEmpty(entity.SubCategory);
                 }
+
+                Assert.IsNotNull(entity.Resolutions);
             }
         }
 

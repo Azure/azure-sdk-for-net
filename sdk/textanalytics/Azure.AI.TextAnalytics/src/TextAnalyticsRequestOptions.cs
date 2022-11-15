@@ -9,7 +9,7 @@ namespace Azure.AI.TextAnalytics
     /// <para>For example, set model version, whether to include statistics,
     /// and more.</para>
     /// </summary>
-    public class TextAnalyticsRequestOptions
+    public class TextAnalyticsRequestOptions : IModelValidator
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TextAnalyticsRequestOptions"/>
@@ -18,12 +18,6 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         public TextAnalyticsRequestOptions()
         {
-        }
-
-        internal TextAnalyticsRequestOptions(bool includeStatistics, string modelVersion)
-        {
-            IncludeStatistics = includeStatistics;
-            ModelVersion = modelVersion;
         }
 
         /// <summary>
@@ -52,8 +46,19 @@ namespace Azure.AI.TextAnalytics
         /// </para>
         /// </summary>
         /// <remarks>
-        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and up.
+        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and newer.
         /// </remarks>
         public bool? DisableServiceLogs { get; set; }
+
+        /// <summary>
+        /// Checks that the specified <see cref="TextAnalyticsClientOptions.ServiceVersion"/> supports all properties set within this model.
+        /// </summary>
+        /// <param name="current">The current <see cref="TextAnalyticsClientOptions.ServiceVersion"/> used by the <see cref="TextAnalyticsClient"/>.</param>
+        internal virtual void CheckSupported(TextAnalyticsClientOptions.ServiceVersion current)
+        {
+            Validation.SupportsProperty(this, DisableServiceLogs, nameof(DisableServiceLogs), TextAnalyticsClientOptions.ServiceVersion.V3_1, current);
+        }
+
+        void IModelValidator.CheckSupported(TextAnalyticsClientOptions.ServiceVersion current) => CheckSupported(current);
     }
 }

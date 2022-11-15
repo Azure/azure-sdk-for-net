@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.EventGrid
 {
     /// <summary>
     /// A class representing a collection of <see cref="DomainEventSubscriptionResource" /> and their operations.
-    /// Each <see cref="DomainEventSubscriptionResource" /> in the collection will belong to the same instance of <see cref="DomainResource" />.
-    /// To get a <see cref="DomainEventSubscriptionCollection" /> instance call the GetDomainEventSubscriptions method from an instance of <see cref="DomainResource" />.
+    /// Each <see cref="DomainEventSubscriptionResource" /> in the collection will belong to the same instance of <see cref="EventGridDomainResource" />.
+    /// To get a <see cref="DomainEventSubscriptionCollection" /> instance call the GetDomainEventSubscriptions method from an instance of <see cref="EventGridDomainResource" />.
     /// </summary>
     public partial class DomainEventSubscriptionCollection : ArmCollection, IEnumerable<DomainEventSubscriptionResource>, IAsyncEnumerable<DomainEventSubscriptionResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.EventGrid
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != DomainResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DomainResource.ResourceType), nameof(id));
+            if (id.ResourceType != EventGridDomainResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, EventGridDomainResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<DomainEventSubscriptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string eventSubscriptionName, EventSubscriptionData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DomainEventSubscriptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string eventSubscriptionName, EventGridSubscriptionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
             Argument.AssertNotNull(data, nameof(data));
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<DomainEventSubscriptionResource> CreateOrUpdate(WaitUntil waitUntil, string eventSubscriptionName, EventSubscriptionData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DomainEventSubscriptionResource> CreateOrUpdate(WaitUntil waitUntil, string eventSubscriptionName, EventGridSubscriptionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
             Argument.AssertNotNull(data, nameof(data));

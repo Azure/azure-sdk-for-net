@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager.DataShare;
 using Azure.ResourceManager.Models;
@@ -12,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DataShare.Models
 {
     /// <summary> A SQL DB table data set. </summary>
-    public partial class SqlDBTableDataSet : DataSetData
+    public partial class SqlDBTableDataSet : ShareDataSetData
     {
         /// <summary> Initializes a new instance of SqlDBTableDataSet. </summary>
         public SqlDBTableDataSet()
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="schemaName"> Schema of the table. Default value is dbo. </param>
         /// <param name="sqlServerResourceId"> Resource id of SQL server. </param>
         /// <param name="tableName"> SQL DB table name. </param>
-        internal SqlDBTableDataSet(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetKind kind, string databaseName, string dataSetId, string schemaName, string sqlServerResourceId, string tableName) : base(id, name, resourceType, systemData, kind)
+        internal SqlDBTableDataSet(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetKind kind, string databaseName, Guid? dataSetId, string schemaName, ResourceIdentifier sqlServerResourceId, string tableName) : base(id, name, resourceType, systemData, kind)
         {
             DatabaseName = databaseName;
             DataSetId = dataSetId;
@@ -44,11 +45,11 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <summary> Database name of the source data set. </summary>
         public string DatabaseName { get; set; }
         /// <summary> Unique id for identifying a data set resource. </summary>
-        public string DataSetId { get; }
+        public Guid? DataSetId { get; }
         /// <summary> Schema of the table. Default value is dbo. </summary>
         public string SchemaName { get; set; }
         /// <summary> Resource id of SQL server. </summary>
-        public string SqlServerResourceId { get; set; }
+        public ResourceIdentifier SqlServerResourceId { get; set; }
         /// <summary> SQL DB table name. </summary>
         public string TableName { get; set; }
     }

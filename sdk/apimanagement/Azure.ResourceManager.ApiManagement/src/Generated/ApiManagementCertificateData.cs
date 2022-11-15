@@ -27,16 +27,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="systemData"> The systemData. </param>
         /// <param name="subject"> Subject attribute of the certificate. </param>
         /// <param name="thumbprint"> Thumbprint of the certificate. </param>
-        /// <param name="expiresOn">
+        /// <param name="expireOn">
         /// Expiration date of the certificate. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
         /// 
         /// </param>
         /// <param name="keyVaultDetails"> KeyVault location details of the certificate. </param>
-        internal ApiManagementCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string subject, string thumbprint, DateTimeOffset? expiresOn, KeyVaultContractProperties keyVaultDetails) : base(id, name, resourceType, systemData)
+        internal ApiManagementCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string subject, string thumbprint, DateTimeOffset? expireOn, KeyVaultContractProperties keyVaultDetails) : base(id, name, resourceType, systemData)
         {
             Subject = subject;
             Thumbprint = thumbprint;
-            ExpiresOn = expiresOn;
+            ExpireOn = expireOn;
             KeyVaultDetails = keyVaultDetails;
         }
 
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// Expiration date of the certificate. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
         /// 
         /// </summary>
-        public DateTimeOffset? ExpiresOn { get; set; }
+        public DateTimeOffset? ExpireOn { get; set; }
         /// <summary> KeyVault location details of the certificate. </summary>
         public KeyVaultContractProperties KeyVaultDetails { get; set; }
     }

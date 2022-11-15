@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<SystemData> systemData = default;
             Optional<AuthPlatform> platform = default;
             Optional<GlobalValidation> globalValidation = default;
-            Optional<IdentityProviders> identityProviders = default;
-            Optional<LoginInformation> login = default;
-            Optional<HttpSettings> httpSettings = default;
+            Optional<AppServiceIdentityProviders> identityProviders = default;
+            Optional<WebAppLoginInfo> login = default;
+            Optional<AppServiceHttpSettings> httpSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            identityProviders = IdentityProviders.DeserializeIdentityProviders(property0.Value);
+                            identityProviders = AppServiceIdentityProviders.DeserializeAppServiceIdentityProviders(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("login"))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            login = LoginInformation.DeserializeLoginInformation(property0.Value);
+                            login = WebAppLoginInfo.DeserializeWebAppLoginInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("httpSettings"))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            httpSettings = HttpSettings.DeserializeHttpSettings(property0.Value);
+                            httpSettings = AppServiceHttpSettings.DeserializeAppServiceHttpSettings(property0.Value);
                             continue;
                         }
                     }

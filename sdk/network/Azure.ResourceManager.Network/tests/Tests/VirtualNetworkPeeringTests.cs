@@ -13,11 +13,13 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
 {
+    [ClientTestFixture(true, "2021-04-01", "2018-11-01")]
     public class VirtualNetworkPeeringTests : NetworkServiceClientTestBase
     {
         private SubscriptionResource _subscription;
 
-        public VirtualNetworkPeeringTests(bool isAsync) : base(isAsync)
+        public VirtualNetworkPeeringTests(bool isAsync, string apiVersion)
+        : base(isAsync, VirtualNetworkPeeringResource.ResourceType, apiVersion)
         {
         }
 

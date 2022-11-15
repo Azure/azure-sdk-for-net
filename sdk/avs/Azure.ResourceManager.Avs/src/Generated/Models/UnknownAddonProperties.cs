@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary> The UnknownAddonProperties. </summary>
-    internal partial class UnknownAddonProperties : AddonProperties
+    internal partial class UnknownAddonProperties : AvsPrivateCloudAddonProperties
     {
         /// <summary> Initializes a new instance of UnknownAddonProperties. </summary>
         /// <param name="addonType"> The type of private cloud addon. </param>

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,28 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0 (2022-11-11)
+
+### Features Added
+
+- Added new custom enum type `NodeCommunicationMode`.
+  - This property determines how a pool communicates with the Batch service.
+  - Possible values: Default, Classic, Simplified.
+- Added properties `CurrentNodeCommunicationMode` and `TargetNodeCommunicationMode` of type `NodeCommunicationMode` to `BatchAccountPoolData`.
+
+### Other Changes
+
+- Updated descriptions of Certificate related apis to indicate that the apis will be deprecated by Feb 2024.
+
+## 1.0.0 (2022-09-19)
+
+This is the first stable release of the Batch Management client library.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.3.1
+- Optimized the implementation of methods related to tag operations.
 
 ## 1.0.0-beta.2 (2022-08-29)
 

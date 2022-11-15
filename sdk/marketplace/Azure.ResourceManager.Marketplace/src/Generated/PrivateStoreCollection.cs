@@ -63,11 +63,9 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="data"> The PrivateStore to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation> CreateOrUpdateAsync(WaitUntil waitUntil, string privateStoreId, PrivateStoreData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation> CreateOrUpdateAsync(WaitUntil waitUntil, Guid privateStoreId, PrivateStoreData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
             Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreCollection.CreateOrUpdate");
@@ -96,11 +94,9 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="data"> The PrivateStore to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation CreateOrUpdate(WaitUntil waitUntil, string privateStoreId, PrivateStoreData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation CreateOrUpdate(WaitUntil waitUntil, Guid privateStoreId, PrivateStoreData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
             Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreCollection.CreateOrUpdate");
@@ -127,12 +123,8 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> is null. </exception>
-        public virtual async Task<Response<PrivateStoreResource>> GetAsync(string privateStoreId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateStoreResource>> GetAsync(Guid privateStoreId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
-
             using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreCollection.Get");
             scope.Start();
             try
@@ -156,12 +148,8 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> is null. </exception>
-        public virtual Response<PrivateStoreResource> Get(string privateStoreId, CancellationToken cancellationToken = default)
+        public virtual Response<PrivateStoreResource> Get(Guid privateStoreId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
-
             using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreCollection.Get");
             scope.Start();
             try
@@ -271,12 +259,8 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string privateStoreId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(Guid privateStoreId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
-
             using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreCollection.Exists");
             scope.Start();
             try
@@ -298,12 +282,8 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> is null. </exception>
-        public virtual Response<bool> Exists(string privateStoreId, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(Guid privateStoreId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
-
             using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreCollection.Exists");
             scope.Start();
             try

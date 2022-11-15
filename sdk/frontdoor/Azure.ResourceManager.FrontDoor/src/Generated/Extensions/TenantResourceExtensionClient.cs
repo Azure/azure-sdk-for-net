@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.FrontDoor
         private ClientDiagnostics FrontDoorNameAvailabilityClientDiagnostics => _frontDoorNameAvailabilityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.FrontDoor", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private FrontDoorNameAvailabilityRestOperations FrontDoorNameAvailabilityRestClient => _frontDoorNameAvailabilityRestClient ??= new FrontDoorNameAvailabilityRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
-        private string GetApiVersionOrNull(Core.ResourceType resourceType)
+        private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
@@ -48,15 +48,15 @@ namespace Azure.ResourceManager.FrontDoor
         /// Request Path: /providers/Microsoft.Network/checkFrontDoorNameAvailability
         /// Operation Id: FrontDoorNameAvailability_Check
         /// </summary>
-        /// <param name="input"> Input to check. </param>
+        /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckNameAvailabilityOutput>> CheckFrontDoorNameAvailabilityAsync(CheckNameAvailabilityInput input, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FrontDoorNameAvailabilityResult>> CheckFrontDoorNameAvailabilityAsync(FrontDoorNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = FrontDoorNameAvailabilityClientDiagnostics.CreateScope("TenantResourceExtensionClient.CheckFrontDoorNameAvailability");
             scope.Start();
             try
             {
-                var response = await FrontDoorNameAvailabilityRestClient.CheckAsync(input, cancellationToken).ConfigureAwait(false);
+                var response = await FrontDoorNameAvailabilityRestClient.CheckAsync(content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -71,15 +71,15 @@ namespace Azure.ResourceManager.FrontDoor
         /// Request Path: /providers/Microsoft.Network/checkFrontDoorNameAvailability
         /// Operation Id: FrontDoorNameAvailability_Check
         /// </summary>
-        /// <param name="input"> Input to check. </param>
+        /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckNameAvailabilityOutput> CheckFrontDoorNameAvailability(CheckNameAvailabilityInput input, CancellationToken cancellationToken = default)
+        public virtual Response<FrontDoorNameAvailabilityResult> CheckFrontDoorNameAvailability(FrontDoorNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = FrontDoorNameAvailabilityClientDiagnostics.CreateScope("TenantResourceExtensionClient.CheckFrontDoorNameAvailability");
             scope.Start();
             try
             {
-                var response = FrontDoorNameAvailabilityRestClient.Check(input, cancellationToken);
+                var response = FrontDoorNameAvailabilityRestClient.Check(content, cancellationToken);
                 return response;
             }
             catch (Exception e)

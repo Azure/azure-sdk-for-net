@@ -8,21 +8,19 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary> Monitor service details. </summary>
-    public partial class MonitorServiceList : ServiceAlertsMetaDataProperties
+    public partial class MonitorServiceList : ServiceAlertMetadataProperties
     {
         /// <summary> Initializes a new instance of MonitorServiceList. </summary>
         /// <param name="data"> Array of operations. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         internal MonitorServiceList(IEnumerable<MonitorServiceDetails> data)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             Data = data.ToList();
             MetadataIdentifier = ServiceAlertMetadataIdentifier.MonitorServiceList;

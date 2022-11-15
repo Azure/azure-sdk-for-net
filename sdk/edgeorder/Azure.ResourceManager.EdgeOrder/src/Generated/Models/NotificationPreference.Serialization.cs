@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             writer.WritePropertyName("stageName");
             writer.WriteStringValue(StageName.ToString());
             writer.WritePropertyName("sendNotification");
-            writer.WriteBooleanValue(SendNotification);
+            writer.WriteBooleanValue(IsNotificationRequired);
             writer.WriteEndObject();
         }
 

@@ -190,13 +190,14 @@ namespace Azure.AI.Language.Conversations.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2022_05_15_Preview)]
         public async Task AnalyzeConversation_ConversationSummarization()
         {
             var textConversationItems = new List<TextConversationItem>()
             {
-                new TextConversationItem("1", "Agent", "Hello, how can I help you?"),
-                new TextConversationItem("2", "Customer", "How to upgrade Office? I am getting error messages the whole day."),
-                new TextConversationItem("3", "Agent", "Press the upgrade button please. Then sign in and follow the instructions."),
+                new TextConversationItem("1", "Agent", "Hello, how can I help you?") { Role = "Agent" },
+                new TextConversationItem("2", "Customer", "How to upgrade Office? I am getting error messages the whole day.") { Role = "Customer" },
+                new TextConversationItem("3", "Agent", "Press the upgrade button please. Then sign in and follow the instructions.") { Role = "Agent" },
             };
 
             var input = new List<TextConversation>()
@@ -215,8 +216,7 @@ namespace Azure.AI.Language.Conversations.Tests
             var multiLanguageConversationAnalysisInput = new MultiLanguageConversationAnalysisInput(input);
             var analyzeConversationJobsInput = new AnalyzeConversationJobsInput(multiLanguageConversationAnalysisInput, tasks);
 
-            Operation<BinaryData> analyzeConversationOperation = await Client.AnalyzeConversationAsync(WaitUntil.Started, analyzeConversationJobsInput.AsRequestContent());
-            await analyzeConversationOperation.WaitForCompletionAsync();
+            Operation<BinaryData> analyzeConversationOperation = await Client.AnalyzeConversationAsync(WaitUntil.Completed, analyzeConversationJobsInput.AsRequestContent());
 
             using JsonDocument json = await JsonDocument.ParseAsync(analyzeConversationOperation.Value.ToStream());
             AnalyzeConversationJobState jobResults = AnalyzeConversationJobState.DeserializeAnalyzeConversationJobState(json.RootElement);
@@ -233,17 +233,18 @@ namespace Azure.AI.Language.Conversations.Tests
                 Assert.NotNull(results.Conversations);
                 foreach (SummaryResultConversationsItem conversation in results.Conversations)
                 {
-                    Assert.NotNull(conversation.Summaries);
+                    Assert.That(conversation.Summaries, Is.Not.Null.And.Not.Empty);
                     foreach (ConversationsSummaryResultSummariesItem summary in conversation.Summaries)
                     {
                         Assert.NotNull(summary.Text);
-                        Assert.NotNull(summary.Aspect);
+                        Assert.That(summary.Aspect, Is.EqualTo("issue").Or.EqualTo("resolution"));
                     }
                 }
             }
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2022_05_15_Preview)]
         public async Task AnalyzeConversation_ConversationPII_TextInput()
         {
             var textConversationItems = new List<TextConversationItem>()
@@ -269,8 +270,7 @@ namespace Azure.AI.Language.Conversations.Tests
             var multiLanguageConversationAnalysisInput = new MultiLanguageConversationAnalysisInput(input);
             var analyzeConversationJobsInput = new AnalyzeConversationJobsInput(multiLanguageConversationAnalysisInput, tasks);
 
-            Operation<BinaryData> analyzeConversationOperation = await Client.AnalyzeConversationAsync(WaitUntil.Started, analyzeConversationJobsInput.AsRequestContent());
-            await analyzeConversationOperation.WaitForCompletionAsync();
+            Operation<BinaryData> analyzeConversationOperation = await Client.AnalyzeConversationAsync(WaitUntil.Completed, analyzeConversationJobsInput.AsRequestContent());
 
             using JsonDocument json = await JsonDocument.ParseAsync(analyzeConversationOperation.Value.ToStream());
             AnalyzeConversationJobState jobResults = AnalyzeConversationJobState.DeserializeAnalyzeConversationJobState(json.RootElement);
@@ -305,46 +305,29 @@ namespace Azure.AI.Language.Conversations.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2022_05_15_Preview)]
         public async Task AnalyzeConversation_ConversationPII_TranscriptInput()
         {
-            var transciprtConversationItemOne = new TranscriptConversationItem(id: "1", participantId: "speaker")
-            {
-                Itn = "hi",
-                MaskedItn = "hi",
-                Text = "Hi",
-                Lexical = "hi",
-            };
-            transciprtConversationItemOne.AudioTimings.Add(new WordLevelTiming(4500000, 2800000, "hi"));
+            var transcriptConversationItemOne = new TranscriptConversationItem("1", "speaker", "hi", "hi", "Hi", "hi");
+            transcriptConversationItemOne.WordLevelTimings.Add(new WordLevelTiming(4500000, 2800000, "hi"));
 
-            var transciprtConversationItemTwo = new TranscriptConversationItem(id: "2", participantId: "speaker")
-            {
-                Itn = "jane doe",
-                MaskedItn = "jane doe",
-                Text = "Jane doe",
-                Lexical = "jane doe",
-            };
-            transciprtConversationItemTwo.AudioTimings.Add(new WordLevelTiming(7100000, 4800000, "jane"));
-            transciprtConversationItemTwo.AudioTimings.Add(new WordLevelTiming(12000000, 1700000, "jane"));
+            var transcriptConversationItemTwo = new TranscriptConversationItem("2", "speaker", "jane doe", "jane doe", "Jane doe", "jane doe");
+            transcriptConversationItemTwo.WordLevelTimings.Add(new WordLevelTiming(7100000, 4800000, "jane"));
+            transcriptConversationItemTwo.WordLevelTimings.Add(new WordLevelTiming(12000000, 1700000, "jane"));
 
-            var transciprtConversationItemThree = new TranscriptConversationItem(id: "3", participantId: "agent")
-            {
-                Itn = "hi jane what's your phone number",
-                MaskedItn = "hi jane what's your phone number",
-                Text = "Hi Jane, what's your phone number?",
-                Lexical = "hi jane what's your phone number"
-            };
-            transciprtConversationItemThree.AudioTimings.Add(new WordLevelTiming(7700000, 3100000, "hi"));
-            transciprtConversationItemThree.AudioTimings.Add(new WordLevelTiming(10900000, 5700000, "jane"));
-            transciprtConversationItemThree.AudioTimings.Add(new WordLevelTiming(17300000, 2600000, "what's"));
-            transciprtConversationItemThree.AudioTimings.Add(new WordLevelTiming(20000000, 1600000, "your"));
-            transciprtConversationItemThree.AudioTimings.Add(new WordLevelTiming(21700000, 1700000, "phone"));
-            transciprtConversationItemThree.AudioTimings.Add(new WordLevelTiming(23500000, 2300000, "number"));
+            var transcriptConversationItemThree = new TranscriptConversationItem("3", "agent", "hi jane what's your phone number", "hi jane what's your phone number", "Hi Jane, what's your phone number?", "hi jane what's your phone number");
+            transcriptConversationItemThree.WordLevelTimings.Add(new WordLevelTiming(7700000, 3100000, "hi"));
+            transcriptConversationItemThree.WordLevelTimings.Add(new WordLevelTiming(10900000, 5700000, "jane"));
+            transcriptConversationItemThree.WordLevelTimings.Add(new WordLevelTiming(17300000, 2600000, "what's"));
+            transcriptConversationItemThree.WordLevelTimings.Add(new WordLevelTiming(20000000, 1600000, "your"));
+            transcriptConversationItemThree.WordLevelTimings.Add(new WordLevelTiming(21700000, 1700000, "phone"));
+            transcriptConversationItemThree.WordLevelTimings.Add(new WordLevelTiming(23500000, 2300000, "number"));
 
             var transcriptConversationItems = new List<TranscriptConversationItem>()
             {
-                transciprtConversationItemOne,
-                transciprtConversationItemTwo,
-                transciprtConversationItemThree,
+                transcriptConversationItemOne,
+                transcriptConversationItemTwo,
+                transcriptConversationItemThree,
             };
 
             var input = new List<TranscriptConversation>()
@@ -363,8 +346,7 @@ namespace Azure.AI.Language.Conversations.Tests
             var multiLanguageConversationAnalysisInput = new MultiLanguageConversationAnalysisInput(input);
             var analyzeConversationJobsInput = new AnalyzeConversationJobsInput(multiLanguageConversationAnalysisInput, tasks);
 
-            Operation<BinaryData> analyzeConversationOperation = await Client.AnalyzeConversationAsync(WaitUntil.Started, analyzeConversationJobsInput.AsRequestContent());
-            await analyzeConversationOperation.WaitForCompletionAsync();
+            Operation<BinaryData> analyzeConversationOperation = await Client.AnalyzeConversationAsync(WaitUntil.Completed, analyzeConversationJobsInput.AsRequestContent());
 
             using JsonDocument json = await JsonDocument.ParseAsync(analyzeConversationOperation.Value.ToStream());
             AnalyzeConversationJobState jobResults = AnalyzeConversationJobState.DeserializeAnalyzeConversationJobState(json.RootElement);

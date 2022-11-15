@@ -64,11 +64,11 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <param name="content"> Set the name parameter in the DigitalTwinsInstanceCheckName structure to the name of the DigitalTwinsInstance to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<CheckNameResult>> CheckNameAvailabilityDigitalTwinAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CheckNameContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<DigitalTwinsNameResult>> CheckDigitalTwinsNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, DigitalTwinsNameContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).CheckNameAvailabilityDigitalTwinAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckDigitalTwinsNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -81,11 +81,11 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <param name="content"> Set the name parameter in the DigitalTwinsInstanceCheckName structure to the name of the DigitalTwinsInstance to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<CheckNameResult> CheckNameAvailabilityDigitalTwin(this SubscriptionResource subscriptionResource, AzureLocation location, CheckNameContent content, CancellationToken cancellationToken = default)
+        public static Response<DigitalTwinsNameResult> CheckDigitalTwinsNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, DigitalTwinsNameContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).CheckNameAvailabilityDigitalTwin(location, content, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckDigitalTwinsNameAvailability(location, content, cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -175,20 +175,20 @@ namespace Azure.ResourceManager.DigitalTwins
         }
         #endregion
 
-        #region GroupIdInformationResource
+        #region DigitalTwinsPrivateLinkResource
         /// <summary>
-        /// Gets an object representing a <see cref="GroupIdInformationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GroupIdInformationResource.CreateResourceIdentifier" /> to create a <see cref="GroupIdInformationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DigitalTwinsPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DigitalTwinsPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="DigitalTwinsPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GroupIdInformationResource" /> object. </returns>
-        public static GroupIdInformationResource GetGroupIdInformationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DigitalTwinsPrivateLinkResource" /> object. </returns>
+        public static DigitalTwinsPrivateLinkResource GetDigitalTwinsPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                GroupIdInformationResource.ValidateResourceId(id);
-                return new GroupIdInformationResource(client, id);
+                DigitalTwinsPrivateLinkResource.ValidateResourceId(id);
+                return new DigitalTwinsPrivateLinkResource(client, id);
             }
             );
         }

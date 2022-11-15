@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             if (Optional.IsDefined(StorageAccountTenantId))
             {
                 writer.WritePropertyName("storageAccountTenantId");
-                writer.WriteStringValue(StorageAccountTenantId);
+                writer.WriteStringValue(StorageAccountTenantId.Value);
             }
             if (Optional.IsDefined(FriendlyName))
             {
@@ -48,9 +49,9 @@ namespace Azure.ResourceManager.StorageSync.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> storageAccountResourceId = default;
+            Optional<ResourceIdentifier> storageAccountResourceId = default;
             Optional<string> azureFileShareName = default;
-            Optional<string> storageAccountTenantId = default;
+            Optional<Guid> storageAccountTenantId = default;
             Optional<string> friendlyName = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -90,7 +91,12 @@ namespace Azure.ResourceManager.StorageSync.Models
                     {
                         if (property0.NameEquals("storageAccountResourceId"))
                         {
-                            storageAccountResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            storageAccountResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("azureFileShareName"))
@@ -100,7 +106,12 @@ namespace Azure.ResourceManager.StorageSync.Models
                         }
                         if (property0.NameEquals("storageAccountTenantId"))
                         {
-                            storageAccountTenantId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            storageAccountTenantId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("friendlyName"))
@@ -112,7 +123,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     continue;
                 }
             }
-            return new CloudEndpointCreateOrUpdateContent(id, name, type, systemData.Value, storageAccountResourceId.Value, azureFileShareName.Value, storageAccountTenantId.Value, friendlyName.Value);
+            return new CloudEndpointCreateOrUpdateContent(id, name, type, systemData.Value, storageAccountResourceId.Value, azureFileShareName.Value, Optional.ToNullable(storageAccountTenantId), friendlyName.Value);
         }
     }
 }

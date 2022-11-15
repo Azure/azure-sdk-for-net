@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Support.Models
         /// <summary> Initializes a new instance of SupportTicketsListResult. </summary>
         internal SupportTicketsListResult()
         {
-            Value = new ChangeTrackingList<SupportTicketDetailData>();
+            Value = new ChangeTrackingList<SupportTicketData>();
         }
 
         /// <summary> Initializes a new instance of SupportTicketsListResult. </summary>
         /// <param name="value"> List of SupportTicket resources. </param>
         /// <param name="nextLink"> The URI to fetch the next page of SupportTicket resources. </param>
-        internal SupportTicketsListResult(IReadOnlyList<SupportTicketDetailData> value, string nextLink)
+        internal SupportTicketsListResult(IReadOnlyList<SupportTicketData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of SupportTicket resources. </summary>
-        public IReadOnlyList<SupportTicketDetailData> Value { get; }
+        public IReadOnlyList<SupportTicketData> Value { get; }
         /// <summary> The URI to fetch the next page of SupportTicket resources. </summary>
         public string NextLink { get; }
     }

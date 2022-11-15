@@ -23,7 +23,7 @@ namespace Azure.Security.KeyVault.Storage
         {
             HttpPipeline pipeline = HttpPipelineBuilder.Build(
                 options ?? throw new ArgumentNullException(nameof(options)),
-                new ChallengeBasedAuthenticationPolicy(credential ?? throw new ArgumentNullException(nameof(credential))));
+                new ChallengeBasedAuthenticationPolicy(credential ?? throw new ArgumentNullException(nameof(credential)), true));
 
             ClientDiagnostics diagnostics = new ClientDiagnostics(options);
             return new ManagedStorageRestClient(diagnostics, pipeline, vaultUri.AbsoluteUri);

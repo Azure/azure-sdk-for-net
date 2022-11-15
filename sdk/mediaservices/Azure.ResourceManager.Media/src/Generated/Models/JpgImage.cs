@@ -12,17 +12,14 @@ using Azure.Core;
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Describes the properties for producing a series of JPEG images from the input video. </summary>
-    public partial class JpgImage : ImageBasicProperties
+    public partial class JpgImage : MediaImageBase
     {
         /// <summary> Initializes a new instance of JpgImage. </summary>
         /// <param name="start"> The position in the input video from where to start generating thumbnails. The value can be in ISO 8601 format (For example, PT05S to start at 5 seconds), or a frame count (For example, 10 to start at the 10th frame), or a relative value to stream duration (For example, 10% to start at 10% of stream duration). Also supports a macro {Best}, which tells the encoder to select the best thumbnail from the first few seconds of the video and will only produce one thumbnail, no matter what other settings are for Step and Range. The default value is macro {Best}. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="start"/> is null. </exception>
         public JpgImage(string start) : base(start)
         {
-            if (start == null)
-            {
-                throw new ArgumentNullException(nameof(start));
-            }
+            Argument.AssertNotNull(start, nameof(start));
 
             Layers = new ChangeTrackingList<JpgLayer>();
             OdataType = "#Microsoft.Media.JpgImage";

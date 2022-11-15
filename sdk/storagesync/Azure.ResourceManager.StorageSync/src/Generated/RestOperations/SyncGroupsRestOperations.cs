@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.StorageSync
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2020-09-01";
+            _apiVersion = apiVersion ?? "2022-06-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.StorageSync
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, SyncGroupCreateOrUpdateContent content)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, StorageSyncGroupCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/> or <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SyncGroupData>> CreateAsync(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, SyncGroupCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<StorageSyncGroupData>> CreateAsync(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, StorageSyncGroupCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -165,9 +165,9 @@ namespace Azure.ResourceManager.StorageSync
             {
                 case 200:
                     {
-                        SyncGroupData value = default;
+                        StorageSyncGroupData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SyncGroupData.DeserializeSyncGroupData(document.RootElement);
+                        value = StorageSyncGroupData.DeserializeStorageSyncGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/> or <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SyncGroupData> Create(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, SyncGroupCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public Response<StorageSyncGroupData> Create(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, StorageSyncGroupCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -198,9 +198,9 @@ namespace Azure.ResourceManager.StorageSync
             {
                 case 200:
                     {
-                        SyncGroupData value = default;
+                        StorageSyncGroupData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SyncGroupData.DeserializeSyncGroupData(document.RootElement);
+                        value = StorageSyncGroupData.DeserializeStorageSyncGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/> or <paramref name="syncGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/> or <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SyncGroupData>> GetAsync(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<StorageSyncGroupData>> GetAsync(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -251,13 +251,13 @@ namespace Azure.ResourceManager.StorageSync
             {
                 case 200:
                     {
-                        SyncGroupData value = default;
+                        StorageSyncGroupData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SyncGroupData.DeserializeSyncGroupData(document.RootElement);
+                        value = StorageSyncGroupData.DeserializeStorageSyncGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SyncGroupData)null, message.Response);
+                    return Response.FromValue((StorageSyncGroupData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/> or <paramref name="syncGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/> or <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SyncGroupData> Get(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, CancellationToken cancellationToken = default)
+        public Response<StorageSyncGroupData> Get(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -284,13 +284,13 @@ namespace Azure.ResourceManager.StorageSync
             {
                 case 200:
                     {
-                        SyncGroupData value = default;
+                        StorageSyncGroupData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SyncGroupData.DeserializeSyncGroupData(document.RootElement);
+                        value = StorageSyncGroupData.DeserializeStorageSyncGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SyncGroupData)null, message.Response);
+                    return Response.FromValue((StorageSyncGroupData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

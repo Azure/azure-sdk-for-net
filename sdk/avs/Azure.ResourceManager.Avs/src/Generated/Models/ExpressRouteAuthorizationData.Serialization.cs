@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Avs
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<ExpressRouteAuthorizationProvisioningState> provisioningState = default;
-            Optional<string> expressRouteAuthorizationId = default;
+            Optional<ResourceIdentifier> expressRouteAuthorizationId = default;
             Optional<string> expressRouteAuthorizationKey = default;
-            Optional<string> expressRouteId = default;
+            Optional<ResourceIdentifier> expressRouteId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -86,7 +86,12 @@ namespace Azure.ResourceManager.Avs
                         }
                         if (property0.NameEquals("expressRouteAuthorizationId"))
                         {
-                            expressRouteAuthorizationId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            expressRouteAuthorizationId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("expressRouteAuthorizationKey"))
@@ -96,7 +101,12 @@ namespace Azure.ResourceManager.Avs
                         }
                         if (property0.NameEquals("expressRouteId"))
                         {
-                            expressRouteId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            expressRouteId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                     }

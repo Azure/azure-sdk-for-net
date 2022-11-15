@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         internal static QueryOffers DeserializeQueryOffers(JsonElement element)
         {
-            Optional<IReadOnlyList<OfferProperties>> value = default;
+            Optional<IReadOnlyList<PrivateStoreOfferResult>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Marketplace.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<OfferProperties> array = new List<OfferProperties>();
+                    List<PrivateStoreOfferResult> array = new List<PrivateStoreOfferResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OfferProperties.DeserializeOfferProperties(item));
+                        array.Add(PrivateStoreOfferResult.DeserializePrivateStoreOfferResult(item));
                     }
                     value = array;
                     continue;

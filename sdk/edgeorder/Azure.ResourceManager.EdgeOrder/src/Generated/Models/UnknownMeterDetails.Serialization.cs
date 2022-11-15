@@ -14,9 +14,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         internal static UnknownMeterDetails DeserializeUnknownMeterDetails(JsonElement element)
         {
-            BillingType billingType = default;
+            BillingType billingType = "Unknown";
             Optional<double> multiplier = default;
-            Optional<ChargingType> chargingType = default;
+            Optional<EdgeOrderProductChargingType> chargingType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("billingType"))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    chargingType = new ChargingType(property.Value.GetString());
+                    chargingType = new EdgeOrderProductChargingType(property.Value.GetString());
                     continue;
                 }
             }

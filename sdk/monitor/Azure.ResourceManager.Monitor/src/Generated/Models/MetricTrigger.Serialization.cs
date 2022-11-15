@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.Monitor.Models
             TimeSpan timeGrain = default;
             MetricStatisticType statistic = default;
             TimeSpan timeWindow = default;
-            MonitorTimeAggregationType timeAggregation = default;
-            ComparisonOperationType @operator = default;
+            MetricTriggerTimeAggregationType timeAggregation = default;
+            MetricTriggerComparisonOperation @operator = default;
             double threshold = default;
             Optional<IList<AutoscaleRuleMetricDimension>> dimensions = default;
             Optional<bool> dividePerInstance = default;
@@ -126,12 +126,12 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("timeAggregation"))
                 {
-                    timeAggregation = property.Value.GetString().ToMonitorTimeAggregationType();
+                    timeAggregation = property.Value.GetString().ToMetricTriggerTimeAggregationType();
                     continue;
                 }
                 if (property.NameEquals("operator"))
                 {
-                    @operator = property.Value.GetString().ToComparisonOperationType();
+                    @operator = property.Value.GetString().ToMetricTriggerComparisonOperation();
                     continue;
                 }
                 if (property.NameEquals("threshold"))

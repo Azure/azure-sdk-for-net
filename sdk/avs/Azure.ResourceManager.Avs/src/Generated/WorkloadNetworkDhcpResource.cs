@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Avs
     /// A Class representing a WorkloadNetworkDhcp along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WorkloadNetworkDhcpResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetWorkloadNetworkDhcpResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PrivateCloudResource" /> using the GetWorkloadNetworkDhcp method.
+    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource" /> using the GetWorkloadNetworkDhcp method.
     /// </summary>
     public partial class WorkloadNetworkDhcpResource : ArmResource
     {

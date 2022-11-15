@@ -256,8 +256,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             try
             {
-                string messageHash = batchMessage.GetHashCode().ToString(CultureInfo.InvariantCulture);
-
                 ArraySegment<byte> transactionId = AmqpConstants.NullBinary;
                 Transaction ambientTransaction = Transaction.Current;
                 if (ambientTransaction != null)
@@ -275,6 +273,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 if (batchMessage.SerializedMessageSize > MaxMessageSize)
                 {
+                    string messageHash = batchMessage.GetHashCode().ToString(CultureInfo.InvariantCulture);
                     throw new ServiceBusException(string.Format(CultureInfo.InvariantCulture, Resources.MessageSizeExceeded, messageHash, batchMessage.SerializedMessageSize, MaxMessageSize, _entityPath), ServiceBusFailureReason.MessageSizeExceeded);
                 }
 

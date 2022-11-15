@@ -36,9 +36,13 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='networkManagerName'>
             /// The name of the network manager.
             /// </param>
-            public static NetworkManagerDeploymentStatusListResult List(this INetworkManagerDeploymentStatusOperations operations, NetworkManagerDeploymentStatusParameter parameters, string resourceGroupName, string networkManagerName)
+            /// <param name='top'>
+            /// An optional query parameter which specifies the maximum number of records
+            /// to be returned by the server.
+            /// </param>
+            public static NetworkManagerDeploymentStatusListResult List(this INetworkManagerDeploymentStatusOperations operations, NetworkManagerDeploymentStatusParameter parameters, string resourceGroupName, string networkManagerName, int? top = default(int?))
             {
-                return operations.ListAsync(parameters, resourceGroupName, networkManagerName).GetAwaiter().GetResult();
+                return operations.ListAsync(parameters, resourceGroupName, networkManagerName, top).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -56,12 +60,16 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='networkManagerName'>
             /// The name of the network manager.
             /// </param>
+            /// <param name='top'>
+            /// An optional query parameter which specifies the maximum number of records
+            /// to be returned by the server.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<NetworkManagerDeploymentStatusListResult> ListAsync(this INetworkManagerDeploymentStatusOperations operations, NetworkManagerDeploymentStatusParameter parameters, string resourceGroupName, string networkManagerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NetworkManagerDeploymentStatusListResult> ListAsync(this INetworkManagerDeploymentStatusOperations operations, NetworkManagerDeploymentStatusParameter parameters, string resourceGroupName, string networkManagerName, int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(parameters, resourceGroupName, networkManagerName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(parameters, resourceGroupName, networkManagerName, top, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

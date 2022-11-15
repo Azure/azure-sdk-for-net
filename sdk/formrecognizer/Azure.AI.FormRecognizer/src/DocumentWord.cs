@@ -26,7 +26,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary>
         /// The polygon that outlines the content of this word. Coordinates are specified relative to the
         /// top-left of the page, and points are ordered clockwise from the left relative to the word
-        /// orientation. Units are in pixels for images and inches for PDF. The <see cref="LengthUnit"/>
+        /// orientation. Units are in pixels for images and inches for PDF. The <see cref="DocumentPageLengthUnit"/>
         /// type of a recognized page can be found at <see cref="DocumentPage.Unit"/>.
         /// </summary>
         public IReadOnlyList<PointF> BoundingPolygon { get; private set; }

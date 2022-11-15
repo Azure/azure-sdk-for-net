@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -20,5 +22,10 @@ namespace Azure.Identity
         /// The redirect Uri that will be sent with the GetToken request.
         /// </summary>
         public Uri RedirectUri { get; set; }
+
+        /// <summary>
+        /// For multi-tenant applications, specifies additional tenants for which the credential may acquire tokens. Add the wildcard value "*" to allow the credential to acquire tokens for any tenant in which the application is installed.
+        /// </summary>
+        public IList<string> AdditionallyAllowedTenants => AdditionallyAllowedTenantsCore;
     }
 }

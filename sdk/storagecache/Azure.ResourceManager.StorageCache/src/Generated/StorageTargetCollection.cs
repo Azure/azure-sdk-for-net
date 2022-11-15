@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.StorageCache
 {
     /// <summary>
     /// A class representing a collection of <see cref="StorageTargetResource" /> and their operations.
-    /// Each <see cref="StorageTargetResource" /> in the collection will belong to the same instance of <see cref="CacheResource" />.
-    /// To get a <see cref="StorageTargetCollection" /> instance call the GetStorageTargets method from an instance of <see cref="CacheResource" />.
+    /// Each <see cref="StorageTargetResource" /> in the collection will belong to the same instance of <see cref="StorageCacheResource" />.
+    /// To get a <see cref="StorageTargetCollection" /> instance call the GetStorageTargets method from an instance of <see cref="StorageCacheResource" />.
     /// </summary>
     public partial class StorageTargetCollection : ArmCollection, IEnumerable<StorageTargetResource>, IAsyncEnumerable<StorageTargetResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.StorageCache
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != CacheResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, CacheResource.ResourceType), nameof(id));
+            if (id.ResourceType != StorageCacheResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, StorageCacheResource.ResourceType), nameof(id));
         }
 
         /// <summary>

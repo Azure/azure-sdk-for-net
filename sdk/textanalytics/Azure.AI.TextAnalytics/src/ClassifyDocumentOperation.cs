@@ -29,6 +29,7 @@ namespace Azure.AI.TextAnalytics
         private DateTimeOffset? _expiresOn;
         private DateTimeOffset _lastModified;
         private DateTimeOffset _createdOn;
+        private string _displayName;
         private Page<ClassifyDocumentResultCollection> _firstPage;
 
         /// <summary>
@@ -36,6 +37,11 @@ namespace Azure.AI.TextAnalytics
         /// of the long-running operation.
         /// </summary>
         public override string Id { get; }
+
+        /// <summary>
+        /// Display Name of the operation.
+        /// </summary>
+        public virtual string DisplayName => _displayName;
 
         /// <summary>
         /// Time when the operation was created on.
@@ -81,6 +87,8 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="operationId">The ID of this operation.</param>
         /// <param name="client">The client used to check for completion.</param>
+        /// <exception cref="ArgumentException"><paramref name="operationId"/> is an empty string or does not represent a valid continuation token from the <see cref="Id"/> property returned on the original operation.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="operationId"/> or <paramref name="client"/> is null.</exception>
         public ClassifyDocumentOperation(string operationId, TextAnalyticsClient client)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
@@ -258,6 +266,7 @@ namespace Azure.AI.TextAnalytics
                 ? await _serviceClient.AnalyzeTextJobStatusAsync(_jobId, _showStats, null, null, _idToIndexMap, cancellationToken).ConfigureAwait(false)
                 : _serviceClient.AnalyzeTextJobStatus(_jobId, _showStats, null, null, _idToIndexMap, cancellationToken);
 
+            _displayName = response.Value.DisplayName;
             _createdOn = response.Value.CreatedDateTime;
             _expiresOn = response.Value.ExpirationDateTime;
             _lastModified = response.Value.LastUpdatedDateTime;

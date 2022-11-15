@@ -9,7 +9,6 @@ csharp: true
 library-name: NotificationHubs
 namespace: Azure.ResourceManager.NotificationHubs
 require: https://github.com/Azure/azure-rest-api-specs/blob/bab2f4389eb5ca73cdf366ec0a4af3f3eb6e1f6d/specification/notificationhubs/resource-manager/readme.md
-tag: package-2017-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -29,10 +28,10 @@ rename-mapping:
   GcmCredential.properties.googleApiKey: gcmApiKey
   WnsCredential.properties.windowsLiveEndpoint: -|uri
   NotificationHubResource.properties.registrationTtl: -|duration-constant
-  SharedAccessAuthorizationRuleResource.properties.createdTime: CreatedOn|datetime
-  SharedAccessAuthorizationRuleResource.properties.modifiedTime: ModifiedOn|datetime
-  SharedAccessAuthorizationRuleProperties.createdTime: CreatedOn|datetime
-  SharedAccessAuthorizationRuleProperties.modifiedTime: ModifiedOn|datetime
+  SharedAccessAuthorizationRuleResource.properties.createdTime: CreatedOn|date-time
+  SharedAccessAuthorizationRuleResource.properties.modifiedTime: ModifiedOn|date-time
+  SharedAccessAuthorizationRuleProperties.createdTime: CreatedOn|date-time
+  SharedAccessAuthorizationRuleProperties.modifiedTime: ModifiedOn|date-time
   NamespaceResource.properties.enabled: IsEnabled
   NamespaceResource.properties.critical: IsCritical
   NamespaceCreateOrUpdateParameters.properties.enabled: IsEnabled

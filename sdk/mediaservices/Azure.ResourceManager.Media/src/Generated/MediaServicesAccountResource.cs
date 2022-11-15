@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Media
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of AccountFilterResources in the MediaServicesAccount. </summary>
-        /// <returns> An object representing collection of AccountFilterResources and their operations over a AccountFilterResource. </returns>
-        public virtual AccountFilterCollection GetAccountFilters()
+        /// <summary> Gets a collection of MediaServicesAccountFilterResources in the MediaServicesAccount. </summary>
+        /// <returns> An object representing collection of MediaServicesAccountFilterResources and their operations over a MediaServicesAccountFilterResource. </returns>
+        public virtual MediaServicesAccountFilterCollection GetMediaServicesAccountFilters()
         {
-            return GetCachedClient(Client => new AccountFilterCollection(Client, Id));
+            return GetCachedClient(Client => new MediaServicesAccountFilterCollection(Client, Id));
         }
 
         /// <summary>
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AccountFilterResource>> GetAccountFilterAsync(string filterName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MediaServicesAccountFilterResource>> GetMediaServicesAccountFilterAsync(string filterName, CancellationToken cancellationToken = default)
         {
-            return await GetAccountFilters().GetAsync(filterName, cancellationToken).ConfigureAwait(false);
+            return await GetMediaServicesAccountFilters().GetAsync(filterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -121,9 +121,9 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AccountFilterResource> GetAccountFilter(string filterName, CancellationToken cancellationToken = default)
+        public virtual Response<MediaServicesAccountFilterResource> GetMediaServicesAccountFilter(string filterName, CancellationToken cancellationToken = default)
         {
-            return GetAccountFilters().Get(filterName, cancellationToken);
+            return GetMediaServicesAccountFilters().Get(filterName, cancellationToken);
         }
 
         /// <summary> Gets a collection of MediaServicesPrivateLinkResources in the MediaServicesAccount. </summary>
@@ -385,11 +385,11 @@ namespace Azure.ResourceManager.Media
             return GetStreamingLocators().Get(streamingLocatorName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of LiveEventResources in the MediaServicesAccount. </summary>
-        /// <returns> An object representing collection of LiveEventResources and their operations over a LiveEventResource. </returns>
-        public virtual LiveEventCollection GetLiveEvents()
+        /// <summary> Gets a collection of MediaLiveEventResources in the MediaServicesAccount. </summary>
+        /// <returns> An object representing collection of MediaLiveEventResources and their operations over a MediaLiveEventResource. </returns>
+        public virtual MediaLiveEventCollection GetMediaLiveEvents()
         {
-            return GetCachedClient(Client => new LiveEventCollection(Client, Id));
+            return GetCachedClient(Client => new MediaLiveEventCollection(Client, Id));
         }
 
         /// <summary>
@@ -402,9 +402,9 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentException"> <paramref name="liveEventName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="liveEventName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<LiveEventResource>> GetLiveEventAsync(string liveEventName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MediaLiveEventResource>> GetMediaLiveEventAsync(string liveEventName, CancellationToken cancellationToken = default)
         {
-            return await GetLiveEvents().GetAsync(liveEventName, cancellationToken).ConfigureAwait(false);
+            return await GetMediaLiveEvents().GetAsync(liveEventName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -417,9 +417,9 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentException"> <paramref name="liveEventName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="liveEventName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<LiveEventResource> GetLiveEvent(string liveEventName, CancellationToken cancellationToken = default)
+        public virtual Response<MediaLiveEventResource> GetMediaLiveEvent(string liveEventName, CancellationToken cancellationToken = default)
         {
-            return GetLiveEvents().Get(liveEventName, cancellationToken);
+            return GetMediaLiveEvents().Get(liveEventName, cancellationToken);
         }
 
         /// <summary> Gets a collection of StreamingEndpointResources in the MediaServicesAccount. </summary>
@@ -679,7 +679,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="content"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<EdgePolicies>> GetEdgePoliciesAsync(GetEdgePoliciesContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MediaServicesEdgePolicies>> GetEdgePoliciesAsync(EdgePoliciesRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -705,7 +705,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="content"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<EdgePolicies> GetEdgePolicies(GetEdgePoliciesContent content, CancellationToken cancellationToken = default)
+        public virtual Response<MediaServicesEdgePolicies> GetEdgePolicies(EdgePoliciesRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

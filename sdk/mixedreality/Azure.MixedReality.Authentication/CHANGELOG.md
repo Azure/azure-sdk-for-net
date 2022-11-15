@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,13 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0 (2022-09-09)
+
+### Bugs Fixed
+
+- Fixed an issue that prevented proper AAD authentication in regions other than East US 2 using the
+  `mixedreality.azure.com` account domain.
 
 ## 1.1.0 (2022-07-28)
 

@@ -25,13 +25,13 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         private static readonly AnalyzeSentimentOptions DefaultAnalyzeSentimentOptions = new();
 
         private readonly TextAnalyticsRestClient _serviceRestClient;
-        private readonly TextAnalyticsClientOptions _options;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _baseUri;
 
         public override ClientDiagnostics Diagnostics => _clientDiagnostics;
 
         public LegacyServiceClient(Uri endpoint, TokenCredential credential, string authorizationScope, string serviceVersion, TextAnalyticsClientOptions options)
+            : base(options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -42,13 +42,13 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
             _baseUri = endpoint;
             _clientDiagnostics = new TextAnalyticsClientDiagnostics(options);
-            _options = options;
 
             var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, authorizationScope));
             _serviceRestClient = new TextAnalyticsRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri, serviceVersion);
         }
 
         public LegacyServiceClient(Uri endpoint, AzureKeyCredential credential, string serviceVersion, TextAnalyticsClientOptions options)
+            : base(options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -58,7 +58,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
             _baseUri = endpoint;
             _clientDiagnostics = new TextAnalyticsClientDiagnostics(options);
-            _options = options;
 
             var pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.AuthorizationHeader));
             _serviceRestClient = new TextAnalyticsRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri, serviceVersion);
@@ -384,6 +383,8 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         public override async Task<Response<PiiEntityCollection>> RecognizePiiEntitiesAsync(string document, string language = default, RecognizePiiEntitiesOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(document, nameof(document));
+            Validation.SupportsOperation($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.RecognizePiiEntitiesAsync)}", TextAnalyticsClientOptions.ServiceVersion.V3_1, ServiceVersion);
+
             options ??= DefaultPiiEntitiesOptions;
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizePiiEntities)}");
@@ -430,6 +431,8 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         public override Response<PiiEntityCollection> RecognizePiiEntities(string document, string language = default, RecognizePiiEntitiesOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(document, nameof(document));
+            Validation.SupportsOperation($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.RecognizePiiEntities)}", TextAnalyticsClientOptions.ServiceVersion.V3_1, ServiceVersion);
+
             options ??= DefaultPiiEntitiesOptions;
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizePiiEntities)}");
@@ -511,6 +514,8 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
         private async Task<Response<RecognizePiiEntitiesResultCollection>> RecognizePiiEntitiesBatchAsync(MultiLanguageBatchInput batchInput, RecognizePiiEntitiesOptions options, CancellationToken cancellationToken)
         {
+            Validation.SupportsOperation($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.RecognizePiiEntitiesBatchAsync)}", TextAnalyticsClientOptions.ServiceVersion.V3_1, ServiceVersion);
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizePiiEntitiesBatch)}");
             scope.Start();
 
@@ -547,6 +552,8 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
         private Response<RecognizePiiEntitiesResultCollection> RecognizePiiEntitiesBatch(MultiLanguageBatchInput batchInput, RecognizePiiEntitiesOptions options, CancellationToken cancellationToken)
         {
+            Validation.SupportsOperation($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.RecognizePiiEntitiesBatch)}", TextAnalyticsClientOptions.ServiceVersion.V3_1, ServiceVersion);
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizePiiEntitiesBatch)}");
             scope.Start();
 
@@ -586,16 +593,16 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         #region Recognize Custom Entities
 
         public override RecognizeCustomEntitiesOperation StartRecognizeCustomEntities(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, RecognizeCustomEntitiesOptions options = default, CancellationToken cancellationToken = default) =>
-            throw new NotSupportedException($"{nameof(StartRecognizeCustomEntities)} not supported by API versions v3.0, v3.1.");
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartRecognizeCustomEntities)}", TextAnalyticsClientOptions.ServiceVersion.V2022_05_01, ServiceVersion);
 
         public override RecognizeCustomEntitiesOperation StartRecognizeCustomEntities(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, RecognizeCustomEntitiesOptions options = default, CancellationToken cancellationToken = default) =>
-            throw new NotSupportedException($"{nameof(StartRecognizeCustomEntities)} not supported by API versions v3.0, v3.1.");
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartRecognizeCustomEntities)}", TextAnalyticsClientOptions.ServiceVersion.V2022_05_01, ServiceVersion);
 
         public override Task<RecognizeCustomEntitiesOperation> StartRecognizeCustomEntitiesAsync(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, RecognizeCustomEntitiesOptions options = default, CancellationToken cancellationToken = default) =>
-            throw new NotSupportedException($"{nameof(StartRecognizeCustomEntitiesAsync)} not supported by API versions v3.0, v3.1.");
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartRecognizeCustomEntitiesAsync)}", TextAnalyticsClientOptions.ServiceVersion.V2022_05_01, ServiceVersion);
 
         public override Task<RecognizeCustomEntitiesOperation> StartRecognizeCustomEntitiesAsync(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, RecognizeCustomEntitiesOptions options = default, CancellationToken cancellationToken = default) =>
-            throw new NotSupportedException($"{nameof(StartRecognizeCustomEntitiesAsync)} not supported by API versions v3.0, v3.1.");
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartRecognizeCustomEntitiesAsync)}", TextAnalyticsClientOptions.ServiceVersion.V2022_05_01, ServiceVersion);
 
         #endregion
 
@@ -1124,6 +1131,8 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
         private AnalyzeHealthcareEntitiesOperation StartAnalyzeHealthcareEntities(MultiLanguageBatchInput batchInput, AnalyzeHealthcareEntitiesOptions options, CancellationToken cancellationToken = default)
         {
+            Validation.SupportsOperation($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartAnalyzeHealthcareEntities)}", TextAnalyticsClientOptions.ServiceVersion.V3_1, ServiceVersion);
+
             options ??= DefaultHeathcareEntitiesOptions;
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartAnalyzeHealthcareEntities)}");
@@ -1152,6 +1161,8 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
         private async Task<AnalyzeHealthcareEntitiesOperation> StartAnalyzeHealthcareEntitiesAsync(MultiLanguageBatchInput batchInput, AnalyzeHealthcareEntitiesOptions options, CancellationToken cancellationToken = default)
         {
+            Validation.SupportsOperation($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartAnalyzeHealthcareEntitiesAsync)}", TextAnalyticsClientOptions.ServiceVersion.V3_1, ServiceVersion);
+
             options ??= DefaultHeathcareEntitiesOptions;
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartAnalyzeHealthcareEntities)}");
@@ -1446,16 +1457,18 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
         public override Task CancelAnalyzeActionsJobAsync(string jobId, CancellationToken cancellationToken = default)
         {
-            throw new NotSupportedException("Cancellation not supported by API versions v3.0, v3.1.");
+            throw Validation.NotSupported("Cancellation", TextAnalyticsClientOptions.ServiceVersion.V2022_05_01, ServiceVersion);
         }
 
         public override void CancelAnalyzeActionsJob(string jobId, CancellationToken cancellationToken = default)
         {
-            throw new NotSupportedException("Cancellation not supported by API versions v3.0, v3.1.");
+            throw Validation.NotSupported("Cancellation", TextAnalyticsClientOptions.ServiceVersion.V2022_05_01, ServiceVersion);
         }
 
         private AnalyzeActionsOperation StartAnalyzeActions(MultiLanguageBatchInput batchInput, TextAnalyticsActions actions, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default)
         {
+            Validation.SupportsOperation($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartAnalyzeActions)}", TextAnalyticsClientOptions.ServiceVersion.V3_1, ServiceVersion);
+
             options ??= new AnalyzeActionsOptions();
             AnalyzeBatchInput analyzeDocumentInputs = new AnalyzeBatchInput(batchInput, CreateTasks(actions)) { DisplayName = actions.DisplayName };
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartAnalyzeActions)}");
@@ -1479,6 +1492,8 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
         private async Task<AnalyzeActionsOperation> StartAnalyzeActionsAsync(MultiLanguageBatchInput batchInput, TextAnalyticsActions actions, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default)
         {
+            Validation.SupportsOperation($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartAnalyzeActionsAsync)}", TextAnalyticsClientOptions.ServiceVersion.V3_1, ServiceVersion);
+
             options ??= new AnalyzeActionsOptions();
 
             AnalyzeBatchInput analyzeDocumentInputs = new AnalyzeBatchInput(batchInput, CreateTasks(actions)) { DisplayName = actions.DisplayName };
@@ -1502,7 +1517,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             }
         }
 
-        private static Legacy.JobManifestTasks CreateTasks(TextAnalyticsActions actions)
+        private Legacy.JobManifestTasks CreateTasks(TextAnalyticsActions actions)
         {
             Legacy.JobManifestTasks tasks = new();
 
@@ -1526,6 +1541,32 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             {
                 tasks.SentimentAnalysisTasks = Transforms.ConvertFromAnalyzeSentimentActionsToLegacyTasks(actions.AnalyzeSentimentActions);
             }
+
+            // Not supported in legacy service.
+            if (actions.AnalyzeHealthcareEntitiesActions != null && actions.AnalyzeHealthcareEntitiesActions.Count > 0)
+            {
+                throw Validation.NotSupported(nameof(AnalyzeHealthcareEntitiesAction), TextAnalyticsClientOptions.ServiceVersion.V2022_05_01, ServiceVersion);
+            }
+            if (actions.MultiLabelClassifyActions != null && actions.MultiLabelClassifyActions.Count > 0)
+            {
+                throw Validation.NotSupported(nameof(MultiLabelClassifyAction), TextAnalyticsClientOptions.ServiceVersion.V2022_05_01, ServiceVersion);
+            }
+            if (actions.RecognizeCustomEntitiesActions != null && actions.RecognizeCustomEntitiesActions.Count > 0)
+            {
+                throw Validation.NotSupported(nameof(RecognizeCustomEntitiesAction), TextAnalyticsClientOptions.ServiceVersion.V2022_05_01, ServiceVersion);
+            }
+            if (actions.SingleLabelClassifyActions != null && actions.SingleLabelClassifyActions.Count > 0)
+            {
+                throw Validation.NotSupported(nameof(SingleLabelClassifyAction), TextAnalyticsClientOptions.ServiceVersion.V2022_05_01, ServiceVersion);
+            }
+            if (actions.ExtractSummaryActions != null && actions.ExtractSummaryActions.Count > 0)
+            {
+                throw Validation.NotSupported(nameof(ExtractSummaryAction), TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+            }
+            if (actions.AbstractSummaryActions != null && actions.AbstractSummaryActions.Count > 0)
+            {
+                throw Validation.NotSupported(nameof(AbstractSummaryAction), TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+            }
             return tasks;
         }
 
@@ -1534,46 +1575,46 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         #region Single Label Classify
 
         public override ClassifyDocumentOperation StartSingleLabelClassify(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, SingleLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
-            throw new NotSupportedException($"{nameof(StartSingleLabelClassify)} not supported by API versions v3.0, v3.1.");
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartSingleLabelClassify)}", TextAnalyticsClientOptions.ServiceVersion.V2022_05_01, ServiceVersion);
         public override ClassifyDocumentOperation StartSingleLabelClassify(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, SingleLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
-            throw new NotSupportedException($"{nameof(StartSingleLabelClassify)} not supported by API versions v3.0, v3.1.");
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartSingleLabelClassify)}", TextAnalyticsClientOptions.ServiceVersion.V2022_05_01, ServiceVersion);
         public override Task<ClassifyDocumentOperation> StartSingleLabelClassifyAsync(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, SingleLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
-            throw new NotSupportedException($"{nameof(StartSingleLabelClassifyAsync)} not supported by API versions v3.0, v3.1.");
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartSingleLabelClassifyAsync)}", TextAnalyticsClientOptions.ServiceVersion.V2022_05_01, ServiceVersion);
         public override Task<ClassifyDocumentOperation> StartSingleLabelClassifyAsync(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, SingleLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
-            throw new NotSupportedException($"{nameof(StartSingleLabelClassifyAsync)} not supported by API versions v3.0, v3.1.");
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartSingleLabelClassifyAsync)}", TextAnalyticsClientOptions.ServiceVersion.V2022_05_01, ServiceVersion);
 
         #endregion
 
         #region Multi Label Classify
 
         public override ClassifyDocumentOperation StartMultiLabelClassify(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
-            throw new NotSupportedException($"{nameof(StartMultiLabelClassify)} not supported by API versions v3.0, v3.1.");
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartMultiLabelClassify)}", TextAnalyticsClientOptions.ServiceVersion.V2022_05_01, ServiceVersion);
         public override ClassifyDocumentOperation StartMultiLabelClassify(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
-            throw new NotSupportedException($"{nameof(StartMultiLabelClassify)} not supported by API versions v3.0, v3.1.");
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartMultiLabelClassify)}", TextAnalyticsClientOptions.ServiceVersion.V2022_05_01, ServiceVersion);
         public override Task<ClassifyDocumentOperation> StartMultiLabelClassifyAsync(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
-            throw new NotSupportedException($"{nameof(StartMultiLabelClassifyAsync)} not supported by API versions v3.0, v3.1.");
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartMultiLabelClassifyAsync)}", TextAnalyticsClientOptions.ServiceVersion.V2022_05_01, ServiceVersion);
         public override Task<ClassifyDocumentOperation> StartMultiLabelClassifyAsync(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
-            throw new NotSupportedException($"{nameof(StartMultiLabelClassifyAsync)} not supported by API versions v3.0, v3.1.");
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartMultiLabelClassifyAsync)}", TextAnalyticsClientOptions.ServiceVersion.V2022_05_01, ServiceVersion);
 
         #endregion
 
         #region Long Running Operations
 
         public override Task<Response<Models.AnalyzeTextJobState>> AnalyzeTextJobStatusAsync(string jobId, bool? showStats, int? top, int? skip, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default) =>
-            throw new NotSupportedException($"{nameof(AnalyzeTextJobStatusAsync)} not supported by API versions v3.0, v3.1.");
+            throw Validation.NotSupported(nameof(AnalyzeTextJobStatusAsync), TextAnalyticsClientOptions.ServiceVersion.V2022_05_01, ServiceVersion);
         public override Response<Models.AnalyzeTextJobState> AnalyzeTextJobStatus(string jobId, bool? showStats, int? top, int? skip, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default) =>
-            throw new NotSupportedException($"{nameof(AnalyzeTextJobStatus)} not supported by API versions v3.0, v3.1.");
+            throw Validation.NotSupported(nameof(AnalyzeTextJobStatus), TextAnalyticsClientOptions.ServiceVersion.V2022_05_01, ServiceVersion);
         public override Task<Response<Models.AnalyzeTextJobState>> AnalyzeTextJobStatusNextPageAsync(string nextLink, int? pageSizeHint, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default) =>
-            throw new NotSupportedException($"{nameof(AnalyzeTextJobStatusNextPageAsync)} not supported by API versions v3.0, v3.1.");
+            throw Validation.NotSupported(nameof(AnalyzeTextJobStatusNextPageAsync), TextAnalyticsClientOptions.ServiceVersion.V2022_05_01, ServiceVersion);
         public override Response<Models.AnalyzeTextJobState> AnalyzeTextJobStatusNextPage(string nextLink, int? pageSizeHint, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default) =>
-            throw new NotSupportedException($"{nameof(AnalyzeTextJobStatusNextPage)} not supported by API versions v3.0, v3.1.");
+            throw Validation.NotSupported(nameof(AnalyzeTextJobStatusNextPage), TextAnalyticsClientOptions.ServiceVersion.V2022_05_01, ServiceVersion);
 
         #endregion
 
         #region Common
 
         private MultiLanguageInput ConvertToMultiLanguageInput(string document, string language, int id = 0)
-            => new MultiLanguageInput($"{id}", document) { Language = language ?? _options.DefaultLanguage };
+            => new MultiLanguageInput($"{id}", document) { Language = language ?? Options.DefaultLanguage };
 
         private MultiLanguageBatchInput ConvertToMultiLanguageInputs(IEnumerable<string> documents, string language)
         {
@@ -1595,14 +1636,14 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
             foreach (var document in documents)
             {
-                batchInput.Documents.Add(new MultiLanguageInput(document.Id, document.Text) { Language = document.Language ?? _options.DefaultLanguage });;
+                batchInput.Documents.Add(new MultiLanguageInput(document.Id, document.Text) { Language = document.Language ?? Options.DefaultLanguage });;
             }
 
             return batchInput;
         }
 
         private LanguageInput ConvertToLanguageInput(string document, string countryHint, int id = 0)
-            => new LanguageInput($"{id}", document) { CountryHint = countryHint ?? _options.DefaultCountryHint };
+            => new LanguageInput($"{id}", document) { CountryHint = countryHint ?? Options.DefaultCountryHint };
 
         private LanguageBatchInput ConvertToLanguageInputs(IEnumerable<string> documents, string countryHint)
         {
@@ -1624,7 +1665,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
             foreach (var document in documents)
             {
-                batchInput.Documents.Add(new LanguageInput(document.Id, document.Text) { CountryHint = document.CountryHint ?? _options.DefaultCountryHint });
+                batchInput.Documents.Add(new LanguageInput(document.Id, document.Text) { CountryHint = document.CountryHint ?? Options.DefaultCountryHint });
             }
 
             return batchInput;

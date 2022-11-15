@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static UnknownAutomationAction DeserializeUnknownAutomationAction(JsonElement element)
         {
-            ActionType actionType = default;
+            ActionType actionType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actionType"))

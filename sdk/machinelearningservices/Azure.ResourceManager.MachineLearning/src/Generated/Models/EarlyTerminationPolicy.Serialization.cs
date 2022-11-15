@@ -41,38 +41,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "TruncationSelection": return TruncationSelectionPolicy.DeserializeTruncationSelectionPolicy(element);
                 }
             }
-            Optional<int> delayEvaluation = default;
-            Optional<int> evaluationInterval = default;
-            EarlyTerminationPolicyType policyType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("delayEvaluation"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    delayEvaluation = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("evaluationInterval"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    evaluationInterval = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("policyType"))
-                {
-                    policyType = new EarlyTerminationPolicyType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownEarlyTerminationPolicy(Optional.ToNullable(delayEvaluation), Optional.ToNullable(evaluationInterval), policyType);
+            return UnknownEarlyTerminationPolicy.DeserializeUnknownEarlyTerminationPolicy(element);
         }
     }
 }

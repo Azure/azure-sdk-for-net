@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CachesListResult>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<StorageCachesResult>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -70,9 +70,9 @@ namespace Azure.ResourceManager.StorageCache
             {
                 case 200:
                     {
-                        CachesListResult value = default;
+                        StorageCachesResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CachesListResult.DeserializeCachesListResult(document.RootElement);
+                        value = StorageCachesResult.DeserializeStorageCachesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CachesListResult> List(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<StorageCachesResult> List(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -95,9 +95,9 @@ namespace Azure.ResourceManager.StorageCache
             {
                 case 200:
                     {
-                        CachesListResult value = default;
+                        StorageCachesResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CachesListResult.DeserializeCachesListResult(document.RootElement);
+                        value = StorageCachesResult.DeserializeStorageCachesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CachesListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<StorageCachesResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -141,9 +141,9 @@ namespace Azure.ResourceManager.StorageCache
             {
                 case 200:
                     {
-                        CachesListResult value = default;
+                        StorageCachesResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CachesListResult.DeserializeCachesListResult(document.RootElement);
+                        value = StorageCachesResult.DeserializeStorageCachesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CachesListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<StorageCachesResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -168,9 +168,9 @@ namespace Azure.ResourceManager.StorageCache
             {
                 case 200:
                     {
-                        CachesListResult value = default;
+                        StorageCachesResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CachesListResult.DeserializeCachesListResult(document.RootElement);
+                        value = StorageCachesResult.DeserializeStorageCachesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CacheData>> GetAsync(string subscriptionId, string resourceGroupName, string cacheName, CancellationToken cancellationToken = default)
+        public async Task<Response<StorageCacheData>> GetAsync(string subscriptionId, string resourceGroupName, string cacheName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -289,13 +289,13 @@ namespace Azure.ResourceManager.StorageCache
             {
                 case 200:
                     {
-                        CacheData value = default;
+                        StorageCacheData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CacheData.DeserializeCacheData(document.RootElement);
+                        value = StorageCacheData.DeserializeStorageCacheData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((CacheData)null, message.Response);
+                    return Response.FromValue((StorageCacheData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CacheData> Get(string subscriptionId, string resourceGroupName, string cacheName, CancellationToken cancellationToken = default)
+        public Response<StorageCacheData> Get(string subscriptionId, string resourceGroupName, string cacheName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -320,19 +320,19 @@ namespace Azure.ResourceManager.StorageCache
             {
                 case 200:
                     {
-                        CacheData value = default;
+                        StorageCacheData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CacheData.DeserializeCacheData(document.RootElement);
+                        value = StorageCacheData.DeserializeStorageCacheData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((CacheData)null, message.Response);
+                    return Response.FromValue((StorageCacheData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string cacheName, CacheData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string cacheName, StorageCacheData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string cacheName, CacheData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string cacheName, StorageCacheData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string cacheName, CacheData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string cacheName, StorageCacheData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.StorageCache
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string cacheName, CacheData data)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string cacheName, StorageCacheData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CacheData>> UpdateAsync(string subscriptionId, string resourceGroupName, string cacheName, CacheData data, CancellationToken cancellationToken = default)
+        public async Task<Response<StorageCacheData>> UpdateAsync(string subscriptionId, string resourceGroupName, string cacheName, StorageCacheData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -457,9 +457,9 @@ namespace Azure.ResourceManager.StorageCache
             {
                 case 200:
                     {
-                        CacheData value = default;
+                        StorageCacheData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CacheData.DeserializeCacheData(document.RootElement);
+                        value = StorageCacheData.DeserializeStorageCacheData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CacheData> Update(string subscriptionId, string resourceGroupName, string cacheName, CacheData data, CancellationToken cancellationToken = default)
+        public Response<StorageCacheData> Update(string subscriptionId, string resourceGroupName, string cacheName, StorageCacheData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -488,9 +488,9 @@ namespace Azure.ResourceManager.StorageCache
             {
                 case 200:
                     {
-                        CacheData value = default;
+                        StorageCacheData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CacheData.DeserializeCacheData(document.RootElement);
+                        value = StorageCacheData.DeserializeStorageCacheData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -868,7 +868,7 @@ namespace Azure.ResourceManager.StorageCache
             }
         }
 
-        internal HttpMessage CreateStopPrimingJobRequest(string subscriptionId, string resourceGroupName, string cacheName, PrimingJobIdParameter primingJobId)
+        internal HttpMessage CreateStopPrimingJobRequest(string subscriptionId, string resourceGroupName, string cacheName, PrimingJobContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -885,12 +885,12 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (primingJobId != null)
+            if (content != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(primingJobId);
-                request.Content = content;
+                var content0 = new Utf8JsonRequestContent();
+                content0.JsonWriter.WriteObjectValue(content);
+                request.Content = content0;
             }
             _userAgent.Apply(message);
             return message;
@@ -900,17 +900,17 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> Target resource group. </param>
         /// <param name="cacheName"> Name of Cache. Length of name must not be greater than 80 and chars must be from the [-0-9a-zA-Z_] char class. </param>
-        /// <param name="primingJobId"> Object containing the priming job ID. </param>
+        /// <param name="content"> Object containing the priming job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> StopPrimingJobAsync(string subscriptionId, string resourceGroupName, string cacheName, PrimingJobIdParameter primingJobId = null, CancellationToken cancellationToken = default)
+        public async Task<Response> StopPrimingJobAsync(string subscriptionId, string resourceGroupName, string cacheName, PrimingJobContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
 
-            using var message = CreateStopPrimingJobRequest(subscriptionId, resourceGroupName, cacheName, primingJobId);
+            using var message = CreateStopPrimingJobRequest(subscriptionId, resourceGroupName, cacheName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -926,17 +926,17 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> Target resource group. </param>
         /// <param name="cacheName"> Name of Cache. Length of name must not be greater than 80 and chars must be from the [-0-9a-zA-Z_] char class. </param>
-        /// <param name="primingJobId"> Object containing the priming job ID. </param>
+        /// <param name="content"> Object containing the priming job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response StopPrimingJob(string subscriptionId, string resourceGroupName, string cacheName, PrimingJobIdParameter primingJobId = null, CancellationToken cancellationToken = default)
+        public Response StopPrimingJob(string subscriptionId, string resourceGroupName, string cacheName, PrimingJobContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
 
-            using var message = CreateStopPrimingJobRequest(subscriptionId, resourceGroupName, cacheName, primingJobId);
+            using var message = CreateStopPrimingJobRequest(subscriptionId, resourceGroupName, cacheName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -948,7 +948,7 @@ namespace Azure.ResourceManager.StorageCache
             }
         }
 
-        internal HttpMessage CreatePausePrimingJobRequest(string subscriptionId, string resourceGroupName, string cacheName, PrimingJobIdParameter primingJobId)
+        internal HttpMessage CreatePausePrimingJobRequest(string subscriptionId, string resourceGroupName, string cacheName, PrimingJobContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -965,12 +965,12 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (primingJobId != null)
+            if (content != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(primingJobId);
-                request.Content = content;
+                var content0 = new Utf8JsonRequestContent();
+                content0.JsonWriter.WriteObjectValue(content);
+                request.Content = content0;
             }
             _userAgent.Apply(message);
             return message;
@@ -980,17 +980,17 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> Target resource group. </param>
         /// <param name="cacheName"> Name of Cache. Length of name must not be greater than 80 and chars must be from the [-0-9a-zA-Z_] char class. </param>
-        /// <param name="primingJobId"> Object containing the priming job ID. </param>
+        /// <param name="content"> Object containing the priming job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> PausePrimingJobAsync(string subscriptionId, string resourceGroupName, string cacheName, PrimingJobIdParameter primingJobId = null, CancellationToken cancellationToken = default)
+        public async Task<Response> PausePrimingJobAsync(string subscriptionId, string resourceGroupName, string cacheName, PrimingJobContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
 
-            using var message = CreatePausePrimingJobRequest(subscriptionId, resourceGroupName, cacheName, primingJobId);
+            using var message = CreatePausePrimingJobRequest(subscriptionId, resourceGroupName, cacheName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1006,17 +1006,17 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> Target resource group. </param>
         /// <param name="cacheName"> Name of Cache. Length of name must not be greater than 80 and chars must be from the [-0-9a-zA-Z_] char class. </param>
-        /// <param name="primingJobId"> Object containing the priming job ID. </param>
+        /// <param name="content"> Object containing the priming job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response PausePrimingJob(string subscriptionId, string resourceGroupName, string cacheName, PrimingJobIdParameter primingJobId = null, CancellationToken cancellationToken = default)
+        public Response PausePrimingJob(string subscriptionId, string resourceGroupName, string cacheName, PrimingJobContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
 
-            using var message = CreatePausePrimingJobRequest(subscriptionId, resourceGroupName, cacheName, primingJobId);
+            using var message = CreatePausePrimingJobRequest(subscriptionId, resourceGroupName, cacheName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1028,7 +1028,7 @@ namespace Azure.ResourceManager.StorageCache
             }
         }
 
-        internal HttpMessage CreateResumePrimingJobRequest(string subscriptionId, string resourceGroupName, string cacheName, PrimingJobIdParameter primingJobId)
+        internal HttpMessage CreateResumePrimingJobRequest(string subscriptionId, string resourceGroupName, string cacheName, PrimingJobContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1045,12 +1045,12 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (primingJobId != null)
+            if (content != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(primingJobId);
-                request.Content = content;
+                var content0 = new Utf8JsonRequestContent();
+                content0.JsonWriter.WriteObjectValue(content);
+                request.Content = content0;
             }
             _userAgent.Apply(message);
             return message;
@@ -1060,17 +1060,17 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> Target resource group. </param>
         /// <param name="cacheName"> Name of Cache. Length of name must not be greater than 80 and chars must be from the [-0-9a-zA-Z_] char class. </param>
-        /// <param name="primingJobId"> Object containing the priming job ID. </param>
+        /// <param name="content"> Object containing the priming job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ResumePrimingJobAsync(string subscriptionId, string resourceGroupName, string cacheName, PrimingJobIdParameter primingJobId = null, CancellationToken cancellationToken = default)
+        public async Task<Response> ResumePrimingJobAsync(string subscriptionId, string resourceGroupName, string cacheName, PrimingJobContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
 
-            using var message = CreateResumePrimingJobRequest(subscriptionId, resourceGroupName, cacheName, primingJobId);
+            using var message = CreateResumePrimingJobRequest(subscriptionId, resourceGroupName, cacheName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1086,17 +1086,17 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> Target resource group. </param>
         /// <param name="cacheName"> Name of Cache. Length of name must not be greater than 80 and chars must be from the [-0-9a-zA-Z_] char class. </param>
-        /// <param name="primingJobId"> Object containing the priming job ID. </param>
+        /// <param name="content"> Object containing the priming job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response ResumePrimingJob(string subscriptionId, string resourceGroupName, string cacheName, PrimingJobIdParameter primingJobId = null, CancellationToken cancellationToken = default)
+        public Response ResumePrimingJob(string subscriptionId, string resourceGroupName, string cacheName, PrimingJobContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
 
-            using var message = CreateResumePrimingJobRequest(subscriptionId, resourceGroupName, cacheName, primingJobId);
+            using var message = CreateResumePrimingJobRequest(subscriptionId, resourceGroupName, cacheName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1284,7 +1284,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CachesListResult>> ListNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<StorageCachesResult>> ListNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1295,9 +1295,9 @@ namespace Azure.ResourceManager.StorageCache
             {
                 case 200:
                     {
-                        CachesListResult value = default;
+                        StorageCachesResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CachesListResult.DeserializeCachesListResult(document.RootElement);
+                        value = StorageCachesResult.DeserializeStorageCachesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1311,7 +1311,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CachesListResult> ListNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<StorageCachesResult> ListNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1322,9 +1322,9 @@ namespace Azure.ResourceManager.StorageCache
             {
                 case 200:
                     {
-                        CachesListResult value = default;
+                        StorageCachesResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CachesListResult.DeserializeCachesListResult(document.RootElement);
+                        value = StorageCachesResult.DeserializeStorageCachesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1353,7 +1353,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CachesListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<StorageCachesResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1365,9 +1365,9 @@ namespace Azure.ResourceManager.StorageCache
             {
                 case 200:
                     {
-                        CachesListResult value = default;
+                        StorageCachesResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CachesListResult.DeserializeCachesListResult(document.RootElement);
+                        value = StorageCachesResult.DeserializeStorageCachesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1382,7 +1382,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CachesListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<StorageCachesResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1394,9 +1394,9 @@ namespace Azure.ResourceManager.StorageCache
             {
                 case 200:
                     {
-                        CachesListResult value = default;
+                        StorageCachesResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CachesListResult.DeserializeCachesListResult(document.RootElement);
+                        value = StorageCachesResult.DeserializeStorageCachesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

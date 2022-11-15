@@ -103,7 +103,8 @@
         },
         {
             "file":[
-                "sdk/datafactory/Azure.ResourceManager.DataFactory/src/Generated/Models/RestServiceAuthenticationType.cs"
+                "sdk/datafactory/Azure.ResourceManager.DataFactory/src/Generated/Models/RestServiceAuthenticationType.cs",
+                "sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Generated/Models/RestServiceAuthenticationType.cs"
             ],
             "_justification": "File contains a string value that ends with credential, not a true credential."
         },
@@ -117,6 +118,13 @@
                 "sdk/containerregistry/Azure.ResourceManager.ContainerRegistry/tests/SessionRecords/ContainerRegistryTests/ContainerRegistryToken()Async.json"
             ],
             "_justification": "The async operation id starts with token, not a true token value."
+        },
+        {
+            "file":[
+                "sdk/containerservice/Azure.ResourceManager.ContainerService/tests/SessionRecords/ContainerServiceCollectionTests/GetCredentials().json",
+                "sdk/containerservice/Azure.ResourceManager.ContainerService/tests/SessionRecords/ContainerServiceCollectionTests/GetCredentials()Async.json"
+            ],
+            "_justification": "Files contain ephemeral keys or certificates used by test code during playback."
         }
     ]
 }

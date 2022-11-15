@@ -13,22 +13,16 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DataShare.Models
 {
     /// <summary> A kusto table data set. </summary>
-    public partial class KustoTableDataSet : DataSetData
+    public partial class KustoTableDataSet : ShareDataSetData
     {
         /// <summary> Initializes a new instance of KustoTableDataSet. </summary>
         /// <param name="kustoDatabaseResourceId"> Resource id of the kusto database. </param>
         /// <param name="tableLevelSharingProperties"> Table level sharing properties for kusto database. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="kustoDatabaseResourceId"/> or <paramref name="tableLevelSharingProperties"/> is null. </exception>
-        public KustoTableDataSet(string kustoDatabaseResourceId, TableLevelSharingProperties tableLevelSharingProperties)
+        public KustoTableDataSet(ResourceIdentifier kustoDatabaseResourceId, TableLevelSharingProperties tableLevelSharingProperties)
         {
-            if (kustoDatabaseResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(kustoDatabaseResourceId));
-            }
-            if (tableLevelSharingProperties == null)
-            {
-                throw new ArgumentNullException(nameof(tableLevelSharingProperties));
-            }
+            Argument.AssertNotNull(kustoDatabaseResourceId, nameof(kustoDatabaseResourceId));
+            Argument.AssertNotNull(tableLevelSharingProperties, nameof(tableLevelSharingProperties));
 
             KustoDatabaseResourceId = kustoDatabaseResourceId;
             TableLevelSharingProperties = tableLevelSharingProperties;
@@ -46,7 +40,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="location"> Location of the kusto cluster. </param>
         /// <param name="provisioningState"> Provisioning state of the kusto table data set. </param>
         /// <param name="tableLevelSharingProperties"> Table level sharing properties for kusto database. </param>
-        internal KustoTableDataSet(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetKind kind, string dataSetId, string kustoDatabaseResourceId, AzureLocation? location, ProvisioningState? provisioningState, TableLevelSharingProperties tableLevelSharingProperties) : base(id, name, resourceType, systemData, kind)
+        internal KustoTableDataSet(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetKind kind, Guid? dataSetId, ResourceIdentifier kustoDatabaseResourceId, AzureLocation? location, DataShareProvisioningState? provisioningState, TableLevelSharingProperties tableLevelSharingProperties) : base(id, name, resourceType, systemData, kind)
         {
             DataSetId = dataSetId;
             KustoDatabaseResourceId = kustoDatabaseResourceId;
@@ -57,13 +51,13 @@ namespace Azure.ResourceManager.DataShare.Models
         }
 
         /// <summary> Unique id for identifying a data set resource. </summary>
-        public string DataSetId { get; }
+        public Guid? DataSetId { get; }
         /// <summary> Resource id of the kusto database. </summary>
-        public string KustoDatabaseResourceId { get; set; }
+        public ResourceIdentifier KustoDatabaseResourceId { get; set; }
         /// <summary> Location of the kusto cluster. </summary>
         public AzureLocation? Location { get; }
         /// <summary> Provisioning state of the kusto table data set. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public DataShareProvisioningState? ProvisioningState { get; }
         /// <summary> Table level sharing properties for kusto database. </summary>
         public TableLevelSharingProperties TableLevelSharingProperties { get; set; }
     }

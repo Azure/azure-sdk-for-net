@@ -37,7 +37,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             // build modes and their differences, please see:
             // https://aka.ms/azsdk/formrecognizer/buildmode
 
-            BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
+            BuildDocumentModelOperation operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
             DocumentModelDetails model = operation.Value;
 
             Console.WriteLine($"  Model Id: {model.ModelId}");
@@ -56,7 +56,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             #endregion
 
             // Delete the model on completion to clean environment.
-            await client.DeleteModelAsync(model.ModelId);
+            await client.DeleteDocumentModelAsync(model.ModelId);
         }
     }
 }

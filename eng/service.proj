@@ -92,6 +92,7 @@
     <RemoveDuplicates Inputs="@(ProjectsToInclude->Replace($(RepoRoot), ''))">
       <Output TaskParameter="Filtered" ItemName="ProjectsToIncludeFitered"/>
     </RemoveDuplicates>
+    <Message Text="Write to file $(OutputProjectFilePath)" Importance="high"/>
     <Message Text="%24%28RepoRoot%29%(ProjectsToIncludeFitered.Identity)" Importance="high"/>
     <ItemGroup>
       <_WriteToLines Include="%24%28RepoRoot%29%(ProjectsToIncludeFitered.Identity)" />

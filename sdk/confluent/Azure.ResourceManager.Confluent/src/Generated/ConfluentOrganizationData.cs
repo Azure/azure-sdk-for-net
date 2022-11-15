@@ -23,14 +23,8 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="offerDetail"/> or <paramref name="userDetail"/> is null. </exception>
         public ConfluentOrganizationData(AzureLocation location, ConfluentOfferDetail offerDetail, ConfluentUserDetail userDetail) : base(location)
         {
-            if (offerDetail == null)
-            {
-                throw new ArgumentNullException(nameof(offerDetail));
-            }
-            if (userDetail == null)
-            {
-                throw new ArgumentNullException(nameof(userDetail));
-            }
+            Argument.AssertNotNull(offerDetail, nameof(offerDetail));
+            Argument.AssertNotNull(userDetail, nameof(userDetail));
 
             OfferDetail = offerDetail;
             UserDetail = userDetail;

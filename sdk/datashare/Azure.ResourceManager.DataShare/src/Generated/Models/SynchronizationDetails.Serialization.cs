@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.DataShare.Models
     {
         internal static SynchronizationDetails DeserializeSynchronizationDetails(JsonElement element)
         {
-            Optional<string> dataSetId = default;
-            Optional<DataSetType> dataSetType = default;
+            Optional<Guid> dataSetId = default;
+            Optional<ShareDataSetType> dataSetType = default;
             Optional<int> durationMs = default;
             Optional<DateTimeOffset> endTime = default;
             Optional<long> filesRead = default;
@@ -34,7 +34,12 @@ namespace Azure.ResourceManager.DataShare.Models
             {
                 if (property.NameEquals("dataSetId"))
                 {
-                    dataSetId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    dataSetId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("dataSetType"))
@@ -44,7 +49,7 @@ namespace Azure.ResourceManager.DataShare.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dataSetType = new DataSetType(property.Value.GetString());
+                    dataSetType = new ShareDataSetType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("durationMs"))
@@ -163,7 +168,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     continue;
                 }
             }
-            return new SynchronizationDetails(dataSetId.Value, Optional.ToNullable(dataSetType), Optional.ToNullable(durationMs), Optional.ToNullable(endTime), Optional.ToNullable(filesRead), Optional.ToNullable(filesWritten), message.Value, name.Value, Optional.ToNullable(rowsCopied), Optional.ToNullable(rowsRead), Optional.ToNullable(sizeRead), Optional.ToNullable(sizeWritten), Optional.ToNullable(startTime), status.Value, Optional.ToNullable(vCore));
+            return new SynchronizationDetails(Optional.ToNullable(dataSetId), Optional.ToNullable(dataSetType), Optional.ToNullable(durationMs), Optional.ToNullable(endTime), Optional.ToNullable(filesRead), Optional.ToNullable(filesWritten), message.Value, name.Value, Optional.ToNullable(rowsCopied), Optional.ToNullable(rowsRead), Optional.ToNullable(sizeRead), Optional.ToNullable(sizeWritten), Optional.ToNullable(startTime), status.Value, Optional.ToNullable(vCore));
         }
     }
 }

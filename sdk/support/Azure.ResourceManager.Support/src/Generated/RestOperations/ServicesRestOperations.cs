@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Support
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ServiceData>> GetAsync(string serviceName, CancellationToken cancellationToken = default)
+        public async Task<Response<SupportAzureServiceData>> GetAsync(string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
@@ -123,13 +123,13 @@ namespace Azure.ResourceManager.Support
             {
                 case 200:
                     {
-                        ServiceData value = default;
+                        SupportAzureServiceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ServiceData.DeserializeServiceData(document.RootElement);
+                        value = SupportAzureServiceData.DeserializeSupportAzureServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ServiceData)null, message.Response);
+                    return Response.FromValue((SupportAzureServiceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Support
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ServiceData> Get(string serviceName, CancellationToken cancellationToken = default)
+        public Response<SupportAzureServiceData> Get(string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
@@ -150,13 +150,13 @@ namespace Azure.ResourceManager.Support
             {
                 case 200:
                     {
-                        ServiceData value = default;
+                        SupportAzureServiceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ServiceData.DeserializeServiceData(document.RootElement);
+                        value = SupportAzureServiceData.DeserializeSupportAzureServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ServiceData)null, message.Response);
+                    return Response.FromValue((SupportAzureServiceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

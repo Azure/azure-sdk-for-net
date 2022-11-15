@@ -61,20 +61,20 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="hybridRunbookWorkerGroupName"> The hybrid runbook worker group name. </param>
-        /// <param name="hybridRunbookWorkerGroupCreationParameters"> The create or update parameters for hybrid runbook worker group. </param>
+        /// <param name="content"> The create or update parameters for hybrid runbook worker group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hybridRunbookWorkerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="hybridRunbookWorkerGroupName"/> or <paramref name="hybridRunbookWorkerGroupCreationParameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<HybridRunbookWorkerGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string hybridRunbookWorkerGroupName, HybridRunbookWorkerGroupCreateOrUpdateParameters hybridRunbookWorkerGroupCreationParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="hybridRunbookWorkerGroupName"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<HybridRunbookWorkerGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string hybridRunbookWorkerGroupName, HybridRunbookWorkerGroupCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hybridRunbookWorkerGroupName, nameof(hybridRunbookWorkerGroupName));
-            Argument.AssertNotNull(hybridRunbookWorkerGroupCreationParameters, nameof(hybridRunbookWorkerGroupCreationParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _hybridRunbookWorkerGroupClientDiagnostics.CreateScope("HybridRunbookWorkerGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _hybridRunbookWorkerGroupRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hybridRunbookWorkerGroupName, hybridRunbookWorkerGroupCreationParameters, cancellationToken).ConfigureAwait(false);
+                var response = await _hybridRunbookWorkerGroupRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hybridRunbookWorkerGroupName, content, cancellationToken).ConfigureAwait(false);
                 var operation = new AutomationArmOperation<HybridRunbookWorkerGroupResource>(Response.FromValue(new HybridRunbookWorkerGroupResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -94,20 +94,20 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="hybridRunbookWorkerGroupName"> The hybrid runbook worker group name. </param>
-        /// <param name="hybridRunbookWorkerGroupCreationParameters"> The create or update parameters for hybrid runbook worker group. </param>
+        /// <param name="content"> The create or update parameters for hybrid runbook worker group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hybridRunbookWorkerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="hybridRunbookWorkerGroupName"/> or <paramref name="hybridRunbookWorkerGroupCreationParameters"/> is null. </exception>
-        public virtual ArmOperation<HybridRunbookWorkerGroupResource> CreateOrUpdate(WaitUntil waitUntil, string hybridRunbookWorkerGroupName, HybridRunbookWorkerGroupCreateOrUpdateParameters hybridRunbookWorkerGroupCreationParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="hybridRunbookWorkerGroupName"/> or <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<HybridRunbookWorkerGroupResource> CreateOrUpdate(WaitUntil waitUntil, string hybridRunbookWorkerGroupName, HybridRunbookWorkerGroupCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hybridRunbookWorkerGroupName, nameof(hybridRunbookWorkerGroupName));
-            Argument.AssertNotNull(hybridRunbookWorkerGroupCreationParameters, nameof(hybridRunbookWorkerGroupCreationParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _hybridRunbookWorkerGroupClientDiagnostics.CreateScope("HybridRunbookWorkerGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _hybridRunbookWorkerGroupRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hybridRunbookWorkerGroupName, hybridRunbookWorkerGroupCreationParameters, cancellationToken);
+                var response = _hybridRunbookWorkerGroupRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hybridRunbookWorkerGroupName, content, cancellationToken);
                 var operation = new AutomationArmOperation<HybridRunbookWorkerGroupResource>(Response.FromValue(new HybridRunbookWorkerGroupResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);

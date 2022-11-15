@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("isSubjectCaseSensitive");
                 writer.WriteBooleanValue(IsSubjectCaseSensitive.Value);
             }
-            if (Optional.IsDefined(EnableAdvancedFilteringOnArrays))
+            if (Optional.IsDefined(IsAdvancedFilteringOnArraysEnabled))
             {
                 writer.WritePropertyName("enableAdvancedFilteringOnArrays");
-                writer.WriteBooleanValue(EnableAdvancedFilteringOnArrays.Value);
+                writer.WriteBooleanValue(IsAdvancedFilteringOnArraysEnabled.Value);
             }
             if (Optional.IsCollectionDefined(AdvancedFilters))
             {

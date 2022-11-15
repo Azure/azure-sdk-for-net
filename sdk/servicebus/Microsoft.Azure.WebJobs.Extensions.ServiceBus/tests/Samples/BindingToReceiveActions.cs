@@ -26,7 +26,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Tests.Samples
                 await messageActions.CompleteMessageAsync(message);
 
                 // attempt to receive additional messages in this session
-                await receiveActions.ReceiveMessagesAsync(maxMessages: 10);
+                var receivedMessages = await receiveActions.ReceiveMessagesAsync(maxMessages: 10);
+
+                // you can also use the receive actions to peek messages
+                var peekedMessages = await receiveActions.PeekMessagesAsync(maxMessages: 10);
             }
         }
         #endregion

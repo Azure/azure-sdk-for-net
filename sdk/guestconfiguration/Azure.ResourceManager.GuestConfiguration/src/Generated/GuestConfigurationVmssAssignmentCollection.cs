@@ -6,7 +6,10 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -22,10 +25,11 @@ namespace Azure.ResourceManager.GuestConfiguration
     /// Each <see cref="GuestConfigurationVmssAssignmentResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
     /// To get a <see cref="GuestConfigurationVmssAssignmentCollection" /> instance call the GetGuestConfigurationVmssAssignments method from an instance of <see cref="ResourceGroupResource" />.
     /// </summary>
-    public partial class GuestConfigurationVmssAssignmentCollection : ArmCollection
+    public partial class GuestConfigurationVmssAssignmentCollection : ArmCollection, IEnumerable<GuestConfigurationVmssAssignmentResource>, IAsyncEnumerable<GuestConfigurationVmssAssignmentResource>
     {
         private readonly ClientDiagnostics _guestConfigurationVmssAssignmentGuestConfigurationAssignmentsVmSSClientDiagnostics;
         private readonly GuestConfigurationAssignmentsVmssRestOperations _guestConfigurationVmssAssignmentGuestConfigurationAssignmentsVmSSRestClient;
+        private readonly string _vmssName;
 
         /// <summary> Initializes a new instance of the <see cref="GuestConfigurationVmssAssignmentCollection"/> class for mocking. </summary>
         protected GuestConfigurationVmssAssignmentCollection()
@@ -35,8 +39,12 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <summary> Initializes a new instance of the <see cref="GuestConfigurationVmssAssignmentCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal GuestConfigurationVmssAssignmentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        /// <param name="vmssName"> The name of the virtual machine scale set. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vmssName"/> is an empty string, and was expected to be non-empty. </exception>
+        internal GuestConfigurationVmssAssignmentCollection(ArmClient client, ResourceIdentifier id, string vmssName) : base(client, id)
         {
+            _vmssName = vmssName;
             _guestConfigurationVmssAssignmentGuestConfigurationAssignmentsVmSSClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", GuestConfigurationVmssAssignmentResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(GuestConfigurationVmssAssignmentResource.ResourceType, out string guestConfigurationVmssAssignmentGuestConfigurationAssignmentsVmSSApiVersion);
             _guestConfigurationVmssAssignmentGuestConfigurationAssignmentsVmSSRestClient = new GuestConfigurationAssignmentsVmssRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, guestConfigurationVmssAssignmentGuestConfigurationAssignmentsVmSSApiVersion);
@@ -56,21 +64,19 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{name}
         /// Operation Id: GuestConfigurationAssignmentsVMSS_Get
         /// </summary>
-        /// <param name="vmssName"> The name of the virtual machine scale set. </param>
         /// <param name="name"> The guest configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/> or <paramref name="name"/> is null. </exception>
-        public virtual async Task<Response<GuestConfigurationVmssAssignmentResource>> GetAsync(string vmssName, string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual async Task<Response<GuestConfigurationVmssAssignmentResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _guestConfigurationVmssAssignmentGuestConfigurationAssignmentsVmSSClientDiagnostics.CreateScope("GuestConfigurationVmssAssignmentCollection.Get");
             scope.Start();
             try
             {
-                var response = await _guestConfigurationVmssAssignmentGuestConfigurationAssignmentsVmSSRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vmssName, name, cancellationToken).ConfigureAwait(false);
+                var response = await _guestConfigurationVmssAssignmentGuestConfigurationAssignmentsVmSSRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _vmssName, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GuestConfigurationVmssAssignmentResource(Client, response.Value), response.GetRawResponse());
@@ -87,21 +93,19 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{name}
         /// Operation Id: GuestConfigurationAssignmentsVMSS_Get
         /// </summary>
-        /// <param name="vmssName"> The name of the virtual machine scale set. </param>
         /// <param name="name"> The guest configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/> or <paramref name="name"/> is null. </exception>
-        public virtual Response<GuestConfigurationVmssAssignmentResource> Get(string vmssName, string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual Response<GuestConfigurationVmssAssignmentResource> Get(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _guestConfigurationVmssAssignmentGuestConfigurationAssignmentsVmSSClientDiagnostics.CreateScope("GuestConfigurationVmssAssignmentCollection.Get");
             scope.Start();
             try
             {
-                var response = _guestConfigurationVmssAssignmentGuestConfigurationAssignmentsVmSSRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vmssName, name, cancellationToken);
+                var response = _guestConfigurationVmssAssignmentGuestConfigurationAssignmentsVmSSRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _vmssName, name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GuestConfigurationVmssAssignmentResource(Client, response.Value), response.GetRawResponse());
@@ -114,25 +118,77 @@ namespace Azure.ResourceManager.GuestConfiguration
         }
 
         /// <summary>
+        /// List all guest configuration assignments for VMSS.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments
+        /// Operation Id: GuestConfigurationAssignmentsVMSS_List
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="GuestConfigurationVmssAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<GuestConfigurationVmssAssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<GuestConfigurationVmssAssignmentResource>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _guestConfigurationVmssAssignmentGuestConfigurationAssignmentsVmSSClientDiagnostics.CreateScope("GuestConfigurationVmssAssignmentCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _guestConfigurationVmssAssignmentGuestConfigurationAssignmentsVmSSRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, _vmssName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new GuestConfigurationVmssAssignmentResource(Client, value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary>
+        /// List all guest configuration assignments for VMSS.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments
+        /// Operation Id: GuestConfigurationAssignmentsVMSS_List
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="GuestConfigurationVmssAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<GuestConfigurationVmssAssignmentResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            Page<GuestConfigurationVmssAssignmentResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _guestConfigurationVmssAssignmentGuestConfigurationAssignmentsVmSSClientDiagnostics.CreateScope("GuestConfigurationVmssAssignmentCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _guestConfigurationVmssAssignmentGuestConfigurationAssignmentsVmSSRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, _vmssName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new GuestConfigurationVmssAssignmentResource(Client, value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{name}
         /// Operation Id: GuestConfigurationAssignmentsVMSS_Get
         /// </summary>
-        /// <param name="vmssName"> The name of the virtual machine scale set. </param>
         /// <param name="name"> The guest configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/> or <paramref name="name"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string vmssName, string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _guestConfigurationVmssAssignmentGuestConfigurationAssignmentsVmSSClientDiagnostics.CreateScope("GuestConfigurationVmssAssignmentCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _guestConfigurationVmssAssignmentGuestConfigurationAssignmentsVmSSRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vmssName, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _guestConfigurationVmssAssignmentGuestConfigurationAssignmentsVmSSRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _vmssName, name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -147,21 +203,19 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{name}
         /// Operation Id: GuestConfigurationAssignmentsVMSS_Get
         /// </summary>
-        /// <param name="vmssName"> The name of the virtual machine scale set. </param>
         /// <param name="name"> The guest configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/> or <paramref name="name"/> is null. </exception>
-        public virtual Response<bool> Exists(string vmssName, string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _guestConfigurationVmssAssignmentGuestConfigurationAssignmentsVmSSClientDiagnostics.CreateScope("GuestConfigurationVmssAssignmentCollection.Exists");
             scope.Start();
             try
             {
-                var response = _guestConfigurationVmssAssignmentGuestConfigurationAssignmentsVmSSRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vmssName, name, cancellationToken: cancellationToken);
+                var response = _guestConfigurationVmssAssignmentGuestConfigurationAssignmentsVmSSRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _vmssName, name, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -169,6 +223,21 @@ namespace Azure.ResourceManager.GuestConfiguration
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<GuestConfigurationVmssAssignmentResource> IEnumerable<GuestConfigurationVmssAssignmentResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<GuestConfigurationVmssAssignmentResource> IAsyncEnumerable<GuestConfigurationVmssAssignmentResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

@@ -2,34 +2,40 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Azure.Communication.CallingServer.Models.Streaming
+namespace Azure.Communication.CallingServer
 {
     /// <summary>
     /// Streaming audio.
     /// </summary>
-    public class MediaStreamingAudio
+    public class MediaStreamingAudio : MediaStreamingPackageBase
     {
+        internal MediaStreamingAudio(byte[] data, DateTime timestamp, string participantId, bool isSilence)
+        {
+            Data = data;
+            Timestamp = timestamp;
+            Participant = new CommunicationUserIdentifier(participantId);
+            IsSilent = isSilence;
+        }
+
         /// <summary>
-        /// Base64 Encoded audio buffer data .
+        /// The audio data.
         /// </summary>
-        [JsonPropertyName("data")]
-        public byte[] Data { get; set; }
+        public byte[] Data { get; }
+
         /// <summary>
         /// The timestamp of thwn the media was sourced.
         /// </summary>
-        [JsonPropertyName("timestamp")]
-        public DateTime Timestamp { get; set; }
+        public DateTime Timestamp { get; }
         /// <summary>
         /// Participant ID
         /// </summary>
-        [JsonPropertyName("participantId")]
-        public string ParticipantId { get; set; }
+        public CommunicationIdentifier Participant { get; }
         /// <summary>
         /// Indicates if the received audio buffer contains only silence.
         /// </summary>
-        [JsonPropertyName("isSilence")]
-        public bool IsSilence { get; set; }
+        public bool IsSilent { get; }
     }
 }

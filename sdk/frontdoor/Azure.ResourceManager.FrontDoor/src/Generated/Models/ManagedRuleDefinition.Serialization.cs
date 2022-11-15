@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         {
             Optional<string> ruleId = default;
             Optional<ManagedRuleEnabledState> defaultState = default;
-            Optional<ActionType> defaultAction = default;
+            Optional<RuleMatchActionType> defaultAction = default;
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    defaultAction = new ActionType(property.Value.GetString());
+                    defaultAction = new RuleMatchActionType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("description"))

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         internal static AzureFunctionEventSubscriptionDestination DeserializeAzureFunctionEventSubscriptionDestination(JsonElement element)
         {
             EndpointType endpointType = default;
-            Optional<string> resourceId = default;
+            Optional<ResourceIdentifier> resourceId = default;
             Optional<int> maxEventsPerBatch = default;
             Optional<int> preferredBatchSizeInKilobytes = default;
             Optional<IList<DeliveryAttributeMapping>> deliveryAttributeMappings = default;
@@ -74,7 +74,12 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         if (property0.NameEquals("resourceId"))
                         {
-                            resourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            resourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("maxEventsPerBatch"))

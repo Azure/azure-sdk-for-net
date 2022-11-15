@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    since = property.Value.GetDateTimeOffset();
+                    since = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("code"))

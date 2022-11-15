@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Support
     /// A Class representing a ProblemClassification along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ProblemClassificationResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetProblemClassificationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServiceResource" /> using the GetProblemClassification method.
+    /// Otherwise you can get one from its parent resource <see cref="SupportAzureServiceResource" /> using the GetProblemClassification method.
     /// </summary>
     public partial class ProblemClassificationResource : ArmResource
     {

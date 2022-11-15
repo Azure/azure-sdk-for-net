@@ -40,37 +40,37 @@ namespace Azure.Maps
         private const string UnifiedValue = "Unified";
 
         /// <summary> United Arab Emirates (Arabic View). </summary>
-        public static LocalizedMapView AE { get; } = new LocalizedMapView(AEValue);
+        public static LocalizedMapView UnitedArabEmirates { get; } = new LocalizedMapView(AEValue);
         /// <summary> Argentina (Argentinian View). </summary>
-        public static LocalizedMapView AR { get; } = new LocalizedMapView(ARValue);
+        public static LocalizedMapView Argentina { get; } = new LocalizedMapView(ARValue);
         /// <summary> Bahrain (Arabic View). </summary>
-        public static LocalizedMapView BH { get; } = new LocalizedMapView(BHValue);
+        public static LocalizedMapView Bahrain { get; } = new LocalizedMapView(BHValue);
         /// <summary> India (Indian View). </summary>
-        public static LocalizedMapView IN { get; } = new LocalizedMapView(INValue);
+        public static LocalizedMapView India { get; } = new LocalizedMapView(INValue);
         /// <summary> Iraq (Arabic View). </summary>
-        public static LocalizedMapView IQ { get; } = new LocalizedMapView(IQValue);
+        public static LocalizedMapView Iraq { get; } = new LocalizedMapView(IQValue);
         /// <summary> Jordan (Arabic View). </summary>
-        public static LocalizedMapView JO { get; } = new LocalizedMapView(JOValue);
+        public static LocalizedMapView Jordan { get; } = new LocalizedMapView(JOValue);
         /// <summary> Kuwait (Arabic View). </summary>
-        public static LocalizedMapView KW { get; } = new LocalizedMapView(KWValue);
+        public static LocalizedMapView Kuwait { get; } = new LocalizedMapView(KWValue);
         /// <summary> Lebanon (Arabic View). </summary>
-        public static LocalizedMapView LB { get; } = new LocalizedMapView(LBValue);
+        public static LocalizedMapView Lebanon { get; } = new LocalizedMapView(LBValue);
         /// <summary> Morocco (Moroccan View). </summary>
-        public static LocalizedMapView MA { get; } = new LocalizedMapView(MAValue);
+        public static LocalizedMapView Morocco { get; } = new LocalizedMapView(MAValue);
         /// <summary> Oman (Arabic View). </summary>
-        public static LocalizedMapView OM { get; } = new LocalizedMapView(OMValue);
+        public static LocalizedMapView Oman { get; } = new LocalizedMapView(OMValue);
         /// <summary> Pakistan (Pakistani View). </summary>
-        public static LocalizedMapView PK { get; } = new LocalizedMapView(PKValue);
+        public static LocalizedMapView Pakistan { get; } = new LocalizedMapView(PKValue);
         /// <summary> Palestinian Authority (Arabic View). </summary>
-        public static LocalizedMapView PS { get; } = new LocalizedMapView(PSValue);
+        public static LocalizedMapView PalestinianAuthority { get; } = new LocalizedMapView(PSValue);
         /// <summary> Qatar (Arabic View). </summary>
-        public static LocalizedMapView QA { get; } = new LocalizedMapView(QAValue);
+        public static LocalizedMapView Qatar { get; } = new LocalizedMapView(QAValue);
         /// <summary> Saudi Arabia (Arabic View). </summary>
-        public static LocalizedMapView SA { get; } = new LocalizedMapView(SAValue);
+        public static LocalizedMapView SaudiArabia { get; } = new LocalizedMapView(SAValue);
         /// <summary> Syria (Arabic View). </summary>
-        public static LocalizedMapView SY { get; } = new LocalizedMapView(SYValue);
+        public static LocalizedMapView Syria { get; } = new LocalizedMapView(SYValue);
         /// <summary> Yemen (Arabic View). </summary>
-        public static LocalizedMapView YE { get; } = new LocalizedMapView(YEValue);
+        public static LocalizedMapView Yemen { get; } = new LocalizedMapView(YEValue);
         /// <summary> Return the map data based on the IP address of the request. </summary>
         public static LocalizedMapView Auto { get; } = new LocalizedMapView(AutoValue);
         /// <summary> Unified View (Others). </summary>

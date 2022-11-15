@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="expressRouteAuthorizationId"> The ID of the ExpressRoute Circuit Authorization. </param>
         /// <param name="expressRouteAuthorizationKey"> The key of the ExpressRoute Circuit Authorization. </param>
         /// <param name="expressRouteId"> The ID of the ExpressRoute Circuit. </param>
-        internal ExpressRouteAuthorizationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExpressRouteAuthorizationProvisioningState? provisioningState, string expressRouteAuthorizationId, string expressRouteAuthorizationKey, string expressRouteId) : base(id, name, resourceType, systemData)
+        internal ExpressRouteAuthorizationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExpressRouteAuthorizationProvisioningState? provisioningState, ResourceIdentifier expressRouteAuthorizationId, string expressRouteAuthorizationKey, ResourceIdentifier expressRouteId) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             ExpressRouteAuthorizationId = expressRouteAuthorizationId;
@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.Avs
         /// <summary> The state of the  ExpressRoute Circuit Authorization provisioning. </summary>
         public ExpressRouteAuthorizationProvisioningState? ProvisioningState { get; }
         /// <summary> The ID of the ExpressRoute Circuit Authorization. </summary>
-        public string ExpressRouteAuthorizationId { get; }
+        public ResourceIdentifier ExpressRouteAuthorizationId { get; }
         /// <summary> The key of the ExpressRoute Circuit Authorization. </summary>
         public string ExpressRouteAuthorizationKey { get; }
         /// <summary> The ID of the ExpressRoute Circuit. </summary>
-        public string ExpressRouteId { get; set; }
+        public ResourceIdentifier ExpressRouteId { get; set; }
     }
 }

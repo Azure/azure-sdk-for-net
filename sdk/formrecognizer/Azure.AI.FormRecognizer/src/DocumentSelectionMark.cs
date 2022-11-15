@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary>
         /// Initializes a new instance of DocumentSelectionMark. Used by the <see cref="DocumentAnalysisModelFactory"/>.
         /// </summary>
-        internal DocumentSelectionMark(SelectionMarkState state, IReadOnlyList<PointF> boundingPolygon, DocumentSpan span, float confidence)
+        internal DocumentSelectionMark(DocumentSelectionMarkState state, IReadOnlyList<PointF> boundingPolygon, DocumentSpan span, float confidence)
         {
             State = state;
             BoundingPolygon = boundingPolygon;
@@ -26,7 +26,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary>
         /// The polygon that outlines the content of this selection mark. Coordinates are specified relative to the
         /// top-left of the page, and points are ordered clockwise from the left relative to the selection mark
-        /// orientation. Units are in pixels for images and inches for PDF. The <see cref="LengthUnit"/>
+        /// orientation. Units are in pixels for images and inches for PDF. The <see cref="DocumentPageLengthUnit"/>
         /// type of a recognized page can be found at <see cref="DocumentPage.Unit"/>.
         /// </summary>
         public IReadOnlyList<PointF> BoundingPolygon { get; private set; }
@@ -34,7 +34,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary>
         /// Selection mark state value, like Selected or Unselected.
         /// </summary>
-        public SelectionMarkState State { get; private set; }
+        public DocumentSelectionMarkState State { get; private set; }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private IReadOnlyList<float> Polygon
@@ -54,15 +54,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 if (value == V3SelectionMarkState.Selected)
                 {
-                    State = SelectionMarkState.Selected;
+                    State = DocumentSelectionMarkState.Selected;
                 }
                 else if (value == V3SelectionMarkState.Unselected)
                 {
-                    State = SelectionMarkState.Unselected;
+                    State = DocumentSelectionMarkState.Unselected;
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException($"Unknown {nameof(SelectionMarkState)} value: {value}");
+                    throw new ArgumentOutOfRangeException($"Unknown {nameof(DocumentSelectionMarkState)} value: {value}");
                 }
             }
         }

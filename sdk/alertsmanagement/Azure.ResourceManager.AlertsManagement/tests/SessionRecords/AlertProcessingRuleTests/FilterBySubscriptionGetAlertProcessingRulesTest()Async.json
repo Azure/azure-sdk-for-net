@@ -1,0 +1,1300 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-f1b52e875269ce43b8c080e2dc34dc20-941ce6012eb8f943-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "6e7e46560ecf92999aee2de633a028bb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "629",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 05 Sep 2022 12:24:31 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "9e8ea747-2a7f-4afc-a5f3-d447ab12c37d",
+        "x-ms-ratelimit-remaining-subscription-reads": "11996",
+        "x-ms-request-id": "9e8ea747-2a7f-4afc-a5f3-d447ab12c37d",
+        "x-ms-routing-request-id": "GERMANYWESTCENTRAL:20220905T122431Z:9e8ea747-2a7f-4afc-a5f3-d447ab12c37d"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "avjerafi_tag1": "testing subscription-level alert 1",
+          "avjerafi_tag2": "testing subscription-level alert 2",
+          "avjerafi_tag3": "testing subscription-level alert 3",
+          "avjerafi_tag4": "testing subscription-level alert 4"
+        },
+        "subscriptionId": "042ebc40-492c-4e4e-a02a-c04b5ba7ee23",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": "Alerts_AMP_Playground_DEV_00",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/providers/Microsoft.AlertsManagement/actionRules?api-version=2021-08-08",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-0464b56241ee144c9080897886f9f0e2-7726b0463991074b-00",
+        "User-Agent": "azsdk-net-ResourceManager.AlertsManagement/1.0.0-alpha.20220905.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "214e5238a536bf89fddac209cb571434",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, no-cache",
+        "Content-Length": "26338",
+        "Content-Security-Policy": "script-src \u0027self\u0027",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 05 Sep 2022 12:24:32 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "fe3c6f3a-f474-4e7b-9237-2c065a453af7",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "997",
+        "x-ms-request-id": "b9111d82-2479-4097-be69-3e3b2e626084",
+        "x-ms-routing-request-id": "GERMANYWESTCENTRAL:20220905T122432Z:fe3c6f3a-f474-4e7b-9237-2c065a453af7",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "properties": {
+              "scopes": [
+                "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/AMPE2EValidation",
+                "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/avhaddadResourceGroup/providers/Microsoft.Storage/storageAccounts/avhaddadstorage"
+              ],
+              "schedule": {
+                "effectiveFrom": "2022-04-10T00:00:00",
+                "effectiveUntil": "2022-05-01T23:59:59",
+                "timeZone": "Central America Standard Time",
+                "recurrences": [
+                  {
+                    "daysOfWeek": [
+                      "Monday",
+                      "Tuesday",
+                      "Wednesday",
+                      "Thursday",
+                      "Friday"
+                    ],
+                    "recurrenceType": "Weekly",
+                    "startTime": "18:00:00",
+                    "endTime": "09:00:00"
+                  },
+                  {
+                    "daysOfWeek": [
+                      "Saturday",
+                      "Sunday"
+                    ],
+                    "recurrenceType": "Weekly"
+                  }
+                ]
+              },
+              "conditions": [
+                {
+                  "field": "Severity",
+                  "operator": "NotEquals",
+                  "values": [
+                    "Sev1"
+                  ]
+                }
+              ],
+              "enabled": true,
+              "actions": [
+                {
+                  "actionGroupIds": [
+                    "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/ActionRulesRG/providers/microsoft.insights/actionGroups/Tami email"
+                  ],
+                  "actionType": "AddActionGroups"
+                }
+              ]
+            },
+            "systemData": {
+              "createdBy": "taruas@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-04-10T11:36:12.7889047Z",
+              "lastModifiedBy": "taruas@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-04-10T19:06:39.1896667Z"
+            },
+            "location": "Global",
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/ActionRulesRG/providers/Microsoft.AlertsManagement/actionRules/ASC Demo Rule",
+            "type": "Microsoft.AlertsManagement/actionRules",
+            "name": "ASC Demo Rule"
+          },
+          {
+            "properties": {
+              "scopes": [
+                "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/default-activitylogalerts/providers/Microsoft.AlertsManagement/actionRules/ActionRuleTest1"
+              ],
+              "schedule": {
+                "effectiveFrom": "2019-12-22T11:00:00",
+                "effectiveUntil": "2020-09-24T11:00:00",
+                "recurrences": [
+                  {
+                    "daysOfMonth": [
+                      1,
+                      2,
+                      3,
+                      4,
+                      5,
+                      6,
+                      7,
+                      8,
+                      9,
+                      10,
+                      11,
+                      12,
+                      13,
+                      14,
+                      15,
+                      16,
+                      17,
+                      18,
+                      19,
+                      20,
+                      21,
+                      22,
+                      23,
+                      24,
+                      25,
+                      26,
+                      27,
+                      28,
+                      29,
+                      30,
+                      31
+                    ],
+                    "recurrenceType": "Monthly"
+                  }
+                ]
+              },
+              "conditions": [
+                {
+                  "field": "Severity",
+                  "operator": "NotEquals",
+                  "values": [
+                    "Sev4"
+                  ]
+                }
+              ],
+              "enabled": true,
+              "actions": [
+                {
+                  "actionType": "RemoveAllActionGroups"
+                }
+              ],
+              "description": ""
+            },
+            "systemData": {
+              "createdBy": "inzimerm@microsoft.com",
+              "createdAt": "2019-09-10T10:33:24.4747395Z",
+              "lastModifiedBy": "ilaizi@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2021-11-01T19:29:43.1212865Z"
+            },
+            "location": "Global",
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/Default-ActivityLogAlerts/providers/Microsoft.AlertsManagement/actionRules/ActionRuleTest1",
+            "type": "Microsoft.AlertsManagement/actionRules",
+            "name": "ActionRuleTest1"
+          },
+          {
+            "properties": {
+              "scopes": [
+                "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23"
+              ],
+              "conditions": [
+                {
+                  "field": "Severity",
+                  "operator": "Equals",
+                  "values": [
+                    "Sev2"
+                  ]
+                }
+              ],
+              "enabled": true,
+              "actions": [
+                {
+                  "actionType": "RemoveAllActionGroups"
+                }
+              ]
+            },
+            "systemData": {
+              "createdBy": "54dc3e0a-a3bd-4017-a418-d957604499c5",
+              "createdByType": "Application",
+              "createdAt": "2022-09-05T12:24:16.6383871Z",
+              "lastModifiedBy": "54dc3e0a-a3bd-4017-a418-d957604499c5",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-09-05T12:24:16.6383871Z"
+            },
+            "location": "Global",
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/testRg7367/providers/Microsoft.AlertsManagement/actionRules/AlertProcessingRule3861",
+            "type": "Microsoft.AlertsManagement/actionRules",
+            "name": "AlertProcessingRule3861"
+          },
+          {
+            "properties": {
+              "scopes": [
+                "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23"
+              ],
+              "schedule": {
+                "effectiveFrom": "2022-09-03T17:00:00",
+                "effectiveUntil": "2022-09-03T17:01:00",
+                "timeZone": "Israel Standard Time"
+              },
+              "enabled": true,
+              "actions": [
+                {
+                  "actionType": "RemoveAllActionGroups"
+                }
+              ]
+            },
+            "systemData": {
+              "createdBy": "khaboasb@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-09-03T12:27:37.1078973Z",
+              "lastModifiedBy": "khaboasb@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-09-03T12:27:37.1078973Z"
+            },
+            "location": "Global",
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/ActionRulesRG/providers/Microsoft.AlertsManagement/actionRules/AlertProcessingRuleTestSDK",
+            "type": "Microsoft.AlertsManagement/actionRules",
+            "name": "AlertProcessingRuleTestSDK"
+          },
+          {
+            "properties": {
+              "scopes": [
+                "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/ShakedRG/providers/Microsoft.ServiceBus/namespaces/testshakedsb"
+              ],
+              "conditions": [
+                {
+                  "field": "AlertRuleId",
+                  "operator": "Contains",
+                  "values": [
+                    "Hi bye"
+                  ]
+                }
+              ],
+              "enabled": true,
+              "actions": [
+                {
+                  "actionType": "RemoveAllActionGroups"
+                }
+              ],
+              "description": ""
+            },
+            "systemData": {
+              "createdBy": "orhorowi@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2021-10-13T09:42:38.4743175Z",
+              "lastModifiedBy": "orhorowi@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2021-10-13T09:43:49.6740996Z"
+            },
+            "location": "global",
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/alertrg/providers/Microsoft.AlertsManagement/actionRules/CheckForBackSpacesInsideAlertRuleId",
+            "type": "Microsoft.AlertsManagement/actionRules",
+            "name": "CheckForBackSpacesInsideAlertRuleId"
+          },
+          {
+            "properties": {
+              "scopes": [
+                "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23"
+              ],
+              "enabled": false,
+              "actions": [
+                {
+                  "actionGroupIds": [
+                    "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/inzimermrg/providers/microsoft.insights/actiongroups/inzimermag"
+                  ],
+                  "actionType": "AddActionGroups"
+                }
+              ],
+              "description": ""
+            },
+            "systemData": {
+              "createdBy": "taruas@microsoft.com",
+              "createdAt": "2021-03-02T06:42:36.6587244Z",
+              "lastModifiedBy": "taruas@microsoft.com",
+              "lastModifiedAt": "2021-03-02T06:42:36.6587244Z"
+            },
+            "location": "global",
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/alertrg/providers/Microsoft.AlertsManagement/actionRules/CheckPayload",
+            "type": "Microsoft.AlertsManagement/actionRules",
+            "name": "CheckPayload"
+          },
+          {
+            "properties": {
+              "scopes": [
+                "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/ShakedRG/providers/Microsoft.ServiceBus/namespaces/testshakedsb"
+              ],
+              "conditions": [
+                {
+                  "field": "AlertRuleId",
+                  "operator": "Contains",
+                  "values": [
+                    "\u2605\u52D5\u753B\u914D\u4FE1\u30A2\u30E9\u30FC\u30C8"
+                  ]
+                }
+              ],
+              "enabled": true,
+              "actions": [
+                {
+                  "actionType": "RemoveAllActionGroups"
+                }
+              ],
+              "description": "check for encoded alert rule Id issues"
+            },
+            "systemData": {
+              "createdBy": "orhorowi@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2021-10-13T09:40:19.8177201Z",
+              "lastModifiedBy": "orhorowi@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2021-10-13T09:40:19.8177201Z"
+            },
+            "location": "global",
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/shakedrg/providers/Microsoft.AlertsManagement/actionRules/CheckUrlEncodingForAlertRuleId",
+            "type": "Microsoft.AlertsManagement/actionRules",
+            "name": "CheckUrlEncodingForAlertRuleId"
+          },
+          {
+            "properties": {
+              "scopes": [
+                "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23"
+              ],
+              "schedule": {
+                "effectiveFrom": "2021-06-03T14:00:00",
+                "effectiveUntil": "2031-06-05T06:00:00",
+                "recurrences": [
+                  {
+                    "recurrenceType": "Daily",
+                    "startTime": "14:00:00",
+                    "endTime": "06:00:00"
+                  }
+                ]
+              },
+              "conditions": [
+                {
+                  "field": "TargetResourceType",
+                  "operator": "Equals",
+                  "values": [
+                    "microsoft.compute/virtualmachines"
+                  ]
+                },
+                {
+                  "field": "AlertContext",
+                  "operator": "Equals",
+                  "values": [
+                    "test environment"
+                  ]
+                }
+              ],
+              "enabled": false,
+              "actions": [
+                {
+                  "actionType": "RemoveAllActionGroups"
+                }
+              ],
+              "description": ""
+            },
+            "systemData": {
+              "createdBy": "taruas@microsoft.com",
+              "createdAt": "2021-06-03T09:15:47.021594Z",
+              "lastModifiedBy": "taruas@microsoft.com",
+              "lastModifiedAt": "2021-06-03T09:15:47.021594Z"
+            },
+            "location": "global",
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/alertrg/providers/Microsoft.AlertsManagement/actionRules/DailyNoneWorkingHours",
+            "type": "Microsoft.AlertsManagement/actionRules",
+            "name": "DailyNoneWorkingHours"
+          },
+          {
+            "properties": {
+              "scopes": [
+                "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/ToDelete/providers/Microsoft.ServiceBus/namespaces/TestForActionRuleToDelete"
+              ],
+              "schedule": {
+                "effectiveFrom": "2021-03-21T17:24:31",
+                "effectiveUntil": "2021-03-22T00:00:00"
+              },
+              "enabled": false,
+              "actions": [
+                {
+                  "actionType": "RemoveAllActionGroups"
+                }
+              ],
+              "description": "suppress from 19:25 PM to 2:00 AM in 21/3/2021"
+            },
+            "systemData": {
+              "createdBy": "orhorowi@microsoft.com",
+              "createdAt": "2021-03-21T17:28:59.1718143Z",
+              "lastModifiedBy": "orhorowi@microsoft.com",
+              "lastModifiedAt": "2021-03-21T17:37:52.8705189Z"
+            },
+            "location": "global",
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/alertrg/providers/Microsoft.AlertsManagement/actionRules/OnceSuppression",
+            "type": "Microsoft.AlertsManagement/actionRules",
+            "name": "OnceSuppression"
+          },
+          {
+            "properties": {
+              "scopes": [
+                "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/ShakedRG"
+              ],
+              "schedule": {
+                "effectiveFrom": "2021-06-26T06:00:00",
+                "effectiveUntil": "2021-07-27T06:00:00",
+                "recurrences": [
+                  {
+                    "daysOfWeek": [
+                      "Monday",
+                      "Thursday",
+                      "Saturday"
+                    ],
+                    "recurrenceType": "Weekly",
+                    "startTime": "06:00:00",
+                    "endTime": "06:00:00"
+                  }
+                ]
+              },
+              "conditions": [
+                {
+                  "field": "Severity",
+                  "operator": "Equals",
+                  "values": [
+                    "Sev0",
+                    "Sev1"
+                  ]
+                }
+              ],
+              "enabled": true,
+              "actions": [
+                {
+                  "actionType": "RemoveAllActionGroups"
+                }
+              ],
+              "description": "Test description"
+            },
+            "systemData": {
+              "createdBy": "shnaidor@microsoft.com",
+              "createdAt": "2020-12-08T08:22:29.2785875Z",
+              "lastModifiedBy": "shnaidor@microsoft.com",
+              "lastModifiedAt": "2020-12-08T08:27:35.1217661Z"
+            },
+            "location": "global",
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/ShakedRG/providers/Microsoft.AlertsManagement/actionRules/Test AR RG With Space",
+            "type": "Microsoft.AlertsManagement/actionRules",
+            "name": "Test AR RG With Space"
+          },
+          {
+            "properties": {
+              "scopes": [
+                "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/idsternRG/providers/Microsoft.KeyVault/vaults/amp-test-geneva-actions"
+              ],
+              "schedule": {
+                "effectiveFrom": "2018-06-26T06:00:00",
+                "effectiveUntil": "2018-07-27T06:00:00",
+                "recurrences": [
+                  {
+                    "daysOfWeek": [
+                      "Monday",
+                      "Thursday",
+                      "Saturday"
+                    ],
+                    "recurrenceType": "Weekly",
+                    "startTime": "06:00:00",
+                    "endTime": "06:00:00"
+                  }
+                ]
+              },
+              "enabled": true,
+              "actions": [
+                {
+                  "actionType": "RemoveAllActionGroups"
+                }
+              ]
+            },
+            "systemData": {
+              "createdBy": "shnaidor@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2021-11-30T12:54:22.205727Z",
+              "lastModifiedBy": "shnaidor@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2021-11-30T12:56:17.119043Z"
+            },
+            "location": "Global",
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/ShakedRG/providers/Microsoft.AlertsManagement/actionRules/Test-AR",
+            "type": "Microsoft.AlertsManagement/actionRules",
+            "name": "Test-AR"
+          },
+          {
+            "properties": {
+              "scopes": [
+                "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/inbal-test"
+              ],
+              "schedule": {
+                "effectiveFrom": "2021-06-26T06:00:00",
+                "effectiveUntil": "2021-07-27T06:00:00",
+                "timeZone": "UTC",
+                "recurrences": [
+                  {
+                    "daysOfWeek": [
+                      "Monday",
+                      "Thursday",
+                      "Saturday"
+                    ],
+                    "recurrenceType": "Weekly",
+                    "startTime": "06:00:00",
+                    "endTime": "06:00:00"
+                  }
+                ]
+              },
+              "conditions": [
+                {
+                  "field": "AlertContext",
+                  "operator": "Contains",
+                  "values": [
+                    "k"
+                  ]
+                },
+                {
+                  "field": "MonitorCondition",
+                  "operator": "NotEquals",
+                  "values": [
+                    "Resolved",
+                    "Fired"
+                  ]
+                },
+                {
+                  "field": "Severity",
+                  "operator": "Equals",
+                  "values": [
+                    "Sev0",
+                    "Sev1"
+                  ]
+                }
+              ],
+              "enabled": true,
+              "actions": [
+                {
+                  "actionType": "RemoveAllActionGroups"
+                }
+              ],
+              "description": "!\u0060#_/"
+            },
+            "systemData": {
+              "createdBy": "t-inleib@microsoft.com",
+              "createdAt": "2021-01-27T11:05:20.5295596Z",
+              "lastModifiedBy": "t-inleib@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2021-12-09T11:40:27.4865812Z"
+            },
+            "location": "Global",
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/inbal-test/providers/Microsoft.AlertsManagement/actionRules/TestAR-t-inleib",
+            "type": "Microsoft.AlertsManagement/actionRules",
+            "name": "TestAR-t-inleib"
+          },
+          {
+            "properties": {
+              "scopes": [
+                "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/ShakedRG"
+              ],
+              "schedule": {
+                "effectiveFrom": "2021-06-26T06:00:00",
+                "effectiveUntil": "2021-07-27T06:00:00",
+                "recurrences": [
+                  {
+                    "daysOfWeek": [
+                      "Monday",
+                      "Thursday",
+                      "Saturday"
+                    ],
+                    "recurrenceType": "Weekly",
+                    "startTime": "06:00:00",
+                    "endTime": "06:00:00"
+                  }
+                ]
+              },
+              "conditions": [
+                {
+                  "field": "Severity",
+                  "operator": "Equals",
+                  "values": [
+                    "Sev0",
+                    "Sev1"
+                  ]
+                },
+                {
+                  "field": "AlertContext",
+                  "operator": "NotEquals",
+                  "values": [
+                    "%20"
+                  ]
+                }
+              ],
+              "enabled": true,
+              "actions": [
+                {
+                  "actionType": "RemoveAllActionGroups"
+                }
+              ],
+              "description": "Test description"
+            },
+            "systemData": {
+              "createdBy": "shnaidor@microsoft.com",
+              "createdAt": "2020-12-08T09:25:29.1573055Z",
+              "lastModifiedBy": "shnaidor@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2021-07-18T16:01:40.3595909Z"
+            },
+            "location": "global",
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/ShakedRG/providers/Microsoft.AlertsManagement/actionRules/TestARShaked",
+            "type": "Microsoft.AlertsManagement/actionRules",
+            "name": "TestARShaked"
+          },
+          {
+            "properties": {
+              "scopes": [
+                "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/ToDelete/providers/microsoft.insights/components/olavitest"
+              ],
+              "schedule": {
+                "effectiveFrom": "2021-10-28T00:00:00",
+                "timeZone": "Israel Standard Time",
+                "recurrences": [
+                  {
+                    "recurrenceType": "Daily",
+                    "startTime": "01:00:00",
+                    "endTime": "02:00:00"
+                  }
+                ]
+              },
+              "enabled": true,
+              "actions": [
+                {
+                  "actionGroupIds": [
+                    "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/avjerafirg/providers/microsoft.insights/actionGroups/oren-test-alaemailtemplate"
+                  ],
+                  "actionType": "AddActionGroups"
+                }
+              ]
+            },
+            "systemData": {
+              "createdBy": "orhorowi@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2021-10-28T13:32:30.0994791Z",
+              "lastModifiedBy": "orhorowi@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2021-10-30T20:15:08.893896Z"
+            },
+            "location": "Global",
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/ToDelete/providers/Microsoft.AlertsManagement/actionRules/TestActionRuleTimeZoneDayLightSavings",
+            "type": "Microsoft.AlertsManagement/actionRules",
+            "name": "TestActionRuleTimeZoneDayLightSavings"
+          },
+          {
+            "properties": {
+              "scopes": [
+                "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23"
+              ],
+              "enabled": true,
+              "actions": [
+                {
+                  "actionGroupIds": [
+                    "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/actionrulesrg/providers/microsoft.insights/actiongroups/test-sweden"
+                  ],
+                  "actionType": "AddActionGroups"
+                }
+              ]
+            },
+            "systemData": {
+              "createdBy": "khaboasb@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-07-20T17:11:34.1670318Z",
+              "lastModifiedBy": "khaboasb@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-07-20T17:11:34.1670318Z"
+            },
+            "location": "Global",
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/ActionRulesRG/providers/Microsoft.AlertsManagement/actionRules/TestSwedenKhaled",
+            "type": "Microsoft.AlertsManagement/actionRules",
+            "name": "TestSwedenKhaled"
+          },
+          {
+            "properties": {
+              "scopes": [
+                "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/ToDelete",
+                "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23"
+              ],
+              "schedule": {
+                "effectiveUntil": "2021-08-29T13:02:01",
+                "timeZone": "Israel Standard Time",
+                "recurrences": [
+                  {
+                    "daysOfWeek": [
+                      "Sunday",
+                      "Monday",
+                      "Tuesday",
+                      "Wednesday",
+                      "Thursday"
+                    ],
+                    "recurrenceType": "Weekly",
+                    "startTime": "12:00:00",
+                    "endTime": "13:00:00"
+                  }
+                ]
+              },
+              "conditions": [
+                {
+                  "field": "MonitorService",
+                  "operator": "Equals",
+                  "values": [
+                    "Platform"
+                  ]
+                }
+              ],
+              "enabled": true,
+              "actions": [
+                {
+                  "actionType": "RemoveAllActionGroups"
+                }
+              ]
+            },
+            "systemData": {
+              "createdBy": "orhorowi@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2021-08-26T10:39:14.4557603Z",
+              "lastModifiedBy": "orhorowi@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2021-08-26T10:39:14.4557603Z"
+            },
+            "location": "global",
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/ToDelete/providers/Microsoft.AlertsManagement/actionRules/TestSystemDataChange",
+            "type": "Microsoft.AlertsManagement/actionRules",
+            "name": "TestSystemDataChange"
+          },
+          {
+            "properties": {
+              "scopes": [
+                "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23"
+              ],
+              "schedule": {
+                "effectiveFrom": "2021-07-08T11:36:19",
+                "effectiveUntil": "2021-07-11T11:36:19"
+              },
+              "conditions": [
+                {
+                  "field": "Severity",
+                  "operator": "Equals",
+                  "values": [
+                    "Sev0"
+                  ]
+                },
+                {
+                  "field": "TargetResourceType",
+                  "operator": "Equals",
+                  "values": [
+                    "microsoft.apimanagement/service"
+                  ]
+                }
+              ],
+              "enabled": true,
+              "actions": [
+                {
+                  "actionType": "RemoveAllActionGroups"
+                }
+              ],
+              "description": ""
+            },
+            "systemData": {
+              "createdBy": "taruas@microsoft.com",
+              "createdAt": "2021-07-08T11:39:04.9003564Z",
+              "lastModifiedBy": "taruas@microsoft.com",
+              "lastModifiedAt": "2021-07-08T11:39:04.9003564Z"
+            },
+            "location": "global",
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/alertrg/providers/Microsoft.AlertsManagement/actionRules/Testing Refactor- supression",
+            "type": "Microsoft.AlertsManagement/actionRules",
+            "name": "Testing Refactor- supression"
+          },
+          {
+            "properties": {
+              "scopes": [
+                "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23"
+              ],
+              "schedule": {
+                "effectiveFrom": "2022-03-10T00:00:00",
+                "effectiveUntil": "2022-03-14T23:59:59",
+                "timeZone": "Israel Standard Time",
+                "recurrences": [
+                  {
+                    "recurrenceType": "Daily",
+                    "startTime": "00:00:00",
+                    "endTime": "00:00:00"
+                  }
+                ]
+              },
+              "enabled": false,
+              "actions": [
+                {
+                  "actionType": "RemoveAllActionGroups"
+                }
+              ]
+            },
+            "systemData": {
+              "createdBy": "taruas@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-03-10T14:07:38.9612457Z",
+              "lastModifiedBy": "taruas@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-03-10T14:47:44.1440847Z"
+            },
+            "location": "Global",
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/ActionRulesRG/providers/Microsoft.AlertsManagement/actionRules/Testing daily all day",
+            "type": "Microsoft.AlertsManagement/actionRules",
+            "name": "Testing daily all day"
+          },
+          {
+            "properties": {
+              "scopes": [
+                "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23"
+              ],
+              "enabled": false,
+              "actions": [
+                {
+                  "actionGroupIds": [
+                    "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/default-activitylogalerts/providers/microsoft.insights/actiongroups/web hook"
+                  ],
+                  "actionType": "AddActionGroups"
+                }
+              ],
+              "description": ""
+            },
+            "systemData": {
+              "createdBy": "olavi@microsoft.com",
+              "createdAt": "2019-07-04T10:20:51.2967795Z",
+              "lastModifiedBy": "inzimerm@microsoft.com",
+              "lastModifiedAt": "2021-04-04T16:18:47.569249Z"
+            },
+            "location": "global",
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/default-activitylogalerts/providers/Microsoft.AlertsManagement/actionRules/WebHook",
+            "type": "Microsoft.AlertsManagement/actionRules",
+            "name": "WebHook"
+          },
+          {
+            "properties": {
+              "scopes": [
+                "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/ToDelete/providers/Microsoft.ServiceBus/namespaces/TestForActionRuleToDelete"
+              ],
+              "schedule": {
+                "effectiveFrom": "2021-03-21T17:35:09",
+                "effectiveUntil": "2021-03-28T23:00:00",
+                "recurrences": [
+                  {
+                    "daysOfWeek": [
+                      "Sunday",
+                      "Monday",
+                      "Tuesday",
+                      "Wednesday",
+                      "Thursday",
+                      "Friday",
+                      "Saturday"
+                    ],
+                    "recurrenceType": "Weekly",
+                    "startTime": "17:35:09",
+                    "endTime": "23:00:00"
+                  }
+                ]
+              },
+              "conditions": [
+                {
+                  "field": "TargetResourceType",
+                  "operator": "Equals",
+                  "values": [
+                    "microsoft.compute/virtualmachines",
+                    "microsoft.network/virtualnetworks",
+                    "microsoft.netapp/netappaccounts/capacitypools/volumes"
+                  ]
+                }
+              ],
+              "enabled": true,
+              "actions": [
+                {
+                  "actionType": "RemoveAllActionGroups"
+                }
+              ],
+              "description": "weekly suppression"
+            },
+            "systemData": {
+              "createdBy": "orhorowi@microsoft.com",
+              "createdAt": "2021-03-21T17:36:21.0919472Z",
+              "lastModifiedBy": "taruas@microsoft.com",
+              "lastModifiedAt": "2021-05-23T19:59:42.5892575Z"
+            },
+            "location": "global",
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/alertrg/providers/Microsoft.AlertsManagement/actionRules/WeeklySuppression",
+            "type": "Microsoft.AlertsManagement/actionRules",
+            "name": "WeeklySuppression"
+          },
+          {
+            "properties": {
+              "scopes": [
+                "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/avjerafiRG/providers/microsoft.insights/actiongroups/Alert dev"
+              ],
+              "schedule": {
+                "effectiveFrom": "2020-06-01T07:04:51",
+                "effectiveUntil": "2020-06-30T07:04:51"
+              },
+              "enabled": true,
+              "actions": [
+                {
+                  "actionType": "RemoveAllActionGroups"
+                }
+              ],
+              "description": ""
+            },
+            "systemData": {
+              "createdBy": "avjerafi@microsoft.com",
+              "createdAt": "2020-05-05T07:06:55.4169497Z",
+              "lastModifiedBy": "avjerafi@microsoft.com",
+              "lastModifiedAt": "2020-05-05T07:06:55.4169497Z"
+            },
+            "location": "global",
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/avjerafirg/providers/Microsoft.AlertsManagement/actionRules/avjerafi_action_rule_suppress_alert_dev_in_june",
+            "type": "Microsoft.AlertsManagement/actionRules",
+            "name": "avjerafi_action_rule_suppress_alert_dev_in_june"
+          },
+          {
+            "properties": {
+              "scopes": [
+                "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/avjerafirg2"
+              ],
+              "schedule": {
+                "effectiveFrom": "2020-06-30T21:00:00",
+                "effectiveUntil": "2020-07-31T20:59:59"
+              },
+              "enabled": false,
+              "actions": [
+                {
+                  "actionType": "RemoveAllActionGroups"
+                }
+              ],
+              "description": "Supressing all activity log alerts in July"
+            },
+            "systemData": {
+              "createdBy": "avjerafi@microsoft.com",
+              "createdAt": "2020-05-06T06:13:31.8958494Z",
+              "lastModifiedBy": "idstern@microsoft.com",
+              "lastModifiedAt": "2020-07-09T17:02:15.5944189Z"
+            },
+            "location": "global",
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/avjerafi_export_template_test/providers/Microsoft.AlertsManagement/actionRules/avjerafi_action_rule_suppress_all_in_july",
+            "type": "Microsoft.AlertsManagement/actionRules",
+            "name": "avjerafi_action_rule_suppress_all_in_july"
+          },
+          {
+            "properties": {
+              "scopes": [
+                "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/HadarResourceGroup/providers/Microsoft.Compute/virtualMachines/HadarsVM"
+              ],
+              "enabled": true,
+              "actions": [
+                {
+                  "actionGroupIds": [
+                    "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/HadarResourceGroup/providers/microsoft.insights/actionGroups/HadarActionGroup"
+                  ],
+                  "actionType": "AddActionGroups"
+                }
+              ]
+            },
+            "systemData": {
+              "createdBy": "hadarlivni@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2021-12-05T12:44:04.3939727Z",
+              "lastModifiedBy": "hadarlivni@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2021-12-05T12:44:59.5185604Z"
+            },
+            "location": "Global",
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/HadarResourceGroup/providers/Microsoft.AlertsManagement/actionRules/hadarAlertProcessingRule",
+            "type": "Microsoft.AlertsManagement/actionRules",
+            "name": "hadarAlertProcessingRule"
+          },
+          {
+            "properties": {
+              "scopes": [
+                "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23"
+              ],
+              "conditions": [
+                {
+                  "field": "AlertRuleName",
+                  "operator": "Equals",
+                  "values": [
+                    "LogserachSupressActionGroup"
+                  ]
+                }
+              ],
+              "enabled": true,
+              "actions": [
+                {
+                  "actionType": "RemoveAllActionGroups"
+                }
+              ]
+            },
+            "systemData": {
+              "createdBy": "ilaizi@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-01-09T12:12:57.4638333Z",
+              "lastModifiedBy": "ilaizi@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-01-09T12:12:57.4638333Z"
+            },
+            "location": "Global",
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/ilaiziRG/providers/Microsoft.AlertsManagement/actionRules/ilyadupress",
+            "type": "Microsoft.AlertsManagement/actionRules",
+            "name": "ilyadupress"
+          },
+          {
+            "properties": {
+              "scopes": [
+                "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23"
+              ],
+              "enabled": false,
+              "actions": [
+                {
+                  "actionType": "RemoveAllActionGroups"
+                }
+              ]
+            },
+            "systemData": {
+              "createdBy": "avhaddad@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-05-31T20:35:34.9917198Z",
+              "lastModifiedBy": "khaboasb@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-07-25T12:18:24.8913856Z"
+            },
+            "location": "Global",
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/avhaddadResourceGroup/providers/Microsoft.AlertsManagement/actionRules/processingruleaviv",
+            "type": "Microsoft.AlertsManagement/actionRules",
+            "name": "processingruleaviv"
+          },
+          {
+            "properties": {
+              "scopes": [
+                "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/ToDelete",
+                "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23"
+              ],
+              "schedule": {
+                "effectiveUntil": "2021-08-29T13:02:01",
+                "timeZone": "Israel Standard Time",
+                "recurrences": [
+                  {
+                    "daysOfWeek": [
+                      "Sunday",
+                      "Monday",
+                      "Tuesday",
+                      "Wednesday",
+                      "Thursday"
+                    ],
+                    "recurrenceType": "Weekly",
+                    "startTime": "12:00:00",
+                    "endTime": "13:00:00"
+                  }
+                ]
+              },
+              "conditions": [
+                {
+                  "field": "MonitorService",
+                  "operator": "Equals",
+                  "values": [
+                    "Platform"
+                  ]
+                }
+              ],
+              "enabled": true,
+              "actions": [
+                {
+                  "actionType": "RemoveAllActionGroups"
+                }
+              ]
+            },
+            "systemData": {
+              "createdBy": "orhorowi@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2021-08-25T11:02:43.272951Z",
+              "lastModifiedBy": "orhorowi@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2021-08-25T11:02:43.272951Z"
+            },
+            "location": "global",
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/ToDelete/providers/Microsoft.AlertsManagement/actionRules/testPutActionRule",
+            "type": "Microsoft.AlertsManagement/actionRules",
+            "name": "testPutActionRule"
+          },
+          {
+            "properties": {
+              "scopes": [
+                "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23"
+              ],
+              "schedule": {
+                "effectiveFrom": "2021-03-03T20:50:02",
+                "effectiveUntil": "2021-03-03T20:55:02"
+              },
+              "conditions": [
+                {
+                  "field": "TargetResourceType",
+                  "operator": "Equals",
+                  "values": [
+                    "microsoft.compute/virtualmachines"
+                  ]
+                }
+              ],
+              "enabled": false,
+              "actions": [
+                {
+                  "actionType": "RemoveAllActionGroups"
+                }
+              ],
+              "description": ""
+            },
+            "systemData": {
+              "createdBy": "taruas@microsoft.com",
+              "createdAt": "2021-03-03T20:50:44.8208602Z",
+              "lastModifiedBy": "taruas@microsoft.com",
+              "lastModifiedAt": "2021-03-03T20:50:44.8208602Z"
+            },
+            "location": "global",
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/alertrg/providers/Microsoft.AlertsManagement/actionRules/testcreationResourceType",
+            "type": "Microsoft.AlertsManagement/actionRules",
+            "name": "testcreationResourceType"
+          },
+          {
+            "properties": {
+              "scopes": [
+                "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23"
+              ],
+              "schedule": {
+                "effectiveFrom": "2021-03-21T13:35:09",
+                "effectiveUntil": "2021-03-28T17:00:00",
+                "recurrences": [
+                  {
+                    "daysOfWeek": [
+                      "Sunday",
+                      "Monday",
+                      "Tuesday",
+                      "Wednesday",
+                      "Thursday",
+                      "Friday",
+                      "Saturday"
+                    ],
+                    "recurrenceType": "Weekly",
+                    "startTime": "13:35:09",
+                    "endTime": "17:00:00"
+                  }
+                ]
+              },
+              "enabled": true,
+              "actions": [
+                {
+                  "actionType": "RemoveAllActionGroups"
+                }
+              ],
+              "description": "testfordelete"
+            },
+            "systemData": {
+              "createdBy": "lienglender@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2021-08-17T15:45:07.7883973Z",
+              "lastModifiedBy": "lienglender@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2021-08-17T15:45:07.7883973Z"
+            },
+            "location": "global",
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/ActionRulesRG/providers/Microsoft.AlertsManagement/actionRules/testfordelete2",
+            "type": "Microsoft.AlertsManagement/actionRules",
+            "name": "testfordelete2"
+          },
+          {
+            "properties": {
+              "scopes": [
+                "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23"
+              ],
+              "schedule": {
+                "effectiveFrom": "2021-05-19T15:41:16",
+                "effectiveUntil": "2021-05-20T15:41:16",
+                "recurrences": [
+                  {
+                    "daysOfWeek": [
+                      "Tuesday",
+                      "Wednesday",
+                      "Thursday",
+                      "Friday"
+                    ],
+                    "recurrenceType": "Weekly",
+                    "startTime": "15:41:16",
+                    "endTime": "15:41:16"
+                  }
+                ]
+              },
+              "conditions": [
+                {
+                  "field": "Description",
+                  "operator": "Equals",
+                  "values": [
+                    "never"
+                  ]
+                }
+              ],
+              "enabled": true,
+              "actions": [
+                {
+                  "actionType": "RemoveAllActionGroups"
+                }
+              ],
+              "description": ""
+            },
+            "systemData": {
+              "createdBy": "taruas@microsoft.com",
+              "createdAt": "2021-05-19T15:43:13.4963033Z",
+              "lastModifiedBy": "taruas@microsoft.com",
+              "lastModifiedAt": "2021-05-19T15:43:13.4963033Z"
+            },
+            "location": "global",
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/alertrg/providers/Microsoft.AlertsManagement/actionRules/testingDayofweek",
+            "type": "Microsoft.AlertsManagement/actionRules",
+            "name": "testingDayofweek"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1652499145",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "042ebc40-492c-4e4e-a02a-c04b5ba7ee23"
+  }
+}

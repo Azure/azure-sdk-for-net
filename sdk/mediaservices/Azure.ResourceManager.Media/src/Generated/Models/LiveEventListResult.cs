@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of LiveEventListResult. </summary>
         internal LiveEventListResult()
         {
-            Value = new ChangeTrackingList<LiveEventData>();
+            Value = new ChangeTrackingList<MediaLiveEventData>();
         }
 
         /// <summary> Initializes a new instance of LiveEventListResult. </summary>
         /// <param name="value"> The result of the List Live Event operation. </param>
         /// <param name="odataCount"> The number of result. </param>
         /// <param name="odataNextLink"> The link to the next set of results. Not empty if value contains incomplete list of live outputs. </param>
-        internal LiveEventListResult(IReadOnlyList<LiveEventData> value, int? odataCount, string odataNextLink)
+        internal LiveEventListResult(IReadOnlyList<MediaLiveEventData> value, int? odataCount, string odataNextLink)
         {
             Value = value;
             OdataCount = odataCount;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Media.Models
         }
 
         /// <summary> The result of the List Live Event operation. </summary>
-        public IReadOnlyList<LiveEventData> Value { get; }
+        public IReadOnlyList<MediaLiveEventData> Value { get; }
         /// <summary> The number of result. </summary>
         public int? OdataCount { get; }
         /// <summary> The link to the next set of results. Not empty if value contains incomplete list of live outputs. </summary>

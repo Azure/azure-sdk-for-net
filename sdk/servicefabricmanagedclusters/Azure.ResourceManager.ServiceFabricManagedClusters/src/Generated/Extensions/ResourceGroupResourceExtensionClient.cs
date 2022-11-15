@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ManagedClusterResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ManagedClusterResources and their operations over a ManagedClusterResource. </returns>
-        public virtual ManagedClusterCollection GetManagedClusters()
+        /// <summary> Gets a collection of ServiceFabricManagedClusterResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ServiceFabricManagedClusterResources and their operations over a ServiceFabricManagedClusterResource. </returns>
+        public virtual ServiceFabricManagedClusterCollection GetServiceFabricManagedClusters()
         {
-            return GetCachedClient(Client => new ManagedClusterCollection(Client, Id));
+            return GetCachedClient(Client => new ServiceFabricManagedClusterCollection(Client, Id));
         }
     }
 }

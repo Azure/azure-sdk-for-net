@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataShare.Models
         internal static SynchronizationSettingList DeserializeSynchronizationSettingList(JsonElement element)
         {
             Optional<string> nextLink = default;
-            IReadOnlyList<SynchronizationSettingData> value = default;
+            IReadOnlyList<DataShareSynchronizationSettingData> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"))
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
                 if (property.NameEquals("value"))
                 {
-                    List<SynchronizationSettingData> array = new List<SynchronizationSettingData>();
+                    List<DataShareSynchronizationSettingData> array = new List<DataShareSynchronizationSettingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynchronizationSettingData.DeserializeSynchronizationSettingData(item));
+                        array.Add(DataShareSynchronizationSettingData.DeserializeDataShareSynchronizationSettingData(item));
                     }
                     value = array;
                     continue;

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -18,14 +19,14 @@ namespace Azure.ResourceManager.StorageCache.Models
             writer.WritePropertyName("primingJobName");
             writer.WriteStringValue(PrimingJobName);
             writer.WritePropertyName("primingManifestUrl");
-            writer.WriteStringValue(PrimingManifestUri);
+            writer.WriteStringValue(PrimingManifestUri.AbsoluteUri);
             writer.WriteEndObject();
         }
 
         internal static PrimingJob DeserializePrimingJob(JsonElement element)
         {
             string primingJobName = default;
-            string primingManifestUrl = default;
+            Uri primingManifestUrl = default;
             Optional<string> primingJobId = default;
             Optional<PrimingJobState> primingJobState = default;
             Optional<string> primingJobStatus = default;
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
                 if (property.NameEquals("primingManifestUrl"))
                 {
-                    primingManifestUrl = property.Value.GetString();
+                    primingManifestUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("primingJobId"))

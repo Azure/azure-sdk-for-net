@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="frontDoorName"/> or <paramref name="rulesEngineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="frontDoorName"/> or <paramref name="rulesEngineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RulesEngineData>> GetAsync(string subscriptionId, string resourceGroupName, string frontDoorName, string rulesEngineName, CancellationToken cancellationToken = default)
+        public async Task<Response<FrontDoorRulesEngineData>> GetAsync(string subscriptionId, string resourceGroupName, string frontDoorName, string rulesEngineName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -159,13 +159,13 @@ namespace Azure.ResourceManager.FrontDoor
             {
                 case 200:
                     {
-                        RulesEngineData value = default;
+                        FrontDoorRulesEngineData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RulesEngineData.DeserializeRulesEngineData(document.RootElement);
+                        value = FrontDoorRulesEngineData.DeserializeFrontDoorRulesEngineData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RulesEngineData)null, message.Response);
+                    return Response.FromValue((FrontDoorRulesEngineData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="frontDoorName"/> or <paramref name="rulesEngineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="frontDoorName"/> or <paramref name="rulesEngineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RulesEngineData> Get(string subscriptionId, string resourceGroupName, string frontDoorName, string rulesEngineName, CancellationToken cancellationToken = default)
+        public Response<FrontDoorRulesEngineData> Get(string subscriptionId, string resourceGroupName, string frontDoorName, string rulesEngineName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -192,19 +192,19 @@ namespace Azure.ResourceManager.FrontDoor
             {
                 case 200:
                     {
-                        RulesEngineData value = default;
+                        FrontDoorRulesEngineData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RulesEngineData.DeserializeRulesEngineData(document.RootElement);
+                        value = FrontDoorRulesEngineData.DeserializeFrontDoorRulesEngineData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RulesEngineData)null, message.Response);
+                    return Response.FromValue((FrontDoorRulesEngineData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string frontDoorName, string rulesEngineName, RulesEngineData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string frontDoorName, string rulesEngineName, FrontDoorRulesEngineData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="frontDoorName"/>, <paramref name="rulesEngineName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="frontDoorName"/> or <paramref name="rulesEngineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string frontDoorName, string rulesEngineName, RulesEngineData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string frontDoorName, string rulesEngineName, FrontDoorRulesEngineData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="frontDoorName"/>, <paramref name="rulesEngineName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="frontDoorName"/> or <paramref name="rulesEngineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string frontDoorName, string rulesEngineName, RulesEngineData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string frontDoorName, string rulesEngineName, FrontDoorRulesEngineData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

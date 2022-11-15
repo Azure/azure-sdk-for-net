@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2017-08-01-preview";
+            _apiVersion = apiVersion ?? "2020-01-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        /// <summary> Security contact configurations for the subscription. </summary>
+        /// <summary> List all security contact configurations for the subscription. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        /// <summary> Security contact configurations for the subscription. </summary>
+        /// <summary> List all security contact configurations for the subscription. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        /// <summary> Security contact configurations for the subscription. </summary>
+        /// <summary> Get Default Security contact configurations for the subscription. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
         /// <param name="securityContactName"> Name of the security contact object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        /// <summary> Security contact configurations for the subscription. </summary>
+        /// <summary> Get Default Security contact configurations for the subscription. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
         /// <param name="securityContactName"> Name of the security contact object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        /// <summary> Security contact configurations for the subscription. </summary>
+        /// <summary> Create security contact configurations for the subscription. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
         /// <param name="securityContactName"> Name of the security contact object. </param>
         /// <param name="data"> Security contact object. </param>
@@ -220,6 +220,7 @@ namespace Azure.ResourceManager.SecurityCenter
             switch (message.Response.Status)
             {
                 case 200:
+                case 201:
                     {
                         SecurityContactData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
@@ -231,7 +232,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        /// <summary> Security contact configurations for the subscription. </summary>
+        /// <summary> Create security contact configurations for the subscription. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
         /// <param name="securityContactName"> Name of the security contact object. </param>
         /// <param name="data"> Security contact object. </param>
@@ -249,6 +250,7 @@ namespace Azure.ResourceManager.SecurityCenter
             switch (message.Response.Status)
             {
                 case 200:
+                case 201:
                     {
                         SecurityContactData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
@@ -278,7 +280,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        /// <summary> Security contact configurations for the subscription. </summary>
+        /// <summary> Delete security contact configurations for the subscription. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
         /// <param name="securityContactName"> Name of the security contact object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -293,6 +295,7 @@ namespace Azure.ResourceManager.SecurityCenter
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
+                case 200:
                 case 204:
                     return message.Response;
                 default:
@@ -300,7 +303,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        /// <summary> Security contact configurations for the subscription. </summary>
+        /// <summary> Delete security contact configurations for the subscription. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
         /// <param name="securityContactName"> Name of the security contact object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -315,88 +318,9 @@ namespace Azure.ResourceManager.SecurityCenter
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
+                case 200:
                 case 204:
                     return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string securityContactName, SecurityContactData data)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.Security/securityContacts/", false);
-            uri.AppendPath(securityContactName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Security contact configurations for the subscription. </summary>
-        /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="securityContactName"> Name of the security contact object. </param>
-        /// <param name="data"> Security contact object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="securityContactName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="securityContactName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SecurityContactData>> UpdateAsync(string subscriptionId, string securityContactName, SecurityContactData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(securityContactName, nameof(securityContactName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateUpdateRequest(subscriptionId, securityContactName, data);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        SecurityContactData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SecurityContactData.DeserializeSecurityContactData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Security contact configurations for the subscription. </summary>
-        /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="securityContactName"> Name of the security contact object. </param>
-        /// <param name="data"> Security contact object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="securityContactName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="securityContactName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SecurityContactData> Update(string subscriptionId, string securityContactName, SecurityContactData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(securityContactName, nameof(securityContactName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateUpdateRequest(subscriptionId, securityContactName, data);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        SecurityContactData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SecurityContactData.DeserializeSecurityContactData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -416,7 +340,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        /// <summary> Security contact configurations for the subscription. </summary>
+        /// <summary> List all security contact configurations for the subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -443,7 +367,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        /// <summary> Security contact configurations for the subscription. </summary>
+        /// <summary> List all security contact configurations for the subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

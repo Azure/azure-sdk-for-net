@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<string> audioLanguage = default;
             Optional<AudioAnalysisMode> mode = default;
             Optional<IDictionary<string, string>> experimentalOptions = default;
-            string odataType = default;
+            string odataType = "#Microsoft.Media.AudioAnalyzerPreset";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("audioLanguage"))

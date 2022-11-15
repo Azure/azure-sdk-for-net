@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -16,12 +17,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="value"> The value of the secret. </param>
         /// <param name="encryptionAlgorithm"> The algorithm used to encrypt &quot;Value&quot;. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AsymmetricEncryptedSecret(string value, EncryptionAlgorithm encryptionAlgorithm)
+        public AsymmetricEncryptedSecret(string value, DataBoxEdgeEncryptionAlgorithm encryptionAlgorithm)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value;
             EncryptionAlgorithm = encryptionAlgorithm;
@@ -31,7 +29,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="value"> The value of the secret. </param>
         /// <param name="encryptionCertThumbprint"> Thumbprint certificate used to encrypt \&quot;Value\&quot;. If the value is unencrypted, it will be null. </param>
         /// <param name="encryptionAlgorithm"> The algorithm used to encrypt &quot;Value&quot;. </param>
-        internal AsymmetricEncryptedSecret(string value, string encryptionCertThumbprint, EncryptionAlgorithm encryptionAlgorithm)
+        internal AsymmetricEncryptedSecret(string value, string encryptionCertThumbprint, DataBoxEdgeEncryptionAlgorithm encryptionAlgorithm)
         {
             Value = value;
             EncryptionCertThumbprint = encryptionCertThumbprint;
@@ -43,6 +41,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Thumbprint certificate used to encrypt \&quot;Value\&quot;. If the value is unencrypted, it will be null. </summary>
         public string EncryptionCertThumbprint { get; set; }
         /// <summary> The algorithm used to encrypt &quot;Value&quot;. </summary>
-        public EncryptionAlgorithm EncryptionAlgorithm { get; set; }
+        public DataBoxEdgeEncryptionAlgorithm EncryptionAlgorithm { get; set; }
     }
 }
