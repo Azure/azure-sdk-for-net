@@ -9,10 +9,7 @@ param(
     [string] $SubscriptionId,
 
     [Parameter()]
-    [string] $ClusterName,
-
-    [Parameter()]
-    [string] $DatabaseName,
+    [string] $IotHubName,
 
     [Parameter()]
     [string] $AppRegistrationName

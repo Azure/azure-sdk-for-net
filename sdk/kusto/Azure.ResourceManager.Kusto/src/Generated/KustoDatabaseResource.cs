@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="callerRole"> By default, any user who run operation on a database become an Admin on it. This property allows the caller to exclude the caller from Admins list. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<KustoDatabaseResource>> UpdateAsync(WaitUntil waitUntil, KustoDatabaseData data, CallerRole? callerRole = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<KustoDatabaseResource>> UpdateAsync(WaitUntil waitUntil, KustoDatabaseData data, KustoDatabaseCallerRole? callerRole = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="callerRole"> By default, any user who run operation on a database become an Admin on it. This property allows the caller to exclude the caller from Admins list. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<KustoDatabaseResource> Update(WaitUntil waitUntil, KustoDatabaseData data, CallerRole? callerRole = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<KustoDatabaseResource> Update(WaitUntil waitUntil, KustoDatabaseData data, KustoDatabaseCallerRole? callerRole = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 

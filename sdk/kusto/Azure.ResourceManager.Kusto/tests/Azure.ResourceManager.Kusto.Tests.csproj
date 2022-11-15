@@ -5,11 +5,9 @@
 
   <ItemGroup>
     <Folder Include="SessionRecords" />
-    <Folder Include="SessionRecords\" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.ResourceManager.Network" />
     <PackageReference Include="System.Linq.Async" />
   </ItemGroup>
 </Project>

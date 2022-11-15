@@ -9,7 +9,6 @@ csharp: true
 library-name: Kusto
 namespace: Azure.ResourceManager.Kusto
 require: https://github.com/Azure/azure-rest-api-specs/blob/05a9cdab363b8ec824094ee73950c04594325172/specification/azure-kusto/resource-manager/readme.md
-tag: package-2022-07
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -213,7 +212,7 @@ rename-mapping:
   DefaultPrincipalsModificationKind: KustoDatabaseDefaultPrincipalsModificationKind
   TableLevelSharingProperties: KustoDatabaseTableLevelSharingProperties
   TrustedExternalTenant: KustoClusterTrustedExternalTenant
-  callerRole: KustoDatabaseCallerRole
+  CallerRole: KustoDatabaseCallerRole
   DatabaseShareOrigin: KustoDatabaseShareOrigin
 
 
