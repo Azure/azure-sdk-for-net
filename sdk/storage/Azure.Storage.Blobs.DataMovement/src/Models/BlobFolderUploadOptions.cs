@@ -24,11 +24,6 @@ namespace Azure.Storage.Blobs.DataMovement.Models
         public StorageTransferOptions TransferOptions { get; set; }
 
         /// <summary>
-        /// Progress Handler
-        /// </summary>
-        public IProgress<BlobFolderUploadProgress> ProgressHandler { get; set; }
-
-        /// <summary>
         /// Optional <see cref="BlobImmutabilityPolicy"/> to set on the blob.
         /// Note that is parameter is only applicable to a blob within a container that
         /// has immutable storage with versioning enabled.
@@ -36,54 +31,10 @@ namespace Azure.Storage.Blobs.DataMovement.Models
         public BlobImmutabilityPolicy ImmutabilityPolicy { get; set; }
 
         /// <summary>
-        /// Optional for using transactional
-        /// hashing on uploads.
-        /// </summary>
-        ///public UploadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
-
-        /// <summary>
         /// Optional.  Indicates if a legal hold should be placed on the blob.
         /// Note that is parameter is only applicable to a blob within a container that
         /// has immutable storage with versioning enabled.
         /// </summary>
         public bool? LegalHold { get; set; }
-
-        /// <summary>
-        /// Number of files/blobs transferred succesfully
-        /// </summary>
-        public event SyncAsyncEventHandler<BlobUploadSuccessEventArgs> UploadCompletedEventHandler;
-        internal SyncAsyncEventHandler<BlobUploadSuccessEventArgs> GetUploadCompleted() => UploadCompletedEventHandler;
-
-        /// <summary>
-        /// Number of directories transferred
-        /// </summary>
-        public event SyncAsyncEventHandler<BlobFolderUploadSuccessEventArgs> FolderCompletedEventHandler;
-        internal SyncAsyncEventHandler<BlobFolderUploadSuccessEventArgs> GetFolderCompleted() => FolderCompletedEventHandler;
-
-        /// <summary>
-        /// Number of Files Failing Transfer either due to no access or just failing transfer in general
-        /// </summary>
-        public event SyncAsyncEventHandler<BlobUploadFailedEventArgs> UploadFailedEventHandler;
-
-        internal SyncAsyncEventHandler<BlobUploadFailedEventArgs> GetUploadFailed() => UploadFailedEventHandler;
-
-        /// <summary>
-        /// Number of Files Skipped during Transfer due to no overwrite allowed as specified.
-        /// </summary>
-        public event SyncAsyncEventHandler<BlobUploadSkippedEventArgs> UploadSkippedEventHandler;
-
-        internal SyncAsyncEventHandler<BlobUploadSkippedEventArgs> GetUploadSkipped() => UploadSkippedEventHandler;
-
-        /// <summary>
-        /// Number of directories skipped transfer. Due to inaccessability not sure if we should keep track if a few files in a folder are unable to transfer
-        /// </summary>
-        public event SyncAsyncEventHandler<BlobFolderUploadFailedEventArgs> FolderFailedEventHandler;
-        internal SyncAsyncEventHandler<BlobFolderUploadFailedEventArgs> GetFolderFailed() => FolderFailedEventHandler;
-
-        /// <summary>
-        /// If the transfer status of the job changes then the event will get added to this handler.
-        /// </summary>
-        public event SyncAsyncEventHandler<TransferStatusEventArgs> TransferStatusEventHandler;
-        internal SyncAsyncEventHandler<TransferStatusEventArgs> GetTransferStatus() => TransferStatusEventHandler;
     }
 }

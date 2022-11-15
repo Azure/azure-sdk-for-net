@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Azure.Storage.DataMovement.JobPlanModels
+namespace Azure.Storage.DataMovement
 {
     /// <summary>
     /// Required if the blob has associated snapshots. Specify one of the following two options:

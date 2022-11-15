@@ -101,8 +101,8 @@ namespace Azure.Storage.DataMovement
                 S2SInvalidMetadataHandleOption = 0, // TODO: revisit when supported
                 atomicJobStatus = (uint) jobStatus,
                 atomicPartStatus = (uint) jobPart.JobPartStatus,
-                DeleteSnapshotsOption = JobPlanModels.JobPartDeleteSnapshotsOption.None, // TODO: revisit when feature is added
-                PermanentDeleteOption = JobPlanModels.JobPartPermanentDeleteOption.None, // TODO: revisit when feature is added
+                DeleteSnapshotsOption = JobPartDeleteSnapshotsOption.None, // TODO: revisit when feature is added
+                PermanentDeleteOption = JobPartPermanentDeleteOption.None, // TODO: revisit when feature is added
                 RehydratePriorityType = JobPartPlanRehydratePriorityType.None, // TODO: revisit when feature is added
             };
         }

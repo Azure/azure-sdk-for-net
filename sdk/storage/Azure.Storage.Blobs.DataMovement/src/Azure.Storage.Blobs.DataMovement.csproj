@@ -27,9 +27,7 @@
     <Compile Include="$(AzureStorageSharedSources)AesGcm\**\*.cs" LinkBase="Shared\Storage" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.VisualStudio.Threading" VersionOverride="16.10.56" />
     <PackageReference Include="System.Threading.Channels" />
-    <PackageReference Include="System.Threading.Tasks.Dataflow" VersionOverride="5.0.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.DataMovement\src\Azure.Storage.DataMovement.csproj" />

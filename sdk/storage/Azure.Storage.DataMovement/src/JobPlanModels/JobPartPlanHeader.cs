@@ -1,10 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Runtime.InteropServices;
-using Azure.Core;
-using Azure.Storage.DataMovement.JobPlanModels;
 using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
