@@ -80,6 +80,26 @@ namespace Azure.Core
         public static RequestContent Create(object serializable, ObjectSerializer? serializer = null) => Create((serializer ?? JsonObjectSerializer.Default).Serialize(serializable));
 
         /// <summary>
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public static dynamic CreateDynamic()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="serializable"></param>
+        /// <param name="serializer"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public static dynamic CreateDynamic(object serializable, ObjectSerializer? serializer = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// Creates a RequestContent representing the UTF-8 Encoding of the given <see cref="string"/>.
         /// </summary>
         /// <param name="content">The <see cref="string"/> to use.</param>
