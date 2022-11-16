@@ -315,10 +315,10 @@ function DeployStressPackage(
     # Helm 3 stores release information in kubernetes secrets. The only way to add extra labels around
     # specific releases (thereby enabling filtering on `helm list`) is to label the underlying secret resources.
     # There is not currently support for setting these labels via the helm cli.
-    $helmReleaseConfig = kubectl get secrets `
-        -n $pkg.Namespace `
-        -l status=deployed,name=$($pkg.ReleaseName) `
-        -o jsonpath='{.items[0].metadata.name}'
+    $helmReleaseConfig = RunOrExitOnFailure kubectl get secrets `
+                                                -n $pkg.Namespace `
+                                                -l "status=deployed,name=$($pkg.ReleaseName)" `
+                                                -o jsonpath='{.items[0].metadata.name}'
 
     Run kubectl label secret -n $pkg.Namespace --overwrite $helmReleaseConfig deployId=$deployId
 }
