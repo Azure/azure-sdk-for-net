@@ -776,6 +776,10 @@ namespace Azure
                 // Create the property as an object if it's missing :-o !!
                 // Note: carefully consider this - this will create data for typos on the
                 // read side - is there a way to address using read/write modality?
+
+                // Note: if we want to do this, we need to implement this functionality
+                // with expressions, because once the method is bound, it won't call this
+                // binding method again unless the restriction is invalidated.
                 if (_value.GetPropertyValue(binder.Name) == null)
                 {
                     _value.SetValue(binder.Name, new JsonData());
