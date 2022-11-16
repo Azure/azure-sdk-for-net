@@ -3,11 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using Azure.Identity.Tests.Mock;
 using Azure.Security.KeyVault.Secrets;
 using NUnit.Framework;
 
@@ -22,7 +18,8 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
-        public async Task ValidateImdsSystemAssignedIdentity()
+        [TestCaseSource(nameof(AuthorityHostValues))]
+        public async Task ValidateImdsSystemAssignedIdentity(Uri authority)
         {
             if (string.IsNullOrEmpty(TestEnvironment.IMDSEnable))
             {
@@ -33,7 +30,7 @@ namespace Azure.Identity.Tests
             {
                 var vaultUri = new Uri(TestEnvironment.SystemAssignedVault);
 
-                var cred = CreateManagedIdentityCredential();
+                var cred = CreateManagedIdentityCredential(authority: authority);
 
                 // Hard code service version or recorded tests will fail: https://github.com/Azure/azure-sdk-for-net/issues/10432
                 var kvoptions = InstrumentClientOptions(new SecretClientOptions(SecretClientOptions.ServiceVersion.V7_0));
@@ -48,7 +45,8 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
-        public async Task ValidateImdsUserAssignedIdentity()
+        [TestCaseSource(nameof(AuthorityHostValues))]
+        public async Task ValidateImdsUserAssignedIdentity(Uri authority)
         {
             if (string.IsNullOrEmpty(TestEnvironment.IMDSEnable))
             {
@@ -61,7 +59,7 @@ namespace Azure.Identity.Tests
 
                 var clientId = TestEnvironment.IMDSClientId;
 
-                var cred = CreateManagedIdentityCredential(clientId);
+                var cred = CreateManagedIdentityCredential(clientId, authority: authority);
 
                 // Hard code service version or recorded tests will fail: https://github.com/Azure/azure-sdk-for-net/issues/10432
                 var kvoptions = InstrumentClientOptions(new SecretClientOptions(SecretClientOptions.ServiceVersion.V7_0));
@@ -74,9 +72,21 @@ namespace Azure.Identity.Tests
             }
         }
 
-        private ManagedIdentityCredential CreateManagedIdentityCredential(string clientId = null, TokenCredentialOptions options = null)
+        public static IEnumerable<object[]> AuthorityHostValues()
+        {
+            // params
+            // az thrown Exception message, expected message, expected  exception
+            yield return new object[] { AzureAuthorityHosts.AzureChina };
+            yield return new object[] { AzureAuthorityHosts.AzureGermany };
+            yield return new object[] { AzureAuthorityHosts.AzureGovernment };
+            yield return new object[] { AzureAuthorityHosts.AzurePublicCloud };
+            yield return new object[] { new Uri("https://foo.bar") };
+        }
+
+        private ManagedIdentityCredential CreateManagedIdentityCredential(string clientId = null, TokenCredentialOptions options = null, Uri authority = null)
         {
             options = InstrumentClientOptions(options ?? new TokenCredentialOptions());
+            options.AuthorityHost = authority;
 
             var pipeline = CredentialPipeline.GetInstance(options);
 

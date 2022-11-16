@@ -69,11 +69,12 @@ namespace Azure.Identity
                 .WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline.HttpPipeline))
                 .WithLogging(LogMsal, enablePiiLogging: IsPiiLoggingEnabled);
 
-            //special case for using appTokenProviderCallback, authority validation and instance metadata discovery should be disabled since we're not calling the STS
+            // Special case for using appTokenProviderCallback, authority validation and instance metadata discovery should be disabled since we're not calling the STS
+            // The authority is hard coded to public cloud in order to match the host found in s_instanceMetadata, but is not actually used in the request.
             if (_appTokenProviderCallback != null)
             {
                 confClientBuilder.WithAppTokenProvider(_appTokenProviderCallback)
-                    .WithAuthority(Pipeline.AuthorityHost.AbsoluteUri, TenantId, false)
+                    .WithAuthority(AzureAuthorityHosts.AzurePublicCloud.AbsoluteUri, TenantId, false)
                     .WithInstanceDiscoveryMetadata(s_instanceMetadata);
             }
             else
