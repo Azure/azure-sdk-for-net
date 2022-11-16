@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Dns.Models
 {
     internal partial class TxtRecordListResult
     {
-        internal static TxtRecordListResult DeserializeTxtRecordSetListResult(JsonElement element)
+        internal static TxtRecordListResult DeserializeTxtRecordListResult(JsonElement element)
         {
             Optional<IReadOnlyList<TxtRecordData>> value = default;
             Optional<string> nextLink = default;

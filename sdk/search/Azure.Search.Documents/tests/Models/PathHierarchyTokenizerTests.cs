@@ -54,6 +54,7 @@ namespace Azure.Search.Documents.Tests.Models
             jsonDoc = JsonDocument.Parse(stream);
             Assert.True(jsonDoc.RootElement.TryGetProperty("@odata.type", out JsonElement odataTypeElem));
             Assert.AreEqual(@"#Microsoft.Azure.Search.PathHierarchyTokenizerV2", odataTypeElem.GetString());
+            jsonDoc.Dispose();
         }
     }
 }

@@ -1,806 +1,897 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/entities/health/jobs?stringIndexType=Utf16CodeUnit",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs?api-version=2022-10-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": "application/json, text/json",
-        "Content-Length": "157",
+        "Accept": "application/json",
+        "Content-Length": "256",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-ff8a067f2873014b8135d8b5a76b6980-2c18419fda915743-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210514.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "912de7ef7312f174815daaace9ee22e6",
+        "traceparent": "00-7c74ddc3c05d4f91f398fb257f82e02f-ea04349407a71195-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221014.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "cc8077af7cd2cf4c92c3559636d2ea18",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "documents": [
+        "analysisInput": {
+          "documents": [
+            {
+              "id": "0",
+              "text": "Baby not likely to have Meningitis. in case of fever in the mother, consider Penicillin for the baby too.",
+              "language": "en"
+            }
+          ]
+        },
+        "tasks": [
           {
-            "id": "0",
-            "text": "Baby not likely to have Meningitis. in case of fever in the mother, consider Penicillin for the baby too.",
-            "language": "en"
+            "parameters": {
+              "stringIndexType": "Utf16CodeUnit"
+            },
+            "kind": "Healthcare"
           }
         ]
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "e9a35efc-b1ed-46dc-bfef-c466e485a726",
-        "Date": "Fri, 14 May 2021 17:28:51 GMT",
-        "operation-location": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/entities/health/jobs/41b14a1f-3514-414e-9c57-733f5a9dcf5f",
+        "apim-request-id": "6070f18d-e8aa-4d12-a169-9e6f889a5daf",
+        "Content-Length": "0",
+        "Date": "Fri, 14 Oct 2022 22:15:27 GMT",
+        "operation-location": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/a957f69f-eb7e-43ab-a081-6c14d145d59a?api-version=2022-10-01-preview",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "92"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "110"
       },
-      "ResponseBody": []
+      "ResponseBody": null
     },
     {
-      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/entities/health/jobs/41b14a1f-3514-414e-9c57-733f5a9dcf5f?showStats=false",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/a957f69f-eb7e-43ab-a081-6c14d145d59a?api-version=2022-10-01-preview\u0026showStats=false",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application/json, text/json",
+        "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210514.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "03ee5c28e71ec5ecf8fc2d0dce4ae244",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221014.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a5a75a7116eac17ba3ef06641ba0eee9",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "cd3ce908-1eb8-46a3-ba49-3c4ec83560d6",
+        "apim-request-id": "859b0217-da6a-427c-aae8-929305544003",
+        "Content-Length": "282",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 14 May 2021 17:28:51 GMT",
+        "Date": "Fri, 14 Oct 2022 22:15:27 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "7"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "6"
       },
       "ResponseBody": {
-        "jobId": "41b14a1f-3514-414e-9c57-733f5a9dcf5f",
-        "lastUpdateDateTime": "2021-05-14T17:28:51Z",
-        "createdDateTime": "2021-05-14T17:28:51Z",
-        "expirationDateTime": "2021-05-15T17:28:51Z",
+        "jobId": "a957f69f-eb7e-43ab-a081-6c14d145d59a",
+        "lastUpdateDateTime": "2022-10-14T22:15:28Z",
+        "createdDateTime": "2022-10-14T22:15:28Z",
+        "expirationDateTime": "2022-10-15T22:15:28Z",
         "status": "notStarted",
-        "errors": []
+        "errors": [],
+        "tasks": {
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 1,
+          "items": []
+        }
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/entities/health/jobs/41b14a1f-3514-414e-9c57-733f5a9dcf5f?showStats=false",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/a957f69f-eb7e-43ab-a081-6c14d145d59a?api-version=2022-10-01-preview\u0026showStats=false",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application/json, text/json",
+        "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210514.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "3278ba1b878dc9118485304baf2db90f",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221014.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "9f076cd7573898aa8cbd5b73cf0594be",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "2f1a21d3-f5c5-4fcb-8696-70f5f04ca4d3",
+        "apim-request-id": "e9b61c22-d597-433d-8033-66ebfd3e339c",
+        "Content-Length": "279",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 14 May 2021 17:28:52 GMT",
+        "Date": "Fri, 14 Oct 2022 22:15:28 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "36"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "13"
       },
       "ResponseBody": {
-        "jobId": "41b14a1f-3514-414e-9c57-733f5a9dcf5f",
-        "lastUpdateDateTime": "2021-05-14T17:28:52Z",
-        "createdDateTime": "2021-05-14T17:28:51Z",
-        "expirationDateTime": "2021-05-15T17:28:51Z",
+        "jobId": "a957f69f-eb7e-43ab-a081-6c14d145d59a",
+        "lastUpdateDateTime": "2022-10-14T22:15:28Z",
+        "createdDateTime": "2022-10-14T22:15:28Z",
+        "expirationDateTime": "2022-10-15T22:15:28Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 1,
+          "items": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/a957f69f-eb7e-43ab-a081-6c14d145d59a?api-version=2022-10-01-preview\u0026showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221014.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "ed555fbcffdb99f4fbbe28e375e8b4f1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "e2964b9d-d096-49a3-88c6-6029d4023ff7",
+        "Content-Length": "7501",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 14 Oct 2022 22:15:29 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "48"
+      },
+      "ResponseBody": {
+        "jobId": "a957f69f-eb7e-43ab-a081-6c14d145d59a",
+        "lastUpdateDateTime": "2022-10-14T22:15:29Z",
+        "createdDateTime": "2022-10-14T22:15:28Z",
+        "expirationDateTime": "2022-10-15T22:15:28Z",
         "status": "succeeded",
         "errors": [],
-        "results": {
-          "documents": [
+        "tasks": {
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 0,
+          "total": 1,
+          "items": [
             {
-              "id": "0",
-              "entities": [
-                {
-                  "offset": 0,
-                  "length": 4,
-                  "text": "Baby",
-                  "category": "Age",
-                  "confidenceScore": 0.9,
-                  "name": "Infant",
-                  "links": [
-                    {
-                      "dataSource": "UMLS",
-                      "id": "C0021270"
-                    },
-                    {
-                      "dataSource": "AOD",
-                      "id": "0000005273"
-                    },
-                    {
-                      "dataSource": "CCPSS",
-                      "id": "0030805"
-                    },
-                    {
-                      "dataSource": "CHV",
-                      "id": "0000006675"
-                    },
-                    {
-                      "dataSource": "DXP",
-                      "id": "U002089"
-                    },
-                    {
-                      "dataSource": "LCH",
-                      "id": "U002421"
-                    },
-                    {
-                      "dataSource": "LCH_NW",
-                      "id": "sh85066022"
-                    },
-                    {
-                      "dataSource": "LNC",
-                      "id": "LA19747-7"
-                    },
-                    {
-                      "dataSource": "MDR",
-                      "id": "10021731"
-                    },
-                    {
-                      "dataSource": "MSH",
-                      "id": "D007223"
-                    },
-                    {
-                      "dataSource": "NCI",
-                      "id": "C27956"
-                    },
-                    {
-                      "dataSource": "NCI_FDA",
-                      "id": "C27956"
-                    },
-                    {
-                      "dataSource": "NCI_NICHD",
-                      "id": "C27956"
-                    },
-                    {
-                      "dataSource": "SNOMEDCT_US",
-                      "id": "133931009"
-                    }
-                  ]
-                },
-                {
-                  "offset": 24,
-                  "length": 10,
-                  "text": "Meningitis",
-                  "category": "Diagnosis",
-                  "confidenceScore": 0.9,
-                  "assertion": {
-                    "certainty": "negativePossible"
-                  },
-                  "name": "Meningitis",
-                  "links": [
-                    {
-                      "dataSource": "UMLS",
-                      "id": "C0025289"
-                    },
-                    {
-                      "dataSource": "AOD",
-                      "id": "0000006185"
-                    },
-                    {
-                      "dataSource": "BI",
-                      "id": "BI00546"
-                    },
-                    {
-                      "dataSource": "CCPSS",
-                      "id": "1018016"
-                    },
-                    {
-                      "dataSource": "CCSR_10",
-                      "id": "NVS001"
-                    },
-                    {
-                      "dataSource": "CHV",
-                      "id": "0000007932"
-                    },
-                    {
-                      "dataSource": "COSTAR",
-                      "id": "478"
-                    },
-                    {
-                      "dataSource": "CSP",
-                      "id": "2042-5301"
-                    },
-                    {
-                      "dataSource": "CST",
-                      "id": "MENINGITIS"
-                    },
-                    {
-                      "dataSource": "DXP",
-                      "id": "U002543"
-                    },
-                    {
-                      "dataSource": "HPO",
-                      "id": "HP:0001287"
-                    },
-                    {
-                      "dataSource": "ICD10",
-                      "id": "G03.9"
-                    },
-                    {
-                      "dataSource": "ICD10AM",
-                      "id": "G03.9"
-                    },
-                    {
-                      "dataSource": "ICD10CM",
-                      "id": "G03.9"
-                    },
-                    {
-                      "dataSource": "ICD9CM",
-                      "id": "322.9"
-                    },
-                    {
-                      "dataSource": "ICPC2ICD10ENG",
-                      "id": "MTHU048434"
-                    },
-                    {
-                      "dataSource": "ICPC2P",
-                      "id": "N71002"
-                    },
-                    {
-                      "dataSource": "LCH",
-                      "id": "U002901"
-                    },
-                    {
-                      "dataSource": "LCH_NW",
-                      "id": "sh85083562"
-                    },
-                    {
-                      "dataSource": "LNC",
-                      "id": "LP20756-0"
-                    },
-                    {
-                      "dataSource": "MDR",
-                      "id": "10027199"
-                    },
-                    {
-                      "dataSource": "MEDCIN",
-                      "id": "31192"
-                    },
-                    {
-                      "dataSource": "MEDLINEPLUS",
-                      "id": "324"
-                    },
-                    {
-                      "dataSource": "MSH",
-                      "id": "D008581"
-                    },
-                    {
-                      "dataSource": "NANDA-I",
-                      "id": "02899"
-                    },
-                    {
-                      "dataSource": "NCI",
-                      "id": "C26828"
-                    },
-                    {
-                      "dataSource": "NCI_CPTAC",
-                      "id": "C26828"
-                    },
-                    {
-                      "dataSource": "NCI_CTCAE",
-                      "id": "E11458"
-                    },
-                    {
-                      "dataSource": "NCI_FDA",
-                      "id": "2389"
-                    },
-                    {
-                      "dataSource": "NCI_NCI-GLOSS",
-                      "id": "CDR0000471780"
-                    },
-                    {
-                      "dataSource": "NCI_NICHD",
-                      "id": "C26828"
-                    },
-                    {
-                      "dataSource": "OMIM",
-                      "id": "MTHU005994"
-                    },
-                    {
-                      "dataSource": "PSY",
-                      "id": "30660"
-                    },
-                    {
-                      "dataSource": "RCD",
-                      "id": "X000H"
-                    },
-                    {
-                      "dataSource": "SNM",
-                      "id": "M-40000"
-                    },
-                    {
-                      "dataSource": "SNMI",
-                      "id": "DA-10010"
-                    },
-                    {
-                      "dataSource": "SNOMEDCT_US",
-                      "id": "7180009"
-                    },
-                    {
-                      "dataSource": "WHO",
-                      "id": "0955"
-                    }
-                  ]
-                },
-                {
-                  "offset": 47,
-                  "length": 5,
-                  "text": "fever",
-                  "category": "SymptomOrSign",
-                  "confidenceScore": 0.99,
-                  "name": "Fever",
-                  "links": [
-                    {
-                      "dataSource": "UMLS",
-                      "id": "C0015967"
-                    },
-                    {
-                      "dataSource": "AIR",
-                      "id": "FEVER"
-                    },
-                    {
-                      "dataSource": "AOD",
-                      "id": "0000004396"
-                    },
-                    {
-                      "dataSource": "BI",
-                      "id": "BI00751"
-                    },
-                    {
-                      "dataSource": "CCC",
-                      "id": "K25.2"
-                    },
-                    {
-                      "dataSource": "CCPSS",
-                      "id": "1017166"
-                    },
-                    {
-                      "dataSource": "CCSR_10",
-                      "id": "SYM002"
-                    },
-                    {
-                      "dataSource": "CHV",
-                      "id": "0000005010"
-                    },
-                    {
-                      "dataSource": "COSTAR",
-                      "id": "300"
-                    },
-                    {
-                      "dataSource": "CPM",
-                      "id": "65287"
-                    },
-                    {
-                      "dataSource": "CSP",
-                      "id": "2871-4310"
-                    },
-                    {
-                      "dataSource": "CST",
-                      "id": "FEVER"
-                    },
-                    {
-                      "dataSource": "DXP",
-                      "id": "U001483"
-                    },
-                    {
-                      "dataSource": "GO",
-                      "id": "GO:0001660"
-                    },
-                    {
-                      "dataSource": "HPO",
-                      "id": "HP:0001945"
-                    },
-                    {
-                      "dataSource": "ICD10",
-                      "id": "R50.9"
-                    },
-                    {
-                      "dataSource": "ICD10AM",
-                      "id": "R50.9"
-                    },
-                    {
-                      "dataSource": "ICD10CM",
-                      "id": "R50.9"
-                    },
-                    {
-                      "dataSource": "ICD9CM",
-                      "id": "780.60"
-                    },
-                    {
-                      "dataSource": "ICNP",
-                      "id": "10041539"
-                    },
-                    {
-                      "dataSource": "ICPC",
-                      "id": "A03"
-                    },
-                    {
-                      "dataSource": "ICPC2EENG",
-                      "id": "A03"
-                    },
-                    {
-                      "dataSource": "ICPC2ICD10ENG",
-                      "id": "MTHU041751"
-                    },
-                    {
-                      "dataSource": "ICPC2P",
-                      "id": "A03002"
-                    },
-                    {
-                      "dataSource": "LCH",
-                      "id": "U001776"
-                    },
-                    {
-                      "dataSource": "LCH_NW",
-                      "id": "sh85047994"
-                    },
-                    {
-                      "dataSource": "LNC",
-                      "id": "MTHU013518"
-                    },
-                    {
-                      "dataSource": "MDR",
-                      "id": "10005911"
-                    },
-                    {
-                      "dataSource": "MEDCIN",
-                      "id": "6005"
-                    },
-                    {
-                      "dataSource": "MEDLINEPLUS",
-                      "id": "511"
-                    },
-                    {
-                      "dataSource": "MSH",
-                      "id": "D005334"
-                    },
-                    {
-                      "dataSource": "MTHICD9",
-                      "id": "780.60"
-                    },
-                    {
-                      "dataSource": "NANDA-I",
-                      "id": "01128"
-                    },
-                    {
-                      "dataSource": "NCI",
-                      "id": "C3038"
-                    },
-                    {
-                      "dataSource": "NCI_CTCAE",
-                      "id": "E11102"
-                    },
-                    {
-                      "dataSource": "NCI_FDA",
-                      "id": "1858"
-                    },
-                    {
-                      "dataSource": "NCI_NCI-GLOSS",
-                      "id": "CDR0000450108"
-                    },
-                    {
-                      "dataSource": "NCI_NICHD",
-                      "id": "C3038"
-                    },
-                    {
-                      "dataSource": "NOC",
-                      "id": "070307"
-                    },
-                    {
-                      "dataSource": "OMIM",
-                      "id": "MTHU005439"
-                    },
-                    {
-                      "dataSource": "OMS",
-                      "id": "50.03"
-                    },
-                    {
-                      "dataSource": "PCDS",
-                      "id": "PRB_11020.02"
-                    },
-                    {
-                      "dataSource": "PDQ",
-                      "id": "CDR0000775882"
-                    },
-                    {
-                      "dataSource": "PSY",
-                      "id": "23840"
-                    },
-                    {
-                      "dataSource": "QMR",
-                      "id": "Q0200115"
-                    },
-                    {
-                      "dataSource": "RCD",
-                      "id": "X76EI"
-                    },
-                    {
-                      "dataSource": "SNM",
-                      "id": "F-03003"
-                    },
-                    {
-                      "dataSource": "SNMI",
-                      "id": "F-03003"
-                    },
-                    {
-                      "dataSource": "SNOMEDCT_US",
-                      "id": "386661006"
-                    },
-                    {
-                      "dataSource": "WHO",
-                      "id": "0725"
-                    }
-                  ]
-                },
-                {
-                  "offset": 60,
-                  "length": 6,
-                  "text": "mother",
-                  "category": "FamilyRelation",
-                  "confidenceScore": 0.99,
-                  "name": "Mother (person)",
-                  "links": [
-                    {
-                      "dataSource": "UMLS",
-                      "id": "C0026591"
-                    },
-                    {
-                      "dataSource": "AOD",
-                      "id": "0000027173"
-                    },
-                    {
-                      "dataSource": "CCPSS",
-                      "id": "U000286"
-                    },
-                    {
-                      "dataSource": "CHV",
-                      "id": "0000008266"
-                    },
-                    {
-                      "dataSource": "CSP",
-                      "id": "1124-5492"
-                    },
-                    {
-                      "dataSource": "HL7V3.0",
-                      "id": "MTH"
-                    },
-                    {
-                      "dataSource": "LCH",
-                      "id": "U003028"
-                    },
-                    {
-                      "dataSource": "LCH_NW",
-                      "id": "sh85087526"
-                    },
-                    {
-                      "dataSource": "LNC",
-                      "id": "LA10417-6"
-                    },
-                    {
-                      "dataSource": "MSH",
-                      "id": "D009035"
-                    },
-                    {
-                      "dataSource": "NCI",
-                      "id": "C25189"
-                    },
-                    {
-                      "dataSource": "NCI_CDISC",
-                      "id": "C25189"
-                    },
-                    {
-                      "dataSource": "NCI_GDC",
-                      "id": "C25189"
-                    },
-                    {
-                      "dataSource": "PSY",
-                      "id": "32140"
-                    },
-                    {
-                      "dataSource": "RCD",
-                      "id": "X78ym"
-                    },
-                    {
-                      "dataSource": "SNMI",
-                      "id": "S-10120"
-                    },
-                    {
-                      "dataSource": "SNOMEDCT_US",
-                      "id": "72705000"
-                    }
-                  ]
-                },
-                {
-                  "offset": 77,
-                  "length": 10,
-                  "text": "Penicillin",
-                  "category": "MedicationName",
-                  "confidenceScore": 0.95,
-                  "assertion": {
-                    "certainty": "neutralPossible"
-                  },
-                  "name": "penicillins",
-                  "links": [
-                    {
-                      "dataSource": "UMLS",
-                      "id": "C0030842"
-                    },
-                    {
-                      "dataSource": "AOD",
-                      "id": "0000019206"
-                    },
-                    {
-                      "dataSource": "ATC",
-                      "id": "J01C"
-                    },
-                    {
-                      "dataSource": "CCPSS",
-                      "id": "0014106"
-                    },
-                    {
-                      "dataSource": "CHV",
-                      "id": "0000009423"
-                    },
-                    {
-                      "dataSource": "CSP",
-                      "id": "0199-8025"
-                    },
-                    {
-                      "dataSource": "GS",
-                      "id": "4011"
-                    },
-                    {
-                      "dataSource": "LCH",
-                      "id": "U003521"
-                    },
-                    {
-                      "dataSource": "LCH_NW",
-                      "id": "sh85099402"
-                    },
-                    {
-                      "dataSource": "LNC",
-                      "id": "LP14319-5"
-                    },
-                    {
-                      "dataSource": "MEDCIN",
-                      "id": "40319"
-                    },
-                    {
-                      "dataSource": "MMSL",
-                      "id": "d00116"
-                    },
-                    {
-                      "dataSource": "MSH",
-                      "id": "D010406"
-                    },
-                    {
-                      "dataSource": "NCI",
-                      "id": "C1500"
-                    },
-                    {
-                      "dataSource": "NCI_DTP",
-                      "id": "NSC0402815"
-                    },
-                    {
-                      "dataSource": "NCI_NCI-GLOSS",
-                      "id": "CDR0000045296"
-                    },
-                    {
-                      "dataSource": "NDDF",
-                      "id": "016121"
-                    },
-                    {
-                      "dataSource": "PSY",
-                      "id": "37190"
-                    },
-                    {
-                      "dataSource": "RCD",
-                      "id": "x009C"
-                    },
-                    {
-                      "dataSource": "SNM",
-                      "id": "E-7260"
-                    },
-                    {
-                      "dataSource": "SNMI",
-                      "id": "C-54000"
-                    },
-                    {
-                      "dataSource": "SNOMEDCT_US",
-                      "id": "764146007"
-                    },
-                    {
-                      "dataSource": "VANDF",
-                      "id": "4019880"
-                    }
-                  ]
-                },
-                {
-                  "offset": 96,
-                  "length": 4,
-                  "text": "baby",
-                  "category": "Age",
-                  "confidenceScore": 0.96,
-                  "name": "Infant",
-                  "links": [
-                    {
-                      "dataSource": "UMLS",
-                      "id": "C0021270"
-                    },
-                    {
-                      "dataSource": "AOD",
-                      "id": "0000005273"
-                    },
-                    {
-                      "dataSource": "CCPSS",
-                      "id": "0030805"
-                    },
-                    {
-                      "dataSource": "CHV",
-                      "id": "0000006675"
-                    },
-                    {
-                      "dataSource": "DXP",
-                      "id": "U002089"
-                    },
-                    {
-                      "dataSource": "LCH",
-                      "id": "U002421"
-                    },
-                    {
-                      "dataSource": "LCH_NW",
-                      "id": "sh85066022"
-                    },
-                    {
-                      "dataSource": "LNC",
-                      "id": "LA19747-7"
-                    },
-                    {
-                      "dataSource": "MDR",
-                      "id": "10021731"
-                    },
-                    {
-                      "dataSource": "MSH",
-                      "id": "D007223"
-                    },
-                    {
-                      "dataSource": "NCI",
-                      "id": "C27956"
-                    },
-                    {
-                      "dataSource": "NCI_FDA",
-                      "id": "C27956"
-                    },
-                    {
-                      "dataSource": "NCI_NICHD",
-                      "id": "C27956"
-                    },
-                    {
-                      "dataSource": "SNOMEDCT_US",
-                      "id": "133931009"
-                    }
-                  ]
-                }
-              ],
-              "relations": [],
-              "warnings": []
+              "kind": "HealthcareLROResults",
+              "lastUpdateDateTime": "2022-10-14T22:15:29.6474996Z",
+              "status": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "0",
+                    "entities": [
+                      {
+                        "offset": 0,
+                        "length": 4,
+                        "text": "Baby",
+                        "category": "Age",
+                        "confidenceScore": 0.94,
+                        "name": "Infant",
+                        "links": [
+                          {
+                            "dataSource": "UMLS",
+                            "id": "C0021270"
+                          },
+                          {
+                            "dataSource": "AOD",
+                            "id": "0000005273"
+                          },
+                          {
+                            "dataSource": "CCPSS",
+                            "id": "0030805"
+                          },
+                          {
+                            "dataSource": "CHV",
+                            "id": "0000006675"
+                          },
+                          {
+                            "dataSource": "DXP",
+                            "id": "U002089"
+                          },
+                          {
+                            "dataSource": "LCH",
+                            "id": "U002421"
+                          },
+                          {
+                            "dataSource": "LCH_NW",
+                            "id": "sh85066022"
+                          },
+                          {
+                            "dataSource": "LNC",
+                            "id": "LA19747-7"
+                          },
+                          {
+                            "dataSource": "MDR",
+                            "id": "10021731"
+                          },
+                          {
+                            "dataSource": "MSH",
+                            "id": "D007223"
+                          },
+                          {
+                            "dataSource": "NCI",
+                            "id": "C27956"
+                          },
+                          {
+                            "dataSource": "NCI_FDA",
+                            "id": "C27956"
+                          },
+                          {
+                            "dataSource": "NCI_NICHD",
+                            "id": "C27956"
+                          },
+                          {
+                            "dataSource": "SNOMEDCT_US",
+                            "id": "133931009"
+                          }
+                        ]
+                      },
+                      {
+                        "offset": 24,
+                        "length": 10,
+                        "text": "Meningitis",
+                        "category": "Diagnosis",
+                        "confidenceScore": 1.0,
+                        "assertion": {
+                          "certainty": "negativePossible"
+                        },
+                        "name": "Meningitis",
+                        "links": [
+                          {
+                            "dataSource": "UMLS",
+                            "id": "C0025289"
+                          },
+                          {
+                            "dataSource": "AOD",
+                            "id": "0000006185"
+                          },
+                          {
+                            "dataSource": "BI",
+                            "id": "BI00546"
+                          },
+                          {
+                            "dataSource": "CCPSS",
+                            "id": "1018016"
+                          },
+                          {
+                            "dataSource": "CCSR_10",
+                            "id": "NVS001"
+                          },
+                          {
+                            "dataSource": "CCSR_ICD10CM",
+                            "id": "NVS001"
+                          },
+                          {
+                            "dataSource": "CHV",
+                            "id": "0000007932"
+                          },
+                          {
+                            "dataSource": "COSTAR",
+                            "id": "478"
+                          },
+                          {
+                            "dataSource": "CSP",
+                            "id": "2042-5301"
+                          },
+                          {
+                            "dataSource": "CST",
+                            "id": "MENINGITIS"
+                          },
+                          {
+                            "dataSource": "DXP",
+                            "id": "U002543"
+                          },
+                          {
+                            "dataSource": "HPO",
+                            "id": "HP:0001287"
+                          },
+                          {
+                            "dataSource": "ICD10",
+                            "id": "G03.9"
+                          },
+                          {
+                            "dataSource": "ICD10AM",
+                            "id": "G03.9"
+                          },
+                          {
+                            "dataSource": "ICD10CM",
+                            "id": "G03.9"
+                          },
+                          {
+                            "dataSource": "ICD9CM",
+                            "id": "322.9"
+                          },
+                          {
+                            "dataSource": "ICPC2ICD10ENG",
+                            "id": "MTHU048434"
+                          },
+                          {
+                            "dataSource": "ICPC2P",
+                            "id": "N71002"
+                          },
+                          {
+                            "dataSource": "LCH",
+                            "id": "U002901"
+                          },
+                          {
+                            "dataSource": "LCH_NW",
+                            "id": "sh85083562"
+                          },
+                          {
+                            "dataSource": "LNC",
+                            "id": "LP20756-0"
+                          },
+                          {
+                            "dataSource": "MDR",
+                            "id": "10027199"
+                          },
+                          {
+                            "dataSource": "MEDCIN",
+                            "id": "31192"
+                          },
+                          {
+                            "dataSource": "MEDLINEPLUS",
+                            "id": "324"
+                          },
+                          {
+                            "dataSource": "MSH",
+                            "id": "D008581"
+                          },
+                          {
+                            "dataSource": "NANDA-I",
+                            "id": "02899"
+                          },
+                          {
+                            "dataSource": "NCI",
+                            "id": "C26828"
+                          },
+                          {
+                            "dataSource": "NCI_CPTAC",
+                            "id": "C26828"
+                          },
+                          {
+                            "dataSource": "NCI_CTCAE",
+                            "id": "E11458"
+                          },
+                          {
+                            "dataSource": "NCI_FDA",
+                            "id": "2389"
+                          },
+                          {
+                            "dataSource": "NCI_NCI-GLOSS",
+                            "id": "CDR0000471780"
+                          },
+                          {
+                            "dataSource": "NCI_NICHD",
+                            "id": "C26828"
+                          },
+                          {
+                            "dataSource": "NCI_caDSR",
+                            "id": "C26828"
+                          },
+                          {
+                            "dataSource": "OMIM",
+                            "id": "MTHU005994"
+                          },
+                          {
+                            "dataSource": "PSY",
+                            "id": "30660"
+                          },
+                          {
+                            "dataSource": "RCD",
+                            "id": "X000H"
+                          },
+                          {
+                            "dataSource": "SNM",
+                            "id": "M-40000"
+                          },
+                          {
+                            "dataSource": "SNMI",
+                            "id": "DA-10010"
+                          },
+                          {
+                            "dataSource": "SNOMEDCT_US",
+                            "id": "7180009"
+                          },
+                          {
+                            "dataSource": "WHO",
+                            "id": "0955"
+                          }
+                        ]
+                      },
+                      {
+                        "offset": 47,
+                        "length": 5,
+                        "text": "fever",
+                        "category": "SymptomOrSign",
+                        "confidenceScore": 0.98,
+                        "name": "Fever",
+                        "links": [
+                          {
+                            "dataSource": "UMLS",
+                            "id": "C0015967"
+                          },
+                          {
+                            "dataSource": "AIR",
+                            "id": "FEVER"
+                          },
+                          {
+                            "dataSource": "AOD",
+                            "id": "0000004396"
+                          },
+                          {
+                            "dataSource": "BI",
+                            "id": "BI00751"
+                          },
+                          {
+                            "dataSource": "CCC",
+                            "id": "K25.2"
+                          },
+                          {
+                            "dataSource": "CCPSS",
+                            "id": "1017166"
+                          },
+                          {
+                            "dataSource": "CCSR_10",
+                            "id": "SYM002"
+                          },
+                          {
+                            "dataSource": "CCSR_ICD10CM",
+                            "id": "SYM002"
+                          },
+                          {
+                            "dataSource": "CHV",
+                            "id": "0000005010"
+                          },
+                          {
+                            "dataSource": "COSTAR",
+                            "id": "300"
+                          },
+                          {
+                            "dataSource": "CPM",
+                            "id": "65287"
+                          },
+                          {
+                            "dataSource": "CSP",
+                            "id": "2871-4310"
+                          },
+                          {
+                            "dataSource": "CST",
+                            "id": "FEVER"
+                          },
+                          {
+                            "dataSource": "DXP",
+                            "id": "U001483"
+                          },
+                          {
+                            "dataSource": "GO",
+                            "id": "GO:0001660"
+                          },
+                          {
+                            "dataSource": "HPO",
+                            "id": "HP:0001945"
+                          },
+                          {
+                            "dataSource": "ICD10",
+                            "id": "R50.9"
+                          },
+                          {
+                            "dataSource": "ICD10AM",
+                            "id": "R50.9"
+                          },
+                          {
+                            "dataSource": "ICD10CM",
+                            "id": "R50.9"
+                          },
+                          {
+                            "dataSource": "ICD9CM",
+                            "id": "780.60"
+                          },
+                          {
+                            "dataSource": "ICNP",
+                            "id": "10041539"
+                          },
+                          {
+                            "dataSource": "ICPC",
+                            "id": "A03"
+                          },
+                          {
+                            "dataSource": "ICPC2EENG",
+                            "id": "A03"
+                          },
+                          {
+                            "dataSource": "ICPC2ICD10ENG",
+                            "id": "MTHU041751"
+                          },
+                          {
+                            "dataSource": "ICPC2P",
+                            "id": "A03002"
+                          },
+                          {
+                            "dataSource": "LCH",
+                            "id": "U001776"
+                          },
+                          {
+                            "dataSource": "LCH_NW",
+                            "id": "sh85047994"
+                          },
+                          {
+                            "dataSource": "LNC",
+                            "id": "MTHU013518"
+                          },
+                          {
+                            "dataSource": "MDR",
+                            "id": "10005911"
+                          },
+                          {
+                            "dataSource": "MEDCIN",
+                            "id": "6005"
+                          },
+                          {
+                            "dataSource": "MEDLINEPLUS",
+                            "id": "511"
+                          },
+                          {
+                            "dataSource": "MSH",
+                            "id": "D005334"
+                          },
+                          {
+                            "dataSource": "MTHICD9",
+                            "id": "780.60"
+                          },
+                          {
+                            "dataSource": "NANDA-I",
+                            "id": "01128"
+                          },
+                          {
+                            "dataSource": "NCI",
+                            "id": "C3038"
+                          },
+                          {
+                            "dataSource": "NCI_CTCAE",
+                            "id": "E11102"
+                          },
+                          {
+                            "dataSource": "NCI_FDA",
+                            "id": "1858"
+                          },
+                          {
+                            "dataSource": "NCI_GDC",
+                            "id": "C3038"
+                          },
+                          {
+                            "dataSource": "NCI_NCI-GLOSS",
+                            "id": "CDR0000450108"
+                          },
+                          {
+                            "dataSource": "NCI_NICHD",
+                            "id": "C3038"
+                          },
+                          {
+                            "dataSource": "NCI_caDSR",
+                            "id": "C3038"
+                          },
+                          {
+                            "dataSource": "NOC",
+                            "id": "070307"
+                          },
+                          {
+                            "dataSource": "OMIM",
+                            "id": "MTHU005439"
+                          },
+                          {
+                            "dataSource": "OMS",
+                            "id": "50.03"
+                          },
+                          {
+                            "dataSource": "PCDS",
+                            "id": "PRB_11020.02"
+                          },
+                          {
+                            "dataSource": "PDQ",
+                            "id": "CDR0000775882"
+                          },
+                          {
+                            "dataSource": "PSY",
+                            "id": "23840"
+                          },
+                          {
+                            "dataSource": "QMR",
+                            "id": "Q0200115"
+                          },
+                          {
+                            "dataSource": "RCD",
+                            "id": "X76EI"
+                          },
+                          {
+                            "dataSource": "SNM",
+                            "id": "F-03003"
+                          },
+                          {
+                            "dataSource": "SNMI",
+                            "id": "F-03003"
+                          },
+                          {
+                            "dataSource": "SNOMEDCT_US",
+                            "id": "386661006"
+                          },
+                          {
+                            "dataSource": "WHO",
+                            "id": "0725"
+                          }
+                        ]
+                      },
+                      {
+                        "offset": 60,
+                        "length": 6,
+                        "text": "mother",
+                        "category": "FamilyRelation",
+                        "confidenceScore": 0.99,
+                        "name": "Mother (person)",
+                        "links": [
+                          {
+                            "dataSource": "UMLS",
+                            "id": "C0026591"
+                          },
+                          {
+                            "dataSource": "AOD",
+                            "id": "0000027173"
+                          },
+                          {
+                            "dataSource": "CCPSS",
+                            "id": "U000286"
+                          },
+                          {
+                            "dataSource": "CHV",
+                            "id": "0000008266"
+                          },
+                          {
+                            "dataSource": "CSP",
+                            "id": "1124-5492"
+                          },
+                          {
+                            "dataSource": "HL7V3.0",
+                            "id": "MTH"
+                          },
+                          {
+                            "dataSource": "LCH",
+                            "id": "U003028"
+                          },
+                          {
+                            "dataSource": "LCH_NW",
+                            "id": "sh85087526"
+                          },
+                          {
+                            "dataSource": "LNC",
+                            "id": "LA10417-6"
+                          },
+                          {
+                            "dataSource": "MSH",
+                            "id": "D009035"
+                          },
+                          {
+                            "dataSource": "NCI",
+                            "id": "C25189"
+                          },
+                          {
+                            "dataSource": "NCI_CDISC",
+                            "id": "C25189"
+                          },
+                          {
+                            "dataSource": "NCI_GDC",
+                            "id": "C25189"
+                          },
+                          {
+                            "dataSource": "NCI_caDSR",
+                            "id": "C25189"
+                          },
+                          {
+                            "dataSource": "PSY",
+                            "id": "32140"
+                          },
+                          {
+                            "dataSource": "RCD",
+                            "id": "X78ym"
+                          },
+                          {
+                            "dataSource": "SNMI",
+                            "id": "S-10120"
+                          },
+                          {
+                            "dataSource": "SNOMEDCT_US",
+                            "id": "72705000"
+                          }
+                        ]
+                      },
+                      {
+                        "offset": 77,
+                        "length": 10,
+                        "text": "Penicillin",
+                        "category": "MedicationName",
+                        "confidenceScore": 0.84,
+                        "assertion": {
+                          "certainty": "neutralPossible"
+                        },
+                        "name": "penicillins",
+                        "links": [
+                          {
+                            "dataSource": "UMLS",
+                            "id": "C0030842"
+                          },
+                          {
+                            "dataSource": "AOD",
+                            "id": "0000019206"
+                          },
+                          {
+                            "dataSource": "ATC",
+                            "id": "J01C"
+                          },
+                          {
+                            "dataSource": "CCPSS",
+                            "id": "0014106"
+                          },
+                          {
+                            "dataSource": "CHV",
+                            "id": "0000009423"
+                          },
+                          {
+                            "dataSource": "CSP",
+                            "id": "0199-8025"
+                          },
+                          {
+                            "dataSource": "GS",
+                            "id": "4011"
+                          },
+                          {
+                            "dataSource": "LCH",
+                            "id": "U003521"
+                          },
+                          {
+                            "dataSource": "LCH_NW",
+                            "id": "sh85099402"
+                          },
+                          {
+                            "dataSource": "LNC",
+                            "id": "LP14319-5"
+                          },
+                          {
+                            "dataSource": "MEDCIN",
+                            "id": "40319"
+                          },
+                          {
+                            "dataSource": "MMSL",
+                            "id": "d00116"
+                          },
+                          {
+                            "dataSource": "MSH",
+                            "id": "D010406"
+                          },
+                          {
+                            "dataSource": "NCI",
+                            "id": "C1500"
+                          },
+                          {
+                            "dataSource": "NCI_DTP",
+                            "id": "NSC0402815"
+                          },
+                          {
+                            "dataSource": "NCI_NCI-GLOSS",
+                            "id": "CDR0000045296"
+                          },
+                          {
+                            "dataSource": "NDDF",
+                            "id": "016121"
+                          },
+                          {
+                            "dataSource": "PSY",
+                            "id": "37190"
+                          },
+                          {
+                            "dataSource": "RCD",
+                            "id": "x009C"
+                          },
+                          {
+                            "dataSource": "SNM",
+                            "id": "E-7260"
+                          },
+                          {
+                            "dataSource": "SNMI",
+                            "id": "C-54000"
+                          },
+                          {
+                            "dataSource": "SNOMEDCT_US",
+                            "id": "764146007"
+                          },
+                          {
+                            "dataSource": "VANDF",
+                            "id": "4019880"
+                          }
+                        ]
+                      },
+                      {
+                        "offset": 96,
+                        "length": 4,
+                        "text": "baby",
+                        "category": "FamilyRelation",
+                        "confidenceScore": 1.0,
+                        "name": "Infant",
+                        "links": [
+                          {
+                            "dataSource": "UMLS",
+                            "id": "C0021270"
+                          },
+                          {
+                            "dataSource": "AOD",
+                            "id": "0000005273"
+                          },
+                          {
+                            "dataSource": "CCPSS",
+                            "id": "0030805"
+                          },
+                          {
+                            "dataSource": "CHV",
+                            "id": "0000006675"
+                          },
+                          {
+                            "dataSource": "DXP",
+                            "id": "U002089"
+                          },
+                          {
+                            "dataSource": "LCH",
+                            "id": "U002421"
+                          },
+                          {
+                            "dataSource": "LCH_NW",
+                            "id": "sh85066022"
+                          },
+                          {
+                            "dataSource": "LNC",
+                            "id": "LA19747-7"
+                          },
+                          {
+                            "dataSource": "MDR",
+                            "id": "10021731"
+                          },
+                          {
+                            "dataSource": "MSH",
+                            "id": "D007223"
+                          },
+                          {
+                            "dataSource": "NCI",
+                            "id": "C27956"
+                          },
+                          {
+                            "dataSource": "NCI_FDA",
+                            "id": "C27956"
+                          },
+                          {
+                            "dataSource": "NCI_NICHD",
+                            "id": "C27956"
+                          },
+                          {
+                            "dataSource": "SNOMEDCT_US",
+                            "id": "133931009"
+                          }
+                        ]
+                      }
+                    ],
+                    "relations": [],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2022-03-01"
+              }
             }
-          ],
-          "errors": [],
-          "modelVersion": "2021-03-01"
+          ]
         }
       }
     }
   ],
   "Variables": {
-    "RandomSeed": "1480713916",
+    "RandomSeed": "2146405087",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://mariari-westus2-s.cognitiveservices.azure.com/"
+    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
   }
 }

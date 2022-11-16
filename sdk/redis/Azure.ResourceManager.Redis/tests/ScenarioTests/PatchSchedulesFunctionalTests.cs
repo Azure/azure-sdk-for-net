@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.Redis.Tests
         private void ValidateResponseForSchedulePatch(RedisPatchScheduleResource schedulesSet, string redisName)
         {
             Assert.AreEqual(2, schedulesSet.Data.ScheduleEntries.Count);
+            Assert.AreEqual(DefaultLocation, schedulesSet.Data.Location);
             foreach (var schedule in schedulesSet.Data.ScheduleEntries)
             {
                 if (schedule.DayOfWeek.Equals(RedisDayOfWeek.Monday))

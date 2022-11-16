@@ -20,7 +20,8 @@ namespace Azure.ResourceManager.Media.Tests
 
         private MediaLiveOutputCollection liveOutputCollection => _liveEvent.GetMediaLiveOutputs();
 
-        public LiveOutputTests(bool isAsync) : base(isAsync)
+        public LiveOutputTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

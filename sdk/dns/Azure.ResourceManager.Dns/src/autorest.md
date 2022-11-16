@@ -92,6 +92,8 @@ directive:
   - from: swagger-document
     where: $.definitions
     transform: >
+      $.RecordSet["x-ms-client-name"] = "Record";
+      $.RecordSetListResult["x-ms-client-name"] = "RecordListResult";
       $.ZoneUpdate["x-ms-client-name"] = "ZoneUpdateOptions";
       $.NsRecord.properties.nsdname["x-ms-client-name"] = "DnsNSDomainName";
       $.PtrRecord.properties.ptrdname["x-ms-client-name"] = "DnsPtrDomainName";
@@ -101,7 +103,6 @@ directive:
       $.ZoneProperties.properties.maxNumberOfRecordSets["x-ms-client-name"] = "maxNumberOfRecords";
       $.ZoneProperties.properties.maxNumberOfRecordsPerRecordSet["x-ms-client-name"] = "maxNumberOfRecordsPerRecord";
       $.ZoneProperties.properties.numberOfRecordSets["x-ms-client-name"] = "numberOfRecords";
-      $.RecordSet["x-ms-client-name"] = "Record";
 
 # FooTime => FooTimeInSeconds
   - from: swagger-document

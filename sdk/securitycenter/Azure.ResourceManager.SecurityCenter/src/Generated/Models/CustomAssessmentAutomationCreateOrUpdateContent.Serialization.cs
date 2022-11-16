@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> compressedQuery = default;
-            Optional<SupportedCloudEnum> supportedCloud = default;
-            Optional<SeverityEnum> severity = default;
+            Optional<CustomAssessmentAutomationSupportedCloud> supportedCloud = default;
+            Optional<CustomAssessmentSeverity> severity = default;
             Optional<string> displayName = default;
             Optional<string> description = default;
             Optional<string> remediationDescription = default;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            supportedCloud = new SupportedCloudEnum(property0.Value.GetString());
+                            supportedCloud = new CustomAssessmentAutomationSupportedCloud(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("severity"))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            severity = new SeverityEnum(property0.Value.GetString());
+                            severity = new CustomAssessmentSeverity(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("displayName"))

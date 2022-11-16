@@ -33,6 +33,7 @@ namespace Azure.Identity.Tests
                 ExcludeInteractiveBrowserCredential = true,
                 ExcludeSharedTokenCacheCredential = true,
                 ExcludeAzureCliCredential = true,
+                ExcludeVisualStudioCodeCredential = false,
             });
 
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudio();
@@ -71,6 +72,7 @@ namespace Azure.Identity.Tests
                 ExcludeManagedIdentityCredential = true,
                 ExcludeVisualStudioCredential = true,
                 ExcludeAzureCliCredential = true,
+                ExcludeVisualStudioCodeCredential = false,
                 VisualStudioCodeTenantId = TestEnvironment.TestTenantId
             });
 
@@ -109,6 +111,7 @@ namespace Azure.Identity.Tests
                 ExcludeSharedTokenCacheCredential = true,
                 ExcludeManagedIdentityCredential = true,
                 ExcludeAzureCliCredential = true,
+                ExcludeVisualStudioCodeCredential = false,
                 VisualStudioCodeTenantId = TestEnvironment.TestTenantId
             });
 
@@ -145,6 +148,7 @@ namespace Azure.Identity.Tests
                 ExcludeInteractiveBrowserCredential = true,
                 ExcludeSharedTokenCacheCredential = true,
                 ExcludeManagedIdentityCredential = true,
+                ExcludeVisualStudioCodeCredential = false,
                 VisualStudioCodeTenantId = TestEnvironment.TestTenantId
             });
 
@@ -183,6 +187,7 @@ namespace Azure.Identity.Tests
                 ExcludeInteractiveBrowserCredential = true,
                 ExcludeSharedTokenCacheCredential = true,
                 ExcludeManagedIdentityCredential = true,
+                ExcludeVisualStudioCodeCredential = false,
                 VisualStudioCodeTenantId = TestEnvironment.TestTenantId
             });
 
@@ -218,6 +223,7 @@ namespace Azure.Identity.Tests
                 ExcludeInteractiveBrowserCredential = true,
                 ExcludeManagedIdentityCredential = true,
                 ExcludeSharedTokenCacheCredential = true,
+                ExcludeVisualStudioCodeCredential = false,
             });
 
             var vscAdapter = new TestVscAdapter(ExpectedServiceName, "AzureCloud", "{}");
@@ -249,6 +255,7 @@ namespace Azure.Identity.Tests
                 ExcludeInteractiveBrowserCredential = true,
                 ExcludeSharedTokenCacheCredential = true,
                 ExcludeManagedIdentityCredential = true,
+                ExcludeVisualStudioCodeCredential = false,
             });
 
             var vscAdapter = new TestVscAdapter(ExpectedServiceName, "AzureCloud", null);
@@ -279,6 +286,7 @@ namespace Azure.Identity.Tests
                 ExcludeInteractiveBrowserCredential = true,
                 ExcludeSharedTokenCacheCredential = true,
                 ExcludeManagedIdentityCredential = true,
+                ExcludeVisualStudioCodeCredential = false,
             });
 
             var vscAdapter = new TestVscAdapter(ExpectedServiceName, "AzureCloud", null);

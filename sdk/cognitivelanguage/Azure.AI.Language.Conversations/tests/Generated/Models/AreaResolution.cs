@@ -17,7 +17,7 @@ namespace Azure.AI.Language.Conversations
         {
             Unit = unit;
             Value = value;
-            ResolutionKind = ResolutionKind.Area;
+            ResolutionKind = ResolutionKind.AreaResolution;
         }
 
         /// <summary> Initializes a new instance of AreaResolution. </summary>

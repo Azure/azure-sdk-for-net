@@ -103,7 +103,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var message = "Test message!";
             var instance = new EventHubsException(false, resourceName, message);
 
-            Assert.That(instance.Message, Is.EqualTo(message));
+            Assert.That(instance.Message, Does.StartWith(message));
         }
 
         /// <summary>
@@ -120,6 +120,23 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(instance.Message, Does.Contain(namespaceValue), "The message should include the Event Hubs namespace");
             Assert.That(instance.Message, Does.Contain(message), "The message should include the exception message text");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubsException.Message" />
+        ///   property.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase("EntityName")]
+        public void MessageIncludesTroubleshootingLink(string resourceName)
+        {
+            var message = "Test message!";
+            var instance = new EventHubsException(false, resourceName, message);
+
+            Assert.That(instance.Message, Contains.Substring(Resources.TroubleshootingGuideLink));
         }
 
         /// <summary>

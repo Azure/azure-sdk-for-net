@@ -20,10 +20,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="canary"/> is null. </exception>
         public CustomRolloutSpecification(CustomRolloutSpecificationCanary canary)
         {
-            if (canary == null)
-            {
-                throw new ArgumentNullException(nameof(canary));
-            }
+            Argument.AssertNotNull(canary, nameof(canary));
 
             Canary = canary;
             ResourceTypeRegistrations = new ChangeTrackingList<ResourceTypeRegistrationData>();
@@ -42,7 +39,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Gets or sets the canary. </summary>
         internal CustomRolloutSpecificationCanary Canary { get; set; }
-        /// <summary> Gets the canary regions. </summary>
+        /// <summary> Gets the regions. </summary>
         public IList<string> CanaryRegions
         {
             get

@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="budgetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="budgetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BudgetData>> GetAsync(string scope, string budgetName, CancellationToken cancellationToken = default)
+        public async Task<Response<ConsumptionBudgetData>> GetAsync(string scope, string budgetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(budgetName, nameof(budgetName));
@@ -137,13 +137,13 @@ namespace Azure.ResourceManager.Consumption
             {
                 case 200:
                     {
-                        BudgetData value = default;
+                        ConsumptionBudgetData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BudgetData.DeserializeBudgetData(document.RootElement);
+                        value = ConsumptionBudgetData.DeserializeConsumptionBudgetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((BudgetData)null, message.Response);
+                    return Response.FromValue((ConsumptionBudgetData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="budgetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="budgetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BudgetData> Get(string scope, string budgetName, CancellationToken cancellationToken = default)
+        public Response<ConsumptionBudgetData> Get(string scope, string budgetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(budgetName, nameof(budgetName));
@@ -166,19 +166,19 @@ namespace Azure.ResourceManager.Consumption
             {
                 case 200:
                     {
-                        BudgetData value = default;
+                        ConsumptionBudgetData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BudgetData.DeserializeBudgetData(document.RootElement);
+                        value = ConsumptionBudgetData.DeserializeConsumptionBudgetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((BudgetData)null, message.Response);
+                    return Response.FromValue((ConsumptionBudgetData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string scope, string budgetName, BudgetData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string scope, string budgetName, ConsumptionBudgetData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="budgetName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="budgetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BudgetData>> CreateOrUpdateAsync(string scope, string budgetName, BudgetData data, CancellationToken cancellationToken = default)
+        public async Task<Response<ConsumptionBudgetData>> CreateOrUpdateAsync(string scope, string budgetName, ConsumptionBudgetData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(budgetName, nameof(budgetName));
@@ -220,9 +220,9 @@ namespace Azure.ResourceManager.Consumption
                 case 200:
                 case 201:
                     {
-                        BudgetData value = default;
+                        ConsumptionBudgetData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BudgetData.DeserializeBudgetData(document.RootElement);
+                        value = ConsumptionBudgetData.DeserializeConsumptionBudgetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="budgetName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="budgetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BudgetData> CreateOrUpdate(string scope, string budgetName, BudgetData data, CancellationToken cancellationToken = default)
+        public Response<ConsumptionBudgetData> CreateOrUpdate(string scope, string budgetName, ConsumptionBudgetData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(budgetName, nameof(budgetName));
@@ -250,9 +250,9 @@ namespace Azure.ResourceManager.Consumption
                 case 200:
                 case 201:
                     {
-                        BudgetData value = default;
+                        ConsumptionBudgetData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BudgetData.DeserializeBudgetData(document.RootElement);
+                        value = ConsumptionBudgetData.DeserializeConsumptionBudgetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

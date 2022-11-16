@@ -32,16 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "EnvironmentVariableSetup": return EnvironmentVariableSetup.DeserializeEnvironmentVariableSetup(element);
                 }
             }
-            string type = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownCustomSetupBase(type);
+            return UnknownCustomSetupBase.DeserializeUnknownCustomSetupBase(element);
         }
     }
 }

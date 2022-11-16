@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: ArcScVmm
 namespace: Azure.ResourceManager.ArcScVmm
+# default tag is a preview version
 require: https://github.com/Azure/azure-rest-api-specs/blob/ba936cf8f3b4720dc025837281241fdc903f7e4d/specification/scvmm/resource-manager/readme.md
-tag: package-2020-06-05-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true

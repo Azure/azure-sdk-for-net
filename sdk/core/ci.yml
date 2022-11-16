@@ -41,6 +41,8 @@ extends:
       safeName: AzureCore
     - name: Azure.Core.Experimental
       safeName: AzureCoreExperimental
+    - name: Azure.Core.Expressions.DataFactory
+      safeName: AzureCoreExpressionsDataFactory
     - name: Microsoft.Azure.Core.NewtonsoftJson
       safeName: MicrosoftAzureCoreNewtonsoftJson
     - name: Microsoft.Azure.Core.Spatial

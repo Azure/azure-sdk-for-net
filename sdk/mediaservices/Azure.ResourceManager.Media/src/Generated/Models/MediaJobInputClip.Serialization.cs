@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<ClipTime> end = default;
             Optional<string> label = default;
             Optional<IList<MediaJobInputDefinition>> inputDefinitions = default;
-            string odataType = default;
+            string odataType = "#Microsoft.Media.JobInputClip";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("files"))

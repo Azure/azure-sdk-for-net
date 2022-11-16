@@ -45,8 +45,8 @@ namespace Azure.Analytics.Purview.Share.Tests.Samples
                 //No accepted sent shares
                 return;
             }
-
-            var receiverEmail = JsonDocument.Parse(acceptedSentShare).RootElement.GetProperty("properties").GetProperty("receiverEmail").GetString();
+            using var jsonDocument = JsonDocument.Parse(acceptedSentShare);
+            var receiverEmail = jsonDocument.RootElement.GetProperty("properties").GetProperty("receiverEmail").GetString();
             #endregion Snippet:Azure_Analytics_Purview_Share_Samples_ViewAcceptedShares
         }
     }

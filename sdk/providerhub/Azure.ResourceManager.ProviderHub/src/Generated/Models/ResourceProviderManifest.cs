@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Gets the provider authentication. </summary>
         internal ResourceProviderManifestProviderAuthentication ProviderAuthentication { get; }
-        /// <summary> Gets the provider authentication allowed audiences. </summary>
+        /// <summary> Gets the allowed audiences. </summary>
         public IList<string> ProviderAuthenticationAllowedAudiences
         {
             get => ProviderAuthentication?.AllowedAudiences;

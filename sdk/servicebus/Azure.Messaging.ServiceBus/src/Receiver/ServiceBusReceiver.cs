@@ -731,6 +731,15 @@ namespace Azure.Messaging.ServiceBus
         ///     </item>
         ///   </list>
         /// </exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <list type="bullet">
+        ///     <item>
+        ///       <description>
+        ///         The dead letter reason or dead letter error description exceeded the maximum length of 4096.
+        ///       </description>
+        ///     </item>
+        ///   </list>
+        /// </exception>
         public virtual async Task DeadLetterMessageAsync(
             ServiceBusReceivedMessage message,
             IDictionary<string, object> propertiesToModify,
@@ -799,6 +808,15 @@ namespace Azure.Messaging.ServiceBus
         ///     </item>
         ///   </list>
         /// </exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <list type="bullet">
+        ///     <item>
+        ///       <description>
+        ///         The dead letter reason or dead letter error description exceeded the maximum length of 4096.
+        ///       </description>
+        ///     </item>
+        ///   </list>
+        /// </exception>
         public virtual async Task DeadLetterMessageAsync(
             ServiceBusReceivedMessage message,
             string deadLetterReason,
@@ -827,7 +845,7 @@ namespace Azure.Messaging.ServiceBus
         /// A lock token can be found in <see cref="ServiceBusReceivedMessage.LockTokenGuid"/>,
         /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBusReceiveMode.PeekLock"/>.
         /// In order to receive a message from the dead-letter queue, you will need a new <see cref="ServiceBusReceiver"/>, with the corresponding path.
-        /// You can use EntityNameHelper.FormatDeadLetterPath(string) to help with this.
+        /// You can use <see cref="ServiceBusReceiverOptions.SubQueue"/> with <see cref="SubQueue.DeadLetter"/> to help with this.
         /// This operation can only be performed on messages that were received by this receiver.
         /// </remarks>
         internal virtual async Task DeadLetterInternalAsync(

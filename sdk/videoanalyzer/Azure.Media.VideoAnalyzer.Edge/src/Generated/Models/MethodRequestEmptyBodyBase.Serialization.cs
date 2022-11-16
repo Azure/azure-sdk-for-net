@@ -42,7 +42,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
             }
             string name = default;
-            string methodName = default;
+            string methodName = "MethodRequestEmptyBodyBase";
             Optional<string> apiVersion = default;
             foreach (var property in element.EnumerateObject())
             {

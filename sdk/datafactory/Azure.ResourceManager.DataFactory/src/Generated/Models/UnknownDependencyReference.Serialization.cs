@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static UnknownDependencyReference DeserializeUnknownDependencyReference(JsonElement element)
         {
-            string type = default;
+            string type = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))

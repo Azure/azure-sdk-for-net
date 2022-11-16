@@ -35,9 +35,9 @@ namespace Azure.Storage.Files.Shares.Models
         public long? MaxSize { get; set; }
 
         /// <summary>
-        /// Optional <see cref="UploadTransferValidationOptions"/> for using transactional
+        /// Optional override settings for this client's <see cref="ShareClientOptions.TransferValidation"/> settings.
         /// hashing on uploads.
         /// </summary>
-        public UploadTransferValidationOptions TransferValidationOptions { get; set; }
+        public UploadTransferValidationOptions TransferValidation { get; set; }
     }
 }

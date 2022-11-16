@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -16,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static AllowedConnectionsList DeserializeAllowedConnectionsList(JsonElement element)
         {
-            Optional<IReadOnlyList<AllowedConnectionsResourceData>> value = default;
+            Optional<IReadOnlyList<SecurityCenterAllowedConnection>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +26,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AllowedConnectionsResourceData> array = new List<AllowedConnectionsResourceData>();
+                    List<SecurityCenterAllowedConnection> array = new List<SecurityCenterAllowedConnection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AllowedConnectionsResourceData.DeserializeAllowedConnectionsResourceData(item));
+                        array.Add(SecurityCenterAllowedConnection.DeserializeSecurityCenterAllowedConnection(item));
                     }
                     value = array;
                     continue;

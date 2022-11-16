@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<int> channels = default;
             Optional<int> samplingRate = default;
             Optional<int> bitrate = default;
-            string odataType = default;
+            string odataType = "#Microsoft.Media.Audio";
             Optional<string> label = default;
             foreach (var property in element.EnumerateObject())
             {

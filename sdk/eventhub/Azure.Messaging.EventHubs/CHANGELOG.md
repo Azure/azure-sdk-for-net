@@ -10,6 +10,37 @@
 
 ### Other Changes
 
+## 5.7.4 (2022-11-08)
+
+### Bugs Fixed
+
+- Telemetry will now use a parent activity instead of links when the event processor is configured to use a `eventBatchMaximumCount` of 1.
+
+- The reference for the AMQP transport library, `Microsoft.Azure.Amqp`, has been bumped to 2.5.12.  This resolves a rare race condition encountered when creating an AMQP link that could cause the link to hang.
+
+### Other Changes
+
+- Adjusted the frequency that a warning logged when the processor owns more partitions than a basic heuristic believes is ideal.  Warnings will no longer log on each load balancing cycle, only when the number of partitions owned changes.
+
+- Added timing information to logs for AMQP publish and read operations.
+
+## 5.7.3 (2022-10-11)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
+- Anshul Mathur _([GitHub](https://github.com/anshmathur))_
+
+### Other Changes
+
+- Added additional heuristics for the `EventProcessor<T>` configuration to help discover issues that can impact processor performance and stability; these validations will produce warnings at processor start-up should potential concerns be found.
+
+- Exception messages have been updated to include a link to the Event Hubs troubleshooting guide.
+
+- Miscellaneous performance improvements by reducing memory allocations. _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
 ## 5.7.2 (2022-08-09)
 
 ### Acknowledgments

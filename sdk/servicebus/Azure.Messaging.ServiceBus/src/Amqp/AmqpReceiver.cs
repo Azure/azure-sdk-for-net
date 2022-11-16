@@ -664,7 +664,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <remarks>
         /// In order to receive a message from the dead-letter queue, you will need a new
         /// <see cref="ServiceBusReceiver"/> with the corresponding path.
-        /// You can use EntityNameHelper.FormatDeadLetterPath(string)"/> to help with this.
+        /// You can use <see cref="ServiceBusReceiverOptions.SubQueue"/> with <see cref="SubQueue.DeadLetter"/> to help with this.
         /// This operation can only be performed on messages that were received by this receiver
         /// when <see cref="ServiceBusReceiveMode"/> is set to <see cref="ServiceBusReceiveMode.PeekLock"/>.
         /// </remarks>
@@ -1336,9 +1336,20 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             RequestResponseLockedMessages.Dispose();
 
-            if (_receiveLink?.TryGetOpenedObject(out var _) == true)
+            if (_receiveLink?.TryGetOpenedObject(out var link) == true)
             {
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+                // Allow in-flight messages to drain so that they do not remain locked by the service after closing the link.
+                // This should be updated when the AMQP library adds deterministic support for draining via an async method to remove the
+                // somewhat arbitrary delay and to also work for prefetch.
+
+                if (!_isSessionReceiver && !link.Settings.AutoSendFlow && link.LinkCredit > 0)
+                {
+                    link.IssueCredit(link.LinkCredit, true, AmqpConstants.NullBinary);
+                    await Task.Delay(200, cancellationToken).ConfigureAwait(false);
+                }
+
                 await _receiveLink.CloseAsync(CancellationToken.None).ConfigureAwait(false);
             }
 

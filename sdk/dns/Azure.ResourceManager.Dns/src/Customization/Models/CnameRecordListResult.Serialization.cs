@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Dns.Models
 {
     internal partial class CnameRecordListResult
     {
-        internal static CnameRecordListResult DeserializeCnameRecordSetListResult(JsonElement element)
+        internal static CnameRecordListResult DeserializeCnameRecordListResult(JsonElement element)
         {
             Optional<IReadOnlyList<CnameRecordData>> value = default;
             Optional<string> nextLink = default;

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -22,10 +23,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <exception cref="ArgumentNullException"> <paramref name="individualRequestDetails"/> is null. </exception>
         public CreateJobValidationContent(IEnumerable<DataBoxValidationInputContent> individualRequestDetails) : base(individualRequestDetails)
         {
-            if (individualRequestDetails == null)
-            {
-                throw new ArgumentNullException(nameof(individualRequestDetails));
-            }
+            Argument.AssertNotNull(individualRequestDetails, nameof(individualRequestDetails));
 
             ValidationCategory = DataBoxValidationCategory.JobCreationValidation;
         }

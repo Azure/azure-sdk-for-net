@@ -402,7 +402,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
         [Test]
         public void RecordingStateChangedEventParsed_Test()
         {
-            CallRecordingStateChanged @event = CallAutomationModelFactory.CallRecordingStateChanged(
+            RecordingStateChanged @event = CallAutomationModelFactory.RecordingStateChanged(
                 callConnectionId: "callConnectionId",
                 serverCallId: "serverCallId",
                 correlationId: "correlationId",
@@ -411,8 +411,8 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 startDateTime: DateTimeOffset.UtcNow);
             JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
             string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
-            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.CallRecordingStateChanged");
-            if (parsedEvent is CallRecordingStateChanged recordingEvent)
+            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.RecordingStateChanged");
+            if (parsedEvent is RecordingStateChanged recordingEvent)
             {
                 Assert.AreEqual("recordingId", recordingEvent.RecordingId);
                 Assert.AreEqual("serverCallId", recordingEvent.ServerCallId);
@@ -432,7 +432,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 serverCallId: "serverCallId",
                 correlationId: "correlationId",
                 operationContext: "operationContext",
-                resultInformation: new ResultInformation(code: 200, subCode: 200, message: "Action completed successfully"));
+                resultInformation: new ResultInformation(code: 200, subCode: 0, message: "Action completed successfully"));
             JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
             string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.PlayCompleted");
@@ -441,6 +441,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.AreEqual("correlationId", playCompleted.CorrelationId);
                 Assert.AreEqual("serverCallId", playCompleted.ServerCallId);
                 Assert.AreEqual(200, playCompleted.ResultInformation?.Code);
+                Assert.AreEqual(ReasonCode.CompletedSuccessfully, playCompleted.ReasonCode);
             }
             else
             {
@@ -465,6 +466,29 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.AreEqual("correlationId", playFailed.CorrelationId);
                 Assert.AreEqual("serverCallId", playFailed.ServerCallId);
                 Assert.AreEqual(400, playFailed.ResultInformation?.Code);
+                Assert.AreEqual(ReasonCode.PlayDownloadFailed, playFailed.ReasonCode);
+            }
+            else
+            {
+                Assert.Fail("Event parsed wrongfully");
+            }
+        }
+
+        [Test]
+        public void PlayCanceledEventParsed_Test()
+        {
+            PlayCanceled @event = CallAutomationModelFactory.PlayCanceled(
+                callConnectionId: "callConnectionId",
+                serverCallId: "serverCallId",
+                correlationId: "correlationId",
+                operationContext: "operationContext");
+            JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+            string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
+            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.PlayCanceled");
+            if (parsedEvent is PlayCanceled playCancelled)
+            {
+                Assert.AreEqual("correlationId", playCancelled.CorrelationId);
+                Assert.AreEqual("serverCallId", playCancelled.ServerCallId);
             }
             else
             {
@@ -498,6 +522,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.AreEqual(200, recognizeCompleted.ResultInformation?.Code);
                 Assert.NotZero(recognizeCompleted.CollectTonesResult.Tones.Count());
                 Assert.AreEqual(DtmfTone.Five, recognizeCompleted.CollectTonesResult.Tones.First());
+                Assert.AreEqual(ReasonCode.RecognizeMaxDigitsReceived, recognizeCompleted.ReasonCode);
             }
             else
             {
@@ -522,6 +547,29 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.AreEqual("correlationId", recognizeFailed.CorrelationId);
                 Assert.AreEqual("serverCallId", recognizeFailed.ServerCallId);
                 Assert.AreEqual(400, recognizeFailed.ResultInformation?.Code);
+                Assert.AreEqual(ReasonCode.RecognizeInitialSilenceTimedOut, recognizeFailed.ReasonCode);
+            }
+            else
+            {
+                Assert.Fail("Event parsed wrongfully");
+            }
+        }
+
+        [Test]
+        public void RecognizeCancelledEventParsed_Test()
+        {
+            RecognizeCanceled @event = CallAutomationModelFactory.RecognizeCanceled(
+                operationContext: "operationContext",
+                callConnectionId: "callConnectionId",
+                serverCallId: "serverCallId",
+                correlationId: "correlationId");
+            JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+            string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
+            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.RecognizeCanceled");
+            if (parsedEvent is RecognizeCanceled recognizeCancelled)
+            {
+                Assert.AreEqual("correlationId", recognizeCancelled.CorrelationId);
+                Assert.AreEqual("serverCallId", recognizeCancelled.ServerCallId);
             }
             else
             {

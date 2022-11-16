@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointLabel"/> is null. </exception>
         public CreateDatabaseRestorePointDefinition(string restorePointLabel)
         {
-            if (restorePointLabel == null)
-            {
-                throw new ArgumentNullException(nameof(restorePointLabel));
-            }
+            Argument.AssertNotNull(restorePointLabel, nameof(restorePointLabel));
 
             RestorePointLabel = restorePointLabel;
         }

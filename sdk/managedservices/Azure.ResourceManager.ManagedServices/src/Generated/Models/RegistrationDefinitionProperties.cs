@@ -21,14 +21,8 @@ namespace Azure.ResourceManager.ManagedServices.Models
         /// <exception cref="ArgumentNullException"> <paramref name="authorizations"/> or <paramref name="managedByTenantId"/> is null. </exception>
         public RegistrationDefinitionProperties(IEnumerable<Authorization> authorizations, string managedByTenantId)
         {
-            if (authorizations == null)
-            {
-                throw new ArgumentNullException(nameof(authorizations));
-            }
-            if (managedByTenantId == null)
-            {
-                throw new ArgumentNullException(nameof(managedByTenantId));
-            }
+            Argument.AssertNotNull(authorizations, nameof(authorizations));
+            Argument.AssertNotNull(managedByTenantId, nameof(managedByTenantId));
 
             Authorizations = authorizations.ToList();
             EligibleAuthorizations = new ChangeTrackingList<EligibleAuthorization>();

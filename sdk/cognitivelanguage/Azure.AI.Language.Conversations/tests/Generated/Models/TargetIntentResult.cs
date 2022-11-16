@@ -7,7 +7,11 @@
 
 namespace Azure.AI.Language.Conversations
 {
-    /// <summary> This is the base class of an intent prediction. </summary>
+    /// <summary>
+    /// This is the base class of an intent prediction
+    /// Please note <see cref="TargetIntentResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="ConversationTargetIntentResult"/>, <see cref="LuisTargetIntentResult"/>, <see cref="NoneLinkedTargetIntentResult"/> and <see cref="QuestionAnsweringTargetIntentResult"/>.
+    /// </summary>
     public partial class TargetIntentResult
     {
         /// <summary> Initializes a new instance of TargetIntentResult. </summary>

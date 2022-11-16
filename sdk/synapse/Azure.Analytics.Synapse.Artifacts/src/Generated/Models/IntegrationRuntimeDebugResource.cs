@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -13,27 +14,36 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     public partial class IntegrationRuntimeDebugResource : SubResourceDebugResource
     {
         /// <summary> Initializes a new instance of IntegrationRuntimeDebugResource. </summary>
-        /// <param name="properties"> Integration runtime properties. </param>
+        /// <param name="properties">
+        /// Integration runtime properties.
+        /// Please note <see cref="IntegrationRuntime"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ManagedIntegrationRuntime"/> and <see cref="SelfHostedIntegrationRuntime"/>.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public IntegrationRuntimeDebugResource(IntegrationRuntime properties)
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeDebugResource. </summary>
         /// <param name="name"> The resource name. </param>
-        /// <param name="properties"> Integration runtime properties. </param>
+        /// <param name="properties">
+        /// Integration runtime properties.
+        /// Please note <see cref="IntegrationRuntime"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ManagedIntegrationRuntime"/> and <see cref="SelfHostedIntegrationRuntime"/>.
+        /// </param>
         internal IntegrationRuntimeDebugResource(string name, IntegrationRuntime properties) : base(name)
         {
             Properties = properties;
         }
 
-        /// <summary> Integration runtime properties. </summary>
+        /// <summary>
+        /// Integration runtime properties.
+        /// Please note <see cref="IntegrationRuntime"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ManagedIntegrationRuntime"/> and <see cref="SelfHostedIntegrationRuntime"/>.
+        /// </summary>
         public IntegrationRuntime Properties { get; set; }
     }
 }

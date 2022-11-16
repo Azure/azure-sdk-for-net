@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -55,110 +53,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "VirtualMachine": return VirtualMachineCompute.DeserializeVirtualMachineCompute(element);
                 }
             }
-            ComputeType computeType = default;
-            Optional<string> computeLocation = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<string> description = default;
-            Optional<DateTimeOffset> createdOn = default;
-            Optional<DateTimeOffset> modifiedOn = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<IReadOnlyList<ErrorResponse>> provisioningErrors = default;
-            Optional<bool> isAttachedCompute = default;
-            Optional<bool> disableLocalAuth = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("computeType"))
-                {
-                    computeType = new ComputeType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("computeLocation"))
-                {
-                    computeLocation = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("provisioningState"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("description"))
-                {
-                    description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("createdOn"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    createdOn = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("modifiedOn"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    modifiedOn = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("resourceId"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    resourceId = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("provisioningErrors"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        provisioningErrors = null;
-                        continue;
-                    }
-                    List<ErrorResponse> array = new List<ErrorResponse>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ErrorResponse.DeserializeErrorResponse(item));
-                    }
-                    provisioningErrors = array;
-                    continue;
-                }
-                if (property.NameEquals("isAttachedCompute"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    isAttachedCompute = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("disableLocalAuth"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    disableLocalAuth = property.Value.GetBoolean();
-                    continue;
-                }
-            }
-            return new UnknownCompute(computeType, computeLocation.Value, Optional.ToNullable(provisioningState), description.Value, Optional.ToNullable(createdOn), Optional.ToNullable(modifiedOn), resourceId.Value, Optional.ToList(provisioningErrors), Optional.ToNullable(isAttachedCompute), Optional.ToNullable(disableLocalAuth));
+            return UnknownCompute.DeserializeUnknownCompute(element);
         }
     }
 }
