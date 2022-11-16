@@ -30,46 +30,41 @@ namespace Azure.Identity
         protected MsalConfidentialClient()
         { }
 
-        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, string clientSecret, string redirectUrl, TokenCredentialOptions options)
-            : this(pipeline, tenantId, clientId, options)
+        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, string clientSecret, string redirectUrl, TokenCredentialOptions options, string regionalAuthority = null)
+            : base(pipeline, tenantId, clientId, options)
         {
             _clientSecret = clientSecret;
             RedirectUrl = redirectUrl;
+            _azureRegionalAuthorityName = regionalAuthority;
         }
 
-        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, IX509Certificate2Provider certificateProvider, bool includeX5CClaimHeader, TokenCredentialOptions options)
-            : this(pipeline, tenantId, clientId, options)
+        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, IX509Certificate2Provider certificateProvider, bool includeX5CClaimHeader, TokenCredentialOptions options, string regionalAuthority = null)
+            : base(pipeline, tenantId, clientId, options)
         {
             _includeX5CClaimHeader = includeX5CClaimHeader;
             _certificateProvider = certificateProvider;
+            _azureRegionalAuthorityName = regionalAuthority;
         }
 
-        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, Func<string> assertionCallback, TokenCredentialOptions options)
-            : this(pipeline, tenantId, clientId, options)
+        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, Func<string> assertionCallback, TokenCredentialOptions options, string regionalAuthority = null)
+            : base(pipeline, tenantId, clientId, options)
         {
             _assertionCallback = assertionCallback;
+            _azureRegionalAuthorityName = regionalAuthority;
         }
 
-        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, Func<CancellationToken, Task<string>> assertionCallback, TokenCredentialOptions options)
-            : this(pipeline, tenantId, clientId, options)
+        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, Func<CancellationToken, Task<string>> assertionCallback, TokenCredentialOptions options, string regionalAuthority = null)
+            : base(pipeline, tenantId, clientId, options)
         {
             _asyncAssertionCallback = assertionCallback;
+            _azureRegionalAuthorityName = regionalAuthority;
         }
 
-        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, Func<AppTokenProviderParameters, Task<AppTokenProviderResult>> appTokenProviderCallback, TokenCredentialOptions options)
-            : this(pipeline, tenantId, clientId, options)
+        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, Func<AppTokenProviderParameters, Task<AppTokenProviderResult>> appTokenProviderCallback, TokenCredentialOptions options, string regionalAuthority = null)
+            : base(pipeline, tenantId, clientId, options)
         {
             _appTokenProviderCallback = appTokenProviderCallback;
-        }
-
-        private MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, TokenCredentialOptions options): base(pipeline, tenantId, clientId, options)
-        {
-            _azureRegionalAuthorityName = options?.AzureRegionalAuthorityName;
-        }
-
-        internal string RegionalAuthority
-        {
-            get { return _azureRegionalAuthorityName ?? EnvironmentVariables.AzureRegionalAuthorityName; }
+            _azureRegionalAuthorityName = regionalAuthority;
         }
 
         protected override async ValueTask<IConfidentialClientApplication> CreateClientAsync(bool async, CancellationToken cancellationToken)
@@ -111,9 +106,9 @@ namespace Azure.Identity
                 confClientBuilder.WithCertificate(clientCertificate);
             }
 
-            if (!string.IsNullOrEmpty(RegionalAuthority))
+            if (!string.IsNullOrEmpty(_azureRegionalAuthorityName))
             {
-                confClientBuilder.WithAzureRegion(RegionalAuthority);
+                confClientBuilder.WithAzureRegion(_azureRegionalAuthorityName);
             }
 
             if (!string.IsNullOrEmpty(RedirectUrl))

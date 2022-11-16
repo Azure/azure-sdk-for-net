@@ -165,7 +165,8 @@ namespace Azure.Identity
                          clientId,
                          certificateProvider,
                          certCredOptions?.SendCertificateChain ?? false,
-                         options);
+                         options,
+                         certCredOptions.AzureRegionalAuthorityName);
 
             _additionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenantsCore);
         }

@@ -16,7 +16,6 @@ namespace Azure.Identity
     public class TokenCredentialOptions : ClientOptions
     {
         private Uri _authorityHost;
-        private String _azureRegionalAuthorityName;
 
         /// <summary>
         /// Constructs a new <see cref="TokenCredentialOptions"/> instance.
@@ -33,15 +32,6 @@ namespace Azure.Identity
         {
             get { return _authorityHost ?? AzureAuthorityHosts.GetDefault(); }
             set { _authorityHost = Validations.ValidateAuthorityHost(value); }
-        }
-
-        /// <summary>
-        /// The name of the Azure Regional Authority used by ESTS-R. This option is only applicable to certain credentials and will only be used where appropriate.
-        /// </summary>
-        ///
-        public String AzureRegionalAuthorityName {
-            get { return _azureRegionalAuthorityName ?? EnvironmentVariables.AzureRegionalAuthorityName; }
-            set { _azureRegionalAuthorityName = value;  }
         }
 
         /// <summary>
