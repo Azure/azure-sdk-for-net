@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Globalization;
-using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
@@ -73,7 +71,7 @@ namespace Azure.Identity
                 .WithLogging(LogMsal, enablePiiLogging: IsPiiLoggingEnabled);
 
             // Special case for using appTokenProviderCallback, authority validation and instance metadata discovery should be disabled since we're not calling the STS
-            // The authority is hard coded to public cloud in order to match the host found in s_instanceMetadata, but is not actually used in the request.
+            // The authority matches the one configured in the CredentialOptions.
             if (_appTokenProviderCallback != null)
             {
                 confClientBuilder.WithAppTokenProvider(_appTokenProviderCallback)
