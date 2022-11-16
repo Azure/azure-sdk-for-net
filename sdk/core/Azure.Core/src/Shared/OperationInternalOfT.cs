@@ -132,20 +132,10 @@ namespace Azure.Core
             string? interimApiVersion = null)
         {
             var lroDetails = BinaryData.FromBytes(Convert.FromBase64String(id)).ToObjectFromJson<Dictionary<string, string>>();
-            lroDetails.TryGetValue("FinalResponse", out string? finalResponse);
 
-            if (finalResponse != null)
+            if (lroDetails.TryGetValue("FinalResponse", out string? finalResponse))
             {
-                IDictionary<string, object> responseObj = BinaryData.FromString(finalResponse).ToObjectFromJson<IDictionary<string, object>>();
-                var content = BinaryData.FromObjectAsJson(responseObj["ContentStream"]);
-                var contentStream = new MemoryStream();
-                if (content != null)
-                    content.ToStream().CopyTo(contentStream);
-                Response response = new DecodedResponse(((JsonElement)responseObj["Status"]).GetInt32(), ((JsonElement)responseObj["ReasonPhrase"]).GetString())
-                {
-                    ContentStream = contentStream,
-                    ClientRequestId = ((JsonElement)responseObj["ClientRequestId"]).GetString()
-                };
+                Response response = JsonSerializer.Deserialize<OperationInternal.DecodedResponse>(finalResponse)!;
                 return OperationInternal<T>.Succeeded(response, source.CreateResult(response, CancellationToken.None));
             }
             var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, id, interimApiVersion);
@@ -326,7 +316,7 @@ namespace Azure.Core
                 var serializeOptions = new JsonSerializerOptions { Converters = { new StreamConverter() } };
                 var lroDetails = new Dictionary<string, string>()
                 {
-                    ["FinalResponse"] = BinaryData.FromObjectAsJson<Response>(_rawResponse!).ToString()
+                    ["FinalResponse"] = BinaryData.FromObjectAsJson<Response>(_rawResponse!, serializeOptions).ToString()
                 };
                 var lroData = BinaryData.FromObjectAsJson(lroDetails);
                 return Convert.ToBase64String(lroData.ToArray());
@@ -343,7 +333,7 @@ namespace Azure.Core
             throw state.OperationFailedException!;
         }
 
-        private class StreamConverter : JsonConverter<Stream>
+        internal class StreamConverter : JsonConverter<Stream>
         {
             /// <summary> Serialize stream to BinaryData string. </summary>
             /// <param name="writer"> The writer. </param>
@@ -353,7 +343,6 @@ namespace Azure.Core
             {
                 if (model.Length == 0)
                 {
-                    //JsonSerializer.Serialize(writer, JsonDocument.Parse("{}").RootElement);
                     writer.WriteNullValue();
                     return;
                 }
@@ -393,11 +382,14 @@ namespace Azure.Core
                 using var document = JsonDocument.ParseValue(ref reader);
                 foreach (var property in document.RootElement.EnumerateObject())
                 {
-                    // todo: add null check
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     var value = property.Value.GetString();
                     return BinaryData.FromString(value!).ToStream();
                 }
-                return new BinaryData(Array.Empty<byte>()).ToStream();
+                return new MemoryStream();
             }
         }
 
@@ -410,109 +402,6 @@ namespace Azure.Core
             {
                 throw new NotImplementedException();
             }
-        }
-
-        public class DecodedResponse : Response
-        {
-#nullable disable
-            private readonly Dictionary<string, List<string>> _headers = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
-
-            public DecodedResponse(int status, string reasonPhrase = null)
-            {
-                Status = status;
-                ReasonPhrase = reasonPhrase;
-            }
-
-            public override int Status { get; }
-
-            public override string ReasonPhrase { get; }
-
-            public override Stream ContentStream { get; set; }
-
-            public override string ClientRequestId { get; set; }
-
-            private bool? _isError;
-            public override bool IsError { get => _isError ?? base.IsError; }
-            public void SetIsError(bool value) => _isError = value;
-
-            public bool IsDisposed { get; private set; }
-
-            public void SetContent(byte[] content)
-            {
-                ContentStream = new MemoryStream(content, 0, content.Length, false, true);
-            }
-
-            public DecodedResponse SetContent(string content)
-            {
-                SetContent(Encoding.UTF8.GetBytes(content));
-                return this;
-            }
-
-            public DecodedResponse AddHeader(string name, string value)
-            {
-                return AddHeader(new HttpHeader(name, value));
-            }
-
-            public DecodedResponse AddHeader(HttpHeader header)
-            {
-                if (!_headers.TryGetValue(header.Name, out List<string> values))
-                {
-                    _headers[header.Name] = values = new List<string>();
-                }
-
-                values.Add(header.Value);
-                return this;
-            }
-
-    #if HAS_INTERNALS_VISIBLE_CORE
-            internal
-    #endif
-            protected override bool TryGetHeader(string name, out string value)
-            {
-                if (_headers.TryGetValue(name, out List<string> values))
-                {
-                    value = JoinHeaderValue(values);
-                    return true;
-                }
-
-                value = null;
-                return false;
-            }
-
-    #if HAS_INTERNALS_VISIBLE_CORE
-            internal
-    #endif
-            protected override bool TryGetHeaderValues(string name, out IEnumerable<string> values)
-            {
-                var result = _headers.TryGetValue(name, out List<string> valuesList);
-                values = valuesList;
-                return result;
-            }
-
-    #if HAS_INTERNALS_VISIBLE_CORE
-            internal
-    #endif
-            protected override bool ContainsHeader(string name)
-            {
-                return TryGetHeaderValues(name, out _);
-            }
-
-    #if HAS_INTERNALS_VISIBLE_CORE
-            internal
-    #endif
-            protected override IEnumerable<HttpHeader> EnumerateHeaders() => _headers.Select(h => new HttpHeader(h.Key, JoinHeaderValue(h.Value)));
-
-            private static string JoinHeaderValue(IEnumerable<string> values)
-            {
-                return string.Join(",", values);
-            }
-
-            public override void Dispose()
-            {
-                IsDisposed = true;
-                GC.SuppressFinalize(this);
-            }
-#nullable enable
         }
     }
 
