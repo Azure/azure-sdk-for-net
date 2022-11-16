@@ -10,6 +10,7 @@
     <PackageReference Include="Moq" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Azure.Messaging.WebPubSub" />
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
   </ItemGroup>
   
   <ItemGroup>
