@@ -53,7 +53,7 @@ namespace Azure.Messaging.WebPubSub.Clients
             }
         }
 
-        [Event(3, Level = EventLevel.Verbose, Message = "A new WebSocket connnection start to connect with subprotocol {0}.")]
+        [Event(3, Level = EventLevel.Verbose, Message = "A new WebSocket connection start to connect with subprotocol {0}.")]
         public virtual void WebSocketConnecting(string subprotocol)
         {
             if (IsEnabled())
