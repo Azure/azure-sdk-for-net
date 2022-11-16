@@ -1,8 +1,18 @@
 # Release History
 
-## 1.1.0 (2022-11-07)
+## 1.2.0-beta.1 (Unreleased)
 
-### Features
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.1.0 (2022-11-11)
+
+### Features Added
 
 - Added new custom enum type `NodeCommunicationMode`.
   - This property determines how a pool communicates with the Batch service.

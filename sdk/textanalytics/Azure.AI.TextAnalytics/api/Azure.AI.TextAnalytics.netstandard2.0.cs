@@ -1,5 +1,32 @@
 namespace Azure.AI.TextAnalytics
 {
+    public partial class AgeResolution : Azure.AI.TextAnalytics.BaseResolution
+    {
+        internal AgeResolution() { }
+        public Azure.AI.TextAnalytics.AgeUnit Unit { get { throw null; } }
+        public double Value { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AgeUnit : System.IEquatable<Azure.AI.TextAnalytics.AgeUnit>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AgeUnit(string value) { throw null; }
+        public static Azure.AI.TextAnalytics.AgeUnit Day { get { throw null; } }
+        public static Azure.AI.TextAnalytics.AgeUnit Month { get { throw null; } }
+        public static Azure.AI.TextAnalytics.AgeUnit Unspecified { get { throw null; } }
+        public static Azure.AI.TextAnalytics.AgeUnit Week { get { throw null; } }
+        public static Azure.AI.TextAnalytics.AgeUnit Year { get { throw null; } }
+        public bool Equals(Azure.AI.TextAnalytics.AgeUnit other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.TextAnalytics.AgeUnit left, Azure.AI.TextAnalytics.AgeUnit right) { throw null; }
+        public static implicit operator Azure.AI.TextAnalytics.AgeUnit (string value) { throw null; }
+        public static bool operator !=(Azure.AI.TextAnalytics.AgeUnit left, Azure.AI.TextAnalytics.AgeUnit right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class AnalyzeActionsOperation : Azure.PageableOperation<Azure.AI.TextAnalytics.AnalyzeActionsResult>
     {
         protected AnalyzeActionsOperation() { }
@@ -137,6 +164,41 @@ namespace Azure.AI.TextAnalytics
         public string ModelVersion { get { throw null; } }
         public Azure.AI.TextAnalytics.TextDocumentBatchStatistics Statistics { get { throw null; } }
     }
+    public partial class AreaResolution : Azure.AI.TextAnalytics.BaseResolution
+    {
+        internal AreaResolution() { }
+        public Azure.AI.TextAnalytics.AreaUnit Unit { get { throw null; } }
+        public double Value { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AreaUnit : System.IEquatable<Azure.AI.TextAnalytics.AreaUnit>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AreaUnit(string value) { throw null; }
+        public static Azure.AI.TextAnalytics.AreaUnit Acre { get { throw null; } }
+        public static Azure.AI.TextAnalytics.AreaUnit SquareCentimeter { get { throw null; } }
+        public static Azure.AI.TextAnalytics.AreaUnit SquareDecameter { get { throw null; } }
+        public static Azure.AI.TextAnalytics.AreaUnit SquareDecimeter { get { throw null; } }
+        public static Azure.AI.TextAnalytics.AreaUnit SquareFoot { get { throw null; } }
+        public static Azure.AI.TextAnalytics.AreaUnit SquareHectometer { get { throw null; } }
+        public static Azure.AI.TextAnalytics.AreaUnit SquareInch { get { throw null; } }
+        public static Azure.AI.TextAnalytics.AreaUnit SquareKilometer { get { throw null; } }
+        public static Azure.AI.TextAnalytics.AreaUnit SquareMeter { get { throw null; } }
+        public static Azure.AI.TextAnalytics.AreaUnit SquareMile { get { throw null; } }
+        public static Azure.AI.TextAnalytics.AreaUnit SquareMillimeter { get { throw null; } }
+        public static Azure.AI.TextAnalytics.AreaUnit SquareYard { get { throw null; } }
+        public static Azure.AI.TextAnalytics.AreaUnit Unspecified { get { throw null; } }
+        public bool Equals(Azure.AI.TextAnalytics.AreaUnit other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.TextAnalytics.AreaUnit left, Azure.AI.TextAnalytics.AreaUnit right) { throw null; }
+        public static implicit operator Azure.AI.TextAnalytics.AreaUnit (string value) { throw null; }
+        public static bool operator !=(Azure.AI.TextAnalytics.AreaUnit left, Azure.AI.TextAnalytics.AreaUnit right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AssessmentSentiment
     {
@@ -149,6 +211,15 @@ namespace Azure.AI.TextAnalytics
         public Azure.AI.TextAnalytics.TextSentiment Sentiment { get { throw null; } }
         public string Text { get { throw null; } }
     }
+    public abstract partial class BaseResolution
+    {
+        internal BaseResolution() { }
+    }
+    public partial class BooleanResolution : Azure.AI.TextAnalytics.BaseResolution
+    {
+        internal BooleanResolution() { }
+        public bool Value { get { throw null; } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CategorizedEntity
     {
@@ -158,6 +229,7 @@ namespace Azure.AI.TextAnalytics
         public double ConfidenceScore { get { throw null; } }
         public int Length { get { throw null; } }
         public int Offset { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.BaseResolution> Resolutions { get { throw null; } }
         public string SubCategory { get { throw null; } }
         public string Text { get { throw null; } }
     }
@@ -215,6 +287,42 @@ namespace Azure.AI.TextAnalytics
         public string DeploymentName { get { throw null; } }
         public string ProjectName { get { throw null; } }
         public Azure.AI.TextAnalytics.TextDocumentBatchStatistics Statistics { get { throw null; } }
+    }
+    public partial class CurrencyResolution : Azure.AI.TextAnalytics.BaseResolution
+    {
+        internal CurrencyResolution() { }
+        public string Iso4217 { get { throw null; } }
+        public string Unit { get { throw null; } }
+        public double Value { get { throw null; } }
+    }
+    public partial class DateTimeResolution : Azure.AI.TextAnalytics.BaseResolution
+    {
+        internal DateTimeResolution() { }
+        public Azure.AI.TextAnalytics.DateTimeSubKind DateTimeSubKind { get { throw null; } }
+        public Azure.AI.TextAnalytics.TemporalModifier? Modifier { get { throw null; } }
+        public string Timex { get { throw null; } }
+        public string Value { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DateTimeSubKind : System.IEquatable<Azure.AI.TextAnalytics.DateTimeSubKind>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DateTimeSubKind(string value) { throw null; }
+        public static Azure.AI.TextAnalytics.DateTimeSubKind Date { get { throw null; } }
+        public static Azure.AI.TextAnalytics.DateTimeSubKind DateTime { get { throw null; } }
+        public static Azure.AI.TextAnalytics.DateTimeSubKind Duration { get { throw null; } }
+        public static Azure.AI.TextAnalytics.DateTimeSubKind Set { get { throw null; } }
+        public static Azure.AI.TextAnalytics.DateTimeSubKind Time { get { throw null; } }
+        public bool Equals(Azure.AI.TextAnalytics.DateTimeSubKind other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.TextAnalytics.DateTimeSubKind left, Azure.AI.TextAnalytics.DateTimeSubKind right) { throw null; }
+        public static implicit operator Azure.AI.TextAnalytics.DateTimeSubKind (string value) { throw null; }
+        public static bool operator !=(Azure.AI.TextAnalytics.DateTimeSubKind left, Azure.AI.TextAnalytics.DateTimeSubKind right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DetectedLanguage
@@ -529,10 +637,84 @@ namespace Azure.AI.TextAnalytics
         public static bool operator !=(Azure.AI.TextAnalytics.HealthcareEntityRelationType left, Azure.AI.TextAnalytics.HealthcareEntityRelationType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class InformationResolution : Azure.AI.TextAnalytics.BaseResolution
+    {
+        internal InformationResolution() { }
+        public Azure.AI.TextAnalytics.InformationUnit Unit { get { throw null; } }
+        public double Value { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct InformationUnit : System.IEquatable<Azure.AI.TextAnalytics.InformationUnit>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public InformationUnit(string value) { throw null; }
+        public static Azure.AI.TextAnalytics.InformationUnit Bit { get { throw null; } }
+        public static Azure.AI.TextAnalytics.InformationUnit Byte { get { throw null; } }
+        public static Azure.AI.TextAnalytics.InformationUnit Gigabit { get { throw null; } }
+        public static Azure.AI.TextAnalytics.InformationUnit Gigabyte { get { throw null; } }
+        public static Azure.AI.TextAnalytics.InformationUnit Kilobit { get { throw null; } }
+        public static Azure.AI.TextAnalytics.InformationUnit Kilobyte { get { throw null; } }
+        public static Azure.AI.TextAnalytics.InformationUnit Megabit { get { throw null; } }
+        public static Azure.AI.TextAnalytics.InformationUnit Megabyte { get { throw null; } }
+        public static Azure.AI.TextAnalytics.InformationUnit Petabit { get { throw null; } }
+        public static Azure.AI.TextAnalytics.InformationUnit Petabyte { get { throw null; } }
+        public static Azure.AI.TextAnalytics.InformationUnit Terabit { get { throw null; } }
+        public static Azure.AI.TextAnalytics.InformationUnit Terabyte { get { throw null; } }
+        public static Azure.AI.TextAnalytics.InformationUnit Unspecified { get { throw null; } }
+        public bool Equals(Azure.AI.TextAnalytics.InformationUnit other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.TextAnalytics.InformationUnit left, Azure.AI.TextAnalytics.InformationUnit right) { throw null; }
+        public static implicit operator Azure.AI.TextAnalytics.InformationUnit (string value) { throw null; }
+        public static bool operator !=(Azure.AI.TextAnalytics.InformationUnit left, Azure.AI.TextAnalytics.InformationUnit right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class KeyPhraseCollection : System.Collections.ObjectModel.ReadOnlyCollection<string>
     {
         internal KeyPhraseCollection() : base (default(System.Collections.Generic.IList<string>)) { }
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.TextAnalyticsWarning> Warnings { get { throw null; } }
+    }
+    public partial class LengthResolution : Azure.AI.TextAnalytics.BaseResolution
+    {
+        internal LengthResolution() { }
+        public Azure.AI.TextAnalytics.LengthUnit Unit { get { throw null; } }
+        public double Value { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LengthUnit : System.IEquatable<Azure.AI.TextAnalytics.LengthUnit>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LengthUnit(string value) { throw null; }
+        public static Azure.AI.TextAnalytics.LengthUnit Centimeter { get { throw null; } }
+        public static Azure.AI.TextAnalytics.LengthUnit Decameter { get { throw null; } }
+        public static Azure.AI.TextAnalytics.LengthUnit Decimeter { get { throw null; } }
+        public static Azure.AI.TextAnalytics.LengthUnit Foot { get { throw null; } }
+        public static Azure.AI.TextAnalytics.LengthUnit Hectometer { get { throw null; } }
+        public static Azure.AI.TextAnalytics.LengthUnit Inch { get { throw null; } }
+        public static Azure.AI.TextAnalytics.LengthUnit Kilometer { get { throw null; } }
+        public static Azure.AI.TextAnalytics.LengthUnit LightYear { get { throw null; } }
+        public static Azure.AI.TextAnalytics.LengthUnit Meter { get { throw null; } }
+        public static Azure.AI.TextAnalytics.LengthUnit Micrometer { get { throw null; } }
+        public static Azure.AI.TextAnalytics.LengthUnit Mile { get { throw null; } }
+        public static Azure.AI.TextAnalytics.LengthUnit Millimeter { get { throw null; } }
+        public static Azure.AI.TextAnalytics.LengthUnit Nanometer { get { throw null; } }
+        public static Azure.AI.TextAnalytics.LengthUnit Picometer { get { throw null; } }
+        public static Azure.AI.TextAnalytics.LengthUnit Pt { get { throw null; } }
+        public static Azure.AI.TextAnalytics.LengthUnit Unspecified { get { throw null; } }
+        public static Azure.AI.TextAnalytics.LengthUnit Yard { get { throw null; } }
+        public bool Equals(Azure.AI.TextAnalytics.LengthUnit other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.TextAnalytics.LengthUnit left, Azure.AI.TextAnalytics.LengthUnit right) { throw null; }
+        public static implicit operator Azure.AI.TextAnalytics.LengthUnit (string value) { throw null; }
+        public static bool operator !=(Azure.AI.TextAnalytics.LengthUnit left, Azure.AI.TextAnalytics.LengthUnit right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LinkedEntity
@@ -581,6 +763,48 @@ namespace Azure.AI.TextAnalytics
         public bool? DisableServiceLogs { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public bool? IncludeStatistics { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct NumberKind : System.IEquatable<Azure.AI.TextAnalytics.NumberKind>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public NumberKind(string value) { throw null; }
+        public static Azure.AI.TextAnalytics.NumberKind Decimal { get { throw null; } }
+        public static Azure.AI.TextAnalytics.NumberKind Fraction { get { throw null; } }
+        public static Azure.AI.TextAnalytics.NumberKind Integer { get { throw null; } }
+        public static Azure.AI.TextAnalytics.NumberKind Percent { get { throw null; } }
+        public static Azure.AI.TextAnalytics.NumberKind Power { get { throw null; } }
+        public static Azure.AI.TextAnalytics.NumberKind Unspecified { get { throw null; } }
+        public bool Equals(Azure.AI.TextAnalytics.NumberKind other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.TextAnalytics.NumberKind left, Azure.AI.TextAnalytics.NumberKind right) { throw null; }
+        public static implicit operator Azure.AI.TextAnalytics.NumberKind (string value) { throw null; }
+        public static bool operator !=(Azure.AI.TextAnalytics.NumberKind left, Azure.AI.TextAnalytics.NumberKind right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class NumberResolution : Azure.AI.TextAnalytics.BaseResolution
+    {
+        internal NumberResolution() { }
+        public Azure.AI.TextAnalytics.NumberKind NumberKind { get { throw null; } }
+        public double Value { get { throw null; } }
+    }
+    public partial class NumericRangeResolution : Azure.AI.TextAnalytics.BaseResolution
+    {
+        internal NumericRangeResolution() { }
+        public double Maximum { get { throw null; } }
+        public double Minimum { get { throw null; } }
+        public Azure.AI.TextAnalytics.RangeKind RangeKind { get { throw null; } }
+    }
+    public partial class OrdinalResolution : Azure.AI.TextAnalytics.BaseResolution
+    {
+        internal OrdinalResolution() { }
+        public string Offset { get { throw null; } }
+        public Azure.AI.TextAnalytics.RelativeTo RelativeTo { get { throw null; } }
+        public string Value { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PiiEntity
@@ -794,6 +1018,32 @@ namespace Azure.AI.TextAnalytics
         None = 0,
         ProtectedHealthInformation = 1,
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RangeKind : System.IEquatable<Azure.AI.TextAnalytics.RangeKind>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RangeKind(string value) { throw null; }
+        public static Azure.AI.TextAnalytics.RangeKind Age { get { throw null; } }
+        public static Azure.AI.TextAnalytics.RangeKind Area { get { throw null; } }
+        public static Azure.AI.TextAnalytics.RangeKind Currency { get { throw null; } }
+        public static Azure.AI.TextAnalytics.RangeKind Information { get { throw null; } }
+        public static Azure.AI.TextAnalytics.RangeKind Length { get { throw null; } }
+        public static Azure.AI.TextAnalytics.RangeKind Number { get { throw null; } }
+        public static Azure.AI.TextAnalytics.RangeKind Speed { get { throw null; } }
+        public static Azure.AI.TextAnalytics.RangeKind Temperature { get { throw null; } }
+        public static Azure.AI.TextAnalytics.RangeKind Volume { get { throw null; } }
+        public static Azure.AI.TextAnalytics.RangeKind Weight { get { throw null; } }
+        public bool Equals(Azure.AI.TextAnalytics.RangeKind other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.TextAnalytics.RangeKind left, Azure.AI.TextAnalytics.RangeKind right) { throw null; }
+        public static implicit operator Azure.AI.TextAnalytics.RangeKind (string value) { throw null; }
+        public static bool operator !=(Azure.AI.TextAnalytics.RangeKind left, Azure.AI.TextAnalytics.RangeKind right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class RecognizeCustomEntitiesAction
     {
         public RecognizeCustomEntitiesAction(string projectName, string deploymentName) { }
@@ -926,6 +1176,25 @@ namespace Azure.AI.TextAnalytics
         public Azure.AI.TextAnalytics.TextDocumentBatchStatistics Statistics { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RelativeTo : System.IEquatable<Azure.AI.TextAnalytics.RelativeTo>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RelativeTo(string value) { throw null; }
+        public static Azure.AI.TextAnalytics.RelativeTo Current { get { throw null; } }
+        public static Azure.AI.TextAnalytics.RelativeTo End { get { throw null; } }
+        public static Azure.AI.TextAnalytics.RelativeTo Start { get { throw null; } }
+        public bool Equals(Azure.AI.TextAnalytics.RelativeTo other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.TextAnalytics.RelativeTo left, Azure.AI.TextAnalytics.RelativeTo right) { throw null; }
+        public static implicit operator Azure.AI.TextAnalytics.RelativeTo (string value) { throw null; }
+        public static bool operator !=(Azure.AI.TextAnalytics.RelativeTo left, Azure.AI.TextAnalytics.RelativeTo right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ScriptKind : System.IEquatable<Azure.AI.TextAnalytics.ScriptKind>
     {
         private readonly object _dummy;
@@ -989,6 +1258,42 @@ namespace Azure.AI.TextAnalytics
         public string DisplayName { get { throw null; } set { } }
         public bool? IncludeStatistics { get { throw null; } set { } }
     }
+    public partial class SpeedResolution : Azure.AI.TextAnalytics.BaseResolution
+    {
+        internal SpeedResolution() { }
+        public Azure.AI.TextAnalytics.SpeedUnit Unit { get { throw null; } }
+        public double Value { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SpeedUnit : System.IEquatable<Azure.AI.TextAnalytics.SpeedUnit>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SpeedUnit(string value) { throw null; }
+        public static Azure.AI.TextAnalytics.SpeedUnit CentimetersPerMillisecond { get { throw null; } }
+        public static Azure.AI.TextAnalytics.SpeedUnit FootPerMinute { get { throw null; } }
+        public static Azure.AI.TextAnalytics.SpeedUnit FootPerSecond { get { throw null; } }
+        public static Azure.AI.TextAnalytics.SpeedUnit KilometersPerHour { get { throw null; } }
+        public static Azure.AI.TextAnalytics.SpeedUnit KilometersPerMillisecond { get { throw null; } }
+        public static Azure.AI.TextAnalytics.SpeedUnit KilometersPerMinute { get { throw null; } }
+        public static Azure.AI.TextAnalytics.SpeedUnit KilometersPerSecond { get { throw null; } }
+        public static Azure.AI.TextAnalytics.SpeedUnit Knot { get { throw null; } }
+        public static Azure.AI.TextAnalytics.SpeedUnit MetersPerMillisecond { get { throw null; } }
+        public static Azure.AI.TextAnalytics.SpeedUnit MetersPerSecond { get { throw null; } }
+        public static Azure.AI.TextAnalytics.SpeedUnit MilesPerHour { get { throw null; } }
+        public static Azure.AI.TextAnalytics.SpeedUnit Unspecified { get { throw null; } }
+        public static Azure.AI.TextAnalytics.SpeedUnit YardsPerMinute { get { throw null; } }
+        public static Azure.AI.TextAnalytics.SpeedUnit YardsPerSecond { get { throw null; } }
+        public bool Equals(Azure.AI.TextAnalytics.SpeedUnit other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.TextAnalytics.SpeedUnit left, Azure.AI.TextAnalytics.SpeedUnit right) { throw null; }
+        public static implicit operator Azure.AI.TextAnalytics.SpeedUnit (string value) { throw null; }
+        public static bool operator !=(Azure.AI.TextAnalytics.SpeedUnit left, Azure.AI.TextAnalytics.SpeedUnit right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SummarySentence
     {
@@ -1032,6 +1337,75 @@ namespace Azure.AI.TextAnalytics
         public int Offset { get { throw null; } }
         public Azure.AI.TextAnalytics.TextSentiment Sentiment { get { throw null; } }
         public string Text { get { throw null; } }
+    }
+    public partial class TemperatureResolution : Azure.AI.TextAnalytics.BaseResolution
+    {
+        internal TemperatureResolution() { }
+        public Azure.AI.TextAnalytics.TemperatureUnit Unit { get { throw null; } }
+        public double Value { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TemperatureUnit : System.IEquatable<Azure.AI.TextAnalytics.TemperatureUnit>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TemperatureUnit(string value) { throw null; }
+        public static Azure.AI.TextAnalytics.TemperatureUnit Celsius { get { throw null; } }
+        public static Azure.AI.TextAnalytics.TemperatureUnit Fahrenheit { get { throw null; } }
+        public static Azure.AI.TextAnalytics.TemperatureUnit Kelvin { get { throw null; } }
+        public static Azure.AI.TextAnalytics.TemperatureUnit Rankine { get { throw null; } }
+        public static Azure.AI.TextAnalytics.TemperatureUnit Unspecified { get { throw null; } }
+        public bool Equals(Azure.AI.TextAnalytics.TemperatureUnit other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.TextAnalytics.TemperatureUnit left, Azure.AI.TextAnalytics.TemperatureUnit right) { throw null; }
+        public static implicit operator Azure.AI.TextAnalytics.TemperatureUnit (string value) { throw null; }
+        public static bool operator !=(Azure.AI.TextAnalytics.TemperatureUnit left, Azure.AI.TextAnalytics.TemperatureUnit right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TemporalModifier : System.IEquatable<Azure.AI.TextAnalytics.TemporalModifier>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TemporalModifier(string value) { throw null; }
+        public static Azure.AI.TextAnalytics.TemporalModifier After { get { throw null; } }
+        public static Azure.AI.TextAnalytics.TemporalModifier AfterApprox { get { throw null; } }
+        public static Azure.AI.TextAnalytics.TemporalModifier AfterMid { get { throw null; } }
+        public static Azure.AI.TextAnalytics.TemporalModifier AfterStart { get { throw null; } }
+        public static Azure.AI.TextAnalytics.TemporalModifier Approx { get { throw null; } }
+        public static Azure.AI.TextAnalytics.TemporalModifier Before { get { throw null; } }
+        public static Azure.AI.TextAnalytics.TemporalModifier BeforeApprox { get { throw null; } }
+        public static Azure.AI.TextAnalytics.TemporalModifier BeforeEnd { get { throw null; } }
+        public static Azure.AI.TextAnalytics.TemporalModifier BeforeStart { get { throw null; } }
+        public static Azure.AI.TextAnalytics.TemporalModifier End { get { throw null; } }
+        public static Azure.AI.TextAnalytics.TemporalModifier Less { get { throw null; } }
+        public static Azure.AI.TextAnalytics.TemporalModifier Mid { get { throw null; } }
+        public static Azure.AI.TextAnalytics.TemporalModifier More { get { throw null; } }
+        public static Azure.AI.TextAnalytics.TemporalModifier ReferenceUndefined { get { throw null; } }
+        public static Azure.AI.TextAnalytics.TemporalModifier Since { get { throw null; } }
+        public static Azure.AI.TextAnalytics.TemporalModifier SinceEnd { get { throw null; } }
+        public static Azure.AI.TextAnalytics.TemporalModifier Start { get { throw null; } }
+        public static Azure.AI.TextAnalytics.TemporalModifier Until { get { throw null; } }
+        public bool Equals(Azure.AI.TextAnalytics.TemporalModifier other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.TextAnalytics.TemporalModifier left, Azure.AI.TextAnalytics.TemporalModifier right) { throw null; }
+        public static implicit operator Azure.AI.TextAnalytics.TemporalModifier (string value) { throw null; }
+        public static bool operator !=(Azure.AI.TextAnalytics.TemporalModifier left, Azure.AI.TextAnalytics.TemporalModifier right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class TemporalSpanResolution : Azure.AI.TextAnalytics.BaseResolution
+    {
+        internal TemporalSpanResolution() { }
+        public string Begin { get { throw null; } }
+        public string Duration { get { throw null; } }
+        public string End { get { throw null; } }
+        public Azure.AI.TextAnalytics.TemporalModifier? Modifier { get { throw null; } }
     }
     public partial class TextAnalyticsActionResult
     {
@@ -1222,6 +1596,7 @@ namespace Azure.AI.TextAnalytics
     }
     public static partial class TextAnalyticsModelFactory
     {
+        public static Azure.AI.TextAnalytics.AgeResolution AgeResolution(Azure.AI.TextAnalytics.AgeUnit unit, double value) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.TextAnalytics.AnalyzeActionsResult AnalyzeActionsResult(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.ExtractKeyPhrasesActionResult> extractKeyPhrasesActionResult, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.RecognizeEntitiesActionResult> recognizeEntitiesActionResults, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.RecognizePiiEntitiesActionResult> recognizePiiEntitiesActionResults, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.RecognizeLinkedEntitiesActionResult> recognizeLinkedEntitiesActionsResults, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.AnalyzeSentimentActionResult> analyzeSentimentActionsResults) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -1245,16 +1620,22 @@ namespace Azure.AI.TextAnalytics
         public static Azure.AI.TextAnalytics.AnalyzeSentimentResult AnalyzeSentimentResult(string id, Azure.AI.TextAnalytics.TextAnalyticsError error) { throw null; }
         public static Azure.AI.TextAnalytics.AnalyzeSentimentResult AnalyzeSentimentResult(string id, Azure.AI.TextAnalytics.TextDocumentStatistics statistics, Azure.AI.TextAnalytics.DocumentSentiment documentSentiment) { throw null; }
         public static Azure.AI.TextAnalytics.AnalyzeSentimentResultCollection AnalyzeSentimentResultCollection(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.AnalyzeSentimentResult> list, Azure.AI.TextAnalytics.TextDocumentBatchStatistics statistics, string modelVersion) { throw null; }
+        public static Azure.AI.TextAnalytics.AreaResolution AreaResolution(Azure.AI.TextAnalytics.AreaUnit unit, double value) { throw null; }
         public static Azure.AI.TextAnalytics.AssessmentSentiment AssessmentSentiment(Azure.AI.TextAnalytics.TextSentiment sentiment, double positiveScore, double negativeScore, string text, bool isNegated, int offset, int length) { throw null; }
+        public static Azure.AI.TextAnalytics.BooleanResolution BooleanResolution(bool value) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.TextAnalytics.CategorizedEntity CategorizedEntity(string text, string category, string subCategory, double score) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.TextAnalytics.CategorizedEntity CategorizedEntity(string text, string category, string subCategory, double score, int offset, int length) { throw null; }
+        public static Azure.AI.TextAnalytics.CategorizedEntity CategorizedEntity(string text, string category, string subCategory, double score, int offset, int length, System.Collections.Generic.IList<Azure.AI.TextAnalytics.BaseResolution> resolutions) { throw null; }
         public static Azure.AI.TextAnalytics.CategorizedEntityCollection CategorizedEntityCollection(System.Collections.Generic.IList<Azure.AI.TextAnalytics.CategorizedEntity> entities, System.Collections.Generic.IList<Azure.AI.TextAnalytics.TextAnalyticsWarning> warnings = null) { throw null; }
         public static Azure.AI.TextAnalytics.ClassificationCategory ClassificationCategory(string category, double confidenceScore) { throw null; }
         public static Azure.AI.TextAnalytics.ClassificationCategoryCollection ClassificationCategoryCollection(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.ClassificationCategory> classificationList, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.TextAnalyticsWarning> warnings) { throw null; }
         public static Azure.AI.TextAnalytics.ClassifyDocumentResult ClassifyDocumentResult(string id, Azure.AI.TextAnalytics.TextAnalyticsError error) { throw null; }
         public static Azure.AI.TextAnalytics.ClassifyDocumentResult ClassifyDocumentResult(string id, Azure.AI.TextAnalytics.TextDocumentStatistics statistics, Azure.AI.TextAnalytics.ClassificationCategoryCollection documentClassificationCollection, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.TextAnalyticsWarning> warnings = null) { throw null; }
         public static Azure.AI.TextAnalytics.ClassifyDocumentResultCollection ClassifyDocumentResultCollection(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.ClassifyDocumentResult> classificationResultList, Azure.AI.TextAnalytics.TextDocumentBatchStatistics statistics, string projectName, string deploymentName) { throw null; }
+        public static Azure.AI.TextAnalytics.CurrencyResolution CurrencyResolution(string iso4217, string unit, double value) { throw null; }
+        public static Azure.AI.TextAnalytics.DateTimeResolution DateTimeResolution(string timex, Azure.AI.TextAnalytics.DateTimeSubKind dateTimeSubKind, string value, Azure.AI.TextAnalytics.TemporalModifier? modifier) { throw null; }
         public static Azure.AI.TextAnalytics.DetectedLanguage DetectedLanguage(string name, string iso6391Name, double confidenceScore, Azure.AI.TextAnalytics.ScriptKind script, System.Collections.Generic.IList<Azure.AI.TextAnalytics.TextAnalyticsWarning> warnings = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.TextAnalytics.DetectedLanguage DetectedLanguage(string name, string iso6391Name, double confidenceScore, System.Collections.Generic.IList<Azure.AI.TextAnalytics.TextAnalyticsWarning> warnings = null) { throw null; }
@@ -1283,7 +1664,9 @@ namespace Azure.AI.TextAnalytics
         public static Azure.AI.TextAnalytics.HealthcareEntityRelation HealthcareEntityRelation(Azure.AI.TextAnalytics.HealthcareEntityRelationType relationType, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.HealthcareEntityRelationRole> roles) { throw null; }
         public static Azure.AI.TextAnalytics.HealthcareEntityRelation HealthcareEntityRelation(Azure.AI.TextAnalytics.HealthcareEntityRelationType relationType, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.HealthcareEntityRelationRole> roles, double? confidenceScore) { throw null; }
         public static Azure.AI.TextAnalytics.HealthcareEntityRelationRole HealthcareEntityRelationRole(string text, string category, int offset, int length, double confidenceScore, string entityName) { throw null; }
+        public static Azure.AI.TextAnalytics.InformationResolution InformationResolution(Azure.AI.TextAnalytics.InformationUnit unit, double value) { throw null; }
         public static Azure.AI.TextAnalytics.KeyPhraseCollection KeyPhraseCollection(System.Collections.Generic.IList<string> keyPhrases, System.Collections.Generic.IList<Azure.AI.TextAnalytics.TextAnalyticsWarning> warnings = null) { throw null; }
+        public static Azure.AI.TextAnalytics.LengthResolution LengthResolution(Azure.AI.TextAnalytics.LengthUnit unit, double value) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.TextAnalytics.LinkedEntity LinkedEntity(string name, string dataSourceEntityId, string language, string dataSource, System.Uri url, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.LinkedEntityMatch> matches) { throw null; }
         public static Azure.AI.TextAnalytics.LinkedEntity LinkedEntity(string name, string dataSourceEntityId, string language, string dataSource, System.Uri url, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.LinkedEntityMatch> matches, string bingEntitySearchApiId) { throw null; }
@@ -1297,6 +1680,9 @@ namespace Azure.AI.TextAnalytics
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.TextAnalytics.MultiLabelClassifyActionResult MultiLabelClassifyActionResult(System.DateTimeOffset completedOn, string code, string message) { throw null; }
         public static Azure.AI.TextAnalytics.MultiLabelClassifyActionResult MultiLabelClassifyActionResult(string actionName, System.DateTimeOffset completedOn, string code, string message) { throw null; }
+        public static Azure.AI.TextAnalytics.NumberResolution NumberResolution(Azure.AI.TextAnalytics.NumberKind numberKind, double value) { throw null; }
+        public static Azure.AI.TextAnalytics.NumericRangeResolution NumericRangeResolution(Azure.AI.TextAnalytics.RangeKind rangeKind, double minimum, double maximum) { throw null; }
+        public static Azure.AI.TextAnalytics.OrdinalResolution OrdinalResolution(string offset, Azure.AI.TextAnalytics.RelativeTo relativeTo, string value) { throw null; }
         public static Azure.AI.TextAnalytics.PiiEntity PiiEntity(string text, string category, string subCategory, double score, int offset, int length) { throw null; }
         public static Azure.AI.TextAnalytics.PiiEntityCollection PiiEntityCollection(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.PiiEntity> entities, string redactedText, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.TextAnalyticsWarning> warnings = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -1344,13 +1730,18 @@ namespace Azure.AI.TextAnalytics
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.TextAnalytics.SingleLabelClassifyActionResult SingleLabelClassifyActionResult(System.DateTimeOffset completedOn, string code, string message) { throw null; }
         public static Azure.AI.TextAnalytics.SingleLabelClassifyActionResult SingleLabelClassifyActionResult(string actionName, System.DateTimeOffset completedOn, string code, string message) { throw null; }
+        public static Azure.AI.TextAnalytics.SpeedResolution SpeedResolution(Azure.AI.TextAnalytics.SpeedUnit unit, double value) { throw null; }
         public static Azure.AI.TextAnalytics.SummarySentence SummarySentence(string text, double rankScore, int offset, int length) { throw null; }
         public static Azure.AI.TextAnalytics.SummarySentenceCollection SummarySentenceCollection(System.Collections.Generic.IList<Azure.AI.TextAnalytics.SummarySentence> sentences, System.Collections.Generic.IList<Azure.AI.TextAnalytics.TextAnalyticsWarning> warnings = null) { throw null; }
         public static Azure.AI.TextAnalytics.TargetSentiment TargetSentiment(Azure.AI.TextAnalytics.TextSentiment sentiment, string text, double positiveScore, double negativeScore, int offset, int length) { throw null; }
+        public static Azure.AI.TextAnalytics.TemperatureResolution TemperatureResolution(Azure.AI.TextAnalytics.TemperatureUnit unit, double value) { throw null; }
+        public static Azure.AI.TextAnalytics.TemporalSpanResolution TemporalSpanResolution(string begin, string end, string duration, Azure.AI.TextAnalytics.TemporalModifier? modifier) { throw null; }
         public static Azure.AI.TextAnalytics.TextAnalyticsError TextAnalyticsError(string code, string message, string target = null) { throw null; }
         public static Azure.AI.TextAnalytics.TextAnalyticsWarning TextAnalyticsWarning(string code, string message) { throw null; }
         public static Azure.AI.TextAnalytics.TextDocumentBatchStatistics TextDocumentBatchStatistics(int documentCount, int validDocumentCount, int invalidDocumentCount, long transactionCount) { throw null; }
         public static Azure.AI.TextAnalytics.TextDocumentStatistics TextDocumentStatistics(int characterCount, int transactionCount) { throw null; }
+        public static Azure.AI.TextAnalytics.VolumeResolution VolumeResolution(Azure.AI.TextAnalytics.VolumeUnit unit, double value) { throw null; }
+        public static Azure.AI.TextAnalytics.WeightResolution WeightResolution(Azure.AI.TextAnalytics.WeightUnit unit, double value) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TextAnalyticsOperationStatus : System.IEquatable<Azure.AI.TextAnalytics.TextAnalyticsOperationStatus>
@@ -1443,6 +1834,94 @@ namespace Azure.AI.TextAnalytics
         Neutral = 1,
         Negative = 2,
         Mixed = 3,
+    }
+    public partial class VolumeResolution : Azure.AI.TextAnalytics.BaseResolution
+    {
+        internal VolumeResolution() { }
+        public Azure.AI.TextAnalytics.VolumeUnit Unit { get { throw null; } }
+        public double Value { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VolumeUnit : System.IEquatable<Azure.AI.TextAnalytics.VolumeUnit>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VolumeUnit(string value) { throw null; }
+        public static Azure.AI.TextAnalytics.VolumeUnit Barrel { get { throw null; } }
+        public static Azure.AI.TextAnalytics.VolumeUnit Bushel { get { throw null; } }
+        public static Azure.AI.TextAnalytics.VolumeUnit Centiliter { get { throw null; } }
+        public static Azure.AI.TextAnalytics.VolumeUnit Cord { get { throw null; } }
+        public static Azure.AI.TextAnalytics.VolumeUnit CubicCentimeter { get { throw null; } }
+        public static Azure.AI.TextAnalytics.VolumeUnit CubicFoot { get { throw null; } }
+        public static Azure.AI.TextAnalytics.VolumeUnit CubicInch { get { throw null; } }
+        public static Azure.AI.TextAnalytics.VolumeUnit CubicMeter { get { throw null; } }
+        public static Azure.AI.TextAnalytics.VolumeUnit CubicMile { get { throw null; } }
+        public static Azure.AI.TextAnalytics.VolumeUnit CubicMillimeter { get { throw null; } }
+        public static Azure.AI.TextAnalytics.VolumeUnit CubicYard { get { throw null; } }
+        public static Azure.AI.TextAnalytics.VolumeUnit Cup { get { throw null; } }
+        public static Azure.AI.TextAnalytics.VolumeUnit Decaliter { get { throw null; } }
+        public static Azure.AI.TextAnalytics.VolumeUnit FluidDram { get { throw null; } }
+        public static Azure.AI.TextAnalytics.VolumeUnit FluidOunce { get { throw null; } }
+        public static Azure.AI.TextAnalytics.VolumeUnit Gill { get { throw null; } }
+        public static Azure.AI.TextAnalytics.VolumeUnit Hectoliter { get { throw null; } }
+        public static Azure.AI.TextAnalytics.VolumeUnit Hogshead { get { throw null; } }
+        public static Azure.AI.TextAnalytics.VolumeUnit Liter { get { throw null; } }
+        public static Azure.AI.TextAnalytics.VolumeUnit Milliliter { get { throw null; } }
+        public static Azure.AI.TextAnalytics.VolumeUnit Minim { get { throw null; } }
+        public static Azure.AI.TextAnalytics.VolumeUnit Peck { get { throw null; } }
+        public static Azure.AI.TextAnalytics.VolumeUnit Pinch { get { throw null; } }
+        public static Azure.AI.TextAnalytics.VolumeUnit Pint { get { throw null; } }
+        public static Azure.AI.TextAnalytics.VolumeUnit Quart { get { throw null; } }
+        public static Azure.AI.TextAnalytics.VolumeUnit Tablespoon { get { throw null; } }
+        public static Azure.AI.TextAnalytics.VolumeUnit Teaspoon { get { throw null; } }
+        public static Azure.AI.TextAnalytics.VolumeUnit Unspecified { get { throw null; } }
+        public bool Equals(Azure.AI.TextAnalytics.VolumeUnit other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.TextAnalytics.VolumeUnit left, Azure.AI.TextAnalytics.VolumeUnit right) { throw null; }
+        public static implicit operator Azure.AI.TextAnalytics.VolumeUnit (string value) { throw null; }
+        public static bool operator !=(Azure.AI.TextAnalytics.VolumeUnit left, Azure.AI.TextAnalytics.VolumeUnit right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class WeightResolution : Azure.AI.TextAnalytics.BaseResolution
+    {
+        internal WeightResolution() { }
+        public Azure.AI.TextAnalytics.WeightUnit Unit { get { throw null; } }
+        public double Value { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct WeightUnit : System.IEquatable<Azure.AI.TextAnalytics.WeightUnit>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public WeightUnit(string value) { throw null; }
+        public static Azure.AI.TextAnalytics.WeightUnit Dram { get { throw null; } }
+        public static Azure.AI.TextAnalytics.WeightUnit Gallon { get { throw null; } }
+        public static Azure.AI.TextAnalytics.WeightUnit Grain { get { throw null; } }
+        public static Azure.AI.TextAnalytics.WeightUnit Gram { get { throw null; } }
+        public static Azure.AI.TextAnalytics.WeightUnit Kilogram { get { throw null; } }
+        public static Azure.AI.TextAnalytics.WeightUnit LongTonBritish { get { throw null; } }
+        public static Azure.AI.TextAnalytics.WeightUnit MetricTon { get { throw null; } }
+        public static Azure.AI.TextAnalytics.WeightUnit Milligram { get { throw null; } }
+        public static Azure.AI.TextAnalytics.WeightUnit Ounce { get { throw null; } }
+        public static Azure.AI.TextAnalytics.WeightUnit PennyWeight { get { throw null; } }
+        public static Azure.AI.TextAnalytics.WeightUnit Pound { get { throw null; } }
+        public static Azure.AI.TextAnalytics.WeightUnit ShortHundredWeightUS { get { throw null; } }
+        public static Azure.AI.TextAnalytics.WeightUnit ShortTonUS { get { throw null; } }
+        public static Azure.AI.TextAnalytics.WeightUnit Stone { get { throw null; } }
+        public static Azure.AI.TextAnalytics.WeightUnit Ton { get { throw null; } }
+        public static Azure.AI.TextAnalytics.WeightUnit Unspecified { get { throw null; } }
+        public bool Equals(Azure.AI.TextAnalytics.WeightUnit other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.TextAnalytics.WeightUnit left, Azure.AI.TextAnalytics.WeightUnit right) { throw null; }
+        public static implicit operator Azure.AI.TextAnalytics.WeightUnit (string value) { throw null; }
+        public static bool operator !=(Azure.AI.TextAnalytics.WeightUnit left, Azure.AI.TextAnalytics.WeightUnit right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct WellKnownFhirVersion : System.IEquatable<Azure.AI.TextAnalytics.WellKnownFhirVersion>
