@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#if NETCOREAPP3_1_OR_GREATER
 using System;
 using System.Buffers;
 using System.Collections.Generic;
@@ -177,4 +176,3 @@ namespace Azure.Messaging.WebPubSub.Client.Tests.Protocols
         }
     }
 }
-#endif

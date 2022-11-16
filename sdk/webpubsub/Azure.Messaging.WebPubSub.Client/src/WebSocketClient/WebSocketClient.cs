@@ -47,7 +47,11 @@ namespace Azure.Messaging.WebPubSub.Clients
             await _sendLock.WaitAsync(cancellationToken).ConfigureAwait(false);
             try
             {
+#if NETSTANDARD2_1_OR_GREATER
                 await _socket.SendAsync(buffer, messageType, endOfMessage, cancellationToken).ConfigureAwait(false);
+#else
+                await _socket.SendAsync(new ArraySegment<byte>(buffer.ToArray()) , messageType, endOfMessage, cancellationToken).ConfigureAwait(false);
+#endif
             }
             finally
             {
@@ -101,7 +105,7 @@ namespace Azure.Messaging.WebPubSub.Clients
             }
 
             var memory = buffer.GetMemory();
-            var receiveResult = await socket.ReceiveAsync(memory, token).ConfigureAwait(false);
+            var receiveResult = await ReadSocketAsync(socket, memory, token).ConfigureAwait(false);
 
             if (receiveResult.MessageType == WebSocketMessageType.Close)
             {
@@ -113,7 +117,7 @@ namespace Azure.Messaging.WebPubSub.Clients
             while (!receiveResult.EndOfMessage)
             {
                 memory = buffer.GetMemory();
-                receiveResult = await socket.ReceiveAsync(memory, token).ConfigureAwait(false);
+                receiveResult = await ReadSocketAsync(socket, memory, token).ConfigureAwait(false);
 
                 // Need to check again for NetCoreApp2.2 because a close can happen between a 0-byte read and the actual read
                 if (receiveResult.MessageType == WebSocketMessageType.Close)
@@ -126,5 +130,21 @@ namespace Azure.Messaging.WebPubSub.Clients
 
             return receiveResult.MessageType;
         }
+
+#if NETSTANDARD2_1_OR_GREATER
+        private static async Task<ValueWebSocketReceiveResult> ReadSocketAsync(WebSocket socket, Memory<byte> destination, CancellationToken token)
+        {
+            return await socket.ReceiveAsync(destination, token).ConfigureAwait(false);
+        }
+#else
+        private static async Task<WebSocketReceiveResult> ReadSocketAsync(WebSocket socket, Memory<byte> destination, CancellationToken token)
+        {
+            var array = new ArraySegment<byte>(new byte[destination.Length]);
+            var receiveResult = await socket.ReceiveAsync(array, token).ConfigureAwait(false);
+            array.Array.CopyTo(destination);
+
+            return receiveResult;
+        }
+#endif
     }
 }
