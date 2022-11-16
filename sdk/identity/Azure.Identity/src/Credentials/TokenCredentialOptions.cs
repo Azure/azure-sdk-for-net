@@ -36,7 +36,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// The name of the Azure Regional Authority used by ESTSR
+        /// The name of the Azure Regional Authority used by ESTS-R. This option is only applicable to certain credentials and will only be used where appropriate.
         /// </summary>
         ///
         public String AzureRegionalAuthorityName {
