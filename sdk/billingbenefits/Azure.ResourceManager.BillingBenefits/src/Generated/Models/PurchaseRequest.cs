@@ -20,15 +20,15 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <summary> Initializes a new instance of PurchaseRequest. </summary>
         /// <param name="sku"> The SKU to be applied for this resource. </param>
         /// <param name="displayName"> Friendly name of the savings plan. </param>
-        /// <param name="billingScopeId"> Subscription that will be charged for purchasing SavingsPlan. </param>
-        /// <param name="term"> Represent SavingsPlan term in ISO 8601 format. </param>
+        /// <param name="billingScopeId"> Subscription that will be charged for purchasing the benefit. </param>
+        /// <param name="term"> Represent benefit term in ISO 8601 format. </param>
         /// <param name="billingPlan"> Represents the billing plan in ISO 8601 format. Required only for monthly billing plans. </param>
         /// <param name="appliedScopeType"> Type of the Applied Scope. </param>
         /// <param name="commitment"> Commitment towards the benefit. </param>
         /// <param name="effectiveOn"> DateTime of the savings plan starts providing benefit from. </param>
-        /// <param name="renew"> Setting this to true will automatically purchase a new savings plan on the expiration date time. </param>
+        /// <param name="renew"> Setting this to true will automatically purchase a new benefit on the expiration date time. </param>
         /// <param name="appliedScopeProperties"> Properties specific to applied scope type. Not required if not applicable. </param>
-        internal PurchaseRequest(BillingBenefitsSku sku, string displayName, string billingScopeId, SavingsPlanTerm? term, BillingPlan? billingPlan, AppliedScopeType? appliedScopeType, Commitment commitment, DateTimeOffset? effectiveOn, bool? renew, AppliedScopeProperties appliedScopeProperties)
+        internal PurchaseRequest(BillingBenefitsSku sku, string displayName, string billingScopeId, Term? term, BillingPlan? billingPlan, AppliedScopeType? appliedScopeType, Commitment commitment, DateTimeOffset? effectiveOn, bool? renew, AppliedScopeProperties appliedScopeProperties)
         {
             Sku = sku;
             DisplayName = displayName;
@@ -58,10 +58,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <summary> Friendly name of the savings plan. </summary>
         public string DisplayName { get; set; }
-        /// <summary> Subscription that will be charged for purchasing SavingsPlan. </summary>
+        /// <summary> Subscription that will be charged for purchasing the benefit. </summary>
         public string BillingScopeId { get; set; }
-        /// <summary> Represent SavingsPlan term in ISO 8601 format. </summary>
-        public SavingsPlanTerm? Term { get; set; }
+        /// <summary> Represent benefit term in ISO 8601 format. </summary>
+        public Term? Term { get; set; }
         /// <summary> Represents the billing plan in ISO 8601 format. Required only for monthly billing plans. </summary>
         public BillingPlan? BillingPlan { get; set; }
         /// <summary> Type of the Applied Scope. </summary>
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public Commitment Commitment { get; set; }
         /// <summary> DateTime of the savings plan starts providing benefit from. </summary>
         public DateTimeOffset? EffectiveOn { get; }
-        /// <summary> Setting this to true will automatically purchase a new savings plan on the expiration date time. </summary>
+        /// <summary> Setting this to true will automatically purchase a new benefit on the expiration date time. </summary>
         public bool? Renew { get; set; }
         /// <summary> Properties specific to applied scope type. Not required if not applicable. </summary>
         public AppliedScopeProperties AppliedScopeProperties { get; set; }

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
-    /// <summary> Turning this on will apply the reservation discount to other VMs in the same VM size group. Only specify for VirtualMachines reserved resource type. </summary>
+    /// <summary> Turning this on will apply the reservation discount to other VMs in the same VM size group. </summary>
     public readonly partial struct InstanceFlexibility : IEquatable<InstanceFlexibility>
     {
         private readonly string _value;

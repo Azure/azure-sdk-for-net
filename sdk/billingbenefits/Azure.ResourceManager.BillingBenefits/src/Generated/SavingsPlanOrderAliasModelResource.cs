@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.BillingBenefits
         }
 
         /// <summary>
-        /// Create a savings plan.
+        /// Create a savings plan. Learn more about permissions needed at https://go.microsoft.com/fwlink/?linkid=2215851
         /// Request Path: /providers/Microsoft.BillingBenefits/savingsPlanOrderAliases/{savingsPlanOrderAliasName}
         /// Operation Id: SavingsPlanOrderAlias_Create
         /// </summary>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.BillingBenefits
         }
 
         /// <summary>
-        /// Create a savings plan.
+        /// Create a savings plan. Learn more about permissions needed at https://go.microsoft.com/fwlink/?linkid=2215851
         /// Request Path: /providers/Microsoft.BillingBenefits/savingsPlanOrderAliases/{savingsPlanOrderAliasName}
         /// Operation Id: SavingsPlanOrderAlias_Create
         /// </summary>

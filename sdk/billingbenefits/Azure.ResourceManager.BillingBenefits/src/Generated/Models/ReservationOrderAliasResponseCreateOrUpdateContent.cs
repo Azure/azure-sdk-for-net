@@ -32,17 +32,17 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="sku"> Reservation order SKU. </param>
         /// <param name="location"> The Azure Region where the reservation benefits are applied to. </param>
         /// <param name="displayName"> Display name. </param>
-        /// <param name="billingScopeId"> Subscription that will be charged for purchasing SavingsPlan. </param>
-        /// <param name="term"> Represent SavingsPlan term in ISO 8601 format. </param>
+        /// <param name="billingScopeId"> Subscription that will be charged for purchasing the benefit. </param>
+        /// <param name="term"> Represent benefit term in ISO 8601 format. </param>
         /// <param name="billingPlan"> Represents the billing plan in ISO 8601 format. Required only for monthly billing plans. </param>
         /// <param name="appliedScopeType"> Type of the Applied Scope. </param>
         /// <param name="appliedScopeProperties"> Properties specific to applied scope type. Not required if not applicable. </param>
         /// <param name="quantity"> Total Quantity of the SKUs purchased in the Reservation. </param>
-        /// <param name="renew"> Setting this to true will automatically purchase a new savings plan on the expiration date time. </param>
+        /// <param name="renew"> Setting this to true will automatically purchase a new benefit on the expiration date time. </param>
         /// <param name="reservedResourceType"> The type of the resource that is being reserved. </param>
         /// <param name="reviewOn"> This is the date-time when the Azure Hybrid Benefit needs to be reviewed. </param>
         /// <param name="reservedResourceProperties"> Properties specific to each reserved resource type. Not required if not applicable. </param>
-        internal ReservationOrderAliasResponseCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingBenefitsSku sku, AzureLocation? location, string displayName, string billingScopeId, SavingsPlanTerm? term, BillingPlan? billingPlan, AppliedScopeType? appliedScopeType, AppliedScopeProperties appliedScopeProperties, int? quantity, bool? renew, ReservedResourceType? reservedResourceType, DateTimeOffset? reviewOn, ReservationOrderAliasRequestPropertiesReservedResourceProperties reservedResourceProperties) : base(id, name, resourceType, systemData)
+        internal ReservationOrderAliasResponseCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingBenefitsSku sku, AzureLocation? location, string displayName, string billingScopeId, Term? term, BillingPlan? billingPlan, AppliedScopeType? appliedScopeType, AppliedScopeProperties appliedScopeProperties, int? quantity, bool? renew, ReservedResourceType? reservedResourceType, DateTimeOffset? reviewOn, ReservationOrderAliasRequestPropertiesReservedResourceProperties reservedResourceProperties) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
             Location = location;
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public AzureLocation? Location { get; set; }
         /// <summary> Display name. </summary>
         public string DisplayName { get; set; }
-        /// <summary> Subscription that will be charged for purchasing SavingsPlan. </summary>
+        /// <summary> Subscription that will be charged for purchasing the benefit. </summary>
         public string BillingScopeId { get; set; }
-        /// <summary> Represent SavingsPlan term in ISO 8601 format. </summary>
-        public SavingsPlanTerm? Term { get; set; }
+        /// <summary> Represent benefit term in ISO 8601 format. </summary>
+        public Term? Term { get; set; }
         /// <summary> Represents the billing plan in ISO 8601 format. Required only for monthly billing plans. </summary>
         public BillingPlan? BillingPlan { get; set; }
         /// <summary> Type of the Applied Scope. </summary>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public AppliedScopeProperties AppliedScopeProperties { get; set; }
         /// <summary> Total Quantity of the SKUs purchased in the Reservation. </summary>
         public int? Quantity { get; set; }
-        /// <summary> Setting this to true will automatically purchase a new savings plan on the expiration date time. </summary>
+        /// <summary> Setting this to true will automatically purchase a new benefit on the expiration date time. </summary>
         public bool? Renew { get; set; }
         /// <summary> The type of the resource that is being reserved. </summary>
         public ReservedResourceType? ReservedResourceType { get; set; }
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public DateTimeOffset? ReviewOn { get; set; }
         /// <summary> Properties specific to each reserved resource type. Not required if not applicable. </summary>
         internal ReservationOrderAliasRequestPropertiesReservedResourceProperties ReservedResourceProperties { get; set; }
-        /// <summary> Turning this on will apply the reservation discount to other VMs in the same VM size group. Only specify for VirtualMachines reserved resource type. </summary>
+        /// <summary> Turning this on will apply the reservation discount to other VMs in the same VM size group. </summary>
         public InstanceFlexibility? ReservedResourceInstanceFlexibility
         {
             get => ReservedResourceProperties is null ? default : ReservedResourceProperties.InstanceFlexibility;

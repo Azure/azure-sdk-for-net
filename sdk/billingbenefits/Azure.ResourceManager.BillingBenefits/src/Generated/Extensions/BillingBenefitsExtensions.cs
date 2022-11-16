@@ -85,6 +85,38 @@ namespace Azure.ResourceManager.BillingBenefits
         }
 
         /// <summary>
+        /// Validate savings plan purchase.
+        /// Request Path: /providers/Microsoft.BillingBenefits/validate
+        /// Operation Id: SavingsPlanOrderAlias_ValidatePurchase
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="content"> Request body for validating the purchase of a savings plan. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<SavingsPlanValidateResponse>> ValidatePurchaseSavingsPlanOrderAliaAsync(this TenantResource tenantResource, SavingsPlanPurchaseValidateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return await GetExtensionClient(tenantResource).ValidatePurchaseSavingsPlanOrderAliaAsync(content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Validate savings plan purchase.
+        /// Request Path: /providers/Microsoft.BillingBenefits/validate
+        /// Operation Id: SavingsPlanOrderAlias_ValidatePurchase
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="content"> Request body for validating the purchase of a savings plan. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<SavingsPlanValidateResponse> ValidatePurchaseSavingsPlanOrderAlia(this TenantResource tenantResource, SavingsPlanPurchaseValidateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return GetExtensionClient(tenantResource).ValidatePurchaseSavingsPlanOrderAlia(content, cancellationToken);
+        }
+
+        /// <summary>
         /// List savings plans.
         /// Request Path: /providers/Microsoft.BillingBenefits/savingsPlans
         /// Operation Id: SavingsPlans_List
@@ -120,38 +152,6 @@ namespace Azure.ResourceManager.BillingBenefits
         public static Pageable<SavingsPlanModelResource> GetSavingsPlanModels(this TenantResource tenantResource, string filter = null, string orderby = null, string refreshSummary = null, float? skiptoken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenantResource).GetSavingsPlanModels(filter, orderby, refreshSummary, skiptoken, selectedState, take, cancellationToken);
-        }
-
-        /// <summary>
-        /// Validate savings plan purchase.
-        /// Request Path: /providers/Microsoft.BillingBenefits/validate
-        /// Operation Id: SavingsPlanPurchase_Validate
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="content"> Request body for validating the purchase of a savings plan. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<SavingsPlanValidateResponse>> ValidateSavingsPlanPurchaseAsync(this TenantResource tenantResource, SavingsPlanPurchaseValidateContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetExtensionClient(tenantResource).ValidateSavingsPlanPurchaseAsync(content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Validate savings plan purchase.
-        /// Request Path: /providers/Microsoft.BillingBenefits/validate
-        /// Operation Id: SavingsPlanPurchase_Validate
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="content"> Request body for validating the purchase of a savings plan. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<SavingsPlanValidateResponse> ValidateSavingsPlanPurchase(this TenantResource tenantResource, SavingsPlanPurchaseValidateContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetExtensionClient(tenantResource).ValidateSavingsPlanPurchase(content, cancellationToken);
         }
 
         #region SavingsPlanOrderAliasModelResource

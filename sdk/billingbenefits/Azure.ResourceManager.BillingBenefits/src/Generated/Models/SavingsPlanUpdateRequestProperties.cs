@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public AppliedScopeType? AppliedScopeType { get; set; }
         /// <summary> Properties specific to applied scope type. Not required if not applicable. </summary>
         public AppliedScopeProperties AppliedScopeProperties { get; set; }
-        /// <summary> Setting this to true will automatically purchase a new savings plan on the expiration date time. </summary>
+        /// <summary> Setting this to true will automatically purchase a new benefit on the expiration date time. </summary>
         public bool? Renew { get; set; }
         /// <summary> Gets or sets the renew properties. </summary>
         internal RenewProperties RenewProperties { get; set; }

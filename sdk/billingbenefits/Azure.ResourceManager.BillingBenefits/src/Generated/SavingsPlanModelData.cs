@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="displayName"> Display name. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="displayProvisioningState"> The provisioning state of the savings plan for display, e.g. Succeeded. </param>
-        /// <param name="billingScopeId"> Subscription that will be charged for purchasing SavingsPlan. </param>
+        /// <param name="billingScopeId"> Subscription that will be charged for purchasing the benefit. </param>
         /// <param name="billingProfileId"> Fully-qualified identifier of the billing profile where the savings plan is applied. Present only for Field-led or Customer-led customers. </param>
         /// <param name="customerId"> Fully-qualified identifier of the customer where the savings plan is applied. Present only for Partner-led customers. </param>
         /// <param name="billingAccountId"> Fully-qualified identifier of the billing account where the savings plan is applied. Present only for Enterprise Agreement customers. </param>
-        /// <param name="term"> Represent SavingsPlan term in ISO 8601 format. </param>
+        /// <param name="term"> Represent benefit term in ISO 8601 format. </param>
         /// <param name="billingPlan"> Represents the billing plan in ISO 8601 format. Required only for monthly billing plans. </param>
         /// <param name="appliedScopeType"> Type of the Applied Scope. </param>
         /// <param name="userFriendlyAppliedScopeType"> The applied scope type of the savings plan for display, e.g. Shared. </param>
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="purchaseOn"> Date time when the savings plan was purchased. </param>
         /// <param name="benefitStartOn"> This is the DateTime when the savings plan benefit started. </param>
         /// <param name="extendedStatusInfo"></param>
-        /// <param name="renew"> Setting this to true will automatically purchase a new savings plan on the expiration date time. </param>
+        /// <param name="renew"> Setting this to true will automatically purchase a new benefit on the expiration date time. </param>
         /// <param name="utilization"> Savings plan utilization. </param>
         /// <param name="renewProperties"></param>
-        internal SavingsPlanModelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingBenefitsSku sku, string displayName, ProvisioningState? provisioningState, string displayProvisioningState, string billingScopeId, string billingProfileId, string customerId, string billingAccountId, SavingsPlanTerm? term, BillingPlan? billingPlan, AppliedScopeType? appliedScopeType, string userFriendlyAppliedScopeType, AppliedScopeProperties appliedScopeProperties, Commitment commitment, DateTimeOffset? effectiveOn, DateTimeOffset? expiryOn, DateTimeOffset? purchaseOn, DateTimeOffset? benefitStartOn, ExtendedStatusInfo extendedStatusInfo, bool? renew, Utilization utilization, SavingsPlanModelPropertiesRenewProperties renewProperties) : base(id, name, resourceType, systemData)
+        internal SavingsPlanModelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingBenefitsSku sku, string displayName, ProvisioningState? provisioningState, string displayProvisioningState, string billingScopeId, string billingProfileId, string customerId, string billingAccountId, Term? term, BillingPlan? billingPlan, AppliedScopeType? appliedScopeType, string userFriendlyAppliedScopeType, AppliedScopeProperties appliedScopeProperties, Commitment commitment, DateTimeOffset? effectiveOn, DateTimeOffset? expiryOn, DateTimeOffset? purchaseOn, DateTimeOffset? benefitStartOn, ExtendedStatusInfo extendedStatusInfo, bool? renew, Utilization utilization, SavingsPlanModelPropertiesRenewProperties renewProperties) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
             DisplayName = displayName;
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.BillingBenefits
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The provisioning state of the savings plan for display, e.g. Succeeded. </summary>
         public string DisplayProvisioningState { get; }
-        /// <summary> Subscription that will be charged for purchasing SavingsPlan. </summary>
+        /// <summary> Subscription that will be charged for purchasing the benefit. </summary>
         public string BillingScopeId { get; set; }
         /// <summary> Fully-qualified identifier of the billing profile where the savings plan is applied. Present only for Field-led or Customer-led customers. </summary>
         public string BillingProfileId { get; }
@@ -106,8 +106,8 @@ namespace Azure.ResourceManager.BillingBenefits
         public string CustomerId { get; }
         /// <summary> Fully-qualified identifier of the billing account where the savings plan is applied. Present only for Enterprise Agreement customers. </summary>
         public string BillingAccountId { get; }
-        /// <summary> Represent SavingsPlan term in ISO 8601 format. </summary>
-        public SavingsPlanTerm? Term { get; set; }
+        /// <summary> Represent benefit term in ISO 8601 format. </summary>
+        public Term? Term { get; set; }
         /// <summary> Represents the billing plan in ISO 8601 format. Required only for monthly billing plans. </summary>
         public BillingPlan? BillingPlan { get; set; }
         /// <summary> Type of the Applied Scope. </summary>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.BillingBenefits
         public DateTimeOffset? BenefitStartOn { get; set; }
         /// <summary> Gets the extended status info. </summary>
         public ExtendedStatusInfo ExtendedStatusInfo { get; }
-        /// <summary> Setting this to true will automatically purchase a new savings plan on the expiration date time. </summary>
+        /// <summary> Setting this to true will automatically purchase a new benefit on the expiration date time. </summary>
         public bool? Renew { get; set; }
         /// <summary> Savings plan utilization. </summary>
         public Utilization Utilization { get; }

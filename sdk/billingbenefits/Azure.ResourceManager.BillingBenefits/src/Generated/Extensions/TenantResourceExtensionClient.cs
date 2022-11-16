@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.BillingBenefits
     /// <summary> A class to add extension methods to TenantResource. </summary>
     internal partial class TenantResourceExtensionClient : ArmResource
     {
+        private ClientDiagnostics _savingsPlanOrderAliasModelSavingsPlanOrderAliasClientDiagnostics;
+        private SavingsPlanOrderAliasRestOperations _savingsPlanOrderAliasModelSavingsPlanOrderAliasRestClient;
         private ClientDiagnostics _savingsPlansClientDiagnostics;
         private SavingsPlansRestOperations _savingsPlansRestClient;
-        private ClientDiagnostics _savingsPlanPurchaseClientDiagnostics;
-        private SavingsPlanPurchaseRestOperations _savingsPlanPurchaseRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="TenantResourceExtensionClient"/> class for mocking. </summary>
         protected TenantResourceExtensionClient()
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.BillingBenefits
         {
         }
 
+        private ClientDiagnostics SavingsPlanOrderAliasModelSavingsPlanOrderAliasClientDiagnostics => _savingsPlanOrderAliasModelSavingsPlanOrderAliasClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", SavingsPlanOrderAliasModelResource.ResourceType.Namespace, Diagnostics);
+        private SavingsPlanOrderAliasRestOperations SavingsPlanOrderAliasModelSavingsPlanOrderAliasRestClient => _savingsPlanOrderAliasModelSavingsPlanOrderAliasRestClient ??= new SavingsPlanOrderAliasRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SavingsPlanOrderAliasModelResource.ResourceType));
         private ClientDiagnostics SavingsPlansClientDiagnostics => _savingsPlansClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private SavingsPlansRestOperations SavingsPlansRestClient => _savingsPlansRestClient ??= new SavingsPlansRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics SavingsPlanPurchaseClientDiagnostics => _savingsPlanPurchaseClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private SavingsPlanPurchaseRestOperations SavingsPlanPurchaseRestClient => _savingsPlanPurchaseRestClient ??= new SavingsPlanPurchaseRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -67,6 +67,52 @@ namespace Azure.ResourceManager.BillingBenefits
         public virtual ReservationOrderAliasResponseResource GetReservationOrderAliasResponse()
         {
             return new ReservationOrderAliasResponseResource(Client, new ResourceIdentifier(Id.ToString() + "/reservationOrderAliases"));
+        }
+
+        /// <summary>
+        /// Validate savings plan purchase.
+        /// Request Path: /providers/Microsoft.BillingBenefits/validate
+        /// Operation Id: SavingsPlanOrderAlias_ValidatePurchase
+        /// </summary>
+        /// <param name="content"> Request body for validating the purchase of a savings plan. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<SavingsPlanValidateResponse>> ValidatePurchaseSavingsPlanOrderAliaAsync(SavingsPlanPurchaseValidateContent content, CancellationToken cancellationToken = default)
+        {
+            using var scope = SavingsPlanOrderAliasModelSavingsPlanOrderAliasClientDiagnostics.CreateScope("TenantResourceExtensionClient.ValidatePurchaseSavingsPlanOrderAlia");
+            scope.Start();
+            try
+            {
+                var response = await SavingsPlanOrderAliasModelSavingsPlanOrderAliasRestClient.ValidatePurchaseAsync(content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Validate savings plan purchase.
+        /// Request Path: /providers/Microsoft.BillingBenefits/validate
+        /// Operation Id: SavingsPlanOrderAlias_ValidatePurchase
+        /// </summary>
+        /// <param name="content"> Request body for validating the purchase of a savings plan. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SavingsPlanValidateResponse> ValidatePurchaseSavingsPlanOrderAlia(SavingsPlanPurchaseValidateContent content, CancellationToken cancellationToken = default)
+        {
+            using var scope = SavingsPlanOrderAliasModelSavingsPlanOrderAliasClientDiagnostics.CreateScope("TenantResourceExtensionClient.ValidatePurchaseSavingsPlanOrderAlia");
+            scope.Start();
+            try
+            {
+                var response = SavingsPlanOrderAliasModelSavingsPlanOrderAliasRestClient.ValidatePurchase(content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -163,52 +209,6 @@ namespace Azure.ResourceManager.BillingBenefits
                 }
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Validate savings plan purchase.
-        /// Request Path: /providers/Microsoft.BillingBenefits/validate
-        /// Operation Id: SavingsPlanPurchase_Validate
-        /// </summary>
-        /// <param name="content"> Request body for validating the purchase of a savings plan. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SavingsPlanValidateResponse>> ValidateSavingsPlanPurchaseAsync(SavingsPlanPurchaseValidateContent content, CancellationToken cancellationToken = default)
-        {
-            using var scope = SavingsPlanPurchaseClientDiagnostics.CreateScope("TenantResourceExtensionClient.ValidateSavingsPlanPurchase");
-            scope.Start();
-            try
-            {
-                var response = await SavingsPlanPurchaseRestClient.ValidateAsync(content, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Validate savings plan purchase.
-        /// Request Path: /providers/Microsoft.BillingBenefits/validate
-        /// Operation Id: SavingsPlanPurchase_Validate
-        /// </summary>
-        /// <param name="content"> Request body for validating the purchase of a savings plan. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SavingsPlanValidateResponse> ValidateSavingsPlanPurchase(SavingsPlanPurchaseValidateContent content, CancellationToken cancellationToken = default)
-        {
-            using var scope = SavingsPlanPurchaseClientDiagnostics.CreateScope("TenantResourceExtensionClient.ValidateSavingsPlanPurchase");
-            scope.Start();
-            try
-            {
-                var response = SavingsPlanPurchaseRestClient.Validate(content, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
     }
 }

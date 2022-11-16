@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.BillingBenefits
             Optional<string> reservationOrderId = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<string> billingScopeId = default;
-            Optional<SavingsPlanTerm> term = default;
+            Optional<Term> term = default;
             Optional<BillingPlan> billingPlan = default;
             Optional<AppliedScopeType> appliedScopeType = default;
             Optional<AppliedScopeProperties> appliedScopeProperties = default;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.BillingBenefits
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            term = new SavingsPlanTerm(property0.Value.GetString());
+                            term = new Term(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("billingPlan"))

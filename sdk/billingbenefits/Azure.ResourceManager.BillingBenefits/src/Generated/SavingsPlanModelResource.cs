@@ -34,8 +34,6 @@ namespace Azure.ResourceManager.BillingBenefits
 
         private readonly ClientDiagnostics _savingsPlanModelSavingsPlanClientDiagnostics;
         private readonly SavingsPlanRestOperations _savingsPlanModelSavingsPlanRestClient;
-        private readonly ClientDiagnostics _savingsPlanUpdateClientDiagnostics;
-        private readonly SavingsPlanUpdateRestOperations _savingsPlanUpdateRestClient;
         private readonly SavingsPlanModelData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SavingsPlanModelResource"/> class for mocking. </summary>
@@ -60,8 +58,6 @@ namespace Azure.ResourceManager.BillingBenefits
             _savingsPlanModelSavingsPlanClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string savingsPlanModelSavingsPlanApiVersion);
             _savingsPlanModelSavingsPlanRestClient = new SavingsPlanRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, savingsPlanModelSavingsPlanApiVersion);
-            _savingsPlanUpdateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _savingsPlanUpdateRestClient = new SavingsPlanUpdateRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -194,20 +190,20 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <summary>
         /// Validate savings plan patch.
         /// Request Path: /providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}/validate
-        /// Operation Id: SavingsPlanUpdate_Validate
+        /// Operation Id: SavingsPlan_ValidateUpdate
         /// </summary>
         /// <param name="content"> Request body for validating a savings plan patch request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<SavingsPlanValidateResponse>> ValidateSavingsPlanUpdateAsync(SavingsPlanUpdateValidateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SavingsPlanValidateResponse>> ValidateUpdateAsync(SavingsPlanUpdateValidateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _savingsPlanUpdateClientDiagnostics.CreateScope("SavingsPlanModelResource.ValidateSavingsPlanUpdate");
+            using var scope = _savingsPlanModelSavingsPlanClientDiagnostics.CreateScope("SavingsPlanModelResource.ValidateUpdate");
             scope.Start();
             try
             {
-                var response = await _savingsPlanUpdateRestClient.ValidateAsync(Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var response = await _savingsPlanModelSavingsPlanRestClient.ValidateUpdateAsync(Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -220,20 +216,20 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <summary>
         /// Validate savings plan patch.
         /// Request Path: /providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}/validate
-        /// Operation Id: SavingsPlanUpdate_Validate
+        /// Operation Id: SavingsPlan_ValidateUpdate
         /// </summary>
         /// <param name="content"> Request body for validating a savings plan patch request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<SavingsPlanValidateResponse> ValidateSavingsPlanUpdate(SavingsPlanUpdateValidateContent content, CancellationToken cancellationToken = default)
+        public virtual Response<SavingsPlanValidateResponse> ValidateUpdate(SavingsPlanUpdateValidateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _savingsPlanUpdateClientDiagnostics.CreateScope("SavingsPlanModelResource.ValidateSavingsPlanUpdate");
+            using var scope = _savingsPlanModelSavingsPlanClientDiagnostics.CreateScope("SavingsPlanModelResource.ValidateUpdate");
             scope.Start();
             try
             {
-                var response = _savingsPlanUpdateRestClient.Validate(Id.Parent.Name, Id.Name, content, cancellationToken);
+                var response = _savingsPlanModelSavingsPlanRestClient.ValidateUpdate(Id.Parent.Name, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

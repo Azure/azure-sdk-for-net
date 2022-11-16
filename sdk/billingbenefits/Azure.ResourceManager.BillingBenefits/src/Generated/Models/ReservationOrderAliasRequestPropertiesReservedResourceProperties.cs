@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         }
 
         /// <summary> Initializes a new instance of ReservationOrderAliasRequestPropertiesReservedResourceProperties. </summary>
-        /// <param name="instanceFlexibility"> Turning this on will apply the reservation discount to other VMs in the same VM size group. Only specify for VirtualMachines reserved resource type. </param>
+        /// <param name="instanceFlexibility"> Turning this on will apply the reservation discount to other VMs in the same VM size group. </param>
         internal ReservationOrderAliasRequestPropertiesReservedResourceProperties(InstanceFlexibility? instanceFlexibility)
         {
             InstanceFlexibility = instanceFlexibility;
         }
 
-        /// <summary> Turning this on will apply the reservation discount to other VMs in the same VM size group. Only specify for VirtualMachines reserved resource type. </summary>
+        /// <summary> Turning this on will apply the reservation discount to other VMs in the same VM size group. </summary>
         public InstanceFlexibility? InstanceFlexibility { get; set; }
     }
 }

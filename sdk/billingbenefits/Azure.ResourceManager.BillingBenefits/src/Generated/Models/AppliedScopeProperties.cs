@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         }
 
         /// <summary> Initializes a new instance of AppliedScopeProperties. </summary>
-        /// <param name="tenantId"> Tenant ID where the savings plan should apply benefit. </param>
+        /// <param name="tenantId"> Tenant ID where the benefit is applied. </param>
         /// <param name="managementGroupId"> Fully-qualified identifier of the management group where the benefit must be applied. </param>
         /// <param name="subscriptionId"> Fully-qualified identifier of the subscription. </param>
         /// <param name="resourceGroupId"> Fully-qualified identifier of the resource group. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             DisplayName = displayName;
         }
 
-        /// <summary> Tenant ID where the savings plan should apply benefit. </summary>
+        /// <summary> Tenant ID where the benefit is applied. </summary>
         public Guid? TenantId { get; set; }
         /// <summary> Fully-qualified identifier of the management group where the benefit must be applied. </summary>
         public string ManagementGroupId { get; set; }

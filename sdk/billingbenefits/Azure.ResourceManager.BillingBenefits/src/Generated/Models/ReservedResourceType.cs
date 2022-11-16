@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string ComputeSavingsPlanValue = "ComputeSavingsPlan";
         private const string VirtualMachinesValue = "VirtualMachines";
         private const string SqlDatabasesValue = "SqlDatabases";
         private const string SuseLinuxValue = "SuseLinux";
@@ -50,8 +49,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         private const string SqlEdgeValue = "SqlEdge";
         private const string VirtualMachineSoftwareValue = "VirtualMachineSoftware";
 
-        /// <summary> ComputeSavingsPlan. </summary>
-        public static ReservedResourceType ComputeSavingsPlan { get; } = new ReservedResourceType(ComputeSavingsPlanValue);
         /// <summary> VirtualMachines. </summary>
         public static ReservedResourceType VirtualMachines { get; } = new ReservedResourceType(VirtualMachinesValue);
         /// <summary> SqlDatabases. </summary>

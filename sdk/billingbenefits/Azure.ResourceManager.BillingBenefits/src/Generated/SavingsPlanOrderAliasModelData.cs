@@ -35,13 +35,13 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="displayName"> Display name. </param>
         /// <param name="savingsPlanOrderId"> Identifier of the savings plan created. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
-        /// <param name="billingScopeId"> Subscription that will be charged for purchasing SavingsPlan. </param>
-        /// <param name="term"> Represent SavingsPlan term in ISO 8601 format. </param>
+        /// <param name="billingScopeId"> Subscription that will be charged for purchasing the benefit. </param>
+        /// <param name="term"> Represent benefit term in ISO 8601 format. </param>
         /// <param name="billingPlan"> Represents the billing plan in ISO 8601 format. Required only for monthly billing plans. </param>
         /// <param name="appliedScopeType"> Type of the Applied Scope. </param>
         /// <param name="appliedScopeProperties"> Properties specific to applied scope type. Not required if not applicable. </param>
         /// <param name="commitment"> Commitment towards the benefit. </param>
-        internal SavingsPlanOrderAliasModelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingBenefitsSku sku, string kind, string displayName, string savingsPlanOrderId, ProvisioningState? provisioningState, string billingScopeId, SavingsPlanTerm? term, BillingPlan? billingPlan, AppliedScopeType? appliedScopeType, AppliedScopeProperties appliedScopeProperties, Commitment commitment) : base(id, name, resourceType, systemData)
+        internal SavingsPlanOrderAliasModelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingBenefitsSku sku, string kind, string displayName, string savingsPlanOrderId, ProvisioningState? provisioningState, string billingScopeId, Term? term, BillingPlan? billingPlan, AppliedScopeType? appliedScopeType, AppliedScopeProperties appliedScopeProperties, Commitment commitment) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
             Kind = kind;
@@ -78,10 +78,10 @@ namespace Azure.ResourceManager.BillingBenefits
         public string SavingsPlanOrderId { get; }
         /// <summary> Provisioning state. </summary>
         public ProvisioningState? ProvisioningState { get; }
-        /// <summary> Subscription that will be charged for purchasing SavingsPlan. </summary>
+        /// <summary> Subscription that will be charged for purchasing the benefit. </summary>
         public string BillingScopeId { get; set; }
-        /// <summary> Represent SavingsPlan term in ISO 8601 format. </summary>
-        public SavingsPlanTerm? Term { get; set; }
+        /// <summary> Represent benefit term in ISO 8601 format. </summary>
+        public Term? Term { get; set; }
         /// <summary> Represents the billing plan in ISO 8601 format. Required only for monthly billing plans. </summary>
         public BillingPlan? BillingPlan { get; set; }
         /// <summary> Type of the Applied Scope. </summary>

@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.BillingBenefits.Models;
 
 namespace Azure.ResourceManager.BillingBenefits
 {
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.BillingBenefits
             return message;
         }
 
-        /// <summary> Create a savings plan. </summary>
+        /// <summary> Create a savings plan. Learn more about permissions needed at https://go.microsoft.com/fwlink/?linkid=2215851. </summary>
         /// <param name="savingsPlanOrderAliasName"> Name of the savings plan order alias. </param>
         /// <param name="data"> Request body for creating a savings plan order alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.BillingBenefits
             }
         }
 
-        /// <summary> Create a savings plan. </summary>
+        /// <summary> Create a savings plan. Learn more about permissions needed at https://go.microsoft.com/fwlink/?linkid=2215851. </summary>
         /// <param name="savingsPlanOrderAliasName"> Name of the savings plan order alias. </param>
         /// <param name="data"> Request body for creating a savings plan order alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -167,6 +168,73 @@ namespace Azure.ResourceManager.BillingBenefits
                     }
                 case 404:
                     return Response.FromValue((SavingsPlanOrderAliasModelData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateValidatePurchaseRequest(SavingsPlanPurchaseValidateContent content)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.BillingBenefits/validate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Validate savings plan purchase. </summary>
+        /// <param name="content"> Request body for validating the purchase of a savings plan. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public async Task<Response<SavingsPlanValidateResponse>> ValidatePurchaseAsync(SavingsPlanPurchaseValidateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateValidatePurchaseRequest(content);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        SavingsPlanValidateResponse value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = SavingsPlanValidateResponse.DeserializeSavingsPlanValidateResponse(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Validate savings plan purchase. </summary>
+        /// <param name="content"> Request body for validating the purchase of a savings plan. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public Response<SavingsPlanValidateResponse> ValidatePurchase(SavingsPlanPurchaseValidateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateValidatePurchaseRequest(content);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        SavingsPlanValidateResponse value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = SavingsPlanValidateResponse.DeserializeSavingsPlanValidateResponse(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }
