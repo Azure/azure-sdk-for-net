@@ -78,6 +78,7 @@ namespace Azure.Data.Tables.Tests
         private static readonly Expression<Func<TableEntity, bool>> s_binaryExpDE = ent => ent.GetBinaryData("Binary") == s_someBinaryData;
         private static readonly Expression<Func<ComplexEntity, bool>> s_complexExp = ent => ent.String.CompareTo(SomeString) >= 0 && ent.Int64 >= SomeInt64 && ent.Int32 >= SomeInt && ent.DateTime >= s_someDateTime;
         private static readonly Expression<Func<TableEntity, bool>> s_complexExpDE = ent => ent.GetString("String").CompareTo(SomeString) >= 0 && ent.GetInt64("Int64") >= SomeInt64 && ent.GetInt32("Int32") >= SomeInt && ent.GetDateTime("DateTime") >= s_someDateTime;
+        private static readonly Expression<Func<ComplexEntity, bool>> s_veryComplexExp = ent => ent.String.CompareTo(SomeString) >= 0 && (ent.Int64 >= SomeInt64 || ent.Int32 >= SomeInt) && ent.DateTime >= s_someDateTime && !ent.Bool;
         private static readonly Expression<Func<ComplexEntity, bool>> s_complexExpImplicitBooleanCmp = ent => ent.Bool;
         private static readonly Expression<Func<ComplexEntity, bool>> s_complexExpImplicitNullableBooleanCmp = ent => ent.BoolN.Value;
         private static readonly Expression<Func<ComplexEntity, bool>> s_complexExpImplicitBooleanCmpNot = ent => !ent.Bool;
@@ -91,12 +92,12 @@ namespace Azure.Data.Tables.Tests
 
         public static object[] TableEntityExpressionTestCases =
         {
-            new object[] { $"(PartitionKey eq '{Partition}') and (RowKey ne '{Row}')", s_ne },
-            new object[] { $"(PartitionKey eq '{Partition}') and (RowKey gt '{Row}')", s_gt },
-            new object[] { $"(PartitionKey eq '{Partition}') and (RowKey ge '{Row}')", s_ge },
-            new object[] { $"(PartitionKey eq '{Partition}') and (RowKey lt '{Row}')", s_lt },
-            new object[] { $"(PartitionKey eq '{Partition}') and (RowKey le '{Row}')", s_le },
-            new object[] { $"(PartitionKey eq '{Partition}') or (RowKey eq '{Row}')", s_or },
+            new object[] { $"PartitionKey eq '{Partition}' and RowKey ne '{Row}'", s_ne },
+            new object[] { $"PartitionKey eq '{Partition}' and RowKey gt '{Row}'", s_gt },
+            new object[] { $"PartitionKey eq '{Partition}' and RowKey ge '{Row}'", s_ge },
+            new object[] { $"PartitionKey eq '{Partition}' and RowKey lt '{Row}'", s_lt },
+            new object[] { $"PartitionKey eq '{Partition}' and RowKey le '{Row}'", s_le },
+            new object[] { $"PartitionKey eq '{Partition}' or RowKey eq '{Row}'", s_or },
             new object[] { $"String ge '{SomeString}'", s_compareToExp },
             new object[] { $"Guid eq guid'{s_someGuidString}'", s_guidExp },
             new object[] { $"Int64 ge {SomeInt64}L", s_int64Exp },
@@ -108,13 +109,14 @@ namespace Azure.Data.Tables.Tests
             new object[] { $"Bool eq false", s_boolFalseExp },
             new object[] { $"Binary eq X'{string.Join(string.Empty, s_someBinary.Select(b => b.ToString("X2")))}'", s_binaryExp },
             new object[] { $"Binary eq X'{string.Join(string.Empty, s_someBinaryData.ToArray().Select(b => b.ToString("X2")))}'", s_binaryExp },
-            new object[] { $"(((String ge '{SomeString}') and (Int64 ge {SomeInt64}L)) and (Int32 ge {SomeInt})) and (DateTime ge datetime'{s_someDateTimeOffsetRoundtrip}')", s_complexExp },
+            new object[] { $"String ge '{SomeString}' and Int64 ge {SomeInt64}L and Int32 ge {SomeInt} and DateTime ge datetime'{s_someDateTimeOffsetRoundtrip}'", s_complexExp },
+            new object[] { $"String ge '{SomeString}' and (Int64 ge {SomeInt64}L or Int32 ge {SomeInt}) and DateTime ge datetime'{s_someDateTimeOffsetRoundtrip}' and not (Bool eq true)", s_veryComplexExp },
             new object[] { $"Bool eq true", s_complexExpImplicitBooleanCmp },
             new object[] { $"BoolN eq true", s_complexExpImplicitNullableBooleanCmp },
             new object[] { $"not (Bool eq true)", s_complexExpImplicitBooleanCmpNot },
             new object[] { $"BoolN eq true", s_complexExpImplicitCastedNullableBooleanCmp },
-            new object[] { $"(Bool eq true) and (BoolN eq true)", s_complexExpImplicitBooleanCmpAnd },
-            new object[] { $"(Bool eq true) or (BoolN eq true)", s_complexExpImplicitCastedBooleanCmpOr }
+            new object[] { $"Bool eq true and BoolN eq true", s_complexExpImplicitBooleanCmpAnd },
+            new object[] { $"Bool eq true or BoolN eq true", s_complexExpImplicitCastedBooleanCmpOr }
         };
 
         public static object[] TableItemExpressionTestCases =
@@ -122,20 +124,20 @@ namespace Azure.Data.Tables.Tests
             new object[] { $"TableName ne '{TableName}'", s_ne_TI },
             new object[] { $"TableName gt '{TableName}'", s_gt_TI },
             new object[] { $"TableName ge '{TableName}'", s_ge_TI },
-            new object[] { $"(TableName le '{TableName}') and (TableName ge '{TableName2}')", s_lege_TI },
+            new object[] { $"TableName le '{TableName}' and TableName ge '{TableName2}'", s_lege_TI },
             new object[] { $"TableName lt '{TableName}'", s_lt_TI },
             new object[] { $"TableName le '{TableName}'", s_le_TI },
-            new object[] { $"(TableName eq '{TableName}') or (TableName eq '{TableName2}')", s_or_TI },
+            new object[] { $"TableName eq '{TableName}' or TableName eq '{TableName2}'", s_or_TI },
         };
 
         public static object[] DictionaryTableEntityExpressionTestCases =
         {
-            new object[] { $"(PartitionKey eq '{Partition}') and (RowKey ne '{Row}')", s_neDE },
-            new object[] { $"(PartitionKey eq '{Partition}') and (RowKey gt '{Row}')", s_gtDE },
-            new object[] { $"(PartitionKey eq '{Partition}') and (RowKey ge '{Row}')", s_geDE },
-            new object[] { $"(PartitionKey eq '{Partition}') and (RowKey lt '{Row}')", s_ltDE },
-            new object[] { $"(PartitionKey eq '{Partition}') and (RowKey le '{Row}')", s_leDE },
-            new object[] { $"(PartitionKey eq '{Partition}') or (RowKey eq '{Row}')", s_orDE },
+            new object[] { $"PartitionKey eq '{Partition}' and RowKey ne '{Row}'", s_neDE },
+            new object[] { $"PartitionKey eq '{Partition}' and RowKey gt '{Row}'", s_gtDE },
+            new object[] { $"PartitionKey eq '{Partition}' and RowKey ge '{Row}'", s_geDE },
+            new object[] { $"PartitionKey eq '{Partition}' and RowKey lt '{Row}'", s_ltDE },
+            new object[] { $"PartitionKey eq '{Partition}' and RowKey le '{Row}'", s_leDE },
+            new object[] { $"PartitionKey eq '{Partition}' or RowKey eq '{Row}'", s_orDE },
             new object[] { $"String ge '{SomeString}'", s_compareToExpDE },
             new object[] { $"Guid eq guid'{s_someGuidString}'", s_guidExpDE },
             new object[] { $"Int64 ge {SomeInt64}L", s_int64ExpDE },
@@ -147,10 +149,10 @@ namespace Azure.Data.Tables.Tests
             new object[] { $"Bool eq false", s_boolFalseExpDE },
             new object[] { $"Binary eq X'{string.Join(string.Empty, s_someBinary.Select(b => b.ToString("X2")))}'", s_binaryExpDE },
             new object[] { $"Binary eq X'{string.Join(string.Empty, s_someBinaryData.ToArray().Select(b => b.ToString("X2")))}'", s_binaryExpDE },
-            new object[] { $"(((String ge '{SomeString}') and (Int64 ge {SomeInt64}L)) and (Int32 ge {SomeInt})) and (DateTime ge datetime'{s_someDateTimeOffsetRoundtrip}')", s_complexExpDE },
+            new object[] { $"String ge '{SomeString}' and Int64 ge {SomeInt64}L and Int32 ge {SomeInt} and DateTime ge datetime'{s_someDateTimeOffsetRoundtrip}'", s_complexExpDE },
             new object[] { $"Bool eq true", s_tableEntExpImplicitBooleanCmp },
             new object[] { $"Bool eq true", s_tableEntExpImplicitBooleanCmpCasted },
-            new object[] { $"(Bool eq true) or (Bool eq true)", s_tableEntExpImplicitBooleanCmpOr },
+            new object[] { $"Bool eq true or Bool eq true", s_tableEntExpImplicitBooleanCmpOr },
             new object[] { $"not (Bool eq true)", s_tableEntExpImplicitBooleanCmpNot }
         };
 

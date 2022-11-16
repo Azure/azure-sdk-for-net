@@ -118,18 +118,20 @@ namespace Azure.Data.Tables.Queryable
 
         internal override Expression VisitUnary(UnaryExpression u)
         {
+            var addParens = OperandRequiresParentheses(u, u.Operand);
+
             switch (u.NodeType)
             {
                 case ExpressionType.Not:
                     _builder.Append(UriHelper.NOT);
                     _builder.Append(UriHelper.SPACE);
-                    VisitOperand(u.Operand);
+                    VisitOperand(u.Operand, addParens);
                     break;
                 case ExpressionType.Negate:
                 case ExpressionType.NegateChecked:
                     _builder.Append(UriHelper.SPACE);
                     _builder.Append(TranslateOperator(u.NodeType));
-                    VisitOperand(u.Operand);
+                    VisitOperand(u.Operand, addParens);
                     break;
                 case ExpressionType.Convert:
                 case ExpressionType.ConvertChecked:
@@ -145,7 +147,10 @@ namespace Azure.Data.Tables.Queryable
 
         internal override Expression VisitBinary(BinaryExpression b)
         {
-            VisitOperand(b.Left);
+            var addParens = OperandRequiresParentheses(b, b.Left);
+
+            VisitOperand(b.Left, addParens);
+
             _builder.Append(UriHelper.SPACE);
             string operatorString = TranslateOperator(b.NodeType);
             if (string.IsNullOrEmpty(operatorString))
@@ -158,8 +163,17 @@ namespace Azure.Data.Tables.Queryable
             }
 
             _builder.Append(UriHelper.SPACE);
-            VisitOperand(b.Right);
+
+            addParens = OperandRequiresParentheses(b, b.Right);
+
+            VisitOperand(b.Right, addParens);
+
             return b;
+        }
+
+        private static bool OperandRequiresParentheses(Expression outerExpression, Expression innerExpression)
+        {
+            return ExpressionPrecedenceComparer.Instance.Compare(outerExpression, innerExpression) > 0;
         }
 
         internal override Expression VisitParameter(ParameterExpression p)
@@ -172,8 +186,12 @@ namespace Azure.Data.Tables.Queryable
             return exp is ParameterExpression;
         }
 
-        private void VisitOperand(Expression e)
+        private void VisitOperand(Expression e, bool addParens = false)
         {
+            if (addParens)
+            {
+                _builder.Append(UriHelper.LEFTPAREN);
+            }
             if (e is BinaryExpression || e is UnaryExpression)
             {
                 if (e is UnaryExpression unary && unary.NodeType == ExpressionType.TypeAs)
@@ -182,14 +200,16 @@ namespace Azure.Data.Tables.Queryable
                 }
                 else
                 {
-                    _builder.Append(UriHelper.LEFTPAREN);
                     Visit(e);
-                    _builder.Append(UriHelper.RIGHTPAREN);
                 }
             }
             else
             {
                 Visit(e);
+            }
+            if (addParens)
+            {
+                _builder.Append(UriHelper.RIGHTPAREN);
             }
         }
 
