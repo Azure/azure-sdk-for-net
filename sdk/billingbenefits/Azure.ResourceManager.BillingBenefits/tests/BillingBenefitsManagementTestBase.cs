@@ -12,7 +12,10 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
 {
     public class BillingBenefitsManagementTestBase : ManagementRecordedTestBase<BillingBenefitsManagementTestEnvironment>
     {
-        protected ArmClient Client { get; private set; }
+        public string SubscriptionId { get; set; }
+        public ArmClient Client { get; private set; }
+        public ResourceGroupCollection ResourceGroupsOperations { get; set; }
+        public SubscriptionResource Subscription { get; set; }
 
         protected BillingBenefitsManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
@@ -25,17 +28,11 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
         }
 
         [SetUp]
-        public void CreateCommonClient()
+        public async Task CreateCommonClient()
         {
             Client = GetArmClient();
-        }
-
-        protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
-        {
-            string rgName = Recording.GenerateAssetName(rgNamePrefix);
-            ResourceGroupData input = new ResourceGroupData(location);
-            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
-            return lro.Value;
+            Subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupsOperations = Subscription.GetResourceGroups();
         }
     }
 }
