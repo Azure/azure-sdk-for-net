@@ -11,7 +11,7 @@
 
 ### Bugs Fixed
 
-- Added `KustoClusterPrincipalAssignmentData.ClusterPrincipalId` to replace the old property `KustoDatabasePrincipalAssignmentData.PrincipalId` to fix the issue https://github.com/Azure/azure-sdk-for-net/issues/32331.
+- Added `KustoClusterPrincipalAssignmentData.ClusterPrincipalId` to replace the old property `KustoClusterPrincipalAssignmentData.PrincipalId` to fix the issue https://github.com/Azure/azure-sdk-for-net/issues/32331.
 
 ### Other Changes
 
