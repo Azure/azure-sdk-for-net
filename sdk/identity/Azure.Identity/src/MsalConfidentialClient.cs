@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
@@ -13,13 +14,14 @@ namespace Azure.Identity
 {
     internal class MsalConfidentialClient : MsalClientBase<IConfidentialClientApplication>
     {
-        private const string s_instanceMetadata = "{\"tenant_discovery_endpoint\":\"https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration\",\"api-version\":\"1.1\",\"metadata\":[{\"preferred_network\":\"login.microsoftonline.com\",\"preferred_cache\":\"login.windows.net\",\"aliases\":[\"login.microsoftonline.com\",\"login.windows.net\",\"login.microsoft.com\",\"sts.windows.net\"]}]}";
+        private const string s_instanceMetadata = "{{\"tenant_discovery_endpoint\":\"https://{0}/common/v2.0/.well-known/openid-configuration\",\"api-version\":\"1.1\",\"metadata\":[{{\"preferred_network\":\"{0}\",\"preferred_cache\":\"login.windows.net\",\"aliases\":[\"{0}\",\"login.windows.net\",\"login.microsoft.com\",\"sts.windows.net\"]}}]}}";
         internal readonly string _clientSecret;
         internal readonly bool _includeX5CClaimHeader;
         internal readonly IX509Certificate2Provider _certificateProvider;
         private readonly Func<string> _assertionCallback;
         private readonly Func<CancellationToken, Task<string>> _asyncAssertionCallback;
         private readonly Func<AppTokenProviderParameters, Task<AppTokenProviderResult>> _appTokenProviderCallback;
+        private readonly Uri _authority;
 
         internal string RedirectUrl { get; }
 
@@ -59,6 +61,7 @@ namespace Azure.Identity
             : base(pipeline, tenantId, clientId, options)
         {
             _appTokenProviderCallback = appTokenProviderCallback;
+            _authority = options?.AuthorityHost ?? AzureAuthorityHosts.AzurePublicCloud;
         }
 
         internal string RegionalAuthority { get; } = EnvironmentVariables.AzureRegionalAuthorityName;
@@ -74,8 +77,8 @@ namespace Azure.Identity
             if (_appTokenProviderCallback != null)
             {
                 confClientBuilder.WithAppTokenProvider(_appTokenProviderCallback)
-                    .WithAuthority(AzureAuthorityHosts.AzurePublicCloud.AbsoluteUri, TenantId, false)
-                    .WithInstanceDiscoveryMetadata(s_instanceMetadata);
+                    .WithAuthority(_authority.AbsoluteUri, TenantId, false)
+                    .WithInstanceDiscoveryMetadata(string.Format(CultureInfo.InvariantCulture, s_instanceMetadata, _authority.Host));
             }
             else
             {
