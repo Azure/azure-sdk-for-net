@@ -141,5 +141,32 @@ namespace Azure.Core.Tests.Public
         }
 
         // TODO: Add negative tests, e.g. showing you can't call Add an array value to an Object.
+
+        [Test]
+        public void CanCreateArrayOfObjects()
+        {
+            // Public-JsonData interface alternative.
+            //req.DynamicBody.documents = new JsonData[1];
+            //req.DynamicBody.documents[0] = new JsonData();
+            //req.DynamicBody.documents[0].language = "en";
+            //req.DynamicBody.documents[0].id = "1";
+            //req.DynamicBody.documents[0].text = "Great atmosphere. Close to plenty of restaurants, hotels, and transit! Staff are friendly and helpful.";
+
+            dynamic input = RequestContent.CreateDynamic(/* optional serializer options */);
+            input.Documents = new[]
+            {
+                new
+                {
+                    language = "en",
+                    id = "1",
+                    text = "Great atmosphere. Close to plenty of restaurants, hotels, and transit! Staff are friendly and helpful."
+                }
+            };
+
+            Assert.AreEqual(1, input.Documents.Length);
+            Assert.AreEqual("en", (string)input.Documents[0].language);
+            Assert.AreEqual("1", (string)input.Documents[0].id);
+            Assert.AreEqual("Great atmosphere. Close to plenty of restaurants, hotels, and transit! Staff are friendly and helpful.", (string)input.Documents[0].text);
+        }
     }
 }
