@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static AzureResourceEntity DeserializeAzureResourceEntity(JsonElement element)
         {
-            EntityKindEnum kind = default;
+            EntityKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (property.NameEquals("kind"))
                 {
-                    kind = new EntityKindEnum(property.Value.GetString());
+                    kind = new EntityKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))

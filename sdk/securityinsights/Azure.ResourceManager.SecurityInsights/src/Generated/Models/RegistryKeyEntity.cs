@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public RegistryKeyEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
-            Kind = EntityKindEnum.RegistryKey;
+            Kind = EntityKind.RegistryKey;
         }
 
         /// <summary> Initializes a new instance of RegistryKeyEntity. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
         /// <param name="hive"> the hive that holds the registry key. </param>
         /// <param name="key"> The registry key path. </param>
-        internal RegistryKeyEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityKindEnum kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, RegistryHive? hive, string key) : base(id, name, resourceType, systemData, kind)
+        internal RegistryKeyEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, RegistryHive? hive, string key) : base(id, name, resourceType, systemData, kind)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;

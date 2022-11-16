@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             RemediationSteps = new ChangeTrackingList<string>();
             Tactics = new ChangeTrackingList<AttackTactic>();
             ResourceIdentifiers = new ChangeTrackingList<BinaryData>();
-            Kind = EntityKindEnum.SecurityAlert;
+            Kind = EntityKind.SecurityAlert;
         }
 
         /// <summary> Initializes a new instance of SecurityAlert. </summary>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="vendorName"> The name of the vendor that raise the alert. </param>
         /// <param name="alertLink"> The uri link of the alert. </param>
         /// <param name="resourceIdentifiers"> The list of resource identifiers of the alert. </param>
-        internal SecurityAlert(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityKindEnum kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string alertDisplayName, string alertType, string compromisedEntity, ConfidenceLevel? confidenceLevel, IReadOnlyList<SecurityAlertPropertiesConfidenceReasonsItem> confidenceReasons, double? confidenceScore, ConfidenceScoreStatus? confidenceScoreStatus, string description, DateTimeOffset? endTimeUtc, KillChainIntent? intent, string providerAlertId, DateTimeOffset? processingEndOn, string productComponentName, string productName, string productVersion, IReadOnlyList<string> remediationSteps, AlertSeverity? severity, DateTimeOffset? startTimeUtc, AlertStatus? status, string systemAlertId, IReadOnlyList<AttackTactic> tactics, DateTimeOffset? timeGenerated, string vendorName, string alertLink, IReadOnlyList<BinaryData> resourceIdentifiers) : base(id, name, resourceType, systemData, kind)
+        internal SecurityAlert(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string alertDisplayName, string alertType, string compromisedEntity, ConfidenceLevel? confidenceLevel, IReadOnlyList<SecurityAlertPropertiesConfidenceReasonsItem> confidenceReasons, double? confidenceScore, ConfidenceScoreStatus? confidenceScoreStatus, string description, DateTimeOffset? endTimeUtc, KillChainIntent? intent, string providerAlertId, DateTimeOffset? processingEndOn, string productComponentName, string productName, string productVersion, IReadOnlyList<string> remediationSteps, AlertSeverity? severity, DateTimeOffset? startTimeUtc, AlertStatus? status, string systemAlertId, IReadOnlyList<AttackTactic> tactics, DateTimeOffset? timeGenerated, string vendorName, string alertLink, IReadOnlyList<BinaryData> resourceIdentifiers) : base(id, name, resourceType, systemData, kind)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public ProcessEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
-            Kind = EntityKindEnum.Process;
+            Kind = EntityKind.Process;
         }
 
         /// <summary> Initializes a new instance of ProcessEntity. </summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="imageFileEntityId"> Image file entity id. </param>
         /// <param name="parentProcessEntityId"> The parent process entity id. </param>
         /// <param name="processId"> The process ID. </param>
-        internal ProcessEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityKindEnum kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string accountEntityId, string commandLine, DateTimeOffset? creationTimeUtc, ElevationToken? elevationToken, string hostEntityId, string hostLogonSessionEntityId, string imageFileEntityId, string parentProcessEntityId, string processId) : base(id, name, resourceType, systemData, kind)
+        internal ProcessEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string accountEntityId, string commandLine, DateTimeOffset? creationTimeUtc, ElevationToken? elevationToken, string hostEntityId, string hostLogonSessionEntityId, string imageFileEntityId, string parentProcessEntityId, string processId) : base(id, name, resourceType, systemData, kind)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;

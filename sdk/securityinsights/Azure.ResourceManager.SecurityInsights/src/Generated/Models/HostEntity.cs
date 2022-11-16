@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public HostEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
-            Kind = EntityKindEnum.Host;
+            Kind = EntityKind.Host;
         }
 
         /// <summary> Initializes a new instance of HostEntity. </summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="omsAgentId"> The OMS agent id, if the host has OMS agent installed. </param>
         /// <param name="osFamily"> The operating system type. </param>
         /// <param name="osVersion"> A free text representation of the operating system. This field is meant to hold specific versions the are more fine grained than OSFamily or future values not supported by OSFamily enumeration. </param>
-        internal HostEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityKindEnum kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string azureId, string dnsDomain, string hostName, bool? isDomainJoined, string netBiosName, string ntDomain, string omsAgentId, OSFamily? osFamily, string osVersion) : base(id, name, resourceType, systemData, kind)
+        internal HostEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string azureId, string dnsDomain, string hostName, bool? isDomainJoined, string netBiosName, string ntDomain, string omsAgentId, OSFamily? osFamily, string osVersion) : base(id, name, resourceType, systemData, kind)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;

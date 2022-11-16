@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public SubmissionMailEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
-            Kind = EntityKindEnum.SubmissionMail;
+            Kind = EntityKind.SubmissionMail;
         }
 
         /// <summary> Initializes a new instance of SubmissionMailEntity. </summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="senderIP"> The sender&apos;s IP. </param>
         /// <param name="subject"> The subject of submission mail. </param>
         /// <param name="reportType"> The submission type for the given instance. This maps to Junk, Phish, Malware or NotJunk. </param>
-        internal SubmissionMailEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityKindEnum kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, Guid? networkMessageId, Guid? submissionId, string submitter, DateTimeOffset? submissionOn, DateTimeOffset? timestamp, string recipient, string sender, string senderIP, string subject, string reportType) : base(id, name, resourceType, systemData, kind)
+        internal SubmissionMailEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, Guid? networkMessageId, Guid? submissionId, string submitter, DateTimeOffset? submissionOn, DateTimeOffset? timestamp, string recipient, string sender, string senderIP, string subject, string reportType) : base(id, name, resourceType, systemData, kind)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;

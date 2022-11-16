@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
             IPAddressEntityIds = new ChangeTrackingList<string>();
-            Kind = EntityKindEnum.DnsResolution;
+            Kind = EntityKind.DnsResolution;
         }
 
         /// <summary> Initializes a new instance of DnsEntity. </summary>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="domainName"> The name of the dns record associated with the alert. </param>
         /// <param name="hostIPAddressEntityId"> An ip entity id for the dns request client. </param>
         /// <param name="ipAddressEntityIds"> Ip entity identifiers for the resolved ip address. </param>
-        internal DnsEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityKindEnum kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string dnsServerIPEntityId, string domainName, string hostIPAddressEntityId, IReadOnlyList<string> ipAddressEntityIds) : base(id, name, resourceType, systemData, kind)
+        internal DnsEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string dnsServerIPEntityId, string domainName, string hostIPAddressEntityId, IReadOnlyList<string> ipAddressEntityIds) : base(id, name, resourceType, systemData, kind)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;

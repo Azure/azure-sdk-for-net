@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public AzureResourceEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
-            Kind = EntityKindEnum.AzureResource;
+            Kind = EntityKind.AzureResource;
         }
 
         /// <summary> Initializes a new instance of AzureResourceEntity. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
         /// <param name="resourceId"> The azure resource id of the resource. </param>
         /// <param name="subscriptionId"> The subscription id of the resource. </param>
-        internal AzureResourceEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityKindEnum kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string resourceId, string subscriptionId) : base(id, name, resourceType, systemData, kind)
+        internal AzureResourceEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string resourceId, string subscriptionId) : base(id, name, resourceType, systemData, kind)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;

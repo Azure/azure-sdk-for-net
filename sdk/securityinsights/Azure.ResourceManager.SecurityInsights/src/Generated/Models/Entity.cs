@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> The kind of the entity. </param>
-        internal Entity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityKindEnum kind) : base(id, name, resourceType, systemData)
+        internal Entity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityKind kind) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
         }
 
         /// <summary> The kind of the entity. </summary>
-        internal EntityKindEnum Kind { get; set; }
+        internal EntityKind Kind { get; set; }
     }
 }

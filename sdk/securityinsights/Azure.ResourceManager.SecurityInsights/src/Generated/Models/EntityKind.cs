@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> The kind of the entity. </summary>
-    public readonly partial struct EntityKindEnum : IEquatable<EntityKindEnum>
+    public readonly partial struct EntityKind : IEquatable<EntityKind>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="EntityKindEnum"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntityKind"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public EntityKindEnum(string value)
+        public EntityKind(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -45,59 +45,59 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string SubmissionMailValue = "SubmissionMail";
 
         /// <summary> Entity represents account in the system. </summary>
-        public static EntityKindEnum Account { get; } = new EntityKindEnum(AccountValue);
+        public static EntityKind Account { get; } = new EntityKind(AccountValue);
         /// <summary> Entity represents host in the system. </summary>
-        public static EntityKindEnum Host { get; } = new EntityKindEnum(HostValue);
+        public static EntityKind Host { get; } = new EntityKind(HostValue);
         /// <summary> Entity represents file in the system. </summary>
-        public static EntityKindEnum File { get; } = new EntityKindEnum(FileValue);
+        public static EntityKind File { get; } = new EntityKind(FileValue);
         /// <summary> Entity represents azure resource in the system. </summary>
-        public static EntityKindEnum AzureResource { get; } = new EntityKindEnum(AzureResourceValue);
+        public static EntityKind AzureResource { get; } = new EntityKind(AzureResourceValue);
         /// <summary> Entity represents cloud application in the system. </summary>
-        public static EntityKindEnum CloudApplication { get; } = new EntityKindEnum(CloudApplicationValue);
+        public static EntityKind CloudApplication { get; } = new EntityKind(CloudApplicationValue);
         /// <summary> Entity represents dns resolution in the system. </summary>
-        public static EntityKindEnum DnsResolution { get; } = new EntityKindEnum(DnsResolutionValue);
+        public static EntityKind DnsResolution { get; } = new EntityKind(DnsResolutionValue);
         /// <summary> Entity represents file hash in the system. </summary>
-        public static EntityKindEnum FileHash { get; } = new EntityKindEnum(FileHashValue);
+        public static EntityKind FileHash { get; } = new EntityKind(FileHashValue);
         /// <summary> Entity represents ip in the system. </summary>
-        public static EntityKindEnum IP { get; } = new EntityKindEnum(IPValue);
+        public static EntityKind IP { get; } = new EntityKind(IPValue);
         /// <summary> Entity represents malware in the system. </summary>
-        public static EntityKindEnum Malware { get; } = new EntityKindEnum(MalwareValue);
+        public static EntityKind Malware { get; } = new EntityKind(MalwareValue);
         /// <summary> Entity represents process in the system. </summary>
-        public static EntityKindEnum Process { get; } = new EntityKindEnum(ProcessValue);
+        public static EntityKind Process { get; } = new EntityKind(ProcessValue);
         /// <summary> Entity represents registry key in the system. </summary>
-        public static EntityKindEnum RegistryKey { get; } = new EntityKindEnum(RegistryKeyValue);
+        public static EntityKind RegistryKey { get; } = new EntityKind(RegistryKeyValue);
         /// <summary> Entity represents registry value in the system. </summary>
-        public static EntityKindEnum RegistryValue { get; } = new EntityKindEnum(RegistryValueValue);
+        public static EntityKind RegistryValue { get; } = new EntityKind(RegistryValueValue);
         /// <summary> Entity represents security group in the system. </summary>
-        public static EntityKindEnum SecurityGroup { get; } = new EntityKindEnum(SecurityGroupValue);
+        public static EntityKind SecurityGroup { get; } = new EntityKind(SecurityGroupValue);
         /// <summary> Entity represents url in the system. </summary>
-        public static EntityKindEnum Url { get; } = new EntityKindEnum(UrlValue);
+        public static EntityKind Url { get; } = new EntityKind(UrlValue);
         /// <summary> Entity represents IoT device in the system. </summary>
-        public static EntityKindEnum IoTDevice { get; } = new EntityKindEnum(IoTDeviceValue);
+        public static EntityKind IoTDevice { get; } = new EntityKind(IoTDeviceValue);
         /// <summary> Entity represents security alert in the system. </summary>
-        public static EntityKindEnum SecurityAlert { get; } = new EntityKindEnum(SecurityAlertValue);
+        public static EntityKind SecurityAlert { get; } = new EntityKind(SecurityAlertValue);
         /// <summary> Entity represents bookmark in the system. </summary>
-        public static EntityKindEnum Bookmark { get; } = new EntityKindEnum(BookmarkValue);
+        public static EntityKind Bookmark { get; } = new EntityKind(BookmarkValue);
         /// <summary> Entity represents mail cluster in the system. </summary>
-        public static EntityKindEnum MailCluster { get; } = new EntityKindEnum(MailClusterValue);
+        public static EntityKind MailCluster { get; } = new EntityKind(MailClusterValue);
         /// <summary> Entity represents mail message in the system. </summary>
-        public static EntityKindEnum MailMessage { get; } = new EntityKindEnum(MailMessageValue);
+        public static EntityKind MailMessage { get; } = new EntityKind(MailMessageValue);
         /// <summary> Entity represents mailbox in the system. </summary>
-        public static EntityKindEnum Mailbox { get; } = new EntityKindEnum(MailboxValue);
+        public static EntityKind Mailbox { get; } = new EntityKind(MailboxValue);
         /// <summary> Entity represents submission mail in the system. </summary>
-        public static EntityKindEnum SubmissionMail { get; } = new EntityKindEnum(SubmissionMailValue);
-        /// <summary> Determines if two <see cref="EntityKindEnum"/> values are the same. </summary>
-        public static bool operator ==(EntityKindEnum left, EntityKindEnum right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="EntityKindEnum"/> values are not the same. </summary>
-        public static bool operator !=(EntityKindEnum left, EntityKindEnum right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EntityKindEnum"/>. </summary>
-        public static implicit operator EntityKindEnum(string value) => new EntityKindEnum(value);
+        public static EntityKind SubmissionMail { get; } = new EntityKind(SubmissionMailValue);
+        /// <summary> Determines if two <see cref="EntityKind"/> values are the same. </summary>
+        public static bool operator ==(EntityKind left, EntityKind right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="EntityKind"/> values are not the same. </summary>
+        public static bool operator !=(EntityKind left, EntityKind right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="EntityKind"/>. </summary>
+        public static implicit operator EntityKind(string value) => new EntityKind(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is EntityKindEnum other && Equals(other);
+        public override bool Equals(object obj) => obj is EntityKind other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(EntityKindEnum other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(EntityKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
