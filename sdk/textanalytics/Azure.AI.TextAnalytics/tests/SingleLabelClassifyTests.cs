@@ -44,7 +44,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [RecordedTest]
         public async Task SingleLabelClassifyWithDisableServiceLogs()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
@@ -68,7 +68,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [RecordedTest]
         public async Task SingleLabelClassifyBatchWithErrorTest()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             var documents = new List<string>
             {
@@ -103,7 +103,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [RecordedTest]
         public async Task SingleLabelClassifyBatchConvenienceTest()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
@@ -130,7 +130,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [RecordedTest]
         public async Task SingleLabelClassifyBatchConvenienceWithStatisticsTest()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
@@ -162,7 +162,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [RecordedTest]
         public async Task SingleLabelClassifyBatchTest()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
@@ -189,7 +189,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [RecordedTest]
         public async Task SingleLabelClassifyBatchWithStatisticsTest()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
@@ -222,7 +222,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [Ignore("Issue https://github.com/Azure/azure-sdk-for-net/issues/25152")]
         public async Task SingleLabelClassifyWithMultipleActions()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
@@ -258,7 +258,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [RecordedTest]
         public async Task StartSingleLabelClassify()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
             ClassifyDocumentOperation operation = await client.StartSingleLabelClassifyAsync(s_singleLabelClassifyBatchDocuments, TestEnvironment.SingleClassificationProjectName, TestEnvironment.SingleClassificationDeploymentName);
 
             await PollUntilTimeout(operation);
@@ -272,7 +272,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [RecordedTest]
         public async Task StartSingleLabelClassifyWithName()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
             ClassifyDocumentOperation operation = await client.StartSingleLabelClassifyAsync(s_singleLabelClassifyBatchDocuments, TestEnvironment.SingleClassificationProjectName, TestEnvironment.SingleClassificationDeploymentName, new SingleLabelClassifyOptions
             {
                 DisplayName = "StartSingleLabelClassifyWithName",

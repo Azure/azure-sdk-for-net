@@ -29,16 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     case "Existing": return ExistingRecoveryProximityPlacementGroup.DeserializeExistingRecoveryProximityPlacementGroup(element);
                 }
             }
-            string resourceType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("resourceType"))
-                {
-                    resourceType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownRecoveryProximityPlacementGroupCustomDetails(resourceType);
+            return UnknownRecoveryProximityPlacementGroupCustomDetails.DeserializeUnknownRecoveryProximityPlacementGroupCustomDetails(element);
         }
     }
 }

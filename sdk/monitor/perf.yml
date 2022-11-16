@@ -2,5 +2,4 @@ extends:
   template: /eng/pipelines/templates/jobs/perf.yml
   parameters:
     ServiceDirectory: monitor
-    Tests: '^(SingleUpload|BatchUpload)$'
-    
+    Tests: '^(upload|upload-batch)$'

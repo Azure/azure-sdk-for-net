@@ -28,15 +28,6 @@ namespace Azure.Core
             set => _message.RetryNumber = value;
         }
 
-        /// <summary>
-        /// The exception that occurred on the previous attempt, if any.
-        /// </summary>
-        public Exception? LastException
-        {
-            get => _message.LastException;
-            set => _message.LastException = value;
-        }
-
         private readonly HttpMessage _message;
 
         /// <summary>

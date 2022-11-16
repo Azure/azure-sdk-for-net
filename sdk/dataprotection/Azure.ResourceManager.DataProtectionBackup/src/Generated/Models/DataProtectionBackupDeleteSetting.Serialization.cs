@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -32,22 +31,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     case "AbsoluteDeleteOption": return DataProtectionBackupAbsoluteDeleteSetting.DeserializeDataProtectionBackupAbsoluteDeleteSetting(element);
                 }
             }
-            TimeSpan duration = default;
-            string objectType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("duration"))
-                {
-                    duration = property.Value.GetTimeSpan("P");
-                    continue;
-                }
-                if (property.NameEquals("objectType"))
-                {
-                    objectType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownDataProtectionBackupDeleteSetting(duration, objectType);
+            return UnknownDeleteOption.DeserializeUnknownDeleteOption(element);
         }
     }
 }

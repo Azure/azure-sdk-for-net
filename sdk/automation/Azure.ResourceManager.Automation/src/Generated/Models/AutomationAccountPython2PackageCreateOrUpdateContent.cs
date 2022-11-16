@@ -17,12 +17,9 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of AutomationAccountPython2PackageCreateOrUpdateContent. </summary>
         /// <param name="contentLink"> Gets or sets the module content link. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contentLink"/> is null. </exception>
-        public AutomationAccountPython2PackageCreateOrUpdateContent(ContentLink contentLink)
+        public AutomationAccountPython2PackageCreateOrUpdateContent(AutomationContentLink contentLink)
         {
-            if (contentLink == null)
-            {
-                throw new ArgumentNullException(nameof(contentLink));
-            }
+            Argument.AssertNotNull(contentLink, nameof(contentLink));
 
             Tags = new ChangeTrackingDictionary<string, string>();
             ContentLink = contentLink;
@@ -31,6 +28,6 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Gets or sets the tags attached to the resource. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Gets or sets the module content link. </summary>
-        public ContentLink ContentLink { get; }
+        public AutomationContentLink ContentLink { get; }
     }
 }

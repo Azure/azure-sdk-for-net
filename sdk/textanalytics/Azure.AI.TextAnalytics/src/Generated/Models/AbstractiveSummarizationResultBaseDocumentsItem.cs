@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.TextAnalytics;
+using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -19,20 +20,11 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="summaries"> A list of abstractive summaries. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="warnings"/> or <paramref name="summaries"/> is null. </exception>
-        public AbstractiveSummarizationResultBaseDocumentsItem(string id, IEnumerable<DocumentWarning> warnings, IEnumerable<AbstractiveSummary> summaries) : base(id, warnings, summaries)
+        public AbstractiveSummarizationResultBaseDocumentsItem(string id, IEnumerable<DocumentWarning> warnings, IEnumerable<AbstractiveSummaryInternal> summaries) : base(id, warnings, summaries)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (warnings == null)
-            {
-                throw new ArgumentNullException(nameof(warnings));
-            }
-            if (summaries == null)
-            {
-                throw new ArgumentNullException(nameof(summaries));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(warnings, nameof(warnings));
+            Argument.AssertNotNull(summaries, nameof(summaries));
         }
 
         /// <summary> Initializes a new instance of AbstractiveSummarizationResultBaseDocumentsItem. </summary>
@@ -41,7 +33,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
         /// <param name="summaries"> A list of abstractive summaries. </param>
         /// <param name="detectedLanguage"> If &apos;language&apos; is set to &apos;auto&apos; for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
-        internal AbstractiveSummarizationResultBaseDocumentsItem(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, IList<AbstractiveSummary> summaries, DetectedLanguageInternal? detectedLanguage) : base(id, warnings, statistics, summaries)
+        internal AbstractiveSummarizationResultBaseDocumentsItem(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, IList<AbstractiveSummaryInternal> summaries, DetectedLanguageInternal? detectedLanguage) : base(id, warnings, statistics, summaries)
         {
             DetectedLanguage = detectedLanguage;
         }

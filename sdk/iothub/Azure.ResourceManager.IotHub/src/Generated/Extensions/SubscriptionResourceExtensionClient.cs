@@ -22,8 +22,6 @@ namespace Azure.ResourceManager.IotHub
     {
         private ClientDiagnostics _iotHubDescriptionIotHubResourceClientDiagnostics;
         private IotHubResourceRestOperations _iotHubDescriptionIotHubResourceRestClient;
-        private ClientDiagnostics _iotHubResourceClientDiagnostics;
-        private IotHubResourceRestOperations _iotHubResourceRestClient;
         private ClientDiagnostics _resourceProviderCommonClientDiagnostics;
         private ResourceProviderCommonRestOperations _resourceProviderCommonRestClient;
 
@@ -41,8 +39,6 @@ namespace Azure.ResourceManager.IotHub
 
         private ClientDiagnostics IotHubDescriptionIotHubResourceClientDiagnostics => _iotHubDescriptionIotHubResourceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.IotHub", IotHubDescriptionResource.ResourceType.Namespace, Diagnostics);
         private IotHubResourceRestOperations IotHubDescriptionIotHubResourceRestClient => _iotHubDescriptionIotHubResourceRestClient ??= new IotHubResourceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(IotHubDescriptionResource.ResourceType));
-        private ClientDiagnostics IotHubResourceClientDiagnostics => _iotHubResourceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.IotHub", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private IotHubResourceRestOperations IotHubResourceRestClient => _iotHubResourceRestClient ??= new IotHubResourceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics ResourceProviderCommonClientDiagnostics => _resourceProviderCommonClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.IotHub", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private ResourceProviderCommonRestOperations ResourceProviderCommonRestClient => _resourceProviderCommonRestClient ??= new ResourceProviderCommonRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
@@ -145,11 +141,11 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<IotHubNameAvailabilityResponse>> CheckIotHubNameAvailabilityAsync(IotHubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = IotHubResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckIotHubNameAvailability");
+            using var scope = IotHubDescriptionIotHubResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckIotHubNameAvailability");
             scope.Start();
             try
             {
-                var response = await IotHubResourceRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
+                var response = await IotHubDescriptionIotHubResourceRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -168,11 +164,11 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<IotHubNameAvailabilityResponse> CheckIotHubNameAvailability(IotHubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = IotHubResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckIotHubNameAvailability");
+            using var scope = IotHubDescriptionIotHubResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckIotHubNameAvailability");
             scope.Start();
             try
             {
-                var response = IotHubResourceRestClient.CheckNameAvailability(Id.SubscriptionId, content, cancellationToken);
+                var response = IotHubDescriptionIotHubResourceRestClient.CheckNameAvailability(Id.SubscriptionId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

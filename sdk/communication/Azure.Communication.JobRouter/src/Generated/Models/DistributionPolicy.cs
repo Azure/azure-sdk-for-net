@@ -17,7 +17,11 @@ namespace Azure.Communication.JobRouter.Models
         /// <param name="id"> The unique identifier of the policy. </param>
         /// <param name="name"> The human readable name of the policy. </param>
         /// <param name="offerTtlSeconds"> The expiry time of any offers created under this policy will be governed by the offer time to live. </param>
-        /// <param name="mode"> Abstract base class for defining a distribution mode. </param>
+        /// <param name="mode">
+        /// Abstract base class for defining a distribution mode
+        /// Please note <see cref="DistributionMode"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="BestWorkerMode"/>, <see cref="LongestIdleMode"/> and <see cref="RoundRobinMode"/>.
+        /// </param>
         internal DistributionPolicy(string id, string name, double? offerTtlSeconds, DistributionMode mode)
         {
             Id = id;
@@ -30,7 +34,11 @@ namespace Azure.Communication.JobRouter.Models
         public string Id { get; }
         /// <summary> The human readable name of the policy. </summary>
         public string Name { get; set; }
-        /// <summary> Abstract base class for defining a distribution mode. </summary>
+        /// <summary>
+        /// Abstract base class for defining a distribution mode
+        /// Please note <see cref="DistributionMode"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="BestWorkerMode"/>, <see cref="LongestIdleMode"/> and <see cref="RoundRobinMode"/>.
+        /// </summary>
         public DistributionMode Mode { get; set; }
     }
 }

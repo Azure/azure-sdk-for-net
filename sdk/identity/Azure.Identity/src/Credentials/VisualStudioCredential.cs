@@ -18,7 +18,9 @@ using Azure.Identitiy;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Enables authentication to Azure Active Directory using data from Visual Studio
+    /// Enables authentication to Azure Active Directory using data from Visual Studio 2017 or later. See
+    /// <seealso href="https://learn.microsoft.com/dotnet/azure/configure-visual-studio" /> for more information
+    /// on how to configure Visual Studio for Azure development.
     /// </summary>
     public class VisualStudioCredential : TokenCredential
     {

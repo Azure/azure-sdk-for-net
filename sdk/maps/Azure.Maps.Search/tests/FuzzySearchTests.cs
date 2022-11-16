@@ -27,6 +27,15 @@ namespace Azure.Maps.Search.Tests
         }
 
         [RecordedTest]
+        public async Task CanSearchFuzzyWithIndexFilter()
+        {
+            var client = CreateClient();
+            var fuzzySearchResponse = await client.FuzzySearchAsync("Peachtree Road", new FuzzySearchOptions { CountryFilter = new[] { "USA" }, IndexFilter = new[] { SearchIndex.Streets } });
+            Assert.AreEqual("Peachtree Road", fuzzySearchResponse.Value.Results[0].Address.StreetName);
+            Assert.AreEqual("Peachtree Road", fuzzySearchResponse.Value.Results[1].Address.StreetName);
+        }
+
+        [RecordedTest]
         public async Task CanSearchFuzzyBiasedAroundCoordinates()
         {
             var client = CreateClient();

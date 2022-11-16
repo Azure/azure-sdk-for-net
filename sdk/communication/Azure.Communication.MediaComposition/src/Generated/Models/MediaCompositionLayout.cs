@@ -9,7 +9,11 @@ using Azure.Communication.MediaComposition;
 
 namespace Azure.Communication.MediaComposition.Models
 {
-    /// <summary> Configure a layout. </summary>
+    /// <summary>
+    /// Configure a layout
+    /// Please note <see cref="MediaCompositionLayout"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="AutoGridLayout"/>, <see cref="CustomLayout"/>, <see cref="GridLayout"/>, <see cref="PresentationLayout"/> and <see cref="PresenterLayout"/>.
+    /// </summary>
     public partial class MediaCompositionLayout
     {
 

@@ -17,16 +17,16 @@ namespace Azure.Core.Samples
             _timeout = timeout;
         }
 
-        protected internal override bool ShouldRetry(HttpMessage message)
+        protected internal override bool ShouldRetry(HttpMessage message, Exception exception)
         {
-            return ShouldRetryInternalAsync(message, false).EnsureCompleted();
+            return ShouldRetryInternalAsync(message, exception, false).EnsureCompleted();
         }
-        protected internal override ValueTask<bool> ShouldRetryAsync(HttpMessage message)
+        protected internal override ValueTask<bool> ShouldRetryAsync(HttpMessage message, Exception exception)
         {
-            return ShouldRetryInternalAsync(message, true);
+            return ShouldRetryInternalAsync(message, exception, true);
         }
 
-        private ValueTask<bool> ShouldRetryInternalAsync(HttpMessage message, bool async)
+        private ValueTask<bool> ShouldRetryInternalAsync(HttpMessage message, Exception exception, bool async)
         {
             TimeSpan elapsedTime = message.ProcessingContext.StartTime - DateTimeOffset.UtcNow;
             if (elapsedTime > _timeout)
@@ -34,7 +34,7 @@ namespace Azure.Core.Samples
                 return new ValueTask<bool>(false);
             }
 
-            return async ? base.ShouldRetryAsync(message) : new ValueTask<bool>(base.ShouldRetry(message));
+            return async ? base.ShouldRetryAsync(message, exception) : new ValueTask<bool>(base.ShouldRetry(message, exception));
         }
     }
     #endregion

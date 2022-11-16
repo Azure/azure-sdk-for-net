@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> The parameters supplied to the create hybrid runbook worker operation. </summary>
@@ -18,6 +20,6 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Gets or sets the name of the resource. </summary>
         public string Name { get; set; }
         /// <summary> Azure Resource Manager Id for a virtual machine. </summary>
-        public string VmResourceId { get; set; }
+        public ResourceIdentifier VmResourceId { get; set; }
     }
 }

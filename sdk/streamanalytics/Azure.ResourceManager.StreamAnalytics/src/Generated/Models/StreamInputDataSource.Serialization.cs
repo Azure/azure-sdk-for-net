@@ -35,16 +35,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     case "Raw": return RawStreamInputDataSource.DeserializeRawStreamInputDataSource(element);
                 }
             }
-            string type = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownStreamInputDataSource(type);
+            return UnknownStreamInputDataSource.DeserializeUnknownStreamInputDataSource(element);
         }
     }
 }

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             Optional<int> delayEvaluation = default;
             Optional<int> evaluationInterval = default;
-            EarlyTerminationPolicyType policyType = default;
+            EarlyTerminationPolicyType policyType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("delayEvaluation"))

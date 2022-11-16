@@ -84,8 +84,8 @@ namespace Azure.Security.KeyVault.Secrets
         async ValueTask<OperationState> IOperation.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
             Response response = async
-                ? await _pipeline.GetResponseAsync(RequestMethod.Get, cancellationToken, SecretClient.SecretsPath, _value.Name, "/", _value.Version).ConfigureAwait(false)
-                : _pipeline.GetResponse(RequestMethod.Get, cancellationToken, SecretClient.SecretsPath, _value.Name, "/", _value.Version);
+                ? await _pipeline.GetResponseAsync(RequestMethod.Get, cancellationToken, SecretClient.SecretsPath, _value.Name).ConfigureAwait(false)
+                : _pipeline.GetResponse(RequestMethod.Get, cancellationToken, SecretClient.SecretsPath, _value.Name);
 
             switch (response.Status)
             {

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="awsAssumeRoleArn"/> is null. </exception>
         public AwsAssumeRoleAuthenticationDetailsProperties(string awsAssumeRoleArn, Guid awsExternalId)
         {
-            if (awsAssumeRoleArn == null)
-            {
-                throw new ArgumentNullException(nameof(awsAssumeRoleArn));
-            }
+            Argument.AssertNotNull(awsAssumeRoleArn, nameof(awsAssumeRoleArn));
 
             AwsAssumeRoleArn = awsAssumeRoleArn;
             AwsExternalId = awsExternalId;
