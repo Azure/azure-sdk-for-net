@@ -100,43 +100,37 @@ namespace Azure.Identity.Tests
             }
         }
 
-        [Test]
-        public void VerifyMsalClientRegionalAuthorityFromEnvironmentVariable()
+        [TestCase(null)]
+        [TestCase(ConfidentialClientApplication.AttemptRegionDiscovery)]
+        [TestCase("westus")]
+        public void VerifyMsalClientRegionalAuthorityFromEnvironmentVariable(string regionalAuthority)
         {
-            string[] authorities = { null, ConfidentialClientApplication.AttemptRegionDiscovery, "westus" };
-
-            foreach (string regionalAuthority in authorities)
+            using (new TestEnvVar("AZURE_REGIONAL_AUTHORITY_NAME", regionalAuthority))
             {
-                using (new TestEnvVar("AZURE_REGIONAL_AUTHORITY_NAME", regionalAuthority))
-                {
-                    var expectedTenantId = Guid.NewGuid().ToString();
-                    var expectedClientId = Guid.NewGuid().ToString();
-                    var expectedClientSecret = Guid.NewGuid().ToString();
-
-                    var cred = new ClientSecretCredential(expectedTenantId, expectedClientId, expectedClientSecret);
-
-                    Assert.AreEqual(regionalAuthority, cred.Client.RegionalAuthority);
-                }
-            }
-        }
-
-        [Test]
-        public void VerifyMsalClientRegionalAuthorityFromOptions()
-        {
-            string[] authorities = { null, ConfidentialClientApplication.AttemptRegionDiscovery, "westus" };
-
-            foreach (string regionalAuthority in authorities)
-            {
-                var options = new TokenCredentialOptions();
-                options.AzureRegionalAuthorityName = regionalAuthority;
                 var expectedTenantId = Guid.NewGuid().ToString();
                 var expectedClientId = Guid.NewGuid().ToString();
                 var expectedClientSecret = Guid.NewGuid().ToString();
 
-                var cred = new ClientSecretCredential(expectedTenantId, expectedClientId, expectedClientSecret, options);
+                var cred = new ClientSecretCredential(expectedTenantId, expectedClientId, expectedClientSecret);
 
                 Assert.AreEqual(regionalAuthority, cred.Client.RegionalAuthority);
             }
+        }
+
+        [TestCase(null)]
+        [TestCase(ConfidentialClientApplication.AttemptRegionDiscovery)]
+        [TestCase("westus")]
+        public void VerifyMsalClientRegionalAuthorityFromOptions(string regionalAuthority)
+        {
+            var options = new TokenCredentialOptions();
+            options.AzureRegionalAuthorityName = regionalAuthority;
+            var expectedTenantId = Guid.NewGuid().ToString();
+            var expectedClientId = Guid.NewGuid().ToString();
+            var expectedClientSecret = Guid.NewGuid().ToString();
+
+            var cred = new ClientSecretCredential(expectedTenantId, expectedClientId, expectedClientSecret, options);
+
+            Assert.AreEqual(regionalAuthority, cred.Client.RegionalAuthority);
         }
     }
 }
