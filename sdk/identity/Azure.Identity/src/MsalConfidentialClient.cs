@@ -14,7 +14,7 @@ namespace Azure.Identity
 {
     internal class MsalConfidentialClient : MsalClientBase<IConfidentialClientApplication>
     {
-        private const string s_instanceMetadata = "{{\"tenant_discovery_endpoint\":\"https://{0}/common/v2.0/.well-known/openid-configuration\",\"api-version\":\"1.1\",\"metadata\":[{{\"preferred_network\":\"{0}\",\"preferred_cache\":\"login.windows.net\",\"aliases\":[\"{0}\",\"login.windows.net\",\"login.microsoft.com\",\"sts.windows.net\"]}}]}}";
+        // private const string s_instanceMetadata = "{{\"tenant_discovery_endpoint\":\"https://{0}/common/v2.0/.well-known/openid-configuration\",\"api-version\":\"1.1\",\"metadata\":[{{\"preferred_network\":\"{0}\",\"preferred_cache\":\"login.windows.net\",\"aliases\":[\"{0}\",\"login.windows.net\",\"login.microsoft.com\",\"sts.windows.net\"]}}]}}";
         internal readonly string _clientSecret;
         internal readonly bool _includeX5CClaimHeader;
         internal readonly IX509Certificate2Provider _certificateProvider;
@@ -73,12 +73,11 @@ namespace Azure.Identity
                 .WithLogging(LogMsal, enablePiiLogging: IsPiiLoggingEnabled);
 
             // Special case for using appTokenProviderCallback, authority validation and instance metadata discovery should be disabled since we're not calling the STS
-            // The authority is hard coded to public cloud in order to match the host found in s_instanceMetadata, but is not actually used in the request.
+            // MSAL does not attempt to validate the metadata endpoint if the authority targets ADFS.
             if (_appTokenProviderCallback != null)
             {
                 confClientBuilder.WithAppTokenProvider(_appTokenProviderCallback)
-                    .WithAuthority(_authority.AbsoluteUri, TenantId, false)
-                    .WithInstanceDiscoveryMetadata(string.Format(CultureInfo.InvariantCulture, s_instanceMetadata, _authority.Host));
+                    .WithAuthority("https://Do.Not.Validate.net/adfs/", TenantId, false);
             }
             else
             {
