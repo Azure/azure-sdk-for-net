@@ -4,12 +4,24 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     internal partial class AnalyzeDocumentRequest
     {
         /// <summary> Document URL to analyze. </summary>
-        public string UrlSource { get; set; }
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public string UrlSource
+        {
+            get
+            {
+                return UriSource?.ToString();
+            }
+            set
+            {
+                UriSource = new Uri(value);
+            }
+        }
     }
 }

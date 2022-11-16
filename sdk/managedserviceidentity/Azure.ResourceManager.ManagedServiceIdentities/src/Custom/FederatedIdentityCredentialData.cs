@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         {
             get
             {
-                return IssuerUri?.AbsoluteUri;
+                return IssuerUri?.ToString();
             }
             set
             {
