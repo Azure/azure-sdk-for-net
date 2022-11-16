@@ -14,7 +14,7 @@ namespace Azure.Identity
 {
     internal class MsalConfidentialClient : MsalClientBase<IConfidentialClientApplication>
     {
-        // private const string s_instanceMetadata = "{{\"tenant_discovery_endpoint\":\"https://{0}/common/v2.0/.well-known/openid-configuration\",\"api-version\":\"1.1\",\"metadata\":[{{\"preferred_network\":\"{0}\",\"preferred_cache\":\"login.windows.net\",\"aliases\":[\"{0}\",\"login.windows.net\",\"login.microsoft.com\",\"sts.windows.net\"]}}]}}";
+        private const string s_instanceMetadata = "{\"tenant_discovery_endpoint\":\"https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration\",\"api-version\":\"1.1\",\"metadata\":[{\"preferred_network\":\"login.microsoftonline.com\",\"preferred_cache\":\"login.windows.net\",\"aliases\":[\"login.microsoftonline.com\",\"login.windows.net\",\"login.microsoft.com\",\"sts.windows.net\"]},{\"preferred_network\":\"login.partner.microsoftonline.cn\",\"preferred_cache\":\"login.partner.microsoftonline.cn\",\"aliases\":[\"login.partner.microsoftonline.cn\",\"login.chinacloudapi.cn\"]},{\"preferred_network\":\"login.microsoftonline.de\",\"preferred_cache\":\"login.microsoftonline.de\",\"aliases\":[\"login.microsoftonline.de\"]},{\"preferred_network\":\"login.microsoftonline.us\",\"preferred_cache\":\"login.microsoftonline.us\",\"aliases\":[\"login.microsoftonline.us\",\"login.usgovcloudapi.net\"]},{\"preferred_network\":\"login-us.microsoftonline.com\",\"preferred_cache\":\"login-us.microsoftonline.com\",\"aliases\":[\"login-us.microsoftonline.com\"]}]}";
         internal readonly string _clientSecret;
         internal readonly bool _includeX5CClaimHeader;
         internal readonly IX509Certificate2Provider _certificateProvider;
@@ -73,11 +73,12 @@ namespace Azure.Identity
                 .WithLogging(LogMsal, enablePiiLogging: IsPiiLoggingEnabled);
 
             // Special case for using appTokenProviderCallback, authority validation and instance metadata discovery should be disabled since we're not calling the STS
-            // MSAL does not attempt to validate the metadata endpoint if the authority targets ADFS.
+            // The authority is hard coded to public cloud in order to match the host found in s_instanceMetadata, but is not actually used in the request.
             if (_appTokenProviderCallback != null)
             {
                 confClientBuilder.WithAppTokenProvider(_appTokenProviderCallback)
-                    .WithAuthority("https://Do.Not.Validate.net/adfs/", TenantId, false);
+                    .WithAuthority(_authority.AbsoluteUri, TenantId, false)
+                    .WithInstanceDiscoveryMetadata(s_instanceMetadata);
             }
             else
             {
