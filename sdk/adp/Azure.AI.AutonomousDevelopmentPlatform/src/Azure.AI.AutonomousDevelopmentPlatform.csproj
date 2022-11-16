@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>This is the AutonomousDevelopmentPlatform client library for developing .NET applications with rich experience.</Description>
+    <AssemblyTitle>Azure SDK Code Generation AutonomousDevelopmentPlatform for Azure Data Plane</AssemblyTitle>
+    <Version>1.0.0-beta.1</Version>
+    <PackageTags>Azure AutonomousDevelopmentPlatform</PackageTags>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <NoWarn>$(NoWarn);AZC0001;AZC0012</NoWarn>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+  </PropertyGroup>
+
+  <!-- Shared source from Azure.Core -->
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared" />
+    <!-- remove the below line after we figure out how to automatically pull in shared codes, right now it depends on whether you have autorest.md -->
+    <Compile Include="$(AutoRestSharedCodeDirectory)/**/*.cs" Link="Shared/AutoRest/%(RecursiveDir)/%(Filename)%(Extension)" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" />
+    <PackageReference Include="System.Text.Json" />
+  </ItemGroup>
+
+</Project>
