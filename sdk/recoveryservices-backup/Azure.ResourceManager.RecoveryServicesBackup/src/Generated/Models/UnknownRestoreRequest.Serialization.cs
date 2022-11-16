@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static UnknownRestoreRequest DeserializeUnknownRestoreRequest(JsonElement element)
         {
-            string objectType = default;
+            string objectType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("objectType"))

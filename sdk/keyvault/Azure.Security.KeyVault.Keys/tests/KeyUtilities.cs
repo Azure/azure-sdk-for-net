@@ -47,7 +47,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                     }
 #endif
 
-                case SignatureAlgorithm.EdDSAValue:
+                case SignatureAlgorithm.EdDsaValue:
                     // TODO: Support OKP keys and Ed25519 curves: https://github.com/Azure/azure-sdk-for-net/issues/32232
                     throw new IgnoreException("Creating client-side OKP keys is not supported.");
 

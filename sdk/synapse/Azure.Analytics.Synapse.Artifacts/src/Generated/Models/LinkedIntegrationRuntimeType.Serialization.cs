@@ -33,16 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "RBAC": return LinkedIntegrationRuntimeRbacAuthorization.DeserializeLinkedIntegrationRuntimeRbacAuthorization(element);
                 }
             }
-            string authorizationType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("authorizationType"))
-                {
-                    authorizationType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new LinkedIntegrationRuntimeType(authorizationType);
+            return UnknownLinkedIntegrationRuntimeType.DeserializeUnknownLinkedIntegrationRuntimeType(element);
         }
 
         internal partial class LinkedIntegrationRuntimeTypeConverter : JsonConverter<LinkedIntegrationRuntimeType>

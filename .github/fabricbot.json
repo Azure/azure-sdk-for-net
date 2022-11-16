@@ -885,6 +885,15 @@
           ]
         },
         {
+          "label": "DevCenter",
+          "pathFilter": [
+            "sdk/devcenter/"
+          ],
+          "exclude": [
+            ""
+          ]
+        },
+        {
           "label": "Digital Twins",
           "pathFilter": [
             "sdk/digitaltwins/"
@@ -1894,6 +1903,17 @@
           "mentionees": [
             "raedJarrar",
             "jifems"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "DevCenter"
+          ],
+          "mentionees": [
+            "sebrenna",
+            "mharlan", 
+            "chrissmiller"
           ]
         },
         {

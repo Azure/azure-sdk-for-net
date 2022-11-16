@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,17 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0 (2022-11-11)
+
+### Features Added
+
+- Added new resources for Managed Instance AdvancedThreatProtection APIs.
+
+### Other Changes
+
+- Obsolete tag methods in `RestorableDroppedDatabaseResource` and `RestorableDroppedManagedDatabaseResource`.
+- Marked some extension methods to get resources as `EditorBrowsableState.Never`, added corresponding methods that return resource data.
 
 ## 1.0.0 (2022-07-21)
 

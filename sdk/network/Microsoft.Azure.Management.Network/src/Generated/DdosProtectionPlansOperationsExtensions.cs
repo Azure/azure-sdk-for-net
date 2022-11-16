@@ -33,9 +33,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='ddosProtectionPlanName'>
             /// The name of the DDoS protection plan.
             /// </param>
-            public static void Delete(this IDdosProtectionPlansOperations operations, string resourceGroupName, string ddosProtectionPlanName)
+            public static DdosProtectionPlansDeleteHeaders Delete(this IDdosProtectionPlansOperations operations, string resourceGroupName, string ddosProtectionPlanName)
             {
-                operations.DeleteAsync(resourceGroupName, ddosProtectionPlanName).GetAwaiter().GetResult();
+                return operations.DeleteAsync(resourceGroupName, ddosProtectionPlanName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -53,9 +53,12 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IDdosProtectionPlansOperations operations, string resourceGroupName, string ddosProtectionPlanName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DdosProtectionPlansDeleteHeaders> DeleteAsync(this IDdosProtectionPlansOperations operations, string resourceGroupName, string ddosProtectionPlanName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, ddosProtectionPlanName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.DeleteWithHttpMessagesAsync(resourceGroupName, ddosProtectionPlanName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
             }
 
             /// <summary>
@@ -264,9 +267,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='ddosProtectionPlanName'>
             /// The name of the DDoS protection plan.
             /// </param>
-            public static void BeginDelete(this IDdosProtectionPlansOperations operations, string resourceGroupName, string ddosProtectionPlanName)
+            public static DdosProtectionPlansDeleteHeaders BeginDelete(this IDdosProtectionPlansOperations operations, string resourceGroupName, string ddosProtectionPlanName)
             {
-                operations.BeginDeleteAsync(resourceGroupName, ddosProtectionPlanName).GetAwaiter().GetResult();
+                return operations.BeginDeleteAsync(resourceGroupName, ddosProtectionPlanName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -284,9 +287,12 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteAsync(this IDdosProtectionPlansOperations operations, string resourceGroupName, string ddosProtectionPlanName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DdosProtectionPlansDeleteHeaders> BeginDeleteAsync(this IDdosProtectionPlansOperations operations, string resourceGroupName, string ddosProtectionPlanName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, ddosProtectionPlanName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, ddosProtectionPlanName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
             }
 
             /// <summary>

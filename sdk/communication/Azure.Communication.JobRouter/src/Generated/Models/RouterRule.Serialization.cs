@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -33,7 +32,7 @@ namespace Azure.Communication.JobRouter
                     case "static-rule": return StaticRule.DeserializeStaticRule(element);
                 }
             }
-            throw new NotSupportedException("Deserialization of abstract type 'global::Azure.Communication.JobRouter.RouterRule' not supported.");
+            return UnknownRouterRule.DeserializeUnknownRouterRule(element);
         }
     }
 }

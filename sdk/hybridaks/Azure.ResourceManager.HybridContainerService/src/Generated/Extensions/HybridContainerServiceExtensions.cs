@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="HybridContainerServiceVirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<HybridContainerServiceVirtualNetworkResource> GetVirtualNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<HybridContainerServiceVirtualNetworkResource> GetHybridContainerServiceVirtualNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetVirtualNetworksAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetHybridContainerServiceVirtualNetworksAsync(cancellationToken);
         }
 
         /// <summary>
@@ -74,9 +74,9 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HybridContainerServiceVirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<HybridContainerServiceVirtualNetworkResource> GetVirtualNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<HybridContainerServiceVirtualNetworkResource> GetHybridContainerServiceVirtualNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetVirtualNetworks(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetHybridContainerServiceVirtualNetworks(cancellationToken);
         }
 
         /// <summary>
@@ -154,12 +154,12 @@ namespace Azure.ResourceManager.HybridContainerService
             return resourceGroupResource.GetProvisionedClusters().Get(provisionedClustersName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualNetworkResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of HybridContainerServiceVirtualNetworkResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of VirtualNetworkResources and their operations over a HybridContainerServiceVirtualNetworkResource. </returns>
-        public static HybridContainerServiceVirtualNetworkCollection GetVirtualNetworks(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of HybridContainerServiceVirtualNetworkResources and their operations over a HybridContainerServiceVirtualNetworkResource. </returns>
+        public static HybridContainerServiceVirtualNetworkCollection GetHybridContainerServiceVirtualNetworks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetVirtualNetworks();
+            return GetExtensionClient(resourceGroupResource).GetHybridContainerServiceVirtualNetworks();
         }
 
         /// <summary>
@@ -173,9 +173,9 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentException"> <paramref name="virtualNetworksName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworksName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<HybridContainerServiceVirtualNetworkResource>> GetVirtualNetworkAsync(this ResourceGroupResource resourceGroupResource, string virtualNetworksName, CancellationToken cancellationToken = default)
+        public static async Task<Response<HybridContainerServiceVirtualNetworkResource>> GetHybridContainerServiceVirtualNetworkAsync(this ResourceGroupResource resourceGroupResource, string virtualNetworksName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetVirtualNetworks().GetAsync(virtualNetworksName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetHybridContainerServiceVirtualNetworks().GetAsync(virtualNetworksName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -189,9 +189,9 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentException"> <paramref name="virtualNetworksName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworksName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<HybridContainerServiceVirtualNetworkResource> GetVirtualNetwork(this ResourceGroupResource resourceGroupResource, string virtualNetworksName, CancellationToken cancellationToken = default)
+        public static Response<HybridContainerServiceVirtualNetworkResource> GetHybridContainerServiceVirtualNetwork(this ResourceGroupResource resourceGroupResource, string virtualNetworksName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetVirtualNetworks().Get(virtualNetworksName, cancellationToken);
+            return resourceGroupResource.GetHybridContainerServiceVirtualNetworks().Get(virtualNetworksName, cancellationToken);
         }
 
         /// <summary> Gets a collection of StorageSpaceResources in the ResourceGroupResource. </summary>
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
         #endregion
 
-        #region VirtualNetworkResource
+        #region HybridContainerServiceVirtualNetworkResource
         /// <summary>
         /// Gets an object representing a <see cref="HybridContainerServiceVirtualNetworkResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="HybridContainerServiceVirtualNetworkResource.CreateResourceIdentifier" /> to create a <see cref="HybridContainerServiceVirtualNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HybridContainerServiceVirtualNetworkResource" /> object. </returns>
-        public static HybridContainerServiceVirtualNetworkResource GetVirtualNetworkResource(this ArmClient client, ResourceIdentifier id)
+        public static HybridContainerServiceVirtualNetworkResource GetHybridContainerServiceVirtualNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
