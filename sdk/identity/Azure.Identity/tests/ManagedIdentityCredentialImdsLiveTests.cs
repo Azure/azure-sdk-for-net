@@ -18,8 +18,7 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
-        [TestCaseSource(nameof(AuthorityHostValues))]
-        public async Task ValidateImdsSystemAssignedIdentity(Uri authority)
+        public async Task ValidateImdsSystemAssignedIdentity()
         {
             if (string.IsNullOrEmpty(TestEnvironment.IMDSEnable))
             {
@@ -30,7 +29,7 @@ namespace Azure.Identity.Tests
             {
                 var vaultUri = new Uri(TestEnvironment.SystemAssignedVault);
 
-                var cred = CreateManagedIdentityCredential(authority: authority);
+                var cred = CreateManagedIdentityCredential();
 
                 // Hard code service version or recorded tests will fail: https://github.com/Azure/azure-sdk-for-net/issues/10432
                 var kvoptions = InstrumentClientOptions(new SecretClientOptions(SecretClientOptions.ServiceVersion.V7_0));
@@ -45,8 +44,7 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
-        [TestCaseSource(nameof(AuthorityHostValues))]
-        public async Task ValidateImdsUserAssignedIdentity(Uri authority)
+        public async Task ValidateImdsUserAssignedIdentity()
         {
             if (string.IsNullOrEmpty(TestEnvironment.IMDSEnable))
             {
@@ -59,7 +57,7 @@ namespace Azure.Identity.Tests
 
                 var clientId = TestEnvironment.IMDSClientId;
 
-                var cred = CreateManagedIdentityCredential(clientId, authority: authority);
+                var cred = CreateManagedIdentityCredential(clientId);
 
                 // Hard code service version or recorded tests will fail: https://github.com/Azure/azure-sdk-for-net/issues/10432
                 var kvoptions = InstrumentClientOptions(new SecretClientOptions(SecretClientOptions.ServiceVersion.V7_0));
@@ -72,21 +70,9 @@ namespace Azure.Identity.Tests
             }
         }
 
-        public static IEnumerable<object[]> AuthorityHostValues()
-        {
-            // params
-            // az thrown Exception message, expected message, expected  exception
-            yield return new object[] { AzureAuthorityHosts.AzureChina };
-            yield return new object[] { AzureAuthorityHosts.AzureGermany };
-            yield return new object[] { AzureAuthorityHosts.AzureGovernment };
-            yield return new object[] { AzureAuthorityHosts.AzurePublicCloud };
-            yield return new object[] { new Uri("https://foo.bar") };
-        }
-
-        private ManagedIdentityCredential CreateManagedIdentityCredential(string clientId = null, TokenCredentialOptions options = null, Uri authority = null)
+        private ManagedIdentityCredential CreateManagedIdentityCredential(string clientId = null, TokenCredentialOptions options = null)
         {
             options = InstrumentClientOptions(options ?? new TokenCredentialOptions());
-            options.AuthorityHost = authority;
 
             var pipeline = CredentialPipeline.GetInstance(options);
 
