@@ -12,8 +12,6 @@ using System.Text;
 using Azure.ResourceManager.Resources;
 using System.Threading.Tasks;
 using NUnit.Framework.Internal;
-using Azure.ResourceManager.Logic;
-using Azure.ResourceManager.Logic.Models;
 using System.IO;
 
 namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
@@ -87,14 +85,6 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
             var trigger = new AutomationRuleTriggeringLogic(false, TriggersOn.Incidents, TriggersWhen.Created);
             IEnumerable<AutomationRuleModifyPropertiesAction> action = new List<AutomationRuleModifyPropertiesAction>()
             {
-                /*new AutomationRuleRunPlaybookAction(1)
-                {
-                    ActionConfiguration = new PlaybookActionProperties()
-                    {
-                        LogicAppResourceId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/" + resourcegroup + "/providers/Microsoft.Logic/workflows/" + workflowName,
-                        TenantId = Guid.Parse("72f988bf-86f1-41af-91ab-2d7cd011db47")
-                    }
-                }*/
                 new AutomationRuleModifyPropertiesAction(1)
                 {
                     ActionConfiguration = new IncidentPropertiesAction()
@@ -127,7 +117,6 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
             {
                 DisplayName = "SDKTestBookmark",
                 Query = "SecurityEvent | take 10",
-                //EventOn = DateTimeOffset.Now
             };
             return data;
         }
@@ -229,9 +218,6 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
             return new WatchlistItemData()
             {
                 ItemsKeyValue = BinaryData.FromString("{\"ipaddress\":\"1.1.1.2\"}")
-                /*{
-                    {"ipaddress", BinaryData.FromString("\"1.1.1.2\"")}
-                }*/
             };
         }
         #endregion
