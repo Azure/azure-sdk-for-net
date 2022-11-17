@@ -11,15 +11,15 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    /// <summary> A class representing the Relation data model. </summary>
-    public partial class RelationData : ResourceData
+    /// <summary> A class representing the IncidentRelation data model. </summary>
+    public partial class IncidentRelationData : ResourceData
     {
-        /// <summary> Initializes a new instance of RelationData. </summary>
-        public RelationData()
+        /// <summary> Initializes a new instance of IncidentRelationData. </summary>
+        public IncidentRelationData()
         {
         }
 
-        /// <summary> Initializes a new instance of RelationData. </summary>
+        /// <summary> Initializes a new instance of IncidentRelationData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="relatedResourceType"> The resource type of the related resource. </param>
         /// <param name="relatedResourceKind"> The resource kind of the related resource. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
-        internal RelationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string relatedResourceId, string relatedResourceName, string relatedResourceType, string relatedResourceKind, ETag? etag) : base(id, name, resourceType, systemData)
+        internal IncidentRelationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string relatedResourceId, string relatedResourceName, string relatedResourceType, string relatedResourceKind, ETag? etag) : base(id, name, resourceType, systemData)
         {
             RelatedResourceId = relatedResourceId;
             RelatedResourceName = relatedResourceName;

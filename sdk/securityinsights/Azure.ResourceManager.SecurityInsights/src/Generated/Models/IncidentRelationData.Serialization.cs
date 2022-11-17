@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    public partial class RelationData : IUtf8JsonSerializable
+    public partial class IncidentRelationData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityInsights
             writer.WriteEndObject();
         }
 
-        internal static RelationData DeserializeRelationData(JsonElement element)
+        internal static IncidentRelationData DeserializeIncidentRelationData(JsonElement element)
         {
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.SecurityInsights
                     continue;
                 }
             }
-            return new RelationData(id, name, type, systemData.Value, relatedResourceId.Value, relatedResourceName.Value, relatedResourceType.Value, relatedResourceKind.Value, Optional.ToNullable(etag));
+            return new IncidentRelationData(id, name, type, systemData.Value, relatedResourceId.Value, relatedResourceName.Value, relatedResourceType.Value, relatedResourceKind.Value, Optional.ToNullable(etag));
         }
     }
 }

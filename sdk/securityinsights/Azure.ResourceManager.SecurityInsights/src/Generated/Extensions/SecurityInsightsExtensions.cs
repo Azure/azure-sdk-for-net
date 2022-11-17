@@ -712,20 +712,20 @@ namespace Azure.ResourceManager.SecurityInsights
         }
         #endregion
 
-        #region RelationResource
+        #region IncidentRelationResource
         /// <summary>
-        /// Gets an object representing a <see cref="RelationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RelationResource.CreateResourceIdentifier" /> to create a <see cref="RelationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IncidentRelationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IncidentRelationResource.CreateResourceIdentifier" /> to create an <see cref="IncidentRelationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RelationResource" /> object. </returns>
-        public static RelationResource GetRelationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IncidentRelationResource" /> object. </returns>
+        public static IncidentRelationResource GetIncidentRelationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                RelationResource.ValidateResourceId(id);
-                return new RelationResource(client, id);
+                IncidentRelationResource.ValidateResourceId(id);
+                return new IncidentRelationResource(client, id);
             }
             );
         }

@@ -37,6 +37,7 @@ rename-mapping:
   ThreatIntelligenceIndicatorModel: ThreatIntelligenceIndicator
   EntityKindEnum: EntityKind
   Entity: EntityData
+  Relation: IncidentRelation
 
 override-operation-name:
   DomainWhois_Get: GetDomainWhoisInformation

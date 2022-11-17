@@ -125,11 +125,11 @@ namespace Azure.ResourceManager.SecurityInsights
             return GetIncidentComments().Get(incidentCommentId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of RelationResources in the Incident. </summary>
-        /// <returns> An object representing collection of RelationResources and their operations over a RelationResource. </returns>
-        public virtual RelationCollection GetRelations()
+        /// <summary> Gets a collection of IncidentRelationResources in the Incident. </summary>
+        /// <returns> An object representing collection of IncidentRelationResources and their operations over a IncidentRelationResource. </returns>
+        public virtual IncidentRelationCollection GetIncidentRelations()
         {
-            return GetCachedClient(Client => new RelationCollection(Client, Id));
+            return GetCachedClient(Client => new IncidentRelationCollection(Client, Id));
         }
 
         /// <summary>
@@ -142,9 +142,9 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentException"> <paramref name="relationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="relationName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<RelationResource>> GetRelationAsync(string relationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IncidentRelationResource>> GetIncidentRelationAsync(string relationName, CancellationToken cancellationToken = default)
         {
-            return await GetRelations().GetAsync(relationName, cancellationToken).ConfigureAwait(false);
+            return await GetIncidentRelations().GetAsync(relationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -157,9 +157,9 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentException"> <paramref name="relationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="relationName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<RelationResource> GetRelation(string relationName, CancellationToken cancellationToken = default)
+        public virtual Response<IncidentRelationResource> GetIncidentRelation(string relationName, CancellationToken cancellationToken = default)
         {
-            return GetRelations().Get(relationName, cancellationToken);
+            return GetIncidentRelations().Get(relationName, cancellationToken);
         }
 
         /// <summary>
