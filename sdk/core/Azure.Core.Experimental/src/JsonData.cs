@@ -45,10 +45,14 @@ namespace Azure.Core
         }
 
         /// <summary>
-        ///  Creates a new JsonData object which represents an JSON object with no properties.
+        /// Parses test representing a single JSON value into a <see cref="JsonData"/>.
         /// </summary>
-        public JsonData() : this(Array.Empty<KeyValuePair<string, JsonData>>())
+        /// <param name="json">The JSON string.</param>
+        /// <returns>A <see cref="JsonData"/> representation of the value.</returns>
+        internal static JsonData Parse(string json)
         {
+            using var doc = JsonDocument.Parse(json);
+            return new JsonData(doc);
         }
 
         /// <summary>
@@ -123,23 +127,6 @@ namespace Azure.Core
         {
             _kind = element.ValueKind;
             InitFromElement(element);
-        }
-
-        private JsonData(IEnumerable<KeyValuePair<string, JsonData>> properties)
-        {
-            _kind = JsonValueKind.Object;
-            _objectRepresentation = new Dictionary<string, JsonData>();
-            foreach (var property in properties)
-            {
-                if (property.Value == null)
-                {
-                    _objectRepresentation[property.Key] = new JsonData((object?)null);
-                }
-                else
-                {
-                    _objectRepresentation[property.Key] = property.Value;
-                }
-            }
         }
 
         private void InitFromElement(JsonElement element)
@@ -353,9 +340,6 @@ namespace Azure.Core
         /// <param name="right">The <see cref="JsonData"/> to compare.</param>
         /// <returns>False if the given JsonData represents the given string, and false otherwise</returns>
         public static bool operator !=(string? left, JsonData? right) => !(left == right);
-
-        // Used in internal tests.
-        internal static JsonData FromString(string json) => new JsonData(JsonDocument.Parse(json));
 
         /// <summary>
         /// The <see cref="JsonValueKind"/> of the value of this instance.
@@ -866,7 +850,8 @@ namespace Azure.Core
         {
             public override JsonData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                return new JsonData(JsonDocument.ParseValue(ref reader));
+                using var document = JsonDocument.ParseValue(ref reader);
+                return new JsonData(document);
             }
 
             public override void Write(Utf8JsonWriter writer, JsonData value, JsonSerializerOptions options)
