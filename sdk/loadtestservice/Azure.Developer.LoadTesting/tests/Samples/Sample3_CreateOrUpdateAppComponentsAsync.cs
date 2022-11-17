@@ -61,7 +61,7 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
             try
             {
                 // create or update app component
-                Response response = await loadTestAdministrationClient.CreateOrUpdateAppComponentAsync(appComponentId, RequestContent.Create(data));
+                Response response = await loadTestAdministrationClient.CreateOrUpdateAppComponentsAsync(appComponentId, RequestContent.Create(data));
 
                 // if successfully, printing response
                 Console.WriteLine(response.Content);

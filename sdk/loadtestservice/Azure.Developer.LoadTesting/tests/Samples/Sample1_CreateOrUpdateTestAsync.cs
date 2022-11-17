@@ -86,7 +86,7 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
 
             try
             {
-                Response response = await loadTestAdministrationClient.CreateOrUpdateLoadTestAsync(testId, RequestContent.Create(data));
+                Response response = await loadTestAdministrationClient.CreateOrUpdateTestAsync(testId, RequestContent.Create(data));
 
                 // if the test is created successfully, printing response
                 Console.WriteLine(response.Content);

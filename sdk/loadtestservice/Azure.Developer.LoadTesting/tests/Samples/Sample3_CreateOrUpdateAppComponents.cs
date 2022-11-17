@@ -61,7 +61,7 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
             try
             {
                 // create or update app component
-                Response response = loadTestAdministrationClient.CreateOrUpdateAppComponent(appComponentId, RequestContent.Create(data));
+                Response response = loadTestAdministrationClient.CreateOrUpdateAppComponents(appComponentId, RequestContent.Create(data));
 
                 // if successfully, printing response
                 Console.WriteLine(response.Content);
