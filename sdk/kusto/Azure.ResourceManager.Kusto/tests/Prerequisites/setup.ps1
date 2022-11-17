@@ -5,8 +5,7 @@ az login
 $sdkRgs = az group list --tag DeleteAfter --query "[? contains(name,'sdkRg')][].{name:name}" --output tsv
 $sdkRgs | ForEach-Object -Parallel { echo Deleting $_; az group delete --name $_ --yes; echo Deleted $_ }
 
-
-$RootDirectory = (get-item $PSScriptRoot).parent.parent
+$RootDirectory = (Get-Item $PSScriptRoot).parent.parent.parent.parent.parent
 $TestResourcesDirectory = Join-Path -Path $RootDirectory -ChildPath eng\common\TestResources
 
 $subscriptionId = az account list --query "[?name=='Kusto_Dev_Kusto_Ilay_04_Test'].id" --output tsv

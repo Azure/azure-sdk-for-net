@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
         {
             var clusterCollection = ResourceGroup.GetKustoClusters();
 
-            var clusterName = GenerateAssetName("sdkCluster") + "2";
+            var clusterName = GenerateAssetName("sdkCluster");
 
             var clusterDataCreate = new KustoClusterData(Location, _sku1)
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
                 OptimizedAutoscale = new OptimizedAutoscale(1, true, 2, 100),
                 PublicIPType = "DualStack",
                 TrustedExternalTenants = { new KustoClusterTrustedExternalTenant(TE.TenantId) },
-                // TODO
+                // TODO: figure out how to authenticate
                 // KeyVaultProperties = new KustoKeyVaultProperties(
                 //     TE.KeyName,
                 //     TE.KeyVersion,
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             );
         }
 
-        // TODO
+        // TODO: figure out how to authenticate
         // private static void AssertKeyVaultPropertiesEquals(
         //     KustoKeyVaultProperties keyVaultProperties1, KustoKeyVaultProperties keyVaultProperties2
         // )

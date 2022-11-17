@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
         {
             var scriptCollection = Database.GetKustoScripts();
 
-            var scriptName = GenerateAssetName("sdkScript") + "2";
+            var scriptName = GenerateAssetName("sdkScript");
 
             var scriptDataUpdate = new KustoScriptData
             {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             };
 
             var scriptContent =
-                $".create table {GenerateAssetName("sdkScriptContentTable") + "2"} " +
+                $".create table {GenerateAssetName("sdkScriptContentTable")} " +
                 "(Level:string, Timestamp:datetime, UserId:string, TraceId:string, Message:string, ProcessId:int32)";
             var scriptDataCreate = new KustoScriptData
             {

@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Kusto.Tests
 
         protected string GenerateAssetName(string prefix)
         {
-            return prefix + TE.Id;
+            return prefix + TE.Id + (IsAsync ? 0 : 1);
         }
 
         protected string GetFullClusterChildResourceName(string resourceName, string clusterName = null)

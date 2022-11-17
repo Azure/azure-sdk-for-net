@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
         {
             var databaseCollection = Cluster.GetKustoDatabases();
 
-            var databaseName = GenerateAssetName("sdkDatabase") + "2";
+            var databaseName = GenerateAssetName("sdkDatabase");
 
             var databaseDataCreate = new KustoReadWriteDatabase
             {

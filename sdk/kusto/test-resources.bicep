@@ -4,7 +4,7 @@ param location string = resourceGroup().location
 
 output ID string = id
 
-module managedIdentity './data/managedIdentity.bicep' = {
+module managedIdentity './Azure.ResourceManager.Kusto/tests/Prerequisites/Data/managedIdentity.bicep' = {
     name: 'managedIdentity'
     params: {
         id: id
@@ -16,7 +16,7 @@ module managedIdentity './data/managedIdentity.bicep' = {
 output USER_ASSIGNED_IDENTITY_ID string = managedIdentity.outputs.USER_ASSIGNED_IDENTITY_ID
 output USER_ASSIGNED_IDENTITY_PRINCIPAL_ID string = managedIdentity.outputs.USER_ASSIGNED_IDENTITY_PRINCIPAL_ID
 
-module cluster './data/cluster.bicep' = {
+module cluster './Azure.ResourceManager.Kusto/tests/Prerequisites/Data/cluster.bicep' = {
     name: 'cluster'
     params: {
         id: id
@@ -33,7 +33,7 @@ output DATABASE_NAME string = cluster.outputs.DATABASE_NAME
 output TABLE_NAME string = cluster.outputs.TABLE_NAME
 output FOLLOWING_CLUSTER_NAME string = cluster.outputs.FOLLOWING_CLUSTER_NAME
 
-module keyVault './data/keyVault.bicep' = {
+module keyVault './Azure.ResourceManager.Kusto/tests/Prerequisites/Data/keyVault.bicep' = {
     name: 'keyVault'
     params: {
         id: id
@@ -47,7 +47,7 @@ output KEY_VAULT_URI string = keyVault.outputs.KEY_VAULT_URI
 output KEY_NAME string = keyVault.outputs.KEY_NAME
 output KEY_VERSION string = keyVault.outputs.KEY_VERSION
 
-module privateEndpoint './data/privateEndpoint.bicep' = {
+module privateEndpoint './Azure.ResourceManager.Kusto/tests/Prerequisites/Data/privateEndpoint.bicep' = {
     name: 'privateEndpoint'
     params: {
         id: id
@@ -59,7 +59,7 @@ module privateEndpoint './data/privateEndpoint.bicep' = {
 
 output PRIVATE_ENDPOINT_NAME string = privateEndpoint.outputs.PRIVATE_ENDPOINT_NAME
 
-module dataConnection './data/dataConnection.bicep' = {
+module dataConnection './Azure.ResourceManager.Kusto/tests/Prerequisites/Data/dataConnection.bicep' = {
     name: 'dataConnection'
     params: {
         id: id
@@ -71,7 +71,7 @@ module dataConnection './data/dataConnection.bicep' = {
 output EVENT_HUB_ID string = dataConnection.outputs.EVENT_HUB_ID
 output IOT_HUB_ID string = dataConnection.outputs.IOT_HUB_ID
 
-module storage './data/storage.bicep' = {
+module storage './Azure.ResourceManager.Kusto/tests/Prerequisites/Data/storage.bicep' = {
     name: 'storage'
     params: {
         id: id
