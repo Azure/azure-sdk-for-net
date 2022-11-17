@@ -291,7 +291,7 @@ namespace Azure.Core.Tests
             {
                 Assert.AreEqual(JsonValueKind.Object, d.Kind);
                 Assert.AreEqual(d.Properties.Count(), 1);
-                Assert.AreEqual(d["property"], "hello");
+                Assert.AreEqual(d.Get("property"), "hello");
             }
 
             validate(orig);

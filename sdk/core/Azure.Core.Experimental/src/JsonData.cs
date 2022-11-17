@@ -437,32 +437,6 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Gets or sets a value at the given index in an array.
-        /// </summary>
-        /// <param name="arrayIndex">The index in the array of the value to get or set.</param>
-        /// <returns>The value at the given index.</returns>
-        /// <remarks>
-        /// If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Array"/> this method throws <see cref="InvalidOperationException"/>.
-        /// </remarks>
-        public JsonData this[int arrayIndex]
-        {
-            get => GetValueAt(arrayIndex);
-        }
-
-        /// <summary>
-        /// Gets or sets a value for a given property in an object.
-        /// </summary>
-        /// <param name="propertyName">The name of the property in the object to get or set.</param>
-        /// <returns>The value for the given property name.</returns>
-        /// <remarks>
-        /// If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Object"/> this method throws <see cref="InvalidOperationException"/>.
-        /// </remarks>
-        public JsonData this[string propertyName]
-        {
-            get => GetPropertyValue(propertyName);
-        }
-
-        /// <summary>
         /// Converts the value to a <see cref="bool"/>
         /// </summary>
         /// <param name="json">The value to convert.</param>
@@ -870,14 +844,27 @@ namespace Azure.Core
             throw new InvalidOperationException($"Property {propertyName} not found");
         }
 
+        private JsonData GetViaIndexer(object index)
+        {
+            switch (index)
+            {
+                case string propertyName:
+                    return GetPropertyValue(propertyName);
+                case int arrayIndex:
+                    return GetValueAt(arrayIndex);;
+            }
+
+            throw new InvalidOperationException($"Tried to access indexer with unsupport index type: {index}");
+        }
+
         private JsonData SetViaIndexer(object index, object value)
         {
             switch (index)
             {
-                case string property:
-                    return SetValue(property, value);
-                case int i:
-                    return SetValueAt(i, value);
+                case string propertyName:
+                    return SetValue(propertyName, value);
+                case int arrayIndex:
+                    return SetValueAt(arrayIndex, value);
             }
 
             throw new InvalidOperationException($"Tried to access indexer with unsupport index type: {index}");
@@ -1019,9 +1006,9 @@ namespace Azure.Core
 
             private static readonly MethodInfo SetValueMethod = typeof(JsonData).GetMethod(nameof(SetValue), BindingFlags.NonPublic | BindingFlags.Instance);
 
-            private static readonly MethodInfo SetIndexerMethod = typeof(JsonData).GetMethod(nameof(SetViaIndexer), BindingFlags.NonPublic | BindingFlags.Instance);
+            private static readonly MethodInfo GetViaIndexerMethod = typeof(JsonData).GetMethod(nameof(GetViaIndexer), BindingFlags.NonPublic | BindingFlags.Instance);
 
-            private static readonly Dictionary<Type, PropertyInfo> Indexers = GetIndexers();
+            private static readonly MethodInfo SetViaIndexerMethod = typeof(JsonData).GetMethod(nameof(SetViaIndexer), BindingFlags.NonPublic | BindingFlags.Instance);
 
             // Operators that cast from JsonData to another type
             private static readonly Dictionary<Type, MethodInfo> CastFromOperators = GetCastFromOperators();
@@ -1044,11 +1031,11 @@ namespace Azure.Core
             public override DynamicMetaObject BindGetIndex(GetIndexBinder binder, DynamicMetaObject[] indexes)
             {
                 var targetObject = Expression.Convert(Expression, LimitType);
-                var arguments = indexes.Select(i => i.Expression);
-                var indexProperty = Expression.Property(targetObject, Indexers[indexes[0].LimitType], arguments);
+                var arguments = new Expression[] { Expression.Convert(indexes[0].Expression, typeof(object)) };
+                var getViaIndexerCall = Expression.Call(targetObject, GetViaIndexerMethod, arguments);
 
                 var restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
-                return new DynamicMetaObject(indexProperty, restrictions);
+                return new DynamicMetaObject(getViaIndexerCall, restrictions);
             }
 
             public override DynamicMetaObject BindConvert(ConvertBinder binder)
@@ -1092,18 +1079,10 @@ namespace Azure.Core
                     Expression.Convert(indexes[0].Expression, typeof(object)),
                     Expression.Convert(value.Expression, typeof(object))
                 };
-                var setCall = Expression.Call(targetObject, SetIndexerMethod, arguments);
+                var setCall = Expression.Call(targetObject, SetViaIndexerMethod, arguments);
 
                 var restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
                 return new DynamicMetaObject(setCall, restrictions);
-            }
-
-            private static Dictionary<Type, PropertyInfo> GetIndexers()
-            {
-                return typeof(JsonData)
-                    .GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                    .Where(p => p.GetIndexParameters().Any())
-                    .ToDictionary(p => p.GetIndexParameters().First().ParameterType);
             }
 
             private static Dictionary<Type, MethodInfo> GetCastFromOperators()

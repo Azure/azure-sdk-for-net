@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Globalization;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests.Public
@@ -109,6 +111,57 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
+        public void CanTestPropertyForNull()
+        {
+            dynamic jsonData = new BinaryData("{ \"primitive\":\"Hello\", \"nested\": { \"nestedPrimitive\":true } }").ToDynamic();
+
+            Assert.IsNull(jsonData.OptionalInt);
+            Assert.IsNull(jsonData.OptionalString);
+            Assert.AreEqual("Hello", (string)jsonData.Primitive);
+        }
+
+        [Test]
+        public void CanAddStringToList()
+        {
+            dynamic jsonData = new BinaryData(new { value = "foo" }).ToDynamic();
+
+            List<string> list = new();
+
+            // TODO: Should we add an implicit cast to string?
+            // Can we do it dynamically?
+            // Alternatively, we could provide a different type for string leaf
+            // nodes, like we do for numbers.
+            list.Add(jsonData.value);
+
+            Assert.AreEqual(1, list.Count);
+            Assert.AreEqual("foo", list[0]);
+        }
+
+        [Test]
+        public void CanAddIntToList()
+        {
+            dynamic jsonData = new BinaryData(new { value = 5 }).ToDynamic();
+
+            List<int> list = new();
+
+            // TODO: Should we add an implicit cast to int?
+            // Can we do it dynamically?
+            list.Add(jsonData.value);
+
+            Assert.AreEqual(1, list.Count);
+            Assert.AreEqual(5, list[0]);
+        }
+
+        [Test]
+        public void GetMemberIsCaseInsensitive()
+        {
+            dynamic jsonData = new BinaryData("{ \"primitive\":\"Hello\", \"nested\": { \"nestedPrimitive\":true } }").ToDynamic();
+
+            Assert.AreEqual("Hello", (string)jsonData.Primitive);
+            Assert.AreEqual(true, (bool)jsonData.Nested.NestedPrimitive);
+        }
+
+        [Test]
         public void CanReadIntsAsFloatingPoints()
         {
             var json = new BinaryData("5").ToDynamic();
@@ -144,6 +197,24 @@ namespace Azure.Core.Tests.Public
             Assert.Throws<OverflowException>(() => _ = (float)jsonData);
             Assert.AreEqual(34028234663852885981170418348451692544000d, (double)jsonData);
             Assert.AreEqual(34028234663852885981170418348451692544000d, (double)json);
+        }
+
+        [Test]
+        public void CanAccessArrayValues()
+        {
+            dynamic jsonData = new BinaryData("{ \"primitive\":\"Hello\", \"nested\": { \"nestedPrimitive\":true } , \"array\": [1, 2, 3] }").ToDynamic();
+
+            Assert.AreEqual(1, (int)jsonData.array[0]);
+            Assert.AreEqual(2, (int)jsonData.array[1]);
+            Assert.AreEqual(3, (int)jsonData.array[2]);
+        }
+
+        [Test]
+        public void CanAccessJsonPropertiesWithDotnetIllegalCharacters()
+        {
+            dynamic jsonData = new BinaryData("{ \"$foo\":\"Hello\" }").ToDynamic();
+
+            Assert.AreEqual("Hello", (string)jsonData["$foo"]);
         }
 
         [Test]
@@ -206,6 +277,52 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
+        public void CanCastToTypesYouDontOwn()
+        {
+            var now = DateTimeOffset.Now;
+
+            // "O" is the only format supported by default JsonSerializer:
+            // https://learn.microsoft.com/dotnet/standard/datetime/system-text-json-support
+            dynamic nowJson = new BinaryData($"{{ \"value\": \"{now.ToString("O", CultureInfo.InvariantCulture)}\" }}").ToDynamic().value;
+
+            var cast = (DateTimeOffset)nowJson;
+
+            Assert.AreEqual(now, cast);
+        }
+
+        [Test]
+        public void CanCastToIEnumerableOfT()
+        {
+            dynamic data = new BinaryData("{ \"array\": [ 1, 2, 3] }").ToDynamic();
+
+            var enumerable = (IEnumerable<int>)data.array;
+
+            int i = 0;
+            foreach (var item in enumerable)
+            {
+                Assert.AreEqual(++i, item);
+            }
+        }
+
+        [Test]
+        public void CanGetDynamicFromBinaryData()
+        {
+            var data = new BinaryData(new
+            {
+                array = new[] { 1, 2, 3 }
+            });
+
+            dynamic json = data.ToDynamic();
+            dynamic array = json.array;
+
+            int i = 0;
+            foreach (int item in array)
+            {
+                Assert.AreEqual(++i, item);
+            }
+        }
+
+        [Test]
         public void EqualsHandlesStringsSpecial()
         {
             dynamic json = new BinaryData("\"test\"").ToDynamic();
@@ -246,6 +363,20 @@ namespace Azure.Core.Tests.Public
             Assert.IsFalse("foo" == barJson);
             Assert.IsTrue(barJson != "foo");
             Assert.IsTrue("foo" != barJson);
+        }
+
+        [Test]
+        public void EqualsForStringNUnit()
+        {
+            dynamic foo = new BinaryData("{ \"value\": \"foo\" }").ToDynamic();
+            var value = foo.Value;
+
+            // TODO: Outstanding question regarding whether we want these to succeed without a cast.
+            Assert.AreEqual(value, "foo");
+            Assert.AreEqual("foo", value);
+
+            Assert.That(value, Is.EqualTo("foo"));
+            Assert.That("foo", Is.EqualTo(value));
         }
 
         private T JsonAsType<T>(string json)
