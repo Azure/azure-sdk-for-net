@@ -173,3 +173,4 @@ BenchmarkDotNet.Artifacts
 
 artifacts
 .assets
+/sdk/entra/Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents/WebJobs.Extensions.AuthenticationEvents.sln

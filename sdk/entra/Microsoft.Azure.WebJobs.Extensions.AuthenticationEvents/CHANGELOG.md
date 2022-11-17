@@ -1,5 +1,6 @@
 # Release History
 
+<<<<<<< HEAD
 ## 1.0.0-beta.3 (Unreleased)
 
 ### Features Added
@@ -10,6 +11,14 @@
 
 ### Other Changes
 
+=======
+## 1.0.0-beta.2 (2022-11-08)
+
+### Other Changes
+
+
+
+>>>>>>> 6d12baafe76273e1f9c8ed9b7fc3ae2c14006dad
 ## 1.0.0-beta.2 (2022-11-08)
 
 ### Other Changes

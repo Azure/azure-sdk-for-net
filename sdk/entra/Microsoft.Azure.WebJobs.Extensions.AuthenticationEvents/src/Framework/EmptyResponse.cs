@@ -18,7 +18,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         {
             public EmptyRequest(HttpRequestMessage request) : base(request)
             {
-                Payload = new EmptyData();
+                Data = new EmptyData();
                 Response = new EmptyResponse();
             }
 

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -13,17 +14,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <summary>Gets the event identifier.</summary>
         /// <value>The event identifier.</value>
         [JsonPropertyName("tenantId")]
+        [JsonRequired]
         public Guid TenantId { get; set; }
 
         /// <summary>Gets the event identifier.</summary>
         /// <value>The event identifier.</value>
         [JsonPropertyName("authenticationEventListenerId")]
+        [JsonRequired]
         public Guid AuthenticationEventListenerId { get; set; }
 
-        /// <summary>Gets or sets the custom extension identifier.</summary>
-        /// <value>The custom extension identifier.</value>
-        [JsonPropertyName("AuthenticationEventsId")]
-        public Guid AuthenticationEventsId { get; set; }
+        /// <summary>Gets or sets the custom authentication extension identifier.</summary>
+        /// <value>The custom authentication extension identifier. </value>
+        [JsonPropertyName("customAuthenticationExtensionId")]
+        [JsonRequired]
+        public Guid CustomAuthenticationExtensionId { get; set; }
 
         /// <summary>Gets the Json settings.
         /// Which is over-ridable for sub class.</summary>
@@ -44,6 +48,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
             }
         }
 
+        // TODO: What is this?
         internal virtual void InitJsonSerializerSettings(JsonSerializerOptions jsonSerializerSettings) { }
 
         /// <summary>De-serializes the json the its associated typed object.</summary>
