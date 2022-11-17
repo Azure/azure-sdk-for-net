@@ -27,8 +27,6 @@ namespace Azure.Monitor.Ingestion.Tests
                 });
             }
             IEnumerable<LogsIngestionClient.BatchedLogs<IEnumerable>> x = LogsIngestionClient.Batch(entries);
-            //var y = System.Text.Encoding.UTF8.GetString(x.FirstOrDefault().LogsData, 81000);
-            var y = x.First().LogsData.ToString();
             Assert.AreEqual(1, x.Count());
         }
 
