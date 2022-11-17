@@ -157,6 +157,7 @@ namespace Azure.Identity
             ClientCertificateProvider = certificateProvider;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
             ClientCertificateCredentialOptions certCredOptions = (options as ClientCertificateCredentialOptions);
+            string regionalAuthority = certCredOptions.AzureRegionalAuthorityName ?? EnvironmentVariables.AzureRegionalAuthorityName;
 
             Client = client ??
                      new MsalConfidentialClient(
@@ -166,7 +167,7 @@ namespace Azure.Identity
                          certificateProvider,
                          certCredOptions?.SendCertificateChain ?? false,
                          options,
-                         certCredOptions.AzureRegionalAuthorityName);
+                         regionalAuthority);
 
             _additionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenantsCore);
         }

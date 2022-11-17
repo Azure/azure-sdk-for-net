@@ -46,7 +46,8 @@ namespace Azure.Identity
             ResourceIdentifier = options.ResourceIdentifier;
             Pipeline = options.Pipeline;
             _identitySource = new Lazy<ManagedIdentitySource>(() => SelectManagedIdentitySource(options));
-            _msal = new MsalConfidentialClient(Pipeline, "MANAGED-IDENTITY-RESOURCE-TENENT", ClientId ?? "SYSTEM-ASSIGNED-MANAGED-IDENTITY", AppTokenProviderImpl, options.Options);
+            string regionalAuthority = options.AzureRegionalAuthorityName ?? EnvironmentVariables.AzureRegionalAuthorityName;
+            _msal = new MsalConfidentialClient(Pipeline, "MANAGED-IDENTITY-RESOURCE-TENENT", ClientId ?? "SYSTEM-ASSIGNED-MANAGED-IDENTITY", AppTokenProviderImpl, options.Options, regionalAuthority);
         }
 
         internal CredentialPipeline Pipeline { get; }

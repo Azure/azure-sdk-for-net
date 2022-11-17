@@ -19,5 +19,10 @@ namespace Azure.Identity
         public TimeSpan? InitialImdsConnectionTimeout { get; set; }
 
         public CredentialPipeline Pipeline { get; set; }
+
+        /// <summary>
+        ///  The name of the Azure Regional Authority used by ESTS-R
+        /// </summary>
+        public string AzureRegionalAuthorityName { get; set; }
     }
 }
