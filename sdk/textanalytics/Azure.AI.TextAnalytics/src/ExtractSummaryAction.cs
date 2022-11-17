@@ -18,8 +18,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ExtractSummaryAction"/> class based on the given
-        /// <see cref="ExtractSummaryOptions"/>. It sets the <see cref="ModelVersion"/>,
-        /// <see cref="DisableServiceLogs"/>, <see cref="MaxSentenceCount"/>, and <see cref="OrderBy"/> properties.
+        /// <see cref="ExtractSummaryOptions"/>.
         /// </summary>
         public ExtractSummaryAction(ExtractSummaryOptions options)
         {
