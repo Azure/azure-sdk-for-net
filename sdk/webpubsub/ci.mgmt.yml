@@ -16,6 +16,7 @@ extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: webpubsub
+    SDKType: clientmgmt
     LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.WebPubSub
