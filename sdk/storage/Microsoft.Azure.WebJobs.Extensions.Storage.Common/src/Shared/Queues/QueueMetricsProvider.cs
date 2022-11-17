@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
 using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
@@ -31,6 +29,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
             _logger = loggerFactory.CreateLogger<QueueMetricsProvider>();
         }
 
+        // Caller of this function is responsible for wrapping this in try/catch
+        public async Task<int> GetQueueLength()
+        {
+            QueueProperties queueProperties = await _queue.GetPropertiesAsync().ConfigureAwait(false);
+            return queueProperties.ApproximateMessagesCount;
+        }
+
         /// <summary>
         /// Retrieves metrics from the queue entity.
         /// </summary>
@@ -42,8 +47,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
 
             try
             {
-                QueueProperties queueProperties = await _queue.GetPropertiesAsync().ConfigureAwait(false);
-                queueLength = queueProperties.ApproximateMessagesCount;
+                queueLength = await GetQueueLength().ConfigureAwait(false);
 
                 if (queueLength > 0)
                 {

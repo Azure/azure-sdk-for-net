@@ -50,16 +50,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
         {
             try
             {
-                QueueTriggerMetrics metrics = await _queueMetricsProvider.GetMetricsAsync().ConfigureAwait(false);
-                return GetScaleResultInternal(context, metrics.QueueLength);
+                int queueLength = await _queueMetricsProvider.GetQueueLength().ConfigureAwait(false);
+                return GetScaleResultInternal(context, queueLength);
             }
             catch (UnauthorizedAccessException ex)
             {
-                throw new NotSupportedException("Target scaler is not supported.", ex);
+                throw new NotSupportedException("Target scaler is not supported. Unable to access queue to determine queue length.", ex);
             }
         }
 
-        internal TargetScalerResult GetScaleResultInternal(TargetScalerContext context, long queueLength)
+        internal TargetScalerResult GetScaleResultInternal(TargetScalerContext context, int queueLength)
         {
             int concurrency = !context.InstanceConcurrency.HasValue ? _options.BatchSize : context.InstanceConcurrency.Value;
 
