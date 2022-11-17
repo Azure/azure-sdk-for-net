@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.Reservations.Tests
     public class SavingsPlansOrderAliasTests : BillingBenefitsManagementTestBase
     {
         private SavingsPlanOrderAliasModelResource ModelResource { get; set; }
+        private TenantResource tenantResource { get; set; }
 
         public SavingsPlansOrderAliasTests(bool isAsync) : base(isAsync)
         {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.Reservations.Tests
 
                 AsyncPageable<TenantResource> tenantResourcesResponse = Client.GetTenants().GetAllAsync();
                 List<TenantResource> tenantResources = await tenantResourcesResponse.ToEnumerableAsync();
+                tenantResource = tenantResources.ToArray()[0];
             }
         }
 
@@ -132,6 +134,27 @@ namespace Azure.ResourceManager.Reservations.Tests
 
             Assert.AreEqual(200, getAliasResponse.GetRawResponse().Status);
             ValidateResponseProperties(getAliasResponse.Value.Data, AppliedScopeType.ManagementGroup);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task TestValidateSavingsPlanOrderAliasPurchase()
+        {
+            var resource = SavingsPlanOrderAliasModelResource.CreateResourceIdentifier("validateTest");
+            ModelResource = Client.GetSavingsPlanOrderAliasModelResource(resource);
+            var model = CreatePurchaseRequestContent(AppliedScopeType.Shared);
+            var requestContent = new SavingsPlanPurchaseValidateContent();
+            requestContent.Benefits.Add(model);
+
+            var response = await tenantResource.ValidatePurchaseSavingsPlanOrderAliaAsync(requestContent);
+
+            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.NotNull(response.Value);
+            Assert.NotNull(response.Value.Benefits);
+            Assert.AreEqual(1, response.Value.Benefits.Count);
+            Assert.IsTrue(response.Value.Benefits[0].Valid);
+            Assert.Null(response.Value.Benefits[0].Reason);
+            Assert.Null(response.Value.Benefits[0].ReasonCode);
         }
 
         private void ValidateResponseProperties(SavingsPlanOrderAliasModelData Data, AppliedScopeType scope, bool isRG = false)

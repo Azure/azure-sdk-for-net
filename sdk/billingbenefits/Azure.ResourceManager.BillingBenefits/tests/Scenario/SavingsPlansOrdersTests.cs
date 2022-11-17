@@ -39,19 +39,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             var response = await Tenant.GetSavingsPlanOrderModelAsync("b538c0a7-b852-4ff8-aa3a-1d91dad90d2a");
 
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.NotNull(response.Value);
-            Assert.AreEqual("eef82110-c91b-4395-9420-fcfcbefc5a47", response.Value.Data.BillingScopeId);
-            Assert.NotNull(response.Value.Data.Id);
-            Assert.IsNotEmpty(response.Value.Data.Name);
-            Assert.IsNotEmpty(response.Value.Data.DisplayName);
-            Assert.NotNull(response.Value.Data.ResourceType);
-            Assert.AreEqual("microsoft.billingbenefits", response.Value.Data.ResourceType.Namespace);
-            Assert.AreEqual("savingsPlanOrders", response.Value.Data.ResourceType.Type);
-            Assert.NotNull(response.Value.Data.Sku);
-            Assert.AreEqual("Compute_Savings_Plan", response.Value.Data.Sku.Name);
-            Assert.AreEqual("Compute_Savings_Plan", response.Value.Data.SkuName);
-            Assert.NotNull(response.Value.Data.Term);
+            ValidateResponseProperties(response);
         }
 
         [TestCase]
@@ -85,24 +73,29 @@ namespace Azure.ResourceManager.Reservations.Tests
             Assert.Greater(orderResources.Count, 0);
             orderResources.ForEach(model =>
             {
-                Assert.IsTrue(model.HasData);
-                Assert.AreEqual("eef82110-c91b-4395-9420-fcfcbefc5a47", model.Data.BillingScopeId);
-                Assert.NotNull(model.Data.Id);
-                Assert.IsNotEmpty(model.Data.Name);
-                Assert.IsNotEmpty(model.Data.DisplayName);
-                Assert.NotNull(model.Data.ResourceType);
-                Assert.AreEqual("microsoft.billingbenefits", model.Data.ResourceType.Namespace);
-                Assert.AreEqual("savingsPlanOrders", model.Data.ResourceType.Type);
-                Assert.NotNull(model.Data.Sku);
-                Assert.AreEqual("Compute_Savings_Plan", model.Data.Sku.Name);
-                Assert.AreEqual("Compute_Savings_Plan", model.Data.SkuName);
-                Assert.NotNull(model.Data.Term);
-                Assert.NotNull(model.Data.BenefitStartOn);
-                Assert.IsNotEmpty(model.Data.BillingAccountId);
-                Assert.IsNotEmpty(model.Data.BillingProfileId);
-                Assert.NotNull(model.Data.SavingsPlans);
-                Assert.AreEqual(1, model.Data.SavingsPlans.Count);
+                ValidateResponseProperties(model);
             });
+        }
+
+        private void ValidateResponseProperties(SavingsPlanOrderModelResource model)
+        {
+            Assert.IsTrue(model.HasData);
+            Assert.AreEqual("eef82110-c91b-4395-9420-fcfcbefc5a47", model.Data.BillingScopeId);
+            Assert.NotNull(model.Data.Id);
+            Assert.IsNotEmpty(model.Data.Name);
+            Assert.IsNotEmpty(model.Data.DisplayName);
+            Assert.NotNull(model.Data.ResourceType);
+            Assert.AreEqual("microsoft.billingbenefits", model.Data.ResourceType.Namespace);
+            Assert.AreEqual("savingsPlanOrders", model.Data.ResourceType.Type);
+            Assert.NotNull(model.Data.Sku);
+            Assert.AreEqual("Compute_Savings_Plan", model.Data.Sku.Name);
+            Assert.AreEqual("Compute_Savings_Plan", model.Data.SkuName);
+            Assert.NotNull(model.Data.Term);
+            Assert.NotNull(model.Data.BenefitStartOn);
+            Assert.IsNotEmpty(model.Data.BillingAccountId);
+            Assert.IsNotEmpty(model.Data.BillingProfileId);
+            Assert.NotNull(model.Data.SavingsPlans);
+            Assert.AreEqual(1, model.Data.SavingsPlans.Count);
         }
     }
 }
