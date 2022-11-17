@@ -446,15 +446,8 @@ namespace Azure.AI.TextAnalytics
 
         #region Extract Summary
 
-        internal static List<SummarySentence> ConvertToSummarySentenceList(List<ExtractedSummarySentence> sentences)
+        internal static List<SummarySentence> ConvertToSummarySentenceList(IEnumerable<ExtractedSummarySentence> sentences)
             => sentences.Select((sentence) => new SummarySentence(sentence)).ToList();
-
-        internal static SummarySentenceCollection ConvertToSummarySentenceCollection(ExtractiveSummarizationResultDocumentsItem document)
-        {
-            return new SummarySentenceCollection(
-                ConvertToSummarySentenceList(document.Sentences.ToList()),
-                ConvertToWarnings(document.Warnings));
-        }
 
         internal static ExtractSummaryResultCollection ConvertToExtractSummaryResultCollection(
             ExtractiveSummarizationResult results,
@@ -474,10 +467,11 @@ namespace Azure.AI.TextAnalytics
                 extractSummaryResults.Add(new ExtractSummaryResult(
                     document.Id,
                     document.Statistics ?? default,
-                    ConvertToSummarySentenceCollection(document)));
+                    ConvertToSummarySentenceList(document.Sentences),
+                    ConvertToWarnings(document.Warnings)));
             }
 
-            extractSummaryResults = extractSummaryResults.OrderBy(result => idToIndexMap[result.Id]).ToList();
+            extractSummaryResults = SortHeterogeneousCollection(extractSummaryResults, idToIndexMap);
 
             return new ExtractSummaryResultCollection(extractSummaryResults, results.Statistics, results.ModelVersion);
         }
@@ -491,13 +485,7 @@ namespace Azure.AI.TextAnalytics
             {
                 return ConvertToExtractSummaryResultCollection((task as ExtractiveSummarizationLROResult).Results, idToIndexMap);
             }
-
-            if (task.Kind == AnalyzeTextLROResultsKind.ExtractiveSummarizationLROResults)
-            {
-                return ConvertToExtractSummaryResultCollection((task as ExtractiveSummarizationLROResult).Results, idToIndexMap);
-            }
-
-            throw new InvalidOperationException($"Invalid task executed. Expected a {nameof(AnalyzeTextLROResultsKind.ExtractiveSummarizationLROResults)} or {nameof(AnalyzeTextLROResultsKind.ExtractiveSummarizationLROResults)} but instead got {task.Kind}.");
+            throw new InvalidOperationException($"Invalid task executed. Expected a {nameof(AnalyzeTextLROResultsKind.ExtractiveSummarizationLROResults)} but instead got {task.Kind}.");
         }
 
         #endregion
