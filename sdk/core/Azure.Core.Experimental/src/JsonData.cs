@@ -16,8 +16,6 @@ using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 
-#pragma warning disable AZC0014 // Avoid using banned types in public API
-
 namespace Azure.Core
 {
     /// <summary>
@@ -26,7 +24,7 @@ namespace Azure.Core
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     [DebuggerTypeProxy(typeof(JsonDataDebuggerProxy))]
     [JsonConverter(typeof(JsonConverter))]
-    public class JsonData : IDynamicMetaObjectProvider, IEquatable<JsonData>
+    internal class JsonData : IDynamicMetaObjectProvider, IEquatable<JsonData>
     {
         private readonly JsonValueKind _kind;
         private Dictionary<string, JsonData>? _objectRepresentation;
@@ -34,6 +32,17 @@ namespace Azure.Core
         private object? _value;
 
         private static readonly JsonSerializerOptions DefaultJsonSerializerOptions = new JsonSerializerOptions();
+
+        /// <summary>
+        /// Parses a UTF8 encoded string representing a single JSON value into a <see cref="JsonData"/>.
+        /// </summary>
+        /// <param name="utf8Json">A UTF8 encoded string representing a JSON value.</param>
+        /// <returns>A <see cref="JsonData"/> representation of the value.</returns>
+        internal static JsonData Parse(BinaryData utf8Json)
+        {
+            using var doc = JsonDocument.Parse(utf8Json);
+            return new JsonData(doc);
+        }
 
         /// <summary>
         ///  Creates a new JsonData object which represents an JSON object with no properties.
@@ -428,150 +437,6 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Inserts a new value at the end of an array.
-        /// </summary>
-        /// <param name="value">The value to insert into the array.</param>
-        /// <remarks>
-        /// If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Array"/> this method throws <see cref="InvalidOperationException"/>.
-        /// </remarks>
-        public void Add(bool value) => EnsureArray().Add(value);
-
-        /// <summary>
-        /// Inserts a new value at the end of an array.
-        /// </summary>
-        /// <param name="value">The value to insert into the array.</param>
-        /// <remarks>
-        /// If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Array"/> this method throws <see cref="InvalidOperationException"/>.
-        /// </remarks>
-        public void Add(double value) => EnsureArray().Add(value);
-
-        /// <summary>
-        /// Inserts a new value at the end of an array.
-        /// </summary>
-        /// <param name="value">The value to insert into the array.</param>
-        /// <remarks>
-        /// If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Array"/> this method throws <see cref="InvalidOperationException"/>.
-        /// </remarks>
-        public void Add(float value) => EnsureArray().Add(value);
-
-        /// <summary>
-        /// Inserts a new value at the end of an array.
-        /// </summary>
-        /// <param name="value">The value to insert into the array.</param>
-        /// <remarks>
-        /// If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Array"/> this method throws <see cref="InvalidOperationException"/>.
-        /// </remarks>
-        public void Add(int value) => EnsureArray().Add(value);
-
-        /// <summary>
-        /// Inserts a new value at the end of an array.
-        /// </summary>
-        /// <param name="value">The value to insert into the array.</param>
-        /// <remarks>
-        /// If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Array"/> this method throws <see cref="InvalidOperationException"/>.
-        /// </remarks>
-        public void Add(long value) => EnsureArray().Add(value);
-
-        /// <summary>
-        /// Inserts a new value at the end of an array.
-        /// </summary>
-        /// <param name="value">The value to insert into the array.</param>
-        /// <remarks>
-        /// If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Array"/> this method throws <see cref="InvalidOperationException"/>.
-        /// </remarks>
-        public void Add(string? value) => EnsureArray().Add(value);
-
-        /// <summary>
-        /// Inserts a new value at the end of an array.
-        /// </summary>
-        /// <param name="serializable">The value to insert into the array.</param>
-        /// <returns>A <see cref="JsonData"/> of the serialized object.</returns>
-        /// <remarks>
-        /// If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Array"/> this method throws <see cref="InvalidOperationException"/>.
-        /// </remarks>
-        public JsonData Add(object? serializable)
-        {
-            JsonData value = new JsonData(serializable);
-            EnsureArray().Add(value);
-            return value;
-        }
-
-        /// <summary>
-        /// Inserts a new value at the end of an array.
-        /// </summary>
-        /// <param name="serializable">The value to insert into the array.</param>
-        /// <param name="options">Options to control the conversion behavior.</param>
-        /// <returns>A <see cref="JsonData"/> of the serialized object.</returns>
-        /// <remarks>
-        /// If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Array"/> this method throws <see cref="InvalidOperationException"/>.
-        /// </remarks>
-        public JsonData Add(object? serializable, JsonSerializerOptions options)
-        {
-            JsonData value = new JsonData(serializable, options);
-            EnsureArray().Add(value);
-            return value;
-        }
-
-        /// <summary>
-        /// Inserts a new value at the end of an array.
-        /// </summary>
-        /// <param name="serializable">The value to insert into the array.</param>
-        /// <returns>A <see cref="JsonData"/> of the serialized object.</returns>
-        /// <remarks>
-        /// If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Array"/> this method throws <see cref="InvalidOperationException"/>.
-        /// </remarks>
-        public JsonData Add<T>(T[] serializable)
-        {
-            JsonData value = new JsonData(serializable.Select(x => new JsonData(x)));
-            EnsureArray().Add(value);
-            return value;
-        }
-
-        /// <summary>
-        /// Inserts a new value at the end of an array.
-        /// </summary>
-        /// <param name="serializable">The value to insert into the array.</param>
-        /// <param name="options">Options to control the conversion behavior.</param>
-        /// <returns>A <see cref="JsonData"/> of the serialized object.</returns>
-        /// <remarks>
-        /// If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Array"/> this method throws <see cref="InvalidOperationException"/>.
-        /// </remarks>
-        public JsonData Add<T>(T[] serializable, JsonSerializerOptions options)
-        {
-            JsonData value = new JsonData(serializable.Select(x => new JsonData(x, options)));
-            EnsureArray().Add(value);
-            return value;
-        }
-
-        /// <summary>
-        /// Inserts a new empty object at the end of an array.
-        /// </summary>
-        /// <returns>A <see cref="JsonData"/> for the newly created empty object.</returns>
-        /// <remarks>
-        /// If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Array"/> this method throws <see cref="InvalidOperationException"/>.
-        /// </remarks>
-        public JsonData AddEmptyObject()
-        {
-            JsonData value = EmptyObject();
-            EnsureArray().Add(value);
-            return value;
-        }
-
-        /// <summary>
-        /// Inserts a new empty array at the end of an array.
-        /// </summary>
-        /// <returns>A <see cref="JsonData"/> for the newly created empty array.</returns>
-        /// <remarks>
-        /// If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Array"/> this method throws <see cref="InvalidOperationException"/>.
-        /// </remarks>
-        public JsonData AddEmptyArray()
-        {
-            JsonData value = EmptyArray();
-            EnsureArray().Add(value);
-            return value;
-        }
-
-        /// <summary>
         /// Gets or sets a value at the given index in an array.
         /// </summary>
         /// <param name="arrayIndex">The index in the array of the value to get or set.</param>
@@ -582,7 +447,6 @@ namespace Azure.Core
         public JsonData this[int arrayIndex]
         {
             get => GetValueAt(arrayIndex);
-            set => SetValueAt(arrayIndex, value);
         }
 
         /// <summary>
@@ -596,7 +460,6 @@ namespace Azure.Core
         public JsonData this[string propertyName]
         {
             get => GetPropertyValue(propertyName);
-            set => SetValue(propertyName, value);
         }
 
         /// <summary>
@@ -666,72 +529,6 @@ namespace Azure.Core
         public static explicit operator double?(JsonData json) => json.Kind == JsonValueKind.Null ? null : json.GetDouble();
 
         /// <summary>
-        /// Converts an <see cref="int"/> to a <see cref="JsonData"/>.
-        /// </summary>
-        /// <param name="value">The value to convert.</param>
-        public static implicit operator JsonData(int value) => new JsonData(value);
-
-        /// <summary>
-        /// Converts an <see cref="long"/> to a <see cref="JsonData"/>.
-        /// </summary>
-        /// <param name="value">The value to convert.</param>
-        public static implicit operator JsonData(long value) => new JsonData(value);
-
-        /// <summary>
-        /// Converts an <see cref="double"/> to a <see cref="JsonData"/>.
-        /// </summary>
-        /// <param name="value">The value to convert.</param>
-        public static implicit operator JsonData(double value) => new JsonData(value);
-
-        /// <summary>
-        /// Converts an <see cref="float"/> to a <see cref="JsonData"/>.
-        /// </summary>
-        /// <param name="value">The value to convert.</param>
-        public static implicit operator JsonData(float value) => new JsonData(value);
-
-        /// <summary>
-        /// Converts an <see cref="bool"/> to a <see cref="JsonData"/>.
-        /// </summary>
-        /// <param name="value">The value to convert.</param>
-        public static implicit operator JsonData(bool value) =>new JsonData(value);
-
-        /// <summary>
-        /// Converts an <see cref="string"/> to a <see cref="JsonData"/>.
-        /// </summary>
-        /// <param name="value">The value to convert.</param>
-        public static implicit operator JsonData(string? value) => new JsonData(value);
-
-        /// <summary>
-        /// Converts an <see cref="int"/> to a <see cref="JsonData"/>.
-        /// </summary>
-        /// <param name="value">The value to convert.</param>
-        public static implicit operator JsonData(int? value) => new JsonData(value);
-
-        /// <summary>
-        /// Converts an <see cref="long"/> to a <see cref="JsonData"/>.
-        /// </summary>
-        /// <param name="value">The value to convert.</param>
-        public static implicit operator JsonData(long? value) => new JsonData(value);
-
-        /// <summary>
-        /// Converts an <see cref="double"/> to a <see cref="JsonData"/>.
-        /// </summary>
-        /// <param name="value">The value to convert.</param>
-        public static implicit operator JsonData(double? value) => new JsonData(value);
-
-        /// <summary>
-        /// Converts an <see cref="float"/> to a <see cref="JsonData"/>.
-        /// </summary>
-        /// <param name="value">The value to convert.</param>
-        public static implicit operator JsonData(float? value) => new JsonData(value);
-
-        /// <summary>
-        /// Converts an <see cref="bool"/> to a <see cref="JsonData"/>.
-        /// </summary>
-        /// <param name="value">The value to convert.</param>
-        public static implicit operator JsonData(bool? value) => new JsonData(value);
-
-        /// <summary>
         /// Returns true if a <see cref="JsonData"/> has the same value as a given string,
         /// and false otherwise.
         /// </summary>
@@ -750,7 +547,7 @@ namespace Azure.Core
                 return false;
             }
 
-            return left.Kind == JsonValueKind.String && ((string?) left._value) == right;
+            return left.Kind == JsonValueKind.String && ((string?)left._value) == right;
         }
 
         /// <summary>
@@ -1073,6 +870,19 @@ namespace Azure.Core
             throw new InvalidOperationException($"Property {propertyName} not found");
         }
 
+        private JsonData SetViaIndexer(object index, object value)
+        {
+            switch (index)
+            {
+                case string property:
+                    return SetValue(property, value);
+                case int i:
+                    return SetValueAt(i, value);
+            }
+
+            throw new InvalidOperationException($"Tried to access indexer with unsupport index type: {index}");
+        }
+
         private JsonData SetValue(string propertyName, object value)
         {
             if (!(value is JsonData json))
@@ -1209,6 +1019,13 @@ namespace Azure.Core
 
             private static readonly MethodInfo SetValueMethod = typeof(JsonData).GetMethod(nameof(SetValue), BindingFlags.NonPublic | BindingFlags.Instance);
 
+            private static readonly MethodInfo SetIndexerMethod = typeof(JsonData).GetMethod(nameof(SetViaIndexer), BindingFlags.NonPublic | BindingFlags.Instance);
+
+            private static readonly Dictionary<Type, PropertyInfo> Indexers = GetIndexers();
+
+            // Operators that cast from JsonData to another type
+            private static readonly Dictionary<Type, MethodInfo> CastFromOperators = GetCastFromOperators();
+
             internal MetaObject(Expression parameter, IDynamicMetaObjectProvider value) : base(parameter, BindingRestrictions.Empty, value)
             {
             }
@@ -1224,17 +1041,37 @@ namespace Azure.Core
                 return new DynamicMetaObject(getPropertyCall, restrictions);
             }
 
+            public override DynamicMetaObject BindGetIndex(GetIndexBinder binder, DynamicMetaObject[] indexes)
+            {
+                var targetObject = Expression.Convert(Expression, LimitType);
+                var arguments = indexes.Select(i => i.Expression);
+                var indexProperty = Expression.Property(targetObject, Indexers[indexes[0].LimitType], arguments);
+
+                var restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
+                return new DynamicMetaObject(indexProperty, restrictions);
+            }
+
             public override DynamicMetaObject BindConvert(ConvertBinder binder)
             {
+                Expression targetObject = Expression.Convert(Expression, LimitType);
+                BindingRestrictions restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
+
+                Expression convertCall;
+
                 if (binder.Type == typeof(IEnumerable))
                 {
-                    var targetObject = Expression.Convert(Expression, LimitType);
-                    var getPropertyCall = Expression.Call(targetObject, GetDynamicEnumerableMethod);
-
-                    var restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
-                    return new DynamicMetaObject(getPropertyCall, restrictions);
+                    convertCall = Expression.Call(targetObject, GetDynamicEnumerableMethod);
+                    return new DynamicMetaObject(convertCall, restrictions);
                 }
-                return base.BindConvert(binder);
+
+                if (CastFromOperators.TryGetValue(binder.Type, out MethodInfo? castOperator))
+                {
+                    convertCall = Expression.Call(castOperator, targetObject);
+                    return new DynamicMetaObject(convertCall, restrictions);
+                }
+
+                convertCall = Expression.Call(targetObject, nameof(To), new Type[] { binder.Type });
+                return new DynamicMetaObject(convertCall, restrictions);
             }
 
             public override DynamicMetaObject BindSetMember(SetMemberBinder binder, DynamicMetaObject value)
@@ -1246,6 +1083,35 @@ namespace Azure.Core
                 BindingRestrictions restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
                 DynamicMetaObject setProperty = new DynamicMetaObject(setPropertyCall, restrictions);
                 return setProperty;
+            }
+
+            public override DynamicMetaObject BindSetIndex(SetIndexBinder binder, DynamicMetaObject[] indexes, DynamicMetaObject value)
+            {
+                var targetObject = Expression.Convert(Expression, LimitType);
+                var arguments = new Expression[2] {
+                    Expression.Convert(indexes[0].Expression, typeof(object)),
+                    Expression.Convert(value.Expression, typeof(object))
+                };
+                var setCall = Expression.Call(targetObject, SetIndexerMethod, arguments);
+
+                var restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
+                return new DynamicMetaObject(setCall, restrictions);
+            }
+
+            private static Dictionary<Type, PropertyInfo> GetIndexers()
+            {
+                return typeof(JsonData)
+                    .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                    .Where(p => p.GetIndexParameters().Any())
+                    .ToDictionary(p => p.GetIndexParameters().First().ParameterType);
+            }
+
+            private static Dictionary<Type, MethodInfo> GetCastFromOperators()
+            {
+                return typeof(JsonData)
+                    .GetMethods(BindingFlags.Public | BindingFlags.Static)
+                    .Where(method => method.Name == "op_Explicit" || method.Name == "op_Implicit")
+                    .ToDictionary(method => method.ReturnType);
             }
         }
 
@@ -1275,7 +1141,8 @@ namespace Azure.Core
             }
 
             [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
-            public object Members {
+            public object Members
+            {
                 get
                 {
                     if (_jsonData.Kind != JsonValueKind.Array &&
@@ -1283,7 +1150,8 @@ namespace Azure.Core
                         return new SingleMember() { Value = _jsonData.ToJsonString() };
 
                     return BuildMembers().ToArray();
-                }}
+                }
+            }
 
             private IEnumerable<object> BuildMembers()
             {
@@ -1291,14 +1159,14 @@ namespace Azure.Core
                 {
                     foreach (var property in _jsonData.Properties)
                     {
-                        yield return new PropertyMember() {Name = property, Value = _jsonData.Get(property)};
+                        yield return new PropertyMember() { Name = property, Value = _jsonData.Get(property) };
                     }
                 }
                 else if (_jsonData.Kind == JsonValueKind.Array)
                 {
                     foreach (var property in _jsonData.Items)
                     {
-                        yield return  property;
+                        yield return property;
                     }
                 }
             }
