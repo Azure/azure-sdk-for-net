@@ -10,6 +10,8 @@ namespace Azure.Identity
     /// </summary>
     public class ClientSecretCredentialOptions : TokenCredentialOptions, ITokenCacheOptions
     {
+        private string _azureRegionalAuthorityName;
+
         /// <summary>
         /// Specifies the <see cref="TokenCachePersistenceOptions"/> to be used by the credential. If not options are specified, the token cache will not be persisted to disk.
         /// </summary>
@@ -23,6 +25,9 @@ namespace Azure.Identity
         /// <summary>
         ///  The name of the Azure Regional Authority used by ESTS-R
         /// </summary>
-        public string AzureRegionalAuthorityName { get; set; }
+        public string AzureRegionalAuthorityName {
+            get { return _azureRegionalAuthorityName ?? EnvironmentVariables.AzureRegionalAuthorityName; }
+            set { _azureRegionalAuthorityName = value; }
+        }
     }
 }

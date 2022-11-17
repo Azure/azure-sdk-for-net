@@ -8,6 +8,8 @@ namespace Azure.Identity
 {
     internal class ManagedIdentityClientOptions
     {
+        private string _azureRegionalAuthorityName;
+
         public TokenCredentialOptions Options { get; set; }
 
         public string ClientId { get; set; }
@@ -23,6 +25,10 @@ namespace Azure.Identity
         /// <summary>
         ///  The name of the Azure Regional Authority used by ESTS-R
         /// </summary>
-        public string AzureRegionalAuthorityName { get; set; }
+        public string AzureRegionalAuthorityName
+        {
+            get { return _azureRegionalAuthorityName ?? EnvironmentVariables.AzureRegionalAuthorityName; }
+            set { _azureRegionalAuthorityName = value; }
+        }
     }
 }
