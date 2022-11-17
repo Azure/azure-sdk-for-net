@@ -90,11 +90,10 @@ namespace Azure.Monitor.Ingestion
         /// <returns></returns>
         internal static IEnumerable<BatchedLogs<T>> Batch<T>(IEnumerable<T> logEntries, UploadLogsOptions options = null)
         {
-            //TODO: use Array pool instead
-            MemoryStream stream = new MemoryStream(SingleUploadThreshold);
+            // Create ArrayPool and rent memory for efficiency
+            byte[] buffer = ArrayPool<byte>.Shared.Rent(SingleUploadThreshold);
+            MemoryStream stream = new MemoryStream(buffer);
             Utf8JsonWriter writer = new Utf8JsonWriter(stream);
-            //ArrayPool<byte> pool = ArrayPool<byte>.Create(SingleUploadThreshold, 1);
-            //pool.Rent(SingleUploadThreshold);
             writer.WriteStartArray();
             int entryCount = 0;
             List<T> currentLogList = new List<T>();
@@ -122,20 +121,29 @@ namespace Azure.Monitor.Ingestion
                     WriteMemory(tempWriter, memory);
                     tempWriter.WriteEndArray();
                     tempWriter.Flush();
-                    yield return new BatchedLogs<T>(new List<T>{log}, BinaryData.FromStream(stream));
+                    tempStream.Position = 0;
+                    yield return new BatchedLogs<T>(new List<T>{log}, BinaryData.FromStream(tempStream));
                 }
                 // if adding this entry makes stream > 1 Mb send current stream now
-                else if ((stream.Length + memory.Length + 1) >= SingleUploadThreshold)
+                else if ((writer.BytesCommitted + memory.Length + 1) >= SingleUploadThreshold)
                 {
                     writer.WriteEndArray();
                     writer.Flush();
-                    yield return new BatchedLogs<T>(currentLogList, BinaryData.FromStream(stream));
+                    stream.Position = 0;
+                    var binaryData = BinaryData.FromStream(stream);
+                    // return ArrayPool rented storage because it is no longer needed
+                    ArrayPool<byte>.Shared.Return(buffer);
+                    yield return new BatchedLogs<T>(currentLogList, binaryData);
 
+                    // Rent storage from ArrayPool for the next batch
+                    buffer = ArrayPool<byte>.Shared.Rent(SingleUploadThreshold);
                     // reset stream and currentLogList
                     stream = new MemoryStream(SingleUploadThreshold);
                     writer.Flush();
-                    currentLogList = new List<T>(); // reset log list
-                    WriteMemory(writer, memory); // add log to memory and currentLogList
+                    // reset log list
+                    currentLogList = new List<T>();
+                    // add log to memory and currentLogList
+                    WriteMemory(writer, memory);
                     currentLogList.Add(log);
                 }
                 else
@@ -143,15 +151,15 @@ namespace Azure.Monitor.Ingestion
                     WriteMemory(writer, memory);
                     if ((entryCount + 1) == logEntries.Count())
                     {
-                        // reached end of logs and we haven't returned yet
+                        // Reached end of logs and we haven't returned yet
                         writer.WriteEndArray();
-                        stream.Position = 0;
+                        writer.Flush();
                         currentLogList.Add(log);
+                        stream.Position = 0;
                         yield return new BatchedLogs<T>(currentLogList, BinaryData.FromStream(stream));
                     }
                     else
                     {
-                        WriteMemory(writer, BinaryData.FromString(",").ToMemory());
                         currentLogList.Add(log);
                     }
                 }
@@ -163,6 +171,7 @@ namespace Azure.Monitor.Ingestion
         {
             using (JsonDocument doc = JsonDocument.Parse(memory))
             {
+                // Comma separator added automatically by JsonDocument
                 doc.RootElement.WriteTo(writer);
             }
         }
@@ -436,6 +445,8 @@ namespace Azure.Monitor.Ingestion
         /// <remarks> See error response code and error response message for more detail. </remarks>
         public virtual async Task<Response> UploadAsync(string ruleId, string streamName, RequestContent content, RequestContext context = null)
         {
+            // Check if content is already gzipped
+            // if (content.ContentType != null)
             return await UploadRequestContentAsync(ruleId, streamName, content, true, context).ConfigureAwait(false);
         }
 
