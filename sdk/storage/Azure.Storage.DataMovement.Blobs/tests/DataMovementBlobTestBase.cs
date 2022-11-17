@@ -19,7 +19,7 @@ using System.Threading;
 using Azure.Storage.DataMovement.Tests;
 using Azure.Storage.Blobs;
 
-namespace Azure.Storage.DataMovement.Blobs.Tests.Shared
+namespace Azure.Storage.DataMovement.Blobs.Tests
 {
     /// <summary>
     /// Base class for Common tests
