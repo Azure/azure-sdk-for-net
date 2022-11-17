@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <RunSettingsFilePath>$(MSBuildProjectDirectory)\test.runsettings</RunSettingsFilePath>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="MSTest.TestAdapter" />
@@ -12,7 +11,7 @@
     <PackageReference Include="Azure.Messaging.WebPubSub" />
   </ItemGroup>
 
-  <ItemGroup Condition="$(TargetFramework) != 'net461'">
+  <ItemGroup>
     <ProjectReference Include="..\src\Azure.Messaging.WebPubSub.Client.csproj" />
   </ItemGroup>
 </Project>
