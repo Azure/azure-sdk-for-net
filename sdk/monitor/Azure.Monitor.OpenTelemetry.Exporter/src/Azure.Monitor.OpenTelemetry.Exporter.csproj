@@ -3,7 +3,7 @@
     <Description>An OpenTelemetry .NET exporter that exports to Azure Monitor</Description>
     <AssemblyTitle>AzureMonitor OpenTelemetry Exporter</AssemblyTitle>
     <Version>1.0.0-beta.6</Version>
-    <PackageTags>Azure Monitor OpenTelemetry Exporter</PackageTags>
+    <PackageTags>Azure Monitor OpenTelemetry Exporter ApplicationInsights</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
