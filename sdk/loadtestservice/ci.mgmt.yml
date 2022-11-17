@@ -11,7 +11,7 @@ pr:
   paths:
     include:
     - sdk/loadtestservice/ci.mgmt.yml
-    - sdk/loadtestservice/Azure.ResourceManager.LoadTestService/
+    - sdk/loadtestservice/Azure.ResourceManager.LoadTesting/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -19,5 +19,5 @@ extends:
     ServiceDirectory: loadtestservice
     LimitForPullRequest: true
     Artifacts:
-    - name: Azure.ResourceManager.LoadTestService
-      safeName: AzureResourceManagerLoadTestService
+    - name: Azure.ResourceManager.LoadTesting
+      safeName: AzureResourceManagerLoadTesting

@@ -1,4 +1,4 @@
-# Microsoft Azure LoadTesting management client library for .NET
+# Microsoft Azure Load Testing management client library for .NET
 
 **[Describe the service briefly first.]**
 
@@ -14,7 +14,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 ### Install the package
 
-Install the Microsoft Azure LoadTesting management library for .NET with [NuGet](https://www.nuget.org/):
+Install the Microsoft Azure Load Testing management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
 dotnet add package Azure.ResourceManager.LoadTesting --prerelease

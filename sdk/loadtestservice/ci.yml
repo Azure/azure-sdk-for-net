@@ -9,6 +9,9 @@ trigger:
   paths:
     include:
     - sdk/loadtestservice/
+    exclude:
+    - sdk/loadtestservice/Azure.ResourceManager.LoadTestService/
+    - sdk/loadtestservice/Azure.ResourceManager.LoadTesting/
 
 pr:
   branches:
@@ -20,6 +23,9 @@ pr:
   paths:
     include:
     - sdk/loadtestservice/
+    exclude:
+    - sdk/loadtestservice/Azure.ResourceManager.LoadTestService/
+    - sdk/loadtestservice/Azure.ResourceManager.LoadTesting/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
