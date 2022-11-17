@@ -19,11 +19,12 @@ This troubleshooting guide covers failure investigation techniques, common error
   - [Cannot set multiple partition keys for events in EventDataBatch](#cannot-set-multiple-partition-keys-for-events-in-eventdatabatch)
   - [Setting partition key on EventData is not set in Kafka consumer](#setting-partition-key-on-eventdata-is-not-set-in-kafka-consumer)
 - [Troubleshoot event processor issues](#troubleshoot-event-processor-issues)
-  - [Logs reflect intermittent HTTP 412 and HTTP 409 responses from storage](#logs-reflect-intermittent-http-412-and-http-409-responses-from-storage)
+  - [Logs reflect intermittent HTTP 412 and HTTP 409 responses from storage](#logs-reflect-intermittent-http-412-and-http-409-responses-from-azure-storage)
   - [Partitions close and initialize intermittently or during scaling](#partitions-close-and-initialize-intermittently-or-during-scaling)
   - [Partitions close and initialize frequently](#partitions-close-and-initialize-frequently)
-  - [Warnings being raised to the error handler that starts with "A load balancing cycle has taken too long to complete."](#warnings-being-raised-to-the-error-handler-that-starts-with--a-load-balancing-cycle-has-taken-too-long-to-complete-)
+  - [Warnings being raised to the error handler that start with "A load balancing cycle has taken too long to complete."](#warnings-being-raised-to-the-error-handler-that-start-with--a-load-balancing-cycle-has-taken-too-long-to-complete-)
   - ["Frequent errors for "...current receiver '< RECEIVER_NAME >' with epoch '0' is getting disconnected""](#frequent-errors-for-current-receiver--receiver_name--with-epoch-0-is-getting-disconnected)
+  - [Warnings being raised to the error handler that start with "The 'PartitionOwnershipExpirationInterval' and 'LoadBalancingUpdateInterval' are configured using intervals that may cause stability issues"](#warnings-being-raised-to-the-error-handler-that-start-with-the-partitionownershipexpirationinterval-and-loadbalancingupdateinterval-are-configured-using-intervals-that-may-cause-stability-issues)
   - [High CPU usage](#high-cpu-usage)
   - [A partition is not being processed](#a-partition-is-not-being-processed)
   - [Duplicate events are being processed](#duplicate-events-are-being-processed)
@@ -226,7 +227,7 @@ The event processor works in a concurrent and highly asynchronous manner.  Each 
 
 When a processor owns too many partitions, it will often experience contention in the thread pool leading to starvation.  During this time, continuations will start to queue while waiting to be scheduled causing stalls in the processor.  Because there is no fairness guarantee in scheduling, some partitions may appear to stop processing or load balancing may not be able to update ownership, causing partitions to "bounce" between owners.
 
-It is generally recommended that an event processor own no more than three partitions for every 1 CPU core of the host.  It is often helpful to start a ratio of 1.5 partitions for each CPU core and test increasing the number of owned partitions gradually to measure what works best for the specific application.
+Generally, it is recommended that an event processor own no more than 3 partitions for every 1 CPU core of the host.  Since the ratio will vary for each application, it is often helpful to start with 1.5 partitions for each CPU core and increase the number of owned partitions gradually to determine what works best for your application.
 
 Further reading:
 - [Debug ThreadPool Starvation][DebugThreadPoolStarvation]
@@ -237,7 +238,11 @@ Further reading:
 
 To coordinate with other event processors, the checkpoint store ownership records are inspected during each load balancing cycle.  When using an Azure Blob Storage as a checkpoint store, the "soft delete" and "Blob versioning" features can cause large delays when attempting to read the contents of a container.  It is strongly recommended that both be disabled.  For more information, see: [Soft delete for blobs][SoftDeleteBlobStorage] and [Blob versioning][VersioningBlobStorage].
 
-### Warnings being raised to the error handler that starts with  "A load balancing cycle has taken too long to complete. ..."
+#### The "LoadBalancingUpdateInterval" and "PartitionOwnershipExpirationInterval" options are set too close together:
+
+It is recommended that the `PartitionOwnershipExpirationInterval` be at least 3 times greater than the `LoadBalancingUpdateInterval` and very strongly advised that it should be no less than twice as long.  When these intervals are too close together, ownership may expire before it is renewed during load balancing, which could cause partitions to migrate unintentionally.  Adjustments should be made to the values in the processor options.
+
+### Warnings being raised to the error handler that start with  "A load balancing cycle has taken too long to complete. ..."
 
 The full text of the error message looks something like:
 
@@ -263,6 +268,16 @@ If the number of processors configured to us the same Event Hub, consumer group,
 This is often caused by another cluster of processors using the same consumer group but configured to use another checkpoint store instance or location.  This causes the processors to compete against one another for ownership because they cannot coordinate ownership through the checkpoint store.  Other consumers may also compete for exclusive access to a partition if they specify an "owner level" as part of their options. 
 
 Another possible cause is an event processor owning too many partitions.  See: [Too many partitions are owned](#too-many-partitions-are-owned).
+
+### Warnings being raised to the error handler that start with "The 'PartitionOwnershipExpirationInterval' and 'LoadBalancingUpdateInterval' are configured using intervals that may cause stability issues..."
+
+The full text of the error message looks something like:
+
+> The 'PartitionOwnershipExpirationInterval' and 'LoadBalancingUpdateInterval' are configured using intervals that may cause stability issues with partition ownership for the processor instance with identifier '< PROCESSOR_CLIENT_ID >' for Event Hub: '< EVENT_HUB_NAME >'.  It is recommended that the 'PartitionOwnershipExpirationInterval' be at least 3 times greater than the 'LoadBalancingUpdateInterval' and very strongly advised that it should be no less than twice as long.  When these intervals are too close together, ownership may expire before it is renewed during load balancing which will cause partitions to migrate.  Consider adjusting the intervals in the processor options if you experience issues.  Load Balancing Interval < NUMBER > seconds.  Partition Ownership Interval < NUMBER > seconds.
+
+This warning indicates that the processor was configured such that the interval controlling partition ownership related to load balancing is close to the length of the interval before which partition ownership must be renewed to be considered owned.  When these intervals are too close together, ownership may expire before it is renewed during load balancing which can cause partitions to migrate unintentionally.
+
+If you are not experiencing problems, it is safe to ignore this warning.  If partitions begin to migrate or are frequently initialized and closed, consider following the configuration guidance in the warning message.
 
 ### High CPU usage
 

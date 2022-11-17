@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -20,14 +21,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <exception cref="ArgumentNullException"> <paramref name="connectionInfo"/> or <paramref name="selectedSchemas"/> is null. </exception>
         public GetUserTablesOracleTaskInput(OracleConnectionInfo connectionInfo, IEnumerable<string> selectedSchemas)
         {
-            if (connectionInfo == null)
-            {
-                throw new ArgumentNullException(nameof(connectionInfo));
-            }
-            if (selectedSchemas == null)
-            {
-                throw new ArgumentNullException(nameof(selectedSchemas));
-            }
+            Argument.AssertNotNull(connectionInfo, nameof(connectionInfo));
+            Argument.AssertNotNull(selectedSchemas, nameof(selectedSchemas));
 
             ConnectionInfo = connectionInfo;
             SelectedSchemas = selectedSchemas.ToList();

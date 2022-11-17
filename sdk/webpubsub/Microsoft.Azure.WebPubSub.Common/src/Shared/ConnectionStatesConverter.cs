@@ -26,7 +26,8 @@ namespace Microsoft.Azure.WebPubSub.Common
             try
             {
                 var dict = new Dictionary<string, BinaryData>();
-                var element = JsonDocument.ParseValue(ref reader).RootElement;
+                using var jsonDocument = JsonDocument.ParseValue(ref reader);
+                var element = jsonDocument.RootElement;
                 foreach (var elementInfo in element.EnumerateObject())
                 {
                     // Use Base64 decode mapping to encode to avoid data loss.

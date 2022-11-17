@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: Elastic
 namespace: Azure.ResourceManager.Elastic
+# default tag is a preview version
 require: https://github.com/Azure/azure-rest-api-specs/blob/7d5d1db0c45d6fe0934c97b6a6f9bb34112d42d1/specification/elastic/resource-manager/readme.md
-tag: package-2020-07-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true

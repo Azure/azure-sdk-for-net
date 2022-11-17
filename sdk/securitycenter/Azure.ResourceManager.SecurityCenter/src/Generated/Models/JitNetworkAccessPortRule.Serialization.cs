@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         internal static JitNetworkAccessPortRule DeserializeJitNetworkAccessPortRule(JsonElement element)
         {
             int number = default;
-            Protocol protocol = default;
+            JitNetworkAccessPortProtocol protocol = default;
             Optional<string> allowedSourceAddressPrefix = default;
             Optional<IList<string>> allowedSourceAddressPrefixes = default;
             TimeSpan maxRequestAccessDuration = default;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (property.NameEquals("protocol"))
                 {
-                    protocol = new Protocol(property.Value.GetString());
+                    protocol = new JitNetworkAccessPortProtocol(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("allowedSourceAddressPrefix"))

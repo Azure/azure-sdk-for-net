@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -43,27 +42,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "Command": return CommandJobLimits.DeserializeCommandJobLimits(element);
                 }
             }
-            JobLimitsType jobLimitsType = default;
-            Optional<TimeSpan?> timeout = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("jobLimitsType"))
-                {
-                    jobLimitsType = new JobLimitsType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("timeout"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        timeout = null;
-                        continue;
-                    }
-                    timeout = property.Value.GetTimeSpan("P");
-                    continue;
-                }
-            }
-            return new UnknownJobLimits(jobLimitsType, Optional.ToNullable(timeout));
+            return UnknownJobLimits.DeserializeUnknownJobLimits(element);
         }
     }
 }

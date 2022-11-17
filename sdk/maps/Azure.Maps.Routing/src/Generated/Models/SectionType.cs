@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Maps.Routing.Models
+namespace Azure.Maps.Routing
 {
     /// <summary> The SectionType. </summary>
     public readonly partial struct SectionType : IEquatable<SectionType>

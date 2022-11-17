@@ -19,6 +19,21 @@ namespace Azure.Communication.CallAutomation
             Details = new ChangeTrackingList<CommunicationError>();
         }
 
+        /// <summary> Initializes a new instance of CommunicationError. </summary>
+        /// <param name="code"></param>
+        /// <param name="message"></param>
+        /// <param name="target"></param>
+        /// <param name="details"></param>
+        /// <param name="innererror"></param>
+        internal CommunicationError(string code, string message, string target, IReadOnlyList<CommunicationError> details, CommunicationError innererror)
+        {
+            Code = code;
+            Message = message;
+            Target = target;
+            Details = details;
+            Innererror = innererror;
+        }
+
         /// <summary> Gets the code. </summary>
         public string Code { get; }
         /// <summary> Gets the message. </summary>

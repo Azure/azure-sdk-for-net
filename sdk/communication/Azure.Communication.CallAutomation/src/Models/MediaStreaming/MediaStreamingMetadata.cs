@@ -1,27 +1,40 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Communication.CallAutomation
+using System.Text.Json.Serialization;
+
+namespace Azure.Communication.CallAutomation.Models.MediaStreaming
 {
     /// <summary>
-    /// Streaming metadata
+    /// Metadata package for Media Streaming.
     /// </summary>
     public class MediaStreamingMetadata : MediaStreamingPackageBase
     {
         /// <summary>
         /// Subscription Id.
         /// </summary>
-        public string MediaSubscriptionId { get; }
+        [JsonPropertyName("subscriptionId")]
+        public string MediaSubscriptionId { get; set; }
 
         /// <summary>
-        /// Format.
+        /// The Encoding.
         /// </summary>
-        public MediaStreamingFormat Format { get; }
-
-        internal MediaStreamingMetadata(string mediaSubscriptionId, MediaStreamingFormat format)
-        {
-            MediaSubscriptionId = mediaSubscriptionId;
-            Format = format;
-        }
+        [JsonPropertyName("encoding")]
+        public string Encoding { get; set; }
+        /// <summary>
+        /// Sample Rate.
+        /// </summary>
+        [JsonPropertyName("sampleRate")]
+        public int SampleRate { get; set; }
+        /// <summary>
+        /// Channels.
+        /// </summary>
+        [JsonPropertyName("channels")]
+        public int Channels { get; set; }
+        /// <summary>
+        /// Length.
+        /// </summary>
+        [JsonPropertyName("length")]
+        public int Length { get; set; }
     }
 }

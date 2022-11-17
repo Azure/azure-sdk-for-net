@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.Avs.Models
         private const string BuildingValue = "Building";
         private const string DeletingValue = "Deleting";
         private const string UpdatingValue = "Updating";
+        private const string CanceledValue = "Canceled";
 
         /// <summary> Succeeded. </summary>
         public static PlacementPolicyProvisioningState Succeeded { get; } = new PlacementPolicyProvisioningState(SucceededValue);
@@ -38,6 +39,8 @@ namespace Azure.ResourceManager.Avs.Models
         public static PlacementPolicyProvisioningState Deleting { get; } = new PlacementPolicyProvisioningState(DeletingValue);
         /// <summary> Updating. </summary>
         public static PlacementPolicyProvisioningState Updating { get; } = new PlacementPolicyProvisioningState(UpdatingValue);
+        /// <summary> Canceled. </summary>
+        public static PlacementPolicyProvisioningState Canceled { get; } = new PlacementPolicyProvisioningState(CanceledValue);
         /// <summary> Determines if two <see cref="PlacementPolicyProvisioningState"/> values are the same. </summary>
         public static bool operator ==(PlacementPolicyProvisioningState left, PlacementPolicyProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PlacementPolicyProvisioningState"/> values are not the same. </summary>

@@ -21,14 +21,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/> or <paramref name="targetRegion"/> is null. </exception>
         public PrepareDataMoveContent(string targetResourceId, string targetRegion, DataMoveLevel dataMoveLevel)
         {
-            if (targetResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(targetResourceId));
-            }
-            if (targetRegion == null)
-            {
-                throw new ArgumentNullException(nameof(targetRegion));
-            }
+            Argument.AssertNotNull(targetResourceId, nameof(targetResourceId));
+            Argument.AssertNotNull(targetRegion, nameof(targetRegion));
 
             TargetResourceId = targetResourceId;
             TargetRegion = targetRegion;

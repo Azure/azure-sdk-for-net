@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, SettingName settingName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, SecuritySettingName settingName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SettingData>> GetAsync(string subscriptionId, SettingName settingName, CancellationToken cancellationToken = default)
+        public async Task<Response<SecuritySettingData>> GetAsync(string subscriptionId, SecuritySettingName settingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -138,13 +138,13 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        SettingData value = default;
+                        SecuritySettingData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SettingData.DeserializeSettingData(document.RootElement);
+                        value = SecuritySettingData.DeserializeSecuritySettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SettingData)null, message.Response);
+                    return Response.FromValue((SecuritySettingData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SettingData> Get(string subscriptionId, SettingName settingName, CancellationToken cancellationToken = default)
+        public Response<SecuritySettingData> Get(string subscriptionId, SecuritySettingName settingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -166,19 +166,19 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        SettingData value = default;
+                        SecuritySettingData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SettingData.DeserializeSettingData(document.RootElement);
+                        value = SecuritySettingData.DeserializeSecuritySettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SettingData)null, message.Response);
+                    return Response.FromValue((SecuritySettingData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, SettingName settingName, SettingData data)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, SecuritySettingName settingName, SecuritySettingData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SettingData>> UpdateAsync(string subscriptionId, SettingName settingName, SettingData data, CancellationToken cancellationToken = default)
+        public async Task<Response<SecuritySettingData>> UpdateAsync(string subscriptionId, SecuritySettingName settingName, SecuritySettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(data, nameof(data));
@@ -218,9 +218,9 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        SettingData value = default;
+                        SecuritySettingData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SettingData.DeserializeSettingData(document.RootElement);
+                        value = SecuritySettingData.DeserializeSecuritySettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SettingData> Update(string subscriptionId, SettingName settingName, SettingData data, CancellationToken cancellationToken = default)
+        public Response<SecuritySettingData> Update(string subscriptionId, SecuritySettingName settingName, SecuritySettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(data, nameof(data));
@@ -246,9 +246,9 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        SettingData value = default;
+                        SecuritySettingData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SettingData.DeserializeSettingData(document.RootElement);
+                        value = SecuritySettingData.DeserializeSecuritySettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

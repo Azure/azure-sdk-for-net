@@ -22,12 +22,12 @@ namespace Azure.Storage.Blobs
             long position,
             PageBlobRequestConditions conditions,
             IProgress<long> progressHandler,
-            UploadTransferValidationOptions validationOptions
+            UploadTransferValidationOptions transferValidation
             ) : base(
                 position,
                 bufferSize,
                 progressHandler,
-                validationOptions
+                transferValidation
                 )
         {
             ValidateBufferSize(bufferSize);

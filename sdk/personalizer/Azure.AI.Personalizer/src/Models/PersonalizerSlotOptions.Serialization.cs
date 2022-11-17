@@ -17,7 +17,8 @@ namespace Azure.AI.Personalizer
             if (Optional.IsCollectionDefined(Features))
             {
                 writer.WritePropertyName("features");
-                JsonDocument.Parse(JsonSerializer.Serialize(Features)).WriteTo(writer);
+                using var jsonDocument = JsonDocument.Parse(JsonSerializer.Serialize(Features));
+                jsonDocument.WriteTo(writer);
             }
             if (Optional.IsCollectionDefined(ExcludedActions))
             {

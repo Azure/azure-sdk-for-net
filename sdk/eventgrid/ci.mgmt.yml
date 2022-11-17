@@ -1,4 +1,5 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+# This is for Track 2 managment plane SDK
 
 trigger: none
 pr:
@@ -16,6 +17,7 @@ pr:
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
+    SdkType: mgmtclient
     ServiceDirectory: eventgrid
     LimitForPullRequest: true
     Artifacts:

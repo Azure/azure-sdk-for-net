@@ -254,19 +254,19 @@ namespace Azure.ResourceManager.Billing
         /// Operation Id: BillingSubscriptions_Move
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="moveBillingSubscriptionRequest"> Request parameters that are provided to the move subscription operation. </param>
+        /// <param name="content"> Request parameters that are provided to the move subscription operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="moveBillingSubscriptionRequest"/> is null. </exception>
-        public virtual async Task<ArmOperation<BillingSubscriptionResource>> MoveAsync(WaitUntil waitUntil, MoveBillingSubscriptionRequest moveBillingSubscriptionRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<BillingSubscriptionResource>> MoveAsync(WaitUntil waitUntil, BillingSubscriptionMoveContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(moveBillingSubscriptionRequest, nameof(moveBillingSubscriptionRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _billingSubscriptionClientDiagnostics.CreateScope("BillingSubscriptionResource.Move");
             scope.Start();
             try
             {
-                var response = await _billingSubscriptionRestClient.MoveAsync(Id.Parent.Name, Id.Name, moveBillingSubscriptionRequest, cancellationToken).ConfigureAwait(false);
-                var operation = new BillingArmOperation<BillingSubscriptionResource>(new BillingSubscriptionOperationSource(Client), _billingSubscriptionClientDiagnostics, Pipeline, _billingSubscriptionRestClient.CreateMoveRequest(Id.Parent.Name, Id.Name, moveBillingSubscriptionRequest).Request, response, OperationFinalStateVia.Location);
+                var response = await _billingSubscriptionRestClient.MoveAsync(Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new BillingArmOperation<BillingSubscriptionResource>(new BillingSubscriptionOperationSource(Client), _billingSubscriptionClientDiagnostics, Pipeline, _billingSubscriptionRestClient.CreateMoveRequest(Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -284,19 +284,19 @@ namespace Azure.ResourceManager.Billing
         /// Operation Id: BillingSubscriptions_Move
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="moveBillingSubscriptionRequest"> Request parameters that are provided to the move subscription operation. </param>
+        /// <param name="content"> Request parameters that are provided to the move subscription operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="moveBillingSubscriptionRequest"/> is null. </exception>
-        public virtual ArmOperation<BillingSubscriptionResource> Move(WaitUntil waitUntil, MoveBillingSubscriptionRequest moveBillingSubscriptionRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<BillingSubscriptionResource> Move(WaitUntil waitUntil, BillingSubscriptionMoveContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(moveBillingSubscriptionRequest, nameof(moveBillingSubscriptionRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _billingSubscriptionClientDiagnostics.CreateScope("BillingSubscriptionResource.Move");
             scope.Start();
             try
             {
-                var response = _billingSubscriptionRestClient.Move(Id.Parent.Name, Id.Name, moveBillingSubscriptionRequest, cancellationToken);
-                var operation = new BillingArmOperation<BillingSubscriptionResource>(new BillingSubscriptionOperationSource(Client), _billingSubscriptionClientDiagnostics, Pipeline, _billingSubscriptionRestClient.CreateMoveRequest(Id.Parent.Name, Id.Name, moveBillingSubscriptionRequest).Request, response, OperationFinalStateVia.Location);
+                var response = _billingSubscriptionRestClient.Move(Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new BillingArmOperation<BillingSubscriptionResource>(new BillingSubscriptionOperationSource(Client), _billingSubscriptionClientDiagnostics, Pipeline, _billingSubscriptionRestClient.CreateMoveRequest(Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -313,18 +313,18 @@ namespace Azure.ResourceManager.Billing
         /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}/validateMoveEligibility
         /// Operation Id: BillingSubscriptions_ValidateMoveEligibility
         /// </summary>
-        /// <param name="moveBillingSubscriptionRequest"> Request parameters that are provided to the validate move eligibility operation. </param>
+        /// <param name="content"> Request parameters that are provided to the validate move eligibility operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="moveBillingSubscriptionRequest"/> is null. </exception>
-        public virtual async Task<Response<ValidateMoveBillingSubscriptionEligibilityResult>> ValidateMoveEligibilityAsync(MoveBillingSubscriptionRequest moveBillingSubscriptionRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<BillingSubscriptionValidateMoveEligibilityResult>> ValidateMoveEligibilityAsync(BillingSubscriptionMoveContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(moveBillingSubscriptionRequest, nameof(moveBillingSubscriptionRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _billingSubscriptionClientDiagnostics.CreateScope("BillingSubscriptionResource.ValidateMoveEligibility");
             scope.Start();
             try
             {
-                var response = await _billingSubscriptionRestClient.ValidateMoveEligibilityAsync(Id.Parent.Name, Id.Name, moveBillingSubscriptionRequest, cancellationToken).ConfigureAwait(false);
+                var response = await _billingSubscriptionRestClient.ValidateMoveEligibilityAsync(Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -339,18 +339,18 @@ namespace Azure.ResourceManager.Billing
         /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}/validateMoveEligibility
         /// Operation Id: BillingSubscriptions_ValidateMoveEligibility
         /// </summary>
-        /// <param name="moveBillingSubscriptionRequest"> Request parameters that are provided to the validate move eligibility operation. </param>
+        /// <param name="content"> Request parameters that are provided to the validate move eligibility operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="moveBillingSubscriptionRequest"/> is null. </exception>
-        public virtual Response<ValidateMoveBillingSubscriptionEligibilityResult> ValidateMoveEligibility(MoveBillingSubscriptionRequest moveBillingSubscriptionRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<BillingSubscriptionValidateMoveEligibilityResult> ValidateMoveEligibility(BillingSubscriptionMoveContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(moveBillingSubscriptionRequest, nameof(moveBillingSubscriptionRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _billingSubscriptionClientDiagnostics.CreateScope("BillingSubscriptionResource.ValidateMoveEligibility");
             scope.Start();
             try
             {
-                var response = _billingSubscriptionRestClient.ValidateMoveEligibility(Id.Parent.Name, Id.Name, moveBillingSubscriptionRequest, cancellationToken);
+                var response = _billingSubscriptionRestClient.ValidateMoveEligibility(Id.Parent.Name, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

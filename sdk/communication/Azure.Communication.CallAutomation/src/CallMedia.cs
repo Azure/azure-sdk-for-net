@@ -23,10 +23,10 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         public virtual string CallConnectionId { get; internal set; }
 
-        internal CallMedia(string callConnectionId, ContentRestClient CallContentRestClient, ClientDiagnostics clientDiagnostics)
+        internal CallMedia(string callConnectionId, ContentRestClient callContentRestClient, ClientDiagnostics clientDiagnostics)
         {
             CallConnectionId = callConnectionId;
-            ContentRestClient = CallContentRestClient;
+            ContentRestClient = callContentRestClient;
             _clientDiagnostics = clientDiagnostics;
         }
 

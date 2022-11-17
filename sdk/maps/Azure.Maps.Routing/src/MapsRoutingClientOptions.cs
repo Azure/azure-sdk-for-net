@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Maps.Routing
 {
     /// <summary> Client options for RouteClient. </summary>
-    public partial class MapsRouteClientOptions : ClientOptions
+    public partial class MapsRoutingClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V1_0;
 
@@ -24,12 +24,13 @@ namespace Azure.Maps.Routing
 
         internal string Version { get; }
 
-        internal Uri Endpoint { get; }
+        /// <summary> The Azure Maps endpoint for requests. </summary>
+        public Uri Endpoint { get; set; }
 
-        /// <summary> Initializes new instance of MapsRouteClientOptions. </summary>
+        /// <summary> Initializes new instance of MapsRoutingClientOptions. </summary>
         /// <param name="version"> Route service version. </param>
         /// <param name="endpoint"> server parameter. </param>
-        public MapsRouteClientOptions(ServiceVersion version = LatestVersion, Uri endpoint = null)
+        public MapsRoutingClientOptions(ServiceVersion version = LatestVersion, Uri endpoint = null)
         {
             Version = version switch
             {

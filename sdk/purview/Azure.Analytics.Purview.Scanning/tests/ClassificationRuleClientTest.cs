@@ -66,15 +66,18 @@ namespace Azure.Analytics.Purview.Scanning.Tests
             //Get
             Response getResponse = await client.GetPropertiesAsync(new());
             Assert.AreEqual(200, getResponse.Status);
-            JsonElement getBodyJson = JsonDocument.Parse(GetContentFromResponse(getResponse)).RootElement;
+            using var jsonDocumentGet = JsonDocument.Parse(GetContentFromResponse(getResponse));
+            JsonElement getBodyJson = jsonDocumentGet.RootElement;
             Assert.AreEqual("test-description1009-updated", getBodyJson.GetProperty("properties").GetProperty("description").GetString());
             //Get Version
             var getVersionResponseList = client.GetVersionsAsync(new()).GetAsyncEnumerator();
             await getVersionResponseList.MoveNextAsync();
-            JsonElement getVersionBodyJson = JsonDocument.Parse(getVersionResponseList.Current).RootElement;
+            using var jsonDocumentVersionList = JsonDocument.Parse(getVersionResponseList.Current);
+            JsonElement getVersionBodyJson = jsonDocumentVersionList.RootElement;
             Assert.AreEqual("test-description1009", getVersionBodyJson.GetProperty("properties").GetProperty("description").GetString());
             await getVersionResponseList.MoveNextAsync();
-            JsonElement getSecondVersionBodyJson = JsonDocument.Parse(getVersionResponseList.Current).RootElement;
+            using var jsonDocumentVersionListNext = JsonDocument.Parse(getVersionResponseList.Current);
+            JsonElement getSecondVersionBodyJson = jsonDocumentVersionListNext.RootElement;
             await getVersionResponseList.DisposeAsync();
             Assert.AreEqual("test-description1009-updated", getSecondVersionBodyJson.GetProperty("properties").GetProperty("description").GetString());
             //Tag Version

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="errorMessage"/> is null. </exception>
         internal GetInsightsErrorKind(GetInsightsError kind, string errorMessage)
         {
-            if (errorMessage == null)
-            {
-                throw new ArgumentNullException(nameof(errorMessage));
-            }
+            Argument.AssertNotNull(errorMessage, nameof(errorMessage));
 
             Kind = kind;
             ErrorMessage = errorMessage;

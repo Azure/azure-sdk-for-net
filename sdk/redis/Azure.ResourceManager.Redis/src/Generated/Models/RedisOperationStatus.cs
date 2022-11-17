@@ -21,10 +21,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <exception cref="ArgumentNullException"> <paramref name="status"/> is null. </exception>
         internal RedisOperationStatus(string status) : base(status)
         {
-            if (status == null)
-            {
-                throw new ArgumentNullException(nameof(status));
-            }
+            Argument.AssertNotNull(status, nameof(status));
 
             Properties = new ChangeTrackingDictionary<string, BinaryData>();
         }

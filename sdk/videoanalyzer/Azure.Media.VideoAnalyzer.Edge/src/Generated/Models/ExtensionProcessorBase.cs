@@ -7,36 +7,33 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> Base class for pipeline extension processors. Pipeline extensions allow for custom media analysis and processing to be plugged into the Video Analyzer pipeline. </summary>
+    /// <summary>
+    /// Base class for pipeline extension processors. Pipeline extensions allow for custom media analysis and processing to be plugged into the Video Analyzer pipeline.
+    /// Please note <see cref="ExtensionProcessorBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="GrpcExtension"/> and <see cref="HttpExtension"/>.
+    /// </summary>
     public partial class ExtensionProcessorBase : ProcessorNodeBase
     {
         /// <summary> Initializes a new instance of ExtensionProcessorBase. </summary>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
-        /// <param name="endpoint"> Endpoint details of the pipeline extension plugin. </param>
+        /// <param name="endpoint">
+        /// Endpoint details of the pipeline extension plugin.
+        /// Please note <see cref="EndpointBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="TlsEndpoint"/> and <see cref="UnsecuredEndpoint"/>.
+        /// </param>
         /// <param name="image"> Image transformations and formatting options to be applied to the video frame(s) prior submission to the pipeline extension plugin. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="inputs"/>, <paramref name="endpoint"/> or <paramref name="image"/> is null. </exception>
         public ExtensionProcessorBase(string name, IEnumerable<NodeInput> inputs, EndpointBase endpoint, ImageProperties image) : base(name, inputs)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (inputs == null)
-            {
-                throw new ArgumentNullException(nameof(inputs));
-            }
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (image == null)
-            {
-                throw new ArgumentNullException(nameof(image));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(inputs, nameof(inputs));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(image, nameof(image));
 
             Endpoint = endpoint;
             Image = image;
@@ -47,7 +44,11 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
-        /// <param name="endpoint"> Endpoint details of the pipeline extension plugin. </param>
+        /// <param name="endpoint">
+        /// Endpoint details of the pipeline extension plugin.
+        /// Please note <see cref="EndpointBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="TlsEndpoint"/> and <see cref="UnsecuredEndpoint"/>.
+        /// </param>
         /// <param name="image"> Image transformations and formatting options to be applied to the video frame(s) prior submission to the pipeline extension plugin. </param>
         /// <param name="samplingOptions"> Media sampling parameters that define how often media is submitted to the extension plugin. </param>
         internal ExtensionProcessorBase(string type, string name, IList<NodeInput> inputs, EndpointBase endpoint, ImageProperties image, SamplingOptions samplingOptions) : base(type, name, inputs)
@@ -58,7 +59,11 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Type = type ?? "#Microsoft.VideoAnalyzer.ExtensionProcessorBase";
         }
 
-        /// <summary> Endpoint details of the pipeline extension plugin. </summary>
+        /// <summary>
+        /// Endpoint details of the pipeline extension plugin.
+        /// Please note <see cref="EndpointBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="TlsEndpoint"/> and <see cref="UnsecuredEndpoint"/>.
+        /// </summary>
         public EndpointBase Endpoint { get; set; }
         /// <summary> Image transformations and formatting options to be applied to the video frame(s) prior submission to the pipeline extension plugin. </summary>
         public ImageProperties Image { get; set; }

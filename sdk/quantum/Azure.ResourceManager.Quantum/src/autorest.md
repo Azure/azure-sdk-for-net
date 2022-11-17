@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: Quantum
 namespace: Azure.ResourceManager.Quantum
+# default tag is a preview version
 require: https://github.com/Azure/azure-rest-api-specs/blob/34ba022add0034e30462b76e1548ce5a7e053e33/specification/quantum/resource-manager/readme.md
-tag: package-2022-01-10-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true

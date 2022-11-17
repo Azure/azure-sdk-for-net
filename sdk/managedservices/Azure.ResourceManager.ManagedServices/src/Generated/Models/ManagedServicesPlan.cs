@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedServices.Models
 {
@@ -20,22 +21,10 @@ namespace Azure.ResourceManager.ManagedServices.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="publisher"/>, <paramref name="product"/> or <paramref name="version"/> is null. </exception>
         public ManagedServicesPlan(string name, string publisher, string product, string version)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (publisher == null)
-            {
-                throw new ArgumentNullException(nameof(publisher));
-            }
-            if (product == null)
-            {
-                throw new ArgumentNullException(nameof(product));
-            }
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(publisher, nameof(publisher));
+            Argument.AssertNotNull(product, nameof(product));
+            Argument.AssertNotNull(version, nameof(version));
 
             Name = name;
             Publisher = publisher;

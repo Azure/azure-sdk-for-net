@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static UnknownDeliveryRuleCondition DeserializeUnknownDeliveryRuleCondition(JsonElement element)
         {
-            MatchVariable name = default;
+            MatchVariable name = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
