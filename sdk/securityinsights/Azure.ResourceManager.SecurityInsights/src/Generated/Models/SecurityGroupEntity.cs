@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents a security group entity. </summary>
-    public partial class SecurityGroupEntity : Entity
+    public partial class SecurityGroupEntity : EntityData
     {
         /// <summary> Initializes a new instance of SecurityGroupEntity. </summary>
         public SecurityGroupEntity()

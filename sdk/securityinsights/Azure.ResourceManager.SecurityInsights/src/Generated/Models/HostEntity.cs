@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents a host entity. </summary>
-    public partial class HostEntity : Entity
+    public partial class HostEntity : EntityData
     {
         /// <summary> Initializes a new instance of HostEntity. </summary>
         public HostEntity()

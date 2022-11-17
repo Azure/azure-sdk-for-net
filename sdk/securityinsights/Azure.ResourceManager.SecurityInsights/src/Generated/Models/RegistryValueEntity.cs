@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents a registry value entity. </summary>
-    public partial class RegistryValueEntity : Entity
+    public partial class RegistryValueEntity : EntityData
     {
         /// <summary> Initializes a new instance of RegistryValueEntity. </summary>
         public RegistryValueEntity()

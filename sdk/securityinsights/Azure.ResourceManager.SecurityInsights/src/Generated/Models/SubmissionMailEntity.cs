@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents a submission mail entity. </summary>
-    public partial class SubmissionMailEntity : Entity
+    public partial class SubmissionMailEntity : EntityData
     {
         /// <summary> Initializes a new instance of SubmissionMailEntity. </summary>
         public SubmissionMailEntity()

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents an azure resource entity. </summary>
-    public partial class AzureResourceEntity : Entity
+    public partial class AzureResourceEntity : EntityData
     {
         /// <summary> Initializes a new instance of AzureResourceEntity. </summary>
         public AzureResourceEntity()

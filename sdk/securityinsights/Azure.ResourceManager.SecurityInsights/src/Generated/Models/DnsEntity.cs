@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents a dns entity. </summary>
-    public partial class DnsEntity : Entity
+    public partial class DnsEntity : EntityData
     {
         /// <summary> Initializes a new instance of DnsEntity. </summary>
         public DnsEntity()

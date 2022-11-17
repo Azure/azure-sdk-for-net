@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents a file hash entity. </summary>
-    public partial class FileHashEntity : Entity
+    public partial class FileHashEntity : EntityData
     {
         /// <summary> Initializes a new instance of FileHashEntity. </summary>
         public FileHashEntity()

@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class Entity : IUtf8JsonSerializable
+    public partial class EntityData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteEndObject();
         }
 
-        internal static Entity DeserializeEntity(JsonElement element)
+        internal static EntityData DeserializeEntityData(JsonElement element)
         {
             if (element.TryGetProperty("kind", out JsonElement discriminator))
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new Entity(id, name, type, systemData.Value, kind);
+            return new EntityData(id, name, type, systemData.Value, kind);
         }
     }
 }

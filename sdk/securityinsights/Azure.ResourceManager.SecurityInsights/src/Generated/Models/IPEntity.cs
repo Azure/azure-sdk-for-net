@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents an ip entity. </summary>
-    public partial class IPEntity : Entity
+    public partial class IPEntity : EntityData
     {
         /// <summary> Initializes a new instance of IPEntity. </summary>
         public IPEntity()

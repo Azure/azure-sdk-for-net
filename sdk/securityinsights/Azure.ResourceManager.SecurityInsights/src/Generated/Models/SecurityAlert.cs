@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents a security alert entity. </summary>
-    public partial class SecurityAlert : Entity
+    public partial class SecurityAlert : EntityData
     {
         /// <summary> Initializes a new instance of SecurityAlert. </summary>
         public SecurityAlert()

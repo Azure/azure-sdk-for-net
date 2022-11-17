@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         internal static IncidentEntitiesResponse DeserializeIncidentEntitiesResponse(JsonElement element)
         {
-            Optional<IReadOnlyList<Entity>> entities = default;
+            Optional<IReadOnlyList<EntityData>> entities = default;
             Optional<IReadOnlyList<IncidentEntitiesResultsMetadata>> metaData = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Entity> array = new List<Entity>();
+                    List<EntityData> array = new List<EntityData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Entity.DeserializeEntity(item));
+                        array.Add(EntityData.DeserializeEntityData(item));
                     }
                     entities = array;
                     continue;

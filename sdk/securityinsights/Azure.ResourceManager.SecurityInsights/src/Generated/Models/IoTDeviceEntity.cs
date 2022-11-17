@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents an IoT device entity. </summary>
-    public partial class IoTDeviceEntity : Entity
+    public partial class IoTDeviceEntity : EntityData
     {
         /// <summary> Initializes a new instance of IoTDeviceEntity. </summary>
         public IoTDeviceEntity()
