@@ -15,9 +15,14 @@
     <PackageReleaseNotes>
       <![CDATA[
         This is a public release of the Azure Compute SDK. Included with this release is:
-        1. CloudService API calls updated to version 2022-04-04.
-        2. Adding OS Image Scheduled Events to the Scheduled Events Profile in Virtual Machines and Virtual Machine Scale Sets. This allows users to configure if a VM has scheduled events pop up when it's about to undergo an OS-related operation like a reimage or an OS upgrade.
-        3. Adding the Max Surge setting to the Rolling Upgrade Policy in Virtual Machine Scale Sets. Enabling Max Surge would create new VMs to upgrade the Scale Set, rather than updating the existing VMs. Existing VMs will be deleted once the new virtual machines are created for each batch.
+        1. Gallery API calls updated to version 2022-03-03.
+        2. New API call for getting the gallery image latest version name.
+        3. Added CustomActions and SafetyProfile to Gallery Applications and Gallery Image Versions.
+        4. Changed the GalleryImageVersionStorageProfile type to GalleryArtifactVersionFullSource.
+        5. Moved the Uri property from GalleryArtifactVersionSource to GalleryDiskImageSource.
+        6. Added the PrivacyStatementUri and Eula properties to SharedGalleryImageProperties.
+        7. Adding OS Image Scheduled Events to the Scheduled Events Profile in Virtual Machines and Virtual Machine Scale Sets. This allows users to configure if a VM has scheduled events pop up when it's about to undergo an OS-related operation like a reimage or an OS upgrade.
+        8. Adding the Max Surge setting to the Rolling Upgrade Policy in Virtual Machine Scale Sets. Enabling Max Surge would create new VMs to upgrade the Scale Set, rather than updating the existing VMs. Existing VMs will be deleted once the new virtual machines are created for each batch.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
