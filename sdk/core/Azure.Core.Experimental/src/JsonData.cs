@@ -142,23 +142,6 @@ namespace Azure.Core
             }
         }
 
-        private JsonData(IEnumerable<JsonData> array)
-        {
-            _kind = JsonValueKind.Array;
-            _arrayRepresentation = new List<JsonData>();
-            foreach (var item in array)
-            {
-                if (item == null)
-                {
-                    _arrayRepresentation.Add(new JsonData((object?)null));
-                }
-                else
-                {
-                    _arrayRepresentation.Add(item);
-                }
-            }
-        }
-
         private void InitFromElement(JsonElement element)
         {
             switch (element.ValueKind)
@@ -196,37 +179,12 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Returns the value for a given property.
-        /// </summary>
-        /// <typeparam name="T">The type of the object to return.</typeparam>
-        /// <param name="propertyName">The name of the property to get.</param>
-        /// <returns>The value for a given property</returns>
-        /// <remarks>If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Object"/> this method throws <see cref="InvalidOperationException"/>.</remarks>
-        public T Get<T>(string propertyName)
-        {
-            return GetPropertyValue(propertyName).To<T>();
-        }
-
-        /// <summary>
-        /// Gets the value of a property from an object.
-        /// </summary>
-        /// <typeparam name="T">The type of the object to return.</typeparam>
-        /// <param name="propertyName">The name of the property to get.</param>
-        /// <param name="options">Options to control the conversion behavior.</param>
-        /// <returns>The value for a given property.</returns>
-        /// <remarks>If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Object"/> this method throws <see cref="InvalidOperationException"/>.</remarks>
-        public T Get<T>(string propertyName, JsonSerializerOptions options)
-        {
-            return GetPropertyValue(propertyName).To<T>(options);
-        }
-
-        /// <summary>
         /// Gets the value of a property from an object, or <code>null</code> if no such property exists.
         /// </summary>
         /// <param name="propertyName">The name of the property to get</param>
         /// <returns>The value for a given property, or <code>null</code> if no such property exists.</returns>
         /// <remarks>If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Object"/> this method throws <see cref="InvalidOperationException"/>.</remarks>
-        public JsonData? Get(string propertyName)
+        internal JsonData? Get(string propertyName)
         {
             if (EnsureObject().TryGetValue(propertyName, out JsonData value))
             {
@@ -241,7 +199,7 @@ namespace Azure.Core
         /// </summary>
         /// <typeparam name="T">The type to convert the value into.</typeparam>
         /// <returns>A new instance of <typeparamref name="T"/> constructed from the underlying JSON value.</returns>
-        public T To<T>() => To<T>(DefaultJsonSerializerOptions);
+        internal T To<T>() => To<T>(DefaultJsonSerializerOptions);
 
         /// <summary>
         /// Deserializes the given JSON value into an instance of a given type.
@@ -249,7 +207,7 @@ namespace Azure.Core
         /// <typeparam name="T">The type to deserialize the value into</typeparam>
         /// <param name="options">Options to control the conversion behavior.</param>
         /// <returns>A new instance of <typeparamref name="T"/> constructed from the underlying JSON value.</returns>
-        public T To<T>(JsonSerializerOptions options)
+        internal T To<T>(JsonSerializerOptions options)
         {
             return JsonSerializer.Deserialize<T>(ToJsonString(), options);
         }
@@ -258,7 +216,7 @@ namespace Azure.Core
         /// Returns a stringified version of the JSON for this value.
         /// </summary>
         /// <returns>Returns a stringified version of the JSON for this value.</returns>
-        public string ToJsonString()
+        internal string ToJsonString()
         {
             using var memoryStream = new MemoryStream();
             using (var writer = new Utf8JsonWriter(memoryStream))
@@ -266,174 +224,6 @@ namespace Azure.Core
                 WriteTo(writer);
             }
             return Encoding.UTF8.GetString(memoryStream.ToArray());
-        }
-
-        /// <summary>
-        /// Sets the property of an object to a given value.
-        /// </summary>
-        /// <param name="propertyName">The property to set.</param>
-        /// <param name="value">The value to set the property to.</param>
-        /// <remarks>
-        /// If the property already exists, the value is overwritten.
-        /// If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Object"/> this method throws <see cref="InvalidOperationException"/>.
-        /// </remarks>
-        public void Set(string propertyName, bool value) => EnsureObject()[propertyName] = new JsonData(value);
-
-        /// <summary>
-        /// Sets the property of an object to a given value.
-        /// </summary>
-        /// <param name="propertyName">The property to set.</param>
-        /// <param name="value">The value to set the property to.</param>
-        /// <remarks>
-        /// If the property already exists, the value is overwritten.
-        /// If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Object"/> this method throws <see cref="InvalidOperationException"/>.
-        /// </remarks>
-        public void Set(string propertyName, double value) => EnsureObject()[propertyName] = new JsonData(value);
-
-        /// <summary>
-        /// Sets the property of an object to a given value.
-        /// </summary>
-        /// <param name="propertyName">The property to set.</param>
-        /// <param name="value">The value to set the property to.</param>
-        /// <remarks>
-        /// If the property already exists, the value is overwritten.
-        /// If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Object"/> this method throws <see cref="InvalidOperationException"/>.
-        /// </remarks>
-        public void Set(string propertyName, float value) => EnsureObject()[propertyName] = new JsonData(value);
-
-        /// <summary>
-        /// Sets the property of an object to a given value.
-        /// </summary>
-        /// <param name="propertyName">The property to set.</param>
-        /// <param name="value">The value to set the property to.</param>
-        /// <remarks>
-        /// If the property already exists, the value is overwritten.
-        /// If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Object"/> this method throws <see cref="InvalidOperationException"/>.
-        /// </remarks>
-        public void Set(string propertyName, int value) => EnsureObject()[propertyName] = new JsonData(value);
-
-        /// <summary>
-        /// Sets the property of an object to a given value.
-        /// </summary>
-        /// <param name="propertyName">The property to set.</param>
-        /// <param name="value">The value to set the property to.</param>
-        /// <remarks>
-        /// If the property already exists, the value is overwritten.
-        /// If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Object"/> this method throws <see cref="InvalidOperationException"/>.
-        /// </remarks>
-        public void Set(string propertyName, long value) => EnsureObject()[propertyName] = new JsonData(value);
-
-        /// <summary>
-        /// Sets the property of an object to a given value.
-        /// </summary>
-        /// <param name="propertyName">The property to set.</param>
-        /// <param name="value">The value to set the property to.</param>
-        /// <remarks>
-        /// If the property already exists, the value is overwritten.
-        /// If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Object"/> this method throws <see cref="InvalidOperationException"/>.
-        /// </remarks>
-        public void Set(string propertyName, string? value) => EnsureObject()[propertyName] = new JsonData(value);
-
-        /// <summary>
-        /// Sets the property of an object to a given value.
-        /// </summary>
-        /// <param name="propertyName">The property to set.</param>
-        /// <param name="serializable">The value to set the property to.</param>
-        /// <returns>A <see cref="JsonData"/> of the serialized object.</returns>
-        /// <remarks>
-        /// If the property already exists, the value is overwritten.
-        /// If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Object"/> this method throws <see cref="InvalidOperationException"/>.
-        /// </remarks>
-        public JsonData Set(string propertyName, object? serializable)
-        {
-            JsonData value = new JsonData(serializable);
-            EnsureObject()[propertyName] = value;
-            return value;
-        }
-
-        /// <summary>
-        /// Sets the property of an object to a given value.
-        /// </summary>
-        /// <param name="propertyName">The property to set.</param>
-        /// <param name="serializable">The value to set the property to.</param>
-        /// <param name="options">Options to control the conversion behavior.</param>
-        /// <returns>A <see cref="JsonData"/> of the serialized object.</returns>
-        /// <remarks>
-        /// If the property already exists, the value is overwritten.
-        /// If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Object"/> this method throws <see cref="InvalidOperationException"/>.
-        /// </remarks>
-        public JsonData Set(string propertyName, object? serializable, JsonSerializerOptions options)
-        {
-            JsonData value = new JsonData(serializable, options);
-            EnsureObject()[propertyName] = value;
-            return value;
-        }
-
-        /// <summary>
-        /// Sets the property of an object to a given value.
-        /// </summary>
-        /// <param name="propertyName">The property to set.</param>
-        /// <param name="serializable">The value to set the property to.</param>
-        /// <returns>A <see cref="JsonData"/> of the serialized object.</returns>
-        /// <remarks>
-        /// If the property already exists, the value is overwritten.
-        /// If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Object"/> this method throws <see cref="InvalidOperationException"/>.
-        /// </remarks>
-        public JsonData Set<T>(string propertyName, T[] serializable)
-        {
-            JsonData value = new JsonData(serializable.Select(x => new JsonData(x)));
-            EnsureObject()[propertyName] = value;
-            return value;
-        }
-
-        /// <summary>
-        /// Sets the property of an object to a given value.
-        /// </summary>
-        /// <param name="propertyName">The property to set.</param>
-        /// <param name="serializable">The value to set the property to.</param>
-        /// <param name="options">Options to control the conversion behavior.</param>
-        /// <returns>A <see cref="JsonData"/> of the serialized object.</returns>
-        /// <remarks>
-        /// If the property already exists, the value is overwritten.
-        /// If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Object"/> this method throws <see cref="InvalidOperationException"/>.
-        /// </remarks>
-        public JsonData Set<T>(string propertyName, T[] serializable, JsonSerializerOptions options)
-        {
-            JsonData value = new JsonData(serializable.Select(x => new JsonData(x, options)));
-            EnsureObject()[propertyName] = value;
-            return value;
-        }
-
-        /// <summary>
-        /// Sets the property of an object to a new empty object.
-        /// </summary>
-        /// <param name="propertyName">The property to set.</param>
-        /// <returns>A <see cref="JsonData"/> for the newly created empty object.</returns>
-        /// <remarks>
-        /// If the property already exists, the value is overwritten.
-        /// If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Object"/> this method throws <see cref="InvalidOperationException"/>.
-        /// </remarks>
-        public JsonData SetEmptyObject(string propertyName)
-        {
-            JsonData value = EmptyObject();
-            EnsureObject()[propertyName] = value;
-            return value;
-        }
-
-        /// <summary>
-        /// Sets the property of an object to a new empty array.
-        /// </summary>
-        /// <param name="propertyName">The property to set.</param>
-        /// <returns>A <see cref="JsonData"/> for the newly created empty array.</returns>
-        /// <remarks>
-        /// If the property already exists, the value is overwritten.
-        /// If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Object"/> this method throws <see cref="InvalidOperationException"/>.
-        /// </remarks>
-        public JsonData SetEmptyArray(string propertyName)
-        {
-            JsonData value = EmptyArray();
-            EnsureObject()[propertyName] = value;
-            return value;
         }
 
         /// <summary>
@@ -564,61 +354,8 @@ namespace Azure.Core
         /// <returns>False if the given JsonData represents the given string, and false otherwise</returns>
         public static bool operator !=(string? left, JsonData? right) => !(left == right);
 
-        /// <summary>
-        /// Parses text representing a single JSON value into a <see cref="JsonData"/>.
-        /// </summary>
-        /// <param name="json">A string representing a JSON value.</param>
-        /// <returns>A <see cref="JsonData"/> representation of the value.</returns>
-        public static JsonData FromString(string json) => new JsonData(JsonDocument.Parse(json));
-
-        /// <summary>
-        /// Parses text representing a single JSON value into a <see cref="JsonData"/>.
-        /// </summary>
-        /// <param name="utf8Json">A UTF8 encoded string representing a JSON value.</param>
-        /// <returns>A <see cref="JsonData"/> representation of the value.</returns>
-        public static JsonData FromBytes(byte[] utf8Json) => new JsonData(JsonDocument.Parse(utf8Json));
-
-        /// <summary>
-        /// Parses text representing a single JSON value into a <see cref="JsonData"/>.
-        /// </summary>
-        /// <param name="utf8Json">A UTF8 encoded string representing a JSON value.</param>
-        /// <returns>A <see cref="JsonData"/> representation of the value.</returns>
-        public static JsonData FromBytes(ReadOnlyMemory<byte> utf8Json) => new JsonData(JsonDocument.Parse(utf8Json));
-
-        /// <summary>
-        /// Parses text representing a single JSON value into a <see cref="JsonData"/>.
-        /// </summary>
-        /// <param name="utf8Json">A UTF8 encoded string representing a JSON value.</param>
-        /// <returns>A <see cref="JsonData"/> representation of the value</returns>
-        public static JsonData FromStream(Stream utf8Json) => new JsonData(JsonDocument.Parse(utf8Json));
-
-        /// <summary>
-        /// Parses text representing a single JSON value into a <see cref="JsonData"/>.
-        /// </summary>
-        /// <param name="utf8JsonStream">A UTF8 encoded string representing a JSON value.</param>
-        /// <param name="cancellationToken">A token to monitor for cancelation requests.</param>
-        /// <returns>A Task which will construct the <see cref="JsonData"/> representation of the value</returns>
-        public static async Task<JsonData> FromStreamAsync(Stream utf8JsonStream, CancellationToken cancellationToken = default) => new JsonData((await JsonDocument.ParseAsync(utf8JsonStream, cancellationToken: cancellationToken).ConfigureAwait(false)).RootElement);
-
-        /// <summary>
-        /// Constructs a <see cref="JsonData"/> from an object. The value corresponds to the serialized representation of the object.
-        /// </summary>
-        /// <param name="value">The object to construct the <see cref="JsonData"/> from.</param>
-        /// <param name="options">Options to control the conversion behavior.</param>
-        /// <returns>A <see cref="JsonData"/> representation of the value.</returns>
-        public static JsonData FromObject<T>(T value, JsonSerializerOptions? options = null) => new JsonData(value, options ?? DefaultJsonSerializerOptions);
-
-        /// <summary>
-        /// Returns a new <see cref="JsonData"/> that represents an empty object.
-        /// </summary>
-        /// <returns>A <see cref="JsonData"/> that represents an empty object.</returns>
-        public static JsonData EmptyObject() => new JsonData();
-
-        /// <summary>
-        /// Returns a new <see cref="JsonData"/> that represents an empty array.
-        /// </summary>
-        /// <returns>A <see cref="JsonData"/> that represents an empty array.</returns>
-        public static JsonData EmptyArray() => new JsonData(System.Array.Empty<JsonData>());
+        // Used in internal tests.
+        internal static JsonData FromString(string json) => new JsonData(JsonDocument.Parse(json));
 
         /// <summary>
         /// The <see cref="JsonValueKind"/> of the value of this instance.
@@ -641,7 +378,7 @@ namespace Azure.Core
         /// Returns the names of all the properties of this object.
         /// </summary>
         /// <remarks>If <see cref="Kind"/> is not <see cref="JsonValueKind.Object"/> this methods throws <see cref="InvalidOperationException"/>.</remarks>
-        public IEnumerable<string> Properties
+        internal IEnumerable<string> Properties
         {
             get => EnsureObject().Keys;
         }
@@ -650,36 +387,9 @@ namespace Azure.Core
         /// Returns all the elements in this array.
         /// </summary>
         /// <remarks>If<see cref="Kind"/> is not<see cref="JsonValueKind.Array"/> this methods throws <see cref = "InvalidOperationException" />.</remarks>
-        public IEnumerable<JsonData> Items
+        internal IEnumerable<JsonData> Items
         {
             get => EnsureArray();
-        }
-
-        /// <summary>
-        /// Writes the UTF-8 encoded string representation of this instance.
-        /// </summary>
-        /// <param name="stream">The stream to write to.</param>
-        /// <returns>The number of bytes written into the stream.</returns>
-        public long WriteTo(Stream stream)
-        {
-            using Utf8JsonWriter writer = new Utf8JsonWriter(stream);
-            WriteTo(writer);
-            writer.Flush();
-            return writer.BytesCommitted;
-        }
-
-        /// <summary>
-        /// Writes the UTF-8 encoded string representation of this instance.
-        /// </summary>
-        /// <param name="stream">The stream to write to.</param>
-        /// <param name="cancellationToken">A token to monitor for cancelation requests.</param>
-        /// <returns>The number of bytes written into the stream.</returns>
-        public async Task<long> WriteToAsync(Stream stream, CancellationToken cancellationToken)
-        {
-            using Utf8JsonWriter writer = new Utf8JsonWriter(stream);
-            WriteTo(writer);
-            await writer.FlushAsync(cancellationToken).ConfigureAwait(false);
-            return writer.BytesCommitted;
         }
 
         /// <inheritdoc />
@@ -836,12 +546,7 @@ namespace Azure.Core
                 return Length;
             }
 
-            if (EnsureObject().TryGetValue(propertyName, out JsonData element))
-            {
-                return element;
-            }
-
-            throw new InvalidOperationException($"Property {propertyName} not found");
+            return GetPropertyValue(propertyName);
         }
 
         private JsonData GetViaIndexer(object index)
@@ -852,19 +557,6 @@ namespace Azure.Core
                     return GetPropertyValue(propertyName);
                 case int arrayIndex:
                     return GetValueAt(arrayIndex);;
-            }
-
-            throw new InvalidOperationException($"Tried to access indexer with unsupport index type: {index}");
-        }
-
-        private JsonData SetViaIndexer(object index, object value)
-        {
-            switch (index)
-            {
-                case string propertyName:
-                    return SetValue(propertyName, value);
-                case int arrayIndex:
-                    return SetValueAt(arrayIndex, value);
             }
 
             throw new InvalidOperationException($"Tried to access indexer with unsupport index type: {index}");
@@ -892,6 +584,19 @@ namespace Azure.Core
             return _arrayRepresentation!;
         }
 
+        private JsonData SetViaIndexer(object index, object value)
+        {
+            switch (index)
+            {
+                case string propertyName:
+                    return SetValue(propertyName, value);
+                case int arrayIndex:
+                    return SetValueAt(arrayIndex, value);
+            }
+
+            throw new InvalidOperationException($"Tried to access indexer with unsupport index type: {index}");
+        }
+
         private JsonData GetValueAt(int index)
         {
             return EnsureArray()[index];
@@ -917,6 +622,7 @@ namespace Azure.Core
 
             return _value;
         }
+
         private Number EnsureNumberValue()
         {
             if (_kind != JsonValueKind.Number)

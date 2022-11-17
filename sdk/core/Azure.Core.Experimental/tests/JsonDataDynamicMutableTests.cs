@@ -65,7 +65,7 @@ namespace Azure.Core.Tests
         {
             var json = JsonData.FromString("{}");
             dynamic jsonData = json;
-            jsonData.a = JsonData.EmptyObject();
+            jsonData.a = JsonData.FromString("{}");
             jsonData.a.b = 2;
 
             Assert.AreEqual(json.ToString(), "{\"a\":{\"b\":2}}");
@@ -76,7 +76,7 @@ namespace Azure.Core.Tests
         {
             var json = JsonData.FromString("{}");
             dynamic jsonData = json;
-            dynamic anotherJson = JsonData.EmptyObject();
+            dynamic anotherJson = JsonData.FromString("{}");
             jsonData.a = anotherJson;
             anotherJson.b = 2;
 
