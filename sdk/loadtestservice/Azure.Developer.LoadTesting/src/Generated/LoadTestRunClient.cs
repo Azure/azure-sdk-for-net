@@ -563,17 +563,17 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='CreateOrUpdateAppComponentAsync(String,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreateOrUpdateAppComponentAsync(string testRunId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='CreateOrUpdateAppComponentsAsync(String,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> CreateOrUpdateAppComponentsAsync(string testRunId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.CreateOrUpdateAppComponent");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.CreateOrUpdateAppComponents");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateAppComponentRequest(testRunId, content, context);
+                using HttpMessage message = CreateCreateOrUpdateAppComponentsRequest(testRunId, content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -591,17 +591,17 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='CreateOrUpdateAppComponent(String,RequestContent,RequestContext)']/*" />
-        public virtual Response CreateOrUpdateAppComponent(string testRunId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='CreateOrUpdateAppComponents(String,RequestContent,RequestContext)']/*" />
+        public virtual Response CreateOrUpdateAppComponents(string testRunId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.CreateOrUpdateAppComponent");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.CreateOrUpdateAppComponents");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateAppComponentRequest(testRunId, content, context);
+                using HttpMessage message = CreateCreateOrUpdateAppComponentsRequest(testRunId, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1068,7 +1068,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateAppComponentRequest(string testRunId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateAppComponentsRequest(string testRunId, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
             var request = message.Request;

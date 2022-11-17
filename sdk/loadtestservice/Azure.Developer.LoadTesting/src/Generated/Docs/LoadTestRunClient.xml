@@ -1805,9 +1805,9 @@ Schema for <c>DimensionValueList</c>:
 
 </remarks>
     </member>
-    <member name="CreateOrUpdateAppComponentAsync(String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdateAppComponentsAsync(String,RequestContent,RequestContext)">
 <example>
-This sample shows how to call CreateOrUpdateAppComponentAsync with required parameters and request content and parse the result.
+This sample shows how to call CreateOrUpdateAppComponentsAsync with required parameters and request content and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
@@ -1823,7 +1823,7 @@ var data = new {
     },
 };
 
-Response response = await client.CreateOrUpdateAppComponentAsync("<testRunId>", RequestContent.Create(data));
+Response response = await client.CreateOrUpdateAppComponentsAsync("<testRunId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("testRunId").ToString());
@@ -1871,9 +1871,9 @@ Schema for <c>TestRunAppComponents</c>:
 
 </remarks>
     </member>
-    <member name="CreateOrUpdateAppComponent(String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdateAppComponents(String,RequestContent,RequestContext)">
 <example>
-This sample shows how to call CreateOrUpdateAppComponent with required parameters and request content and parse the result.
+This sample shows how to call CreateOrUpdateAppComponents with required parameters and request content and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
@@ -1889,7 +1889,7 @@ var data = new {
     },
 };
 
-Response response = client.CreateOrUpdateAppComponent("<testRunId>", RequestContent.Create(data));
+Response response = client.CreateOrUpdateAppComponents("<testRunId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("testRunId").ToString());
