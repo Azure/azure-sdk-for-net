@@ -16,7 +16,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         {
             get
             {
-                return UriSource?.ToString();
+                return UriSource?.AbsoluteUri;
             }
             set
             {
