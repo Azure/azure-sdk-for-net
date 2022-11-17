@@ -8,16 +8,16 @@
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
     /// <summary> Properties specific to each reserved resource type. Not required if not applicable. </summary>
-    internal partial class ReservationOrderAliasRequestPropertiesReservedResourceProperties
+    internal partial class ReservedResourceProperties
     {
-        /// <summary> Initializes a new instance of ReservationOrderAliasRequestPropertiesReservedResourceProperties. </summary>
-        public ReservationOrderAliasRequestPropertiesReservedResourceProperties()
+        /// <summary> Initializes a new instance of ReservedResourceProperties. </summary>
+        public ReservedResourceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ReservationOrderAliasRequestPropertiesReservedResourceProperties. </summary>
+        /// <summary> Initializes a new instance of ReservedResourceProperties. </summary>
         /// <param name="instanceFlexibility"> Turning this on will apply the reservation discount to other VMs in the same VM size group. </param>
-        internal ReservationOrderAliasRequestPropertiesReservedResourceProperties(InstanceFlexibility? instanceFlexibility)
+        internal ReservedResourceProperties(InstanceFlexibility? instanceFlexibility)
         {
             InstanceFlexibility = instanceFlexibility;
         }

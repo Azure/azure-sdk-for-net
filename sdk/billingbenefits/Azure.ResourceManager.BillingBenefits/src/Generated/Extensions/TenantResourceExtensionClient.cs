@@ -62,11 +62,11 @@ namespace Azure.ResourceManager.BillingBenefits
             return GetCachedClient(Client => new SavingsPlanOrderModelCollection(Client, Id));
         }
 
-        /// <summary> Gets an object representing a ReservationOrderAliasResponseResource along with the instance operations that can be performed on it in the TenantResource. </summary>
-        /// <returns> Returns a <see cref="ReservationOrderAliasResponseResource" /> object. </returns>
-        public virtual ReservationOrderAliasResponseResource GetReservationOrderAliasResponse()
+        /// <summary> Gets an object representing a ReservationOrderAliasModelResource along with the instance operations that can be performed on it in the TenantResource. </summary>
+        /// <returns> Returns a <see cref="ReservationOrderAliasModelResource" /> object. </returns>
+        public virtual ReservationOrderAliasModelResource GetReservationOrderAliasModel()
         {
-            return new ReservationOrderAliasResponseResource(Client, new ResourceIdentifier(Id.ToString() + "/reservationOrderAliases"));
+            return new ReservationOrderAliasModelResource(Client, new ResourceIdentifier(Id.ToString() + "/reservationOrderAliases"));
         }
 
         /// <summary>

@@ -7,34 +7,31 @@
 
 using System;
 using Azure.Core;
-using Azure.ResourceManager.BillingBenefits.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.BillingBenefits
+namespace Azure.ResourceManager.BillingBenefits.Models
 {
-    /// <summary> A class representing the ReservationOrderAliasResponse data model. </summary>
-    public partial class ReservationOrderAliasResponseData : ResourceData
+    /// <summary> Reservation order alias. </summary>
+    public partial class ReservationOrderAliasModelCreateOrUpdateContent : ResourceData
     {
-        /// <summary> Initializes a new instance of ReservationOrderAliasResponseData. </summary>
+        /// <summary> Initializes a new instance of ReservationOrderAliasModelCreateOrUpdateContent. </summary>
         /// <param name="sku"> Reservation order SKU. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
-        public ReservationOrderAliasResponseData(BillingBenefitsSku sku)
+        public ReservationOrderAliasModelCreateOrUpdateContent(BillingBenefitsSku sku)
         {
             Argument.AssertNotNull(sku, nameof(sku));
 
             Sku = sku;
         }
 
-        /// <summary> Initializes a new instance of ReservationOrderAliasResponseData. </summary>
+        /// <summary> Initializes a new instance of ReservationOrderAliasModelCreateOrUpdateContent. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="sku"> Reservation order SKU. </param>
-        /// <param name="location"> The Azure Region where the reserved resource lives. </param>
+        /// <param name="location"> The Azure Region where the reservation benefits are applied to. </param>
         /// <param name="displayName"> Display name. </param>
-        /// <param name="reservationOrderId"> Identifier of the reservation order created. </param>
-        /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="billingScopeId"> Subscription that will be charged for purchasing the benefit. </param>
         /// <param name="term"> Represent benefit term in ISO 8601 format. </param>
         /// <param name="billingPlan"> Represents the billing plan in ISO 8601 format. Required only for monthly billing plans. </param>
@@ -43,15 +40,13 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="quantity"> Total Quantity of the SKUs purchased in the Reservation. </param>
         /// <param name="renew"> Setting this to true will automatically purchase a new benefit on the expiration date time. </param>
         /// <param name="reservedResourceType"> The type of the resource that is being reserved. </param>
-        /// <param name="reviewOn"> This is the date-time when the Reservation needs to be reviewed. </param>
+        /// <param name="reviewOn"> This is the date-time when the Azure Hybrid Benefit needs to be reviewed. </param>
         /// <param name="reservedResourceProperties"> Properties specific to each reserved resource type. Not required if not applicable. </param>
-        internal ReservationOrderAliasResponseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingBenefitsSku sku, AzureLocation? location, string displayName, string reservationOrderId, ProvisioningState? provisioningState, string billingScopeId, Term? term, BillingPlan? billingPlan, AppliedScopeType? appliedScopeType, AppliedScopeProperties appliedScopeProperties, int? quantity, bool? renew, ReservedResourceType? reservedResourceType, DateTimeOffset? reviewOn, ReservationOrderAliasResponsePropertiesReservedResourceProperties reservedResourceProperties) : base(id, name, resourceType, systemData)
+        internal ReservationOrderAliasModelCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingBenefitsSku sku, AzureLocation? location, string displayName, string billingScopeId, Term? term, BillingPlan? billingPlan, AppliedScopeType? appliedScopeType, AppliedScopeProperties appliedScopeProperties, int? quantity, bool? renew, ReservedResourceType? reservedResourceType, DateTimeOffset? reviewOn, ReservedResourceProperties reservedResourceProperties) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
             Location = location;
             DisplayName = displayName;
-            ReservationOrderId = reservationOrderId;
-            ProvisioningState = provisioningState;
             BillingScopeId = billingScopeId;
             Term = term;
             BillingPlan = billingPlan;
@@ -78,14 +73,10 @@ namespace Azure.ResourceManager.BillingBenefits
             }
         }
 
-        /// <summary> The Azure Region where the reserved resource lives. </summary>
+        /// <summary> The Azure Region where the reservation benefits are applied to. </summary>
         public AzureLocation? Location { get; set; }
         /// <summary> Display name. </summary>
         public string DisplayName { get; set; }
-        /// <summary> Identifier of the reservation order created. </summary>
-        public string ReservationOrderId { get; }
-        /// <summary> Provisioning state. </summary>
-        public ProvisioningState? ProvisioningState { get; }
         /// <summary> Subscription that will be charged for purchasing the benefit. </summary>
         public string BillingScopeId { get; set; }
         /// <summary> Represent benefit term in ISO 8601 format. </summary>
@@ -102,10 +93,10 @@ namespace Azure.ResourceManager.BillingBenefits
         public bool? Renew { get; set; }
         /// <summary> The type of the resource that is being reserved. </summary>
         public ReservedResourceType? ReservedResourceType { get; set; }
-        /// <summary> This is the date-time when the Reservation needs to be reviewed. </summary>
+        /// <summary> This is the date-time when the Azure Hybrid Benefit needs to be reviewed. </summary>
         public DateTimeOffset? ReviewOn { get; set; }
         /// <summary> Properties specific to each reserved resource type. Not required if not applicable. </summary>
-        internal ReservationOrderAliasResponsePropertiesReservedResourceProperties ReservedResourceProperties { get; set; }
+        internal ReservedResourceProperties ReservedResourceProperties { get; set; }
         /// <summary> Turning this on will apply the reservation discount to other VMs in the same VM size group. </summary>
         public InstanceFlexibility? ReservedResourceInstanceFlexibility
         {
@@ -113,7 +104,7 @@ namespace Azure.ResourceManager.BillingBenefits
             set
             {
                 if (ReservedResourceProperties is null)
-                    ReservedResourceProperties = new ReservationOrderAliasResponsePropertiesReservedResourceProperties();
+                    ReservedResourceProperties = new ReservedResourceProperties();
                 ReservedResourceProperties.InstanceFlexibility = value;
             }
         }

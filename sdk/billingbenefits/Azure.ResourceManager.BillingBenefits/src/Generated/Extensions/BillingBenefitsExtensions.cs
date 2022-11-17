@@ -76,12 +76,12 @@ namespace Azure.ResourceManager.BillingBenefits
             return tenantResource.GetSavingsPlanOrderModels().Get(savingsPlanOrderId, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a ReservationOrderAliasResponseResource along with the instance operations that can be performed on it in the TenantResource. </summary>
+        /// <summary> Gets an object representing a ReservationOrderAliasModelResource along with the instance operations that can be performed on it in the TenantResource. </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ReservationOrderAliasResponseResource" /> object. </returns>
-        public static ReservationOrderAliasResponseResource GetReservationOrderAliasResponse(this TenantResource tenantResource)
+        /// <returns> Returns a <see cref="ReservationOrderAliasModelResource" /> object. </returns>
+        public static ReservationOrderAliasModelResource GetReservationOrderAliasModel(this TenantResource tenantResource)
         {
-            return GetExtensionClient(tenantResource).GetReservationOrderAliasResponse();
+            return GetExtensionClient(tenantResource).GetReservationOrderAliasModel();
         }
 
         /// <summary>
@@ -211,20 +211,20 @@ namespace Azure.ResourceManager.BillingBenefits
         }
         #endregion
 
-        #region ReservationOrderAliasResponseResource
+        #region ReservationOrderAliasModelResource
         /// <summary>
-        /// Gets an object representing a <see cref="ReservationOrderAliasResponseResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ReservationOrderAliasResponseResource.CreateResourceIdentifier" /> to create a <see cref="ReservationOrderAliasResponseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ReservationOrderAliasModelResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ReservationOrderAliasModelResource.CreateResourceIdentifier" /> to create a <see cref="ReservationOrderAliasModelResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ReservationOrderAliasResponseResource" /> object. </returns>
-        public static ReservationOrderAliasResponseResource GetReservationOrderAliasResponseResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ReservationOrderAliasModelResource" /> object. </returns>
+        public static ReservationOrderAliasModelResource GetReservationOrderAliasModelResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ReservationOrderAliasResponseResource.ValidateResourceId(id);
-                return new ReservationOrderAliasResponseResource(client, id);
+                ReservationOrderAliasModelResource.ValidateResourceId(id);
+                return new ReservationOrderAliasModelResource(client, id);
             }
             );
         }

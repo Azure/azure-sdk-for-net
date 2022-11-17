@@ -50,4 +50,10 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+rename-mapping:
+  ReservationOrderAliasResponse: ReservationOrderAliasModel
+
+directive:
+  - remove-operation: Operation_List
+
 ```

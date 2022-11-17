@@ -19,46 +19,46 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.BillingBenefits
 {
     /// <summary>
-    /// A Class representing a ReservationOrderAliasResponse along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ReservationOrderAliasResponseResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetReservationOrderAliasResponseResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetReservationOrderAliasResponse method.
+    /// A Class representing a ReservationOrderAliasModel along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ReservationOrderAliasModelResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetReservationOrderAliasModelResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetReservationOrderAliasModel method.
     /// </summary>
-    public partial class ReservationOrderAliasResponseResource : ArmResource
+    public partial class ReservationOrderAliasModelResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ReservationOrderAliasResponseResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ReservationOrderAliasModelResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string reservationOrderAliasName)
         {
             var resourceId = $"/providers/Microsoft.BillingBenefits/reservationOrderAliases/{reservationOrderAliasName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _reservationOrderAliasResponseReservationOrderAliasClientDiagnostics;
-        private readonly ReservationOrderAliasRestOperations _reservationOrderAliasResponseReservationOrderAliasRestClient;
-        private readonly ReservationOrderAliasResponseData _data;
+        private readonly ClientDiagnostics _reservationOrderAliasModelReservationOrderAliasClientDiagnostics;
+        private readonly ReservationOrderAliasRestOperations _reservationOrderAliasModelReservationOrderAliasRestClient;
+        private readonly ReservationOrderAliasModelData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="ReservationOrderAliasResponseResource"/> class for mocking. </summary>
-        protected ReservationOrderAliasResponseResource()
+        /// <summary> Initializes a new instance of the <see cref="ReservationOrderAliasModelResource"/> class for mocking. </summary>
+        protected ReservationOrderAliasModelResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ReservationOrderAliasResponseResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "ReservationOrderAliasModelResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ReservationOrderAliasResponseResource(ArmClient client, ReservationOrderAliasResponseData data) : this(client, data.Id)
+        internal ReservationOrderAliasModelResource(ArmClient client, ReservationOrderAliasModelData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ReservationOrderAliasResponseResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ReservationOrderAliasModelResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ReservationOrderAliasResponseResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ReservationOrderAliasModelResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _reservationOrderAliasResponseReservationOrderAliasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string reservationOrderAliasResponseReservationOrderAliasApiVersion);
-            _reservationOrderAliasResponseReservationOrderAliasRestClient = new ReservationOrderAliasRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, reservationOrderAliasResponseReservationOrderAliasApiVersion);
+            _reservationOrderAliasModelReservationOrderAliasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string reservationOrderAliasModelReservationOrderAliasApiVersion);
+            _reservationOrderAliasModelReservationOrderAliasRestClient = new ReservationOrderAliasRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, reservationOrderAliasModelReservationOrderAliasApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.BillingBenefits
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ReservationOrderAliasResponseData Data
+        public virtual ReservationOrderAliasModelData Data
         {
             get
             {
@@ -94,16 +94,16 @@ namespace Azure.ResourceManager.BillingBenefits
         /// Operation Id: ReservationOrderAlias_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ReservationOrderAliasResponseResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ReservationOrderAliasModelResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _reservationOrderAliasResponseReservationOrderAliasClientDiagnostics.CreateScope("ReservationOrderAliasResponseResource.Get");
+            using var scope = _reservationOrderAliasModelReservationOrderAliasClientDiagnostics.CreateScope("ReservationOrderAliasModelResource.Get");
             scope.Start();
             try
             {
-                var response = await _reservationOrderAliasResponseReservationOrderAliasRestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _reservationOrderAliasModelReservationOrderAliasRestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ReservationOrderAliasResponseResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ReservationOrderAliasModelResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -118,16 +118,16 @@ namespace Azure.ResourceManager.BillingBenefits
         /// Operation Id: ReservationOrderAlias_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ReservationOrderAliasResponseResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ReservationOrderAliasModelResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _reservationOrderAliasResponseReservationOrderAliasClientDiagnostics.CreateScope("ReservationOrderAliasResponseResource.Get");
+            using var scope = _reservationOrderAliasModelReservationOrderAliasClientDiagnostics.CreateScope("ReservationOrderAliasModelResource.Get");
             scope.Start();
             try
             {
-                var response = _reservationOrderAliasResponseReservationOrderAliasRestClient.Get(Id.Name, cancellationToken);
+                var response = _reservationOrderAliasModelReservationOrderAliasRestClient.Get(Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ReservationOrderAliasResponseResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ReservationOrderAliasModelResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,16 +145,16 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="content"> Request body for creating a reservation order alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<ReservationOrderAliasResponseResource>> CreateOrUpdateAsync(WaitUntil waitUntil, ReservationOrderAliasResponseCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ReservationOrderAliasModelResource>> CreateOrUpdateAsync(WaitUntil waitUntil, ReservationOrderAliasModelCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _reservationOrderAliasResponseReservationOrderAliasClientDiagnostics.CreateScope("ReservationOrderAliasResponseResource.CreateOrUpdate");
+            using var scope = _reservationOrderAliasModelReservationOrderAliasClientDiagnostics.CreateScope("ReservationOrderAliasModelResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _reservationOrderAliasResponseReservationOrderAliasRestClient.CreateAsync(Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new BillingBenefitsArmOperation<ReservationOrderAliasResponseResource>(new ReservationOrderAliasResponseOperationSource(Client), _reservationOrderAliasResponseReservationOrderAliasClientDiagnostics, Pipeline, _reservationOrderAliasResponseReservationOrderAliasRestClient.CreateCreateRequest(Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _reservationOrderAliasModelReservationOrderAliasRestClient.CreateAsync(Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new BillingBenefitsArmOperation<ReservationOrderAliasModelResource>(new ReservationOrderAliasModelOperationSource(Client), _reservationOrderAliasModelReservationOrderAliasClientDiagnostics, Pipeline, _reservationOrderAliasModelReservationOrderAliasRestClient.CreateCreateRequest(Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -175,16 +175,16 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="content"> Request body for creating a reservation order alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<ReservationOrderAliasResponseResource> CreateOrUpdate(WaitUntil waitUntil, ReservationOrderAliasResponseCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ReservationOrderAliasModelResource> CreateOrUpdate(WaitUntil waitUntil, ReservationOrderAliasModelCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _reservationOrderAliasResponseReservationOrderAliasClientDiagnostics.CreateScope("ReservationOrderAliasResponseResource.CreateOrUpdate");
+            using var scope = _reservationOrderAliasModelReservationOrderAliasClientDiagnostics.CreateScope("ReservationOrderAliasModelResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _reservationOrderAliasResponseReservationOrderAliasRestClient.Create(Id.Name, content, cancellationToken);
-                var operation = new BillingBenefitsArmOperation<ReservationOrderAliasResponseResource>(new ReservationOrderAliasResponseOperationSource(Client), _reservationOrderAliasResponseReservationOrderAliasClientDiagnostics, Pipeline, _reservationOrderAliasResponseReservationOrderAliasRestClient.CreateCreateRequest(Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _reservationOrderAliasModelReservationOrderAliasRestClient.Create(Id.Name, content, cancellationToken);
+                var operation = new BillingBenefitsArmOperation<ReservationOrderAliasModelResource>(new ReservationOrderAliasModelOperationSource(Client), _reservationOrderAliasModelReservationOrderAliasClientDiagnostics, Pipeline, _reservationOrderAliasModelReservationOrderAliasRestClient.CreateCreateRequest(Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

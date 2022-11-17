@@ -8,12 +8,11 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.BillingBenefits.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.BillingBenefits
+namespace Azure.ResourceManager.BillingBenefits.Models
 {
-    public partial class ReservationOrderAliasResponseData : IUtf8JsonSerializable
+    public partial class ReservationOrderAliasModelCreateOrUpdateContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -86,7 +85,7 @@ namespace Azure.ResourceManager.BillingBenefits
             writer.WriteEndObject();
         }
 
-        internal static ReservationOrderAliasResponseData DeserializeReservationOrderAliasResponseData(JsonElement element)
+        internal static ReservationOrderAliasModelCreateOrUpdateContent DeserializeReservationOrderAliasModelCreateOrUpdateContent(JsonElement element)
         {
             BillingBenefitsSku sku = default;
             Optional<AzureLocation> location = default;
@@ -95,8 +94,6 @@ namespace Azure.ResourceManager.BillingBenefits
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> displayName = default;
-            Optional<string> reservationOrderId = default;
-            Optional<ProvisioningState> provisioningState = default;
             Optional<string> billingScopeId = default;
             Optional<Term> term = default;
             Optional<BillingPlan> billingPlan = default;
@@ -106,7 +103,7 @@ namespace Azure.ResourceManager.BillingBenefits
             Optional<bool> renew = default;
             Optional<ReservedResourceType> reservedResourceType = default;
             Optional<DateTimeOffset> reviewDateTime = default;
-            Optional<ReservationOrderAliasResponsePropertiesReservedResourceProperties> reservedResourceProperties = default;
+            Optional<ReservedResourceProperties> reservedResourceProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
@@ -161,21 +158,6 @@ namespace Azure.ResourceManager.BillingBenefits
                         if (property0.NameEquals("displayName"))
                         {
                             displayName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("reservationOrderId"))
-                        {
-                            reservationOrderId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("billingScopeId"))
@@ -270,14 +252,14 @@ namespace Azure.ResourceManager.BillingBenefits
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            reservedResourceProperties = ReservationOrderAliasResponsePropertiesReservedResourceProperties.DeserializeReservationOrderAliasResponsePropertiesReservedResourceProperties(property0.Value);
+                            reservedResourceProperties = ReservedResourceProperties.DeserializeReservedResourceProperties(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ReservationOrderAliasResponseData(id, name, type, systemData.Value, sku, Optional.ToNullable(location), displayName.Value, reservationOrderId.Value, Optional.ToNullable(provisioningState), billingScopeId.Value, Optional.ToNullable(term), Optional.ToNullable(billingPlan), Optional.ToNullable(appliedScopeType), appliedScopeProperties.Value, Optional.ToNullable(quantity), Optional.ToNullable(renew), Optional.ToNullable(reservedResourceType), Optional.ToNullable(reviewDateTime), reservedResourceProperties.Value);
+            return new ReservationOrderAliasModelCreateOrUpdateContent(id, name, type, systemData.Value, sku, Optional.ToNullable(location), displayName.Value, billingScopeId.Value, Optional.ToNullable(term), Optional.ToNullable(billingPlan), Optional.ToNullable(appliedScopeType), appliedScopeProperties.Value, Optional.ToNullable(quantity), Optional.ToNullable(renew), Optional.ToNullable(reservedResourceType), Optional.ToNullable(reviewDateTime), reservedResourceProperties.Value);
         }
     }
 }
