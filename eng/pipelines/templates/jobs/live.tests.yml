@@ -131,7 +131,7 @@ jobs:
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
         parameters:
           Container: ${{ parameters.UsePlatformContainer }}
-      - pwsh: >
+      - script: >
           dotnet test eng/service.proj
           --framework $(TestTargetFramework)
           --filter 'TestCategory!=Manually & ($(AdditionalTestFilters))'
