@@ -44,6 +44,75 @@ namespace Azure.Identity
         private UpdateTracker<string> _visualStudioTenantId = new UpdateTracker<string>(GetNonEmptyStringOrNull(EnvironmentVariables.TenantId));
         private UpdateTracker<string> _visualStudioCodeTenantId = new UpdateTracker<string>(GetNonEmptyStringOrNull(EnvironmentVariables.TenantId));
 
+        private UpdateTracker<string> _regionalAuthority = new UpdateTracker<string>(GetNonEmptyStringOrNull(EnvironmentVariables.AzureRegionalAuthorityName));
+        private UpdateTracker<string> _clientCertificateCredentialRegionalAuthority = new UpdateTracker<string>(GetNonEmptyStringOrNull(EnvironmentVariables.AzureRegionalAuthorityName));
+        private UpdateTracker<string> _managedIdentityCredentialRegionalAuthority = new UpdateTracker<string>(GetNonEmptyStringOrNull(EnvironmentVariables.AzureRegionalAuthorityName));
+
+        /// <summary>
+        /// The Azure Regional Authority that will be provided to ESTS-R by default.
+        /// If regional authority has not been set as a token credential option, this will fall back to the AZURE_REGIONAL_AUTHORITY_NAME environment variable if it is set.  It defaults to null if neither is provided.
+        /// </summary>
+        public string RegionalAuthority
+        {
+            get => _regionalAuthority.Value;
+            set
+            {
+                if (_clientCertificateCredentialRegionalAuthority.Updated && value != _clientCertificateCredentialRegionalAuthority.Value)
+                {
+                    throw new InvalidOperationException("Applications should not set both RegionalAuthority and ClientCertificateCredentialRegionalAuthority. RegionalAuthority is preferred, and is functionally equivalent. ClientCertificateCredentialRegionalAuthority exists only to provide backwards compatibility.");
+                }
+
+                if (_managedIdentityCredentialRegionalAuthority.Updated && value != _managedIdentityCredentialRegionalAuthority.Value)
+                {
+                    throw new InvalidOperationException("Applications should not set both RegionalAuthority and ManagedIdentityCredentialRegionalAuthority. RegionalAuthority is preferred, and is functionally equivalent. ManagedIdentityCredentialRegionalAuthority exists only to provide backwards compatibility.");
+                }
+
+                _regionalAuthority.Value = value;
+                _clientCertificateCredentialRegionalAuthority.Value = value;
+                _managedIdentityCredentialRegionalAuthority.Value = value;
+            }
+        }
+
+        /// <summary>
+        /// The Azure Regional Authority that will be provided to ESTS-R, in the case the <see cref="DefaultAzureCredential"/> authenticates through the
+        /// <see cref="ClientCertificateCredential"/>. The default is null.
+        /// The value can also be set by setting the environment variable AZURE_REGIONAL_AUTHORITY_NAME.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public string ClientCertificateCredentialRegionalAuthority
+        {
+            get => _clientCertificateCredentialRegionalAuthority.Value;
+            set
+            {
+                if (_regionalAuthority.Updated && value != _regionalAuthority.Value)
+                {
+                    throw new InvalidOperationException("Applications should not set both RegionalAuthority and ClientCertificateCredentialRegionalAuthority. RegionalAuthority is preferred, and is functionally equivalent. ClientCertificateCredentialRegionalAuthority exists only to provide backwards compatibility.");
+                }
+
+                _clientCertificateCredentialRegionalAuthority.Value = value;
+            }
+        }
+
+        /// <summary>
+        /// The Azure Regional Authority that will be provided to ESTS-R, in the case the <see cref="DefaultAzureCredential"/> authenticates through the
+        /// <see cref="ManagedIdentityCredential"/>. The default is null.
+        /// The value can also be set by setting the environment variable AZURE_REGIONAL_AUTHORITY_NAME.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public string ManagedIdentityCredentialRegionalAuthority
+        {
+            get => _managedIdentityCredentialRegionalAuthority.Value;
+            set
+            {
+                if (_regionalAuthority.Updated && value != _regionalAuthority.Value)
+                {
+                    throw new InvalidOperationException("Applications should not set both RegionalAuthority and ManagedIdentityCredentialRegionalAuthority. RegionalAuthority is preferred, and is functionally equivalent. ManagedIdentityCredentialRegionalAuthority exists only to provide backwards compatibility.");
+                }
+
+                _managedIdentityCredentialRegionalAuthority.Value = value;
+            }
+        }
+
         /// <summary>
         /// The ID of the tenant to which the credential will authenticate by default. If not specified, the credential will authenticate to any requested tenant, and will default to the tenant to which the chosen authentication method was originally authenticated.
         /// </summary>
@@ -251,6 +320,9 @@ namespace Azure.Identity
         {
             var options = new DefaultAzureCredentialOptions
             {
+                _regionalAuthority = _regionalAuthority,
+                _clientCertificateCredentialRegionalAuthority= _clientCertificateCredentialRegionalAuthority,
+                _managedIdentityCredentialRegionalAuthority= _managedIdentityCredentialRegionalAuthority,
                 _tenantId = _tenantId,
                 _interactiveBrowserTenantId = _interactiveBrowserTenantId,
                 _sharedTokenCacheTenantId = _sharedTokenCacheTenantId,
@@ -269,8 +341,7 @@ namespace Azure.Identity
                 ExcludeVisualStudioCredential = ExcludeVisualStudioCredential,
                 ExcludeVisualStudioCodeCredential = ExcludeVisualStudioCodeCredential,
                 ExcludeAzurePowerShellCredential = ExcludeAzurePowerShellCredential,
-                AuthorityHost = AuthorityHost,
-                AzureRegionalAuthorityName = AzureRegionalAuthorityName
+                AuthorityHost = AuthorityHost
             };
 
             foreach (var addlTenant in AdditionallyAllowedTenants)
