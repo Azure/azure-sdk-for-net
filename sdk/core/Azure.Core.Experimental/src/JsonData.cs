@@ -522,14 +522,14 @@ namespace Azure.Core
             return _objectRepresentation!;
         }
 
-        private JsonData GetPropertyValue(string propertyName)
+        private JsonData? GetPropertyValue(string propertyName)
         {
             if (EnsureObject().TryGetValue(propertyName, out JsonData element))
             {
                 return element;
             }
 
-            throw new InvalidOperationException($"Property {propertyName} not found");
+            return null;
         }
 
         /// <summary>
@@ -539,7 +539,7 @@ namespace Azure.Core
         /// </summary>
         /// <param name="propertyName">The name of the property to get the value of.</param>
         /// <returns></returns>
-        private object GetDynamicProperty(string propertyName)
+        private object? GetDynamicProperty(string propertyName)
         {
             if (_kind == JsonValueKind.Array && propertyName == nameof(Length))
             {
@@ -549,7 +549,7 @@ namespace Azure.Core
             return GetPropertyValue(propertyName);
         }
 
-        private JsonData GetViaIndexer(object index)
+        private JsonData? GetViaIndexer(object index)
         {
             switch (index)
             {

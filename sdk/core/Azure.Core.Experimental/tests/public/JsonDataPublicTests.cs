@@ -117,7 +117,7 @@ namespace Azure.Core.Tests.Public
 
             Assert.IsNull(jsonData.OptionalInt);
             Assert.IsNull(jsonData.OptionalString);
-            Assert.AreEqual("Hello", (string)jsonData.Primitive);
+            Assert.AreEqual("Hello", (string)jsonData.primitive);
         }
 
         [Test]
