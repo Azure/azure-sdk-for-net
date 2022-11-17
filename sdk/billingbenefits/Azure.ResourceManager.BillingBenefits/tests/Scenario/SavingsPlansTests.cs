@@ -13,26 +13,25 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Reservations.Tests
 {
-    public class ListSavingsPlansTests : BillingBenefitsManagementTestBase
+    public class SavingsPlansTests : BillingBenefitsManagementTestBase
     {
         private TenantResource Tenant { get; set; }
-        private SavingsPlanOrderModelCollection Collection { get; set; }
 
-        public ListSavingsPlansTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public SavingsPlansTests(bool isAsync) : base(isAsync)
         {
         }
 
         [SetUp]
         public async Task ClearAndInitialize()
         {
-            //if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
-            //{
+            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
+            {
                 await CreateCommonClient();
 
                 AsyncPageable<TenantResource> tenantResourcesResponse = Client.GetTenants().GetAllAsync();
                 List<TenantResource> tenantResources = await tenantResourcesResponse.ToEnumerableAsync();
                 Tenant = tenantResources.ToArray()[0];
-            //}
+            }
         }
 
         [TestCase]
@@ -41,6 +40,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             var response = Tenant.GetSavingsPlanModelsAsync();
             List<SavingsPlanModelResource> savingsPlanModelResources = await response.ToEnumerableAsync();
+
             Assert.Greater(savingsPlanModelResources.Count, 0);
             savingsPlanModelResources.ForEach(model =>
             {
@@ -66,6 +66,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             var response = Tenant.GetSavingsPlanModelsAsync(selectedState: "Succeeded");
             List<SavingsPlanModelResource> savingsPlanModelResources = await response.ToEnumerableAsync();
+
             Assert.Greater(savingsPlanModelResources.Count, 0);
             savingsPlanModelResources.ForEach(model =>
             {

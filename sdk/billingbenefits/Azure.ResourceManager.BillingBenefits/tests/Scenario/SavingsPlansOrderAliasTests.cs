@@ -16,8 +16,6 @@ namespace Azure.ResourceManager.Reservations.Tests
 {
     public class SavingsPlansOrderAliasTests : BillingBenefitsManagementTestBase
     {
-        private TenantResource Tenant { get; set; }
-        private SavingsPlanOrderModelCollection Collection { get; set; }
         private SavingsPlanOrderAliasModelResource ModelResource { get; set; }
 
         public SavingsPlansOrderAliasTests(bool isAsync) : base(isAsync)
@@ -33,7 +31,6 @@ namespace Azure.ResourceManager.Reservations.Tests
 
                 AsyncPageable<TenantResource> tenantResourcesResponse = Client.GetTenants().GetAllAsync();
                 List<TenantResource> tenantResources = await tenantResourcesResponse.ToEnumerableAsync();
-                Tenant = tenantResources.ToArray()[0];
             }
         }
 
@@ -45,6 +42,7 @@ namespace Azure.ResourceManager.Reservations.Tests
             ModelResource = Client.GetSavingsPlanOrderAliasModelResource(resource);
             var request = CreatePurchaseRequestContent(AppliedScopeType.Shared);
             var createResponse = await ModelResource.CreateOrUpdateAsync(WaitUntil.Completed, request);
+
             Assert.NotNull(createResponse);
             Assert.IsTrue(createResponse.HasCompleted);
             Assert.IsTrue(createResponse.HasValue);
@@ -68,6 +66,7 @@ namespace Azure.ResourceManager.Reservations.Tests
             ModelResource = Client.GetSavingsPlanOrderAliasModelResource(resource);
             var request = CreatePurchaseRequestContent(AppliedScopeType.Single);
             var createResponse = await ModelResource.CreateOrUpdateAsync(WaitUntil.Completed, request);
+
             Assert.NotNull(createResponse);
             Assert.IsTrue(createResponse.HasCompleted);
             Assert.IsTrue(createResponse.HasValue);
@@ -95,6 +94,7 @@ namespace Azure.ResourceManager.Reservations.Tests
                 ResourceGroupId = "/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47/resourceGroups/TestRG"
             };
             var createResponse = await ModelResource.CreateOrUpdateAsync(WaitUntil.Completed, request);
+
             Assert.NotNull(createResponse);
             Assert.IsTrue(createResponse.HasCompleted);
             Assert.IsTrue(createResponse.HasValue);
@@ -118,6 +118,7 @@ namespace Azure.ResourceManager.Reservations.Tests
             ModelResource = Client.GetSavingsPlanOrderAliasModelResource(resource);
             var request = CreatePurchaseRequestContent(AppliedScopeType.ManagementGroup);
             var createResponse = await ModelResource.CreateOrUpdateAsync(WaitUntil.Completed, request);
+
             Assert.NotNull(createResponse);
             Assert.IsTrue(createResponse.HasCompleted);
             Assert.IsTrue(createResponse.HasValue);
@@ -176,14 +177,14 @@ namespace Azure.ResourceManager.Reservations.Tests
             Assert.NotNull(Data.Sku);
             Assert.AreEqual("Compute_Savings_Plan", Data.Sku.Name);
             Assert.AreEqual("Compute_Savings_Plan", Data.SkuName);
-            Assert.AreEqual(SavingsPlanTerm.P3Y, Data.Term);
+            Assert.AreEqual(Term.P3Y, Data.Term);
         }
 
         private static SavingsPlanOrderAliasModelData CreatePurchaseRequestContent(AppliedScopeType scope)
         {
             var request = new SavingsPlanOrderAliasModelData(new BillingBenefitsSku("Compute_Savings_Plan"));
             request.BillingScopeId = "/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47";
-            request.Term = new SavingsPlanTerm("P3Y");
+            request.Term = new Term("P3Y");
             request.AppliedScopeType = scope;
             request.DisplayName = "TestSPName" + scope.ToString();
             request.BillingPlan = new BillingPlan("P1M");
