@@ -57,44 +57,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "TextNER": return TextNer.DeserializeTextNer(element);
                 }
             }
-            Optional<LogVerbosity> logVerbosity = default;
-            Optional<string> targetColumnName = default;
-            TaskType taskType = default;
-            MLTableJobInput trainingData = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("logVerbosity"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    logVerbosity = new LogVerbosity(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("targetColumnName"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        targetColumnName = null;
-                        continue;
-                    }
-                    targetColumnName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("taskType"))
-                {
-                    taskType = new TaskType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("trainingData"))
-                {
-                    trainingData = MLTableJobInput.DeserializeMLTableJobInput(property.Value);
-                    continue;
-                }
-            }
-            return new UnknownAutoMLVertical(Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData);
+            return UnknownAutoMLVertical.DeserializeUnknownAutoMLVertical(element);
         }
     }
 }

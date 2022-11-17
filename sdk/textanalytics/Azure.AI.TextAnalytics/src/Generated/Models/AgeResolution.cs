@@ -5,35 +5,12 @@
 
 #nullable disable
 
-namespace Azure.AI.TextAnalytics.Models
+using Azure.AI.TextAnalytics.Models;
+
+namespace Azure.AI.TextAnalytics
 {
     /// <summary> Represents the Age entity resolution model. </summary>
-    internal partial class AgeResolution : BaseResolution
+    public partial class AgeResolution : BaseResolution
     {
-        /// <summary> Initializes a new instance of AgeResolution. </summary>
-        /// <param name="unit"> The Age Unit of measurement. </param>
-        /// <param name="value"> The numeric value that the extracted text denotes. </param>
-        public AgeResolution(AgeUnit unit, double value)
-        {
-            Unit = unit;
-            Value = value;
-            ResolutionKind = ResolutionKind.AgeResolution;
-        }
-
-        /// <summary> Initializes a new instance of AgeResolution. </summary>
-        /// <param name="resolutionKind"> The entity resolution object kind. </param>
-        /// <param name="unit"> The Age Unit of measurement. </param>
-        /// <param name="value"> The numeric value that the extracted text denotes. </param>
-        internal AgeResolution(ResolutionKind resolutionKind, AgeUnit unit, double value) : base(resolutionKind)
-        {
-            Unit = unit;
-            Value = value;
-            ResolutionKind = resolutionKind;
-        }
-
-        /// <summary> The Age Unit of measurement. </summary>
-        public AgeUnit Unit { get; set; }
-        /// <summary> The numeric value that the extracted text denotes. </summary>
-        public double Value { get; set; }
     }
 }

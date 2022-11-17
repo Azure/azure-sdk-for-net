@@ -31,16 +31,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     case "rawValue": return RawValueSecretInfo.DeserializeRawValueSecretInfo(element);
                 }
             }
-            LinkerSecretType secretType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("secretType"))
-                {
-                    secretType = new LinkerSecretType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownSecretBaseInfo(secretType);
+            return UnknownSecretInfoBase.DeserializeUnknownSecretInfoBase(element);
         }
     }
 }

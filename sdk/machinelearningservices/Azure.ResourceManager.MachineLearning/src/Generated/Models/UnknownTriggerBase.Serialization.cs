@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> endTime = default;
             Optional<string> startTime = default;
             Optional<string> timeZone = default;
-            TriggerType triggerType = default;
+            TriggerType triggerType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endTime"))

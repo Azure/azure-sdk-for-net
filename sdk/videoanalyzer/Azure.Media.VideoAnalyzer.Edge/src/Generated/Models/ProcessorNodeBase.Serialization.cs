@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -46,33 +45,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     case "#Microsoft.VideoAnalyzer.SignalGateProcessor": return SignalGateProcessor.DeserializeSignalGateProcessor(element);
                 }
             }
-            string type = default;
-            string name = default;
-            IList<NodeInput> inputs = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("@type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("inputs"))
-                {
-                    List<NodeInput> array = new List<NodeInput>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(NodeInput.DeserializeNodeInput(item));
-                    }
-                    inputs = array;
-                    continue;
-                }
-            }
-            return new ProcessorNodeBase(type, name, inputs);
+            return UnknownProcessorNodeBase.DeserializeUnknownProcessorNodeBase(element);
         }
     }
 }

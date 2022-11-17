@@ -30,32 +30,40 @@ function FindStressPackages(
     # Bare minimum filter for stress tests
     $filters['stressTest'] = 'true'
     $packages = @()
-    $chartFiles = Get-ChildItem -Recurse -Filter 'Chart.yaml' $directory 
+    $chartFiles = Get-ChildItem -Recurse -Filter 'Chart.yaml' $directory
+    Write-Host "Found chart files:"
+    Write-Host ($chartFiles -join "`n")
+
     if (!$MatrixFileName) {
-        $MatrixFileName = '/scenarios-matrix.yaml'
+        $MatrixFileName = 'scenarios-matrix.yaml'
     }
+
     foreach ($chartFile in $chartFiles) {
         $chart = ParseChart $chartFile
-        
-        VerifyAddonsVersion $chart
-        if (matchesAnnotations $chart $filters) {
-            $matrixFilePath = (Join-Path $chartFile.Directory.FullName $MatrixFileName)
-            if (Test-Path $matrixFilePath) {
-                GenerateScenarioMatrix `
-                    -matrixFilePath $matrixFilePath `
-                    -Selection $MatrixSelection `
-                    -DisplayNameFilter $MatrixDisplayNameFilter `
-                    -Filters $MatrixFilters `
-                    -Replace $MatrixReplace `
-                    -NonSparseParameters $MatrixNonSparseParameters
-            }
 
-            $packages += NewStressTestPackageInfo `
-                            -chart $chart `
-                            -chartFile $chartFile `
-                            -CI:$CI `
-                            -namespaceOverride $namespaceOverride
+        if (!(matchesAnnotations $chart $filters)) {
+            Write-Host "Skipping chart file '$chartFile'"
+            continue
         }
+
+        VerifyAddonsVersion $chart $chartFile
+
+        $matrixFilePath = (Join-Path $chartFile.Directory.FullName $MatrixFileName)
+        if (Test-Path $matrixFilePath) {
+            GenerateScenarioMatrix `
+                -matrixFilePath $matrixFilePath `
+                -Selection $MatrixSelection `
+                -DisplayNameFilter $MatrixDisplayNameFilter `
+                -Filters $MatrixFilters `
+                -Replace $MatrixReplace `
+                -NonSparseParameters $MatrixNonSparseParameters
+        }
+
+        $packages += NewStressTestPackageInfo `
+                        -chart $chart `
+                        -chartFile $chartFile `
+                        -CI:$CI `
+                        -namespaceOverride $namespaceOverride
     }
 
     return $packages
@@ -67,7 +75,7 @@ function ParseChart([string]$chartFile) {
 
 function MatchesAnnotations([hashtable]$chart, [hashtable]$filters) {
     foreach ($filter in $filters.GetEnumerator()) {
-        if (!$chart.annotations -or $chart.annotations[$filter.Key] -ne $filter.Value) {
+        if (!$chart["annotations"] -or $chart["annotations"][$filter.Key] -ne $filter.Value) {
             return $false
         }
     }
@@ -75,11 +83,12 @@ function MatchesAnnotations([hashtable]$chart, [hashtable]$filters) {
     return $true
 }
 
-function VerifyAddonsVersion([hashtable]$chart) {
+function VerifyAddonsVersion([hashtable]$chart, [string]$chartFile) {
     foreach ($dependency in $chart.dependencies) {
         if ($dependency.name -eq "stress-test-addons" -and
-            $dependency.version -lt "0.2.0") {
-            throw "The stress-test-addons version in use is $($dependency.version), please use versions >= 0.2.0"
+            $dependency.version -like '0.1.*' -or
+            $dependency.version -like '^0.1.*') {
+            throw "The stress-test-addons version in use for '$chartFile' is $($dependency.version), please use versions >= 0.2.0"
         }
     }
 }

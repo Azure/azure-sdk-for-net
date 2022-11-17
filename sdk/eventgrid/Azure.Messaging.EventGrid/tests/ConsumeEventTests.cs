@@ -1657,6 +1657,70 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.AreEqual("e0a1f743-1a70-451f-830e-e96477163902", healthEvent.FhirResourceId);
             Assert.AreEqual(1, healthEvent.FhirResourceVersionId);
         }
+
+        [Test]
+        public void ConsumeDicomImageCreatedEvent()
+        {
+            string requestContent = @"{
+            ""source"": ""/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/Microsoft.HealthcareApis/workspaces/{workspace-name}"",
+            ""subject"": ""{dicom-account}.dicom.azurehealthcareapis.com/v1/studies/1.2.3.4.3/series/1.2.3.4.3.9423673/instances/1.3.6.1.4.1.45096.2.296485376.2210.1633373143.864442"",
+            ""eventType"": ""Microsoft.HealthcareApis.DicomImageCreated"",
+            ""dataVersion"": ""1"",
+            ""metadataVersion"": ""1"", 
+            ""eventTime"": ""2022-09-15T01:14:04.5613214Z"",
+            ""id"": ""d621839d-958b-4142-a638-bb966b4f7dfd"",
+            ""data"": {
+                ""imageStudyInstanceUid"": ""1.2.3.4.3"",
+                ""imageSeriesInstanceUid"": ""1.2.3.4.3.9423673"",
+                ""imageSopInstanceUid"": ""1.3.6.1.4.1.45096.2.296485376.2210.1633373143.864442"",
+                ""serviceHostName"": ""{dicom-account}.dicom.azurehealthcareapis.com"",
+                ""sequenceNumber"": 1
+            },
+            ""specVersion"": ""1.0""
+        }";
+            EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            var healthEvent = eventData as HealthcareDicomImageCreatedEventData;
+            Assert.IsNotNull(healthEvent);
+            Assert.AreEqual("1.2.3.4.3", healthEvent.ImageStudyInstanceUid);
+            Assert.AreEqual("1.2.3.4.3.9423673", healthEvent.ImageSeriesInstanceUid);
+            Assert.AreEqual("1.3.6.1.4.1.45096.2.296485376.2210.1633373143.864442", healthEvent.ImageSopInstanceUid);
+            Assert.AreEqual(1, healthEvent.SequenceNumber);
+        }
+
+        [Test]
+        public void ConsumeDicomImageDeletedEvent()
+        {
+            string requestContent = @"{
+            ""source"": ""/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/Microsoft.HealthcareApis/workspaces/{workspace-name}"",
+            ""subject"": ""{dicom-account}.dicom.azurehealthcareapis.com/v1/studies/1.2.3.4.3/series/1.2.3.4.3.9423673/instances/1.3.6.1.4.1.45096.2.296485376.2210.1633373143.864442"",
+            ""eventType"": ""Microsoft.HealthcareApis.DicomImageDeleted"",
+            ""dataVersion"": ""1"",
+            ""metadataVersion"": ""1"", 
+            ""eventTime"": ""2022-09-15T01:14:04.5613214Z"",
+            ""id"": ""d621839d-958b-4142-a638-bb966b4f7dfd"",
+            ""data"": {
+                ""imageStudyInstanceUid"": ""1.2.3.4.3"",
+                ""imageSeriesInstanceUid"": ""1.2.3.4.3.9423673"",
+                ""imageSopInstanceUid"": ""1.3.6.1.4.1.45096.2.296485376.2210.1633373143.864442"",
+                ""serviceHostName"": ""{dicom-account}.dicom.azurehealthcareapis.com"",
+                ""sequenceNumber"": 1
+            },
+            ""specVersion"": ""1.0""
+        }";
+            EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            var healthEvent = eventData as HealthcareDicomImageDeletedEventData;
+            Assert.IsNotNull(healthEvent);
+            Assert.AreEqual("1.2.3.4.3", healthEvent.ImageStudyInstanceUid);
+            Assert.AreEqual("1.2.3.4.3.9423673", healthEvent.ImageSeriesInstanceUid);
+            Assert.AreEqual("1.3.6.1.4.1.45096.2.296485376.2210.1633373143.864442", healthEvent.ImageSopInstanceUid);
+            Assert.AreEqual(1, healthEvent.SequenceNumber);
+        }
         #endregion
         #endregion
 
@@ -3134,6 +3198,66 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.AreEqual("{fhir-account}.fhir.azurehealthcareapis.com", healthEvent.FhirServiceHostName);
             Assert.AreEqual("e0a1f743-1a70-451f-830e-e96477163902", healthEvent.FhirResourceId);
             Assert.AreEqual(1, healthEvent.FhirResourceVersionId);
+        }
+
+        [Test]
+        public void ConsumeCloudEventDicomImageCreatedEvent()
+        {
+            string requestContent = @"{
+            ""source"": ""/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/Microsoft.HealthcareApis/workspaces/{workspace-name}"",
+            ""subject"": ""{dicom-account}.dicom.azurehealthcareapis.com/v1/studies/1.2.3.4.3/series/1.2.3.4.3.9423673/instances/1.3.6.1.4.1.45096.2.296485376.2210.1633373143.864442"",
+            ""type"": ""Microsoft.HealthcareApis.DicomImageCreated"",
+            ""time"": ""2022-09-15T01:14:04.5613214Z"",
+            ""id"": ""d621839d-958b-4142-a638-bb966b4f7dfd"",
+            ""data"": {
+                ""imageStudyInstanceUid"": ""1.2.3.4.3"",
+                ""imageSeriesInstanceUid"": ""1.2.3.4.3.9423673"",
+                ""imageSopInstanceUid"": ""1.3.6.1.4.1.45096.2.296485376.2210.1633373143.864442"",
+                ""serviceHostName"": ""{dicom-account}.dicom.azurehealthcareapis.com"",
+                ""sequenceNumber"": 1
+            },
+            ""specversion"": ""1.0""
+        }";
+            CloudEvent[] events = CloudEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            var healthEvent = eventData as HealthcareDicomImageCreatedEventData;
+            Assert.IsNotNull(healthEvent);
+            Assert.AreEqual("1.2.3.4.3", healthEvent.ImageStudyInstanceUid);
+            Assert.AreEqual("1.2.3.4.3.9423673", healthEvent.ImageSeriesInstanceUid);
+            Assert.AreEqual("1.3.6.1.4.1.45096.2.296485376.2210.1633373143.864442", healthEvent.ImageSopInstanceUid);
+            Assert.AreEqual(1, healthEvent.SequenceNumber);
+        }
+
+        [Test]
+        public void ConsumeCloudEventDicomImageDeletedEvent()
+        {
+            string requestContent = @"{
+            ""source"": ""/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/Microsoft.HealthcareApis/workspaces/{workspace-name}"",
+            ""subject"": ""{dicom-account}.dicom.azurehealthcareapis.com/v1/studies/1.2.3.4.3/series/1.2.3.4.3.9423673/instances/1.3.6.1.4.1.45096.2.296485376.2210.1633373143.864442"",
+            ""type"": ""Microsoft.HealthcareApis.DicomImageDeleted"",
+            ""time"": ""2022-09-15T01:14:04.5613214Z"",
+            ""id"": ""d621839d-958b-4142-a638-bb966b4f7dfd"",
+            ""data"": {
+                ""imageStudyInstanceUid"": ""1.2.3.4.3"",
+                ""imageSeriesInstanceUid"": ""1.2.3.4.3.9423673"",
+                ""imageSopInstanceUid"": ""1.3.6.1.4.1.45096.2.296485376.2210.1633373143.864442"",
+                ""serviceHostName"": ""{dicom-account}.dicom.azurehealthcareapis.com"",
+                ""sequenceNumber"": 1
+            },
+            ""specversion"": ""1.0""
+        }";
+            CloudEvent[] events = CloudEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            var healthEvent = eventData as HealthcareDicomImageDeletedEventData;
+            Assert.IsNotNull(healthEvent);
+            Assert.AreEqual("1.2.3.4.3", healthEvent.ImageStudyInstanceUid);
+            Assert.AreEqual("1.2.3.4.3.9423673", healthEvent.ImageSeriesInstanceUid);
+            Assert.AreEqual("1.3.6.1.4.1.45096.2.296485376.2210.1633373143.864442", healthEvent.ImageSopInstanceUid);
+            Assert.AreEqual(1, healthEvent.SequenceNumber);
         }
         #endregion
         #endregion

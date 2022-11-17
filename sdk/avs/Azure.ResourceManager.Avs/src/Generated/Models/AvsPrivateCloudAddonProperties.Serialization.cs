@@ -32,27 +32,7 @@ namespace Azure.ResourceManager.Avs.Models
                     case "VR": return AddonVrProperties.DeserializeAddonVrProperties(element);
                 }
             }
-            AddonType addonType = default;
-            Optional<AddonProvisioningState> provisioningState = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("addonType"))
-                {
-                    addonType = new AddonType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("provisioningState"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    provisioningState = new AddonProvisioningState(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownAvsPrivateCloudAddonProperties(addonType, Optional.ToNullable(provisioningState));
+            return UnknownAddonProperties.DeserializeUnknownAddonProperties(element);
         }
     }
 }

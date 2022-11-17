@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             Optional<LogVerbosity> logVerbosity = default;
             Optional<string> targetColumnName = default;
-            TaskType taskType = default;
+            TaskType taskType = "Unknown";
             MLTableJobInput trainingData = default;
             foreach (var property in element.EnumerateObject())
             {

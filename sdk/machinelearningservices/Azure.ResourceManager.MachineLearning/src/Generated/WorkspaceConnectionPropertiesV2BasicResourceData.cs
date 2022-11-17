@@ -43,6 +43,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
+        /// Gets or sets the properties
         /// Please note <see cref="WorkspaceConnectionPropertiesV2"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ManagedIdentityAuthTypeWorkspaceConnectionProperties"/>, <see cref="NoneAuthTypeWorkspaceConnectionProperties"/>, <see cref="PATAuthTypeWorkspaceConnectionProperties"/>, <see cref="SASAuthTypeWorkspaceConnectionProperties"/> and <see cref="UsernamePasswordAuthTypeWorkspaceConnectionProperties"/>.
         /// </summary>

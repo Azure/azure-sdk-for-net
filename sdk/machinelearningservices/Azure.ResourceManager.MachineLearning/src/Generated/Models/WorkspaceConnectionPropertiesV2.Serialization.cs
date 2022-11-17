@@ -53,50 +53,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "UsernamePassword": return UsernamePasswordAuthTypeWorkspaceConnectionProperties.DeserializeUsernamePasswordAuthTypeWorkspaceConnectionProperties(element);
                 }
             }
-            ConnectionAuthType authType = default;
-            Optional<ConnectionCategory> category = default;
-            Optional<string> target = default;
-            Optional<string> value = default;
-            Optional<ValueFormat> valueFormat = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("authType"))
-                {
-                    authType = new ConnectionAuthType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("category"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    category = new ConnectionCategory(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("target"))
-                {
-                    target = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("value"))
-                {
-                    value = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("valueFormat"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    valueFormat = new ValueFormat(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownWorkspaceConnectionPropertiesV2(authType, Optional.ToNullable(category), target.Value, value.Value, Optional.ToNullable(valueFormat));
+            return UnknownWorkspaceConnectionPropertiesV2.DeserializeUnknownWorkspaceConnectionPropertiesV2(element);
         }
     }
 }

@@ -216,10 +216,26 @@ namespace Azure.AI.TextAnalytics
         /// <param name="confidenceScore">Sets the <see cref="DetectedLanguage.ConfidenceScore"/> property.</param>
         /// <param name="warnings">Sets the <see cref="DetectedLanguage.Warnings"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.DetectedLanguage"/> for mocking purposes.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static DetectedLanguage DetectedLanguage(string name, string iso6391Name, double confidenceScore, IList<TextAnalyticsWarning> warnings = default)
         {
             warnings ??= new List<TextAnalyticsWarning>();
             return new DetectedLanguage(new DetectedLanguageInternal(name, iso6391Name, confidenceScore, default), warnings);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.DetectedLanguage"/> for mocking purposes.
+        /// </summary>
+        /// <param name="name">Sets the <see cref="DetectedLanguage.Name"/> property.</param>
+        /// <param name="iso6391Name">Sets the <see cref="DetectedLanguage.Iso6391Name"/> property.</param>
+        /// <param name="confidenceScore">Sets the <see cref="DetectedLanguage.ConfidenceScore"/> property.</param>
+        /// <param name="script">Sets the <see cref="DetectedLanguage.Script"/> property.</param>
+        /// <param name="warnings">Sets the <see cref="DetectedLanguage.Warnings"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.DetectedLanguage"/> for mocking purposes.</returns>
+        public static DetectedLanguage DetectedLanguage(string name, string iso6391Name, double confidenceScore, ScriptKind script, IList<TextAnalyticsWarning> warnings = default)
+        {
+            warnings ??= new List<TextAnalyticsWarning>();
+            return new DetectedLanguage(new DetectedLanguageInternal(name, iso6391Name, confidenceScore, script), warnings);
         }
 
         /// <summary>
@@ -271,7 +287,7 @@ namespace Azure.AI.TextAnalytics
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CategorizedEntity CategorizedEntity(string text, string category, string subCategory, double score)
         {
-            return new CategorizedEntity(new Entity(text, category, subCategory, default, default, score));
+            return new CategorizedEntity(new EntityWithResolution(text, category, subCategory, default, default, score, default));
         }
 
         /// <summary>
@@ -284,9 +300,26 @@ namespace Azure.AI.TextAnalytics
         /// <param name="offset">Sets the <see cref="CategorizedEntity.Offset"/> property.</param>
         /// <param name="length">Sets the <see cref="CategorizedEntity.Length"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.CategorizedEntity"/> for mocking purposes.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static CategorizedEntity CategorizedEntity(string text, string category, string subCategory, double score, int offset, int length)
         {
-            return new CategorizedEntity(new Entity(text, category, subCategory, offset, length, score));
+            return new CategorizedEntity(new EntityWithResolution(text, category, subCategory, offset, length, score, default));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.CategorizedEntity"/> for mocking purposes.
+        /// </summary>
+        /// <param name="text">Sets the <see cref="CategorizedEntity.Text"/> property.</param>
+        /// <param name="category">Sets the <see cref="CategorizedEntity.Category"/> property.</param>
+        /// <param name="subCategory">Sets the <see cref="CategorizedEntity.SubCategory"/> property.</param>
+        /// <param name="score">Sets the <see cref="CategorizedEntity.ConfidenceScore"/> property.</param>
+        /// <param name="offset">Sets the <see cref="CategorizedEntity.Offset"/> property.</param>
+        /// <param name="length">Sets the <see cref="CategorizedEntity.Length"/> property.</param>
+        /// <param name="resolutions">Sets the <see cref="CategorizedEntity.Resolutions"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.CategorizedEntity"/> for mocking purposes.</returns>
+        public static CategorizedEntity CategorizedEntity(string text, string category, string subCategory, double score, int offset, int length, IList<BaseResolution> resolutions)
+        {
+            return new CategorizedEntity(new EntityWithResolution(text, category, subCategory, offset, length, score, resolutions));
         }
 
         /// <summary>
@@ -334,6 +367,177 @@ namespace Azure.AI.TextAnalytics
         public static RecognizeEntitiesResultCollection RecognizeEntitiesResultCollection(IEnumerable<RecognizeEntitiesResult> list, TextDocumentBatchStatistics statistics, string modelVersion)
         {
             return new RecognizeEntitiesResultCollection(list.ToList(), statistics, modelVersion);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.AgeResolution"/> for mocking purposes.
+        /// </summary>
+        /// <param name="unit">Sets the <see cref="AgeResolution.Unit"/> property.</param>
+        /// <param name="value">Sets the <see cref="AgeResolution.Value"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.AgeResolution"/> for mocking purposes.</returns>
+        public static AgeResolution AgeResolution(AgeUnit unit, double value)
+        {
+            return new AgeResolution(ResolutionKind.AgeResolution, unit, value);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.AreaResolution"/> for mocking purposes.
+        /// </summary>
+        /// <param name="unit">Sets the <see cref="AreaResolution.Unit"/> property.</param>
+        /// <param name="value">Sets the <see cref="AreaResolution.Value"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.AreaResolution"/> for mocking purposes.</returns>
+        public static AreaResolution AreaResolution(AreaUnit unit, double value)
+        {
+            return new AreaResolution(ResolutionKind.AreaResolution, unit, value);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.BooleanResolution"/> for mocking purposes.
+        /// </summary>
+        /// <param name="value">Sets the <see cref="BooleanResolution.Value"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.BooleanResolution"/> for mocking purposes.</returns>
+        public static BooleanResolution BooleanResolution(bool value)
+        {
+            return new BooleanResolution(ResolutionKind.BooleanResolution, value);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.CurrencyResolution"/> for mocking purposes.
+        /// </summary>
+        /// <param name="iso4217">Sets the <see cref="CurrencyResolution.Iso4217"/> property.</param>
+        /// <param name="unit">Sets the <see cref="CurrencyResolution.Unit"/> property.</param>
+        /// <param name="value">Sets the <see cref="CurrencyResolution.Value"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.CurrencyResolution"/> for mocking purposes.</returns>
+        public static CurrencyResolution CurrencyResolution(string iso4217, string unit, double value)
+        {
+            return new CurrencyResolution(ResolutionKind.CurrencyResolution, iso4217, unit, value);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.DateTimeResolution"/> for mocking purposes.
+        /// </summary>
+        /// <param name="timex">Sets the <see cref="DateTimeResolution.Timex"/> property.</param>
+        /// <param name="dateTimeSubKind">Sets the <see cref="DateTimeResolution.DateTimeSubKind"/> property.</param>
+        /// <param name="value">Sets the <see cref="DateTimeResolution.Value"/> property.</param>
+        /// <param name="modifier">Sets the <see cref="DateTimeResolution.Modifier"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.DateTimeResolution"/> for mocking purposes.</returns>
+        public static DateTimeResolution DateTimeResolution(string timex, DateTimeSubKind dateTimeSubKind, string value, TemporalModifier? modifier)
+        {
+            return new DateTimeResolution(ResolutionKind.DateTimeResolution, timex, dateTimeSubKind, value, modifier);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.InformationResolution"/> for mocking purposes.
+        /// </summary>
+        /// <param name="unit">Sets the <see cref="InformationResolution.Unit"/> property.</param>
+        /// <param name="value">Sets the <see cref="InformationResolution.Value"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.InformationResolution"/> for mocking purposes.</returns>
+        public static InformationResolution InformationResolution(InformationUnit unit, double value)
+        {
+            return new InformationResolution(ResolutionKind.InformationResolution, unit, value);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.LengthResolution"/> for mocking purposes.
+        /// </summary>
+        /// <param name="unit">Sets the <see cref="LengthResolution.Unit"/> property.</param>
+        /// <param name="value">Sets the <see cref="LengthResolution.Value"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.LengthResolution"/> for mocking purposes.</returns>
+        public static LengthResolution LengthResolution(LengthUnit unit, double value)
+        {
+            return new LengthResolution(ResolutionKind.LengthResolution, unit, value);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.NumberResolution"/> for mocking purposes.
+        /// </summary>
+        /// <param name="numberKind">Sets the <see cref="NumberResolution.NumberKind"/> property.</param>
+        /// <param name="value">Sets the <see cref="NumberResolution.Value"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.NumberResolution"/> for mocking purposes.</returns>
+        public static NumberResolution NumberResolution(NumberKind numberKind, double value)
+        {
+            return new NumberResolution(ResolutionKind.NumberResolution, numberKind, value);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.NumericRangeResolution"/> for mocking purposes.
+        /// </summary>
+        /// <param name="rangeKind">Sets the <see cref="NumericRangeResolution.RangeKind"/> property.</param>
+        /// <param name="minimum">Sets the <see cref="NumericRangeResolution.Minimum"/> property.</param>
+        /// <param name="maximum">Sets the <see cref="NumericRangeResolution.Maximum"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.NumericRangeResolution"/> for mocking purposes.</returns>
+        public static NumericRangeResolution NumericRangeResolution(RangeKind rangeKind, double minimum, double maximum)
+        {
+            return new NumericRangeResolution(ResolutionKind.NumericRangeResolution, rangeKind, minimum, maximum);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.OrdinalResolution"/> for mocking purposes.
+        /// </summary>
+        /// <param name="offset">Sets the <see cref="OrdinalResolution.Offset"/> property.</param>
+        /// <param name="relativeTo">Sets the <see cref="OrdinalResolution.RelativeTo"/> property.</param>
+        /// <param name="value">Sets the <see cref="OrdinalResolution.Value"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.OrdinalResolution"/> for mocking purposes.</returns>
+        public static OrdinalResolution OrdinalResolution(string offset, RelativeTo relativeTo, string value)
+        {
+            return new OrdinalResolution(ResolutionKind.OrdinalResolution, offset, relativeTo, value);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.SpeedResolution"/> for mocking purposes.
+        /// </summary>
+        /// <param name="unit">Sets the <see cref="SpeedResolution.Unit"/> property.</param>
+        /// <param name="value">Sets the <see cref="SpeedResolution.Value"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.SpeedResolution"/> for mocking purposes.</returns>
+        public static SpeedResolution SpeedResolution(SpeedUnit unit, double value)
+        {
+            return new SpeedResolution(ResolutionKind.SpeedResolution, unit, value);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.TemperatureResolution"/> for mocking purposes.
+        /// </summary>
+        /// <param name="unit">Sets the <see cref="TemperatureResolution.Unit"/> property.</param>
+        /// <param name="value">Sets the <see cref="TemperatureResolution.Value"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.TemperatureResolution"/> for mocking purposes.</returns>
+        public static TemperatureResolution TemperatureResolution(TemperatureUnit unit, double value)
+        {
+            return new TemperatureResolution(ResolutionKind.TemperatureResolution, unit, value);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.TemporalSpanResolution"/> for mocking purposes.
+        /// </summary>
+        /// <param name="begin">Sets the <see cref="TemporalSpanResolution.Begin"/> property.</param>
+        /// <param name="end">Sets the <see cref="TemporalSpanResolution.End"/> property.</param>
+        /// <param name="duration">Sets the <see cref="TemporalSpanResolution.Duration"/> property.</param>
+        /// <param name="modifier">Sets the <see cref="TemporalSpanResolution.Modifier"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.TemporalSpanResolution"/> for mocking purposes.</returns>
+        public static TemporalSpanResolution TemporalSpanResolution(string begin, string end, string duration, TemporalModifier? modifier)
+        {
+            return new TemporalSpanResolution(ResolutionKind.TemporalSpanResolution, begin, end, duration, modifier);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.VolumeResolution"/> for mocking purposes.
+        /// </summary>
+        /// <param name="unit">Sets the <see cref="VolumeResolution.Unit"/> property.</param>
+        /// <param name="value">Sets the <see cref="VolumeResolution.Value"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.VolumeResolution"/> for mocking purposes.</returns>
+        public static VolumeResolution VolumeResolution(VolumeUnit unit, double value)
+        {
+            return new VolumeResolution(ResolutionKind.VolumeResolution, unit, value);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.WeightResolution"/> for mocking purposes.
+        /// </summary>
+        /// <param name="unit">Sets the <see cref="WeightResolution.Unit"/> property.</param>
+        /// <param name="value">Sets the <see cref="WeightResolution.Value"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.WeightResolution"/> for mocking purposes.</returns>
+        public static WeightResolution WeightResolution(WeightUnit unit, double value)
+        {
+            return new WeightResolution(ResolutionKind.WeightResolution, unit, value);
         }
 
         #endregion Recognize Entities
@@ -693,7 +897,8 @@ namespace Azure.AI.TextAnalytics
                 new List<SingleLabelClassifyActionResult>(),
                 new List<MultiLabelClassifyActionResult>(),
                 new List<AnalyzeHealthcareEntitiesActionResult>(),
-                new List<ExtractSummaryActionResult>()
+                new List<ExtractSummaryActionResult>(),
+                new List<AbstractSummaryActionResult>()
                 );
         }
 
@@ -730,7 +935,8 @@ namespace Azure.AI.TextAnalytics
                 singleLabelClassifyActionResults.ToList(),
                 multiLabelClassifyActionResults.ToList(),
                 new List<AnalyzeHealthcareEntitiesActionResult>(),
-                new List<ExtractSummaryActionResult>()
+                new List<ExtractSummaryActionResult>(),
+                new List<AbstractSummaryActionResult>()
                 );
         }
 
@@ -769,7 +975,8 @@ namespace Azure.AI.TextAnalytics
                 singleLabelClassifyActionResults.ToList(),
                 multiLabelClassifyActionResults.ToList(),
                 analyzeHealthcareEntitiesActionResults.ToList(),
-                new List<ExtractSummaryActionResult>()
+                new List<ExtractSummaryActionResult>(),
+                new List<AbstractSummaryActionResult>()
                 );
         }
 
@@ -786,6 +993,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="multiLabelClassifyActionResults">Sets the collection of <see cref="TextAnalytics.MultiLabelClassifyActionResult"/>.</param>
         /// <param name="analyzeHealthcareEntitiesActionResults">Sets the collection of <see cref="TextAnalytics.AnalyzeHealthcareEntitiesActionResult"/>.</param>
         /// <param name="extractSummaryActionResults">Sets the collection of <see cref="TextAnalytics.ExtractSummaryActionResult"/>.</param>
+        /// <param name="abstractSummaryActionResults">Sets the collection of <see cref="TextAnalytics.AbstractSummaryActionResult"/>.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeActionsResult"/> for mocking purposes.</returns>
         public static AnalyzeActionsResult AnalyzeActionsResult(
             IEnumerable<ExtractKeyPhrasesActionResult> extractKeyPhrasesActionResults,
@@ -797,7 +1005,8 @@ namespace Azure.AI.TextAnalytics
             IEnumerable<SingleLabelClassifyActionResult> singleLabelClassifyActionResults,
             IEnumerable<MultiLabelClassifyActionResult> multiLabelClassifyActionResults,
             IEnumerable<AnalyzeHealthcareEntitiesActionResult> analyzeHealthcareEntitiesActionResults,
-            IEnumerable<ExtractSummaryActionResult> extractSummaryActionResults)
+            IEnumerable<ExtractSummaryActionResult> extractSummaryActionResults,
+            IEnumerable<AbstractSummaryActionResult> abstractSummaryActionResults)
         {
             return new AnalyzeActionsResult(
                 extractKeyPhrasesActionResults.ToList(),
@@ -809,7 +1018,8 @@ namespace Azure.AI.TextAnalytics
                 singleLabelClassifyActionResults.ToList(),
                 multiLabelClassifyActionResults.ToList(),
                 analyzeHealthcareEntitiesActionResults.ToList(),
-                extractSummaryActionResults.ToList()
+                extractSummaryActionResults.ToList(),
+                abstractSummaryActionResults.ToList()
                 );
         }
 
@@ -1374,6 +1584,38 @@ namespace Azure.AI.TextAnalytics
             return new ExtractSummaryActionResult(actionName, completedOn, new Error(code, message));
         }
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.AbstractSummaryActionResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="result">Sets the <see cref="AbstractSummaryActionResult.DocumentsResults"/> property.</param>
+        /// <param name="actionName">Sets the <see cref="TextAnalyticsActionResult.ActionName"/> property.</param>
+        /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.AbstractSummaryActionResult"/> for mocking purposes.</returns>
+        public static AbstractSummaryActionResult AbstractSummaryActionResult(
+            AbstractSummaryResultCollection result,
+            string actionName,
+            DateTimeOffset completedOn)
+        {
+            return new AbstractSummaryActionResult(result, actionName, completedOn);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.AbstractSummaryActionResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="actionName">Sets the <see cref="TextAnalyticsActionResult.ActionName"/> property.</param>
+        /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
+        /// <param name="code">Sets the <see cref="TextAnalyticsError.ErrorCode"/> property.</param>
+        /// <param name="message">Sets the <see cref="TextAnalyticsError.Message"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.AbstractSummaryActionResult"/> for mocking purposes.</returns>
+        public static AbstractSummaryActionResult AbstractSummaryActionResult(
+            string actionName,
+            DateTimeOffset completedOn,
+            string code,
+            string message)
+        {
+            return new AbstractSummaryActionResult(actionName, completedOn, new Error(code, message));
+        }
+
         #endregion Action Result Models
 
         #region Healthcare
@@ -1610,6 +1852,92 @@ namespace Azure.AI.TextAnalytics
         {
             warnings ??= new List<TextAnalyticsWarning>();
             return new SummarySentenceCollection(sentences, warnings);
+        }
+
+        #endregion
+
+        #region Abstract Summary
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.AbstractSummaryResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
+        /// <param name="statistics">Sets the <see cref="TextAnalyticsResult.Statistics"/> property.</param>
+        /// <param name="summaries">Sets the <see cref="AbstractSummaryResult.Summaries"/> property.</param>
+        /// <param name="warnings">Sets the <see cref="AbstractSummaryResult.Warnings"/> property.</param>
+        /// <returns>
+        /// A new instance of <see cref="TextAnalytics.AbstractSummaryResult"/> for mocking purposes.
+        /// </returns>
+        public static AbstractSummaryResult AbstractSummaryResult(
+            string id,
+            TextDocumentStatistics statistics,
+            IList<AbstractiveSummary> summaries,
+            IList<TextAnalyticsWarning> warnings = default)
+        {
+            return new AbstractSummaryResult(id, statistics, summaries, warnings);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.AbstractSummaryResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
+        /// <param name="code">Sets the <see cref="TextAnalyticsError.ErrorCode"/> property.</param>
+        /// <param name="message">Sets the <see cref="TextAnalyticsError.Message"/> property.</param>
+        /// <returns>
+        /// A new instance of <see cref="TextAnalytics.AbstractSummaryResult"/> for mocking purposes.
+        /// </returns>
+        public static AbstractSummaryResult AbstractSummaryResult(string id, string code, string message)
+        {
+            return new AbstractSummaryResult(id, new TextAnalyticsError(code, message));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.AbstractSummaryResultCollection"/> for mocking purposes.
+        /// </summary>
+        /// <param name="results">Sets the collection of <see cref="TextAnalytics.AbstractSummaryResult"/>.</param>
+        /// <param name="statistics">Sets the <see cref="AbstractSummaryResultCollection.Statistics"/> property.</param>
+        /// <param name="modelVersion">Sets the <see cref="AbstractSummaryResultCollection.ModelVersion"/> property.</param>
+        /// <returns>
+        /// A new instance of <see cref="TextAnalytics.AbstractSummaryResultCollection"/> for mocking purposes.
+        /// </returns>
+        public static AbstractSummaryResultCollection AbstractSummaryResultCollection(
+            IList<AbstractSummaryResult> results,
+            TextDocumentBatchStatistics statistics,
+            string modelVersion)
+        {
+            return new AbstractSummaryResultCollection(results, statistics, modelVersion);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.SummaryContext"/> for mocking purposes.
+        /// </summary>
+        /// <param name="offset">Sets the <see cref="SummaryContext.Offset"/> property.</param>
+        /// <param name="length">Sets the <see cref="SummaryContext.Length"/> property.</param>
+        /// <returns>
+        /// A new instance of <see cref="TextAnalytics.SummaryContext"/> for mocking purposes.
+        /// </returns>
+        public static SummaryContext SummaryContext(int offset, int length)
+        {
+            return new SummaryContext(new SummaryContextInternal(offset, length));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.AbstractiveSummary"/> for mocking purposes.
+        /// </summary>
+        /// <param name="text">Sets the <see cref="AbstractiveSummary.Text"/> property.</param>
+        /// <param name="contexts">Sets the <see cref="AbstractiveSummary.Contexts"/> property.</param>
+        /// <returns>
+        /// A new instance of <see cref="TextAnalytics.AbstractiveSummary"/> for mocking purposes.
+        /// </returns>
+        public static AbstractiveSummary AbstractiveSummary(string text, IList<SummaryContext> contexts)
+        {
+            List<SummaryContextInternal> internalContexts = new();
+            foreach (SummaryContext context in contexts)
+            {
+                internalContexts.Add(new SummaryContextInternal(context.Offset, context.Length));
+            }
+
+            return new AbstractiveSummary(new AbstractiveSummaryInternal(text, internalContexts));
         }
 
         #endregion

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static UnknownScheduleActionBase DeserializeUnknownScheduleActionBase(JsonElement element)
         {
-            ScheduleActionType actionType = default;
+            ScheduleActionType actionType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actionType"))

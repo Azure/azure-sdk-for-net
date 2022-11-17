@@ -59,44 +59,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "Recurrence": return RecurrenceTrigger.DeserializeRecurrenceTrigger(element);
                 }
             }
-            Optional<string> endTime = default;
-            Optional<string> startTime = default;
-            Optional<string> timeZone = default;
-            TriggerType triggerType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("endTime"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        endTime = null;
-                        continue;
-                    }
-                    endTime = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("startTime"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        startTime = null;
-                        continue;
-                    }
-                    startTime = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("timeZone"))
-                {
-                    timeZone = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("triggerType"))
-                {
-                    triggerType = new TriggerType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownTriggerBase(endTime.Value, startTime.Value, timeZone.Value, triggerType);
+            return UnknownTriggerBase.DeserializeUnknownTriggerBase(element);
         }
     }
 }

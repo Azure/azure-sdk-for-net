@@ -30,16 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "InvokeBatchEndpoint": return EndpointScheduleAction.DeserializeEndpointScheduleAction(element);
                 }
             }
-            ScheduleActionType actionType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("actionType"))
-                {
-                    actionType = new ScheduleActionType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownScheduleActionBase(actionType);
+            return UnknownScheduleActionBase.DeserializeUnknownScheduleActionBase(element);
         }
     }
 }

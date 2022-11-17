@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -28,16 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     case "VmNicUpdatesTaskDetails": return VmNicUpdatesTaskDetails.DeserializeVmNicUpdatesTaskDetails(element);
                 }
             }
-            string instanceType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("instanceType"))
-                {
-                    instanceType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownTaskTypeDetails(instanceType);
+            return UnknownTaskTypeDetails.DeserializeUnknownTaskTypeDetails(element);
         }
     }
 }

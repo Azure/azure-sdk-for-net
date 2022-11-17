@@ -59,7 +59,7 @@ rename-mapping:
   VirtualNetworkConfiguration: KustoClusterVirtualNetworkConfiguration
   ClusterPrincipalAssignment: KustoClusterPrincipalAssignment
   ClusterPrincipalAssignment.properties.aadObjectId: -|uuid
-  ClusterPrincipalAssignment.properties.principalId: -|uuid
+  ClusterPrincipalAssignment.properties.principalId: ClusterPrincipalId
   PrincipalType: KustoPrincipalAssignmentType
   ClusterPrincipalRole: KustoClusterPrincipalRole
   LanguageExtension: KustoLanguageExtension

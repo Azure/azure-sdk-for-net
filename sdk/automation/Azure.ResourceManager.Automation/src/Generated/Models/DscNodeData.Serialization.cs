@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Automation
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(LastSeen))
+            if (Optional.IsDefined(LastSeenOn))
             {
                 writer.WritePropertyName("lastSeen");
-                writer.WriteStringValue(LastSeen.Value, "O");
+                writer.WriteStringValue(LastSeenOn.Value, "O");
             }
             if (Optional.IsDefined(RegistrationOn))
             {

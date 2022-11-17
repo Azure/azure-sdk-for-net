@@ -440,6 +440,33 @@
             "UnboundAccess": "read,write"
           },
           "Value": null
+        },
+        {
+          "Key": {
+            "Type": "Common.NodeCommunicationMode?",
+            "Name": "CurrentNodeCommunicationMode",
+            "SummaryComment": "The current state of the pool communication mode.",
+            "BoundAccess": "read",
+            "UnboundAccess": "none"
+          },
+          "Value": {
+            "Type": "Models.NodeCommunicationMode?",
+            "Name": "CurrentNodeCommunicationMode"
+          }
+        },
+        {
+          "Key": {
+            "Type": "Common.NodeCommunicationMode?",
+            "Name": "TargetNodeCommunicationMode",
+            "SummaryComment": "The desired node communication mode for the pool.",
+            "RemarksComment": "If omitted, the default value is default.",
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write"
+          },
+          "Value": {
+            "Type": "Models.NodeCommunicationMode?",
+            "Name": "TargetNodeCommunicationMode"
+          }
         }
       ]
     }

@@ -29,16 +29,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                     case "Sas": return SasAuthentication.DeserializeSasAuthentication(element);
                 }
             }
-            string type = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownAuthentication(type);
+            return UnknownAuthentication.DeserializeUnknownAuthentication(element);
         }
     }
 }
