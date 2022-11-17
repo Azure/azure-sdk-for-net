@@ -29,16 +29,7 @@ namespace Azure.ResourceManager.Quota.Models
                     case "LimitValue": return LimitObject.DeserializeLimitObject(element);
                 }
             }
-            LimitType limitObjectType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("limitObjectType"))
-                {
-                    limitObjectType = new LimitType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownLimitJsonObject(limitObjectType);
+            return UnknownLimitJsonObject.DeserializeUnknownLimitJsonObject(element);
         }
     }
 }

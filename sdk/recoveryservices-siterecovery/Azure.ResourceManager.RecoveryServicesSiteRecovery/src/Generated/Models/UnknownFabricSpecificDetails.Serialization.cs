@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static UnknownFabricSpecificDetails DeserializeUnknownFabricSpecificDetails(JsonElement element)
         {
-            string instanceType = default;
+            string instanceType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("instanceType"))

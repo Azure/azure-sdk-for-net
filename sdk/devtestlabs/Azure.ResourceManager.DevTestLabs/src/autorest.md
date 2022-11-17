@@ -58,7 +58,7 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics/{serviceFabricName}/schedules/{name}: DevTestLabServiceFabricSchedule
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}: DevTestLabVmSchedule
 
-operation-name-override:
+override-operation-name:
   PolicySets_EvaluatePolicies: EvaluatePolicies
 
 rename-mapping:

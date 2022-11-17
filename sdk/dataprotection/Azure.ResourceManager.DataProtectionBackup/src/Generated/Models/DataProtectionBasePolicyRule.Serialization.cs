@@ -32,22 +32,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     case "AzureRetentionRule": return DataProtectionRetentionRule.DeserializeDataProtectionRetentionRule(element);
                 }
             }
-            string name = default;
-            string objectType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("objectType"))
-                {
-                    objectType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownDataProtectionBasePolicyRule(name, objectType);
+            return UnknownBasePolicyRule.DeserializeUnknownBasePolicyRule(element);
         }
     }
 }

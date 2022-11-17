@@ -16,7 +16,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary> Initializes a new instance of DirectoryItem. </summary>
         /// <param name="name"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        internal DirectoryItem(string name)
+        internal DirectoryItem(StringEncoded name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
@@ -29,7 +29,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="properties"> File properties. </param>
         /// <param name="attributes"></param>
         /// <param name="permissionKey"></param>
-        internal DirectoryItem(string name, string fileId, FileProperty properties, string attributes, string permissionKey)
+        internal DirectoryItem(StringEncoded name, string fileId, FileProperty properties, string attributes, string permissionKey)
         {
             Name = name;
             FileId = fileId;
@@ -39,7 +39,7 @@ namespace Azure.Storage.Files.Shares.Models
         }
 
         /// <summary> Gets the name. </summary>
-        public string Name { get; }
+        public StringEncoded Name { get; }
         /// <summary> Gets the file id. </summary>
         public string FileId { get; }
         /// <summary> File properties. </summary>

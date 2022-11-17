@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static UnknownClipTime DeserializeUnknownClipTime(JsonElement element)
         {
-            string odataType = default;
+            string odataType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.type"))

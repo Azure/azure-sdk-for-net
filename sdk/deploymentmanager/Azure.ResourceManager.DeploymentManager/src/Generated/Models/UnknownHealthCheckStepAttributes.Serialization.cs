@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
 
         internal static UnknownHealthCheckStepAttributes DeserializeUnknownHealthCheckStepAttributes(JsonElement element)
         {
-            string type = default;
+            string type = "Unknown";
             Optional<TimeSpan> waitDuration = default;
             Optional<TimeSpan> maxElasticDuration = default;
             TimeSpan healthyStateDuration = default;

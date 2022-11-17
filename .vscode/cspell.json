@@ -74,6 +74,8 @@
     "overridden",
     "parallelization",
     "personalizer",
+    "petabit",
+    "picometer",
     "pkcs",
     "pstn",
     "pwsh",
@@ -412,6 +414,13 @@
       "filename": "**/sdk/hybriddatamanager/**/*.cs",
       "words": [
         "Oaep"
+      ]
+    },
+    {
+      "filename": "**/sdk/hybridaks/**/*.cs",
+      "words": [
+        "Vmip",
+        "Kubevirt"
       ]
     },
     {
@@ -917,7 +926,15 @@
       "words": [
         "Orgs"
       ]
-    }
+    },
+    {
+      "filename": "**/sdk/webpubsub/**/*.cs",
+      "words": [
+        "protobuf",
+        "Ackable",
+        "awps"
+        ]
+    }  
   ],
   "allowCompoundWords": true
 }
