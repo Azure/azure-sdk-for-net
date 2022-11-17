@@ -194,12 +194,25 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void SerailizationOfListOfT()
         {
-            var elements = new List<TestModel>
+            var elements = new ChangeTrackingList<TestModel>
             {
                 new TestModel { A = 1, B = true },
                 new TestModel { A = 2, B = false }
             };
-            var dfe = new DataFactoryExpression<List<TestModel>>(elements);
+            var dfe = new DataFactoryExpression<IList<TestModel>>(elements);
+            var actual = GetSerializedString(dfe);
+            Assert.AreEqual(@"[{""A"":1,""B"":true},{""A"":2,""B"":false}]", actual);
+        }
+
+        [Test]
+        public void SerailizationOfReadOnlyListOfT()
+        {
+            var elements = new ChangeTrackingList<TestModel>
+            {
+                new TestModel { A = 1, B = true },
+                new TestModel { A = 2, B = false }
+            };
+            var dfe = new DataFactoryExpression<IReadOnlyList<TestModel>>(elements);
             var actual = GetSerializedString(dfe);
             Assert.AreEqual(@"[{""A"":1,""B"":true},{""A"":2,""B"":false}]", actual);
         }
@@ -281,18 +294,77 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void DeserializationOfListOfT()
         {
-            var elements = new List<TestModel>
+            var elements = new ChangeTrackingList<TestModel>
             {
                 new TestModel { A = 1, B = true },
                 new TestModel { A = 2, B = false }
             };
-            var dfe = new DataFactoryExpression<List<TestModel>>(elements);
+            var dfe = new DataFactoryExpression<IList<TestModel>>(elements);
             var actual = GetSerializedString(dfe);
-            dfe = JsonSerializer.Deserialize<DataFactoryExpression<List<TestModel>>>(actual);
+            dfe = JsonSerializer.Deserialize<DataFactoryExpression<IList<TestModel>>>(actual);
             Assert.AreEqual(1, dfe.Literal[0].A);
             Assert.AreEqual(true, dfe.Literal[0].B);
             Assert.AreEqual(2, dfe.Literal[1].A);
             Assert.AreEqual(false, dfe.Literal[1].B);
+        }
+
+        [Test]
+        public void DeserializationOfEmptyListOfT()
+        {
+            var elements = new ChangeTrackingList<TestModel>();
+            var dfe = new DataFactoryExpression<IList<TestModel>>(elements);
+            var actual = GetSerializedString(dfe);
+            dfe = JsonSerializer.Deserialize<DataFactoryExpression<IList<TestModel>>>(actual);
+            Assert.IsEmpty(dfe.Literal);
+        }
+
+        [Test]
+        public void DeserializationOfListOfTExpression()
+        {
+            var dfe = DataFactoryExpression<List<TestModel>>.FromExpression("some expression");
+            Assert.IsFalse(dfe.HasLiteral);
+            Assert.AreEqual("some expression", dfe.Expression);
+        }
+
+        [Test]
+        public void DeserializationOfListOfTWithNull()
+        {
+            var elements = new ChangeTrackingList<TestModel>
+            {
+                new TestModel { A = 1, B = true },
+                null
+            };
+            var dfe = new DataFactoryExpression<IList<TestModel>>(elements);
+            var actual = GetSerializedString(dfe);
+            dfe = JsonSerializer.Deserialize<DataFactoryExpression<IList<TestModel>>>(actual);
+            Assert.AreEqual(1, dfe.Literal[0].A);
+            Assert.AreEqual(true, dfe.Literal[0].B);
+            Assert.IsNull(dfe.Literal[1]);
+        }
+
+        [Test]
+        public void DeserializationOfReadOnlyListOfT()
+        {
+            var elements = new ChangeTrackingList<TestModel>
+            {
+                new TestModel { A = 1, B = true },
+                new TestModel { A = 2, B = false }
+            };
+            var dfe = new DataFactoryExpression<IReadOnlyList<TestModel>>(elements);
+            var actual = GetSerializedString(dfe);
+            dfe = JsonSerializer.Deserialize<DataFactoryExpression<IReadOnlyList<TestModel>>>(actual);
+            Assert.AreEqual(1, dfe.Literal[0].A);
+            Assert.AreEqual(true, dfe.Literal[0].B);
+            Assert.AreEqual(2, dfe.Literal[1].A);
+            Assert.AreEqual(false, dfe.Literal[1].B);
+        }
+
+        [Test]
+        public void DeserializationOfReadOnlyListOfTExpression()
+        {
+            var dfe = DataFactoryExpression<IReadOnlyList<TestModel>>.FromExpression("some expression");
+            Assert.IsFalse(dfe.HasLiteral);
+            Assert.AreEqual("some expression", dfe.Expression);
         }
 
         private static void AssertStringDfe(DataFactoryExpression<string> dfe, string expectedValue)

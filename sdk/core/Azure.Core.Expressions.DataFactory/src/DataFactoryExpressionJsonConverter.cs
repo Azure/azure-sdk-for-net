@@ -16,10 +16,10 @@ namespace Azure.Core.Expressions.DataFactory
         public override bool CanConvert(Type typeToConvert)
         {
             return typeToConvert == typeof(DataFactoryExpression<string>) ||
-                    typeToConvert == typeof(DataFactoryExpression<int>) ||
-                    typeToConvert == typeof(DataFactoryExpression<double>) ||
-                    typeToConvert == typeof(DataFactoryExpression<Array>) ||
-                    typeToConvert == typeof(DataFactoryExpression<bool>) ||
+                   typeToConvert == typeof(DataFactoryExpression<int>) ||
+                   typeToConvert == typeof(DataFactoryExpression<double>) ||
+                   typeToConvert == typeof(DataFactoryExpression<Array>) ||
+                   typeToConvert == typeof(DataFactoryExpression<bool>) ||
                    IsGenericDataFactoryList(typeToConvert);
         }
 
@@ -38,13 +38,13 @@ namespace Azure.Core.Expressions.DataFactory
                 return Deserialize<bool>(document.RootElement);
             if (IsGenericDataFactoryList(typeToConvert))
             {
-                var methodInfo = typeof(DataFactoryExpressionJsonConverter)
-                    .GetMethod(
-                        "DeserializeList",
-                        BindingFlags.Static | BindingFlags.NonPublic)!
-                    .MakeGenericMethod(typeToConvert.GenericTypeArguments[0].GenericTypeArguments[0]);
+                string methodName = typeToConvert.GenericTypeArguments[0].GetGenericTypeDefinition() == typeof(IList<>)
+                    ? nameof(DeserializeList)
+                    : nameof(DeserializeReadOnlyList);
+                var methodInfo = GetGenericSerializationMethod(typeToConvert, methodName);
                 return methodInfo!.Invoke(null, new object[] { document.RootElement })!;
             }
+
             throw new InvalidOperationException($"Unable to convert {typeToConvert.Name} into a DataFactoryExpression<T>");
         }
 
@@ -60,19 +60,31 @@ namespace Azure.Core.Expressions.DataFactory
                 Serialize(writer, arrayExpression);
             else if (value is DataFactoryExpression<bool> boolExpression)
                 Serialize(writer, boolExpression);
-            else if (IsGenericDataFactoryList(value.GetType()))
-            {
-                var methodInfo = typeof(DataFactoryExpressionJsonConverter)
-                    .GetMethod(
-                        "SerializeList",
-                        BindingFlags.Static | BindingFlags.NonPublic)!
-                    .MakeGenericMethod(value.GetType().GenericTypeArguments[0].GenericTypeArguments[0]);
-                methodInfo!.Invoke(null, new object[] { writer, value });
-            }
             else
             {
-                throw new InvalidOperationException($"Unable to convert {value.GetType().Name} into a DataFactoryExpression<T>");
+                Type typeToConvert = value.GetType();
+                if (IsGenericDataFactoryList(typeToConvert))
+                {
+                    string methodName = typeToConvert.GenericTypeArguments[0].GetGenericTypeDefinition() == typeof(IList<>)
+                        ? nameof(SerializeList)
+                        : nameof(SerializeReadOnlyList);
+                    var methodInfo = GetGenericSerializationMethod(typeToConvert, methodName);
+                    methodInfo!.Invoke(null, new object[] { writer, value });
+                }
+                else
+                {
+                    throw new InvalidOperationException($"Unable to convert {value.GetType().Name} into a DataFactoryExpression<T>");
+                }
             }
+        }
+
+        private static MethodInfo GetGenericSerializationMethod(Type typeToConvert, string methodName)
+        {
+            return typeof(DataFactoryExpressionJsonConverter)
+                .GetMethod(
+                    methodName,
+                    BindingFlags.Static | BindingFlags.NonPublic)!
+                .MakeGenericMethod(typeToConvert.GenericTypeArguments[0].GenericTypeArguments[0]);
         }
 
         private static bool IsGenericDataFactoryList(Type type)
@@ -80,11 +92,13 @@ namespace Azure.Core.Expressions.DataFactory
             return type.IsGenericType &&
                    type.GetGenericTypeDefinition() == typeof(DataFactoryExpression<>) &&
                    type.GenericTypeArguments[0].IsGenericType &&
-                   type.GenericTypeArguments[0].GetGenericTypeDefinition() == typeof(List<>) &&
+                   IsGenericListType(type.GenericTypeArguments[0].GetGenericTypeDefinition()) &&
                    type.GenericTypeArguments[0].GenericTypeArguments[0].GetCustomAttributes().Any(a => a.GetType() == typeof(JsonConverterAttribute));
         }
 
-        internal static void Serialize<T>(Utf8JsonWriter writer, DataFactoryExpression<T> expression)
+        private static bool IsGenericListType(Type type) => type == typeof(IList<>) || type == typeof(IReadOnlyList<>);
+
+        private static void Serialize<T>(Utf8JsonWriter writer, DataFactoryExpression<T> expression)
         {
             if (expression.HasLiteral)
             {
@@ -96,22 +110,38 @@ namespace Azure.Core.Expressions.DataFactory
             }
         }
 
-        internal static void SerializeList<T>(Utf8JsonWriter writer, DataFactoryExpression<List<T>> expression)
+        private static void SerializeList<T>(Utf8JsonWriter writer, DataFactoryExpression<IList<T>> expression)
         {
             if (expression.HasLiteral)
             {
-                writer.WriteStartArray();
-                foreach (T? elem in expression.LiteralInternal!)
-                {
-                    JsonSerializer.Serialize(writer, elem);
-                }
-
-                writer.WriteEndArray();
+                SerializeListCore(writer, expression.Literal!.AsEnumerable());
             }
             else
             {
                 SerializeExpression(writer, expression.Type!, expression.Expression!);
             }
+        }
+
+        private static void SerializeReadOnlyList<T>(Utf8JsonWriter writer, DataFactoryExpression<IReadOnlyList<T>> expression)
+        {
+            if (expression.HasLiteral)
+            {
+                SerializeListCore(writer, expression.Literal!.AsEnumerable());
+            }
+            else
+            {
+                SerializeExpression(writer, expression.Type!, expression.Expression!);
+            }
+        }
+
+        private static void SerializeListCore<T>(Utf8JsonWriter writer, IEnumerable<T> enumerable)
+        {
+            writer.WriteStartArray();
+            foreach (T? elem in enumerable)
+            {
+                JsonSerializer.Serialize(writer, elem);
+            }
+            writer.WriteEndArray();
         }
 
         private static void SerializeExpression(Utf8JsonWriter writer, string type, string value)
@@ -124,20 +154,36 @@ namespace Azure.Core.Expressions.DataFactory
             writer.WriteEndObject();
         }
 
-        internal static DataFactoryExpression<List<T>> DeserializeList<T>(JsonElement element)
+        private static DataFactoryExpression<IList<T?>> DeserializeList<T>(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Array)
             {
-                var list = new List<T>();
+                var list = new ChangeTrackingList<T?>();
                 foreach (var item in element.EnumerateArray())
                 {
-                    list.Add(JsonSerializer.Deserialize<T>(item.ToString()!)!);
+                    list.Add(item.ValueKind == JsonValueKind.Null ? default : JsonSerializer.Deserialize<T>(item.ToString()!));
                 }
 
-                return new DataFactoryExpression<List<T>>(list);
+                return new DataFactoryExpression<IList<T?>>(list);
             }
 
-            throw new InvalidOperationException("Can only be called on an array");
+            throw new InvalidOperationException($"Cannot deserialize an {element.ValueKind} as a list.");
+        }
+
+        private static DataFactoryExpression<IReadOnlyList<T?>> DeserializeReadOnlyList<T>(JsonElement element)
+        {
+            if (element.ValueKind == JsonValueKind.Array)
+            {
+                var list = new ChangeTrackingList<T?>();
+                foreach (var item in element.EnumerateArray())
+                {
+                    list.Add(item.ValueKind == JsonValueKind.Null ? default : JsonSerializer.Deserialize<T>(item.ToString()!));
+                }
+
+                return new DataFactoryExpression<IReadOnlyList<T?>>(list);
+            }
+
+            throw new InvalidOperationException($"Cannot deserialize an {element.ValueKind} as a list.");
         }
 
         internal static DataFactoryExpression<T> Deserialize<T>(JsonElement element)
@@ -152,20 +198,17 @@ namespace Azure.Core.Expressions.DataFactory
                     if (property.NameEquals("value"))
                     {
                         expression = property.Value.GetString();
-                        continue;
                     }
                 }
                 if (expression is null)
                     throw new InvalidOperationException("Missing required parameter 'value'");
                 return DataFactoryExpression<T>.FromExpression(expression);
             }
-            else
-            {
-                var obj = element.GetObject();
-                if (obj is not null)
-                    value = (T)obj;
-                return new DataFactoryExpression<T>(value);
-            }
+
+            var obj = element.GetObject();
+            if (obj is not null)
+                value = (T)obj;
+            return new DataFactoryExpression<T>(value);
         }
     }
 }
