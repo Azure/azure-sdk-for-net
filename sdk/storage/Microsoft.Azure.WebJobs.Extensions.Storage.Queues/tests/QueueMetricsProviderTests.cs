@@ -7,15 +7,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Threading;
 using Azure;
+using Azure.Core.TestFramework;
 using Azure.Storage.Queues;
-using Azure.Storage.Queues.Models;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Listeners;
-using Microsoft.Azure.WebJobs.Host;
-using Microsoft.Azure.WebJobs.Host.Protocols;
-using Microsoft.Azure.WebJobs.Host.Scale;
-using Microsoft.Azure.WebJobs.Host.Timers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -24,7 +19,7 @@ using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Tests
 {
-    internal class QueueMetricsProviderTests
+    internal class QueueMetricsProviderTests : LiveTestBase<WebJobsTestEnvironment>
     {
         private ILoggerFactory _loggerFactory;
         private TestLoggerProvider _loggerProvider;
