@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
         #endregion
 
         #region RelationData
-        public static void AssertRelationData(RelationData data1, RelationData data2)
+        public static void AssertRelationData(IncidentRelationData data1, IncidentRelationData data2)
         {
             AssertResource(data1, data2);
             Assert.AreEqual(data1.RelatedResourceName, data2.RelatedResourceName);
@@ -131,9 +131,9 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
             Assert.AreEqual(data1.RelatedResourceKind, data2.RelatedResourceKind);
             Assert.AreEqual(data1.RelatedResourceType, data2.RelatedResourceType);
         }
-        public static RelationData GetRelationData()
+        public static IncidentRelationData GetRelationData()
         {
-            return new RelationData()
+            return new IncidentRelationData()
             {
             };
         }
