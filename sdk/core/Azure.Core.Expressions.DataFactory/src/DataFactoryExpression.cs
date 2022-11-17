@@ -4,7 +4,7 @@
 using System;
 using System.ComponentModel;
 using System.Linq;
-using System.Security;
+using System.Text.Json.Serialization;
 
 namespace Azure.Core.Expressions.DataFactory
 {
@@ -14,21 +14,22 @@ namespace Azure.Core.Expressions.DataFactory
     /// </summary>
     /// <typeparam name="T"> Can be one of <see cref="string"/>, <see cref="bool"/>, <see cref="int"/>, <see cref="double"/>, <see cref="Array"/>. </typeparam>
 #pragma warning disable SA1649 // File name should match first type name
-    public sealed partial class DataFactoryExpression<T> : IUtf8JsonSerializable
+    [JsonConverter(typeof(DataFactoryExpressionJsonConverter))]
+    public sealed class DataFactoryExpression<T>
 #pragma warning restore SA1649 // File name should match first type name
     {
-        private string? _type;
-        private T? _literal;
-        private string? _expression;
+        internal string? Type { get; }
+        internal T? LiteralInternal { get; }
+        internal string? Expression { get; }
 
         /// <summary>
         /// Initializes a new instance of DataFactoryExpression with a literal value.
         /// </summary>
-        /// <param name="literal"> The literal value. </param>
-        public DataFactoryExpression(T literal)
+        /// <param name="literalInternal"> The literal value. </param>
+        public DataFactoryExpression(T literalInternal)
         {
             HasLiteral = true;
-            _literal = literal;
+            LiteralInternal = literalInternal;
         }
 
         /// <summary>
@@ -45,15 +46,15 @@ namespace Azure.Core.Expressions.DataFactory
             get
             {
                 if (HasLiteral)
-                    return _literal;
+                    return LiteralInternal;
                 throw new InvalidOperationException("Cannot get value from Expression.");
             }
         }
 
         internal DataFactoryExpression(string expression, string type)
         {
-            _type = type;
-            _expression = expression;
+            Type = type;
+            Expression = expression;
         }
 
         /// <inheritdoc/>
@@ -61,16 +62,16 @@ namespace Azure.Core.Expressions.DataFactory
         {
             if (HasLiteral)
             {
-                if (_literal is Array literalArray)
+                if (LiteralInternal is Array literalArray)
                 {
                     return $"[{string.Join(",", literalArray.OfType<object>().Select(item => item?.ToString()))}]";
                 }
                 else
                 {
-                    return _literal?.ToString();
+                    return LiteralInternal?.ToString();
                 }
             }
-            return _expression!;
+            return Expression!;
         }
 
         /// <summary>
