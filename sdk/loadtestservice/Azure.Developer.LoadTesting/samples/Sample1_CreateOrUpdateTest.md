@@ -1,4 +1,4 @@
-# Create or Update Load Test 
+# Create or Update Load Test
 
 To use these samples, you'll first need to set up resources. See [getting started](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/loadtestservice/Azure.Developer.LoadTesting/README.md#getting-started) for details.
 
@@ -81,6 +81,3 @@ catch (Exception e)
     Console.WriteLine(String.Format("Error : ", e.Message));
 }
 ```
-
-To see the full example source files, see:
-* [Sample1_CreateOrUpdateTest.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/loadtestservice/Azure.Developer.LoadTesting/tests/Samples/Sample1_CreateOrUpdateTest.cs) 
