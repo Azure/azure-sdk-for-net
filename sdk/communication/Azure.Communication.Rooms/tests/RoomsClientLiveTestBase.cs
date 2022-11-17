@@ -17,16 +17,25 @@ namespace Azure.Communication.Rooms.Tests
     public class RoomsClientLiveTestBase : RecordedTestBase<RoomsClientTestEnvironment>
     {
         private const string DateTimeStampRegEx = @"[0-9]*-[0-9]*-[0-9]*T[0-9]*:[0-9]*:[0-9]*.[0-9]*Z";
+        private const string URIDomainNameReplacerRegEx = @"https://([^/?]+)";
+        private const string URIIdentityReplacerRegEx = @"/identities/([^/?]+)";
+
         public RoomsClientLiveTestBase(bool isAsync) : base(isAsync)
         {
             SanitizedHeaders.Add("x-ms-content-sha256");
             IgnoredHeaders.Add("Repeatability-Request-ID");
             IgnoredHeaders.Add("Repeatability-First-Sent");
+            JsonPathSanitizers.Add("$..token");
+            JsonPathSanitizers.Add("$..appId");
+            JsonPathSanitizers.Add("$..userId");
+            JsonPathSanitizers.Add("$..id");
             BodyRegexSanitizers.Add(new BodyRegexSanitizer(DateTimeStampRegEx, SanitizeValue));
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIIdentityReplacerRegEx, "/identities/Sanitized"));
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainNameReplacerRegEx, "https://sanitized.communication.azure.com"));
         }
         protected RoomsClient CreateInstrumentedRoomsClient(ServiceVersion version)
         {
-            var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
+            var connectionString = TestEnvironment.CommunicationConnectionStringRooms;
             RoomsClient client = new RoomsClient(connectionString, CreateRoomsClientOptionsWithCorrelationVectorLogs(version));
 
             #region Snippet:Azure_Communication_Rooms_Tests_Samples_CreateRoomsClient
@@ -45,7 +54,7 @@ namespace Azure.Communication.Rooms.Tests
         protected CommunicationIdentityClient CreateInstrumentedCommunicationIdentityClient()
             => InstrumentClient(
                 new CommunicationIdentityClient(
-                    TestEnvironment.LiveTestDynamicConnectionString,
+                    TestEnvironment.CommunicationConnectionStringRooms,
                     InstrumentClientOptions(new CommunicationIdentityClientOptions(CommunicationIdentityClientOptions.ServiceVersion.V2021_03_07))));
 
         private RoomsClientOptions CreateRoomsClientOptionsWithCorrelationVectorLogs(ServiceVersion version)
