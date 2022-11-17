@@ -15,6 +15,7 @@ using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Diagnostics.Runtime.Interop;
+using Microsoft.Identity.Client;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
@@ -68,6 +69,31 @@ namespace Azure.Identity.Tests
             }
 
             Assert.AreEqual(5, callCount);
+        }
+
+        [TestCase(null)]
+        [TestCase(ConfidentialClientApplication.AttemptRegionDiscovery)]
+        [TestCase("westus")]
+        public void VerifyMsalClientRegionalAuthorityFromEnvironmentVariable(string regionalAuthority)
+        {
+            using (new TestEnvVar("AZURE_REGIONAL_AUTHORITY_NAME", regionalAuthority))
+            {
+                var miClientOptions = new ManagedIdentityClientOptions();
+
+                var cred = new ManagedIdentityCredential(new ManagedIdentityClient(miClientOptions));
+                Assert.AreEqual(regionalAuthority, cred.Client.RegionalAuthory);
+            }
+        }
+
+        [TestCase(null)]
+        [TestCase(ConfidentialClientApplication.AttemptRegionDiscovery)]
+        [TestCase("westus")]
+        public void VerifyMsalClientRegionalAuthorityFromOptions(string regionalAuthority)
+        {
+            var miClientOptions = new ManagedIdentityClientOptions { AzureRegionalAuthorityName = regionalAuthority };
+
+            var cred = new ManagedIdentityCredential(new ManagedIdentityClient(miClientOptions));
+            Assert.AreEqual(regionalAuthority, cred.Client.RegionalAuthory);
         }
 
         [NonParallelizable]

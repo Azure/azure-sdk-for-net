@@ -50,6 +50,14 @@ namespace Azure.Identity
             _msal = new MsalConfidentialClient(Pipeline, "MANAGED-IDENTITY-RESOURCE-TENENT", ClientId ?? "SYSTEM-ASSIGNED-MANAGED-IDENTITY", AppTokenProviderImpl, options.Options, regionalAuthority);
         }
 
+        internal string RegionalAuthory
+        {
+            get
+            {
+                return _msal._azureRegionalAuthorityName;
+            }
+        }
+
         internal CredentialPipeline Pipeline { get; }
 
         internal protected string ClientId { get; }
