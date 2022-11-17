@@ -113,7 +113,7 @@ namespace Azure.Identity.Tests
 
                 var cred = new ClientSecretCredential(expectedTenantId, expectedClientId, expectedClientSecret);
 
-                Assert.AreEqual(regionalAuthority, cred.Client.RegionalAuthority);
+                Assert.AreEqual(regionalAuthority, cred.Client._azureRegionalAuthorityName);
             }
         }
 
@@ -122,7 +122,7 @@ namespace Azure.Identity.Tests
         [TestCase("westus")]
         public void VerifyMsalClientRegionalAuthorityFromOptions(string regionalAuthority)
         {
-            var options = new TokenCredentialOptions();
+            var options = new ClientSecretCredentialOptions();
             options.AzureRegionalAuthorityName = regionalAuthority;
             var expectedTenantId = Guid.NewGuid().ToString();
             var expectedClientId = Guid.NewGuid().ToString();
@@ -130,7 +130,7 @@ namespace Azure.Identity.Tests
 
             var cred = new ClientSecretCredential(expectedTenantId, expectedClientId, expectedClientSecret, options);
 
-            Assert.AreEqual(regionalAuthority, cred.Client.RegionalAuthority);
+            Assert.AreEqual(regionalAuthority, cred.Client._azureRegionalAuthorityName);
         }
     }
 }

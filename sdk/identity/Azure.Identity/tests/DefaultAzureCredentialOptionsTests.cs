@@ -90,13 +90,13 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void ValidateShallowCloneCopiesAllProperties([Values]bool useTenantId)
+        public void ValidateShallowCloneCopiesAllProperties([Values]bool useDefaultProps)
         {
             Random rand = new Random();
 
             var orig = new DefaultAzureCredentialOptions();
 
-            foreach (var propInfo in EnumerateDefaultAzureCredentialOptionsProperties(useTenantId, !useTenantId))
+            foreach (var propInfo in EnumerateDefaultAzureCredentialOptionsProperties(useDefaultProps, !useDefaultProps))
             {
                 if (propInfo.PropertyType == typeof(string))
                 {
@@ -132,7 +132,7 @@ namespace Azure.Identity.Tests
 
             var clone = orig.ShallowClone();
 
-            foreach (var propInfo in EnumerateDefaultAzureCredentialOptionsProperties(useTenantId, !useTenantId))
+            foreach (var propInfo in EnumerateDefaultAzureCredentialOptionsProperties(useDefaultProps, !useDefaultProps))
             {
                 if (propInfo.PropertyType == typeof(IList<string>))
                 {
@@ -145,7 +145,7 @@ namespace Azure.Identity.Tests
             }
         }
 
-        private IEnumerable<PropertyInfo> EnumerateDefaultAzureCredentialOptionsProperties(bool includeTenantId, bool includeAltTenantIds)
+        private IEnumerable<PropertyInfo> EnumerateDefaultAzureCredentialOptionsProperties(bool includeDefaultPropInfo, bool includeAltPropInfo)
         {
             foreach (var propInfo in typeof(DefaultAzureCredentialOptions).GetProperties())
             {
@@ -157,8 +157,22 @@ namespace Azure.Identity.Tests
                         // diagnostics is also ignored by shallow clone
                         case "Diagnostics":
                             break;
+                        case "RegionalAuthority":
+                            if (includeDefaultPropInfo)
+                            {
+                                yield return propInfo;
+                            }
+                            break;
+                        case "ClientCertificateCredentialRegionalAuthority":
+                        case "ClientSecretCredentialRegionalAuthority":
+                        case "ManagedIdentityCredentialRegionalAuthority":
+                            if (includeAltPropInfo)
+                            {
+                                yield return propInfo;
+                            }
+                            break;
                         case "TenantId":
-                            if (includeTenantId)
+                            if (includeDefaultPropInfo)
                             {
                                 yield return propInfo;
                             }
@@ -167,7 +181,7 @@ namespace Azure.Identity.Tests
                         case "SharedTokenCacheTenantId":
                         case "VisualStudioTenantId":
                         case "VisualStudioCodeTenantId":
-                            if (includeAltTenantIds)
+                            if (includeAltPropInfo)
                             {
                                 yield return propInfo;
                             }

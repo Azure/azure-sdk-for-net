@@ -250,8 +250,6 @@ namespace Azure.Identity.Tests
         [TestCase("westus")]
         public void VerifyMsalClientRegionalAuthorityFromEnvironmentVariable(string regionalAuthority)
         {
-            string[] authorities = { null, ConfidentialClientApplication.AttemptRegionDiscovery, "westus" };
-
             using (new TestEnvVar("AZURE_REGIONAL_AUTHORITY_NAME", regionalAuthority))
             {
                 var expectedTenantId = Guid.NewGuid().ToString();
@@ -259,7 +257,7 @@ namespace Azure.Identity.Tests
                 var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
 
                 var cred = new ClientCertificateCredential(expectedTenantId, expectedClientId, certificatePath);
-                Assert.AreEqual(regionalAuthority, cred.Client.RegionalAuthority);
+                Assert.AreEqual(regionalAuthority, cred.Client._azureRegionalAuthorityName);
             }
         }
 
@@ -268,14 +266,14 @@ namespace Azure.Identity.Tests
         [TestCase("westus")]
         public void VerifyMsalClientRegionalAuthorityFromOptions(string regionalAuthority)
         {
-            var options = new TokenCredentialOptions();
+            var options = new ClientCertificateCredentialOptions();
             options.AzureRegionalAuthorityName = regionalAuthority;
             var expectedTenantId = Guid.NewGuid().ToString();
             var expectedClientId = Guid.NewGuid().ToString();
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
 
             var cred = new ClientCertificateCredential(expectedTenantId, expectedClientId, certificatePath, options);
-            Assert.AreEqual(regionalAuthority, cred.Client.RegionalAuthority);
+            Assert.AreEqual(regionalAuthority, cred.Client._azureRegionalAuthorityName);
         }
     }
 }

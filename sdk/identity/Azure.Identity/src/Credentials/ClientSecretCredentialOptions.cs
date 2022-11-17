@@ -19,5 +19,10 @@ namespace Azure.Identity
         /// For multi-tenant applications, specifies additional tenants for which the credential may acquire tokens. Add the wildcard value "*" to allow the credential to acquire tokens for any tenant in which the application is installed.
         /// </summary>
         public IList<string> AdditionallyAllowedTenants => AdditionallyAllowedTenantsCore;
+
+        /// <summary>
+        ///  The name of the Azure Regional Authority used by ESTS-R
+        /// </summary>
+        public string AzureRegionalAuthorityName { get; set; }
     }
 }

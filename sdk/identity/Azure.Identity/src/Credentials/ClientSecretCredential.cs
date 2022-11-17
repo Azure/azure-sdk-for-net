@@ -89,6 +89,9 @@ namespace Azure.Identity
 
             ClientSecret = clientSecret;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
+            ClientSecretCredentialOptions secretCredOptions = (options as ClientSecretCredentialOptions);
+            string regionalAuthority = secretCredOptions?.AzureRegionalAuthorityName ?? EnvironmentVariables.AzureRegionalAuthorityName;
+
             Client = client ??
                      new MsalConfidentialClient(
                          _pipeline,
@@ -96,7 +99,8 @@ namespace Azure.Identity
                          clientId,
                          clientSecret,
                          null,
-                         options);
+                         options,
+                         regionalAuthority);
 
             _additionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenantsCore);
         }

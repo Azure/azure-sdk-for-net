@@ -157,7 +157,7 @@ namespace Azure.Identity
             ClientCertificateProvider = certificateProvider;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
             ClientCertificateCredentialOptions certCredOptions = (options as ClientCertificateCredentialOptions);
-            string regionalAuthority = certCredOptions.AzureRegionalAuthorityName ?? EnvironmentVariables.AzureRegionalAuthorityName;
+            string regionalAuthority = certCredOptions?.AzureRegionalAuthorityName ?? EnvironmentVariables.AzureRegionalAuthorityName;
 
             Client = client ??
                      new MsalConfidentialClient(

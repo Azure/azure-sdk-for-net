@@ -46,6 +46,7 @@ namespace Azure.Identity
 
         private UpdateTracker<string> _regionalAuthority = new UpdateTracker<string>(GetNonEmptyStringOrNull(EnvironmentVariables.AzureRegionalAuthorityName));
         private UpdateTracker<string> _clientCertificateCredentialRegionalAuthority = new UpdateTracker<string>(GetNonEmptyStringOrNull(EnvironmentVariables.AzureRegionalAuthorityName));
+        private UpdateTracker<string> _clientSecretCredentialRegionalAuthority = new UpdateTracker<string>(GetNonEmptyStringOrNull(EnvironmentVariables.AzureRegionalAuthorityName));
         private UpdateTracker<string> _managedIdentityCredentialRegionalAuthority = new UpdateTracker<string>(GetNonEmptyStringOrNull(EnvironmentVariables.AzureRegionalAuthorityName));
 
         /// <summary>
@@ -60,6 +61,11 @@ namespace Azure.Identity
                 if (_clientCertificateCredentialRegionalAuthority.Updated && value != _clientCertificateCredentialRegionalAuthority.Value)
                 {
                     throw new InvalidOperationException("Applications should not set both RegionalAuthority and ClientCertificateCredentialRegionalAuthority. RegionalAuthority is preferred, and is functionally equivalent. ClientCertificateCredentialRegionalAuthority exists only to provide backwards compatibility.");
+                }
+
+                if (_clientSecretCredentialRegionalAuthority.Updated && value != _clientSecretCredentialRegionalAuthority.Value)
+                {
+                    throw new InvalidOperationException("Applications should not set both RegionalAuthority and ClientSecretCredentialRegionalAuthority. RegionalAuthority is preferred, and is functionally equivalent. ClientSecretCredentialRegionalAuthority exists only to provide backwards compatibility.");
                 }
 
                 if (_managedIdentityCredentialRegionalAuthority.Updated && value != _managedIdentityCredentialRegionalAuthority.Value)
@@ -90,6 +96,26 @@ namespace Azure.Identity
                 }
 
                 _clientCertificateCredentialRegionalAuthority.Value = value;
+            }
+        }
+
+        /// <summary>
+        /// The Azure Regional Authority that will be provided to ESTS-R, in the case the <see cref="DefaultAzureCredential"/> authenticates through the
+        /// <see cref="ClientSecretCredential"/>. The default is null.
+        /// The value can also be set by setting the environment variable AZURE_REGIONAL_AUTHORITY_NAME.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public string ClientSecretCredentialRegionalAuthority
+        {
+            get => _clientSecretCredentialRegionalAuthority.Value;
+            set
+            {
+                if (_regionalAuthority.Updated && value != _regionalAuthority.Value)
+                {
+                    throw new InvalidOperationException("Applications should not set both RegionalAuthority and ClientSecretCredentialRegionalAuthority. RegionalAuthority is preferred, and is functionally equivalent. ClientSecretCredentialRegionalAuthority exists only to provide backwards compatibility.");
+                }
+
+                _clientSecretCredentialRegionalAuthority.Value = value;
             }
         }
 
@@ -322,6 +348,7 @@ namespace Azure.Identity
             {
                 _regionalAuthority = _regionalAuthority,
                 _clientCertificateCredentialRegionalAuthority= _clientCertificateCredentialRegionalAuthority,
+                _clientSecretCredentialRegionalAuthority = _clientSecretCredentialRegionalAuthority,
                 _managedIdentityCredentialRegionalAuthority= _managedIdentityCredentialRegionalAuthority,
                 _tenantId = _tenantId,
                 _interactiveBrowserTenantId = _interactiveBrowserTenantId,
