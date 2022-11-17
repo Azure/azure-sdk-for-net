@@ -168,9 +168,7 @@ node_modules/
 # MSBuild binary log files
 msbuild.binlog
 
-# BenchmarkDotNet
+# BenchmarkDotNet 
 BenchmarkDotNet.Artifacts
 
 artifacts
-.assets
-/sdk/entra/Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents/WebJobs.Extensions.AuthenticationEvents.sln
