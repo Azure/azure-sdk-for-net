@@ -92,7 +92,7 @@ namespace Azure.Template.Tests.Samples
             serviceClient.SendToAll(
                     RequestContent.Create("Hello World!"),
                     ContentType.TextPlain,
-                    filter: SearchFilter.Create($"userId eq {null}"));
+                    filter: ClientConnectionFilter.Create($"userId eq {null}"));
 
             // Use filter to send JSON message to connections in groupA but not in groupB
             var group1 = "GroupA";
@@ -104,7 +104,7 @@ namespace Azure.Template.Tests.Samples
                         Bar = 42
                     }),
                     ContentType.ApplicationJson,
-                    filter: SearchFilter.Create($"{group1} in groups and not({group2} in groups)"));
+                    filter: ClientConnectionFilter.Create($"{group1} in groups and not({group2} in groups)"));
             #endregion
         }
 

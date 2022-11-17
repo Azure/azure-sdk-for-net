@@ -11,19 +11,12 @@ using System;
 namespace Azure.Messaging.WebPubSub
 {
     /// <summary>
-    /// The SearchFilter class is used to help construct valid OData filter
-    /// parameter to be used by Send* APIs
-    /// <see cref="WebPubSubServiceClient.SendToAll(RequestContent, ContentType, System.Collections.Generic.IEnumerable{string}, string, RequestContext)"/>,
-    /// <see cref="WebPubSubServiceClient.SendToAllAsync(RequestContent, ContentType, System.Collections.Generic.IEnumerable{string}, string, RequestContext)"/>
-    /// <see cref="WebPubSubServiceClient.SendToUser(string, RequestContent, ContentType, string, RequestContext)"/>
-    /// <see cref="WebPubSubServiceClient.SendToUserAsync(string, RequestContent, ContentType, string, RequestContext)"/>
-    /// <see cref="WebPubSubServiceClient.SendToGroup(string, RequestContent, ContentType, System.Collections.Generic.IEnumerable{string}, string, RequestContext)"/>
-    /// <see cref="WebPubSubServiceClient.SendToGroupAsync(string, RequestContent, ContentType, System.Collections.Generic.IEnumerable{string}, string, RequestContext)"/>
-    /// by automatically replacing, quoting, and escaping interpolated
+    /// The ClientConnectionFilter class is used to help construct valid OData filter
+    /// parameter to be used by Send* APIs by automatically replacing, quoting, and escaping interpolated
     /// parameters.
     /// For more information, see <see href="https://aka.ms/awps/filter-syntax">Filters in Azure Web PubSub</see>.
     /// </summary>
-    public static class SearchFilter
+    public static class ClientConnectionFilter
     {
         /// <summary>
         /// Create an OData filter expression from an interpolated string.  The

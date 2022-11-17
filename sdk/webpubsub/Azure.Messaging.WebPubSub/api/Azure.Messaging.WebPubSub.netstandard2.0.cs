@@ -1,6 +1,6 @@
 namespace Azure.Messaging.WebPubSub
 {
-    public static partial class SearchFilter
+    public static partial class ClientConnectionFilter
     {
         public static string Create(System.FormattableString filter) { throw null; }
         public static string Create(System.FormattableString filter, System.IFormatProvider formatProvider) { throw null; }

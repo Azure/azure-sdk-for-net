@@ -7,7 +7,7 @@
 - Added method `serviceClient.RemoveConnectionFromAllGroups` to remove the connection from all the groups it is in.
 - Added a `groups` option in `serviceClient.GetClientAccessUri`, to enable connections join initial groups once it is connected.
 - Added a `filter` parameter when sending messages to connections in a hub/group/user to filter out the connections recieving message, details about `filter` syntax please see [OData filter syntax for Azure Web PubSub](https://aka.ms/awps/filter-syntax).
-- Provided a utility class `SearchFilter` to generate the `filter` parameter, e.g. `SearchFilter.Create($"{group1} in groups and not({group2} in groups)"))`
+- Provided a utility class `ClientConnectionFilter` to generate the `filter` parameter, e.g. `ClientConnectionFilter.Create($"{group1} in groups and not({group2} in groups)"))`
 
 ## 1.2.0 (2022-11-04)
 
