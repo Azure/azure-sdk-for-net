@@ -476,7 +476,7 @@
       "RequestBody": {
         "properties": {
           "scriptUrl": "https://sdkstorageaccount391.blob.core.windows.net/sdkcontainer391/sdkBlob391.txt",
-          "scriptUrlSasToken": "sv=2015-04-05\u0026ss=b\u0026srt=o\u0026sp=r\u0026se=2022-11-18T13%3A39%3A48.0000000Z\u0026sig=ip3okSx0kez35cXIw%2BrU0dBwb%2B8%2F%2FYFtYBduI6xb7mQ%3D",
+          "scriptUrlSasToken": "Sanitized",
           "forceUpdateTag": "tag1"
         }
       },
