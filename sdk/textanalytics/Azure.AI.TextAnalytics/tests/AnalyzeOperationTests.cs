@@ -853,6 +853,46 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
+        public async Task AnalyzeOperationAbstractSummary()
+        {
+            TextAnalyticsClient client = GetClient();
+            var documents = new List<string>
+            {
+                "Extractive summarization extracts sentences that collectively represent the most important or relevant information within the original content."
+                + " Abstractive summarization generates a summary with concise, coherent sentences or words which are not simply extract sentences from the original document."
+                + " These features are designed to shorten content that could be considered too long to read.",
+            };
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                AbstractSummaryActions = new List<AbstractSummaryAction>() { new AbstractSummaryAction() { MaxSentenceCount = 2 } },
+                DisplayName = "AnalyzeOperationAbstractSummary",
+            };
+
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, batchActions);
+            await operation.WaitForCompletionAsync();
+
+            // Take the first page.
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            IReadOnlyCollection<AbstractSummaryActionResult> abstractSummaryActionsResults = resultCollection.AbstractSummaryResults;
+            Assert.IsNotNull(abstractSummaryActionsResults);
+
+            AbstractSummaryResultCollection abstractSummaryDocumentsResults = abstractSummaryActionsResults.FirstOrDefault().DocumentsResults;
+            Assert.AreEqual(1, abstractSummaryDocumentsResults.Count);
+
+            AbstractSummaryResult result = abstractSummaryDocumentsResults[0];
+            Assert.Greater(result.Summaries.Count, 0);
+
+            AbstractiveSummary summary = result.Summaries.FirstOrDefault();
+            Assert.IsNotNull(summary);
+            Assert.That(summary.Text, Is.Not.Null.And.Not.Empty);
+            Assert.Less(summary.Text.Length, documents[0].Length);
+            Assert.IsNotNull(summary.Contexts);
+            Assert.Greater(summary.Contexts.Count, 0);
+        }
+
+        [RecordedTest]
         [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
         public void AnalyzeOperationAnalyzeHealthcareEntitiesActionNotSupported()
         {
