@@ -14,7 +14,6 @@ using Azure.Storage.Tests.Shared;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Timers;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Listeners;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Executors;
@@ -116,63 +115,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         public void ScaleMonitor_Id_ReturnsExpectedValue()
         {
             Assert.AreEqual("testfunction-queuetrigger-testqueue", _scaleMonitor.Descriptor.Id);
-        }
-
-        [Test]
-        public async Task GetMetrics_ReturnsExpectedResult()
-        {
-            var queuesOptions = new QueuesOptions();
-            Mock<ITriggerExecutor<QueueMessage>> mockTriggerExecutor = new Mock<ITriggerExecutor<QueueMessage>>(MockBehavior.Strict);
-            var mockConcurrencyManager = new Mock<ConcurrencyManager>(MockBehavior.Strict);
-            var queueProcessorFactory = new DefaultQueueProcessorFactory();
-            var queueProcessor = QueueListenerFactory.CreateQueueProcessor(Fixture.Queue, null, _loggerFactory, queueProcessorFactory, queuesOptions, null);
-            QueueListener listener = new QueueListener(Fixture.Queue, null, mockTriggerExecutor.Object, new WebJobsExceptionHandler(null),
-                _loggerFactory, null, queuesOptions, queueProcessor, new FunctionDescriptor { Id = "TestFunction" }, mockConcurrencyManager.Object);
-
-            var metrics = await _scaleMonitor.GetMetricsAsync();
-
-            Assert.AreEqual(0, metrics.QueueLength);
-            Assert.AreEqual(TimeSpan.Zero, metrics.QueueTime);
-            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
-
-            // add some test messages
-            for (int i = 0; i < 5; i++)
-            {
-                await Fixture.Queue.SendMessageAsync($"Message {i}");
-            }
-
-            await Task.Delay(TimeSpan.FromSeconds(5));
-
-            metrics = await _scaleMonitor.GetMetricsAsync();
-
-            Assert.AreEqual(5, metrics.QueueLength);
-            Assert.True(metrics.QueueTime.Ticks > 0);
-            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
-
-            // verify non-generic interface works as expected
-            metrics = (QueueTriggerMetrics)(await (_scaleMonitor).GetMetricsAsync());
-            Assert.AreEqual(5, metrics.QueueLength);
-        }
-
-        [Test]
-        public async Task GetMetrics_HandlesStorageExceptions()
-        {
-            var exception = new RequestFailedException(
-                500,
-                "Things are very wrong.",
-                default,
-                new Exception());
-
-            _mockQueue.Setup(p => p.GetPropertiesAsync(It.IsAny<CancellationToken>())).Throws(exception);
-
-            var metrics = await _scaleMonitor.GetMetricsAsync();
-
-            Assert.AreEqual(0, metrics.QueueLength);
-            Assert.AreEqual(TimeSpan.Zero, metrics.QueueTime);
-            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
-
-            var warning = _loggerProvider.GetAllLogMessages().Single(p => p.Level == Microsoft.Extensions.Logging.LogLevel.Warning);
-            Assert.AreEqual("Error querying for queue scale status: Things are very wrong.", warning.FormattedMessage);
         }
 
         [Test]
