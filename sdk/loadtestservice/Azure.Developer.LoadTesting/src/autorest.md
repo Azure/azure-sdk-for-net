@@ -6,7 +6,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 > see https://aka.ms/autorest
 
 ``` yaml
-input-file: https://github.com/Azure/azure-rest-api-specs/blob/89e55fb268544efa964cc09630c960ed326f9056/specification/loadtestservice/data-plane/Microsoft.LoadTestService/stable/2022-11-01/loadtestservice.json
+input-file: https://github.com/Azure/azure-rest-api-specs/blob/b32e1896f30e6ea155449cb49719a6286e32b961/specification/loadtestservice/data-plane/Microsoft.LoadTestService/stable/2022-11-01/loadtestservice.json
 namespace: Azure.Developer.LoadTesting
 security: AADToken
 security-scopes: https://cnt-prod.loadtesting.azure.com/.default

@@ -197,28 +197,28 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> Upload input file for a given test name. File size can&apos;t be more than 50 MB. Existing file with same name for the given test will be overwritten. File should be provided in the request body as multipart/form-data. </summary>
+        /// <summary> Upload input file for a given test name. File size can&apos;t be more than 50 MB. Existing file with same name for the given test will be overwritten. File should be provided in the request body as application/octet-stream. </summary>
         /// <param name="testId"> Unique name for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
-        /// <param name="fileId"> Unique name for test file, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="fileName"> Unique name for test file with file extension like : App.jmx. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="fileType"> File type. Allowed values: &quot;JMX_FILE&quot; | &quot;USER_PROPERTIES&quot; | &quot;ADDITIONAL_ARTIFACTS&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testId"/>, <paramref name="fileId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/>, <paramref name="fileName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='UploadTestFileAsync(String,String,RequestContent,String,RequestContext)']/*" />
-        public virtual async Task<Response> UploadTestFileAsync(string testId, string fileId, RequestContent content, string fileType = null, RequestContext context = null)
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='UploadFileAsync(String,String,RequestContent,String,RequestContext)']/*" />
+        public virtual async Task<Response> UploadFileAsync(string testId, string fileName, RequestContent content, string fileType = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.UploadTestFile");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.UploadFile");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUploadTestFileRequest(testId, fileId, content, fileType, context);
+                using HttpMessage message = CreateUploadFileRequest(testId, fileName, content, fileType, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -228,28 +228,28 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> Upload input file for a given test name. File size can&apos;t be more than 50 MB. Existing file with same name for the given test will be overwritten. File should be provided in the request body as multipart/form-data. </summary>
+        /// <summary> Upload input file for a given test name. File size can&apos;t be more than 50 MB. Existing file with same name for the given test will be overwritten. File should be provided in the request body as application/octet-stream. </summary>
         /// <param name="testId"> Unique name for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
-        /// <param name="fileId"> Unique name for test file, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="fileName"> Unique name for test file with file extension like : App.jmx. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="fileType"> File type. Allowed values: &quot;JMX_FILE&quot; | &quot;USER_PROPERTIES&quot; | &quot;ADDITIONAL_ARTIFACTS&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testId"/>, <paramref name="fileId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/>, <paramref name="fileName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='UploadTestFile(String,String,RequestContent,String,RequestContext)']/*" />
-        public virtual Response UploadTestFile(string testId, string fileId, RequestContent content, string fileType = null, RequestContext context = null)
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='UploadFile(String,String,RequestContent,String,RequestContext)']/*" />
+        public virtual Response UploadFile(string testId, string fileName, RequestContent content, string fileType = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.UploadTestFile");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.UploadFile");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUploadTestFileRequest(testId, fileId, content, fileType, context);
+                using HttpMessage message = CreateUploadFileRequest(testId, fileName, content, fileType, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -261,23 +261,23 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> Get test file by the file name. </summary>
         /// <param name="testId"> Unique name for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
-        /// <param name="fileId"> Unique name for test file, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="fileName"> File name with file extension like app.jmx. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="fileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="fileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestFileAsync(String,String,RequestContext)']/*" />
-        public virtual async Task<Response> GetTestFileAsync(string testId, string fileId, RequestContext context = null)
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetFileAsync(String,String,RequestContext)']/*" />
+        public virtual async Task<Response> GetFileAsync(string testId, string fileName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetTestFile");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetFile");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTestFileRequest(testId, fileId, context);
+                using HttpMessage message = CreateGetFileRequest(testId, fileName, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -289,23 +289,23 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> Get test file by the file name. </summary>
         /// <param name="testId"> Unique name for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
-        /// <param name="fileId"> Unique name for test file, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="fileName"> File name with file extension like app.jmx. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="fileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="fileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestFile(String,String,RequestContext)']/*" />
-        public virtual Response GetTestFile(string testId, string fileId, RequestContext context = null)
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetFile(String,String,RequestContext)']/*" />
+        public virtual Response GetFile(string testId, string fileName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetTestFile");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetFile");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTestFileRequest(testId, fileId, context);
+                using HttpMessage message = CreateGetFileRequest(testId, fileName, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -317,23 +317,23 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> Delete file by the file name for a test. </summary>
         /// <param name="testId"> Unique name for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
-        /// <param name="fileId"> Unique name for test file, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="fileName"> File name with file extension like app.jmx. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="fileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="fileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='DeleteTestFileAsync(String,String,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteTestFileAsync(string testId, string fileId, RequestContext context = null)
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='DeleteFileAsync(String,String,RequestContext)']/*" />
+        public virtual async Task<Response> DeleteFileAsync(string testId, string fileName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteTestFile");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteFile");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteTestFileRequest(testId, fileId, context);
+                using HttpMessage message = CreateDeleteFileRequest(testId, fileName, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -345,23 +345,23 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> Delete file by the file name for a test. </summary>
         /// <param name="testId"> Unique name for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
-        /// <param name="fileId"> Unique name for test file, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="fileName"> File name with file extension like app.jmx. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="fileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="fileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='DeleteTestFile(String,String,RequestContext)']/*" />
-        public virtual Response DeleteTestFile(string testId, string fileId, RequestContext context = null)
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='DeleteFile(String,String,RequestContext)']/*" />
+        public virtual Response DeleteFile(string testId, string fileName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteTestFile");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteFile");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteTestFileRequest(testId, fileId, context);
+                using HttpMessage message = CreateDeleteFileRequest(testId, fileName, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -588,8 +588,8 @@ namespace Azure.Developer.LoadTesting
         }
 
         /// <summary> Get all load tests by the fully qualified resource Id e.g subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}. </summary>
-        /// <param name="orderby"> Sort on one of the field - lastModifiedDateTime, displayName, createdBy in (field asc/desc) format. eg: displayName asc. </param>
-        /// <param name="search"> Filter search based on searchable fields - testId, createdBy. </param>
+        /// <param name="orderby"> Sort on the supported fields in (field asc/desc) format. eg: lastModifiedDateTime asc. Supported fields - lastModifiedDateTime. </param>
+        /// <param name="search"> Prefix based, case sensitive search on searchable fields - testId, createdBy. </param>
         /// <param name="lastModifiedStartTime"> Start DateTime(ISO 8601 literal format) of the last updated time range to filter tests. </param>
         /// <param name="lastModifiedEndTime"> End DateTime(ISO 8601 literal format) of the last updated time range to filter tests. </param>
         /// <param name="continuationToken"> Continuation token to get the next page of response. </param>
@@ -621,8 +621,8 @@ namespace Azure.Developer.LoadTesting
         }
 
         /// <summary> Get all load tests by the fully qualified resource Id e.g subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}. </summary>
-        /// <param name="orderby"> Sort on one of the field - lastModifiedDateTime, displayName, createdBy in (field asc/desc) format. eg: displayName asc. </param>
-        /// <param name="search"> Filter search based on searchable fields - testId, createdBy. </param>
+        /// <param name="orderby"> Sort on the supported fields in (field asc/desc) format. eg: lastModifiedDateTime asc. Supported fields - lastModifiedDateTime. </param>
+        /// <param name="search"> Prefix based, case sensitive search on searchable fields - testId, createdBy. </param>
         /// <param name="lastModifiedStartTime"> Start DateTime(ISO 8601 literal format) of the last updated time range to filter tests. </param>
         /// <param name="lastModifiedEndTime"> End DateTime(ISO 8601 literal format) of the last updated time range to filter tests. </param>
         /// <param name="continuationToken"> Continuation token to get the next page of response. </param>
@@ -808,7 +808,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateUploadTestFileRequest(string testId, string fileId, RequestContent content, string fileType, RequestContext context)
+        internal HttpMessage CreateUploadFileRequest(string testId, string fileName, RequestContent content, string fileType, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier201);
             var request = message.Request;
@@ -819,7 +819,7 @@ namespace Azure.Developer.LoadTesting
             uri.AppendPath("/tests/", false);
             uri.AppendPath(testId, true);
             uri.AppendPath("/files/", false);
-            uri.AppendPath(fileId, true);
+            uri.AppendPath(fileName, true);
             if (fileType != null)
             {
                 uri.AppendQuery("fileType", fileType, true);
@@ -827,12 +827,12 @@ namespace Azure.Developer.LoadTesting
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "multipart/form-data");
+            request.Headers.Add("Content-Type", "application/octet-stream");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateGetTestFileRequest(string testId, string fileId, RequestContext context)
+        internal HttpMessage CreateGetFileRequest(string testId, string fileName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -843,14 +843,14 @@ namespace Azure.Developer.LoadTesting
             uri.AppendPath("/tests/", false);
             uri.AppendPath(testId, true);
             uri.AppendPath("/files/", false);
-            uri.AppendPath(fileId, true);
+            uri.AppendPath(fileName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateDeleteTestFileRequest(string testId, string fileId, RequestContext context)
+        internal HttpMessage CreateDeleteFileRequest(string testId, string fileName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
@@ -861,7 +861,7 @@ namespace Azure.Developer.LoadTesting
             uri.AppendPath("/tests/", false);
             uri.AppendPath(testId, true);
             uri.AppendPath("/files/", false);
-            uri.AppendPath(fileId, true);
+            uri.AppendPath(fileName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

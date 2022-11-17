@@ -48,7 +48,7 @@ var data = new {
     passFailCriteria = new {
         passFailMetrics = new {
             key = new {
-                clientmetric = "response_time_ms",
+                clientMetric = "response_time_ms",
                 aggregate = "count",
                 condition = "<condition>",
                 requestName = "<requestName>",
@@ -77,7 +77,7 @@ var data = new {
         quickStartTest = true,
         optionalLoadTestConfig = new {
             endpointUrl = "<endpointUrl>",
-            vusers = 1234,
+            virtualUsers = 1234,
             rampUpTime = 1234,
             duration = 1234,
         },
@@ -90,7 +90,7 @@ var data = new {
 Response response = await client.CreateOrUpdateTestRunAsync("<testRunId>", RequestContent.Create(data), "<oldTestRunId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientmetric").ToString());
+Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientMetric").ToString());
 Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("aggregate").ToString());
 Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("condition").ToString());
 Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("requestName").ToString());
@@ -123,47 +123,40 @@ Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("engin
 Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("splitAllCSVs").ToString());
 Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("quickStartTest").ToString());
 Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("endpointUrl").ToString());
-Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("vusers").ToString());
+Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("virtualUsers").ToString());
 Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("rampUpTime").ToString());
 Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("duration").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileId").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("filename").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("expireDateTime").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("validationStatus").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileId").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("filename").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("expireDateTime").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("validationStatus").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileId").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("filename").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("expireDateTime").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("validationStatus").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileId").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("filename").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("expireDateTime").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("validationStatus").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileId").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("filename").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("expireDateTime").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("validationStatus").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("fileId").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("filename").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("expireDateTime").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("validationStatus").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsUrl").GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsUrl").GetProperty("fileId").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsUrl").GetProperty("filename").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsUrl").GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsUrl").GetProperty("expireDateTime").ToString());
@@ -177,7 +170,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("startDateTime").ToString());
 Console.WriteLine(result.GetProperty("endDateTime").ToString());
 Console.WriteLine(result.GetProperty("executedDateTime").ToString());
-Console.WriteLine(result.GetProperty("vusers").ToString());
+Console.WriteLine(result.GetProperty("virtualUsers").ToString());
 Console.WriteLine(result.GetProperty("portalUrl").ToString());
 Console.WriteLine(result.GetProperty("duration").ToString());
 Console.WriteLine(result.GetProperty("subnetId").ToString());
@@ -216,7 +209,7 @@ Schema for <c>TestRun</c>:
     quickStartTest: boolean, # Optional. If true, optionalLoadTestConfig is required and JMX script for the load test is not required to upload.
     optionalLoadTestConfig: {
       endpointUrl: string, # Optional. Test URL. Provide the complete HTTP URL. For example, http://contoso-app.azurewebsites.net/login
-      vusers: number, # Optional. No of concurrent virtual users
+      virtualUsers: number, # Optional. No of concurrent virtual users
       rampUpTime: number, # Optional. Ramp up time
       duration: number, # Optional. Test run duration
     }, # Optional. Optional load test config
@@ -225,7 +218,6 @@ Schema for <c>TestRun</c>:
     inputArtifacts: {
       configFileInfo: {
         url: string, # Optional. File URL.
-        fileId: string, # Optional. Unique name for test file.
         filename: string, # Optional. Name of the file.
         fileType: &quot;JMX_FILE&quot; | &quot;USER_PROPERTIES&quot; | &quot;ADDITIONAL_ARTIFACTS&quot;, # Optional. File type
         expireDateTime: string (ISO 8601 Format), # Optional. Expiry time of the file (ISO 8601 literal format)
@@ -250,7 +242,7 @@ Schema for <c>TestRun</c>:
   startDateTime: string (ISO 8601 Format), # Optional. The test run start DateTime(ISO 8601 literal format).
   endDateTime: string (ISO 8601 Format), # Optional. The test run end DateTime(ISO 8601 literal format).
   executedDateTime: string (ISO 8601 Format), # Optional. Test run initiated time.
-  vusers: number, # Optional. Number of virtual users, for which test has been run.
+  virtualUsers: number, # Optional. Number of virtual users, for which test has been run.
   portalUrl: string, # Optional. Portal url.
   duration: number, # Optional. Test run duration in milliseconds.
   subnetId: string, # Optional. Subnet ID on which the load test instances should run.
@@ -287,7 +279,7 @@ Schema for <c>TestRun</c>:
     quickStartTest: boolean, # Optional. If true, optionalLoadTestConfig is required and JMX script for the load test is not required to upload.
     optionalLoadTestConfig: {
       endpointUrl: string, # Optional. Test URL. Provide the complete HTTP URL. For example, http://contoso-app.azurewebsites.net/login
-      vusers: number, # Optional. No of concurrent virtual users
+      virtualUsers: number, # Optional. No of concurrent virtual users
       rampUpTime: number, # Optional. Ramp up time
       duration: number, # Optional. Test run duration
     }, # Optional. Optional load test config
@@ -296,7 +288,6 @@ Schema for <c>TestRun</c>:
     inputArtifacts: {
       configFileInfo: {
         url: string, # Optional. File URL.
-        fileId: string, # Optional. Unique name for test file.
         filename: string, # Optional. Name of the file.
         fileType: &quot;JMX_FILE&quot; | &quot;USER_PROPERTIES&quot; | &quot;ADDITIONAL_ARTIFACTS&quot;, # Optional. File type
         expireDateTime: string (ISO 8601 Format), # Optional. Expiry time of the file (ISO 8601 literal format)
@@ -321,7 +312,7 @@ Schema for <c>TestRun</c>:
   startDateTime: string (ISO 8601 Format), # Optional. The test run start DateTime(ISO 8601 literal format).
   endDateTime: string (ISO 8601 Format), # Optional. The test run end DateTime(ISO 8601 literal format).
   executedDateTime: string (ISO 8601 Format), # Optional. Test run initiated time.
-  vusers: number, # Optional. Number of virtual users, for which test has been run.
+  virtualUsers: number, # Optional. Number of virtual users, for which test has been run.
   portalUrl: string, # Optional. Portal url.
   duration: number, # Optional. Test run duration in milliseconds.
   subnetId: string, # Optional. Subnet ID on which the load test instances should run.
@@ -357,7 +348,7 @@ var data = new {
     passFailCriteria = new {
         passFailMetrics = new {
             key = new {
-                clientmetric = "response_time_ms",
+                clientMetric = "response_time_ms",
                 aggregate = "count",
                 condition = "<condition>",
                 requestName = "<requestName>",
@@ -386,7 +377,7 @@ var data = new {
         quickStartTest = true,
         optionalLoadTestConfig = new {
             endpointUrl = "<endpointUrl>",
-            vusers = 1234,
+            virtualUsers = 1234,
             rampUpTime = 1234,
             duration = 1234,
         },
@@ -399,7 +390,7 @@ var data = new {
 Response response = client.CreateOrUpdateTestRun("<testRunId>", RequestContent.Create(data), "<oldTestRunId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientmetric").ToString());
+Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientMetric").ToString());
 Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("aggregate").ToString());
 Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("condition").ToString());
 Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("requestName").ToString());
@@ -432,47 +423,40 @@ Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("engin
 Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("splitAllCSVs").ToString());
 Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("quickStartTest").ToString());
 Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("endpointUrl").ToString());
-Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("vusers").ToString());
+Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("virtualUsers").ToString());
 Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("rampUpTime").ToString());
 Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("duration").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileId").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("filename").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("expireDateTime").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("validationStatus").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileId").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("filename").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("expireDateTime").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("validationStatus").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileId").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("filename").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("expireDateTime").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("validationStatus").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileId").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("filename").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("expireDateTime").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("validationStatus").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileId").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("filename").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("expireDateTime").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("validationStatus").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("fileId").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("filename").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("expireDateTime").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("validationStatus").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsUrl").GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsUrl").GetProperty("fileId").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsUrl").GetProperty("filename").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsUrl").GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsUrl").GetProperty("expireDateTime").ToString());
@@ -486,7 +470,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("startDateTime").ToString());
 Console.WriteLine(result.GetProperty("endDateTime").ToString());
 Console.WriteLine(result.GetProperty("executedDateTime").ToString());
-Console.WriteLine(result.GetProperty("vusers").ToString());
+Console.WriteLine(result.GetProperty("virtualUsers").ToString());
 Console.WriteLine(result.GetProperty("portalUrl").ToString());
 Console.WriteLine(result.GetProperty("duration").ToString());
 Console.WriteLine(result.GetProperty("subnetId").ToString());
@@ -525,7 +509,7 @@ Schema for <c>TestRun</c>:
     quickStartTest: boolean, # Optional. If true, optionalLoadTestConfig is required and JMX script for the load test is not required to upload.
     optionalLoadTestConfig: {
       endpointUrl: string, # Optional. Test URL. Provide the complete HTTP URL. For example, http://contoso-app.azurewebsites.net/login
-      vusers: number, # Optional. No of concurrent virtual users
+      virtualUsers: number, # Optional. No of concurrent virtual users
       rampUpTime: number, # Optional. Ramp up time
       duration: number, # Optional. Test run duration
     }, # Optional. Optional load test config
@@ -534,7 +518,6 @@ Schema for <c>TestRun</c>:
     inputArtifacts: {
       configFileInfo: {
         url: string, # Optional. File URL.
-        fileId: string, # Optional. Unique name for test file.
         filename: string, # Optional. Name of the file.
         fileType: &quot;JMX_FILE&quot; | &quot;USER_PROPERTIES&quot; | &quot;ADDITIONAL_ARTIFACTS&quot;, # Optional. File type
         expireDateTime: string (ISO 8601 Format), # Optional. Expiry time of the file (ISO 8601 literal format)
@@ -559,7 +542,7 @@ Schema for <c>TestRun</c>:
   startDateTime: string (ISO 8601 Format), # Optional. The test run start DateTime(ISO 8601 literal format).
   endDateTime: string (ISO 8601 Format), # Optional. The test run end DateTime(ISO 8601 literal format).
   executedDateTime: string (ISO 8601 Format), # Optional. Test run initiated time.
-  vusers: number, # Optional. Number of virtual users, for which test has been run.
+  virtualUsers: number, # Optional. Number of virtual users, for which test has been run.
   portalUrl: string, # Optional. Portal url.
   duration: number, # Optional. Test run duration in milliseconds.
   subnetId: string, # Optional. Subnet ID on which the load test instances should run.
@@ -596,7 +579,7 @@ Schema for <c>TestRun</c>:
     quickStartTest: boolean, # Optional. If true, optionalLoadTestConfig is required and JMX script for the load test is not required to upload.
     optionalLoadTestConfig: {
       endpointUrl: string, # Optional. Test URL. Provide the complete HTTP URL. For example, http://contoso-app.azurewebsites.net/login
-      vusers: number, # Optional. No of concurrent virtual users
+      virtualUsers: number, # Optional. No of concurrent virtual users
       rampUpTime: number, # Optional. Ramp up time
       duration: number, # Optional. Test run duration
     }, # Optional. Optional load test config
@@ -605,7 +588,6 @@ Schema for <c>TestRun</c>:
     inputArtifacts: {
       configFileInfo: {
         url: string, # Optional. File URL.
-        fileId: string, # Optional. Unique name for test file.
         filename: string, # Optional. Name of the file.
         fileType: &quot;JMX_FILE&quot; | &quot;USER_PROPERTIES&quot; | &quot;ADDITIONAL_ARTIFACTS&quot;, # Optional. File type
         expireDateTime: string (ISO 8601 Format), # Optional. Expiry time of the file (ISO 8601 literal format)
@@ -630,7 +612,7 @@ Schema for <c>TestRun</c>:
   startDateTime: string (ISO 8601 Format), # Optional. The test run start DateTime(ISO 8601 literal format).
   endDateTime: string (ISO 8601 Format), # Optional. The test run end DateTime(ISO 8601 literal format).
   executedDateTime: string (ISO 8601 Format), # Optional. Test run initiated time.
-  vusers: number, # Optional. Number of virtual users, for which test has been run.
+  virtualUsers: number, # Optional. Number of virtual users, for which test has been run.
   portalUrl: string, # Optional. Portal url.
   duration: number, # Optional. Test run duration in milliseconds.
   subnetId: string, # Optional. Subnet ID on which the load test instances should run.
@@ -653,7 +635,7 @@ var client = new LoadTestRunClient("<https://my-service.azure.com>", credential)
 Response response = await client.GetTestRunAsync("<testRunId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientmetric").ToString());
+Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientMetric").ToString());
 Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("aggregate").ToString());
 Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("condition").ToString());
 Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("requestName").ToString());
@@ -686,47 +668,40 @@ Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("engin
 Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("splitAllCSVs").ToString());
 Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("quickStartTest").ToString());
 Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("endpointUrl").ToString());
-Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("vusers").ToString());
+Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("virtualUsers").ToString());
 Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("rampUpTime").ToString());
 Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("duration").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileId").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("filename").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("expireDateTime").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("validationStatus").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileId").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("filename").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("expireDateTime").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("validationStatus").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileId").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("filename").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("expireDateTime").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("validationStatus").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileId").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("filename").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("expireDateTime").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("validationStatus").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileId").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("filename").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("expireDateTime").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("validationStatus").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("fileId").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("filename").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("expireDateTime").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("validationStatus").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsUrl").GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsUrl").GetProperty("fileId").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsUrl").GetProperty("filename").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsUrl").GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsUrl").GetProperty("expireDateTime").ToString());
@@ -740,7 +715,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("startDateTime").ToString());
 Console.WriteLine(result.GetProperty("endDateTime").ToString());
 Console.WriteLine(result.GetProperty("executedDateTime").ToString());
-Console.WriteLine(result.GetProperty("vusers").ToString());
+Console.WriteLine(result.GetProperty("virtualUsers").ToString());
 Console.WriteLine(result.GetProperty("portalUrl").ToString());
 Console.WriteLine(result.GetProperty("duration").ToString());
 Console.WriteLine(result.GetProperty("subnetId").ToString());
@@ -779,7 +754,7 @@ Schema for <c>TestRun</c>:
     quickStartTest: boolean, # Optional. If true, optionalLoadTestConfig is required and JMX script for the load test is not required to upload.
     optionalLoadTestConfig: {
       endpointUrl: string, # Optional. Test URL. Provide the complete HTTP URL. For example, http://contoso-app.azurewebsites.net/login
-      vusers: number, # Optional. No of concurrent virtual users
+      virtualUsers: number, # Optional. No of concurrent virtual users
       rampUpTime: number, # Optional. Ramp up time
       duration: number, # Optional. Test run duration
     }, # Optional. Optional load test config
@@ -788,7 +763,6 @@ Schema for <c>TestRun</c>:
     inputArtifacts: {
       configFileInfo: {
         url: string, # Optional. File URL.
-        fileId: string, # Optional. Unique name for test file.
         filename: string, # Optional. Name of the file.
         fileType: &quot;JMX_FILE&quot; | &quot;USER_PROPERTIES&quot; | &quot;ADDITIONAL_ARTIFACTS&quot;, # Optional. File type
         expireDateTime: string (ISO 8601 Format), # Optional. Expiry time of the file (ISO 8601 literal format)
@@ -813,7 +787,7 @@ Schema for <c>TestRun</c>:
   startDateTime: string (ISO 8601 Format), # Optional. The test run start DateTime(ISO 8601 literal format).
   endDateTime: string (ISO 8601 Format), # Optional. The test run end DateTime(ISO 8601 literal format).
   executedDateTime: string (ISO 8601 Format), # Optional. Test run initiated time.
-  vusers: number, # Optional. Number of virtual users, for which test has been run.
+  virtualUsers: number, # Optional. Number of virtual users, for which test has been run.
   portalUrl: string, # Optional. Portal url.
   duration: number, # Optional. Test run duration in milliseconds.
   subnetId: string, # Optional. Subnet ID on which the load test instances should run.
@@ -836,7 +810,7 @@ var client = new LoadTestRunClient("<https://my-service.azure.com>", credential)
 Response response = client.GetTestRun("<testRunId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientmetric").ToString());
+Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientMetric").ToString());
 Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("aggregate").ToString());
 Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("condition").ToString());
 Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("requestName").ToString());
@@ -869,47 +843,40 @@ Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("engin
 Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("splitAllCSVs").ToString());
 Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("quickStartTest").ToString());
 Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("endpointUrl").ToString());
-Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("vusers").ToString());
+Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("virtualUsers").ToString());
 Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("rampUpTime").ToString());
 Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("duration").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileId").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("filename").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("expireDateTime").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("validationStatus").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileId").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("filename").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("expireDateTime").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("validationStatus").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileId").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("filename").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("expireDateTime").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("validationStatus").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileId").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("filename").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("expireDateTime").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("validationStatus").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileId").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("filename").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("expireDateTime").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("validationStatus").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("fileId").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("filename").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("expireDateTime").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("validationStatus").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsUrl").GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsUrl").GetProperty("fileId").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsUrl").GetProperty("filename").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsUrl").GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsUrl").GetProperty("expireDateTime").ToString());
@@ -923,7 +890,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("startDateTime").ToString());
 Console.WriteLine(result.GetProperty("endDateTime").ToString());
 Console.WriteLine(result.GetProperty("executedDateTime").ToString());
-Console.WriteLine(result.GetProperty("vusers").ToString());
+Console.WriteLine(result.GetProperty("virtualUsers").ToString());
 Console.WriteLine(result.GetProperty("portalUrl").ToString());
 Console.WriteLine(result.GetProperty("duration").ToString());
 Console.WriteLine(result.GetProperty("subnetId").ToString());
@@ -962,7 +929,7 @@ Schema for <c>TestRun</c>:
     quickStartTest: boolean, # Optional. If true, optionalLoadTestConfig is required and JMX script for the load test is not required to upload.
     optionalLoadTestConfig: {
       endpointUrl: string, # Optional. Test URL. Provide the complete HTTP URL. For example, http://contoso-app.azurewebsites.net/login
-      vusers: number, # Optional. No of concurrent virtual users
+      virtualUsers: number, # Optional. No of concurrent virtual users
       rampUpTime: number, # Optional. Ramp up time
       duration: number, # Optional. Test run duration
     }, # Optional. Optional load test config
@@ -971,7 +938,6 @@ Schema for <c>TestRun</c>:
     inputArtifacts: {
       configFileInfo: {
         url: string, # Optional. File URL.
-        fileId: string, # Optional. Unique name for test file.
         filename: string, # Optional. Name of the file.
         fileType: &quot;JMX_FILE&quot; | &quot;USER_PROPERTIES&quot; | &quot;ADDITIONAL_ARTIFACTS&quot;, # Optional. File type
         expireDateTime: string (ISO 8601 Format), # Optional. Expiry time of the file (ISO 8601 literal format)
@@ -996,7 +962,7 @@ Schema for <c>TestRun</c>:
   startDateTime: string (ISO 8601 Format), # Optional. The test run start DateTime(ISO 8601 literal format).
   endDateTime: string (ISO 8601 Format), # Optional. The test run end DateTime(ISO 8601 literal format).
   executedDateTime: string (ISO 8601 Format), # Optional. Test run initiated time.
-  vusers: number, # Optional. Number of virtual users, for which test has been run.
+  virtualUsers: number, # Optional. Number of virtual users, for which test has been run.
   portalUrl: string, # Optional. Portal url.
   duration: number, # Optional. Test run duration in milliseconds.
   subnetId: string, # Optional. Subnet ID on which the load test instances should run.
@@ -1009,18 +975,17 @@ Schema for <c>TestRun</c>:
 
 </remarks>
     </member>
-    <member name="GetTestRunFileAsync(String,String,RequestContext)">
+    <member name="GetFileAsync(String,String,RequestContext)">
 <example>
-This sample shows how to call GetTestRunFileAsync with required parameters and parse the result.
+This sample shows how to call GetFileAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
 
-Response response = await client.GetTestRunFileAsync("<testRunId>", "<fileId>");
+Response response = await client.GetFileAsync("<testRunId>", "<fileName>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("fileId").ToString());
 Console.WriteLine(result.GetProperty("filename").ToString());
 Console.WriteLine(result.GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("expireDateTime").ToString());
@@ -1035,7 +1000,6 @@ Response Body:
 Schema for <c>FileInfo</c>:
 <code>{
   url: string, # Optional. File URL.
-  fileId: string, # Optional. Unique name for test file.
   filename: string, # Optional. Name of the file.
   fileType: &quot;JMX_FILE&quot; | &quot;USER_PROPERTIES&quot; | &quot;ADDITIONAL_ARTIFACTS&quot;, # Optional. File type
   expireDateTime: string (ISO 8601 Format), # Optional. Expiry time of the file (ISO 8601 literal format)
@@ -1045,18 +1009,17 @@ Schema for <c>FileInfo</c>:
 
 </remarks>
     </member>
-    <member name="GetTestRunFile(String,String,RequestContext)">
+    <member name="GetFile(String,String,RequestContext)">
 <example>
-This sample shows how to call GetTestRunFile with required parameters and parse the result.
+This sample shows how to call GetFile with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
 
-Response response = client.GetTestRunFile("<testRunId>", "<fileId>");
+Response response = client.GetFile("<testRunId>", "<fileName>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("fileId").ToString());
 Console.WriteLine(result.GetProperty("filename").ToString());
 Console.WriteLine(result.GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("expireDateTime").ToString());
@@ -1071,7 +1034,6 @@ Response Body:
 Schema for <c>FileInfo</c>:
 <code>{
   url: string, # Optional. File URL.
-  fileId: string, # Optional. Unique name for test file.
   filename: string, # Optional. Name of the file.
   fileType: &quot;JMX_FILE&quot; | &quot;USER_PROPERTIES&quot; | &quot;ADDITIONAL_ARTIFACTS&quot;, # Optional. File type
   expireDateTime: string (ISO 8601 Format), # Optional. Expiry time of the file (ISO 8601 literal format)
@@ -1091,7 +1053,7 @@ var client = new LoadTestRunClient("<https://my-service.azure.com>", credential)
 Response response = await client.StopTestRunAsync("<testRunId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientmetric").ToString());
+Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientMetric").ToString());
 Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("aggregate").ToString());
 Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("condition").ToString());
 Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("requestName").ToString());
@@ -1124,47 +1086,40 @@ Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("engin
 Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("splitAllCSVs").ToString());
 Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("quickStartTest").ToString());
 Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("endpointUrl").ToString());
-Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("vusers").ToString());
+Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("virtualUsers").ToString());
 Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("rampUpTime").ToString());
 Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("duration").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileId").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("filename").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("expireDateTime").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("validationStatus").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileId").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("filename").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("expireDateTime").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("validationStatus").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileId").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("filename").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("expireDateTime").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("validationStatus").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileId").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("filename").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("expireDateTime").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("validationStatus").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileId").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("filename").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("expireDateTime").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("validationStatus").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("fileId").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("filename").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("expireDateTime").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("validationStatus").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsUrl").GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsUrl").GetProperty("fileId").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsUrl").GetProperty("filename").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsUrl").GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsUrl").GetProperty("expireDateTime").ToString());
@@ -1178,7 +1133,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("startDateTime").ToString());
 Console.WriteLine(result.GetProperty("endDateTime").ToString());
 Console.WriteLine(result.GetProperty("executedDateTime").ToString());
-Console.WriteLine(result.GetProperty("vusers").ToString());
+Console.WriteLine(result.GetProperty("virtualUsers").ToString());
 Console.WriteLine(result.GetProperty("portalUrl").ToString());
 Console.WriteLine(result.GetProperty("duration").ToString());
 Console.WriteLine(result.GetProperty("subnetId").ToString());
@@ -1217,7 +1172,7 @@ Schema for <c>TestRun</c>:
     quickStartTest: boolean, # Optional. If true, optionalLoadTestConfig is required and JMX script for the load test is not required to upload.
     optionalLoadTestConfig: {
       endpointUrl: string, # Optional. Test URL. Provide the complete HTTP URL. For example, http://contoso-app.azurewebsites.net/login
-      vusers: number, # Optional. No of concurrent virtual users
+      virtualUsers: number, # Optional. No of concurrent virtual users
       rampUpTime: number, # Optional. Ramp up time
       duration: number, # Optional. Test run duration
     }, # Optional. Optional load test config
@@ -1226,7 +1181,6 @@ Schema for <c>TestRun</c>:
     inputArtifacts: {
       configFileInfo: {
         url: string, # Optional. File URL.
-        fileId: string, # Optional. Unique name for test file.
         filename: string, # Optional. Name of the file.
         fileType: &quot;JMX_FILE&quot; | &quot;USER_PROPERTIES&quot; | &quot;ADDITIONAL_ARTIFACTS&quot;, # Optional. File type
         expireDateTime: string (ISO 8601 Format), # Optional. Expiry time of the file (ISO 8601 literal format)
@@ -1251,7 +1205,7 @@ Schema for <c>TestRun</c>:
   startDateTime: string (ISO 8601 Format), # Optional. The test run start DateTime(ISO 8601 literal format).
   endDateTime: string (ISO 8601 Format), # Optional. The test run end DateTime(ISO 8601 literal format).
   executedDateTime: string (ISO 8601 Format), # Optional. Test run initiated time.
-  vusers: number, # Optional. Number of virtual users, for which test has been run.
+  virtualUsers: number, # Optional. Number of virtual users, for which test has been run.
   portalUrl: string, # Optional. Portal url.
   duration: number, # Optional. Test run duration in milliseconds.
   subnetId: string, # Optional. Subnet ID on which the load test instances should run.
@@ -1274,7 +1228,7 @@ var client = new LoadTestRunClient("<https://my-service.azure.com>", credential)
 Response response = client.StopTestRun("<testRunId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientmetric").ToString());
+Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientMetric").ToString());
 Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("aggregate").ToString());
 Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("condition").ToString());
 Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("requestName").ToString());
@@ -1307,47 +1261,40 @@ Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("engin
 Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("splitAllCSVs").ToString());
 Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("quickStartTest").ToString());
 Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("endpointUrl").ToString());
-Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("vusers").ToString());
+Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("virtualUsers").ToString());
 Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("rampUpTime").ToString());
 Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("duration").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileId").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("filename").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("expireDateTime").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("validationStatus").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileId").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("filename").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("expireDateTime").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("validationStatus").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileId").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("filename").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("expireDateTime").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("validationStatus").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileId").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("filename").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("expireDateTime").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("validationStatus").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileId").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("filename").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("expireDateTime").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("validationStatus").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("fileId").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("filename").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("expireDateTime").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("validationStatus").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsUrl").GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsUrl").GetProperty("fileId").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsUrl").GetProperty("filename").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsUrl").GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsUrl").GetProperty("expireDateTime").ToString());
@@ -1361,7 +1308,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("startDateTime").ToString());
 Console.WriteLine(result.GetProperty("endDateTime").ToString());
 Console.WriteLine(result.GetProperty("executedDateTime").ToString());
-Console.WriteLine(result.GetProperty("vusers").ToString());
+Console.WriteLine(result.GetProperty("virtualUsers").ToString());
 Console.WriteLine(result.GetProperty("portalUrl").ToString());
 Console.WriteLine(result.GetProperty("duration").ToString());
 Console.WriteLine(result.GetProperty("subnetId").ToString());
@@ -1400,7 +1347,7 @@ Schema for <c>TestRun</c>:
     quickStartTest: boolean, # Optional. If true, optionalLoadTestConfig is required and JMX script for the load test is not required to upload.
     optionalLoadTestConfig: {
       endpointUrl: string, # Optional. Test URL. Provide the complete HTTP URL. For example, http://contoso-app.azurewebsites.net/login
-      vusers: number, # Optional. No of concurrent virtual users
+      virtualUsers: number, # Optional. No of concurrent virtual users
       rampUpTime: number, # Optional. Ramp up time
       duration: number, # Optional. Test run duration
     }, # Optional. Optional load test config
@@ -1409,7 +1356,6 @@ Schema for <c>TestRun</c>:
     inputArtifacts: {
       configFileInfo: {
         url: string, # Optional. File URL.
-        fileId: string, # Optional. Unique name for test file.
         filename: string, # Optional. Name of the file.
         fileType: &quot;JMX_FILE&quot; | &quot;USER_PROPERTIES&quot; | &quot;ADDITIONAL_ARTIFACTS&quot;, # Optional. File type
         expireDateTime: string (ISO 8601 Format), # Optional. Expiry time of the file (ISO 8601 literal format)
@@ -1434,7 +1380,7 @@ Schema for <c>TestRun</c>:
   startDateTime: string (ISO 8601 Format), # Optional. The test run start DateTime(ISO 8601 literal format).
   endDateTime: string (ISO 8601 Format), # Optional. The test run end DateTime(ISO 8601 literal format).
   executedDateTime: string (ISO 8601 Format), # Optional. Test run initiated time.
-  vusers: number, # Optional. Number of virtual users, for which test has been run.
+  virtualUsers: number, # Optional. Number of virtual users, for which test has been run.
   portalUrl: string, # Optional. Portal url.
   duration: number, # Optional. Test run duration in milliseconds.
   subnetId: string, # Optional. Subnet ID on which the load test instances should run.
@@ -1457,8 +1403,8 @@ var client = new LoadTestRunClient("<https://my-service.azure.com>", credential)
 Response response = await client.GetMetricNamespacesAsync("<testRunId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("metricNamespaceName").ToString());
 ]]></code>
 </example>
 <remarks>
@@ -1470,8 +1416,8 @@ Schema for <c>MetricNamespaceCollection</c>:
 <code>{
   value: [
     {
-      name: string, # Optional. The escaped name of the namespace.
-      metricNamespaceName: string, # Optional. The fully qualified metric namespace name.
+      description: string, # Optional. The namespace description.
+      name: string, # Optional. The metric namespace name.
     }
   ], # Required. The values for the metric namespaces.
 }
@@ -1489,8 +1435,8 @@ var client = new LoadTestRunClient("<https://my-service.azure.com>", credential)
 Response response = client.GetMetricNamespaces("<testRunId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("metricNamespaceName").ToString());
 ]]></code>
 </example>
 <remarks>
@@ -1502,8 +1448,8 @@ Schema for <c>MetricNamespaceCollection</c>:
 <code>{
   value: [
     {
-      name: string, # Optional. The escaped name of the namespace.
-      metricNamespaceName: string, # Optional. The fully qualified metric namespace name.
+      description: string, # Optional. The namespace description.
+      name: string, # Optional. The metric namespace name.
     }
   ], # Required. The values for the metric namespaces.
 }
@@ -1521,11 +1467,10 @@ var client = new LoadTestRunClient("<https://my-service.azure.com>", credential)
 Response response = await client.GetMetricDefinitionsAsync("<testRunId>", "<metricNamespace>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("dimensions")[0].GetProperty("localizedValue").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("dimensions")[0].GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("displayDescription").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").GetProperty("localizedValue").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("dimensions")[0].GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("dimensions")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("namespace").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("primaryAggregationType").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("supportedAggregationTypes")[0].ToString());
@@ -1544,21 +1489,21 @@ Schema for <c>MetricDefinitionCollection</c>:
     {
       dimensions: [
         {
-          localizedValue: string, # Optional. The locale specific value.
-          value: string, # Optional. The invariant value.
+          description: string, # Optional. The description
+          name: string, # Optional. The name
         }
-      ], # Optional. The name and the display name of the dimension, i.e. it is a localizable string.
-      displayDescription: string, # Optional. Detailed description of this metric.
-      name: LocalizableString, # Optional. The localizable string class.
+      ], # Optional. List of dimensions
+      description: string, # Optional. The metric description
+      name: string, # Optional. The metric name
       namespace: string, # Optional. The namespace the metric belongs to.
-      primaryAggregationType: &quot;Average&quot; | &quot;Count&quot; | &quot;Minimum&quot; | &quot;Maximum&quot; | &quot;None&quot; | &quot;Total&quot; | &quot;Percentile90&quot; | &quot;Percentile95&quot; | &quot;Percentile99&quot;, # Optional. the primary aggregation type value defining how to use the values for display.
-      supportedAggregationTypes: [string], # Optional. the collection of what aggregation types are supported.
+      primaryAggregationType: &quot;Average&quot; | &quot;Count&quot; | &quot;None&quot; | &quot;Total&quot; | &quot;Percentile90&quot; | &quot;Percentile95&quot; | &quot;Percentile99&quot;, # Optional. The primary aggregation type value defining how to use the values for display.
+      supportedAggregationTypes: [string], # Optional. The collection of what all aggregation types are supported.
       unit: &quot;NotSpecified&quot; | &quot;Percent&quot; | &quot;Count&quot; | &quot;Seconds&quot; | &quot;Milliseconds&quot; | &quot;Bytes&quot; | &quot;BytesPerSecond&quot; | &quot;CountPerSecond&quot;, # Optional. The unit of the metric.
       metricAvailabilities: [
         {
           timeGrain: &quot;PT5S&quot; | &quot;PT10S&quot; | &quot;PT1M&quot; | &quot;PT5M&quot; | &quot;PT1H&quot;, # Optional. The time grain specifies the aggregation interval for the metric. Expressed as a duration &apos;PT1M&apos;, &apos;PT1H&apos;, etc.
         }
-      ], # Optional. Metric availability specifies the time grain (aggregation interval or frequency) and the retention period for that time grain.
+      ], # Optional. Metric availability specifies the time grain (aggregation interval or frequency).
     }
   ], # Required. the values for the metric definitions.
 }
@@ -1576,11 +1521,10 @@ var client = new LoadTestRunClient("<https://my-service.azure.com>", credential)
 Response response = client.GetMetricDefinitions("<testRunId>", "<metricNamespace>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("dimensions")[0].GetProperty("localizedValue").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("dimensions")[0].GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("displayDescription").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").GetProperty("localizedValue").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("dimensions")[0].GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("dimensions")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("namespace").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("primaryAggregationType").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("supportedAggregationTypes")[0].ToString());
@@ -1599,21 +1543,21 @@ Schema for <c>MetricDefinitionCollection</c>:
     {
       dimensions: [
         {
-          localizedValue: string, # Optional. The locale specific value.
-          value: string, # Optional. The invariant value.
+          description: string, # Optional. The description
+          name: string, # Optional. The name
         }
-      ], # Optional. The name and the display name of the dimension, i.e. it is a localizable string.
-      displayDescription: string, # Optional. Detailed description of this metric.
-      name: LocalizableString, # Optional. The localizable string class.
+      ], # Optional. List of dimensions
+      description: string, # Optional. The metric description
+      name: string, # Optional. The metric name
       namespace: string, # Optional. The namespace the metric belongs to.
-      primaryAggregationType: &quot;Average&quot; | &quot;Count&quot; | &quot;Minimum&quot; | &quot;Maximum&quot; | &quot;None&quot; | &quot;Total&quot; | &quot;Percentile90&quot; | &quot;Percentile95&quot; | &quot;Percentile99&quot;, # Optional. the primary aggregation type value defining how to use the values for display.
-      supportedAggregationTypes: [string], # Optional. the collection of what aggregation types are supported.
+      primaryAggregationType: &quot;Average&quot; | &quot;Count&quot; | &quot;None&quot; | &quot;Total&quot; | &quot;Percentile90&quot; | &quot;Percentile95&quot; | &quot;Percentile99&quot;, # Optional. The primary aggregation type value defining how to use the values for display.
+      supportedAggregationTypes: [string], # Optional. The collection of what all aggregation types are supported.
       unit: &quot;NotSpecified&quot; | &quot;Percent&quot; | &quot;Count&quot; | &quot;Seconds&quot; | &quot;Milliseconds&quot; | &quot;Bytes&quot; | &quot;BytesPerSecond&quot; | &quot;CountPerSecond&quot;, # Optional. The unit of the metric.
       metricAvailabilities: [
         {
           timeGrain: &quot;PT5S&quot; | &quot;PT10S&quot; | &quot;PT1M&quot; | &quot;PT5M&quot; | &quot;PT1H&quot;, # Optional. The time grain specifies the aggregation interval for the metric. Expressed as a duration &apos;PT1M&apos;, &apos;PT1H&apos;, etc.
         }
-      ], # Optional. Metric availability specifies the time grain (aggregation interval or frequency) and the retention period for that time grain.
+      ], # Optional. Metric availability specifies the time grain (aggregation interval or frequency).
     }
   ], # Required. the values for the metric definitions.
 }
@@ -1621,7 +1565,7 @@ Schema for <c>MetricDefinitionCollection</c>:
 
 </remarks>
     </member>
-    <member name="GetMetricsAsync(String,String,String,String,String,RequestContent,String,String,RequestContext)">
+    <member name="GetMetricsAsync(String,String,String,String,RequestContent,String,String,RequestContext)">
 <example>
 This sample shows how to call GetMetricsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1630,7 +1574,7 @@ var client = new LoadTestRunClient("<https://my-service.azure.com>", credential)
 
 var data = new {};
 
-Response response = await client.GetMetricsAsync("<testRunId>", "<metricname>", "<metricNamespace>", "<resultType>", "<timespan>", RequestContent.Create(data));
+Response response = await client.GetMetricsAsync("<testRunId>", "<metricname>", "<metricNamespace>", "<timespan>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
@@ -1651,28 +1595,14 @@ var data = new {
     },
 };
 
-Response response = await client.GetMetricsAsync("<testRunId>", "<metricname>", "<metricNamespace>", "<resultType>", "<timespan>", RequestContent.Create(data), "<aggregation>", "<interval>");
+Response response = await client.GetMetricsAsync("<testRunId>", "<metricname>", "<metricNamespace>", "<timespan>", RequestContent.Create(data), "<aggregation>", "<interval>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("testRunId").ToString());
-Console.WriteLine(result.GetProperty("interval").ToString());
-Console.WriteLine(result.GetProperty("namespace").ToString());
-Console.WriteLine(result.GetProperty("timespan").ToString());
-Console.WriteLine(result.GetProperty("value").GetProperty("name").GetProperty("localizedValue").ToString());
-Console.WriteLine(result.GetProperty("value").GetProperty("name").GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("value").GetProperty("timeseries")[0].GetProperty("data")[0].GetProperty("average").ToString());
-Console.WriteLine(result.GetProperty("value").GetProperty("timeseries")[0].GetProperty("data")[0].GetProperty("count").ToString());
-Console.WriteLine(result.GetProperty("value").GetProperty("timeseries")[0].GetProperty("data")[0].GetProperty("maximum").ToString());
-Console.WriteLine(result.GetProperty("value").GetProperty("timeseries")[0].GetProperty("data")[0].GetProperty("minimum").ToString());
-Console.WriteLine(result.GetProperty("value").GetProperty("timeseries")[0].GetProperty("data")[0].GetProperty("timeStamp").ToString());
-Console.WriteLine(result.GetProperty("value").GetProperty("timeseries")[0].GetProperty("data")[0].GetProperty("total").ToString());
-Console.WriteLine(result.GetProperty("value").GetProperty("timeseries")[0].GetProperty("data")[0].GetProperty("percentile90").ToString());
-Console.WriteLine(result.GetProperty("value").GetProperty("timeseries")[0].GetProperty("data")[0].GetProperty("percentile95").ToString());
-Console.WriteLine(result.GetProperty("value").GetProperty("timeseries")[0].GetProperty("data")[0].GetProperty("percentile99").ToString());
-Console.WriteLine(result.GetProperty("value").GetProperty("timeseries")[0].GetProperty("metadatavalues")[0].GetProperty("name").GetProperty("localizedValue").ToString());
-Console.WriteLine(result.GetProperty("value").GetProperty("timeseries")[0].GetProperty("metadatavalues")[0].GetProperty("name").GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("value").GetProperty("timeseries")[0].GetProperty("metadatavalues")[0].GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("value").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("timeseries")[0].GetProperty("data")[0].GetProperty("timestamp").ToString());
+Console.WriteLine(result.GetProperty("timeseries")[0].GetProperty("data")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("timeseries")[0].GetProperty("dimensionValues")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("timeseries")[0].GetProperty("dimensionValues")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("nextLink").ToString());
 ]]></code>
 </example>
 <remarks>
@@ -1684,57 +1614,40 @@ Schema for <c>MetricRequestPayload</c>:
 <code>{
   filters: [
     {
-      name: string, # Optional. The invariant metadata name
-      values: [string], # Optional. The metadata values. Maximum values can be 20.
+      name: string, # Optional. The dimension name
+      values: [string], # Optional. The dimension values. Maximum values can be 20.
     }
-  ], # Optional. The MetadataFilter is used to reduce the set of metric data returned. Example: Metric contains metadata like SamplerName, Error. To retrieve all the time series data where SamplerName is equals to HTTPRequest1 or HTTPRequest2, the MetadataFilter value will be {&quot;SamplerName&quot;, [&quot;HTTPRequest1&quot;, &quot;HTTPRequest2&quot;}
+  ], # Optional. Get metrics for specific dimension values. Example: Metric contains dimension like SamplerName, Error. To retrieve all the time series data where SamplerName is equals to HTTPRequest1 or HTTPRequest2, the DimensionFilter value will be {&quot;SamplerName&quot;, [&quot;HTTPRequest1&quot;, &quot;HTTPRequest2&quot;}
 }
 </code>
 
 Response Body:
 
-Schema for <c>Response</c>:
+Schema for <c>Metrics</c>:
 <code>{
-  testRunId: string, # Optional. Test run identifier
-  interval: string, # Optional. The interval (window size) for which the metric data was returned in. This may be adjusted in the future and returned back from what was originally requested. This is not present if a metadata request was made.
-  namespace: string, # Optional. The namespace of the metrics being queried.
-  timespan: string, # Optional. The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by &apos;/&apos;. This may be adjusted in the future and returned back from what was originally requested.
-  value: {
-    name: {
-      localizedValue: string, # Optional. The locale specific value.
-      value: string, # Optional. The invariant value.
-    }, # Optional. The localizable string class.
-    timeseries: [
-      {
-        data: [
-          {
-            average: number, # Optional. The average value in the time range.
-            count: number, # Optional. The number of samples in the time range. Can be used to determine the number of values that contributed to the average value.
-            maximum: number, # Optional. The greatest value in the time range.
-            minimum: number, # Optional. The least value in the time range.
-            timeStamp: string, # Optional. The timestamp for the metric value in ISO 8601 format.
-            total: number, # Optional. The sum of all of the values in the time range.
-            percentile90: number, # Optional. 90th percentile value in the time range.
-            percentile95: number, # Optional. 95th percentile value in the time range.
-            percentile99: number, # Optional. 99th percentile value in the time range.
-          }
-        ], # Optional. An array of data points representing the metric values. This is only returned if a result type of &quot;Data&quot; is specified.
-        metadatavalues: [
-          {
-            name: LocalizableString, # Optional. The localizable string class.
-            value: string, # Optional. The value of the metadata.
-          }
-        ], # Optional. The metadata values 
-      }
-    ], # Optional. The time series returned when a data query is performed.
-    unit: &quot;NotSpecified&quot; | &quot;Percent&quot; | &quot;Count&quot; | &quot;Seconds&quot; | &quot;Milliseconds&quot; | &quot;Bytes&quot; | &quot;BytesPerSecond&quot; | &quot;CountPerSecond&quot;, # Optional. The unit of the metric.
-  }, # Optional. The result data of a query.
+  timeseries: [
+    {
+      data: [
+        {
+          timestamp: string, # Optional. The timestamp for the metric value in ISO 8601 format.
+          value: number, # Optional. The metric value.
+        }
+      ], # Optional. An array of data points representing the metric values.
+      dimensionValues: [
+        {
+          name: string, # Optional. The name of the dimension.
+          value: string, # Optional. The value of the dimension.
+        }
+      ], # Optional. The dimension values 
+    }
+  ], # Optional. Timeseries data for metric query.
+  nextLink: string, # Optional. Link for the next set of timeseries in case of paginated results, if applicable
 }
 </code>
 
 </remarks>
     </member>
-    <member name="GetMetrics(String,String,String,String,String,RequestContent,String,String,RequestContext)">
+    <member name="GetMetrics(String,String,String,String,RequestContent,String,String,RequestContext)">
 <example>
 This sample shows how to call GetMetrics with required parameters and parse the result.
 <code><![CDATA[
@@ -1743,7 +1656,7 @@ var client = new LoadTestRunClient("<https://my-service.azure.com>", credential)
 
 var data = new {};
 
-Response response = client.GetMetrics("<testRunId>", "<metricname>", "<metricNamespace>", "<resultType>", "<timespan>", RequestContent.Create(data));
+Response response = client.GetMetrics("<testRunId>", "<metricname>", "<metricNamespace>", "<timespan>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
@@ -1764,28 +1677,14 @@ var data = new {
     },
 };
 
-Response response = client.GetMetrics("<testRunId>", "<metricname>", "<metricNamespace>", "<resultType>", "<timespan>", RequestContent.Create(data), "<aggregation>", "<interval>");
+Response response = client.GetMetrics("<testRunId>", "<metricname>", "<metricNamespace>", "<timespan>", RequestContent.Create(data), "<aggregation>", "<interval>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("testRunId").ToString());
-Console.WriteLine(result.GetProperty("interval").ToString());
-Console.WriteLine(result.GetProperty("namespace").ToString());
-Console.WriteLine(result.GetProperty("timespan").ToString());
-Console.WriteLine(result.GetProperty("value").GetProperty("name").GetProperty("localizedValue").ToString());
-Console.WriteLine(result.GetProperty("value").GetProperty("name").GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("value").GetProperty("timeseries")[0].GetProperty("data")[0].GetProperty("average").ToString());
-Console.WriteLine(result.GetProperty("value").GetProperty("timeseries")[0].GetProperty("data")[0].GetProperty("count").ToString());
-Console.WriteLine(result.GetProperty("value").GetProperty("timeseries")[0].GetProperty("data")[0].GetProperty("maximum").ToString());
-Console.WriteLine(result.GetProperty("value").GetProperty("timeseries")[0].GetProperty("data")[0].GetProperty("minimum").ToString());
-Console.WriteLine(result.GetProperty("value").GetProperty("timeseries")[0].GetProperty("data")[0].GetProperty("timeStamp").ToString());
-Console.WriteLine(result.GetProperty("value").GetProperty("timeseries")[0].GetProperty("data")[0].GetProperty("total").ToString());
-Console.WriteLine(result.GetProperty("value").GetProperty("timeseries")[0].GetProperty("data")[0].GetProperty("percentile90").ToString());
-Console.WriteLine(result.GetProperty("value").GetProperty("timeseries")[0].GetProperty("data")[0].GetProperty("percentile95").ToString());
-Console.WriteLine(result.GetProperty("value").GetProperty("timeseries")[0].GetProperty("data")[0].GetProperty("percentile99").ToString());
-Console.WriteLine(result.GetProperty("value").GetProperty("timeseries")[0].GetProperty("metadatavalues")[0].GetProperty("name").GetProperty("localizedValue").ToString());
-Console.WriteLine(result.GetProperty("value").GetProperty("timeseries")[0].GetProperty("metadatavalues")[0].GetProperty("name").GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("value").GetProperty("timeseries")[0].GetProperty("metadatavalues")[0].GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("value").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("timeseries")[0].GetProperty("data")[0].GetProperty("timestamp").ToString());
+Console.WriteLine(result.GetProperty("timeseries")[0].GetProperty("data")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("timeseries")[0].GetProperty("dimensionValues")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("timeseries")[0].GetProperty("dimensionValues")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("nextLink").ToString());
 ]]></code>
 </example>
 <remarks>
@@ -1797,51 +1696,110 @@ Schema for <c>MetricRequestPayload</c>:
 <code>{
   filters: [
     {
-      name: string, # Optional. The invariant metadata name
-      values: [string], # Optional. The metadata values. Maximum values can be 20.
+      name: string, # Optional. The dimension name
+      values: [string], # Optional. The dimension values. Maximum values can be 20.
     }
-  ], # Optional. The MetadataFilter is used to reduce the set of metric data returned. Example: Metric contains metadata like SamplerName, Error. To retrieve all the time series data where SamplerName is equals to HTTPRequest1 or HTTPRequest2, the MetadataFilter value will be {&quot;SamplerName&quot;, [&quot;HTTPRequest1&quot;, &quot;HTTPRequest2&quot;}
+  ], # Optional. Get metrics for specific dimension values. Example: Metric contains dimension like SamplerName, Error. To retrieve all the time series data where SamplerName is equals to HTTPRequest1 or HTTPRequest2, the DimensionFilter value will be {&quot;SamplerName&quot;, [&quot;HTTPRequest1&quot;, &quot;HTTPRequest2&quot;}
 }
 </code>
 
 Response Body:
 
-Schema for <c>Response</c>:
+Schema for <c>Metrics</c>:
 <code>{
-  testRunId: string, # Optional. Test run identifier
-  interval: string, # Optional. The interval (window size) for which the metric data was returned in. This may be adjusted in the future and returned back from what was originally requested. This is not present if a metadata request was made.
-  namespace: string, # Optional. The namespace of the metrics being queried.
-  timespan: string, # Optional. The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by &apos;/&apos;. This may be adjusted in the future and returned back from what was originally requested.
-  value: {
-    name: {
-      localizedValue: string, # Optional. The locale specific value.
-      value: string, # Optional. The invariant value.
-    }, # Optional. The localizable string class.
-    timeseries: [
-      {
-        data: [
-          {
-            average: number, # Optional. The average value in the time range.
-            count: number, # Optional. The number of samples in the time range. Can be used to determine the number of values that contributed to the average value.
-            maximum: number, # Optional. The greatest value in the time range.
-            minimum: number, # Optional. The least value in the time range.
-            timeStamp: string, # Optional. The timestamp for the metric value in ISO 8601 format.
-            total: number, # Optional. The sum of all of the values in the time range.
-            percentile90: number, # Optional. 90th percentile value in the time range.
-            percentile95: number, # Optional. 95th percentile value in the time range.
-            percentile99: number, # Optional. 99th percentile value in the time range.
-          }
-        ], # Optional. An array of data points representing the metric values. This is only returned if a result type of &quot;Data&quot; is specified.
-        metadatavalues: [
-          {
-            name: LocalizableString, # Optional. The localizable string class.
-            value: string, # Optional. The value of the metadata.
-          }
-        ], # Optional. The metadata values 
-      }
-    ], # Optional. The time series returned when a data query is performed.
-    unit: &quot;NotSpecified&quot; | &quot;Percent&quot; | &quot;Count&quot; | &quot;Seconds&quot; | &quot;Milliseconds&quot; | &quot;Bytes&quot; | &quot;BytesPerSecond&quot; | &quot;CountPerSecond&quot;, # Optional. The unit of the metric.
-  }, # Optional. The result data of a query.
+  timeseries: [
+    {
+      data: [
+        {
+          timestamp: string, # Optional. The timestamp for the metric value in ISO 8601 format.
+          value: number, # Optional. The metric value.
+        }
+      ], # Optional. An array of data points representing the metric values.
+      dimensionValues: [
+        {
+          name: string, # Optional. The name of the dimension.
+          value: string, # Optional. The value of the dimension.
+        }
+      ], # Optional. The dimension values 
+    }
+  ], # Optional. Timeseries data for metric query.
+  nextLink: string, # Optional. Link for the next set of timeseries in case of paginated results, if applicable
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetMetricDimensionValuesAsync(String,String,String,String,String,String,RequestContext)">
+<example>
+This sample shows how to call GetMetricDimensionValuesAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
+
+Response response = await client.GetMetricDimensionValuesAsync("<testRunId>", "<name>", "<metricname>", "<metricNamespace>", "<timespan>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetMetricDimensionValuesAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
+
+Response response = await client.GetMetricDimensionValuesAsync("<testRunId>", "<name>", "<metricname>", "<metricNamespace>", "<timespan>", "<interval>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("value")[0].ToString());
+Console.WriteLine(result.GetProperty("nextLink").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>DimensionValueList</c>:
+<code>{
+  value: [string], # Optional. The dimension values
+  nextLink: string, # Optional. Link for the next set of values in case of paginated results, if applicable
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetMetricDimensionValues(String,String,String,String,String,String,RequestContext)">
+<example>
+This sample shows how to call GetMetricDimensionValues with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
+
+Response response = client.GetMetricDimensionValues("<testRunId>", "<name>", "<metricname>", "<metricNamespace>", "<timespan>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetMetricDimensionValues with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
+
+Response response = client.GetMetricDimensionValues("<testRunId>", "<name>", "<metricname>", "<metricNamespace>", "<timespan>", "<interval>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("value")[0].ToString());
+Console.WriteLine(result.GetProperty("nextLink").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>DimensionValueList</c>:
+<code>{
+  value: [string], # Optional. The dimension values
+  nextLink: string, # Optional. Link for the next set of values in case of paginated results, if applicable
 }
 </code>
 
@@ -2088,10 +2046,7 @@ var data = new {
             resourceId = "<resourceId>",
             metricNamespace = "<metricNamespace>",
             displayDescription = "<displayDescription>",
-            name = new {
-                localizedValue = "<localizedValue>",
-                value = "<value>",
-            },
+            name = "<name>",
             aggregation = "<aggregation>",
             unit = "<unit>",
             resourceType = "<resourceType>",
@@ -2107,8 +2062,7 @@ Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetPropert
 Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("resourceId").ToString());
 Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("metricNamespace").ToString());
 Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("displayDescription").ToString());
-Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("name").GetProperty("localizedValue").ToString());
-Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("name").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("aggregation").ToString());
 Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("unit").ToString());
 Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("resourceType").ToString());
@@ -2174,10 +2128,7 @@ var data = new {
             resourceId = "<resourceId>",
             metricNamespace = "<metricNamespace>",
             displayDescription = "<displayDescription>",
-            name = new {
-                localizedValue = "<localizedValue>",
-                value = "<value>",
-            },
+            name = "<name>",
             aggregation = "<aggregation>",
             unit = "<unit>",
             resourceType = "<resourceType>",
@@ -2193,8 +2144,7 @@ Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetPropert
 Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("resourceId").ToString());
 Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("metricNamespace").ToString());
 Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("displayDescription").ToString());
-Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("name").GetProperty("localizedValue").ToString());
-Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("name").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("aggregation").ToString());
 Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("unit").ToString());
 Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("resourceType").ToString());
@@ -2250,8 +2200,7 @@ Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetPropert
 Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("resourceId").ToString());
 Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("metricNamespace").ToString());
 Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("displayDescription").ToString());
-Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("name").GetProperty("localizedValue").ToString());
-Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("name").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("aggregation").ToString());
 Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("unit").ToString());
 Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("resourceType").ToString());
@@ -2294,8 +2243,7 @@ Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetPropert
 Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("resourceId").ToString());
 Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("metricNamespace").ToString());
 Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("displayDescription").ToString());
-Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("name").GetProperty("localizedValue").ToString());
-Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("name").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("aggregation").ToString());
 Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("unit").ToString());
 Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("resourceType").ToString());
@@ -2344,7 +2292,7 @@ var client = new LoadTestRunClient("<https://my-service.azure.com>", credential)
 await foreach (var data in client.GetTestRunsAsync("<orderby>", "<continuationToken>", "<search>", "<testId>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, "<status>", 1234))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientmetric").ToString());
+    Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientMetric").ToString());
     Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("aggregate").ToString());
     Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("condition").ToString());
     Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("requestName").ToString());
@@ -2377,47 +2325,40 @@ await foreach (var data in client.GetTestRunsAsync("<orderby>", "<continuationTo
     Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("splitAllCSVs").ToString());
     Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("quickStartTest").ToString());
     Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("endpointUrl").ToString());
-    Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("vusers").ToString());
+    Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("virtualUsers").ToString());
     Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("rampUpTime").ToString());
     Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("duration").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("url").ToString());
-    Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileId").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("filename").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileType").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("expireDateTime").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("validationStatus").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("url").ToString());
-    Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileId").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("filename").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileType").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("expireDateTime").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("validationStatus").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("url").ToString());
-    Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileId").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("filename").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileType").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("expireDateTime").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("validationStatus").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("url").ToString());
-    Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileId").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("filename").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileType").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("expireDateTime").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("validationStatus").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("url").ToString());
-    Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileId").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("filename").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileType").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("expireDateTime").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("validationStatus").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("url").ToString());
-    Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("fileId").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("filename").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("fileType").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("expireDateTime").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("validationStatus").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsUrl").GetProperty("url").ToString());
-    Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsUrl").GetProperty("fileId").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsUrl").GetProperty("filename").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsUrl").GetProperty("fileType").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsUrl").GetProperty("expireDateTime").ToString());
@@ -2431,7 +2372,7 @@ await foreach (var data in client.GetTestRunsAsync("<orderby>", "<continuationTo
     Console.WriteLine(result.GetProperty("startDateTime").ToString());
     Console.WriteLine(result.GetProperty("endDateTime").ToString());
     Console.WriteLine(result.GetProperty("executedDateTime").ToString());
-    Console.WriteLine(result.GetProperty("vusers").ToString());
+    Console.WriteLine(result.GetProperty("virtualUsers").ToString());
     Console.WriteLine(result.GetProperty("portalUrl").ToString());
     Console.WriteLine(result.GetProperty("duration").ToString());
     Console.WriteLine(result.GetProperty("subnetId").ToString());
@@ -2471,7 +2412,7 @@ Schema for <c>TestRunsListValue</c>:
     quickStartTest: boolean, # Optional. If true, optionalLoadTestConfig is required and JMX script for the load test is not required to upload.
     optionalLoadTestConfig: {
       endpointUrl: string, # Optional. Test URL. Provide the complete HTTP URL. For example, http://contoso-app.azurewebsites.net/login
-      vusers: number, # Optional. No of concurrent virtual users
+      virtualUsers: number, # Optional. No of concurrent virtual users
       rampUpTime: number, # Optional. Ramp up time
       duration: number, # Optional. Test run duration
     }, # Optional. Optional load test config
@@ -2480,7 +2421,6 @@ Schema for <c>TestRunsListValue</c>:
     inputArtifacts: {
       configFileInfo: {
         url: string, # Optional. File URL.
-        fileId: string, # Optional. Unique name for test file.
         filename: string, # Optional. Name of the file.
         fileType: &quot;JMX_FILE&quot; | &quot;USER_PROPERTIES&quot; | &quot;ADDITIONAL_ARTIFACTS&quot;, # Optional. File type
         expireDateTime: string (ISO 8601 Format), # Optional. Expiry time of the file (ISO 8601 literal format)
@@ -2505,7 +2445,7 @@ Schema for <c>TestRunsListValue</c>:
   startDateTime: string (ISO 8601 Format), # Optional. The test run start DateTime(ISO 8601 literal format).
   endDateTime: string (ISO 8601 Format), # Optional. The test run end DateTime(ISO 8601 literal format).
   executedDateTime: string (ISO 8601 Format), # Optional. Test run initiated time.
-  vusers: number, # Optional. Number of virtual users, for which test has been run.
+  virtualUsers: number, # Optional. Number of virtual users, for which test has been run.
   portalUrl: string, # Optional. Portal url.
   duration: number, # Optional. Test run duration in milliseconds.
   subnetId: string, # Optional. Subnet ID on which the load test instances should run.
@@ -2539,7 +2479,7 @@ var client = new LoadTestRunClient("<https://my-service.azure.com>", credential)
 foreach (var data in client.GetTestRuns("<orderby>", "<continuationToken>", "<search>", "<testId>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, "<status>", 1234))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientmetric").ToString());
+    Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientMetric").ToString());
     Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("aggregate").ToString());
     Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("condition").ToString());
     Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("requestName").ToString());
@@ -2572,47 +2512,40 @@ foreach (var data in client.GetTestRuns("<orderby>", "<continuationToken>", "<se
     Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("splitAllCSVs").ToString());
     Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("quickStartTest").ToString());
     Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("endpointUrl").ToString());
-    Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("vusers").ToString());
+    Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("virtualUsers").ToString());
     Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("rampUpTime").ToString());
     Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("duration").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("url").ToString());
-    Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileId").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("filename").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileType").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("expireDateTime").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("validationStatus").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("url").ToString());
-    Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileId").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("filename").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileType").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("expireDateTime").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("validationStatus").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("url").ToString());
-    Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileId").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("filename").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileType").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("expireDateTime").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("validationStatus").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("url").ToString());
-    Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileId").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("filename").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileType").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("expireDateTime").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("validationStatus").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("url").ToString());
-    Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileId").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("filename").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileType").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("expireDateTime").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("validationStatus").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("url").ToString());
-    Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("fileId").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("filename").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("fileType").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("expireDateTime").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultUrl").GetProperty("validationStatus").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsUrl").GetProperty("url").ToString());
-    Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsUrl").GetProperty("fileId").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsUrl").GetProperty("filename").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsUrl").GetProperty("fileType").ToString());
     Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsUrl").GetProperty("expireDateTime").ToString());
@@ -2626,7 +2559,7 @@ foreach (var data in client.GetTestRuns("<orderby>", "<continuationToken>", "<se
     Console.WriteLine(result.GetProperty("startDateTime").ToString());
     Console.WriteLine(result.GetProperty("endDateTime").ToString());
     Console.WriteLine(result.GetProperty("executedDateTime").ToString());
-    Console.WriteLine(result.GetProperty("vusers").ToString());
+    Console.WriteLine(result.GetProperty("virtualUsers").ToString());
     Console.WriteLine(result.GetProperty("portalUrl").ToString());
     Console.WriteLine(result.GetProperty("duration").ToString());
     Console.WriteLine(result.GetProperty("subnetId").ToString());
@@ -2666,7 +2599,7 @@ Schema for <c>TestRunsListValue</c>:
     quickStartTest: boolean, # Optional. If true, optionalLoadTestConfig is required and JMX script for the load test is not required to upload.
     optionalLoadTestConfig: {
       endpointUrl: string, # Optional. Test URL. Provide the complete HTTP URL. For example, http://contoso-app.azurewebsites.net/login
-      vusers: number, # Optional. No of concurrent virtual users
+      virtualUsers: number, # Optional. No of concurrent virtual users
       rampUpTime: number, # Optional. Ramp up time
       duration: number, # Optional. Test run duration
     }, # Optional. Optional load test config
@@ -2675,7 +2608,6 @@ Schema for <c>TestRunsListValue</c>:
     inputArtifacts: {
       configFileInfo: {
         url: string, # Optional. File URL.
-        fileId: string, # Optional. Unique name for test file.
         filename: string, # Optional. Name of the file.
         fileType: &quot;JMX_FILE&quot; | &quot;USER_PROPERTIES&quot; | &quot;ADDITIONAL_ARTIFACTS&quot;, # Optional. File type
         expireDateTime: string (ISO 8601 Format), # Optional. Expiry time of the file (ISO 8601 literal format)
@@ -2700,7 +2632,7 @@ Schema for <c>TestRunsListValue</c>:
   startDateTime: string (ISO 8601 Format), # Optional. The test run start DateTime(ISO 8601 literal format).
   endDateTime: string (ISO 8601 Format), # Optional. The test run end DateTime(ISO 8601 literal format).
   executedDateTime: string (ISO 8601 Format), # Optional. Test run initiated time.
-  vusers: number, # Optional. Number of virtual users, for which test has been run.
+  virtualUsers: number, # Optional. Number of virtual users, for which test has been run.
   portalUrl: string, # Optional. Portal url.
   duration: number, # Optional. Test run duration in milliseconds.
   subnetId: string, # Optional. Subnet ID on which the load test instances should run.

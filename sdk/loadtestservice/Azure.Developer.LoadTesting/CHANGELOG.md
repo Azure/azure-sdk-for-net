@@ -21,6 +21,7 @@
 - Method Addded `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestRunClient.GetServerMetricsConfigAsync`
 - Method Addded `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestAdministrationClient.CheckTestFileValidationStatusAsync`
 - Method Addded `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestAdministrationClient.CheckTestRunCompletedAsync`
+- Method Addded `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestRunClient.GetMetricDimensionValues`
 
 ### Breaking Changes
 - Renamed sublcient from `TestRunClinet` to `LoadTestRunClient`
