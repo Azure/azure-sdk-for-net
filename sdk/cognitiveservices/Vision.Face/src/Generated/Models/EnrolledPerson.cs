@@ -26,7 +26,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// <summary>
         /// Initializes a new instance of the EnrolledPerson class.
         /// </summary>
-        public EnrolledPerson(System.Guid? personId = default(System.Guid?), string name = default(string), string userData = default(string))
+        public EnrolledPerson(System.Guid personId = default(System.Guid), string name = default(string), string userData = default(string))
         {
             PersonId = personId;
             Name = name;
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "personId")]
-        public System.Guid? PersonId { get; set; }
+        public System.Guid PersonId { get; set; }
 
         /// <summary>
         /// </summary>

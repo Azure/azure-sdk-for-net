@@ -1003,7 +1003,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// </param>
         /// <param name='returnFaceId'>
         /// A value indicating whether the operation should return faceIds of detected
-        /// faces.
+        /// faces. Detecting with this value set to true requires additional
+        /// access approvals at https://aka.ms/facerecognition.
         /// </param>
         /// <param name='returnFaceLandmarks'>
         /// A value indicating whether the operation should return landmarks of the
@@ -1068,7 +1069,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<DetectedFace>>> DetectWithUrlWithHttpMessagesAsync(string url, bool? returnFaceId = true, bool? returnFaceLandmarks = false, IList<FaceAttributeType> returnFaceAttributes = default(IList<FaceAttributeType>), string recognitionModel = default(string), bool? returnRecognitionModel = false, string detectionModel = default(string), int? faceIdTimeToLive = 86400, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<DetectedFace>>> DetectWithUrlWithHttpMessagesAsync(string url, bool? returnFaceId = default(bool?), bool? returnFaceLandmarks = false, IList<FaceAttributeType> returnFaceAttributes = default(IList<FaceAttributeType>), string recognitionModel = default(string), bool? returnRecognitionModel = false, string detectionModel = default(string), int? faceIdTimeToLive = 86400, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
@@ -1505,7 +1506,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// </param>
         /// <param name='returnFaceId'>
         /// A value indicating whether the operation should return faceIds of detected
-        /// faces.
+        /// faces. Detecting with this value set to true requires additional
+        /// access approvals at https://aka.ms/facerecognition.
         /// </param>
         /// <param name='returnFaceLandmarks'>
         /// A value indicating whether the operation should return landmarks of the
@@ -1570,7 +1572,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<DetectedFace>>> DetectWithStreamWithHttpMessagesAsync(Stream image, bool? returnFaceId = true, bool? returnFaceLandmarks = false, IList<FaceAttributeType> returnFaceAttributes = default(IList<FaceAttributeType>), string recognitionModel = default(string), bool? returnRecognitionModel = false, string detectionModel = default(string), int? faceIdTimeToLive = 86400, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<DetectedFace>>> DetectWithStreamWithHttpMessagesAsync(Stream image, bool? returnFaceId = default(bool?), bool? returnFaceLandmarks = false, IList<FaceAttributeType> returnFaceAttributes = default(IList<FaceAttributeType>), string recognitionModel = default(string), bool? returnRecognitionModel = false, string detectionModel = default(string), int? faceIdTimeToLive = 86400, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {

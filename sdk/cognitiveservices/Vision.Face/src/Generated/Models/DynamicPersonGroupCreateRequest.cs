@@ -30,7 +30,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// Initializes a new instance of the DynamicPersonGroupCreateRequest
         /// class.
         /// </summary>
-        public DynamicPersonGroupCreateRequest(string name = default(string), string userData = default(string), IList<string> addPersonIds = default(IList<string>))
+        public DynamicPersonGroupCreateRequest(string name = default(string), string userData = default(string), IList<System.Guid> addPersonIds = default(IList<System.Guid>))
         {
             Name = name;
             UserData = userData;
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "addPersonIds")]
-        public IList<string> AddPersonIds { get; set; }
+        public IList<System.Guid> AddPersonIds { get; set; }
 
     }
 }

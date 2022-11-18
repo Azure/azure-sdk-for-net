@@ -39,9 +39,32 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<EnrollmentResponse>> GetPersonsAsync(this IPersonDirectory operations, string start = default(string), string top = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<EnrollmentResponse>> GetPersonsAsync(this IPersonDirectory operations, System.Guid? start = null, string top = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetPersonsWithHttpMessagesAsync(start, top, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Retrieve list of person information in person directory.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='start'>
+            /// </param>
+            /// <param name='top'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IList<EnrollmentResponse>> GetPersonsAsync(this IPersonDirectory operations, string start = null, string top = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                Guid startGuid = Guid.Empty;
+                Guid.TryParse(start, out startGuid);
+                using (var _result = await operations.GetPersonsWithHttpMessagesAsync(startGuid, top, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -58,9 +81,48 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<HttpOperationResponse<PersonCreationResponse, PersonDirectoryCreatePersonHeaders>> CreatePersonAsync(this IPersonDirectory operations, EnrolledPerson body, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<HttpOperationResponse<PersonCreationResponse, PersonDirectoryCreatePersonHeaders>> CreatePersonAsync(this IPersonDirectory operations, EnrollmentRequest body, CancellationToken cancellationToken = default(CancellationToken))
             {
                 return  await operations.CreatePersonWithHttpMessagesAsync(body, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Creates a new person in person directory.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='body'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<HttpOperationResponse<PersonCreationResponse, PersonDirectoryCreatePersonHeaders>> CreatePersonAsync(this IPersonDirectory operations, EnrolledPerson body, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                var convertedRequest = new EnrollmentRequest
+                {
+                    Name = body.Name,
+                    UserData = body.UserData
+                };
+                return  await operations.CreatePersonWithHttpMessagesAsync(convertedRequest, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Update name or userData of a person.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='personId'>
+            /// </param>
+            /// <param name='body'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task UpdatePersonAsync(this IPersonDirectory operations, System.Guid personId, EnrollmentRequest body, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.UpdatePersonWithHttpMessagesAsync(personId, body, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -78,7 +140,30 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// </param>
             public static async Task UpdatePersonAsync(this IPersonDirectory operations, string personId, EnrollmentRequest body, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdatePersonWithHttpMessagesAsync(personId, body, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                Guid idGuid = Guid.Empty;
+                Guid.TryParse(personId, out idGuid);
+                (await operations.UpdatePersonWithHttpMessagesAsync(idGuid, body, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Delete an existing person from person directory.
+            /// The persistedFaceId, userData, person name and face feature(s) in the
+            /// person entry will all be deleted.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='personId'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PersonDirectoryDeletePersonHeaders> DeletePersonAsync(this IPersonDirectory operations, System.Guid personId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.DeletePersonWithHttpMessagesAsync(personId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
             }
 
             /// <summary>
@@ -96,7 +181,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// </param>
             public static async Task<PersonDirectoryDeletePersonHeaders> DeletePersonAsync(this IPersonDirectory operations, string personId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DeletePersonWithHttpMessagesAsync(personId, null, cancellationToken).ConfigureAwait(false))
+                Guid idGuid = Guid.Empty;
+                Guid.TryParse(personId, out idGuid);
+                using (var _result = await operations.DeletePersonWithHttpMessagesAsync(idGuid, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }
@@ -115,9 +202,32 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<EnrolledPerson> GetPersonAsync(this IPersonDirectory operations, string personId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<EnrolledPerson> GetPersonAsync(this IPersonDirectory operations, System.Guid personId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetPersonWithHttpMessagesAsync(personId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Retrieve a person's name and userData, and the persisted faceIds
+            /// representing the registered person face feature(s).
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='personId'>
+            /// Person id.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<EnrolledPerson> GetPersonAsync(this IPersonDirectory operations, string personId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                Guid idGuid = Guid.Empty;
+                Guid.TryParse(personId, out idGuid);
+                using (var _result = await operations.GetPersonWithHttpMessagesAsync(idGuid, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -135,6 +245,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='recognitionModel'>
             /// Recognition model string.
             /// </param>
+            /// <param name='url'>
+            /// Face image URL.
+            /// </param>
             /// <param name='detectionModel'>
             /// Detection model string.
             /// </param>
@@ -147,9 +260,33 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<HttpOperationResponse<EnrollmentPrintResponse, PersonDirectoryAddPersonFaceHeaders>> AddPersonFaceAsync(this IPersonDirectory operations, string personId, string recognitionModel, string detectionModel = default(string), string userData = default(string), string targetFace = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<HttpOperationResponse<EnrollmentPrintResponse, PersonDirectoryAddPersonFaceFromUrlHeaders>> AddPersonFaceFromUrlAsync(this IPersonDirectory operations, System.Guid personId, string recognitionModel, string url, string detectionModel = default(string), string userData = default(string), string targetFace = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                return await operations.AddPersonFaceWithHttpMessagesAsync(personId, recognitionModel, detectionModel, userData, targetFace, null, cancellationToken).ConfigureAwait(false);
+                return await operations.AddPersonFaceFromUrlWithHttpMessagesAsync(personId, recognitionModel, url, detectionModel, userData, targetFace, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Retrieve person face information. The persisted person face is specified by
+            /// its personId and persistedFaceId.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='personId'>
+            /// Target person to get persistedFaceIds from.
+            /// </param>
+            /// <param name='recognitionModel'>
+            /// The 'recognitionModel' associated with this persisted face.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PersonResponse> GetPersonFacesAsync(this IPersonDirectory operations, System.Guid personId, string recognitionModel, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetPersonFacesWithHttpMessagesAsync(personId, recognitionModel, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -170,7 +307,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// </param>
             public static async Task<PersonResponse> GetPersonFacesAsync(this IPersonDirectory operations, string personId, string recognitionModel, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetPersonFacesWithHttpMessagesAsync(personId, recognitionModel, null, cancellationToken).ConfigureAwait(false))
+                Guid idGuid = Guid.Empty;
+                Guid.TryParse(personId, out idGuid);
+                using (var _result = await operations.GetPersonFacesWithHttpMessagesAsync(idGuid, recognitionModel, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -196,9 +335,41 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PersonDirectoryDeletePersonFaceHeaders> DeletePersonFaceAsync(this IPersonDirectory operations, string personId, string recognitionModel, string persistedFaceId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PersonDirectoryDeletePersonFaceHeaders> DeletePersonFaceAsync(this IPersonDirectory operations, System.Guid personId, string recognitionModel, System.Guid persistedFaceId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.DeletePersonFaceWithHttpMessagesAsync(personId, recognitionModel, persistedFaceId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
+            }
+
+            /// <summary>
+            /// Delete an existing person face from person directory.
+            /// The persistedFaceId, userData, and face feature in the person entry will
+            /// all be deleted.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='personId'>
+            /// Person id.
+            /// </param>
+            /// <param name='recognitionModel'>
+            /// Recognition model string.
+            /// </param>
+            /// <param name='persistedFaceId'>
+            /// Persisted face id to delete.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PersonDirectoryDeletePersonFaceHeaders> DeletePersonFaceAsync(this IPersonDirectory operations, string personId, string recognitionModel, string persistedFaceId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                Guid personIdGuid = Guid.Empty;
+                Guid.TryParse(personId, out personIdGuid);
+                Guid faceIdGuid = Guid.Empty;
+                Guid.TryParse(personId, out faceIdGuid);
+                using (var _result = await operations.DeletePersonFaceWithHttpMessagesAsync(personIdGuid, recognitionModel, faceIdGuid, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }
@@ -223,9 +394,40 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PersistedFaceResponse> GetPersonFaceAsync(this IPersonDirectory operations, string personId, string recognitionModel, string persistedFaceId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PersistedFaceResponse> GetPersonFaceAsync(this IPersonDirectory operations, System.Guid personId, string recognitionModel, System.Guid persistedFaceId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetPersonFaceWithHttpMessagesAsync(personId, recognitionModel, persistedFaceId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Retrieve person face information. The persisted person face is specified by
+            /// its personId and persistedFaceId.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='personId'>
+            /// Target person to get face from.
+            /// </param>
+            /// <param name='recognitionModel'>
+            /// The 'recognitionModel' associated with this persisted face.
+            /// </param>
+            /// <param name='persistedFaceId'>
+            /// Target person face id to get.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PersistedFaceResponse> GetPersonFaceAsync(this IPersonDirectory operations, string personId, string recognitionModel, string persistedFaceId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                Guid personIdGuid = Guid.Empty;
+                Guid.TryParse(personId, out personIdGuid);
+                Guid faceIdGuid = Guid.Empty;
+                Guid.TryParse(personId, out faceIdGuid);
+                using (var _result = await operations.GetPersonFaceWithHttpMessagesAsync(personIdGuid, recognitionModel, faceIdGuid, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -252,9 +454,39 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdatePersonFaceAsync(this IPersonDirectory operations, string personId, string recognitionModel, string persistedFaceId, PersistedFaceWithType body, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdatePersonFaceAsync(this IPersonDirectory operations, System.Guid personId, string recognitionModel, System.Guid persistedFaceId, PersistedFaceWithType body, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.UpdatePersonFaceWithHttpMessagesAsync(personId, recognitionModel, persistedFaceId, body, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Update the data of a person face.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='personId'>
+            /// Target person to update face from.
+            /// </param>
+            /// <param name='recognitionModel'>
+            /// The 'recognitionModel' associated with this persisted face.
+            /// </param>
+            /// <param name='persistedFaceId'>
+            /// PersistedFaceId created from Person Face Create
+            /// </param>
+            /// <param name='body'>
+            /// Target person face id to update.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task UpdatePersonFaceAsync(this IPersonDirectory operations, string personId, string recognitionModel, string persistedFaceId, PersistedFaceWithType body, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                Guid personIdGuid = Guid.Empty;
+                Guid.TryParse(personId, out personIdGuid);
+                Guid faceIdGuid = Guid.Empty;
+                Guid.TryParse(personId, out faceIdGuid);
+                (await operations.UpdatePersonFaceWithHttpMessagesAsync(personIdGuid, recognitionModel, faceIdGuid, body, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -372,9 +604,39 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DynamicPersonGroupListPersonsResponse> ListDynamicPersonGroupPersonsAsync(this IPersonDirectory operations, string dynamicPersonGroupId, string start = default(string), string top = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DynamicPersonGroupListPersonsResponse> ListDynamicPersonGroupPersonsAsync(this IPersonDirectory operations, string dynamicPersonGroupId, System.Guid? start = null, string top = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListDynamicPersonGroupPersonsWithHttpMessagesAsync(dynamicPersonGroupId, start, top, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Retrieve list of persons referenced in a given DynamicPersonGroup person
+            /// directory.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='dynamicPersonGroupId'>
+            /// Dynamic person group Id to list persons from
+            /// </param>
+            /// <param name='start'>
+            /// List persons from the least personId greater than the "start". It contains
+            /// no more than 64 characters. Default is empty.
+            /// </param>
+            /// <param name='top'>
+            /// The number of persons to list, ranging in [1, 1000]. Default is 1000.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DynamicPersonGroupListPersonsResponse> ListDynamicPersonGroupPersonsAsync(this IPersonDirectory operations, string dynamicPersonGroupId, string start = default(string), string top = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                Guid startIdGuid = Guid.Empty;
+                Guid.TryParse(start, out startIdGuid);
+                using (var _result = await operations.ListDynamicPersonGroupPersonsWithHttpMessagesAsync(dynamicPersonGroupId, startIdGuid, top, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -425,9 +687,39 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PersonDynamicPersonGroupReferenceResponse> ListDynamicPersonGroupPersonReferencesAsync(this IPersonDirectory operations, string personId, string start = default(string), string top = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PersonDynamicPersonGroupReferenceResponse> ListDynamicPersonGroupPersonReferencesAsync(this IPersonDirectory operations, System.Guid personId, string start = default(string), string top = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListDynamicPersonGroupPersonReferencesWithHttpMessagesAsync(personId, start, top, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List the dynamic person groups that a person has been referenced in.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='personId'>
+            /// Valid PersonId created from Person Create.
+            /// </param>
+            /// <param name='start'>
+            /// List dynamic person group id from the least dynamicPersonGroupId greater
+            /// than the "start". It contains no more than 64 characters. Default is empty.
+            /// </param>
+            /// <param name='top'>
+            /// The number of dynamicPersonGroupId to list, ranging in [1, 1000]. Default
+            /// is 1000.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PersonDynamicPersonGroupReferenceResponse> ListDynamicPersonGroupPersonReferencesAsync(this IPersonDirectory operations, string personId, string start = default(string), string top = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                Guid idGuid = Guid.Empty;
+                Guid.TryParse(personId, out idGuid);
+                using (var _result = await operations.ListDynamicPersonGroupPersonReferencesWithHttpMessagesAsync(idGuid, start, top, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -460,9 +752,43 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<HttpOperationResponse<EnrollmentPrintResponse, PersonDirectoryAddPersonFaceFromStreamHeaders>> AddPersonFaceFromStreamAsync(this IPersonDirectory operations, string personId, string recognitionModel, Stream image, string detectionModel = default(string), string userData = default(string), string targetFace = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<HttpOperationResponse<EnrollmentPrintResponse, PersonDirectoryAddPersonFaceFromStreamHeaders>> AddPersonFaceFromStreamAsync(this IPersonDirectory operations, System.Guid personId, string recognitionModel, Stream image, string detectionModel = default(string), string userData = default(string), string targetFace = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 return await operations.AddPersonFaceFromStreamWithHttpMessagesAsync(personId, recognitionModel, image, detectionModel, userData, targetFace, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Add a new face to person.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='personId'>
+            /// Person id.
+            /// </param>
+            /// <param name='recognitionModel'>
+            /// Recognition model string.
+            /// </param>
+            /// <param name='image'>
+            /// An image stream.
+            /// </param>
+            /// <param name='detectionModel'>
+            /// Detection model string.
+            /// </param>
+            /// <param name='userData'>
+            /// User data of person face.
+            /// </param>
+            /// <param name='targetFace'>
+            /// Target face.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<HttpOperationResponse<EnrollmentPrintResponse, PersonDirectoryAddPersonFaceFromStreamHeaders>> AddPersonFaceFromStreamAsync(this IPersonDirectory operations, string personId, string recognitionModel, Stream image, string detectionModel = default(string), string userData = default(string), string targetFace = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                Guid idGuid = Guid.Empty;
+                Guid.TryParse(personId, out idGuid);
+                return await operations.AddPersonFaceFromStreamWithHttpMessagesAsync(idGuid, recognitionModel, image, detectionModel, userData, targetFace, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>

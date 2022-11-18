@@ -45,7 +45,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<EnrollmentResponse>>> GetPersonsWithHttpMessagesAsync(string start = default(string), string top = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<EnrollmentResponse>>> GetPersonsWithHttpMessagesAsync(System.Guid? start = default(System.Guid?), string top = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates a new person in person directory.
         /// </summary>
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<PersonCreationResponse,PersonDirectoryCreatePersonHeaders>> CreatePersonWithHttpMessagesAsync(EnrolledPerson body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<PersonCreationResponse,PersonDirectoryCreatePersonHeaders>> CreatePersonWithHttpMessagesAsync(EnrollmentRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Update name or userData of a person.
         /// </summary>
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> UpdatePersonWithHttpMessagesAsync(string personId, EnrollmentRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse> UpdatePersonWithHttpMessagesAsync(System.Guid personId, EnrollmentRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete an existing person from person directory.
         /// The persistedFaceId, userData, person name and face feature(s) in
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationHeaderResponse<PersonDirectoryDeletePersonHeaders>> DeletePersonWithHttpMessagesAsync(string personId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationHeaderResponse<PersonDirectoryDeletePersonHeaders>> DeletePersonWithHttpMessagesAsync(System.Guid personId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieve a person's name and userData, and the persisted faceIds
         /// representing the registered person face feature(s).
@@ -129,7 +129,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<EnrolledPerson>> GetPersonWithHttpMessagesAsync(string personId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<EnrolledPerson>> GetPersonWithHttpMessagesAsync(System.Guid personId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Add a new face to person.
         /// </summary>
@@ -138,6 +138,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// </param>
         /// <param name='recognitionModel'>
         /// Recognition model string.
+        /// </param>
+        /// <param name='url'>
+        /// Publicly reachable URL of an image
         /// </param>
         /// <param name='detectionModel'>
         /// Detection model string.
@@ -163,7 +166,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<EnrollmentPrintResponse,PersonDirectoryAddPersonFaceHeaders>> AddPersonFaceWithHttpMessagesAsync(string personId, string recognitionModel, string detectionModel = default(string), string userData = default(string), string targetFace = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<EnrollmentPrintResponse,PersonDirectoryAddPersonFaceFromUrlHeaders>> AddPersonFaceFromUrlWithHttpMessagesAsync(System.Guid personId, string recognitionModel, string url, string detectionModel = default(string), string userData = default(string), string targetFace = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieve person face information. The persisted person face is
         /// specified by its personId and persistedFaceId.
@@ -189,7 +192,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<PersonResponse>> GetPersonFacesWithHttpMessagesAsync(string personId, string recognitionModel, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<PersonResponse>> GetPersonFacesWithHttpMessagesAsync(System.Guid personId, string recognitionModel, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete an existing person face from person directory.
         /// The persistedFaceId, userData, and face feature in the person entry
@@ -216,7 +219,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationHeaderResponse<PersonDirectoryDeletePersonFaceHeaders>> DeletePersonFaceWithHttpMessagesAsync(string personId, string recognitionModel, string persistedFaceId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationHeaderResponse<PersonDirectoryDeletePersonFaceHeaders>> DeletePersonFaceWithHttpMessagesAsync(System.Guid personId, string recognitionModel, System.Guid persistedFaceId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieve person face information. The persisted person face is
         /// specified by its personId and persistedFaceId.
@@ -245,7 +248,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<PersistedFaceResponse>> GetPersonFaceWithHttpMessagesAsync(string personId, string recognitionModel, string persistedFaceId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<PersistedFaceResponse>> GetPersonFaceWithHttpMessagesAsync(System.Guid personId, string recognitionModel, System.Guid persistedFaceId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Update the data of a person face.
         /// </summary>
@@ -273,7 +276,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> UpdatePersonFaceWithHttpMessagesAsync(string personId, string recognitionModel, string persistedFaceId, PersistedFaceWithType body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse> UpdatePersonFaceWithHttpMessagesAsync(System.Guid personId, string recognitionModel, System.Guid persistedFaceId, PersistedFaceWithType body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates a new dynamic person group with specified
         /// dynamicPersonGroupId, name, and user-provided userData.
@@ -398,7 +401,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<DynamicPersonGroupListPersonsResponse>> ListDynamicPersonGroupPersonsWithHttpMessagesAsync(string dynamicPersonGroupId, string start = default(string), string top = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<DynamicPersonGroupListPersonsResponse>> ListDynamicPersonGroupPersonsWithHttpMessagesAsync(string dynamicPersonGroupId, System.Guid? start = default(System.Guid?), string top = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieve list of dynamic person groups in person directory.
         /// </summary>
@@ -458,7 +461,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<PersonDynamicPersonGroupReferenceResponse>> ListDynamicPersonGroupPersonReferencesWithHttpMessagesAsync(string personId, string start = default(string), string top = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<PersonDynamicPersonGroupReferenceResponse>> ListDynamicPersonGroupPersonReferencesWithHttpMessagesAsync(System.Guid personId, string start = default(string), string top = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Add a new face to person.
         /// </summary>
@@ -495,6 +498,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<EnrollmentPrintResponse,PersonDirectoryAddPersonFaceFromStreamHeaders>> AddPersonFaceFromStreamWithHttpMessagesAsync(string personId, string recognitionModel, Stream image, string detectionModel = default(string), string userData = default(string), string targetFace = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<EnrollmentPrintResponse,PersonDirectoryAddPersonFaceFromStreamHeaders>> AddPersonFaceFromStreamWithHttpMessagesAsync(System.Guid personId, string recognitionModel, Stream image, string detectionModel = default(string), string userData = default(string), string targetFace = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

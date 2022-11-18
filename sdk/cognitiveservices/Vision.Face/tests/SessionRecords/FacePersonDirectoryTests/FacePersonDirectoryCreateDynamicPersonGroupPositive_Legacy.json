@@ -27,13 +27,13 @@
           "chunked"
         ],
         "operation-location": [
-          "/face/v1.0-preview/operations/1de3ed7b-315b-4cff-9027-f483a8d4d682"
+          "/face/v1.0-preview/operations/d7e88ddf-2def-4bc3-9106-6c776b8fa470"
         ],
         "x-envoy-upstream-service-time": [
-          "47"
+          "170"
         ],
         "apim-request-id": [
-          "291c644b-254a-481b-9e50-3b53d0cb7259"
+          "db4f5f14-c19c-4cdd-8e3b-e3b01ab7ad68"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -48,16 +48,16 @@
           "CognitiveServices.Face.Transaction=1"
         ],
         "Date": [
-          "Fri, 18 Nov 2022 02:04:44 GMT"
+          "Fri, 18 Nov 2022 02:04:39 GMT"
         ],
         "Location": [
-          "/face/v1.0-preview/persons/16063068-d806-438c-9d87-6840c1df8bd0"
+          "/face/v1.0-preview/persons/e0f23bc0-aa6c-4684-938c-91b9013e3255"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"personId\": \"16063068-d806-438c-9d87-6840c1df8bd0\"\r\n}",
+      "ResponseBody": "{\r\n  \"personId\": \"e0f23bc0-aa6c-4684-938c-91b9013e3255\"\r\n}",
       "StatusCode": 202
     },
     {
@@ -87,13 +87,13 @@
           "chunked"
         ],
         "operation-location": [
-          "/face/v1.0-preview/operations/017137f2-650e-45a5-a007-83865ac5f629"
+          "/face/v1.0-preview/operations/70ba04a8-2a22-4fc4-a697-3ee00d284d85"
         ],
         "x-envoy-upstream-service-time": [
-          "65"
+          "68"
         ],
         "apim-request-id": [
-          "3e7d2697-ba77-466f-a49d-604f8a94995e"
+          "0f91de76-f1f9-4a01-948e-87e49f5f63fe"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -108,21 +108,21 @@
           "CognitiveServices.Face.Transaction=1"
         ],
         "Date": [
-          "Fri, 18 Nov 2022 02:04:45 GMT"
+          "Fri, 18 Nov 2022 02:04:40 GMT"
         ],
         "Location": [
-          "/face/v1.0-preview/persons/c8af70b8-8b13-48a2-8861-c47a2c3e59b8"
+          "/face/v1.0-preview/persons/b63ee3dc-8b05-41d0-8b5e-d17b54f535be"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"personId\": \"c8af70b8-8b13-48a2-8861-c47a2c3e59b8\"\r\n}",
+      "ResponseBody": "{\r\n  \"personId\": \"b63ee3dc-8b05-41d0-8b5e-d17b54f535be\"\r\n}",
       "StatusCode": 202
     },
     {
-      "RequestUri": "/face/v1.0-preview/operations/1de3ed7b-315b-4cff-9027-f483a8d4d682",
-      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L29wZXJhdGlvbnMvMWRlM2VkN2ItMzE1Yi00Y2ZmLTkwMjctZjQ4M2E4ZDRkNjgy",
+      "RequestUri": "/face/v1.0-preview/operations/d7e88ddf-2def-4bc3-9106-6c776b8fa470",
+      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L29wZXJhdGlvbnMvZDdlODhkZGYtMmRlZi00YmMzLTkxMDYtNmM3NzZiOGZhNDcw",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -138,10 +138,10 @@
       },
       "ResponseHeaders": {
         "x-envoy-upstream-service-time": [
-          "14"
+          "15"
         ],
         "apim-request-id": [
-          "9d625c38-91ec-451c-914b-05718c57ce92"
+          "04647733-be34-41a2-88fc-23d8110c3eb6"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -156,7 +156,7 @@
           "CognitiveServices.Face.Transaction=1"
         ],
         "Date": [
-          "Fri, 18 Nov 2022 02:04:44 GMT"
+          "Fri, 18 Nov 2022 02:04:39 GMT"
         ],
         "Content-Length": [
           "113"
@@ -165,12 +165,12 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": \"running\",\r\n  \"createdTime\": \"2022-11-18T02:04:45.6459862Z\",\r\n  \"lastActionTime\": \"2022-11-18T02:04:45.6460054Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"status\": \"running\",\r\n  \"createdTime\": \"2022-11-18T02:04:39.3303454Z\",\r\n  \"lastActionTime\": \"2022-11-18T02:04:39.3303635Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/face/v1.0-preview/operations/1de3ed7b-315b-4cff-9027-f483a8d4d682",
-      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L29wZXJhdGlvbnMvMWRlM2VkN2ItMzE1Yi00Y2ZmLTkwMjctZjQ4M2E4ZDRkNjgy",
+      "RequestUri": "/face/v1.0-preview/operations/d7e88ddf-2def-4bc3-9106-6c776b8fa470",
+      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L29wZXJhdGlvbnMvZDdlODhkZGYtMmRlZi00YmMzLTkxMDYtNmM3NzZiOGZhNDcw",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -186,10 +186,10 @@
       },
       "ResponseHeaders": {
         "x-envoy-upstream-service-time": [
-          "13"
+          "163"
         ],
         "apim-request-id": [
-          "5e2af0c6-e1c7-401f-b9eb-8639361e2636"
+          "b212fea5-bd01-42df-b923-85a052986a90"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -204,7 +204,7 @@
           "CognitiveServices.Face.Transaction=1"
         ],
         "Date": [
-          "Fri, 18 Nov 2022 02:04:45 GMT"
+          "Fri, 18 Nov 2022 02:04:40 GMT"
         ],
         "Content-Length": [
           "161"
@@ -213,12 +213,12 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": \"succeeded\",\r\n  \"createdTime\": \"2022-11-18T02:04:45.6459862Z\",\r\n  \"lastActionTime\": \"2022-11-18T02:04:45.9294301Z\",\r\n  \"finishedTime\": \"2022-11-18T02:04:45.9248841Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"status\": \"succeeded\",\r\n  \"createdTime\": \"2022-11-18T02:04:39.3303454Z\",\r\n  \"lastActionTime\": \"2022-11-18T02:04:39.8110828Z\",\r\n  \"finishedTime\": \"2022-11-18T02:04:39.8048666Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/face/v1.0-preview/operations/017137f2-650e-45a5-a007-83865ac5f629",
-      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L29wZXJhdGlvbnMvMDE3MTM3ZjItNjUwZS00NWE1LWEwMDctODM4NjVhYzVmNjI5",
+      "RequestUri": "/face/v1.0-preview/operations/70ba04a8-2a22-4fc4-a697-3ee00d284d85",
+      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L29wZXJhdGlvbnMvNzBiYTA0YTgtMmEyMi00ZmM0LWE2OTctM2VlMDBkMjg0ZDg1",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -237,7 +237,7 @@
           "6"
         ],
         "apim-request-id": [
-          "9021e1c4-870a-4cd5-85a4-dbaa2e2f5ae4"
+          "84c162d6-fd8a-4012-a045-082e6266963b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -252,21 +252,21 @@
           "CognitiveServices.Face.Transaction=1"
         ],
         "Date": [
-          "Fri, 18 Nov 2022 02:04:45 GMT"
+          "Fri, 18 Nov 2022 02:04:40 GMT"
         ],
         "Content-Length": [
-          "112"
+          "113"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": \"running\",\r\n  \"createdTime\": \"2022-11-18T02:04:46.806065Z\",\r\n  \"lastActionTime\": \"2022-11-18T02:04:46.8060804Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"status\": \"running\",\r\n  \"createdTime\": \"2022-11-18T02:04:41.2238569Z\",\r\n  \"lastActionTime\": \"2022-11-18T02:04:41.2238811Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/face/v1.0-preview/operations/017137f2-650e-45a5-a007-83865ac5f629",
-      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L29wZXJhdGlvbnMvMDE3MTM3ZjItNjUwZS00NWE1LWEwMDctODM4NjVhYzVmNjI5",
+      "RequestUri": "/face/v1.0-preview/operations/70ba04a8-2a22-4fc4-a697-3ee00d284d85",
+      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L29wZXJhdGlvbnMvNzBiYTA0YTgtMmEyMi00ZmM0LWE2OTctM2VlMDBkMjg0ZDg1",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -282,10 +282,10 @@
       },
       "ResponseHeaders": {
         "x-envoy-upstream-service-time": [
-          "8"
+          "6"
         ],
         "apim-request-id": [
-          "47ce48dd-2cdc-4756-a395-3ed7ad959dde"
+          "40904e03-a0fc-4a7e-81b8-9cafed781ebf"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -300,7 +300,7 @@
           "CognitiveServices.Face.Transaction=1"
         ],
         "Date": [
-          "Fri, 18 Nov 2022 02:04:47 GMT"
+          "Fri, 18 Nov 2022 02:04:41 GMT"
         ],
         "Content-Length": [
           "160"
@@ -309,14 +309,14 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": \"succeeded\",\r\n  \"createdTime\": \"2022-11-18T02:04:46.806065Z\",\r\n  \"lastActionTime\": \"2022-11-18T02:04:47.1997472Z\",\r\n  \"finishedTime\": \"2022-11-18T02:04:47.1959312Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"status\": \"succeeded\",\r\n  \"createdTime\": \"2022-11-18T02:04:41.2238569Z\",\r\n  \"lastActionTime\": \"2022-11-18T02:04:41.4881099Z\",\r\n  \"finishedTime\": \"2022-11-18T02:04:41.476007Z\"\r\n}",
       "StatusCode": 200
     },
     {
       "RequestUri": "/face/v1.0-preview/dynamicpersongroups/dynamic-person-group-id",
       "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L2R5bmFtaWNwZXJzb25ncm91cHMvZHluYW1pYy1wZXJzb24tZ3JvdXAtaWQ=",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"name\": \"DynamicPersonGroupName\",\r\n  \"userData\": \"User data\",\r\n  \"addPersonIds\": [\r\n    \"16063068-d806-438c-9d87-6840c1df8bd0\"\r\n  ]\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"DynamicPersonGroupName\",\r\n  \"userData\": \"User data\",\r\n  \"addPersonIds\": [\r\n    \"e0f23bc0-aa6c-4684-938c-91b9013e3255\"\r\n  ]\r\n}",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
           ""
@@ -336,13 +336,13 @@
       },
       "ResponseHeaders": {
         "operation-location": [
-          "/face/v1.0-preview/operations/e1553667-0d83-424f-800c-595040ca048b"
+          "/face/v1.0-preview/operations/2183eb29-22f9-43e7-ba71-f31d79ef816f"
         ],
         "x-envoy-upstream-service-time": [
-          "277"
+          "287"
         ],
         "apim-request-id": [
-          "232502db-d040-4447-bd02-d523a3759d00"
+          "822ab80d-93e9-4c02-8f7c-c8dceedeec25"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -357,7 +357,7 @@
           "CognitiveServices.Face.Transaction=1"
         ],
         "Date": [
-          "Fri, 18 Nov 2022 02:04:48 GMT"
+          "Fri, 18 Nov 2022 02:04:42 GMT"
         ],
         "Content-Length": [
           "0"
@@ -367,8 +367,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/face/v1.0-preview/operations/e1553667-0d83-424f-800c-595040ca048b",
-      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L29wZXJhdGlvbnMvZTE1NTM2NjctMGQ4My00MjRmLTgwMGMtNTk1MDQwY2EwNDhi",
+      "RequestUri": "/face/v1.0-preview/operations/2183eb29-22f9-43e7-ba71-f31d79ef816f",
+      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L29wZXJhdGlvbnMvMjE4M2ViMjktMjJmOS00M2U3LWJhNzEtZjMxZDc5ZWY4MTZm",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -384,10 +384,10 @@
       },
       "ResponseHeaders": {
         "x-envoy-upstream-service-time": [
-          "8"
+          "6"
         ],
         "apim-request-id": [
-          "f2cf3494-c3d2-40bc-8bd0-8a2a7130c276"
+          "d0488745-4fa9-4fac-bca5-4390d717435b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -402,7 +402,55 @@
           "CognitiveServices.Face.Transaction=1"
         ],
         "Date": [
-          "Fri, 18 Nov 2022 02:04:48 GMT"
+          "Fri, 18 Nov 2022 02:04:42 GMT"
+        ],
+        "Content-Length": [
+          "267"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"notStarted\",\r\n  \"createdTime\": \"2022-11-18T02:04:42.6379348Z\",\r\n  \"lastActionTime\": \"2022-11-18T02:04:42.6379663Z\",\r\n  \"resourceLocation\": \"/face/v1.0-preview/dynamicpersongroups/dynamic-person-group-id\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/face/v1.0-preview/operations/2183eb29-22f9-43e7-ba71-f31d79ef816f",
+      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L29wZXJhdGlvbnMvMjE4M2ViMjktMjJmOS00M2U3LWJhNzEtZjMxZDc5ZWY4MTZm",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.8.4515.0",
+          "OSName/Windows",
+          "OSVersion/10.0.19045.0",
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "x-envoy-upstream-service-time": [
+          "6"
+        ],
+        "apim-request-id": [
+          "1b11b095-a41a-43ed-a43c-82e0eb871a2e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ],
+        "x-ms-region": [
+          "West US 2"
+        ],
+        "CSP-Billing-Usage": [
+          "CognitiveServices.Face.Transaction=1"
+        ],
+        "Date": [
+          "Fri, 18 Nov 2022 02:04:43 GMT"
         ],
         "Content-Length": [
           "266"
@@ -411,62 +459,14 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": \"notStarted\",\r\n  \"createdTime\": \"2022-11-18T02:04:48.198488Z\",\r\n  \"lastActionTime\": \"2022-11-18T02:04:48.1985227Z\",\r\n  \"resourceLocation\": \"/face/v1.0-preview/dynamicpersongroups/dynamic-person-group-id\"\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/face/v1.0-preview/operations/e1553667-0d83-424f-800c-595040ca048b",
-      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L29wZXJhdGlvbnMvZTE1NTM2NjctMGQ4My00MjRmLTgwMGMtNTk1MDQwY2EwNDhi",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "Ocp-Apim-Subscription-Key": [
-          ""
-        ],
-        "User-Agent": [
-          "FxVersion/4.8.4515.0",
-          "OSName/Windows",
-          "OSVersion/10.0.19045.0",
-          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "x-envoy-upstream-service-time": [
-          "7"
-        ],
-        "apim-request-id": [
-          "6e99db5d-0202-4cac-8c47-51c13959738e"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains; preload"
-        ],
-        "x-content-type-options": [
-          "nosniff"
-        ],
-        "x-ms-region": [
-          "West US 2"
-        ],
-        "CSP-Billing-Usage": [
-          "CognitiveServices.Face.Transaction=1"
-        ],
-        "Date": [
-          "Fri, 18 Nov 2022 02:04:49 GMT"
-        ],
-        "Content-Length": [
-          "265"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": \"succeeded\",\r\n  \"createdTime\": \"2022-11-18T02:04:48.198488Z\",\r\n  \"lastActionTime\": \"2022-11-18T02:04:48.6665339Z\",\r\n  \"resourceLocation\": \"/face/v1.0-preview/dynamicpersongroups/dynamic-person-group-id\"\r\n}",
+      "ResponseBody": "{\r\n  \"status\": \"succeeded\",\r\n  \"createdTime\": \"2022-11-18T02:04:42.6379348Z\",\r\n  \"lastActionTime\": \"2022-11-18T02:04:43.4313693Z\",\r\n  \"resourceLocation\": \"/face/v1.0-preview/dynamicpersongroups/dynamic-person-group-id\"\r\n}",
       "StatusCode": 200
     },
     {
       "RequestUri": "/face/v1.0-preview/dynamicpersongroups/dynamic-person-group-id",
       "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L2R5bmFtaWNwZXJzb25ncm91cHMvZHluYW1pYy1wZXJzb24tZ3JvdXAtaWQ=",
       "RequestMethod": "PATCH",
-      "RequestBody": "{\r\n  \"name\": \"UpdatedDynamicPersonGroupName\",\r\n  \"userData\": \"Updated user data\",\r\n  \"addPersonIds\": [\r\n    \"c8af70b8-8b13-48a2-8861-c47a2c3e59b8\"\r\n  ]\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"UpdatedDynamicPersonGroupName\",\r\n  \"userData\": \"Updated user data\",\r\n  \"addPersonIds\": [\r\n    \"b63ee3dc-8b05-41d0-8b5e-d17b54f535be\"\r\n  ]\r\n}",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
           ""
@@ -486,13 +486,13 @@
       },
       "ResponseHeaders": {
         "operation-location": [
-          "/face/v1.0-preview/operations/b0cbd781-bebf-4211-af76-3b065ba3b77b"
+          "/face/v1.0-preview/operations/25a61f25-e2b9-4cca-a313-7184dc4b4fab"
         ],
         "x-envoy-upstream-service-time": [
-          "225"
+          "247"
         ],
         "apim-request-id": [
-          "b87b4db8-47ad-41f3-9ba8-a57338908c49"
+          "490d3037-ca81-494b-811d-b5c224b0c417"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -507,7 +507,7 @@
           "CognitiveServices.Face.Transaction=1"
         ],
         "Date": [
-          "Fri, 18 Nov 2022 02:04:49 GMT"
+          "Fri, 18 Nov 2022 02:04:43 GMT"
         ],
         "Content-Length": [
           "0"
@@ -517,56 +517,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/face/v1.0-preview/operations/b0cbd781-bebf-4211-af76-3b065ba3b77b",
-      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L29wZXJhdGlvbnMvYjBjYmQ3ODEtYmViZi00MjExLWFmNzYtM2IwNjViYTNiNzdi",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "Ocp-Apim-Subscription-Key": [
-          ""
-        ],
-        "User-Agent": [
-          "FxVersion/4.8.4515.0",
-          "OSName/Windows",
-          "OSVersion/10.0.19045.0",
-          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "x-envoy-upstream-service-time": [
-          "6"
-        ],
-        "apim-request-id": [
-          "b80ae095-0157-4614-b89f-4d2a1c109981"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains; preload"
-        ],
-        "x-content-type-options": [
-          "nosniff"
-        ],
-        "x-ms-region": [
-          "West US 2"
-        ],
-        "CSP-Billing-Usage": [
-          "CognitiveServices.Face.Transaction=1"
-        ],
-        "Date": [
-          "Fri, 18 Nov 2022 02:04:49 GMT"
-        ],
-        "Content-Length": [
-          "267"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": \"notStarted\",\r\n  \"createdTime\": \"2022-11-18T02:04:49.4944724Z\",\r\n  \"lastActionTime\": \"2022-11-18T02:04:49.4945125Z\",\r\n  \"resourceLocation\": \"/face/v1.0-preview/dynamicpersongroups/dynamic-person-group-id\"\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/face/v1.0-preview/operations/b0cbd781-bebf-4211-af76-3b065ba3b77b",
-      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L29wZXJhdGlvbnMvYjBjYmQ3ODEtYmViZi00MjExLWFmNzYtM2IwNjViYTNiNzdi",
+      "RequestUri": "/face/v1.0-preview/operations/25a61f25-e2b9-4cca-a313-7184dc4b4fab",
+      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L29wZXJhdGlvbnMvMjVhNjFmMjUtZTJiOS00Y2NhLWEzMTMtNzE4NGRjNGI0ZmFi",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -585,7 +537,7 @@
           "7"
         ],
         "apim-request-id": [
-          "f7edd5a6-e1e0-486e-8f25-a4fd989d0550"
+          "de2bb8e5-bcd2-4de6-af4f-e251eb6a8e05"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -600,7 +552,55 @@
           "CognitiveServices.Face.Transaction=1"
         ],
         "Date": [
-          "Fri, 18 Nov 2022 02:04:50 GMT"
+          "Fri, 18 Nov 2022 02:04:43 GMT"
+        ],
+        "Content-Length": [
+          "267"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"notStarted\",\r\n  \"createdTime\": \"2022-11-18T02:04:44.0273206Z\",\r\n  \"lastActionTime\": \"2022-11-18T02:04:44.0273483Z\",\r\n  \"resourceLocation\": \"/face/v1.0-preview/dynamicpersongroups/dynamic-person-group-id\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/face/v1.0-preview/operations/25a61f25-e2b9-4cca-a313-7184dc4b4fab",
+      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L29wZXJhdGlvbnMvMjVhNjFmMjUtZTJiOS00Y2NhLWEzMTMtNzE4NGRjNGI0ZmFi",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.8.4515.0",
+          "OSName/Windows",
+          "OSVersion/10.0.19045.0",
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "x-envoy-upstream-service-time": [
+          "21"
+        ],
+        "apim-request-id": [
+          "6852ff00-ef0c-4f9e-a1e6-54f2b02d9ccd"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ],
+        "x-ms-region": [
+          "West US 2"
+        ],
+        "CSP-Billing-Usage": [
+          "CognitiveServices.Face.Transaction=1"
+        ],
+        "Date": [
+          "Fri, 18 Nov 2022 02:04:44 GMT"
         ],
         "Content-Length": [
           "266"
@@ -609,7 +609,7 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": \"succeeded\",\r\n  \"createdTime\": \"2022-11-18T02:04:49.4944724Z\",\r\n  \"lastActionTime\": \"2022-11-18T02:04:49.7977429Z\",\r\n  \"resourceLocation\": \"/face/v1.0-preview/dynamicpersongroups/dynamic-person-group-id\"\r\n}",
+      "ResponseBody": "{\r\n  \"status\": \"succeeded\",\r\n  \"createdTime\": \"2022-11-18T02:04:44.0273206Z\",\r\n  \"lastActionTime\": \"2022-11-18T02:04:44.5752001Z\",\r\n  \"resourceLocation\": \"/face/v1.0-preview/dynamicpersongroups/dynamic-person-group-id\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -630,13 +630,13 @@
       },
       "ResponseHeaders": {
         "operation-location": [
-          "/face/v1.0-preview/operations/bfd3c559-0adb-43e9-a266-7e6ce76e88d7"
+          "/face/v1.0-preview/operations/da9f5c97-6b82-4d24-9e6f-d05ddcb61173"
         ],
         "x-envoy-upstream-service-time": [
-          "326"
+          "237"
         ],
         "apim-request-id": [
-          "4543c21a-9c2c-44f0-aba7-17fc4ed215ea"
+          "b6c583df-bd1a-4242-8e9e-6c387ab888ba"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -651,7 +651,7 @@
           "CognitiveServices.Face.Transaction=1"
         ],
         "Date": [
-          "Fri, 18 Nov 2022 02:04:50 GMT"
+          "Fri, 18 Nov 2022 02:04:44 GMT"
         ],
         "Content-Length": [
           "0"
