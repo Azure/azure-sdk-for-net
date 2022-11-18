@@ -139,7 +139,7 @@ namespace Azure.Storage.Blobs
                         _progress,
                         _innerOperationName,
                         async: true,
-                        cancellationToken);
+                        cancellationToken).AsTask();
 
                 Response<BlobDownloadStreamingResult> initialResponse = null;
                 try
@@ -228,7 +228,7 @@ namespace Azure.Storage.Blobs
                         _progress,
                         _innerOperationName,
                         async: true,
-                        cancellationToken));
+                        cancellationToken).AsTask());
 
                     // If we have fewer tasks than alotted workers, then just
                     // continue adding tasks until we have _maxWorkerCount

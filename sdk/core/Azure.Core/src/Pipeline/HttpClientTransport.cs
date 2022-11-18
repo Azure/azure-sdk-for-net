@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -326,12 +327,40 @@ namespace Azure.Core.Pipeline
 #if NET6_0_OR_GREATER
         private static string JoinHeaderValues(HeaderStringValues values)
         {
-            return values.Count switch
-            {
-                0 => string.Empty,
-                1 => values.ToString(),
-                _ => string.Join(",", values)
-            };
+            var count = values.Count;
+            // Explicitly handle most common cases
+            switch (count) {
+                case 1:
+                    return values.ToString();
+                case 0:
+                    return string.Empty;
+                case 2:
+                    using (var enumerator = values.GetEnumerator())
+                    {
+                        enumerator.MoveNext();
+                        var value1 = enumerator.Current;
+                        enumerator.MoveNext();
+                        var value2 = enumerator.Current;
+                        return string.Concat(value1, ",", value2);
+                    }
+                default:
+                    var valuesArray = ArrayPool<string>.Shared.Rent(count);
+                    try
+                    {
+                        var index = 0;
+                        foreach (var str in values)
+                        {
+                            valuesArray[index] = str;
+                            index++;
+                        }
+
+                        return string.Join(',', valuesArray, 0, index);
+                    }
+                    finally
+                    {
+                        ArrayPool<string>.Shared.Return(valuesArray);
+                    }
+            }
         }
 #else
         private static string JoinHeaderValues(IEnumerable<string> values)

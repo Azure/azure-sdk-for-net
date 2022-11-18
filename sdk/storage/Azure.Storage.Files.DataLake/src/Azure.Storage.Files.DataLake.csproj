@@ -40,6 +40,7 @@
     <Compile Include="..\..\Azure.Storage.Blobs\src\Sas\SasQueryParametersExtensions.cs" Link="Shared\Sas\KeySasQueryParametersExtensions.cs" />
     <Compile Include="$(AzureStorageSharedSources)AggregatingProgressIncrementer.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)Constants.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)CompatSwitches.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)ContentHasher.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)Errors.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)Errors.Clients.cs" LinkBase="Shared" />

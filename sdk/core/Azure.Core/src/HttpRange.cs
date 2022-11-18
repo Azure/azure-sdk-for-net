@@ -52,13 +52,21 @@ namespace Azure
         public override string ToString()
         {
             // No additional validation by design. API can validate parameter by case, and use this method.
-            var endRange = "";
+
+            //$"{Unit}={Offset}-{endRange}"
+            Span<char> span = stackalloc char[Unit.Length + 40]; // Int64.MaxValue requires 19 characters, so Offset and endRange require 38 or less chars.
+            var position = 0;
+            span.AppendString(ref position, Unit);
+            span.AppendChar(ref position, '=');
+            span.AppendLong(ref position, Offset, provider: CultureInfo.InvariantCulture);
+            span.AppendChar(ref position, '-');
+
             if (Length.HasValue && Length != 0)
             {
-                endRange = (Offset + Length.Value - 1).ToString(CultureInfo.InvariantCulture);
+                span.AppendLong(ref position, Offset + Length.Value - 1, provider: CultureInfo.InvariantCulture);
             }
 
-            return FormattableString.Invariant($"{Unit}={Offset}-{endRange}");
+            return span.Slice(0, position).ToString();
         }
 
         /// <summary>
