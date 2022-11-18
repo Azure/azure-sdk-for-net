@@ -49,7 +49,7 @@ $dotnetRoot = Resolve-Path ($dotnet)
 
 $outputJson = [PSCustomObject]@{
     envs = [PSCustomObject]@{
-        PATH = "$dotnetRoot`:$env:PATH"
+        PATH = "${dotnetRoot}:${env:PATH}"
         DOTNET_ROOT = "$dotnetRoot"
     }
 }
