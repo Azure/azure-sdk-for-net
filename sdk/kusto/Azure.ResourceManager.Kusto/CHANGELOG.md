@@ -1,14 +1,22 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0 (2022-11-17)
 
 ### Features Added
 
-### Breaking Changes
+- Ability to exclude caller from being an admin on Database create/update.
+- EH and IoT hub data connection new property for lookback – start collecting data that was generated a while ago.
+- Follower name override/prefix – ability to define either different name for Read-Only-Following DB, or define prefix name for all DBs (in case of full cluster following scenario).
+- Enhancing Follower GET-related APIs to improve demonstration of follower-leader linage in Azure portal.
 
 ### Bugs Fixed
 
+- Added `KustoClusterPrincipalAssignmentData.ClusterPrincipalId` to replace the old property `KustoClusterPrincipalAssignmentData.PrincipalId` to fix the issue https://github.com/Azure/azure-sdk-for-net/issues/32331.
+
 ### Other Changes
+
+- Upgraded API version to 2022-07-07.
+- New API has the following new SKUs: Standard_L8s_v3, Standard_L16s_v3, Standard_L8as_v3, Standard_L16as_v3, Standard_E16s_v5+4TB_PS, Standard_E2d_v4, Standard_E4d_v4, Standard_E8d_v4, Standard_E16d_v4, Standard_E2d_v5, Standard_E4d_v5, Standard_E8d_v5, Standard_E16d_v5.
 
 ## 1.0.1 (2022-10-09)
 
