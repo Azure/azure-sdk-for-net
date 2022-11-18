@@ -335,7 +335,7 @@ namespace Azure.Messaging.ServiceBus
         /// <see cref="ServiceBusSessionProcessor.MaxConcurrentCallsPerSession"/>.</param>
         public void UpdateConcurrency(int maxConcurrentSessions, int maxConcurrentCallsPerSession)
         {
-            InnerProcessor.UpdateConcurrency(maxConcurrentSessions, maxConcurrentCallsPerSession);
+            InnerProcessor.UpdateConcurrencyInternal(maxConcurrentSessions, maxConcurrentCallsPerSession);
         }
     }
 }

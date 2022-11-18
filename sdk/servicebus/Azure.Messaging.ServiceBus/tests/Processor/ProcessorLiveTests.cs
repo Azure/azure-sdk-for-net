@@ -1003,7 +1003,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             }
         }
 
-        [Test]
+       [Test]
         public async Task CanUpdateConcurrency()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
@@ -1040,6 +1040,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     {
                         processor.UpdateConcurrency(1);
                         Assert.AreEqual(1, processor.MaxConcurrentCalls);
+                        Assert.AreEqual(0, processor.PrefetchCount);
                     }
 
                     // increase concurrency
@@ -1048,6 +1049,70 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         Assert.LessOrEqual(processor.TaskTuples.Where(t => !t.Task.IsCompleted).Count(), 1);
                         processor.UpdateConcurrency(10);
                         Assert.AreEqual(10, processor.MaxConcurrentCalls);
+                        Assert.AreEqual(0, processor.PrefetchCount);
+                    }
+                    if (count == 175)
+                    {
+                        Assert.GreaterOrEqual(processor.TaskTuples.Where(t => !t.Task.IsCompleted).Count(), 5);
+                    }
+                }
+
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
+
+                await processor.StartProcessingAsync();
+                await tcs.Task;
+                await processor.StopProcessingAsync();
+            }
+        }
+
+        [Test]
+        public async Task CanUpdateConcurrencyAndPrefetchCount()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = CreateClient();
+                var sender = client.CreateSender(scope.QueueName);
+                int messageCount = 200;
+
+                await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messageCount));
+
+                await using var processor = client.CreateProcessor(scope.QueueName, new ServiceBusProcessorOptions
+                {
+                    MaxConcurrentCalls = 20
+                });
+
+                int receivedCount = 0;
+                var tcs = new TaskCompletionSource<bool>();
+
+                async Task ProcessMessage(ProcessMessageEventArgs args)
+                {
+                    if (args.CancellationToken.IsCancellationRequested)
+                    {
+                        await args.AbandonMessageAsync(args.Message);
+                    }
+
+                    var count = Interlocked.Increment(ref receivedCount);
+                    if (count == messageCount)
+                    {
+                        tcs.SetResult(true);
+                    }
+
+                    // decrease concurrency
+                    if (count == 100)
+                    {
+                        processor.UpdateConcurrency(1, 1);
+                        Assert.AreEqual(1, processor.MaxConcurrentCalls);
+                        Assert.AreEqual(1, processor.PrefetchCount);
+                    }
+
+                    // increase concurrency
+                    if (count == 150)
+                    {
+                        Assert.LessOrEqual(processor.TaskTuples.Where(t => !t.Task.IsCompleted).Count(), 1);
+                        processor.UpdateConcurrency(10, 10);
+                        Assert.AreEqual(10, processor.MaxConcurrentCalls);
+                        Assert.AreEqual(10, processor.PrefetchCount);
                     }
                     if (count == 175)
                     {

@@ -51,7 +51,7 @@ namespace Azure.Messaging.ServiceBus
             _sessionReceiverOptions = new ServiceBusSessionReceiverOptions
             {
                 ReceiveMode = sessionProcessor.InnerProcessor.Options.ReceiveMode,
-                PrefetchCount = sessionProcessor.InnerProcessor.Options.PrefetchCount
+                PrefetchCount = sessionProcessor.InnerProcessor.PrefetchCount
             };
             _sessionId = sessionId;
             _keepOpenOnReceiveTimeout = keepOpenOnReceiveTimeout;

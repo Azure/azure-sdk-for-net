@@ -39,7 +39,7 @@ namespace Azure.Messaging.ServiceBus
             _receiverOptions = new ServiceBusReceiverOptions
             {
                 ReceiveMode = ProcessorOptions.ReceiveMode,
-                PrefetchCount = ProcessorOptions.PrefetchCount,
+                PrefetchCount = processor.PrefetchCount,
                 // Pass None for subqueue since the subqueue has already
                 // been taken into account when computing the EntityPath of the processor.
                 SubQueue = SubQueue.None,

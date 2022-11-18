@@ -103,7 +103,7 @@ namespace Azure.Messaging.ServiceBus
         /// The prefetch count is specified using <see cref="ServiceBusProcessorOptions.PrefetchCount"/>
         /// and has a default value of 0.
         /// </value>
-        public virtual int PrefetchCount { get; }
+        public virtual int PrefetchCount => _prefetchCount;
 
         /// <summary>
         /// Gets whether or not this processor is currently processing messages.
@@ -114,7 +114,7 @@ namespace Azure.Messaging.ServiceBus
         /// </value>
         public virtual bool IsProcessing => ActiveReceiveTask != null;
 
-        internal ServiceBusProcessorOptions Options { get; }
+        internal ServiceBusProcessorOptions Options { get; } // TODO contains stale values??
 
         /// <summary>
         ///   The active connection to the Azure Service Bus service, enabling client communications for metadata
@@ -131,6 +131,7 @@ namespace Azure.Messaging.ServiceBus
         /// </value>
         public virtual int MaxConcurrentCalls => _maxConcurrentCalls;
         private volatile int _maxConcurrentCalls;
+        private volatile int _prefetchCount;
         private int _currentConcurrentCalls;
 
         internal int MaxConcurrentSessions => _maxConcurrentSessions;
@@ -248,7 +249,7 @@ namespace Azure.Messaging.ServiceBus
             Identifier = string.IsNullOrEmpty(Options.Identifier) ? DiagnosticUtilities.GenerateIdentifier(EntityPath) : Options.Identifier;
 
             ReceiveMode = Options.ReceiveMode;
-            PrefetchCount = Options.PrefetchCount;
+            _prefetchCount = Options.PrefetchCount;
             MaxAutoLockRenewalDuration = Options.MaxAutoLockRenewalDuration;
             _maxConcurrentCalls = Options.MaxConcurrentCalls;
             MaxReceiveWaitTime = Options.MaxReceiveWaitTime;
@@ -636,7 +637,7 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        private void ReconcileReceiverManagers(int maxConcurrentSessions)
+        private void ReconcileReceiverManagers(int maxConcurrentSessions, int prefetchCount)
         {
             if (_receiverManagers.Count == 0)
             {
@@ -699,6 +700,28 @@ namespace Azure.Messaging.ServiceBus
                             _receiverManagers.RemoveAt(0);
                         }
                     }
+                }
+
+                int receiverManagers = _receiverManagers.Count;
+                for (int i = 0; i < receiverManagers; i++)
+                {
+                    var receiverManager = _receiverManagers[i];
+                    if (receiverManager.Receiver.PrefetchCount == prefetchCount)
+                    {
+                        continue;
+                    }
+
+                    // We will track them so that they can be explicitly closed when stopping, just like we do with
+                    // _receiverManagers.
+                    _orphanedReceiverManagers.Add(receiverManager);
+
+                    if (receiverManager is SessionReceiverManager sessionReceiverManager)
+                    {
+                        // these tasks will be awaited when closing the orphaned receivers as part of CloseAsync
+                        _ = sessionReceiverManager.CancelSessionAsync();
+                    }
+
+                    _receiverManagers.RemoveAt(i);
                 }
             }
         }
@@ -1036,6 +1059,24 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
+        ///
+        /// </summary>
+        /// <param name="maxConcurrentCalls"></param>
+        /// <param name="prefetchCount"></param>
+        public void UpdateConcurrency(int maxConcurrentCalls, int prefetchCount)
+        {
+            Argument.AssertAtLeast(maxConcurrentCalls, 1, nameof(maxConcurrentCalls));
+            Argument.AssertAtLeast(prefetchCount, 0, nameof(prefetchCount));
+            lock (_maxConcurrencySyncLock)
+            {
+                _maxConcurrentCalls = maxConcurrentCalls;
+                _prefetchCount = prefetchCount;
+
+                WakeLoop();
+            }
+        }
+
+        /// <summary>
         /// Updates the concurrency for the processor. This method can be used to dynamically change the concurrency of a running processor.
         /// </summary>
         /// <param name="maxConcurrentCalls">The new max concurrent calls value. This will be reflected in the <see cref="ServiceBusProcessor.MaxConcurrentCalls"/>
@@ -1050,7 +1091,7 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        internal void UpdateConcurrency(int maxConcurrentSessions, int maxConcurrentCallsPerSession)
+        internal void UpdateConcurrencyInternal(int maxConcurrentSessions, int maxConcurrentCallsPerSession)
         {
             Argument.AssertAtLeast(maxConcurrentSessions, 1, nameof(maxConcurrentSessions));
             Argument.AssertAtLeast(maxConcurrentCallsPerSession, 1, nameof(maxConcurrentCallsPerSession));
@@ -1078,12 +1119,14 @@ namespace Azure.Messaging.ServiceBus
         {
             int maxConcurrentCalls = 0;
             int maxConcurrentSessions = 0;
+            int prefetchCount = 0;
 
             lock (_maxConcurrencySyncLock)
             {
                 // read synchronized values once to avoid race conditions
                 maxConcurrentCalls = _maxConcurrentCalls;
                 maxConcurrentSessions = _maxConcurrentSessions;
+                prefetchCount = _prefetchCount;
             }
 
             int diff = maxConcurrentCalls - _currentConcurrentCalls;
@@ -1132,7 +1175,7 @@ namespace Azure.Messaging.ServiceBus
                 _currentAcceptSessions = maxAcceptSessions;
             }
 
-            ReconcileReceiverManagers(maxConcurrentSessions);
+            ReconcileReceiverManagers(maxConcurrentSessions, prefetchCount);
 
             _currentConcurrentCalls = maxConcurrentCalls;
             _currentConcurrentSessions = maxConcurrentSessions;
