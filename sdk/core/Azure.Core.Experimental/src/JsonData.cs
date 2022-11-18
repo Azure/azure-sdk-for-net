@@ -116,7 +116,9 @@ namespace Azure.Core
                     InitFromElement(doc.RootElement);
                     break;
                 default:
-                    JsonElement e = JsonDocument.Parse(JsonSerializer.Serialize(value, type ?? (value == null ? typeof(object) : value.GetType()), options)).RootElement;
+                    Type inputType = type ?? (value == null ? typeof(object) : value.GetType());
+                    string json = JsonSerializer.Serialize(value, inputType, options);
+                    JsonElement e = JsonDocument.Parse(json).RootElement;
                     _kind = e.ValueKind;
                     InitFromElement(e);
                     break;
