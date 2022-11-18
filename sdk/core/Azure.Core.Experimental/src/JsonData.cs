@@ -532,7 +532,12 @@ namespace Azure.Core
                 return Length;
             }
 
-            return GetPropertyValue(propertyName);
+            if (_kind == JsonValueKind.Object)
+            {
+                return GetPropertyValue(propertyName);
+            }
+
+            throw new InvalidOperationException($"Cannot get property on JSON element with kind {_kind}.");
         }
 
         private JsonData? GetViaIndexer(object index)

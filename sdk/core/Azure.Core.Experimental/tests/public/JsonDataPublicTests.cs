@@ -19,28 +19,28 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
-        public void DynamicCanConvertToString() => Assert.AreEqual("string", JsonAsType<string>("\"string\""));
+        public void DynamicCanConvertToString() => Assert.AreEqual("string", JsonDataTestHelpers.JsonAsType<string>("\"string\""));
 
         [Test]
-        public void DynamicCanConvertToInt() => Assert.AreEqual(5, JsonAsType<int>("5"));
+        public void DynamicCanConvertToInt() => Assert.AreEqual(5, JsonDataTestHelpers.JsonAsType<int>("5"));
 
         [Test]
-        public void DynamicCanConvertToLong() => Assert.AreEqual(5L, JsonAsType<long>("5"));
+        public void DynamicCanConvertToLong() => Assert.AreEqual(5L, JsonDataTestHelpers.JsonAsType<long>("5"));
 
         [Test]
-        public void DynamicCanConvertToBool() => Assert.AreEqual(true, JsonAsType<bool>("true"));
+        public void DynamicCanConvertToBool() => Assert.AreEqual(true, JsonDataTestHelpers.JsonAsType<bool>("true"));
 
         [Test]
-        public void DynamicCanConvertToNullAsString() => Assert.AreEqual(null, JsonAsType<string>("null"));
+        public void DynamicCanConvertToNullAsString() => Assert.AreEqual(null, JsonDataTestHelpers.JsonAsType<string>("null"));
 
         [Test]
-        public void DynamicCanConvertToNullAsNullableInt() => Assert.AreEqual(null, JsonAsType<int?>("null"));
+        public void DynamicCanConvertToNullAsNullableInt() => Assert.AreEqual(null, JsonDataTestHelpers.JsonAsType<int?>("null"));
 
         [Test]
-        public void DynamicCanConvertToNullAsNullableLong() => Assert.AreEqual(null, JsonAsType<long?>("null"));
+        public void DynamicCanConvertToNullAsNullableLong() => Assert.AreEqual(null, JsonDataTestHelpers.JsonAsType<long?>("null"));
 
         [Test]
-        public void DynamicCanConvertToNullAsNullableBool() => Assert.AreEqual(null, JsonAsType<bool?>("null"));
+        public void DynamicCanConvertToNullAsNullableBool() => Assert.AreEqual(null, JsonDataTestHelpers.JsonAsType<bool?>("null"));
 
         [Test]
         public void DynamicCanConvertToIEnumerableDynamic()
@@ -377,44 +377,6 @@ namespace Azure.Core.Tests.Public
 
             Assert.That(value, Is.EqualTo("foo"));
             Assert.That("foo", Is.EqualTo(value));
-        }
-
-        private T JsonAsType<T>(string json)
-        {
-            dynamic jsonData = new BinaryData(json).ToDynamic();
-            return (T)jsonData;
-        }
-
-#pragma warning disable CS0659 // Type overrides Object.Equals(object o) but does not override Object.GetHashCode()
-        internal class SampleModel : IEquatable<SampleModel>
-#pragma warning restore CS0659 // Type overrides Object.Equals(object o) but does not override Object.GetHashCode()
-        {
-            public SampleModel() { }
-
-            public string Message { get; set; }
-            public int Number { get; set; }
-
-            public SampleModel(string message, int number)
-            {
-                Message = message;
-                Number = number;
-            }
-
-            public override bool Equals(object obj)
-            {
-                SampleModel other = obj as SampleModel;
-                if (other == null)
-                {
-                    return false;
-                }
-
-                return Equals(other);
-            }
-
-            public bool Equals(SampleModel obj)
-            {
-                return Message == obj.Message && Number == obj.Number;
-            }
         }
     }
 }
