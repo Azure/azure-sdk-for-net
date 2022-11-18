@@ -1,8 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-
+using Azure;
 using Azure.Storage.Queues;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Extensions.Logging;
@@ -56,6 +55,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
             catch (UnauthorizedAccessException ex)
             {
                 throw new NotSupportedException("Target scaler is not supported. Unable to access queue to determine queue length.", ex);
+            }
+            catch (RequestFailedException ex)
+            {
+                if (ex.IsNotFoundQueueNotFound() ||
+                    ex.IsConflictQueueBeingDeletedOrDisabled() ||
+                    ex.IsServerSideError())
+                {
+                    // ignore transient errors, and return default metrics
+                    // E.g. if the queue doesn't exist, we'll return a zero queue length
+                    // and scale in
+                    _logger.LogWarning($"Error querying for queue scale status for QueueTargetScaler: {ex.Message}");
+                }
+                return GetScaleResultInternal(context, 0);
             }
         }
 

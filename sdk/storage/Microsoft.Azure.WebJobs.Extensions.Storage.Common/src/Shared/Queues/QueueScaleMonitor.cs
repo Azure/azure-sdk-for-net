@@ -35,7 +35,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
         {
             _queue = queue;
             _logger = loggerFactory.CreateLogger<QueueListener>();
-            _scaleMonitorDescriptor = new ScaleMonitorDescriptor($"{functionId}-QueueTrigger-{_queue.Name}".ToLower(CultureInfo.InvariantCulture));
+            _scaleMonitorDescriptor = new ScaleMonitorDescriptor($"{functionId}-QueueTrigger-{_queue.Name}".ToLower(CultureInfo.InvariantCulture), functionId);
             _queueMetricsProvider = new QueueMetricsProvider(queue, loggerFactory);
         }
 

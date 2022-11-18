@@ -29,7 +29,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
             _logger = loggerFactory.CreateLogger<QueueMetricsProvider>();
         }
 
-        // Caller of this function is responsible for wrapping this in try/catch
+        /// <summary>
+        /// Caller of this function is responsible for wrapping this in try/catch.
+        /// </summary>
+        /// <returns>The queue length from the associated queue entity.</returns>
         public async Task<int> GetQueueLength()
         {
             QueueProperties queueProperties = await _queue.GetPropertiesAsync().ConfigureAwait(false);
@@ -39,7 +42,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
         /// <summary>
         /// Retrieves metrics from the queue entity.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Returns a <see cref="QueueTriggerMetrics"/> object.</returns>
         public async Task<QueueTriggerMetrics> GetMetricsAsync()
         {
             int queueLength = 0;
