@@ -393,7 +393,9 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void DeserializationOfListOfTExpression()
         {
-            var dfe = DataFactoryExpression<List<TestModel>>.FromExpression("some expression");
+            var dfe = DataFactoryExpression<IList<TestModel>>.FromExpression("some expression");
+            var serialized = GetSerializedString(dfe);
+            dfe = JsonSerializer.Deserialize<DataFactoryExpression<IList<TestModel>>>(serialized)!;
             Assert.IsFalse(dfe.HasLiteral);
             Assert.AreEqual("some expression", dfe.Expression);
         }

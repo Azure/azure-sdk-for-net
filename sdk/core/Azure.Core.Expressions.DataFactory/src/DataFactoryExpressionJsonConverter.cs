@@ -163,12 +163,16 @@ namespace Azure.Core.Expressions.DataFactory
                 return new DataFactoryExpression<IList<T?>>(list);
             }
 
+            if (element.ValueKind == JsonValueKind.Object)
+            {
+                return DeserializeExpression<IList<T?>>(element);
+            }
+
             throw new InvalidOperationException($"Cannot deserialize an {element.ValueKind} as a list.");
         }
 
         internal static DataFactoryExpression<T>? Deserialize<T>(JsonElement element)
         {
-            string? expression = default;
             T? value = default;
 
             if (element.ValueKind == JsonValueKind.Null)
@@ -178,23 +182,30 @@ namespace Azure.Core.Expressions.DataFactory
 
             if (element.ValueKind == JsonValueKind.Object)
             {
-                foreach (var property in element.EnumerateObject())
-                {
-                    if (property.NameEquals("value"))
-                    {
-                        expression = property.Value.GetString();
-                        break;
-                    }
-                }
-                if (expression is null)
-                    throw new InvalidOperationException("Missing required parameter 'value'");
-                return DataFactoryExpression<T>.FromExpression(expression);
+                return DeserializeExpression<T>(element);
             }
 
             var obj = element.GetObject();
             if (obj is not null)
                 value = (T)obj;
             return new DataFactoryExpression<T>(value);
+        }
+
+        private static DataFactoryExpression<T> DeserializeExpression<T>(JsonElement element)
+        {
+            string? expression = null;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("value"))
+                {
+                    expression = property.Value.GetString();
+                    break;
+                }
+            }
+
+            if (expression is null)
+                throw new InvalidOperationException("Could not be deserialized as an expression. Missing required parameter 'value'.");
+            return DataFactoryExpression<T>.FromExpression(expression);
         }
     }
 }
