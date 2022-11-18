@@ -2,20 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Text;
-using System.Threading;
-using System.Web;
-
-using Azure.Core;
 
 using NUnit.Framework;
 
 namespace Azure.Messaging.WebPubSub.Tests
 {
     [TestFixture]
-    public class SearchFilterTests
+    public class ClientConnectionFilterTests
     {
         [Test]
         public void NoArguments()
