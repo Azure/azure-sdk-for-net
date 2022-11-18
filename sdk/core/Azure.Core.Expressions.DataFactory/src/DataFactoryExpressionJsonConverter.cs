@@ -154,7 +154,7 @@ namespace Azure.Core.Expressions.DataFactory
         {
             if (element.ValueKind == JsonValueKind.Array)
             {
-                var list = new ChangeTrackingList<T?>();
+                var list = new List<T?>();
                 foreach (var item in element.EnumerateArray())
                 {
                     list.Add(item.ValueKind == JsonValueKind.Null ? default : JsonSerializer.Deserialize<T>(item.ToString()!));
