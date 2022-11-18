@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.NetworkFunction.Models
 {
     /// <summary> Tags object for patch operations. </summary>
-    public partial class AzureTrafficCollectorPatch
+    public partial class TagsObject
     {
-        /// <summary> Initializes a new instance of AzureTrafficCollectorPatch. </summary>
-        public AzureTrafficCollectorPatch()
+        /// <summary> Initializes a new instance of TagsObject. </summary>
+        public TagsObject()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }

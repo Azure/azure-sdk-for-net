@@ -1784,17 +1784,22 @@ namespace Azure.AI.TextAnalytics
         #region Extract Summary
 
         /// <summary>
-        /// Initializes a new instance of <see cref="TextAnalytics.AnalyzeHealthcareEntitiesResult"/> for mocking purposes.
+        /// Initializes a new instance of <see cref="TextAnalytics.ExtractSummaryResult"/> for mocking purposes.
         /// </summary>
         /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
         /// <param name="statistics">Sets the <see cref="TextAnalyticsResult.Statistics"/> property.</param>
         /// <param name="sentences">Sets the <see cref="ExtractSummaryResult.Sentences"/> property.</param>
+        /// <param name="warnings">Sets the <see cref="ExtractSummaryResult.Warnings"/> property.</param>
         /// <returns>
         /// A new instance of <see cref="TextAnalytics.ExtractSummaryResult"/> for mocking purposes.
         /// </returns>
-        public static ExtractSummaryResult ExtractSummaryResult(string id, TextDocumentStatistics statistics, SummarySentenceCollection sentences)
+        public static ExtractSummaryResult ExtractSummaryResult(
+            string id,
+            TextDocumentStatistics statistics,
+            IList<SummarySentence> sentences,
+            IList<TextAnalyticsWarning> warnings = default)
         {
-            return new ExtractSummaryResult(id, statistics, sentences);
+            return new ExtractSummaryResult(id, statistics, sentences, warnings);
         }
 
         /// <summary>
@@ -1814,15 +1819,18 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.ExtractSummaryResultCollection"/> for mocking purposes.
         /// </summary>
-        /// <param name="list">Sets the collection of <see cref="TextAnalytics.ExtractSummaryResult"/>.</param>
+        /// <param name="results">Sets the collection of <see cref="TextAnalytics.ExtractSummaryResult"/>.</param>
         /// <param name="statistics">Sets the <see cref="ExtractSummaryResultCollection.Statistics"/> property.</param>
         /// <param name="modelVersion">Sets the <see cref="ExtractSummaryResultCollection.ModelVersion"/> property.</param>
         /// <returns>
         /// A new instance of <see cref="TextAnalytics.ExtractSummaryResultCollection"/> for mocking purposes.
         /// </returns>
-        public static ExtractSummaryResultCollection ExtractSummaryResultCollection(IEnumerable<ExtractSummaryResult> list, TextDocumentBatchStatistics statistics, string modelVersion)
+        public static ExtractSummaryResultCollection ExtractSummaryResultCollection(
+            IList<ExtractSummaryResult> results,
+            TextDocumentBatchStatistics statistics,
+            string modelVersion)
         {
-            return new ExtractSummaryResultCollection(list.ToList(), statistics, modelVersion);
+            return new ExtractSummaryResultCollection(results, statistics, modelVersion);
         }
 
         /// <summary>
@@ -1838,20 +1846,6 @@ namespace Azure.AI.TextAnalytics
         public static SummarySentence SummarySentence(string text, double rankScore, int offset, int length)
         {
             return new SummarySentence(new ExtractedSummarySentence(text, rankScore, offset, length));
-        }
-
-        /// <summary>
-        /// Initializes a new instance of <see cref="TextAnalytics.SummarySentenceCollection"/> for mocking purposes.
-        /// </summary>
-        /// <param name="sentences">Sets the collection of <see cref="SummarySentence"/>.</param>
-        /// <param name="warnings">Sets the <see cref="SummarySentenceCollection.Warnings"/> property.</param>
-        /// <returns>
-        /// A new instance of <see cref="TextAnalytics.SummarySentenceCollection"/> for mocking purposes.
-        /// </returns>
-        public static SummarySentenceCollection SummarySentenceCollection(IList<SummarySentence> sentences, IList<TextAnalyticsWarning> warnings = default)
-        {
-            warnings ??= new List<TextAnalyticsWarning>();
-            return new SummarySentenceCollection(sentences, warnings);
         }
 
         #endregion

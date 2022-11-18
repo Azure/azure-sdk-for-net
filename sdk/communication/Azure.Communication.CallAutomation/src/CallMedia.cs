@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Communication.CallAutomation.Models;
 using Azure.Core.Pipeline;
 
 namespace Azure.Communication.CallAutomation
@@ -95,6 +96,29 @@ namespace Azure.Communication.CallAutomation
                 PlaySourceInternal sourceInternal;
                 sourceInternal = new PlaySourceInternal(PlaySourceTypeInternal.File);
                 sourceInternal.FileSource = new FileSourceInternal(fileSource.FileUri.AbsoluteUri);
+                sourceInternal.PlaySourceId = playSource.PlaySourceId;
+
+                PlayRequestInternal request = new PlayRequestInternal(sourceInternal);
+                request.PlayTo = playTo.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList();
+
+                if (options != null)
+                {
+                    request.PlayOptions = new PlayOptionsInternal(options.Loop);
+                    request.OperationContext = options.OperationContext;
+                }
+
+                return request;
+            }
+
+            else if (playSource is TextSource textSource)
+            {
+                PlaySourceInternal sourceInternal;
+                sourceInternal = new PlaySourceInternal(PlaySourceTypeInternal.Text);
+                sourceInternal.TextSource = new TextSourceInternal(textSource.Text);
+                sourceInternal.TextSource.SourceLocale = textSource.SourceLocale ?? null;
+                sourceInternal.TextSource.TargetLocale = textSource.TargetLocale ?? null;
+                sourceInternal.TextSource.VoiceGender = textSource.VoiceGender ?? GenderType.M;
+                sourceInternal.TextSource.VoiceName = textSource.VoiceName ?? null;
                 sourceInternal.PlaySourceId = playSource.PlaySourceId;
 
                 PlayRequestInternal request = new PlayRequestInternal(sourceInternal);
