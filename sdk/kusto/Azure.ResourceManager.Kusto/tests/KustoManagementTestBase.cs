@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.Kusto.Tests
         protected KustoManagementTestBase(bool isAsync)
             : base(isAsync)
         {
+            JsonPathSanitizers.Add("$..scriptUrlSasToken");
         }
 
         protected async Task BaseSetUp(bool cluster = false, bool database = false)

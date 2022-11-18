@@ -4,7 +4,7 @@ param(
 
     [Parameter(Mandatory)]
     [string] $ResourceGroup,
-
+    
     [Parameter(Mandatory)]
     [string] $SubscriptionId,
 
@@ -116,7 +116,7 @@ Write-Host("Writing user config file - $fileName`n")
 
 $config = @"
 {
-    "TestMode":  "Live"
+    "TestMode":  "Live"	
 }
 "@
 
