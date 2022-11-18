@@ -110,7 +110,7 @@ namespace Azure.Core.Expressions.DataFactory
         {
             if (expression.HasLiteral)
             {
-                writer.WriteObjectValue(expression.LiteralInternal!);
+                writer.WriteObjectValue(expression.Literal!);
             }
             else
             {

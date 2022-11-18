@@ -20,7 +20,7 @@ namespace Azure.Core.Expressions.DataFactory
 #pragma warning restore SA1649 // File name should match first type name
     {
         internal string? Type { get; }
-        internal T? LiteralInternal { get; }
+        private readonly T? _literal;
         internal string? Expression { get; }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace Azure.Core.Expressions.DataFactory
         public DataFactoryExpression(T? literal)
         {
             HasLiteral = true;
-            LiteralInternal = literal;
+            _literal = literal;
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Azure.Core.Expressions.DataFactory
             get
             {
                 if (HasLiteral)
-                    return LiteralInternal;
+                    return _literal;
                 throw new InvalidOperationException("Cannot get value from Expression.");
             }
         }
@@ -63,13 +63,13 @@ namespace Azure.Core.Expressions.DataFactory
         {
             if (HasLiteral)
             {
-                if (LiteralInternal is Array literalArray)
+                if (_literal is Array literalArray)
                 {
                     return $"[{string.Join(",", literalArray.OfType<object>().Select(item => item?.ToString()))}]";
                 }
                 else
                 {
-                    return LiteralInternal?.ToString();
+                    return _literal?.ToString();
                 }
             }
             return Expression!;
