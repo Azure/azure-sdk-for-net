@@ -6,10 +6,12 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
-[assembly: CodeGenSuppressType("ContainerServiceArmOperationOfT")]
+[assembly:CodeGenSuppressType("ContainerServiceArmOperationOfT")]
 namespace Azure.ResourceManager.ContainerService
 {
 #pragma warning disable SA1649 // File name should match first type name
@@ -34,13 +36,11 @@ namespace Azure.ResourceManager.ContainerService
             _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, response, "ContainerServiceArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
         }
 
-        internal ContainerServiceArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string id, string interimApiVersion = null)
-        {
-            _operation = OperationInternal<T>.Create(id, source, clientDiagnostics, pipeline, "ContainerServiceArmOperation", fallbackStrategy: new ExponentialDelayStrategy(), interimApiVersion: interimApiVersion);
-        }
-
         /// <inheritdoc />
-        public override string Id => _operation.GetOperationId();
+#pragma warning disable CA1822
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public override string Id => throw new NotImplementedException();
+#pragma warning restore CA1822
 
         /// <inheritdoc />
         public override T Value => _operation.Value;
