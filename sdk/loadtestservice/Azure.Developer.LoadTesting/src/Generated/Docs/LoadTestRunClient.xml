@@ -975,14 +975,14 @@ Schema for <c>TestRun</c>:
 
 </remarks>
     </member>
-    <member name="GetFileAsync(String,String,RequestContext)">
+    <member name="GetTestRunFileAsync(String,String,RequestContext)">
 <example>
-This sample shows how to call GetFileAsync with required parameters and parse the result.
+This sample shows how to call GetTestRunFileAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
 
-Response response = await client.GetFileAsync("<testRunId>", "<fileName>");
+Response response = await client.GetTestRunFileAsync("<testRunId>", "<fileName>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("url").ToString());
@@ -1009,14 +1009,14 @@ Schema for <c>FileInfo</c>:
 
 </remarks>
     </member>
-    <member name="GetFile(String,String,RequestContext)">
+    <member name="GetTestRunFile(String,String,RequestContext)">
 <example>
-This sample shows how to call GetFile with required parameters and parse the result.
+This sample shows how to call GetTestRunFile with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
 
-Response response = client.GetFile("<testRunId>", "<fileName>");
+Response response = client.GetTestRunFile("<testRunId>", "<fileName>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("url").ToString());

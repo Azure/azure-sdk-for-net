@@ -737,28 +737,28 @@ Schema for <c>Test</c>:
 
 </remarks>
     </member>
-    <member name="UploadFileAsync(String,String,RequestContent,String,RequestContext)">
+    <member name="UploadTestFileAsync(String,String,RequestContent,String,RequestContext)">
 <example>
-This sample shows how to call UploadFileAsync with required parameters and request content, and how to parse the result.
+This sample shows how to call UploadTestFileAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 var data = File.OpenRead("<filePath>");
 
-Response response = await client.UploadFileAsync("<testId>", "<fileName>", RequestContent.Create(data));
+Response response = await client.UploadTestFileAsync("<testId>", "<fileName>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call UploadFileAsync with all parameters and request content, and how to parse the result.
+This sample shows how to call UploadTestFileAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 var data = File.OpenRead("<filePath>");
 
-Response response = await client.UploadFileAsync("<testId>", "<fileName>", RequestContent.Create(data), "<fileType>");
+Response response = await client.UploadTestFileAsync("<testId>", "<fileName>", RequestContent.Create(data), "<fileType>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("url").ToString());
@@ -785,28 +785,28 @@ Schema for <c>FileInfo</c>:
 
 </remarks>
     </member>
-    <member name="UploadFile(String,String,RequestContent,String,RequestContext)">
+    <member name="UploadTestFile(String,String,RequestContent,String,RequestContext)">
 <example>
-This sample shows how to call UploadFile with required parameters and request content, and how to parse the result.
+This sample shows how to call UploadTestFile with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 var data = File.OpenRead("<filePath>");
 
-Response response = client.UploadFile("<testId>", "<fileName>", RequestContent.Create(data));
+Response response = client.UploadTestFile("<testId>", "<fileName>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call UploadFile with all parameters and request content, and how to parse the result.
+This sample shows how to call UploadTestFile with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 var data = File.OpenRead("<filePath>");
 
-Response response = client.UploadFile("<testId>", "<fileName>", RequestContent.Create(data), "<fileType>");
+Response response = client.UploadTestFile("<testId>", "<fileName>", RequestContent.Create(data), "<fileType>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("url").ToString());
@@ -833,14 +833,14 @@ Schema for <c>FileInfo</c>:
 
 </remarks>
     </member>
-    <member name="GetFileAsync(String,String,RequestContext)">
+    <member name="GetTestFileAsync(String,String,RequestContext)">
 <example>
-This sample shows how to call GetFileAsync with required parameters and parse the result.
+This sample shows how to call GetTestFileAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
-Response response = await client.GetFileAsync("<testId>", "<fileName>");
+Response response = await client.GetTestFileAsync("<testId>", "<fileName>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("url").ToString());
@@ -867,14 +867,14 @@ Schema for <c>FileInfo</c>:
 
 </remarks>
     </member>
-    <member name="GetFile(String,String,RequestContext)">
+    <member name="GetTestFile(String,String,RequestContext)">
 <example>
-This sample shows how to call GetFile with required parameters and parse the result.
+This sample shows how to call GetTestFile with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
-Response response = client.GetFile("<testId>", "<fileName>");
+Response response = client.GetTestFile("<testId>", "<fileName>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("url").ToString());
@@ -901,26 +901,26 @@ Schema for <c>FileInfo</c>:
 
 </remarks>
     </member>
-    <member name="DeleteFileAsync(String,String,RequestContext)">
+    <member name="DeleteTestFileAsync(String,String,RequestContext)">
 <example>
-This sample shows how to call DeleteFileAsync with required parameters.
+This sample shows how to call DeleteTestFileAsync with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
-Response response = await client.DeleteFileAsync("<testId>", "<fileName>");
+Response response = await client.DeleteTestFileAsync("<testId>", "<fileName>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="DeleteFile(String,String,RequestContext)">
+    <member name="DeleteTestFile(String,String,RequestContext)">
 <example>
-This sample shows how to call DeleteFile with required parameters.
+This sample shows how to call DeleteTestFile with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
-Response response = client.DeleteFile("<testId>", "<fileName>");
+Response response = client.DeleteTestFile("<testId>", "<fileName>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>

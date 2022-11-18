@@ -207,17 +207,17 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetFileAsync(String,String,RequestContext)']/*" />
-        public virtual async Task<Response> GetFileAsync(string testRunId, string fileName, RequestContext context = null)
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestRunFileAsync(String,String,RequestContext)']/*" />
+        public virtual async Task<Response> GetTestRunFileAsync(string testRunId, string fileName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
             Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetFile");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetTestRunFile");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetFileRequest(testRunId, fileName, context);
+                using HttpMessage message = CreateGetTestRunFileRequest(testRunId, fileName, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -235,17 +235,17 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetFile(String,String,RequestContext)']/*" />
-        public virtual Response GetFile(string testRunId, string fileName, RequestContext context = null)
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestRunFile(String,String,RequestContext)']/*" />
+        public virtual Response GetTestRunFile(string testRunId, string fileName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
             Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetFile");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetTestRunFile");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetFileRequest(testRunId, fileName, context);
+                using HttpMessage message = CreateGetTestRunFileRequest(testRunId, fileName, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -895,7 +895,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateGetFileRequest(string testRunId, string fileName, RequestContext context)
+        internal HttpMessage CreateGetTestRunFileRequest(string testRunId, string fileName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
