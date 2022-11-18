@@ -58,6 +58,33 @@ function UpdateSparseCheckoutFile([string]$mainSpecDir, [string[]]$specAdditiona
     }
 }
 
+function GetGitRemoteValue([string]$repo) {
+    Push-Location $ProjectDirectory
+    $result = ""
+    try {
+        $gitRemotes = (git remote -v)
+        foreach ($remote in $gitRemotes)
+        {
+            if ($remote.StartsWith("origin")) {
+                if ($remote -match 'https://github.com/\S+\.git') {
+                    $result = "https://github.com/$repo.git"
+                    break
+                } elseif ($remote -match "git@github.com:(\S+)\.git"){
+                    $result = "git@github.com:$repo.git"
+                    break
+                } else {
+                    throw "Unknown git remote format found: $remote"
+                }
+            }
+        }
+    }
+    finally {
+        Pop-Location
+    }
+
+    return $result
+}
+
 function InitializeSparseGitClone([string]$repo) {
     if (!(Test-Path ".git")) {
         git init
@@ -93,10 +120,12 @@ $projectName = $pieces[$pieces.Count - 3]
 
 $specCloneDir = GetSpecCloneDir $projectName
 
+$gitRemoteValue = GetGitRemoteValue $configuration["repo"]
+
 Write-Host "Setting up sparse clone for $projectName"
 Push-Location $specCloneDir.Path
 try {
-    InitializeSparseGitClone $configuration["repo"]
+    InitializeSparseGitClone $gitRemoteValue
 
     $specSubDirectory = $configuration["directory"]
     UpdateSparseCheckoutFile $specSubDirectory $configuration["additionalDirectories"]
