@@ -27,7 +27,7 @@ Create a new private async task as below to handle training your model. You will
 
 You could add the data source, along with start time and end time to a `ModelInfo` object to create a data feed. The data source is a shared access signature(SAS) link in the format https://\[placeholder\]/. To generate the datasource link, you could first download our [sample data][datasource], then upload it to a azure container according to the [Upload a block blob][upload_blob] documentation and get the SAS link of the data according to the [Create SAS tokens for blobs in the Azure portal][generate_sas] documentation.
 
-Call `TrainMultivariateModel` with the created data feed and extract the model ID from the response header. Afterwards, you can get the model info, including the model status, by calling `GetMultivariateModelAsync` with the model ID . Wait until the model status is ready. 
+Call `TrainMultivariateModel` with the created data feed and extract the model ID from the response header. Afterwards, you can get the model info, including the model status, by calling `GetMultivariateModelAsync` with the model ID . Wait until the model status is ready.
 
 ```C# Snippet:TrainMultivariateModel
 private async Task<Guid?> TrainAsync(AnomalyDetectorClient client, string datasource, DateTimeOffset start_time, DateTimeOffset end_time, int max_tryout = 500)
@@ -83,7 +83,7 @@ private async Task<Guid?> TrainAsync(AnomalyDetectorClient client, string dataso
 
 ## Detect anomalies
 
-To detect anomalies using your newly trained model, create a private async Task named `DetectAsync`. You will create a new `DetectionRequest`, pass that as a parameter to `DetectAnomalyAsync` and await the response. From the header of the response, you could extract the result ID. With the result ID, you could get the detection content and detection status by `GetDetectionResultAsync`. Return the detection content when the detection status is ready. 
+To detect anomalies using your newly trained model, create a private async Task named `DetectAsync`. You will create a new `DetectionRequest`, pass that as a parameter to `DetectAnomalyAsync` and await the response. From the header of the response, you could extract the result ID. With the result ID, you could get the detection content and detection status by `GetDetectionResultAsync`. Return the detection content when the detection status is ready.
 
 ```C# Snippet:DetectMultivariateAnomaly
 private async Task<DetectionResult> DetectAsync(AnomalyDetectorClient client, string datasource, Guid model_id,DateTimeOffset start_time, DateTimeOffset end_time, int max_tryout = 500)
@@ -125,7 +125,7 @@ private async Task<DetectionResult> DetectAsync(AnomalyDetectorClient client, st
 
 ## Detect last anomalies
 
-To detect anomalies using your newly trained model, create a private async Task named `DetectLastAsync`. You will create a new `LastDetectionRequest`, you could assign how many last points you want to detect in the request. Pass `LastDetectionRequest` as a parameter to `LastDetectAnomalyAsync` and await the response. Return the detection content when the detection status is ready. 
+To detect anomalies using your newly trained model, create a private async Task named `DetectLastAsync`. You will create a new `LastDetectionRequest`, you could assign how many last points you want to detect in the request. Pass `LastDetectionRequest` as a parameter to `LastDetectAnomalyAsync` and await the response. Return the detection content when the detection status is ready.
 
 ```C# Snippet:DetectLastMultivariateAnomaly
 private async Task<LastDetectionResult> DetectLastAsync(AnomalyDetectorClient client, Guid model_id)
@@ -217,10 +217,6 @@ private async Task<int> GetModelNumberAsync(AnomalyDetectorClient client, bool d
     return count;
 }
 ```
-
-To see the full example source files, see:
-
-* [Multivariate Detect](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/anomalydetector/Azure.AI.AnomalyDetector/tests/samples/Sample4_MultivariateDetect.cs)
 
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/anomalydetector/Azure.AI.AnomalyDetector/README.md
 [datasource]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/anomalydetector/Azure.AI.AnomalyDetector/tests/samples/data/sample_data_20_3000.zip
