@@ -109,23 +109,19 @@ namespace Azure.Core
         }
 
         public static OperationInternal Create(
-            string id,
             ClientDiagnostics clientDiagnostics,
-            HttpPipeline pipeline,
+            IOperation? operation,
+            string? finalResponse,
             string? operationTypeName = null,
             IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
-            DelayStrategy? fallbackStrategy = null,
-            string? interimApiVersion = null)
+            DelayStrategy? fallbackStrategy = null)
         {
-            var lroDetails = BinaryData.FromBytes(Convert.FromBase64String(id)).ToObjectFromJson<Dictionary<string, string>>();
-
-            if (lroDetails.TryGetValue("FinalResponse", out string? finalResponse))
+            if (finalResponse != null)
             {
                 Response response = JsonSerializer.Deserialize<DecodedResponse>(finalResponse)!;
                 return OperationInternal.Succeeded(response);
             }
-            var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, id, interimApiVersion);
-            return new OperationInternal(clientDiagnostics, nextLinkOperation, null, operationTypeName, scopeAttributes, fallbackStrategy);
+            return new OperationInternal(clientDiagnostics, operation!, null, operationTypeName, scopeAttributes, fallbackStrategy);
         }
 
         public override Response RawResponse => _internalOperation.RawResponse;
@@ -135,7 +131,7 @@ namespace Azure.Core
         protected override async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken) =>
             async ? await _internalOperation.UpdateStatusAsync(cancellationToken).ConfigureAwait(false) : _internalOperation.UpdateStatus(cancellationToken);
 
-        public string GetOperationId()
+        public virtual string GetOperationId()
         {
             return _internalOperation.GetOperationId();
         }
@@ -172,6 +168,66 @@ namespace Azure.Core
             }
         }
 
+        internal class StreamConverter : JsonConverter<Stream>
+        {
+            /// <summary> Serialize stream to BinaryData string. </summary>
+            /// <param name="writer"> The writer. </param>
+            /// <param name="model"> The Stream model. </param>
+            /// <param name="options"> The options for JsonSerializer. </param>
+            public override void Write(Utf8JsonWriter writer, Stream model, JsonSerializerOptions options)
+            {
+                if (model.Length == 0)
+                {
+                    writer.WriteNullValue();
+                    return;
+                }
+                MemoryStream? memoryContent = model as MemoryStream;
+
+                if (memoryContent == null)
+                {
+                    throw new InvalidOperationException($"The response is not fully buffered.");
+                }
+
+                if (memoryContent.TryGetBuffer(out ArraySegment<byte> segment))
+                {
+                    var data = new BinaryData(segment.AsMemory());
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(data);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(data.ToString()).RootElement);
+#endif
+                }
+                else
+                {
+                    var data = new BinaryData(memoryContent.ToArray());
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(data);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(data.ToString()).RootElement);
+#endif
+                }
+            }
+
+            /// <summary> Deserialize Stream from BinaryData string. </summary>
+            /// <param name="reader"> The reader. </param>
+            /// <param name="typeToConvert"> The type to convert </param>
+            /// <param name="options"> The options for JsonSerializer. </param>
+            public override Stream Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                foreach (var property in document.RootElement.EnumerateObject())
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    var value = property.Value.GetString();
+                    return BinaryData.FromString(value!).ToStream();
+                }
+                return new MemoryStream();
+            }
+        }
+
         [JsonConverter(typeof(DecodedResponseConverter))]
         internal class DecodedResponse : Response
         {
@@ -195,10 +251,10 @@ namespace Azure.Core
             internal static DecodedResponse DeserializeDecodedResponse(JsonElement element)
             {
                 int status = default;
-                Optional<string> reasonPhrase = default;
+                string reasonPhrase = default;
                 Stream contentStream = new MemoryStream();
-                Optional<string> clientRequestId = default;
-                Optional<bool> isError = default;
+                string clientRequestId = default;
+                bool isError = default;
                 Dictionary<string, List<string>> headers = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
 
                 foreach (var property in element.EnumerateObject())
@@ -273,7 +329,7 @@ namespace Azure.Core
             {
                 public override void Write(Utf8JsonWriter writer, DecodedResponse model, JsonSerializerOptions options)
                 {
-                    writer.WriteObjectValue(model);
+                    throw new NotImplementedException("This converter should only be used for deserialization.");
                 }
                 public override DecodedResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
                 {

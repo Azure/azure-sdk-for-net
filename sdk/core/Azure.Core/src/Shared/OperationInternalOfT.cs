@@ -120,24 +120,20 @@ namespace Azure.Core
         }
 
         public static OperationInternal<T> Create(
-            string id,
             IOperationSource<T> source,
             ClientDiagnostics clientDiagnostics,
-            HttpPipeline pipeline,
+            IOperation<T>? operation,
+            string? finalResponse,
             string? operationTypeName = null,
             IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
-            DelayStrategy? fallbackStrategy = null,
-            string? interimApiVersion = null)
+            DelayStrategy? fallbackStrategy = null)
         {
-            var lroDetails = BinaryData.FromBytes(Convert.FromBase64String(id)).ToObjectFromJson<Dictionary<string, string>>();
-
-            if (lroDetails.TryGetValue("FinalResponse", out string? finalResponse))
+            if (finalResponse != null)
             {
                 Response response = JsonSerializer.Deserialize<OperationInternal.DecodedResponse>(finalResponse)!;
                 return OperationInternal<T>.Succeeded(response, source.CreateResult(response, CancellationToken.None));
             }
-            var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, id, interimApiVersion);
-            return new OperationInternal<T>(clientDiagnostics, nextLinkOperation, null, operationTypeName, scopeAttributes, fallbackStrategy);
+            return new OperationInternal<T>(clientDiagnostics, operation!, null, operationTypeName, scopeAttributes, fallbackStrategy);
         }
 
         public override Response RawResponse => (_stateLock.TryGetValue(out var state) ? state.RawResponse : _rawResponse) ?? throw new InvalidOperationException("The operation does not have a response yet. Please call UpdateStatus or WaitForCompletion first.");
@@ -303,7 +299,7 @@ namespace Azure.Core
             }
         }
 
-        public string GetOperationId()
+        public virtual string GetOperationId()
         {
             try
             {
@@ -311,7 +307,7 @@ namespace Azure.Core
             }
             catch (NotImplementedException)
             {
-                var serializeOptions = new JsonSerializerOptions { Converters = { new StreamConverter() } };
+                var serializeOptions = new JsonSerializerOptions { Converters = { new OperationInternal.StreamConverter() } };
                 var lroDetails = new Dictionary<string, string>()
                 {
                     ["FinalResponse"] = BinaryData.FromObjectAsJson<Response>(_rawResponse!, serializeOptions).ToString()
@@ -329,66 +325,6 @@ namespace Azure.Core
             }
 
             throw state.OperationFailedException!;
-        }
-
-        internal class StreamConverter : JsonConverter<Stream>
-        {
-            /// <summary> Serialize stream to BinaryData string. </summary>
-            /// <param name="writer"> The writer. </param>
-            /// <param name="model"> The Stream model. </param>
-            /// <param name="options"> The options for JsonSerializer. </param>
-            public override void Write(Utf8JsonWriter writer, Stream model, JsonSerializerOptions options)
-            {
-                if (model.Length == 0)
-                {
-                    writer.WriteNullValue();
-                    return;
-                }
-                MemoryStream? memoryContent = model as MemoryStream;
-
-                if (memoryContent == null)
-                {
-                    throw new InvalidOperationException($"The response is not fully buffered.");
-                }
-
-                if (memoryContent.TryGetBuffer(out ArraySegment<byte> segment))
-                {
-                    var data = new BinaryData(segment.AsMemory());
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(data);
-#else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(data.ToString()).RootElement);
-#endif
-                }
-                else
-                {
-                    var data = new BinaryData(memoryContent.ToArray());
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(data);
-#else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(data.ToString()).RootElement);
-#endif
-                }
-            }
-
-            /// <summary> Deserialize Stream from BinaryData string. </summary>
-            /// <param name="reader"> The reader. </param>
-            /// <param name="typeToConvert"> The type to convert </param>
-            /// <param name="options"> The options for JsonSerializer. </param>
-            public override Stream Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                foreach (var property in document.RootElement.EnumerateObject())
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    var value = property.Value.GetString();
-                    return BinaryData.FromString(value!).ToStream();
-                }
-                return new MemoryStream();
-            }
         }
 
         private class FinalOperation : IOperation<T>
