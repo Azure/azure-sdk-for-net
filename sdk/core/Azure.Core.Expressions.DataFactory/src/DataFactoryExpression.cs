@@ -28,7 +28,7 @@ namespace Azure.Core.Expressions.DataFactory
         /// Initializes a new instance of DataFactoryExpression with a literal value.
         /// </summary>
         /// <param name="literal"> The literal value. </param>
-        public DataFactoryExpression(T literal)
+        public DataFactoryExpression(T? literal)
         {
             HasLiteral = true;
             LiteralInternal = literal;
