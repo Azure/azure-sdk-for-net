@@ -47,7 +47,7 @@ namespace Azure.Messaging.WebPubSub.Clients
             await _sendLock.WaitAsync(cancellationToken).ConfigureAwait(false);
             try
             {
-                await _socket.SendAsync(buffer, messageType, endOfMessage, cancellationToken).ConfigureAwait(false);
+                await _socket.SendAsync(new ArraySegment<byte>(buffer.ToArray()) , messageType, endOfMessage, cancellationToken).ConfigureAwait(false);
             }
             finally
             {
@@ -101,7 +101,7 @@ namespace Azure.Messaging.WebPubSub.Clients
             }
 
             var memory = buffer.GetMemory();
-            var receiveResult = await socket.ReceiveAsync(memory, token).ConfigureAwait(false);
+            var receiveResult = await ReadSocketAsync(socket, memory, token).ConfigureAwait(false);
 
             if (receiveResult.MessageType == WebSocketMessageType.Close)
             {
@@ -113,7 +113,7 @@ namespace Azure.Messaging.WebPubSub.Clients
             while (!receiveResult.EndOfMessage)
             {
                 memory = buffer.GetMemory();
-                receiveResult = await socket.ReceiveAsync(memory, token).ConfigureAwait(false);
+                receiveResult = await ReadSocketAsync(socket, memory, token).ConfigureAwait(false);
 
                 // Need to check again for NetCoreApp2.2 because a close can happen between a 0-byte read and the actual read
                 if (receiveResult.MessageType == WebSocketMessageType.Close)
@@ -125,6 +125,14 @@ namespace Azure.Messaging.WebPubSub.Clients
             }
 
             return receiveResult.MessageType;
+        }
+
+        private static async Task<WebSocketReceiveResult> ReadSocketAsync(WebSocket socket, Memory<byte> destination, CancellationToken token)
+        {
+            var array = new ArraySegment<byte>(new byte[destination.Length]);
+            var receiveResult = await socket.ReceiveAsync(array, token).ConfigureAwait(false);
+            array.Array.CopyTo(destination);
+            return receiveResult;
         }
     }
 }
