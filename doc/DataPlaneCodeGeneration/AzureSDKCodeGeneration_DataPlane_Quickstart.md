@@ -92,6 +92,9 @@ sdk\<service name>\<package name>\<package name>.sln
 
         Run `npm install` again to install @azure-tools/cadl-csharp.
 
+  **Notes**: @azure-tools/cadl-csharp: "0.1.6" only works with @cadl-lang/compiler: "0.36.0" and @cadl-lang/rest: "0.18.0"
+  
+
   ***Modify (or create) cadl-project.yaml, add one line under emitters:***
 
   ```diff
@@ -137,13 +140,13 @@ Generate the library source code files to the directory `<sdkPath>/sdk/<service>
 
   ```shell
   npm install
-  npx cadl compile --emit @azure-tools/cadl-csharp --output-path <Path-to-source-code-folder>
+  npx cadl compile --emit @azure-tools/cadl-csharp --output-path <Path-to-source-code-folder> <path-to-cadl-file>
   ```
 
   e.g.
 
   ```shell
-  npx cadl compile --emit @azure-tools/cadl-csharp --output-path <sdkPath>/sdk/<service>/<namespace>/src
+  npx cadl compile --emit @azure-tools/cadl-csharp --output-path /home/azure-sdk-for-net/sdk/deviceupdate/Azure.IoT.DeviceUpdate/src .
   ```
 
 #### Build the library project
