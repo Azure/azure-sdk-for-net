@@ -128,7 +128,7 @@ namespace Azure.Core.Expressions.DataFactory
             if (expression.HasLiteral)
             {
                 writer.WriteStartArray();
-                foreach (T? elem in expression.Literal!.AsEnumerable())
+                foreach (T? elem in expression.Literal!)
                 {
                     JsonSerializer.Serialize(writer, elem);
                 }
