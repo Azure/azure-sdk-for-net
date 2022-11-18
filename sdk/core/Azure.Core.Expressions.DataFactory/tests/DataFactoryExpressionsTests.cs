@@ -226,7 +226,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void SerializationOfListOfT()
         {
-            var elements = new ChangeTrackingList<TestModel>
+            var elements = new List<TestModel>
             {
                 new TestModel { A = 1, B = true },
                 new TestModel { A = 2, B = false }
@@ -357,7 +357,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void DeserializationOfListOfT()
         {
-            var elements = new ChangeTrackingList<TestModel>
+            var elements = new List<TestModel>
             {
                 new TestModel { A = 1, B = true },
                 new TestModel { A = 2, B = false }
@@ -374,7 +374,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void DeserializationOfEmptyListOfT()
         {
-            var elements = new ChangeTrackingList<TestModel>();
+            var elements = new List<TestModel>();
             var dfe = new DataFactoryExpression<IList<TestModel>>(elements);
             var actual = GetSerializedString(dfe);
             dfe = JsonSerializer.Deserialize<DataFactoryExpression<IList<TestModel>>>(actual);
@@ -403,7 +403,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void DeserializationOfListOfTWithNull()
         {
-            var elements = new ChangeTrackingList<TestModel?>
+            var elements = new List<TestModel?>
             {
                 new TestModel { A = 1, B = true },
                 null
