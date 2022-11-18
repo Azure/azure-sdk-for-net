@@ -6,9 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -40,9 +37,9 @@ namespace Azure.ResourceManager.Resources
             _operation = new OperationInternal(clientDiagnostics, nextLinkOperation, response, "ResourcesArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
         }
 
-        internal ResourcesArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string id, string interimApiVersion = null)
+        internal ResourcesArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string id)
         {
-            _operation = OperationInternal.Create(id, clientDiagnostics, pipeline, "ResourcesArmOperation", fallbackStrategy: new ExponentialDelayStrategy(), interimApiVersion: interimApiVersion);
+            _operation = OperationInternal.Create(id, clientDiagnostics, pipeline, "ResourcesArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
         }
 
         /// <inheritdoc />

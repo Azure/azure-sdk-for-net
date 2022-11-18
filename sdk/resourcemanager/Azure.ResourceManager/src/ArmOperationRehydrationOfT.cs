@@ -54,65 +54,11 @@ namespace Azure.ResourceManager
         // <summary> Rehydrate an LRO. </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<T>> RehydrateAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", "", Diagnostics);
-            using var scope = clientDiagnostics.CreateScope("ArmOperationRehydration.Rehydrate");
-            scope.Start();
-            try
-            {
-                Type genericType = typeof(T);
-                IOperationSource<T> source;
-                if (genericType == typeof(GenericResource))
-                {
-                    source = (IOperationSource<T>)(new GenericResourceOperationSource(Client));
-                }
-                else
-                {
-                    throw new ArgumentOutOfRangeException($"Not expected generic type: {genericType}");
-                }
-                var operation = new ResourcesArmOperation<T>(source, clientDiagnostics, Pipeline, Id);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public abstract Task<ArmOperation<T>> RehydrateAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default);
 
         // <summary> Rehydrate an LRO. </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<T> Rehydrate(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", "", Diagnostics);
-            using var scope = clientDiagnostics.CreateScope("ContainerServiceArmOperationRehydration.Rehydrate");
-            scope.Start();
-            try
-            {
-                Type genericType = typeof(T);
-                IOperationSource<T> source;
-                if (genericType == typeof(GenericResource))
-                {
-                    source = (IOperationSource<T>)(new GenericResourceOperationSource(Client));
-                }
-                else
-                {
-                    throw new ArgumentOutOfRangeException($"Not expected generic type: {genericType}");
-                }
-                var operation = new ResourcesArmOperation<T>(source, clientDiagnostics, Pipeline, Id);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public abstract ArmOperation<T> Rehydrate(WaitUntil waitUntil, CancellationToken cancellationToken = default);
     }
 }

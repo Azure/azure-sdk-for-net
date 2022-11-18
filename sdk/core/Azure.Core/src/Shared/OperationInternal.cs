@@ -196,7 +196,7 @@ namespace Azure.Core
             {
                 int status = default;
                 Optional<string> reasonPhrase = default;
-                Optional<Stream> contentStream = default;
+                Stream contentStream = new MemoryStream();
                 Optional<string> clientRequestId = default;
                 Optional<bool> isError = default;
                 Dictionary<string, List<string>> headers = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
@@ -215,8 +215,12 @@ namespace Azure.Core
                     }
                     if (property.NameEquals("ContentStream"))
                     {
-                        var content = property.Value.GetString();
-                        contentStream = new MemoryStream(Encoding.UTF8.GetBytes(content ?? ""));
+                        var content = BinaryData.FromObjectAsJson(property.Value);
+                        if (content != null)
+                        {
+                            content.ToStream().CopyTo(contentStream);
+                            contentStream.Position = 0;
+                        }
                         continue;
                     }
                     if (property.NameEquals("ClientRequestId"))

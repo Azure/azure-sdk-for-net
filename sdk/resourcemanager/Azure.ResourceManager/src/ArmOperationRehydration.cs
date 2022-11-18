@@ -52,45 +52,11 @@ namespace Azure.ResourceManager
         // <summary> Rehydrate an LRO. </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> RehydrateAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", "", Diagnostics);
-            using var scope = clientDiagnostics.CreateScope("ArmOperationRehydration.Rehydrate");
-            scope.Start();
-            try
-            {
-                var operation = new ResourcesArmOperation(clientDiagnostics, Pipeline, Id);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public abstract Task<ArmOperation> RehydrateAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default);
 
         // <summary> Rehydrate an LRO. </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Rehydrate(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", "", Diagnostics);
-            using var scope = clientDiagnostics.CreateScope("ArmOperationRehydration.Rehydrate");
-            scope.Start();
-            try
-            {
-                var operation = new ResourcesArmOperation(clientDiagnostics, Pipeline, Id);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public abstract ArmOperation Rehydrate(WaitUntil waitUntil, CancellationToken cancellationToken = default);
     }
 }

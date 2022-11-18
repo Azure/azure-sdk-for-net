@@ -80,6 +80,26 @@ namespace Azure.ResourceManager
     {
         protected ArmOperation() { }
     }
+    public abstract partial class ArmOperationRehydration
+    {
+        public ArmOperationRehydration(Azure.ResourceManager.ArmClient client, string id) { }
+        protected internal virtual Azure.ResourceManager.ArmClient Client { get { throw null; } }
+        protected internal virtual Azure.Core.DiagnosticsOptions Diagnostics { get { throw null; } }
+        protected internal virtual string Id { get { throw null; } }
+        protected internal virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public abstract Azure.ResourceManager.ArmOperation Rehydrate(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RehydrateAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    }
+    public abstract partial class ArmOperationRehydration<T>
+    {
+        public ArmOperationRehydration(Azure.ResourceManager.ArmClient client, string id) { }
+        protected internal virtual Azure.ResourceManager.ArmClient Client { get { throw null; } }
+        protected internal virtual Azure.Core.DiagnosticsOptions Diagnostics { get { throw null; } }
+        protected internal virtual string Id { get { throw null; } }
+        protected internal virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public abstract Azure.ResourceManager.ArmOperation<T> Rehydrate(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<T>> RehydrateAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    }
     public abstract partial class ArmOperation<T> : Azure.Operation<T>
     {
         protected ArmOperation() { }
@@ -871,6 +891,18 @@ namespace Azure.ResourceManager.Resources
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.ResourceProviderResource>> RegisterAsync(Azure.ResourceManager.Resources.Models.ProviderRegistrationContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.ResourceProviderResource> Unregister(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.ResourceProviderResource>> UnregisterAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ResourcesArmOperationRehydration : Azure.ResourceManager.ArmOperationRehydration
+    {
+        public ResourcesArmOperationRehydration(Azure.ResourceManager.ArmClient client, string id) : base (default(Azure.ResourceManager.ArmClient), default(string)) { }
+        public override Azure.ResourceManager.ArmOperation Rehydrate(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RehydrateAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ResourcesArmOperationRehydration<T> : Azure.ResourceManager.ArmOperationRehydration<T>
+    {
+        public ResourcesArmOperationRehydration(Azure.ResourceManager.ArmClient client, string id) : base (default(Azure.ResourceManager.ArmClient), default(string)) { }
+        public override Azure.ResourceManager.ArmOperation<T> Rehydrate(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<T>> RehydrateAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SubscriptionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.SubscriptionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.SubscriptionResource>, System.Collections.IEnumerable
     {

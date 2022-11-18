@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.ManagementGroups
             _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, response, "ManagementGroupsArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
         }
 
-        internal ManagementGroupsArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string id, string interimApiVersion = null)
+        internal ManagementGroupsArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string id)
         {
-            _operation = OperationInternal<T>.Create(id, source, clientDiagnostics, pipeline, "ManagementGroupsArmOperation", fallbackStrategy: new ExponentialDelayStrategy(), interimApiVersion: interimApiVersion);
+            _operation = OperationInternal<T>.Create(id, source, clientDiagnostics, pipeline, "ManagementGroupsArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
         }
 
         /// <inheritdoc />
