@@ -58,4 +58,4 @@ catch (Exception e)
 }
 ```
 To see the full example source files, see:
-* [Sample3_CreateOrUpdateAppComponentAsync.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/loadtestservice/Azure.Developer.LoadTesting/tests/Samples/Sample3_CreateOrUpdateAppComponentAsync.cs)
+* [Sample3_CreateOrUpdateAppComponentAsync.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/loadtestservice/Azure.Developer.LoadTesting/tests/Samples/Sample3_CreateOrUpdateAppComponentsAsync.cs)

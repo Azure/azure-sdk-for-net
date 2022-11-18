@@ -45,4 +45,4 @@ catch (Exception e)
 }
 ```
 To see the full example source files, see:
-* [Sample4_CreateAndUpdateTest.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/loadtestservice/Azure.Developer.LoadTesting/tests/Samples/Sample4_CreateAndUpdateTest.cs)
+* [Sample4_CreateAndUpdateTest.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/loadtestservice/Azure.Developer.LoadTesting/tests/Samples/Sample4_CreateOrUpdateTestRun.cs)
