@@ -258,10 +258,10 @@ function DeployStressPackage(
             Write-Host "Building and pushing stress test docker image '$imageTag'"
             $dockerFile = Get-ChildItem $dockerFilePath
 
-            $dockerBuildCmd = @("docker"; "build"; "-t"; $imageTag;"-f";$dockerFile)
-            foreach ($envVar in $dockerBuildConfig.scenario.GetEnumerator()) {
+            $dockerBuildCmd = "docker", "build", "-t", $imageTag, "-f", $dockerFile
+            foreach ($buildArg in $dockerBuildConfig.scenario.GetEnumerator()) {
                 $dockerBuildCmd += "--build-arg"
-                $dockerBuildCmd += "$($envVar.Key)=$($envVar.Value)"
+                $dockerBuildCmd += "'$($buildArg.Key)'='$($buildArg.Value)'"
             }
             $dockerBuildCmd += $dockerBuildFolder
 
