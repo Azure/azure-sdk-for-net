@@ -106,11 +106,4 @@ VerifyResult ecVerifyDataResult = ecCryptoClient.VerifyData(SignatureAlgorithm.E
 Debug.WriteLine($"Verified the signature using the algorithm {ecVerifyDataResult.Algorithm}, with key {ecVerifyDataResult.KeyId}. Signature is valid: {ecVerifyDataResult.IsValid}");
 ```
 
-## Source
-
-To see the full example source, see:
-
-* [Synchronous Sample5_SignVerify.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/tests/samples/Sample5_SignVerify.cs)
-* [Asynchronous Sample5_SignVerifyAsync.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/tests/samples/Sample5_SignVerifyAsync.cs)
-
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md

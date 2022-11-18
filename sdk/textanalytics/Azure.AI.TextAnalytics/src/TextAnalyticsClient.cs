@@ -2101,9 +2101,8 @@ namespace Azure.AI.TextAnalytics
         #region Extract Summary
 
         /// <summary>
-        /// Performs extractive summarization on the given documents, which consists of extracting
-        /// sentences that collectively represent the most important or relevant information within
-        /// the original content.
+        /// Performs extractive summarization on the given documents, which consists of extracting sentences that
+        /// collectively represent the most important or relevant information within the original content.
         /// For a list of languages supported by this operation, see
         /// <see href="https://learn.microsoft.com/azure/cognitive-services/language-service/summarization/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
@@ -2113,13 +2112,13 @@ namespace Azure.AI.TextAnalytics
         /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
         /// </remarks>
         /// <param name="documents">The documents to analyze.</param>
-        /// <param name="language">The language that the document is written in.</param>
-        /// <param name="options">The additional configurable options<see cref="ExtractSummaryOptions"/></param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <param name="language">The language that the documents are written in.</param>
+        /// <param name="options">The additional <see cref="ExtractSummaryOptions"/> used to configure the operation.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
         /// <returns>
-        /// An <see cref="ExtractSummaryOperation"/> that can be used to monitor the status of this long-running operation.
-        /// Upon completion, the <see cref="ExtractSummaryOperation"/> will contain the collections of extracted summary
-        /// sentences for each document that was successfully analyzed.
+        /// An <see cref="ExtractSummaryOperation"/> that can be used to monitor the status of extractive
+        /// summarization. Upon completion, the operation will contain the collections of extracted summary sentences
+        /// for each document that was successfully analyzed.
         /// </returns>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
         /// <exception cref="RequestFailedException">Service returned a non-success status code.</exception>
@@ -2136,9 +2135,8 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Performs extractive summarization on the given documents, which consists of extracting
-        /// sentences that collectively represent the most important or relevant information within
-        /// the original content.
+        /// Performs extractive summarization on the given documents, which consists of extracting sentences that
+        /// collectively represent the most important or relevant information within the original content.
         /// For a list of languages supported by this operation, see
         /// <see href="https://learn.microsoft.com/azure/cognitive-services/language-service/summarization/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
@@ -2148,12 +2146,12 @@ namespace Azure.AI.TextAnalytics
         /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
         /// </remarks>
         /// <param name="documents">The documents to analyze.</param>
-        /// <param name="options">The additional configurable options<see cref="ExtractSummaryOptions"/></param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <param name="options">The additional <see cref="ExtractSummaryOptions"/> used to configure the operation.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
         /// <returns>
-        /// An <see cref="ExtractSummaryOperation"/> that can be used to monitor the status of this long-running operation.
-        /// Upon completion, the <see cref="ExtractSummaryOperation"/> will contain the collections of extracted summary
-        /// sentences for each document that was successfully analyzed.
+        /// An <see cref="ExtractSummaryOperation"/> that can be used to monitor the status of extractive
+        /// summarization. Upon completion, the operation will contain the collections of extracted summary sentences
+        /// for each document that was successfully analyzed.
         /// </returns>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
         /// <exception cref="RequestFailedException">Service returned a non-success status code.</exception>
@@ -2161,7 +2159,7 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="ArgumentNullException"><paramref name="documents"/> is null.</exception>
         public virtual ExtractSummaryOperation StartExtractSummary(
             IEnumerable<TextDocumentInput> documents,
-            ExtractSummaryOptions options,
+            ExtractSummaryOptions options = default,
             CancellationToken cancellationToken = default)
         {
             options?.CheckSupported(ServiceVersion);
@@ -2169,9 +2167,8 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Performs extractive summarization on the given documents, which consists of extracting
-        /// sentences that collectively represent the most important or relevant information within
-        /// the original content.
+        /// Performs extractive summarization on the given documents, which consists of extracting sentences that
+        /// collectively represent the most important or relevant information within the original content.
         /// For a list of languages supported by this operation, see
         /// <see href="https://learn.microsoft.com/azure/cognitive-services/language-service/summarization/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
@@ -2181,13 +2178,13 @@ namespace Azure.AI.TextAnalytics
         /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
         /// </remarks>
         /// <param name="documents">The documents to analyze.</param>
-        /// <param name="language">The language that the document is written in.</param>
-        /// <param name="options">The additional configurable <see cref="ExtractSummaryOptions"/> </param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <param name="language">The language that the documents are written in.</param>
+        /// <param name="options">The additional <see cref="ExtractSummaryOptions"/> used to configure the operation.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
         /// <returns>
-        /// An <see cref="ExtractSummaryOperation"/> that can be used to monitor the status of this long-running operation.
-        /// Upon completion, the <see cref="ExtractSummaryOperation"/> will contain the collections of extracted summary
-        /// sentences for each document that was successfully analyzed.
+        /// A <see cref="Task{ExtractSummaryOperation}"/> that can be used to monitor the status of the extractive
+        /// summarization. Upon completion, the operation will contain the collections of extracted summary sentences
+        /// for each document that was successfully analyzed.
         /// </returns>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
         /// <exception cref="RequestFailedException">Service returned a non-success status code.</exception>
@@ -2204,9 +2201,8 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Performs extractive summarization on the given documents, which consists of extracting
-        /// sentences that collectively represent the most important or relevant information within
-        /// the original content.
+        /// Performs extractive summarization on the given documents, which consists of extracting sentences that
+        /// collectively represent the most important or relevant information within the original content.
         /// For a list of languages supported by this operation, see
         /// <see href="https://learn.microsoft.com/azure/cognitive-services/language-service/summarization/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
@@ -2216,12 +2212,12 @@ namespace Azure.AI.TextAnalytics
         /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
         /// </remarks>
         /// <param name="documents">The documents to analyze.</param>
-        /// <param name="options">The additional configurable options<see cref="ExtractSummaryOptions"/></param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <param name="options">The additional <see cref="ExtractSummaryOptions"/> used to configure the operation.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
         /// <returns>
-        /// An <see cref="ExtractSummaryOperation"/> that can be used to monitor the status of this long-running operation.
-        /// Upon completion, the <see cref="ExtractSummaryOperation"/> will contain the collections of extracted summary
-        /// sentences for each document that was successfully analyzed.
+        /// A <see cref="Task{ExtractSummaryOperation}"/> that can be used to monitor the status of the extractive
+        /// summarization. Upon completion, the operation will contain the collections of extracted summary sentences
+        /// for each document that was successfully analyzed.
         /// </returns>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
         /// <exception cref="RequestFailedException">Service returned a non-success status code.</exception>

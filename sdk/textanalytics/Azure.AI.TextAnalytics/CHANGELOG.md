@@ -3,16 +3,17 @@
 ## 5.3.0-beta.1 (Unreleased)
 
 ### Features Added
-- Added `FhirVersion` and `DocumentType` properties to `AnalyzeHealthcareEntitiesOptions` and `AnalyzeHealthcareEntitiesAction`.
-- Added `FhirBundle` property to `AnalyzeHealthcareEntitiesResult`.
-- Added `ConfidenceScore` property to `HealthcareEntityRelation`.
-- Added `WellKnownFhirVersion` and `HealthcareDocumentType` enums.
-- Added `TextAnalyticsActions.ExtractSummaryActions` to perform extractive summarization in a batch of actions.
-- Added `TextAnalyticsClient.StartExtractSummary` and `StartExtractSummaryAsync` to perform extractive summarization on a collection of documents.
-- Added `TextAnalyticsActions.AbstractSummaryActions` to perform abstractive summarization in a batch of actions.
-- Added `TextAnalyticsClient.StartAbstractSummary` and `StartAbstractSummaryAsync` to perform abstractive summarization on a collection of documents.
-- Added `Script` property to `DetectedLanguage`.
-- Added `ScriptKind` enum.
+- Added the `AnalyzeHealthcareEntitiesOptions.FhirVersion` and `AnalyzeHealthcareEntitiesOptions.DocumentType` properties.
+- Added the `AnalyzeHealthcareEntitiesAction.FhirVersion` and `AnalyzeHealthcareEntitiesAction.DocumentType` properties.
+- Added the `AnalyzeHealthcareEntitiesResult.FhirBundle` property.
+- Added the `HealthcareEntityRelation.ConfidenceScore` property.
+- Added the `WellKnownFhirVersion` and `HealthcareDocumentType` enums.
+- Added the `TextAnalyticsActions.ExtractSummaryActions` property to support extractive summarization in a batch of actions.
+- Added the `TextAnalyticsActions.AbstractSummaryActions` property to support abstractive summarization in a batch of actions.
+- Added the `TextAnalyticsClient.StartExtractSummary` and `TextAnalyticsClient.StartExtractSummaryAsync` methods to perform extractive summarization on a collection of documents.
+- Added the `TextAnalyticsClient.StartAbstractSummary` and `TextAnalyticsClient.StartAbstractSummaryAsync` methods to perform abstractive summarization on a collection of documents.
+- Added the `DetectedLanguage.Script` property.
+- Added the `ScriptKind` enum.
 - Added the `CategorizedEntity.Resolutions` property.
 - Added the following classes: `AgeResolution`, `AreaResolution`, `BaseResolution`, `BooleanResolution`, `CurrencyResolution`, `DateTimeResolution`, `InformationResolution`, `LengthResolution`, `NumberResolution`, `NumericRangeResolution`, `OrdinalResolution`, `SpeedResolution`, `TemperatureResolution`, `TemporalSpanResolution` `VolumeResolution`, and `WeightResolution`.
 - Added the following enums: `AgeUnit`, `AreaUnit`, `DateTimeSubKind`, `InformationUnit`,`LengthUnit`, `NumberKind`, `RangeKind`, `RelativeTo`, `SpeedUnit`, `TemperatureUnit`,`TemporalModifier`, `VolumeUnit`, and `WeightUnit`.
