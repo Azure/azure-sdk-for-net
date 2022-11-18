@@ -105,7 +105,7 @@ function GetSpecCloneDir([string]$projectName) {
         Pop-Location
     }
 
-    $sparseSpecCloneDir = "$root/../temp/$projectName"
+    $sparseSpecCloneDir = "$root/../sparse-spec/$projectName"
     New-Item $sparseSpecCloneDir -Type Directory -Force | Out-Null
     $createResult = Resolve-Path $sparseSpecCloneDir
     return $createResult
@@ -122,7 +122,7 @@ $specCloneDir = GetSpecCloneDir $projectName
 
 $gitRemoteValue = GetGitRemoteValue $configuration["repo"]
 
-Write-Host "Setting up sparse clone for $projectName"
+Write-Host "Setting up sparse clone for $projectName at $specCloneDir"
 Push-Location $specCloneDir.Path
 try {
     InitializeSparseGitClone $gitRemoteValue
@@ -139,7 +139,7 @@ finally {
 
 $specDir = Resolve-Path "$specCloneDir/$specSubDirectory"
 
-$tempCadlDir = "$ProjectDirectory/temp"
+$tempCadlDir = "$ProjectDirectory/TempCadlFiles"
 New-Item $tempCadlDir -Type Directory -Force | Out-Null
 CopySpecToProjectIfNeeded `
     -pullResult $result `
