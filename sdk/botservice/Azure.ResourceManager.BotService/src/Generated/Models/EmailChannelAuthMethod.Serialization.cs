@@ -11,17 +11,10 @@ namespace Azure.ResourceManager.BotService.Models
 {
     internal static partial class EmailChannelAuthMethodExtensions
     {
-        public static int ToSerialString(this EmailChannelAuthMethod value) => value switch
-        {
-            EmailChannelAuthMethod.Password => 0,
-            EmailChannelAuthMethod.Graph => 1,
-            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EmailChannelAuthMethod value.")
-        };
-
         public static EmailChannelAuthMethod ToEmailChannelAuthMethod(this int value)
         {
-            if (Equals(value, 0)) return EmailChannelAuthMethod.Password;
-            if (Equals(value, 1)) return EmailChannelAuthMethod.Graph;
+            if (value == 0) return EmailChannelAuthMethod.Password;
+            if (value == 1) return EmailChannelAuthMethod.Graph;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EmailChannelAuthMethod value.");
         }
     }
