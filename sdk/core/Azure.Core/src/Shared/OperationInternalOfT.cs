@@ -383,6 +383,12 @@ namespace Azure.Core
         string GetOperationId();
     }
 
+    internal interface IOperationSource<T>
+    {
+        T CreateResult(Response response, CancellationToken cancellationToken);
+        ValueTask<T> CreateResultAsync(Response response, CancellationToken cancellationToken);
+    }
+
     /// <summary>
     /// A helper structure passed to <see cref="OperationInternal{T}"/> to indicate the current operation state. This structure must be
     /// instantiated by one of its static methods, depending on the operation state:

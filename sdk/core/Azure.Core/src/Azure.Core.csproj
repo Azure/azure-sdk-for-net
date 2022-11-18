@@ -72,7 +72,6 @@
     <Compile Include="Shared\OperationPoller.cs" />
     <Compile Include="Shared\DelayStrategy.cs" />
     <Compile Include="Shared\TypeReferenceTypeAttribute.cs" />
-    <Compile Include="Shared\IOperationSource.cs" />
   </ItemGroup>
 
 </Project>
