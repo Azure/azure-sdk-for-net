@@ -1334,20 +1334,20 @@ namespace Azure.AI.TextAnalytics
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public SpeedUnit(string value) { throw null; }
-        public static Azure.AI.TextAnalytics.SpeedUnit CentimetersPerMillisecond { get { throw null; } }
+        public static Azure.AI.TextAnalytics.SpeedUnit CentimeterPerMillisecond { get { throw null; } }
         public static Azure.AI.TextAnalytics.SpeedUnit FootPerMinute { get { throw null; } }
         public static Azure.AI.TextAnalytics.SpeedUnit FootPerSecond { get { throw null; } }
-        public static Azure.AI.TextAnalytics.SpeedUnit KilometersPerHour { get { throw null; } }
-        public static Azure.AI.TextAnalytics.SpeedUnit KilometersPerMillisecond { get { throw null; } }
-        public static Azure.AI.TextAnalytics.SpeedUnit KilometersPerMinute { get { throw null; } }
-        public static Azure.AI.TextAnalytics.SpeedUnit KilometersPerSecond { get { throw null; } }
+        public static Azure.AI.TextAnalytics.SpeedUnit KilometerPerHour { get { throw null; } }
+        public static Azure.AI.TextAnalytics.SpeedUnit KilometerPerMillisecond { get { throw null; } }
+        public static Azure.AI.TextAnalytics.SpeedUnit KilometerPerMinute { get { throw null; } }
+        public static Azure.AI.TextAnalytics.SpeedUnit KilometerPerSecond { get { throw null; } }
         public static Azure.AI.TextAnalytics.SpeedUnit Knot { get { throw null; } }
-        public static Azure.AI.TextAnalytics.SpeedUnit MetersPerMillisecond { get { throw null; } }
-        public static Azure.AI.TextAnalytics.SpeedUnit MetersPerSecond { get { throw null; } }
-        public static Azure.AI.TextAnalytics.SpeedUnit MilesPerHour { get { throw null; } }
+        public static Azure.AI.TextAnalytics.SpeedUnit MeterPerMillisecond { get { throw null; } }
+        public static Azure.AI.TextAnalytics.SpeedUnit MeterPerSecond { get { throw null; } }
+        public static Azure.AI.TextAnalytics.SpeedUnit MilePerHour { get { throw null; } }
         public static Azure.AI.TextAnalytics.SpeedUnit Unspecified { get { throw null; } }
-        public static Azure.AI.TextAnalytics.SpeedUnit YardsPerMinute { get { throw null; } }
-        public static Azure.AI.TextAnalytics.SpeedUnit YardsPerSecond { get { throw null; } }
+        public static Azure.AI.TextAnalytics.SpeedUnit YardPerMinute { get { throw null; } }
+        public static Azure.AI.TextAnalytics.SpeedUnit YardPerSecond { get { throw null; } }
         public bool Equals(Azure.AI.TextAnalytics.SpeedUnit other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -1472,6 +1472,7 @@ namespace Azure.AI.TextAnalytics
         public string Duration { get { throw null; } }
         public string End { get { throw null; } }
         public Azure.AI.TextAnalytics.TemporalModifier? Modifier { get { throw null; } }
+        public string Timex { get { throw null; } }
     }
     public partial class TextAnalyticsActionResult
     {
@@ -1812,7 +1813,7 @@ namespace Azure.AI.TextAnalytics
         public static Azure.AI.TextAnalytics.SummarySentence SummarySentence(string text, double rankScore, int offset, int length) { throw null; }
         public static Azure.AI.TextAnalytics.TargetSentiment TargetSentiment(Azure.AI.TextAnalytics.TextSentiment sentiment, string text, double positiveScore, double negativeScore, int offset, int length) { throw null; }
         public static Azure.AI.TextAnalytics.TemperatureResolution TemperatureResolution(Azure.AI.TextAnalytics.TemperatureUnit unit, double value) { throw null; }
-        public static Azure.AI.TextAnalytics.TemporalSpanResolution TemporalSpanResolution(string begin, string end, string duration, Azure.AI.TextAnalytics.TemporalModifier? modifier) { throw null; }
+        public static Azure.AI.TextAnalytics.TemporalSpanResolution TemporalSpanResolution(string begin, string end, string duration, Azure.AI.TextAnalytics.TemporalModifier? modifier, string timex) { throw null; }
         public static Azure.AI.TextAnalytics.TextAnalyticsError TextAnalyticsError(string code, string message, string target = null) { throw null; }
         public static Azure.AI.TextAnalytics.TextAnalyticsWarning TextAnalyticsWarning(string code, string message) { throw null; }
         public static Azure.AI.TextAnalytics.TextDocumentBatchStatistics TextDocumentBatchStatistics(int documentCount, int validDocumentCount, int invalidDocumentCount, long transactionCount) { throw null; }

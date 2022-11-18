@@ -12,16 +12,16 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    /// <summary> The PiiResultDocumentsItem. </summary>
-    internal partial class PiiResultDocumentsItem : PiiEntitiesDocumentResult
+    /// <summary> The PIIResultWithDetectedLanguage. </summary>
+    internal partial class PIIResultWithDetectedLanguage : PiiEntitiesDocumentResult
     {
-        /// <summary> Initializes a new instance of PiiResultDocumentsItem. </summary>
+        /// <summary> Initializes a new instance of PIIResultWithDetectedLanguage. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="redactedText"> Returns redacted text. </param>
         /// <param name="entities"> Recognized entities in the document. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="warnings"/>, <paramref name="redactedText"/> or <paramref name="entities"/> is null. </exception>
-        public PiiResultDocumentsItem(string id, IEnumerable<DocumentWarning> warnings, string redactedText, IEnumerable<Entity> entities) : base(id, warnings, redactedText, entities)
+        public PIIResultWithDetectedLanguage(string id, IEnumerable<DocumentWarning> warnings, string redactedText, IEnumerable<Entity> entities) : base(id, warnings, redactedText, entities)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(warnings, nameof(warnings));
@@ -29,14 +29,14 @@ namespace Azure.AI.TextAnalytics.Models
             Argument.AssertNotNull(entities, nameof(entities));
         }
 
-        /// <summary> Initializes a new instance of PiiResultDocumentsItem. </summary>
+        /// <summary> Initializes a new instance of PIIResultWithDetectedLanguage. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
         /// <param name="redactedText"> Returns redacted text. </param>
         /// <param name="entities"> Recognized entities in the document. </param>
         /// <param name="detectedLanguage"> If &apos;language&apos; is set to &apos;auto&apos; for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
-        internal PiiResultDocumentsItem(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, string redactedText, IList<Entity> entities, DetectedLanguageInternal? detectedLanguage) : base(id, warnings, statistics, redactedText, entities)
+        internal PIIResultWithDetectedLanguage(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, string redactedText, IList<Entity> entities, DetectedLanguageInternal? detectedLanguage) : base(id, warnings, statistics, redactedText, entities)
         {
             DetectedLanguage = detectedLanguage;
         }

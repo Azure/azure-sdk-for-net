@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class EntitiesResultDocumentsItem : IUtf8JsonSerializable
+    internal partial class HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,7 +20,7 @@ namespace Azure.AI.TextAnalytics.Models
             if (Optional.IsDefined(DetectedLanguage))
             {
                 writer.WritePropertyName("detectedLanguage");
-                writer.WriteObjectValue(DetectedLanguage.Value);
+                writer.WriteStringValue(DetectedLanguage);
             }
             writer.WritePropertyName("entities");
             writer.WriteStartArray();
@@ -29,6 +29,24 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
+            writer.WritePropertyName("relations");
+            writer.WriteStartArray();
+            foreach (var item in Relations)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsCollectionDefined(FhirBundle))
+            {
+                writer.WritePropertyName("fhirBundle");
+                writer.WriteStartObject();
+                foreach (var item in FhirBundle)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             writer.WritePropertyName("id");
             writer.WriteStringValue(Id);
             writer.WritePropertyName("warnings");
@@ -46,10 +64,12 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteEndObject();
         }
 
-        internal static EntitiesResultDocumentsItem DeserializeEntitiesResultDocumentsItem(JsonElement element)
+        internal static HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage DeserializeHealthcareEntitiesDocumentResultWithDocumentDetectedLanguage(JsonElement element)
         {
-            Optional<DetectedLanguageInternal> detectedLanguage = default;
-            IList<EntityWithResolution> entities = default;
+            Optional<string> detectedLanguage = default;
+            IList<HealthcareEntityInternal> entities = default;
+            IList<HealthcareRelationInternal> relations = default;
+            Optional<IDictionary<string, object>> fhirBundle = default;
             string id = default;
             IList<DocumentWarning> warnings = default;
             Optional<TextDocumentStatistics> statistics = default;
@@ -57,22 +77,42 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 if (property.NameEquals("detectedLanguage"))
                 {
+                    detectedLanguage = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("entities"))
+                {
+                    List<HealthcareEntityInternal> array = new List<HealthcareEntityInternal>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(HealthcareEntityInternal.DeserializeHealthcareEntityInternal(item));
+                    }
+                    entities = array;
+                    continue;
+                }
+                if (property.NameEquals("relations"))
+                {
+                    List<HealthcareRelationInternal> array = new List<HealthcareRelationInternal>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(HealthcareRelationInternal.DeserializeHealthcareRelationInternal(item));
+                    }
+                    relations = array;
+                    continue;
+                }
+                if (property.NameEquals("fhirBundle"))
+                {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    detectedLanguage = DetectedLanguageInternal.DeserializeDetectedLanguageInternal(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("entities"))
-                {
-                    List<EntityWithResolution> array = new List<EntityWithResolution>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                    foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        array.Add(EntityWithResolution.DeserializeEntityWithResolution(item));
+                        dictionary.Add(property0.Name, property0.Value.GetObject());
                     }
-                    entities = array;
+                    fhirBundle = dictionary;
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -101,7 +141,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new EntitiesResultDocumentsItem(id, warnings, Optional.ToNullable(statistics), entities, Optional.ToNullable(detectedLanguage));
+            return new HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage(id, warnings, Optional.ToNullable(statistics), entities, relations, Optional.ToDictionary(fhirBundle), detectedLanguage.Value);
         }
     }
 }
