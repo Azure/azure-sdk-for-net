@@ -1,18 +1,10 @@
 namespace Azure.AI.AnomalyDetector
 {
-    public partial class AnomalyDetectorClientOptions : Azure.Core.ClientOptions
+    public partial class AnomalyDetectorClient
     {
-        public AnomalyDetectorClientOptions(Azure.AI.AnomalyDetector.AnomalyDetectorClientOptions.ServiceVersion version = Azure.AI.AnomalyDetector.AnomalyDetectorClientOptions.ServiceVersion.V1_0) { }
-        public enum ServiceVersion
-        {
-            V1_0 = 1,
-        }
-    }
-    public partial class MultivariateClient
-    {
-        protected MultivariateClient() { }
-        public MultivariateClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
-        public MultivariateClient(System.Uri endpoint, Azure.AzureKeyCredential credential, string apiVersion, Azure.AI.AnomalyDetector.AnomalyDetectorClientOptions options) { }
+        protected AnomalyDetectorClient() { }
+        public AnomalyDetectorClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
+        public AnomalyDetectorClient(System.Uri endpoint, Azure.AzureKeyCredential credential, string apiVersion, Azure.AI.AnomalyDetector.AnomalyDetectorClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response<Azure.AI.AnomalyDetector.Models.Model> CreateAndTrainMultivariateModel(Azure.AI.AnomalyDetector.Models.ModelInfo body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response CreateAndTrainMultivariateModel(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
@@ -28,23 +20,6 @@ namespace Azure.AI.AnomalyDetector
         public virtual Azure.Response DetectMultivariateLastAnomaly(string modelId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.AnomalyDetector.Models.LastDetectionResult>> DetectMultivariateLastAnomalyAsync(string modelId, Azure.AI.AnomalyDetector.Models.LastDetectionRequest body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DetectMultivariateLastAnomalyAsync(string modelId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response GetBatchDetectionResult(string resultId, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetBatchDetectionResultAsync(string resultId, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.AI.AnomalyDetector.Models.DetectionResult> GetBatchDetectionResultValue(string resultId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.AnomalyDetector.Models.DetectionResult>> GetBatchDetectionResultValueAsync(string resultId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response GetMultivariateModel(string modelId, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetMultivariateModelAsync(string modelId, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetMultivariateModels(int? skip = default(int?), int? maxCount = default(int?), Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetMultivariateModelsAsync(int? skip = default(int?), int? maxCount = default(int?), Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.AI.AnomalyDetector.Models.Model> GetMultivariateModelValue(string modelId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.AnomalyDetector.Models.Model>> GetMultivariateModelValueAsync(string modelId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class UnivariateClient
-    {
-        protected UnivariateClient() { }
-        public UnivariateClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
-        public UnivariateClient(System.Uri endpoint, Azure.AzureKeyCredential credential, string apiVersion, Azure.AI.AnomalyDetector.AnomalyDetectorClientOptions options) { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response<Azure.AI.AnomalyDetector.Models.ChangePointDetectResponse> DetectUnivariateChangePoint(Azure.AI.AnomalyDetector.Models.ChangePointDetectRequest body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DetectUnivariateChangePoint(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.AnomalyDetector.Models.ChangePointDetectResponse>> DetectUnivariateChangePointAsync(Azure.AI.AnomalyDetector.Models.ChangePointDetectRequest body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -57,6 +32,26 @@ namespace Azure.AI.AnomalyDetector
         public virtual Azure.Response DetectUnivariateLastPoint(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.AnomalyDetector.Models.LastDetectResponse>> DetectUnivariateLastPointAsync(Azure.AI.AnomalyDetector.Models.DetectRequest body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DetectUnivariateLastPointAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetMultivariateBatchDetectionResult(string resultId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetMultivariateBatchDetectionResultAsync(string resultId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response<Azure.AI.AnomalyDetector.Models.DetectionResult> GetMultivariateBatchDetectionResultValue(string resultId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.AnomalyDetector.Models.DetectionResult>> GetMultivariateBatchDetectionResultValueAsync(string resultId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response GetMultivariateModel(string modelId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetMultivariateModelAsync(string modelId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetMultivariateModels(int? skip = default(int?), int? maxCount = default(int?), Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetMultivariateModelsAsync(int? skip = default(int?), int? maxCount = default(int?), Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response<Azure.AI.AnomalyDetector.Models.Model> GetMultivariateModelValue(string modelId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.AnomalyDetector.Models.Model>> GetMultivariateModelValueAsync(string modelId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.AI.AnomalyDetector.Models.Model> GetMultivariateModelValues(int? skip = default(int?), int? maxCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.AI.AnomalyDetector.Models.Model> GetMultivariateModelValuesAsync(int? skip = default(int?), int? maxCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class AnomalyDetectorClientOptions : Azure.Core.ClientOptions
+    {
+        public AnomalyDetectorClientOptions(Azure.AI.AnomalyDetector.AnomalyDetectorClientOptions.ServiceVersion version = Azure.AI.AnomalyDetector.AnomalyDetectorClientOptions.ServiceVersion.V2015_06_18) { }
+        public enum ServiceVersion
+        {
+            V2015_06_18 = 1,
+        }
     }
 }
 namespace Azure.AI.AnomalyDetector.Models

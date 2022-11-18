@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
 {
-    /// <summary> Client options for AnomalyDetector library clients. </summary>
+    /// <summary> Client options for AnomalyDetectorClient. </summary>
     public partial class AnomalyDetectorClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V1_0;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2015_06_18;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> Service version "1.0". </summary>
-            V1_0 = 1,
+            /// <summary> Service version "2015-06-18". </summary>
+            V2015_06_18 = 1,
         }
 
         internal string Version { get; }
@@ -29,7 +29,7 @@ namespace Azure.AI.AnomalyDetector
         {
             Version = version switch
             {
-                ServiceVersion.V1_0 => "1.0",
+                ServiceVersion.V2015_06_18 => "2015-06-18",
                 _ => throw new NotSupportedException()
             };
         }

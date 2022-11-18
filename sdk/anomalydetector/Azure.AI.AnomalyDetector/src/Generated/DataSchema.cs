@@ -7,11 +7,12 @@
 
 namespace Azure.AI.AnomalyDetector.Models
 {
+    /// <summary> Data schema of input data source: OneTable or MultiTable. The default DataSchema is OneTable. </summary>
     public enum DataSchema
     {
-        /// <summary> OneTable. </summary>
+        /// <summary> OneTable means that your input data are all in one CSV file, which contains one &apos;timestamp&apos; column and several variable columns. The default DataSchema is OneTable. </summary>
         OneTable,
-        /// <summary> MultiTable. </summary>
+        /// <summary> MultiTable means that your input data are separated in multiple CSV files, in each file containing one &apos;timestamp&apos; column and one &apos;variable&apos; column, and the CSV file name should indicate the name of the variable. The default DataSchema is OneTable. </summary>
         MultiTable
     }
 }

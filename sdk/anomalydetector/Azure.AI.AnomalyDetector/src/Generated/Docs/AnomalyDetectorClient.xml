@@ -1,15 +1,615 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetBatchDetectionResultAsync(String,RequestContext)">
+    <member name="DetectUnivariateEntireSeriesAsync(RequestContent,RequestContext)">
 <example>
-This sample shows how to call GetBatchDetectionResultAsync with required parameters and parse the result.
+This sample shows how to call DetectUnivariateEntireSeriesAsync with required request content, and how to parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new MultivariateClient(endpoint, credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
-Response response = await client.GetBatchDetectionResultAsync("<resultId>");
+var data = new {
+    series = new[] {
+        new {
+            value = 123.45f,
+        }
+    },
+};
+
+Response response = await client.DetectUnivariateEntireSeriesAsync(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("period").ToString());
+Console.WriteLine(result.GetProperty("expectedValues")[0].ToString());
+Console.WriteLine(result.GetProperty("upperMargins")[0].ToString());
+Console.WriteLine(result.GetProperty("lowerMargins")[0].ToString());
+Console.WriteLine(result.GetProperty("isAnomaly")[0].ToString());
+Console.WriteLine(result.GetProperty("isNegativeAnomaly")[0].ToString());
+Console.WriteLine(result.GetProperty("isPositiveAnomaly")[0].ToString());
+]]></code>
+This sample shows how to call DetectUnivariateEntireSeriesAsync with all request content, and how to parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+var data = new {
+    series = new[] {
+        new {
+            timestamp = "2022-05-10T14:57:31.2311892-04:00",
+            value = 123.45f,
+        }
+    },
+    granularity = "yearly",
+    customInterval = 1234,
+    period = 1234,
+    maxAnomalyRatio = 123.45f,
+    sensitivity = 1234,
+    imputeMode = "auto",
+    imputeFixedValue = 123.45f,
+};
+
+Response response = await client.DetectUnivariateEntireSeriesAsync(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("period").ToString());
+Console.WriteLine(result.GetProperty("expectedValues")[0].ToString());
+Console.WriteLine(result.GetProperty("upperMargins")[0].ToString());
+Console.WriteLine(result.GetProperty("lowerMargins")[0].ToString());
+Console.WriteLine(result.GetProperty("isAnomaly")[0].ToString());
+Console.WriteLine(result.GetProperty("isNegativeAnomaly")[0].ToString());
+Console.WriteLine(result.GetProperty("isPositiveAnomaly")[0].ToString());
+Console.WriteLine(result.GetProperty("severity")[0].ToString());
+]]></code>
+</example>
+<remarks>
+This operation generates a model with an entire series, each point is detected
+with the same model. With this method, points before and after a certain point
+are used to determine whether it is an anomaly. The entire detection can give
+user an overall status of the time series.
+
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>DetectRequest</c>:
+<code>{
+  series: [
+    {
+      timestamp: string (date &amp; time), # Optional.
+      value: number, # Required.
+    }
+  ], # Required.
+  granularity: &quot;yearly&quot; | &quot;monthly&quot; | &quot;weekly&quot; | &quot;daily&quot; | &quot;hourly&quot; | &quot;minutely&quot; | &quot;secondly&quot; | &quot;microsecond&quot; | &quot;none&quot;, # Optional.
+  customInterval: number, # Optional.
+  period: number, # Optional.
+  maxAnomalyRatio: number, # Optional.
+  sensitivity: number, # Optional.
+  imputeMode: &quot;auto&quot; | &quot;previous&quot; | &quot;linear&quot; | &quot;fixed&quot; | &quot;zero&quot; | &quot;notFill&quot;, # Optional.
+  imputeFixedValue: number, # Optional.
+}
+</code>
+
+Response Body:
+
+Schema for <c>EntireDetectResponse</c>:
+<code>{
+  period: number, # Required.
+  expectedValues: [number], # Required.
+  upperMargins: [number], # Required.
+  lowerMargins: [number], # Required.
+  isAnomaly: [boolean], # Required.
+  isNegativeAnomaly: [boolean], # Required.
+  isPositiveAnomaly: [boolean], # Required.
+  severity: [number], # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="DetectUnivariateEntireSeries(RequestContent,RequestContext)">
+<example>
+This sample shows how to call DetectUnivariateEntireSeries with required request content, and how to parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+var data = new {
+    series = new[] {
+        new {
+            value = 123.45f,
+        }
+    },
+};
+
+Response response = client.DetectUnivariateEntireSeries(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("period").ToString());
+Console.WriteLine(result.GetProperty("expectedValues")[0].ToString());
+Console.WriteLine(result.GetProperty("upperMargins")[0].ToString());
+Console.WriteLine(result.GetProperty("lowerMargins")[0].ToString());
+Console.WriteLine(result.GetProperty("isAnomaly")[0].ToString());
+Console.WriteLine(result.GetProperty("isNegativeAnomaly")[0].ToString());
+Console.WriteLine(result.GetProperty("isPositiveAnomaly")[0].ToString());
+]]></code>
+This sample shows how to call DetectUnivariateEntireSeries with all request content, and how to parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+var data = new {
+    series = new[] {
+        new {
+            timestamp = "2022-05-10T14:57:31.2311892-04:00",
+            value = 123.45f,
+        }
+    },
+    granularity = "yearly",
+    customInterval = 1234,
+    period = 1234,
+    maxAnomalyRatio = 123.45f,
+    sensitivity = 1234,
+    imputeMode = "auto",
+    imputeFixedValue = 123.45f,
+};
+
+Response response = client.DetectUnivariateEntireSeries(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("period").ToString());
+Console.WriteLine(result.GetProperty("expectedValues")[0].ToString());
+Console.WriteLine(result.GetProperty("upperMargins")[0].ToString());
+Console.WriteLine(result.GetProperty("lowerMargins")[0].ToString());
+Console.WriteLine(result.GetProperty("isAnomaly")[0].ToString());
+Console.WriteLine(result.GetProperty("isNegativeAnomaly")[0].ToString());
+Console.WriteLine(result.GetProperty("isPositiveAnomaly")[0].ToString());
+Console.WriteLine(result.GetProperty("severity")[0].ToString());
+]]></code>
+</example>
+<remarks>
+This operation generates a model with an entire series, each point is detected
+with the same model. With this method, points before and after a certain point
+are used to determine whether it is an anomaly. The entire detection can give
+user an overall status of the time series.
+
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>DetectRequest</c>:
+<code>{
+  series: [
+    {
+      timestamp: string (date &amp; time), # Optional.
+      value: number, # Required.
+    }
+  ], # Required.
+  granularity: &quot;yearly&quot; | &quot;monthly&quot; | &quot;weekly&quot; | &quot;daily&quot; | &quot;hourly&quot; | &quot;minutely&quot; | &quot;secondly&quot; | &quot;microsecond&quot; | &quot;none&quot;, # Optional.
+  customInterval: number, # Optional.
+  period: number, # Optional.
+  maxAnomalyRatio: number, # Optional.
+  sensitivity: number, # Optional.
+  imputeMode: &quot;auto&quot; | &quot;previous&quot; | &quot;linear&quot; | &quot;fixed&quot; | &quot;zero&quot; | &quot;notFill&quot;, # Optional.
+  imputeFixedValue: number, # Optional.
+}
+</code>
+
+Response Body:
+
+Schema for <c>EntireDetectResponse</c>:
+<code>{
+  period: number, # Required.
+  expectedValues: [number], # Required.
+  upperMargins: [number], # Required.
+  lowerMargins: [number], # Required.
+  isAnomaly: [boolean], # Required.
+  isNegativeAnomaly: [boolean], # Required.
+  isPositiveAnomaly: [boolean], # Required.
+  severity: [number], # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="DetectUnivariateLastPointAsync(RequestContent,RequestContext)">
+<example>
+This sample shows how to call DetectUnivariateLastPointAsync with required request content, and how to parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+var data = new {
+    series = new[] {
+        new {
+            value = 123.45f,
+        }
+    },
+};
+
+Response response = await client.DetectUnivariateLastPointAsync(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("period").ToString());
+Console.WriteLine(result.GetProperty("suggestedWindow").ToString());
+Console.WriteLine(result.GetProperty("expectedValue").ToString());
+Console.WriteLine(result.GetProperty("upperMargin").ToString());
+Console.WriteLine(result.GetProperty("lowerMargin").ToString());
+Console.WriteLine(result.GetProperty("isAnomaly").ToString());
+Console.WriteLine(result.GetProperty("isNegativeAnomaly").ToString());
+Console.WriteLine(result.GetProperty("isPositiveAnomaly").ToString());
+]]></code>
+This sample shows how to call DetectUnivariateLastPointAsync with all request content, and how to parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+var data = new {
+    series = new[] {
+        new {
+            timestamp = "2022-05-10T14:57:31.2311892-04:00",
+            value = 123.45f,
+        }
+    },
+    granularity = "yearly",
+    customInterval = 1234,
+    period = 1234,
+    maxAnomalyRatio = 123.45f,
+    sensitivity = 1234,
+    imputeMode = "auto",
+    imputeFixedValue = 123.45f,
+};
+
+Response response = await client.DetectUnivariateLastPointAsync(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("period").ToString());
+Console.WriteLine(result.GetProperty("suggestedWindow").ToString());
+Console.WriteLine(result.GetProperty("expectedValue").ToString());
+Console.WriteLine(result.GetProperty("upperMargin").ToString());
+Console.WriteLine(result.GetProperty("lowerMargin").ToString());
+Console.WriteLine(result.GetProperty("isAnomaly").ToString());
+Console.WriteLine(result.GetProperty("isNegativeAnomaly").ToString());
+Console.WriteLine(result.GetProperty("isPositiveAnomaly").ToString());
+Console.WriteLine(result.GetProperty("severity").ToString());
+]]></code>
+</example>
+<remarks>
+This operation generates a model using the points that you sent into the API,
+and based on all data to determine whether the last point is anomalous.
+
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>DetectRequest</c>:
+<code>{
+  series: [
+    {
+      timestamp: string (date &amp; time), # Optional.
+      value: number, # Required.
+    }
+  ], # Required.
+  granularity: &quot;yearly&quot; | &quot;monthly&quot; | &quot;weekly&quot; | &quot;daily&quot; | &quot;hourly&quot; | &quot;minutely&quot; | &quot;secondly&quot; | &quot;microsecond&quot; | &quot;none&quot;, # Optional.
+  customInterval: number, # Optional.
+  period: number, # Optional.
+  maxAnomalyRatio: number, # Optional.
+  sensitivity: number, # Optional.
+  imputeMode: &quot;auto&quot; | &quot;previous&quot; | &quot;linear&quot; | &quot;fixed&quot; | &quot;zero&quot; | &quot;notFill&quot;, # Optional.
+  imputeFixedValue: number, # Optional.
+}
+</code>
+
+Response Body:
+
+Schema for <c>LastDetectResponse</c>:
+<code>{
+  period: number, # Required.
+  suggestedWindow: number, # Required.
+  expectedValue: number, # Required.
+  upperMargin: number, # Required.
+  lowerMargin: number, # Required.
+  isAnomaly: boolean, # Required.
+  isNegativeAnomaly: boolean, # Required.
+  isPositiveAnomaly: boolean, # Required.
+  severity: number, # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="DetectUnivariateLastPoint(RequestContent,RequestContext)">
+<example>
+This sample shows how to call DetectUnivariateLastPoint with required request content, and how to parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+var data = new {
+    series = new[] {
+        new {
+            value = 123.45f,
+        }
+    },
+};
+
+Response response = client.DetectUnivariateLastPoint(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("period").ToString());
+Console.WriteLine(result.GetProperty("suggestedWindow").ToString());
+Console.WriteLine(result.GetProperty("expectedValue").ToString());
+Console.WriteLine(result.GetProperty("upperMargin").ToString());
+Console.WriteLine(result.GetProperty("lowerMargin").ToString());
+Console.WriteLine(result.GetProperty("isAnomaly").ToString());
+Console.WriteLine(result.GetProperty("isNegativeAnomaly").ToString());
+Console.WriteLine(result.GetProperty("isPositiveAnomaly").ToString());
+]]></code>
+This sample shows how to call DetectUnivariateLastPoint with all request content, and how to parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+var data = new {
+    series = new[] {
+        new {
+            timestamp = "2022-05-10T14:57:31.2311892-04:00",
+            value = 123.45f,
+        }
+    },
+    granularity = "yearly",
+    customInterval = 1234,
+    period = 1234,
+    maxAnomalyRatio = 123.45f,
+    sensitivity = 1234,
+    imputeMode = "auto",
+    imputeFixedValue = 123.45f,
+};
+
+Response response = client.DetectUnivariateLastPoint(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("period").ToString());
+Console.WriteLine(result.GetProperty("suggestedWindow").ToString());
+Console.WriteLine(result.GetProperty("expectedValue").ToString());
+Console.WriteLine(result.GetProperty("upperMargin").ToString());
+Console.WriteLine(result.GetProperty("lowerMargin").ToString());
+Console.WriteLine(result.GetProperty("isAnomaly").ToString());
+Console.WriteLine(result.GetProperty("isNegativeAnomaly").ToString());
+Console.WriteLine(result.GetProperty("isPositiveAnomaly").ToString());
+Console.WriteLine(result.GetProperty("severity").ToString());
+]]></code>
+</example>
+<remarks>
+This operation generates a model using the points that you sent into the API,
+and based on all data to determine whether the last point is anomalous.
+
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>DetectRequest</c>:
+<code>{
+  series: [
+    {
+      timestamp: string (date &amp; time), # Optional.
+      value: number, # Required.
+    }
+  ], # Required.
+  granularity: &quot;yearly&quot; | &quot;monthly&quot; | &quot;weekly&quot; | &quot;daily&quot; | &quot;hourly&quot; | &quot;minutely&quot; | &quot;secondly&quot; | &quot;microsecond&quot; | &quot;none&quot;, # Optional.
+  customInterval: number, # Optional.
+  period: number, # Optional.
+  maxAnomalyRatio: number, # Optional.
+  sensitivity: number, # Optional.
+  imputeMode: &quot;auto&quot; | &quot;previous&quot; | &quot;linear&quot; | &quot;fixed&quot; | &quot;zero&quot; | &quot;notFill&quot;, # Optional.
+  imputeFixedValue: number, # Optional.
+}
+</code>
+
+Response Body:
+
+Schema for <c>LastDetectResponse</c>:
+<code>{
+  period: number, # Required.
+  suggestedWindow: number, # Required.
+  expectedValue: number, # Required.
+  upperMargin: number, # Required.
+  lowerMargin: number, # Required.
+  isAnomaly: boolean, # Required.
+  isNegativeAnomaly: boolean, # Required.
+  isPositiveAnomaly: boolean, # Required.
+  severity: number, # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="DetectUnivariateChangePointAsync(RequestContent,RequestContext)">
+<example>
+This sample shows how to call DetectUnivariateChangePointAsync with required request content, and how to parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+var data = new {
+    series = new[] {
+        new {
+            value = 123.45f,
+        }
+    },
+    granularity = "yearly",
+};
+
+Response response = await client.DetectUnivariateChangePointAsync(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call DetectUnivariateChangePointAsync with all request content, and how to parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+var data = new {
+    series = new[] {
+        new {
+            timestamp = "2022-05-10T14:57:31.2311892-04:00",
+            value = 123.45f,
+        }
+    },
+    granularity = "yearly",
+    customInterval = 1234,
+    period = 1234,
+    stableTrendWindow = 1234,
+    threshold = 123.45f,
+};
+
+Response response = await client.DetectUnivariateChangePointAsync(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("period").ToString());
+Console.WriteLine(result.GetProperty("isChangePoint")[0].ToString());
+Console.WriteLine(result.GetProperty("confidenceScores")[0].ToString());
+]]></code>
+</example>
+<remarks>
+Evaluate change point score of every series point
+
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>ChangePointDetectRequest</c>:
+<code>{
+  series: [
+    {
+      timestamp: string (date &amp; time), # Optional.
+      value: number, # Required.
+    }
+  ], # Required.
+  granularity: &quot;yearly&quot; | &quot;monthly&quot; | &quot;weekly&quot; | &quot;daily&quot; | &quot;hourly&quot; | &quot;minutely&quot; | &quot;secondly&quot; | &quot;microsecond&quot; | &quot;none&quot;, # Required.
+  customInterval: number, # Optional.
+  period: number, # Optional.
+  stableTrendWindow: number, # Optional.
+  threshold: number, # Optional.
+}
+</code>
+
+Response Body:
+
+Schema for <c>ChangePointDetectResponse</c>:
+<code>{
+  period: number, # Optional.
+  isChangePoint: [boolean], # Optional.
+  confidenceScores: [number], # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="DetectUnivariateChangePoint(RequestContent,RequestContext)">
+<example>
+This sample shows how to call DetectUnivariateChangePoint with required request content, and how to parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+var data = new {
+    series = new[] {
+        new {
+            value = 123.45f,
+        }
+    },
+    granularity = "yearly",
+};
+
+Response response = client.DetectUnivariateChangePoint(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call DetectUnivariateChangePoint with all request content, and how to parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+var data = new {
+    series = new[] {
+        new {
+            timestamp = "2022-05-10T14:57:31.2311892-04:00",
+            value = 123.45f,
+        }
+    },
+    granularity = "yearly",
+    customInterval = 1234,
+    period = 1234,
+    stableTrendWindow = 1234,
+    threshold = 123.45f,
+};
+
+Response response = client.DetectUnivariateChangePoint(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("period").ToString());
+Console.WriteLine(result.GetProperty("isChangePoint")[0].ToString());
+Console.WriteLine(result.GetProperty("confidenceScores")[0].ToString());
+]]></code>
+</example>
+<remarks>
+Evaluate change point score of every series point
+
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>ChangePointDetectRequest</c>:
+<code>{
+  series: [
+    {
+      timestamp: string (date &amp; time), # Optional.
+      value: number, # Required.
+    }
+  ], # Required.
+  granularity: &quot;yearly&quot; | &quot;monthly&quot; | &quot;weekly&quot; | &quot;daily&quot; | &quot;hourly&quot; | &quot;minutely&quot; | &quot;secondly&quot; | &quot;microsecond&quot; | &quot;none&quot;, # Required.
+  customInterval: number, # Optional.
+  period: number, # Optional.
+  stableTrendWindow: number, # Optional.
+  threshold: number, # Optional.
+}
+</code>
+
+Response Body:
+
+Schema for <c>ChangePointDetectResponse</c>:
+<code>{
+  period: number, # Optional.
+  isChangePoint: [boolean], # Optional.
+  confidenceScores: [number], # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetMultivariateBatchDetectionResultAsync(String,RequestContext)">
+<example>
+This sample shows how to call GetMultivariateBatchDetectionResultAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+Response response = await client.GetMultivariateBatchDetectionResultAsync("<resultId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("resultId").ToString());
@@ -75,15 +675,15 @@ Schema for <c>DetectionResult</c>:
 
 </remarks>
     </member>
-    <member name="GetBatchDetectionResult(String,RequestContext)">
+    <member name="GetMultivariateBatchDetectionResult(String,RequestContext)">
 <example>
-This sample shows how to call GetBatchDetectionResult with required parameters and parse the result.
+This sample shows how to call GetMultivariateBatchDetectionResult with required parameters and parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new MultivariateClient(endpoint, credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
-Response response = client.GetBatchDetectionResult("<resultId>");
+Response response = client.GetMultivariateBatchDetectionResult("<resultId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("resultId").ToString());
@@ -155,7 +755,7 @@ This sample shows how to call CreateAndTrainMultivariateModelAsync with required
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new MultivariateClient(endpoint, credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 var data = new {
     dataSource = "<dataSource>",
@@ -174,7 +774,7 @@ This sample shows how to call CreateAndTrainMultivariateModelAsync with all requ
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new MultivariateClient(endpoint, credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 var data = new {
     dataSource = "<dataSource>",
@@ -343,7 +943,7 @@ This sample shows how to call CreateAndTrainMultivariateModel with required requ
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new MultivariateClient(endpoint, credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 var data = new {
     dataSource = "<dataSource>",
@@ -362,7 +962,7 @@ This sample shows how to call CreateAndTrainMultivariateModel with all request c
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new MultivariateClient(endpoint, credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 var data = new {
     dataSource = "<dataSource>",
@@ -531,7 +1131,7 @@ This sample shows how to call DeleteMultivariateModelAsync with required paramet
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new MultivariateClient(endpoint, credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 Response response = await client.DeleteMultivariateModelAsync("<modelId>");
 Console.WriteLine(response.Status);
@@ -547,7 +1147,7 @@ This sample shows how to call DeleteMultivariateModel with required parameters.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new MultivariateClient(endpoint, credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 Response response = client.DeleteMultivariateModel("<modelId>");
 Console.WriteLine(response.Status);
@@ -563,7 +1163,7 @@ This sample shows how to call GetMultivariateModelAsync with required parameters
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new MultivariateClient(endpoint, credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 Response response = await client.GetMultivariateModelAsync("<modelId>");
 
@@ -647,7 +1247,7 @@ This sample shows how to call GetMultivariateModel with required parameters and 
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new MultivariateClient(endpoint, credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 Response response = client.GetMultivariateModel("<modelId>");
 
@@ -731,7 +1331,7 @@ This sample shows how to call DetectMultivariateBatchAnomalyAsync with required 
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new MultivariateClient(endpoint, credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 var data = new {
     dataSource = "<dataSource>",
@@ -827,7 +1427,7 @@ This sample shows how to call DetectMultivariateBatchAnomaly with required param
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new MultivariateClient(endpoint, credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 var data = new {
     dataSource = "<dataSource>",
@@ -923,7 +1523,7 @@ This sample shows how to call DetectMultivariateLastAnomalyAsync with required p
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new MultivariateClient(endpoint, credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 var data = new {
     variables = new[] {
@@ -1007,7 +1607,7 @@ This sample shows how to call DetectMultivariateLastAnomaly with required parame
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new MultivariateClient(endpoint, credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 var data = new {
     variables = new[] {
@@ -1091,7 +1691,7 @@ This sample shows how to call GetMultivariateModelsAsync and parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new MultivariateClient(endpoint, credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 await foreach (var data in client.GetMultivariateModelsAsync())
 {
@@ -1105,7 +1705,7 @@ This sample shows how to call GetMultivariateModelsAsync with all parameters, an
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new MultivariateClient(endpoint, credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 await foreach (var data in client.GetMultivariateModelsAsync(1234, 1234))
 {
@@ -1184,7 +1784,7 @@ This sample shows how to call GetMultivariateModels and parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new MultivariateClient(endpoint, credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 foreach (var data in client.GetMultivariateModels())
 {
@@ -1198,7 +1798,7 @@ This sample shows how to call GetMultivariateModels with all parameters, and how
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new MultivariateClient(endpoint, credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 foreach (var data in client.GetMultivariateModels(1234, 1234))
 {
