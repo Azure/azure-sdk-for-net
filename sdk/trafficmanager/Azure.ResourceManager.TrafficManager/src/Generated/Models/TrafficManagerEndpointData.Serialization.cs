@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.TrafficManager
             Optional<IList<string>> geoMapping = default;
             Optional<IList<TrafficManagerEndpointSubnetInfo>> subnets = default;
             Optional<IList<TrafficManagerEndpointCustomHeaderInfo>> customHeaders = default;
-            Optional<AlwaysServe> alwaysServe = default;
+            Optional<TrafficManagerEndpointAlwaysServeStatus> alwaysServe = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.TrafficManager
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            alwaysServe = new AlwaysServe(property0.Value.GetString());
+                            alwaysServe = new TrafficManagerEndpointAlwaysServeStatus(property0.Value.GetString());
                             continue;
                         }
                     }
