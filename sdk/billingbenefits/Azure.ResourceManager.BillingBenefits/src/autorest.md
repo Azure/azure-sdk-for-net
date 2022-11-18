@@ -52,7 +52,8 @@ rename-rules:
 
 rename-mapping:
   ReservationOrderAliasResponse: ReservationOrderAliasModel
-
+  ReservationOrderAliasRequestPropertiesReservedResourceProperties: ReservationOrderAliasRequestReservedResourceProperties
+  ReservationOrderAliasResponsePropertiesReservedResourceProperties: ReservationOrderAliasResponseReservedResourceProperties
 directive:
   - remove-operation: Operation_List
 

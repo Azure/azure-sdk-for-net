@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             Optional<bool> renew = default;
             Optional<ReservedResourceType> reservedResourceType = default;
             Optional<DateTimeOffset> reviewDateTime = default;
-            Optional<ReservedResourceProperties> reservedResourceProperties = default;
+            Optional<ReservationOrderAliasRequestReservedResourceProperties> reservedResourceProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            reservedResourceProperties = ReservedResourceProperties.DeserializeReservedResourceProperties(property0.Value);
+                            reservedResourceProperties = ReservationOrderAliasRequestReservedResourceProperties.DeserializeReservationOrderAliasRequestReservedResourceProperties(property0.Value);
                             continue;
                         }
                     }

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="reservedResourceType"> The type of the resource that is being reserved. </param>
         /// <param name="reviewOn"> This is the date-time when the Reservation needs to be reviewed. </param>
         /// <param name="reservedResourceProperties"> Properties specific to each reserved resource type. Not required if not applicable. </param>
-        internal ReservationOrderAliasModelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingBenefitsSku sku, AzureLocation? location, string displayName, string reservationOrderId, ProvisioningState? provisioningState, string billingScopeId, Term? term, BillingPlan? billingPlan, AppliedScopeType? appliedScopeType, AppliedScopeProperties appliedScopeProperties, int? quantity, bool? renew, ReservedResourceType? reservedResourceType, DateTimeOffset? reviewOn, ReservationOrderAliasResponsePropertiesReservedResourceProperties reservedResourceProperties) : base(id, name, resourceType, systemData)
+        internal ReservationOrderAliasModelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingBenefitsSku sku, AzureLocation? location, string displayName, string reservationOrderId, ProvisioningState? provisioningState, string billingScopeId, Term? term, BillingPlan? billingPlan, AppliedScopeType? appliedScopeType, AppliedScopeProperties appliedScopeProperties, int? quantity, bool? renew, ReservedResourceType? reservedResourceType, DateTimeOffset? reviewOn, ReservationOrderAliasResponseReservedResourceProperties reservedResourceProperties) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
             Location = location;
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <summary> This is the date-time when the Reservation needs to be reviewed. </summary>
         public DateTimeOffset? ReviewOn { get; set; }
         /// <summary> Properties specific to each reserved resource type. Not required if not applicable. </summary>
-        internal ReservationOrderAliasResponsePropertiesReservedResourceProperties ReservedResourceProperties { get; set; }
+        internal ReservationOrderAliasResponseReservedResourceProperties ReservedResourceProperties { get; set; }
         /// <summary> Turning this on will apply the reservation discount to other VMs in the same VM size group. </summary>
         public InstanceFlexibility? ReservedResourceInstanceFlexibility
         {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.BillingBenefits
             set
             {
                 if (ReservedResourceProperties is null)
-                    ReservedResourceProperties = new ReservationOrderAliasResponsePropertiesReservedResourceProperties();
+                    ReservedResourceProperties = new ReservationOrderAliasResponseReservedResourceProperties();
                 ReservedResourceProperties.InstanceFlexibility = value;
             }
         }

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
-    internal partial class ReservedResourceProperties : IUtf8JsonSerializable
+    internal partial class ReservationOrderAliasResponseReservedResourceProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             writer.WriteEndObject();
         }
 
-        internal static ReservedResourceProperties DeserializeReservedResourceProperties(JsonElement element)
+        internal static ReservationOrderAliasResponseReservedResourceProperties DeserializeReservationOrderAliasResponseReservedResourceProperties(JsonElement element)
         {
             Optional<InstanceFlexibility> instanceFlexibility = default;
             foreach (var property in element.EnumerateObject())
@@ -35,11 +35,12 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    instanceFlexibility = new InstanceFlexibility(property.Value.GetString());
+                    var value = property.Value;
+                    instanceFlexibility = new InstanceFlexibility(value.GetInt32() == 1? "On": "Off");
                     continue;
                 }
             }
-            return new ReservedResourceProperties(Optional.ToNullable(instanceFlexibility));
+            return new ReservationOrderAliasResponseReservedResourceProperties(Optional.ToNullable(instanceFlexibility));
         }
     }
 }
