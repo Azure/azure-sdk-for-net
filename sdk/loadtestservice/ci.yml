@@ -10,7 +10,6 @@ trigger:
     include:
     - sdk/loadtestservice/
     exclude:
-    - sdk/loadtestservice/Azure.ResourceManager.LoadTestService/
     - sdk/loadtestservice/Azure.ResourceManager.LoadTesting/
 
 pr:
@@ -24,7 +23,6 @@ pr:
     include:
     - sdk/loadtestservice/
     exclude:
-    - sdk/loadtestservice/Azure.ResourceManager.LoadTestService/
     - sdk/loadtestservice/Azure.ResourceManager.LoadTesting/
 
 extends:
