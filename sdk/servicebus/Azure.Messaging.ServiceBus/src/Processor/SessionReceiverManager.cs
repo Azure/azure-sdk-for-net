@@ -145,21 +145,24 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        public override async Task CloseReceiverIfNeeded(
-            CancellationToken processorCancellationToken,
-            bool forceClose = false)
+        public override Task CloseReceiverIfNeeded(CancellationToken cancellationToken)
+        {
+            return ForceCloseReceiver(forceClose: true, cancellationToken);
+        }
+
+        private async Task ForceCloseReceiver(bool forceClose, CancellationToken cancellationToken)
         {
             bool releaseSemaphore = false;
             try
             {
-                // Intentionally not including processor cancellation token as
+                // Intentionally not including cancellation token as
                 // we need to ensure that we at least attempt to close the receiver if needed.
                 await WaitSemaphore(CancellationToken.None).ConfigureAwait(false);
                 releaseSemaphore = true;
 
                 if (forceClose)
                 {
-                    await CloseReceiver(processorCancellationToken).ConfigureAwait(false);
+                    await CloseReceiver(cancellationToken).ConfigureAwait(false);
                     return;
                 }
 
@@ -180,7 +183,7 @@ namespace Azure.Messaging.ServiceBus
                         // as this means the session lock was lost or the user requested to close the session.
                         _sessionCancellationSource.IsCancellationRequested)
                     {
-                        await CloseReceiver(processorCancellationToken).ConfigureAwait(false);
+                        await CloseReceiver(cancellationToken).ConfigureAwait(false);
                     }
                 }
             }
@@ -334,7 +337,7 @@ namespace Azure.Messaging.ServiceBus
             {
                 if (canProcess)
                 {
-                    await CloseReceiverIfNeeded(processorCancellationToken).ConfigureAwait(false);
+                    await ForceCloseReceiver(forceClose: false, processorCancellationToken).ConfigureAwait(false);
                 }
             }
         }

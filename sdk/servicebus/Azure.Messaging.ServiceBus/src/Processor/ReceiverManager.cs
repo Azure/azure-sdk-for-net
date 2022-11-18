@@ -59,9 +59,7 @@ namespace Azure.Messaging.ServiceBus
             _scopeFactory = scopeFactory;
         }
 
-        public virtual async Task CloseReceiverIfNeeded(
-            CancellationToken cancellationToken,
-            bool forceClose = false)
+        public virtual async Task CloseReceiverIfNeeded(CancellationToken cancellationToken)
         {
             var capturedReceiver = Receiver;
             if (capturedReceiver != null)

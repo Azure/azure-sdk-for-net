@@ -1013,9 +1013,7 @@ namespace Azure.Messaging.ServiceBus
 
             foreach (ReceiverManager receiverManager in _receiverManagers.Concat(_orphanedReceiverManagers))
             {
-                await receiverManager.CloseReceiverIfNeeded(
-                        cancellationToken,
-                        forceClose: true)
+                await receiverManager.CloseReceiverIfNeeded(cancellationToken)
                     .ConfigureAwait(false);
             }
         }
