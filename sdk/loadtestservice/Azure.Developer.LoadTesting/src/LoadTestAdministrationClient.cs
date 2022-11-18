@@ -121,7 +121,7 @@ namespace Azure.Developer.LoadTesting
                 body.Position = 0;
                 Console.WriteLine(body);
 
-                using HttpMessage message = CreateUploadFileRequest(testId, fileId, RequestContent.Create(body), fileType, context);
+                using HttpMessage message = CreateUploadTestFileRequest(testId, fileId, RequestContent.Create(body), fileType, context);
                 message.Request.Headers.SetValue("Content-Type", "multipart/form-data;boundary=" + boundary);
                 return _pipeline.ProcessMessage(message, context);
             }
@@ -272,7 +272,7 @@ namespace Azure.Developer.LoadTesting
                 writer.Flush();
                 body.Position = 0;
 
-                using HttpMessage message = CreateUploadFileRequest(testId, fileId, RequestContent.Create(body), fileType, context);
+                using HttpMessage message = CreateUploadTestFileRequest(testId, fileId, RequestContent.Create(body), fileType, context);
                 message.Request.Headers.SetValue("Content-Type", "multipart/form-data;boundary=" + boundary);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
