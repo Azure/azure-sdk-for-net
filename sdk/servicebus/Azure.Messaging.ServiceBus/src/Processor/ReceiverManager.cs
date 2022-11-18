@@ -121,6 +121,8 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
+        public virtual Task Cancel() => Task.CompletedTask;
+
         protected async Task ProcessOneMessageWithinScopeAsync(ServiceBusReceivedMessage message, string activityName, CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _scopeFactory.CreateScope(activityName, DiagnosticScope.ActivityKind.Consumer);

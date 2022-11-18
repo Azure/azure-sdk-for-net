@@ -695,7 +695,7 @@ namespace Azure.Messaging.ServiceBus
                             _orphanedReceiverManagers.Add(_receiverManagers[0]);
 
                             // these tasks will be awaited when closing the orphaned receivers as part of CloseAsync
-                            _ = ((SessionReceiverManager) _receiverManagers[0]).CancelSessionAsync();
+                            _ = _receiverManagers[0].Cancel();
                             _receiverManagers.RemoveAt(0);
                         }
                     }

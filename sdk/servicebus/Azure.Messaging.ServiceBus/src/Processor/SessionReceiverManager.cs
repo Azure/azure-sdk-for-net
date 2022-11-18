@@ -228,7 +228,7 @@ namespace Azure.Messaging.ServiceBus
                 // cancel the automatic session lock renewal
                 try
                 {
-                    await CancelSessionAsync().ConfigureAwait(false);
+                    await Cancel().ConfigureAwait(false);
                 }
                 catch (Exception ex) when (ex is TaskCanceledException)
                 {
@@ -320,7 +320,7 @@ namespace Azure.Messaging.ServiceBus
                     if (sbException.Reason == ServiceBusFailureReason.SessionLockLost)
                     {
                         // this will be awaited when closing the receiver
-                        _ = CancelSessionAsync();
+                        _ = Cancel();
                     }
                 }
                 await RaiseExceptionReceived(
@@ -409,7 +409,7 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        internal async Task CancelSessionAsync()
+        public override async Task Cancel()
         {
             if (_sessionCancellationSource is { IsCancellationRequested: false })
             {
