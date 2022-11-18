@@ -62,7 +62,7 @@ namespace Azure.Core.TestFramework
         {
             ProcessStartInfo testProxyProcessInfo = new ProcessStartInfo(
                 s_dotNetExe,
-                proxyPath)
+                $"{proxyPath} --storage-location=\"{TestEnvironment.RepositoryRoot}\"")
             {
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
