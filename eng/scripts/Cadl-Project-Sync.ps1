@@ -8,10 +8,10 @@ param (
 $ErrorActionPreference = "Stop"
 . $PSScriptRoot/../common/scripts/Helpers/PSModule-Helpers.ps1
 Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
+$sparseCheckoutFile = ".git/info/sparse-checkout"
 
 function AddSparseCheckoutPath([string]$subDirectory) {
-    $file = ".git/info/sparse-checkout"
-    if (!(Test-Path $file) -or !((Get-Content $file).Contains($subDirectory))) {
+    if (!(Test-Path $sparseCheckoutFile) -or !((Get-Content $sparseCheckoutFile).Contains($subDirectory))) {
         Write-Output $subDirectory >> .git/info/sparse-checkout
     }
 }
@@ -35,18 +35,15 @@ function NpmInstallForProject([string]$workingDirectory) {
     }
 }
 
-function CopySpecToProjectIfNeeded([string]$pullResult, [string]$specCloneRoot, [string]$mainSpecDir, [string]$dest, [string[]]$specAdditionalSubDirectories) {
-    if (!($pullResult.Contains("Already up to date.")) && Test-Path $dest) {
-
-        $source = "$specCloneRoot/$mainSpecDir"
+function CopySpecToProjectIfNeeded([string]$specCloneRoot, [string]$mainSpecDir, [string]$dest, [string[]]$specAdditionalSubDirectories) {
+    $source = "$specCloneRoot/$mainSpecDir"
+    Write-Host "Copying spec from $source"
+    Copy-Item -Path $source -Destination $dest -Recurse -Force
+    foreach($additionalDir in $specAdditionalSubDirectories)
+    {
+        $source = "$specCloneRoot/$additionalDir"
         Write-Host "Copying spec from $source"
         Copy-Item -Path $source -Destination $dest -Recurse -Force
-        foreach($additionalDir in $specAdditionalSubDirectories)
-        {
-            $source = "$specCloneRoot/$additionalDir"
-            Write-Host "Copying spec from $source"
-            Copy-Item -Path $source -Destination $dest -Recurse -Force
-        }
     }
 }
 
@@ -86,14 +83,11 @@ function GetGitRemoteValue([string]$repo) {
 }
 
 function InitializeSparseGitClone([string]$repo) {
-    if (!(Test-Path ".git")) {
-        git init
-        if ($LASTEXITCODE) { exit $LASTEXITCODE }
-        git remote add origin $repo
-        if ($LASTEXITCODE) { exit $LASTEXITCODE }
-        git config core.sparseCheckout true
-        if ($LASTEXITCODE) { exit $LASTEXITCODE }
-    }
+    git clone --no-checkout --filter=tree:0 $repo .
+    if ($LASTEXITCODE) { exit $LASTEXITCODE }
+    git sparse-checkout init
+    if ($LASTEXITCODE) { exit $LASTEXITCODE }
+    Remove-Item $sparseCheckoutFile -Force
 }
 
 function GetSpecCloneDir([string]$projectName) {
@@ -123,15 +117,14 @@ $specCloneDir = GetSpecCloneDir $projectName
 $gitRemoteValue = GetGitRemoteValue $configuration["repo"]
 
 Write-Host "Setting up sparse clone for $projectName at $specCloneDir"
+$specSubDirectory = $configuration["directory"]
 Push-Location $specCloneDir.Path
 try {
-    InitializeSparseGitClone $gitRemoteValue
-
-    $specSubDirectory = $configuration["directory"]
-    UpdateSparseCheckoutFile $specSubDirectory $configuration["additionalDirectories"]
-
-    $result = (git pull origin $configuration["commit"])
-    Write-Host $result
+    if (!(Test-Path ".git")) {
+        InitializeSparseGitClone $gitRemoteValue
+        UpdateSparseCheckoutFile $specSubDirectory $configuration["additionalDirectories"]
+        git checkout $configuration["commit"]
+    }
 }
 finally {
     Pop-Location
@@ -142,7 +135,6 @@ $specDir = Resolve-Path "$specCloneDir/$specSubDirectory"
 $tempCadlDir = "$ProjectDirectory/TempCadlFiles"
 New-Item $tempCadlDir -Type Directory -Force | Out-Null
 CopySpecToProjectIfNeeded `
-    -pullResult $result `
     -specCloneRoot $specCloneDir `
     -mainSpecDir $specSubDirectory `
     -dest $tempCadlDir `
