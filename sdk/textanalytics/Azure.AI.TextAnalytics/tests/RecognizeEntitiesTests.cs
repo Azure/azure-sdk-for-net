@@ -313,7 +313,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             RecognizeEntitiesResultCollection results = await client.RecognizeEntitiesBatchAsync(new List<TextDocumentInput>() {
                 new TextDocumentInput("1", "The dog is 14 inches tall and weighs 20 lbs. It is 5 years old."),
-                new TextDocumentInput("2", "This is the first aircraft of its kind. It can fly at over 1,300 meter per second and carry 65-80 passengers."),
+                new TextDocumentInput("2", "This is the first aircraft of its kind. It can fly at over 1,300 mph and carry 65-80 passengers."),
                 new TextDocumentInput("3", "The apartment is 840 sqft. and it has 2 bedrooms. It costs 2,000 US dollars per month and will be available on 11/01/2022."),
                 new TextDocumentInput("4", "Mix 1 cup of sugar. Bake for approximately 60 minutes in an oven preheated to 350 degrees F."),
                 new TextDocumentInput("5", "They retrieved 200 terabytes of data between October 24th, 2022 and October 28th, 2022."),
@@ -374,8 +374,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 if (resolution is SpeedResolution speed)
                 {
                     Assert.AreEqual(1300, speed.Value);
-                    // BUGBUG: https://github.com/Azure/azure-sdk-for-net/issues/32356
-                    // Assert.AreEqual(SpeedUnit.MilesPerHour, speed.Unit);
+                    Assert.AreEqual(SpeedUnit.MilePerHour, speed.Unit);
                 }
 
                 if (resolution is NumericRangeResolution numericRange)
@@ -415,8 +414,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 if (resolution is CurrencyResolution currency)
                 {
                     Assert.AreEqual(2000, currency.Value);
-                    // BUGBUG: https://github.com/Azure/azure-sdk-for-net/issues/32357
-                    // Assert.AreEqual("USD", currency.Iso4217);
+                    Assert.AreEqual("USD", currency.Iso4217);
                     Assert.AreEqual("United States dollar", currency.Unit);
                 }
 

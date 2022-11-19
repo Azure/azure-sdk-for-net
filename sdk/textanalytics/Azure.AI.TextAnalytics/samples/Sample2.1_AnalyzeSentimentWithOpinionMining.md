@@ -38,7 +38,7 @@ string reviewB = @"The rooms were beautiful. The AC was good and quiet, which wa
                 Once we notified the staff, they came and cleaned it and left candles.";
 
 string reviewC = @"Nice rooms! I had a great unobstructed view of the Microsoft campus
-                but bathrooms were old and the toilet was dirty when we arrived. 
+                but bathrooms were old and the toilet was dirty when we arrived.
                 It was close to bus stops and groceries stores. If you want to be close to
                 campus I will recommend it, otherwise, might be better to stay in a cleaner one.";
 
@@ -99,11 +99,6 @@ private Dictionary<string, int> GetComplaints(AnalyzeSentimentResultCollection r
     return complaints;
 }
 ```
-
-
-To see the full example source files, see:
-* [Synchronous Analyze Sentiment with Opinion Mining](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics//tests/samples/Sample2.1_AnalyzeSentimentWithOpinionMining.cs)
-* [Asynchronous Analyze Sentiment with Opinion Mining](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics//tests/samples/Sample2.1_AnalyzeSentimentWithOpinionMiningAsync.cs)
 
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/README.md
