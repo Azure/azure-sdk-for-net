@@ -6,7 +6,7 @@
 
     <ItemGroup>
       <PackageReference Update="Azure.Identity" />
-      <ProjectReference Update="Azure.Messaging.ServiceBus" />
+      <PackageReference Update="Azure.Messaging.ServiceBus" />
       <PackageReference Update="System.CommandLine" />
     </ItemGroup>
 
