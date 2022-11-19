@@ -275,6 +275,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
         public override Azure.AI.FormRecognizer.DocumentAnalysis.AnalyzeResult Value { get { throw null; } }
+        public string GetOperationId() { throw null; }
         public override Azure.Response GetRawResponse() { throw null; }
         public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -323,6 +324,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public override string Id { get { throw null; } }
         public virtual int PercentCompleted { get { throw null; } }
         public override Azure.AI.FormRecognizer.DocumentAnalysis.DocumentModelDetails Value { get { throw null; } }
+        public string GetOperationId() { throw null; }
         public override Azure.Response GetRawResponse() { throw null; }
         public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -344,6 +346,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public override string Id { get { throw null; } }
         public virtual int PercentCompleted { get { throw null; } }
         public override Azure.AI.FormRecognizer.DocumentAnalysis.DocumentModelDetails Value { get { throw null; } }
+        public string GetOperationId() { throw null; }
         public override Azure.Response GetRawResponse() { throw null; }
         public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -359,6 +362,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public override string Id { get { throw null; } }
         public virtual int PercentCompleted { get { throw null; } }
         public override Azure.AI.FormRecognizer.DocumentAnalysis.DocumentModelDetails Value { get { throw null; } }
+        public string GetOperationId() { throw null; }
         public override Azure.Response GetRawResponse() { throw null; }
         public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1050,6 +1054,7 @@ namespace Azure.AI.FormRecognizer.Models
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
         public override Azure.AI.FormRecognizer.Models.RecognizedFormCollection Value { get { throw null; } }
+        public string GetOperationId() { throw null; }
         public override Azure.Response GetRawResponse() { throw null; }
         public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1064,6 +1069,7 @@ namespace Azure.AI.FormRecognizer.Models
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
         public override Azure.AI.FormRecognizer.Models.FormPageCollection Value { get { throw null; } }
+        public string GetOperationId() { throw null; }
         public override Azure.Response GetRawResponse() { throw null; }
         public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1078,6 +1084,7 @@ namespace Azure.AI.FormRecognizer.Models
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
         public override Azure.AI.FormRecognizer.Models.RecognizedFormCollection Value { get { throw null; } }
+        public string GetOperationId() { throw null; }
         public override Azure.Response GetRawResponse() { throw null; }
         public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1106,6 +1113,7 @@ namespace Azure.AI.FormRecognizer.Models
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
         public override Azure.AI.FormRecognizer.Models.RecognizedFormCollection Value { get { throw null; } }
+        public string GetOperationId() { throw null; }
         public override Azure.Response GetRawResponse() { throw null; }
         public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1120,6 +1128,7 @@ namespace Azure.AI.FormRecognizer.Models
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
         public override Azure.AI.FormRecognizer.Models.RecognizedFormCollection Value { get { throw null; } }
+        public string GetOperationId() { throw null; }
         public override Azure.Response GetRawResponse() { throw null; }
         public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1134,6 +1143,7 @@ namespace Azure.AI.FormRecognizer.Models
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
         public override Azure.AI.FormRecognizer.Models.RecognizedFormCollection Value { get { throw null; } }
+        public string GetOperationId() { throw null; }
         public override Azure.Response GetRawResponse() { throw null; }
         public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1194,6 +1204,7 @@ namespace Azure.AI.FormRecognizer.Training
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
         public override Azure.AI.FormRecognizer.Training.CustomFormModelInfo Value { get { throw null; } }
+        public string GetOperationId() { throw null; }
         public override Azure.Response GetRawResponse() { throw null; }
         public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1213,6 +1224,7 @@ namespace Azure.AI.FormRecognizer.Training
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
         public override Azure.AI.FormRecognizer.Training.CustomFormModel Value { get { throw null; } }
+        public string GetOperationId() { throw null; }
         public override Azure.Response GetRawResponse() { throw null; }
         public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

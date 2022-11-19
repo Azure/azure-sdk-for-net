@@ -71,6 +71,7 @@ namespace Azure.Security.KeyVault.Keys
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
         public override Azure.Security.KeyVault.Keys.DeletedKey Value { get { throw null; } }
+        public string GetOperationId() { throw null; }
         public override Azure.Response GetRawResponse() { throw null; }
         public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -376,6 +377,7 @@ namespace Azure.Security.KeyVault.Keys
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
         public override Azure.Security.KeyVault.Keys.KeyVaultKey Value { get { throw null; } }
+        public string GetOperationId() { throw null; }
         public override Azure.Response GetRawResponse() { throw null; }
         public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
