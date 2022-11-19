@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    internal class ResourcePoolOperationSource : IOperationSource<ResourcePoolResource>
+    internal class ResourcePoolOperationSource : Core.IOperationSource<ResourcePoolResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             _client = client;
         }
 
-        ResourcePoolResource IOperationSource<ResourcePoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ResourcePoolResource Core.IOperationSource<ResourcePoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ResourcePoolData.DeserializeResourcePoolData(document.RootElement);
             return new ResourcePoolResource(_client, data);
         }
 
-        async ValueTask<ResourcePoolResource> IOperationSource<ResourcePoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ResourcePoolResource> Core.IOperationSource<ResourcePoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ResourcePoolData.DeserializeResourcePoolData(document.RootElement);

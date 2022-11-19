@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices
 {
-    internal class DeviceProvisioningServiceOperationSource : IOperationSource<DeviceProvisioningServiceResource>
+    internal class DeviceProvisioningServiceOperationSource : Core.IOperationSource<DeviceProvisioningServiceResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             _client = client;
         }
 
-        DeviceProvisioningServiceResource IOperationSource<DeviceProvisioningServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DeviceProvisioningServiceResource Core.IOperationSource<DeviceProvisioningServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DeviceProvisioningServiceData.DeserializeDeviceProvisioningServiceData(document.RootElement);
             return new DeviceProvisioningServiceResource(_client, data);
         }
 
-        async ValueTask<DeviceProvisioningServiceResource> IOperationSource<DeviceProvisioningServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DeviceProvisioningServiceResource> Core.IOperationSource<DeviceProvisioningServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DeviceProvisioningServiceData.DeserializeDeviceProvisioningServiceData(document.RootElement);

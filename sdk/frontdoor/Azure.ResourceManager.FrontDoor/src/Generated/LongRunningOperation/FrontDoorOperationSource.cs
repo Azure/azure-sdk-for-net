@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.FrontDoor
 {
-    internal class FrontDoorOperationSource : IOperationSource<FrontDoorResource>
+    internal class FrontDoorOperationSource : Core.IOperationSource<FrontDoorResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.FrontDoor
             _client = client;
         }
 
-        FrontDoorResource IOperationSource<FrontDoorResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        FrontDoorResource Core.IOperationSource<FrontDoorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = FrontDoorData.DeserializeFrontDoorData(document.RootElement);
             return new FrontDoorResource(_client, data);
         }
 
-        async ValueTask<FrontDoorResource> IOperationSource<FrontDoorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<FrontDoorResource> Core.IOperationSource<FrontDoorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = FrontDoorData.DeserializeFrontDoorData(document.RootElement);

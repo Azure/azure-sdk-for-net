@@ -14,15 +14,15 @@ using Azure.ResourceManager.WebPubSub.Models;
 
 namespace Azure.ResourceManager.WebPubSub
 {
-    internal class WebPubSubKeysOperationSource : IOperationSource<WebPubSubKeys>
+    internal class WebPubSubKeysOperationSource : Core.IOperationSource<WebPubSubKeys>
     {
-        WebPubSubKeys IOperationSource<WebPubSubKeys>.CreateResult(Response response, CancellationToken cancellationToken)
+        WebPubSubKeys Core.IOperationSource<WebPubSubKeys>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return WebPubSubKeys.DeserializeWebPubSubKeys(document.RootElement);
         }
 
-        async ValueTask<WebPubSubKeys> IOperationSource<WebPubSubKeys>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<WebPubSubKeys> Core.IOperationSource<WebPubSubKeys>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return WebPubSubKeys.DeserializeWebPubSubKeys(document.RootElement);

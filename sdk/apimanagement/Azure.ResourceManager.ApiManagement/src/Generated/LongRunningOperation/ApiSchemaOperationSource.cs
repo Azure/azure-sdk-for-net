@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    internal class ApiSchemaOperationSource : IOperationSource<ApiSchemaResource>
+    internal class ApiSchemaOperationSource : Core.IOperationSource<ApiSchemaResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ApiManagement
             _client = client;
         }
 
-        ApiSchemaResource IOperationSource<ApiSchemaResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ApiSchemaResource Core.IOperationSource<ApiSchemaResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ApiSchemaData.DeserializeApiSchemaData(document.RootElement);
             return new ApiSchemaResource(_client, data);
         }
 
-        async ValueTask<ApiSchemaResource> IOperationSource<ApiSchemaResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ApiSchemaResource> Core.IOperationSource<ApiSchemaResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ApiSchemaData.DeserializeApiSchemaData(document.RootElement);

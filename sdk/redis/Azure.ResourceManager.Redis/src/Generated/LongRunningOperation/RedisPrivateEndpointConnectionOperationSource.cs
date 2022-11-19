@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Redis
 {
-    internal class RedisPrivateEndpointConnectionOperationSource : IOperationSource<RedisPrivateEndpointConnectionResource>
+    internal class RedisPrivateEndpointConnectionOperationSource : Core.IOperationSource<RedisPrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Redis
             _client = client;
         }
 
-        RedisPrivateEndpointConnectionResource IOperationSource<RedisPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        RedisPrivateEndpointConnectionResource Core.IOperationSource<RedisPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = RedisPrivateEndpointConnectionData.DeserializeRedisPrivateEndpointConnectionData(document.RootElement);
             return new RedisPrivateEndpointConnectionResource(_client, data);
         }
 
-        async ValueTask<RedisPrivateEndpointConnectionResource> IOperationSource<RedisPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<RedisPrivateEndpointConnectionResource> Core.IOperationSource<RedisPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = RedisPrivateEndpointConnectionData.DeserializeRedisPrivateEndpointConnectionData(document.RootElement);

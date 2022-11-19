@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal class CassandraDataCenterOperationSource : IOperationSource<CassandraDataCenterResource>
+    internal class CassandraDataCenterOperationSource : Core.IOperationSource<CassandraDataCenterResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.CosmosDB
             _client = client;
         }
 
-        CassandraDataCenterResource IOperationSource<CassandraDataCenterResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        CassandraDataCenterResource Core.IOperationSource<CassandraDataCenterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CassandraDataCenterData.DeserializeCassandraDataCenterData(document.RootElement);
             return new CassandraDataCenterResource(_client, data);
         }
 
-        async ValueTask<CassandraDataCenterResource> IOperationSource<CassandraDataCenterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CassandraDataCenterResource> Core.IOperationSource<CassandraDataCenterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CassandraDataCenterData.DeserializeCassandraDataCenterData(document.RootElement);

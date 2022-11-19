@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    internal class BandwidthScheduleOperationSource : IOperationSource<BandwidthScheduleResource>
+    internal class BandwidthScheduleOperationSource : Core.IOperationSource<BandwidthScheduleResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.DataBoxEdge
             _client = client;
         }
 
-        BandwidthScheduleResource IOperationSource<BandwidthScheduleResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        BandwidthScheduleResource Core.IOperationSource<BandwidthScheduleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = BandwidthScheduleData.DeserializeBandwidthScheduleData(document.RootElement);
             return new BandwidthScheduleResource(_client, data);
         }
 
-        async ValueTask<BandwidthScheduleResource> IOperationSource<BandwidthScheduleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<BandwidthScheduleResource> Core.IOperationSource<BandwidthScheduleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = BandwidthScheduleData.DeserializeBandwidthScheduleData(document.RootElement);

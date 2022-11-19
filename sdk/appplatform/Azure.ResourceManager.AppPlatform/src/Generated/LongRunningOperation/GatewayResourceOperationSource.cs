@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppPlatform
 {
-    internal class GatewayResourceOperationSource : IOperationSource<GatewayResource>
+    internal class GatewayResourceOperationSource : Core.IOperationSource<GatewayResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.AppPlatform
             _client = client;
         }
 
-        GatewayResource IOperationSource<GatewayResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        GatewayResource Core.IOperationSource<GatewayResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = GatewayResourceData.DeserializeGatewayResourceData(document.RootElement);
             return new GatewayResource(_client, data);
         }
 
-        async ValueTask<GatewayResource> IOperationSource<GatewayResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<GatewayResource> Core.IOperationSource<GatewayResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = GatewayResourceData.DeserializeGatewayResourceData(document.RootElement);

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Synapse
 {
-    internal class KustoPoolOperationSource : IOperationSource<KustoPoolResource>
+    internal class KustoPoolOperationSource : Core.IOperationSource<KustoPoolResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Synapse
             _client = client;
         }
 
-        KustoPoolResource IOperationSource<KustoPoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        KustoPoolResource Core.IOperationSource<KustoPoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = KustoPoolData.DeserializeKustoPoolData(document.RootElement);
             return new KustoPoolResource(_client, data);
         }
 
-        async ValueTask<KustoPoolResource> IOperationSource<KustoPoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<KustoPoolResource> Core.IOperationSource<KustoPoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = KustoPoolData.DeserializeKustoPoolData(document.RootElement);

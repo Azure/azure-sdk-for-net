@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class FirewallPolicyOperationSource : IOperationSource<FirewallPolicyResource>
+    internal class FirewallPolicyOperationSource : Core.IOperationSource<FirewallPolicyResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        FirewallPolicyResource IOperationSource<FirewallPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        FirewallPolicyResource Core.IOperationSource<FirewallPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = FirewallPolicyData.DeserializeFirewallPolicyData(document.RootElement);
             return new FirewallPolicyResource(_client, data);
         }
 
-        async ValueTask<FirewallPolicyResource> IOperationSource<FirewallPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<FirewallPolicyResource> Core.IOperationSource<FirewallPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = FirewallPolicyData.DeserializeFirewallPolicyData(document.RootElement);

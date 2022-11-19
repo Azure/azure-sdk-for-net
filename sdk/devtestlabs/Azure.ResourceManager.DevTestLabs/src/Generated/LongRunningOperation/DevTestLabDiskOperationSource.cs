@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    internal class DevTestLabDiskOperationSource : IOperationSource<DevTestLabDiskResource>
+    internal class DevTestLabDiskOperationSource : Core.IOperationSource<DevTestLabDiskResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.DevTestLabs
             _client = client;
         }
 
-        DevTestLabDiskResource IOperationSource<DevTestLabDiskResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DevTestLabDiskResource Core.IOperationSource<DevTestLabDiskResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DevTestLabDiskData.DeserializeDevTestLabDiskData(document.RootElement);
             return new DevTestLabDiskResource(_client, data);
         }
 
-        async ValueTask<DevTestLabDiskResource> IOperationSource<DevTestLabDiskResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DevTestLabDiskResource> Core.IOperationSource<DevTestLabDiskResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DevTestLabDiskData.DeserializeDevTestLabDiskData(document.RootElement);

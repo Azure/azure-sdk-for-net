@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppPlatform
 {
-    internal class ServiceRegistryResourceOperationSource : IOperationSource<ServiceRegistryResource>
+    internal class ServiceRegistryResourceOperationSource : Core.IOperationSource<ServiceRegistryResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.AppPlatform
             _client = client;
         }
 
-        ServiceRegistryResource IOperationSource<ServiceRegistryResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ServiceRegistryResource Core.IOperationSource<ServiceRegistryResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ServiceRegistryResourceData.DeserializeServiceRegistryResourceData(document.RootElement);
             return new ServiceRegistryResource(_client, data);
         }
 
-        async ValueTask<ServiceRegistryResource> IOperationSource<ServiceRegistryResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ServiceRegistryResource> Core.IOperationSource<ServiceRegistryResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ServiceRegistryResourceData.DeserializeServiceRegistryResourceData(document.RootElement);

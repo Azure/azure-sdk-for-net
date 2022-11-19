@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Synapse
 {
-    internal class DedicatedSQLminimalTlsSettingOperationSource : IOperationSource<DedicatedSQLminimalTlsSettingResource>
+    internal class DedicatedSQLminimalTlsSettingOperationSource : Core.IOperationSource<DedicatedSQLminimalTlsSettingResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Synapse
             _client = client;
         }
 
-        DedicatedSQLminimalTlsSettingResource IOperationSource<DedicatedSQLminimalTlsSettingResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DedicatedSQLminimalTlsSettingResource Core.IOperationSource<DedicatedSQLminimalTlsSettingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DedicatedSQLminimalTlsSettingData.DeserializeDedicatedSQLminimalTlsSettingData(document.RootElement);
             return new DedicatedSQLminimalTlsSettingResource(_client, data);
         }
 
-        async ValueTask<DedicatedSQLminimalTlsSettingResource> IOperationSource<DedicatedSQLminimalTlsSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DedicatedSQLminimalTlsSettingResource> Core.IOperationSource<DedicatedSQLminimalTlsSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DedicatedSQLminimalTlsSettingData.DeserializeDedicatedSQLminimalTlsSettingData(document.RootElement);

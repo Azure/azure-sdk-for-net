@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class VirtualWanOperationSource : IOperationSource<VirtualWanResource>
+    internal class VirtualWanOperationSource : Core.IOperationSource<VirtualWanResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        VirtualWanResource IOperationSource<VirtualWanResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        VirtualWanResource Core.IOperationSource<VirtualWanResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VirtualWanData.DeserializeVirtualWanData(document.RootElement);
             return new VirtualWanResource(_client, data);
         }
 
-        async ValueTask<VirtualWanResource> IOperationSource<VirtualWanResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VirtualWanResource> Core.IOperationSource<VirtualWanResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VirtualWanData.DeserializeVirtualWanData(document.RootElement);

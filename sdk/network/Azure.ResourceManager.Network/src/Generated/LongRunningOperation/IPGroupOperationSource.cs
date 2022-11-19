@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class IPGroupOperationSource : IOperationSource<IPGroupResource>
+    internal class IPGroupOperationSource : Core.IOperationSource<IPGroupResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        IPGroupResource IOperationSource<IPGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        IPGroupResource Core.IOperationSource<IPGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = IPGroupData.DeserializeIPGroupData(document.RootElement);
             return new IPGroupResource(_client, data);
         }
 
-        async ValueTask<IPGroupResource> IOperationSource<IPGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<IPGroupResource> Core.IOperationSource<IPGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = IPGroupData.DeserializeIPGroupData(document.RootElement);

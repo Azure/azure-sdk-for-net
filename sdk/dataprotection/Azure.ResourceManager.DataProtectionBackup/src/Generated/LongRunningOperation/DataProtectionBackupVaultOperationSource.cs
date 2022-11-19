@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataProtectionBackup
 {
-    internal class DataProtectionBackupVaultOperationSource : IOperationSource<DataProtectionBackupVaultResource>
+    internal class DataProtectionBackupVaultOperationSource : Core.IOperationSource<DataProtectionBackupVaultResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
             _client = client;
         }
 
-        DataProtectionBackupVaultResource IOperationSource<DataProtectionBackupVaultResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DataProtectionBackupVaultResource Core.IOperationSource<DataProtectionBackupVaultResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DataProtectionBackupVaultData.DeserializeDataProtectionBackupVaultData(document.RootElement);
             return new DataProtectionBackupVaultResource(_client, data);
         }
 
-        async ValueTask<DataProtectionBackupVaultResource> IOperationSource<DataProtectionBackupVaultResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DataProtectionBackupVaultResource> Core.IOperationSource<DataProtectionBackupVaultResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DataProtectionBackupVaultData.DeserializeDataProtectionBackupVaultData(document.RootElement);

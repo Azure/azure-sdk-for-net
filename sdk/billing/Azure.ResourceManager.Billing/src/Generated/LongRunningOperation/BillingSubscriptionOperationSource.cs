@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Billing
 {
-    internal class BillingSubscriptionOperationSource : IOperationSource<BillingSubscriptionResource>
+    internal class BillingSubscriptionOperationSource : Core.IOperationSource<BillingSubscriptionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Billing
             _client = client;
         }
 
-        BillingSubscriptionResource IOperationSource<BillingSubscriptionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        BillingSubscriptionResource Core.IOperationSource<BillingSubscriptionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = BillingSubscriptionData.DeserializeBillingSubscriptionData(document.RootElement);
             return new BillingSubscriptionResource(_client, data);
         }
 
-        async ValueTask<BillingSubscriptionResource> IOperationSource<BillingSubscriptionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<BillingSubscriptionResource> Core.IOperationSource<BillingSubscriptionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = BillingSubscriptionData.DeserializeBillingSubscriptionData(document.RootElement);

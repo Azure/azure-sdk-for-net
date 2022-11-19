@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
-    internal class HealthcareApisWorkspacePrivateEndpointConnectionOperationSource : IOperationSource<HealthcareApisWorkspacePrivateEndpointConnectionResource>
+    internal class HealthcareApisWorkspacePrivateEndpointConnectionOperationSource : Core.IOperationSource<HealthcareApisWorkspacePrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.HealthcareApis
             _client = client;
         }
 
-        HealthcareApisWorkspacePrivateEndpointConnectionResource IOperationSource<HealthcareApisWorkspacePrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        HealthcareApisWorkspacePrivateEndpointConnectionResource Core.IOperationSource<HealthcareApisWorkspacePrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = HealthcareApisPrivateEndpointConnectionData.DeserializeHealthcareApisPrivateEndpointConnectionData(document.RootElement);
             return new HealthcareApisWorkspacePrivateEndpointConnectionResource(_client, data);
         }
 
-        async ValueTask<HealthcareApisWorkspacePrivateEndpointConnectionResource> IOperationSource<HealthcareApisWorkspacePrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<HealthcareApisWorkspacePrivateEndpointConnectionResource> Core.IOperationSource<HealthcareApisWorkspacePrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = HealthcareApisPrivateEndpointConnectionData.DeserializeHealthcareApisPrivateEndpointConnectionData(document.RootElement);

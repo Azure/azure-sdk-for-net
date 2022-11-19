@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    internal class TableOperationSource : IOperationSource<TableResource>
+    internal class TableOperationSource : Core.IOperationSource<TableResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.OperationalInsights
             _client = client;
         }
 
-        TableResource IOperationSource<TableResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        TableResource Core.IOperationSource<TableResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = TableData.DeserializeTableData(document.RootElement);
             return new TableResource(_client, data);
         }
 
-        async ValueTask<TableResource> IOperationSource<TableResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<TableResource> Core.IOperationSource<TableResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = TableData.DeserializeTableData(document.RootElement);

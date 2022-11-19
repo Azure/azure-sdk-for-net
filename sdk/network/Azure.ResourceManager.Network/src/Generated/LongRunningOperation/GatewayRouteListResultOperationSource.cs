@@ -14,15 +14,15 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class GatewayRouteListResultOperationSource : IOperationSource<GatewayRouteListResult>
+    internal class GatewayRouteListResultOperationSource : Core.IOperationSource<GatewayRouteListResult>
     {
-        GatewayRouteListResult IOperationSource<GatewayRouteListResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        GatewayRouteListResult Core.IOperationSource<GatewayRouteListResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return GatewayRouteListResult.DeserializeGatewayRouteListResult(document.RootElement);
         }
 
-        async ValueTask<GatewayRouteListResult> IOperationSource<GatewayRouteListResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<GatewayRouteListResult> Core.IOperationSource<GatewayRouteListResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return GatewayRouteListResult.DeserializeGatewayRouteListResult(document.RootElement);

@@ -14,15 +14,15 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class PacketCaptureQueryStatusResultOperationSource : IOperationSource<PacketCaptureQueryStatusResult>
+    internal class PacketCaptureQueryStatusResultOperationSource : Core.IOperationSource<PacketCaptureQueryStatusResult>
     {
-        PacketCaptureQueryStatusResult IOperationSource<PacketCaptureQueryStatusResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        PacketCaptureQueryStatusResult Core.IOperationSource<PacketCaptureQueryStatusResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return PacketCaptureQueryStatusResult.DeserializePacketCaptureQueryStatusResult(document.RootElement);
         }
 
-        async ValueTask<PacketCaptureQueryStatusResult> IOperationSource<PacketCaptureQueryStatusResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PacketCaptureQueryStatusResult> Core.IOperationSource<PacketCaptureQueryStatusResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return PacketCaptureQueryStatusResult.DeserializePacketCaptureQueryStatusResult(document.RootElement);

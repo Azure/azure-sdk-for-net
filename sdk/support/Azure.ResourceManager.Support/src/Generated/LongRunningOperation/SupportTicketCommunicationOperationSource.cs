@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Support
 {
-    internal class SupportTicketCommunicationOperationSource : IOperationSource<SupportTicketCommunicationResource>
+    internal class SupportTicketCommunicationOperationSource : Core.IOperationSource<SupportTicketCommunicationResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Support
             _client = client;
         }
 
-        SupportTicketCommunicationResource IOperationSource<SupportTicketCommunicationResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SupportTicketCommunicationResource Core.IOperationSource<SupportTicketCommunicationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SupportTicketCommunicationData.DeserializeSupportTicketCommunicationData(document.RootElement);
             return new SupportTicketCommunicationResource(_client, data);
         }
 
-        async ValueTask<SupportTicketCommunicationResource> IOperationSource<SupportTicketCommunicationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SupportTicketCommunicationResource> Core.IOperationSource<SupportTicketCommunicationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SupportTicketCommunicationData.DeserializeSupportTicketCommunicationData(document.RootElement);

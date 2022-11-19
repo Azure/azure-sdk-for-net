@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Synapse
 {
-    internal class DatabaseOperationSource : IOperationSource<DatabaseResource>
+    internal class DatabaseOperationSource : Core.IOperationSource<DatabaseResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Synapse
             _client = client;
         }
 
-        DatabaseResource IOperationSource<DatabaseResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DatabaseResource Core.IOperationSource<DatabaseResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DatabaseData.DeserializeDatabaseData(document.RootElement);
             return new DatabaseResource(_client, data);
         }
 
-        async ValueTask<DatabaseResource> IOperationSource<DatabaseResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DatabaseResource> Core.IOperationSource<DatabaseResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DatabaseData.DeserializeDatabaseData(document.RootElement);

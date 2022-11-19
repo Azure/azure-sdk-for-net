@@ -14,15 +14,15 @@ using Azure.ResourceManager.MachineLearning.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    internal class DiagnoseResponseResultOperationSource : IOperationSource<DiagnoseResponseResult>
+    internal class DiagnoseResponseResultOperationSource : Core.IOperationSource<DiagnoseResponseResult>
     {
-        DiagnoseResponseResult IOperationSource<DiagnoseResponseResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        DiagnoseResponseResult Core.IOperationSource<DiagnoseResponseResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return DiagnoseResponseResult.DeserializeDiagnoseResponseResult(document.RootElement);
         }
 
-        async ValueTask<DiagnoseResponseResult> IOperationSource<DiagnoseResponseResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DiagnoseResponseResult> Core.IOperationSource<DiagnoseResponseResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return DiagnoseResponseResult.DeserializeDiagnoseResponseResult(document.RootElement);

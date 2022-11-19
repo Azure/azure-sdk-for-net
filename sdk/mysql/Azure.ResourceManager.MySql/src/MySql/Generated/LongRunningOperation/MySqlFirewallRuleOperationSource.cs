@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MySql
 {
-    internal class MySqlFirewallRuleOperationSource : IOperationSource<MySqlFirewallRuleResource>
+    internal class MySqlFirewallRuleOperationSource : Core.IOperationSource<MySqlFirewallRuleResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.MySql
             _client = client;
         }
 
-        MySqlFirewallRuleResource IOperationSource<MySqlFirewallRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        MySqlFirewallRuleResource Core.IOperationSource<MySqlFirewallRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = MySqlFirewallRuleData.DeserializeMySqlFirewallRuleData(document.RootElement);
             return new MySqlFirewallRuleResource(_client, data);
         }
 
-        async ValueTask<MySqlFirewallRuleResource> IOperationSource<MySqlFirewallRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<MySqlFirewallRuleResource> Core.IOperationSource<MySqlFirewallRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = MySqlFirewallRuleData.DeserializeMySqlFirewallRuleData(document.RootElement);
