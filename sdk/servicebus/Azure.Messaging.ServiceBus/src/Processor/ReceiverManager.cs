@@ -121,7 +121,7 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        public virtual Task Cancel() => Task.CompletedTask;
+        public virtual Task CancelAsync() => Task.CompletedTask;
 
         protected async Task ProcessOneMessageWithinScopeAsync(ServiceBusReceivedMessage message, string activityName, CancellationToken cancellationToken)
         {

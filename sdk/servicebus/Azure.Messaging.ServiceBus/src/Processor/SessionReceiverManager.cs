@@ -145,12 +145,12 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        public override Task CloseReceiverIfNeeded(CancellationToken cancellationToken)
+        public override async Task CloseReceiverIfNeeded(CancellationToken cancellationToken)
         {
-            return ForceCloseReceiver(forceClose: true, cancellationToken);
+            await CloseReceiverCore(forceClose: true, cancellationToken).ConfigureAwait(false);
         }
 
-        private async Task ForceCloseReceiver(bool forceClose, CancellationToken cancellationToken)
+        private async Task CloseReceiverCore(bool forceClose, CancellationToken cancellationToken)
         {
             bool releaseSemaphore = false;
             try
@@ -228,7 +228,7 @@ namespace Azure.Messaging.ServiceBus
                 // cancel the automatic session lock renewal
                 try
                 {
-                    await Cancel().ConfigureAwait(false);
+                    await CancelAsync().ConfigureAwait(false);
                 }
                 catch (Exception ex) when (ex is TaskCanceledException)
                 {
@@ -320,7 +320,7 @@ namespace Azure.Messaging.ServiceBus
                     if (sbException.Reason == ServiceBusFailureReason.SessionLockLost)
                     {
                         // this will be awaited when closing the receiver
-                        _ = Cancel();
+                        _ = CancelAsync();
                     }
                 }
                 await RaiseExceptionReceived(
@@ -337,7 +337,7 @@ namespace Azure.Messaging.ServiceBus
             {
                 if (canProcess)
                 {
-                    await ForceCloseReceiver(forceClose: false, processorCancellationToken).ConfigureAwait(false);
+                    await CloseReceiverCore(forceClose: false, processorCancellationToken).ConfigureAwait(false);
                 }
             }
         }
@@ -409,7 +409,7 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        public override async Task Cancel()
+        public override async Task CancelAsync()
         {
             if (_sessionCancellationSource is { IsCancellationRequested: false })
             {
