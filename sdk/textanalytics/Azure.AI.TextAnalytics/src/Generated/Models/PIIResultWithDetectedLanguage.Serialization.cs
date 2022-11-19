@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class ExtractiveSummarizationResultDocumentsItem : IUtf8JsonSerializable
+    internal partial class PIIResultWithDetectedLanguage : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,9 +22,11 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WritePropertyName("detectedLanguage");
                 writer.WriteObjectValue(DetectedLanguage.Value);
             }
-            writer.WritePropertyName("sentences");
+            writer.WritePropertyName("redactedText");
+            writer.WriteStringValue(RedactedText);
+            writer.WritePropertyName("entities");
             writer.WriteStartArray();
-            foreach (var item in Sentences)
+            foreach (var item in Entities)
             {
                 writer.WriteObjectValue(item);
             }
@@ -46,10 +48,11 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteEndObject();
         }
 
-        internal static ExtractiveSummarizationResultDocumentsItem DeserializeExtractiveSummarizationResultDocumentsItem(JsonElement element)
+        internal static PIIResultWithDetectedLanguage DeserializePIIResultWithDetectedLanguage(JsonElement element)
         {
             Optional<DetectedLanguageInternal> detectedLanguage = default;
-            IList<ExtractedSummarySentence> sentences = default;
+            string redactedText = default;
+            IList<Entity> entities = default;
             string id = default;
             IList<DocumentWarning> warnings = default;
             Optional<TextDocumentStatistics> statistics = default;
@@ -65,14 +68,19 @@ namespace Azure.AI.TextAnalytics.Models
                     detectedLanguage = DetectedLanguageInternal.DeserializeDetectedLanguageInternal(property.Value);
                     continue;
                 }
-                if (property.NameEquals("sentences"))
+                if (property.NameEquals("redactedText"))
                 {
-                    List<ExtractedSummarySentence> array = new List<ExtractedSummarySentence>();
+                    redactedText = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("entities"))
+                {
+                    List<Entity> array = new List<Entity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExtractedSummarySentence.DeserializeExtractedSummarySentence(item));
+                        array.Add(Entity.DeserializeEntity(item));
                     }
-                    sentences = array;
+                    entities = array;
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -101,7 +109,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new ExtractiveSummarizationResultDocumentsItem(id, warnings, Optional.ToNullable(statistics), sentences, Optional.ToNullable(detectedLanguage));
+            return new PIIResultWithDetectedLanguage(id, warnings, Optional.ToNullable(statistics), redactedText, entities, Optional.ToNullable(detectedLanguage));
         }
     }
 }

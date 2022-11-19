@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class PiiResultDocumentsItem : IUtf8JsonSerializable
+    internal partial class EntitiesResultWithDetectedLanguage : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,8 +22,6 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WritePropertyName("detectedLanguage");
                 writer.WriteObjectValue(DetectedLanguage.Value);
             }
-            writer.WritePropertyName("redactedText");
-            writer.WriteStringValue(RedactedText);
             writer.WritePropertyName("entities");
             writer.WriteStartArray();
             foreach (var item in Entities)
@@ -48,11 +46,10 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteEndObject();
         }
 
-        internal static PiiResultDocumentsItem DeserializePiiResultDocumentsItem(JsonElement element)
+        internal static EntitiesResultWithDetectedLanguage DeserializeEntitiesResultWithDetectedLanguage(JsonElement element)
         {
             Optional<DetectedLanguageInternal> detectedLanguage = default;
-            string redactedText = default;
-            IList<Entity> entities = default;
+            IList<EntityWithResolution> entities = default;
             string id = default;
             IList<DocumentWarning> warnings = default;
             Optional<TextDocumentStatistics> statistics = default;
@@ -68,17 +65,12 @@ namespace Azure.AI.TextAnalytics.Models
                     detectedLanguage = DetectedLanguageInternal.DeserializeDetectedLanguageInternal(property.Value);
                     continue;
                 }
-                if (property.NameEquals("redactedText"))
-                {
-                    redactedText = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("entities"))
                 {
-                    List<Entity> array = new List<Entity>();
+                    List<EntityWithResolution> array = new List<EntityWithResolution>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Entity.DeserializeEntity(item));
+                        array.Add(EntityWithResolution.DeserializeEntityWithResolution(item));
                     }
                     entities = array;
                     continue;
@@ -109,7 +101,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new PiiResultDocumentsItem(id, warnings, Optional.ToNullable(statistics), redactedText, entities, Optional.ToNullable(detectedLanguage));
+            return new EntitiesResultWithDetectedLanguage(id, warnings, Optional.ToNullable(statistics), entities, Optional.ToNullable(detectedLanguage));
         }
     }
 }

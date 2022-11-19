@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class AbstractiveSummarizationResultBaseDocumentsItem : IUtf8JsonSerializable
+    internal partial class ExtractedSummaryDocumentResultWithDetectedLanguage : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,9 +22,9 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WritePropertyName("detectedLanguage");
                 writer.WriteObjectValue(DetectedLanguage.Value);
             }
-            writer.WritePropertyName("summaries");
+            writer.WritePropertyName("sentences");
             writer.WriteStartArray();
-            foreach (var item in Summaries)
+            foreach (var item in Sentences)
             {
                 writer.WriteObjectValue(item);
             }
@@ -46,10 +46,10 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteEndObject();
         }
 
-        internal static AbstractiveSummarizationResultBaseDocumentsItem DeserializeAbstractiveSummarizationResultBaseDocumentsItem(JsonElement element)
+        internal static ExtractedSummaryDocumentResultWithDetectedLanguage DeserializeExtractedSummaryDocumentResultWithDetectedLanguage(JsonElement element)
         {
             Optional<DetectedLanguageInternal> detectedLanguage = default;
-            IList<AbstractiveSummaryInternal> summaries = default;
+            IList<ExtractedSummarySentence> sentences = default;
             string id = default;
             IList<DocumentWarning> warnings = default;
             Optional<TextDocumentStatistics> statistics = default;
@@ -65,14 +65,14 @@ namespace Azure.AI.TextAnalytics.Models
                     detectedLanguage = DetectedLanguageInternal.DeserializeDetectedLanguageInternal(property.Value);
                     continue;
                 }
-                if (property.NameEquals("summaries"))
+                if (property.NameEquals("sentences"))
                 {
-                    List<AbstractiveSummaryInternal> array = new List<AbstractiveSummaryInternal>();
+                    List<ExtractedSummarySentence> array = new List<ExtractedSummarySentence>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AbstractiveSummaryInternal.DeserializeAbstractiveSummaryInternal(item));
+                        array.Add(ExtractedSummarySentence.DeserializeExtractedSummarySentence(item));
                     }
-                    summaries = array;
+                    sentences = array;
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -101,7 +101,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new AbstractiveSummarizationResultBaseDocumentsItem(id, warnings, Optional.ToNullable(statistics), summaries, Optional.ToNullable(detectedLanguage));
+            return new ExtractedSummaryDocumentResultWithDetectedLanguage(id, warnings, Optional.ToNullable(statistics), sentences, Optional.ToNullable(detectedLanguage));
         }
     }
 }

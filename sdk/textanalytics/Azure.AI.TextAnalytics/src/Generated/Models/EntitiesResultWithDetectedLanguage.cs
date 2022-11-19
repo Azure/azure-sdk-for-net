@@ -12,28 +12,28 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    /// <summary> The ExtractiveSummarizationResultDocumentsItem. </summary>
-    internal partial class ExtractiveSummarizationResultDocumentsItem : ExtractedSummaryDocumentResult
+    /// <summary> The EntitiesResultWithDetectedLanguage. </summary>
+    internal partial class EntitiesResultWithDetectedLanguage : EntitiesDocumentResult
     {
-        /// <summary> Initializes a new instance of ExtractiveSummarizationResultDocumentsItem. </summary>
+        /// <summary> Initializes a new instance of EntitiesResultWithDetectedLanguage. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
-        /// <param name="sentences"> A ranked list of sentences representing the extracted summary. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="warnings"/> or <paramref name="sentences"/> is null. </exception>
-        public ExtractiveSummarizationResultDocumentsItem(string id, IEnumerable<DocumentWarning> warnings, IEnumerable<ExtractedSummarySentence> sentences) : base(id, warnings, sentences)
+        /// <param name="entities"> Recognized entities in the document. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="warnings"/> or <paramref name="entities"/> is null. </exception>
+        public EntitiesResultWithDetectedLanguage(string id, IEnumerable<DocumentWarning> warnings, IEnumerable<EntityWithResolution> entities) : base(id, warnings, entities)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(warnings, nameof(warnings));
-            Argument.AssertNotNull(sentences, nameof(sentences));
+            Argument.AssertNotNull(entities, nameof(entities));
         }
 
-        /// <summary> Initializes a new instance of ExtractiveSummarizationResultDocumentsItem. </summary>
+        /// <summary> Initializes a new instance of EntitiesResultWithDetectedLanguage. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
-        /// <param name="sentences"> A ranked list of sentences representing the extracted summary. </param>
+        /// <param name="entities"> Recognized entities in the document. </param>
         /// <param name="detectedLanguage"> If &apos;language&apos; is set to &apos;auto&apos; for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
-        internal ExtractiveSummarizationResultDocumentsItem(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, IList<ExtractedSummarySentence> sentences, DetectedLanguageInternal? detectedLanguage) : base(id, warnings, statistics, sentences)
+        internal EntitiesResultWithDetectedLanguage(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, IList<EntityWithResolution> entities, DetectedLanguageInternal? detectedLanguage) : base(id, warnings, statistics, entities)
         {
             DetectedLanguage = detectedLanguage;
         }

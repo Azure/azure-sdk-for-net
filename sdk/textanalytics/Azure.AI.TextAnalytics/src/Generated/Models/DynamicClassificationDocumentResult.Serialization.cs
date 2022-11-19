@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class DynamicClassificationResultDocumentsItem : IUtf8JsonSerializable
+    internal partial class DynamicClassificationDocumentResult : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -41,7 +41,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteEndObject();
         }
 
-        internal static DynamicClassificationResultDocumentsItem DeserializeDynamicClassificationResultDocumentsItem(JsonElement element)
+        internal static DynamicClassificationDocumentResult DeserializeDynamicClassificationDocumentResult(JsonElement element)
         {
             IList<ClassificationResult> classifications = default;
             string id = default;
@@ -85,7 +85,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new DynamicClassificationResultDocumentsItem(id, warnings, Optional.ToNullable(statistics), classifications);
+            return new DynamicClassificationDocumentResult(id, warnings, Optional.ToNullable(statistics), classifications);
         }
     }
 }

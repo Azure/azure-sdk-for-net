@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class EntityLinkingResultDocumentsItem : IUtf8JsonSerializable
+    internal partial class EntityLinkingResultWithDetectedLanguage : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -46,7 +46,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteEndObject();
         }
 
-        internal static EntityLinkingResultDocumentsItem DeserializeEntityLinkingResultDocumentsItem(JsonElement element)
+        internal static EntityLinkingResultWithDetectedLanguage DeserializeEntityLinkingResultWithDetectedLanguage(JsonElement element)
         {
             Optional<DetectedLanguageInternal> detectedLanguage = default;
             IList<LinkedEntity> entities = default;
@@ -101,7 +101,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new EntityLinkingResultDocumentsItem(id, warnings, Optional.ToNullable(statistics), entities, Optional.ToNullable(detectedLanguage));
+            return new EntityLinkingResultWithDetectedLanguage(id, warnings, Optional.ToNullable(statistics), entities, Optional.ToNullable(detectedLanguage));
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Azure.AI.TextAnalytics
             writer.WriteStartObject();
             if (Optional.IsDefined(Iso4217))
             {
-                writer.WritePropertyName("ISO4217");
+                writer.WritePropertyName("iso4217");
                 writer.WriteStringValue(Iso4217);
             }
             writer.WritePropertyName("unit");
@@ -32,15 +32,15 @@ namespace Azure.AI.TextAnalytics
 
         internal static CurrencyResolution DeserializeCurrencyResolution(JsonElement element)
         {
-            Optional<string> isO4217 = default;
+            Optional<string> iso4217 = default;
             string unit = default;
             double value = default;
             ResolutionKind resolutionKind = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ISO4217"))
+                if (property.NameEquals("iso4217"))
                 {
-                    isO4217 = property.Value.GetString();
+                    iso4217 = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("unit"))
@@ -59,7 +59,7 @@ namespace Azure.AI.TextAnalytics
                     continue;
                 }
             }
-            return new CurrencyResolution(resolutionKind, isO4217.Value, unit, value);
+            return new CurrencyResolution(resolutionKind, iso4217.Value, unit, value);
         }
     }
 }
