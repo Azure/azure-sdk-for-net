@@ -9,6 +9,26 @@ $ErrorActionPreference = "Stop"
 . $PSScriptRoot/../common/scripts/Helpers/PSModule-Helpers.ps1
 Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
 
+function NpmInstallForProject([string]$workingDirectory) {
+    Push-Location $workingDirectory
+    try {
+        $currentDur = Resolve-Path "."
+        Write-Host "Generating from $currentDur"
+        if (Test-Path "package.json") {
+            Remove-Item -Path "package.json" -Force
+        }
+        if (Test-Path ".npmrc") {
+            Remove-Item -Path ".npmrc" -Force
+        }
+        Copy-Item -Path "$PSScriptRoot/../csharp-emitter-package.json" -Destination "package.json" -Force
+        npm install
+        if ($LASTEXITCODE) { exit $LASTEXITCODE }
+    }
+    finally {
+        Pop-Location
+    }
+}
+
 $cadlConfigurationFile = Resolve-Path "$ProjectDirectory/src/cadl-location.yaml"
 
 Write-Host "Reading configuration from $cadlConfigurationFile"
@@ -18,11 +38,15 @@ $specSubDirectory = $configuration["directory"]
 $innerFolder = Split-Path $specSubDirectory -Leaf
 
 $tempFolder = "$ProjectDirectory/TempCadlFiles"
+$npmWorkingDir = Resolve-Path $tempFolder/$innerFolder
+$mainCadlFile = Resolve-Path "$npmWorkingDir/main.cadl"
+$resolvedProjectDirectory = Resolve-Path "$ProjectDirectory/src"
 
 try {
-    Push-Location $tempFolder/$innerFolder
-    Write-Host("npx cadl compile --emit `"`@azure-tools/cadl-csharp`" --output-path `"$ProjectDirectory/src/Generated`" --option @azure-tools/cadl-csharp.clear-output-folder=true `"$tempFolder/$innerFolder`"")
-    npx cadl compile --emit "@azure-tools/cadl-csharp" --output-path "$ProjectDirectory/src/Generated" --option @azure-tools/cadl-csharp.clear-output-folder=true "$tempFolder/$innerFolder"
+    Push-Location $npmWorkingDir
+    NpmInstallForProject $npmWorkingDir
+    Write-Host("npx cadl compile $mainCadlFile --emit `"`@azure-tools/cadl-csharp`" --output-path `"$resolvedProjectDirectory`" --option @azure-tools/cadl-csharp.clear-output-folder=true")
+    npx cadl compile $mainCadlFile --emit "@azure-tools/cadl-csharp" --output-path "$resolvedProjectDirectory" --option @azure-tools/cadl-csharp.clear-output-folder=true
 }
 finally {
     Pop-Location

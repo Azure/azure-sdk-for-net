@@ -16,25 +16,6 @@ function AddSparseCheckoutPath([string]$subDirectory) {
     }
 }
 
-function NpmInstallForProject([string]$workingDirectory) {
-    Push-Location $workingDirectory
-    try {
-        $currentDur = Resolve-Path "."
-        Write-Host "Generating from $currentDur"
-        if (Test-Path "package.json") {
-            Remove-Item -Path "package.json" -Force
-        }
-        if (Test-Path ".npmrc") {
-            Remove-Item -Path ".npmrc" -Force
-        }
-        npm install "@azure-tools/cadl-csharp"
-        if ($LASTEXITCODE) { exit $LASTEXITCODE }
-    }
-    finally {
-        Pop-Location
-    }
-}
-
 function CopySpecToProjectIfNeeded([string]$specCloneRoot, [string]$mainSpecDir, [string]$dest, [string[]]$specAdditionalSubDirectories) {
     $source = "$specCloneRoot/$mainSpecDir"
     Write-Host "Copying spec from $source"
@@ -123,14 +104,12 @@ try {
     if (!(Test-Path ".git")) {
         InitializeSparseGitClone $gitRemoteValue
         UpdateSparseCheckoutFile $specSubDirectory $configuration["additionalDirectories"]
-        git checkout $configuration["commit"]
     }
+    git checkout $configuration["commit"]
 }
 finally {
     Pop-Location
 }
-
-$specDir = Resolve-Path "$specCloneDir/$specSubDirectory"
 
 $tempCadlDir = "$ProjectDirectory/TempCadlFiles"
 New-Item $tempCadlDir -Type Directory -Force | Out-Null
@@ -139,6 +118,3 @@ CopySpecToProjectIfNeeded `
     -mainSpecDir $specSubDirectory `
     -dest $tempCadlDir `
     -specAdditionalSubDirectories $configuration["additionalDirectories"]
-
-$innerFolder = Split-Path $specDir -Leaf
-NpmInstallForProject (Resolve-Path "$tempCadlDir/$innerFolder")
