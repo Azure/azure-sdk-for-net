@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace ADP.Common.Operations
+namespace Adp
 {
     /// <summary> The async operation status. </summary>
     public readonly partial struct LongRunningOperationStatus : IEquatable<LongRunningOperationStatus>

@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetAsync(String,RequestContext)">
+<example>
+This sample shows how to call GetAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new MeasurementClient(credential);
+
+Response response = await client.GetAsync("<measurementId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("measurementId").ToString());
+Console.WriteLine(result.GetProperty("location").ToString());
+Console.WriteLine(result.GetProperty("ingestTimestampUtc").ToString());
+Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+Console.WriteLine(result.GetProperty("externalPackageId").ToString());
+Console.WriteLine(result.GetProperty("uploadId").ToString());
+Console.WriteLine(result.GetProperty("discoveryId").ToString());
+Console.WriteLine(result.GetProperty("recordTimestampUtc").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>Measurement</c>:
+<code>{
+  measurementId: string, # Required.
+  location: string, # Required.
+  ingestTimestampUtc: string (date &amp; time), # Optional.
+  resourceEndpoint: string, # Optional.
+  externalPackageId: string, # Optional.
+  uploadId: string, # Optional.
+  discoveryId: string, # Optional.
+  recordTimestampUtc: string (date &amp; time), # Optional.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="Get(String,RequestContext)">
+<example>
+This sample shows how to call Get with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new MeasurementClient(credential);
+
+Response response = client.Get("<measurementId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("measurementId").ToString());
+Console.WriteLine(result.GetProperty("location").ToString());
+Console.WriteLine(result.GetProperty("ingestTimestampUtc").ToString());
+Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+Console.WriteLine(result.GetProperty("externalPackageId").ToString());
+Console.WriteLine(result.GetProperty("uploadId").ToString());
+Console.WriteLine(result.GetProperty("discoveryId").ToString());
+Console.WriteLine(result.GetProperty("recordTimestampUtc").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>Measurement</c>:
+<code>{
+  measurementId: string, # Required.
+  location: string, # Required.
+  ingestTimestampUtc: string (date &amp; time), # Optional.
+  resourceEndpoint: string, # Optional.
+  externalPackageId: string, # Optional.
+  uploadId: string, # Optional.
+  discoveryId: string, # Optional.
+  recordTimestampUtc: string (date &amp; time), # Optional.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="ListAsync(RequestContext)">
+<example>
+This sample shows how to call ListAsync and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new MeasurementClient(credential);
+
+await foreach (var data in client.ListAsync())
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("measurementId").ToString());
+    Console.WriteLine(result.GetProperty("location").ToString());
+    Console.WriteLine(result.GetProperty("ingestTimestampUtc").ToString());
+    Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+    Console.WriteLine(result.GetProperty("externalPackageId").ToString());
+    Console.WriteLine(result.GetProperty("uploadId").ToString());
+    Console.WriteLine(result.GetProperty("discoveryId").ToString());
+    Console.WriteLine(result.GetProperty("recordTimestampUtc").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  measurementId: string, # Required.
+  location: string, # Required.
+  ingestTimestampUtc: string (date &amp; time), # Optional.
+  resourceEndpoint: string, # Optional.
+  externalPackageId: string, # Optional.
+  uploadId: string, # Optional.
+  discoveryId: string, # Optional.
+  recordTimestampUtc: string (date &amp; time), # Optional.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="List(RequestContext)">
+<example>
+This sample shows how to call List and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new MeasurementClient(credential);
+
+foreach (var data in client.List())
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("measurementId").ToString());
+    Console.WriteLine(result.GetProperty("location").ToString());
+    Console.WriteLine(result.GetProperty("ingestTimestampUtc").ToString());
+    Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+    Console.WriteLine(result.GetProperty("externalPackageId").ToString());
+    Console.WriteLine(result.GetProperty("uploadId").ToString());
+    Console.WriteLine(result.GetProperty("discoveryId").ToString());
+    Console.WriteLine(result.GetProperty("recordTimestampUtc").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  measurementId: string, # Required.
+  location: string, # Required.
+  ingestTimestampUtc: string (date &amp; time), # Optional.
+  resourceEndpoint: string, # Optional.
+  externalPackageId: string, # Optional.
+  uploadId: string, # Optional.
+  discoveryId: string, # Optional.
+  recordTimestampUtc: string (date &amp; time), # Optional.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="QueryMeasurementsWithMetadataAsync(RequestContext)">
+<example>
+This sample shows how to call QueryMeasurementsWithMetadataAsync and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new MeasurementClient(credential);
+
+await foreach (var data in client.QueryMeasurementsWithMetadataAsync())
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("measurementId").ToString());
+    Console.WriteLine(result.GetProperty("location").ToString());
+    Console.WriteLine(result.GetProperty("ingestTimestampUtc").ToString());
+    Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+    Console.WriteLine(result.GetProperty("externalPackageId").ToString());
+    Console.WriteLine(result.GetProperty("uploadId").ToString());
+    Console.WriteLine(result.GetProperty("discoveryId").ToString());
+    Console.WriteLine(result.GetProperty("recordTimestampUtc").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+    Console.WriteLine(result.GetProperty("metadata").GetProperty("<test>").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  measurementId: string, # Required.
+  location: string, # Required.
+  ingestTimestampUtc: string (date &amp; time), # Optional.
+  resourceEndpoint: string, # Optional.
+  externalPackageId: string, # Optional.
+  uploadId: string, # Optional.
+  discoveryId: string, # Optional.
+  recordTimestampUtc: string (date &amp; time), # Optional.
+  etag: string, # Required.
+  metadata: Dictionary&lt;string, string&gt;, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="QueryMeasurementsWithMetadata(RequestContext)">
+<example>
+This sample shows how to call QueryMeasurementsWithMetadata and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new MeasurementClient(credential);
+
+foreach (var data in client.QueryMeasurementsWithMetadata())
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("measurementId").ToString());
+    Console.WriteLine(result.GetProperty("location").ToString());
+    Console.WriteLine(result.GetProperty("ingestTimestampUtc").ToString());
+    Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+    Console.WriteLine(result.GetProperty("externalPackageId").ToString());
+    Console.WriteLine(result.GetProperty("uploadId").ToString());
+    Console.WriteLine(result.GetProperty("discoveryId").ToString());
+    Console.WriteLine(result.GetProperty("recordTimestampUtc").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+    Console.WriteLine(result.GetProperty("metadata").GetProperty("<test>").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  measurementId: string, # Required.
+  location: string, # Required.
+  ingestTimestampUtc: string (date &amp; time), # Optional.
+  resourceEndpoint: string, # Optional.
+  externalPackageId: string, # Optional.
+  uploadId: string, # Optional.
+  discoveryId: string, # Optional.
+  recordTimestampUtc: string (date &amp; time), # Optional.
+  etag: string, # Required.
+  metadata: Dictionary&lt;string, string&gt;, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="FindByIdsAsync(RequestContent,RequestContext)">
+<example>
+This sample shows how to call FindByIdsAsync with required request content and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new MeasurementClient(credential);
+
+var data = new {
+    measurementIds = new[] {
+        "<String>"
+    },
+};
+
+await foreach (var data in client.FindByIdsAsync(RequestContent.Create(data)))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("measurementId").ToString());
+    Console.WriteLine(result.GetProperty("location").ToString());
+    Console.WriteLine(result.GetProperty("ingestTimestampUtc").ToString());
+    Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+    Console.WriteLine(result.GetProperty("externalPackageId").ToString());
+    Console.WriteLine(result.GetProperty("uploadId").ToString());
+    Console.WriteLine(result.GetProperty("discoveryId").ToString());
+    Console.WriteLine(result.GetProperty("recordTimestampUtc").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request payload and one item in the pageable response.
+
+Request Body:
+
+Schema for <c>MeasurementListRequestParameters</c>:
+<code>{
+  measurementIds: [string], # Required.
+}
+</code>
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  measurementId: string, # Required.
+  location: string, # Required.
+  ingestTimestampUtc: string (date &amp; time), # Optional.
+  resourceEndpoint: string, # Optional.
+  externalPackageId: string, # Optional.
+  uploadId: string, # Optional.
+  discoveryId: string, # Optional.
+  recordTimestampUtc: string (date &amp; time), # Optional.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="FindByIds(RequestContent,RequestContext)">
+<example>
+This sample shows how to call FindByIds with required request content and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new MeasurementClient(credential);
+
+var data = new {
+    measurementIds = new[] {
+        "<String>"
+    },
+};
+
+foreach (var data in client.FindByIds(RequestContent.Create(data)))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("measurementId").ToString());
+    Console.WriteLine(result.GetProperty("location").ToString());
+    Console.WriteLine(result.GetProperty("ingestTimestampUtc").ToString());
+    Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+    Console.WriteLine(result.GetProperty("externalPackageId").ToString());
+    Console.WriteLine(result.GetProperty("uploadId").ToString());
+    Console.WriteLine(result.GetProperty("discoveryId").ToString());
+    Console.WriteLine(result.GetProperty("recordTimestampUtc").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request payload and one item in the pageable response.
+
+Request Body:
+
+Schema for <c>MeasurementListRequestParameters</c>:
+<code>{
+  measurementIds: [string], # Required.
+}
+</code>
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  measurementId: string, # Required.
+  location: string, # Required.
+  ingestTimestampUtc: string (date &amp; time), # Optional.
+  resourceEndpoint: string, # Optional.
+  externalPackageId: string, # Optional.
+  uploadId: string, # Optional.
+  discoveryId: string, # Optional.
+  recordTimestampUtc: string (date &amp; time), # Optional.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="DeleteAsync(WaitUntil,String,String,RequestContext)">
+<example>
+This sample shows how to call DeleteAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new MeasurementClient(credential);
+
+var operation = await client.DeleteAsync(WaitUntil.Completed, "<measurementId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("measurementId").ToString());
+Console.WriteLine(result.GetProperty("location").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+This sample shows how to call DeleteAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new MeasurementClient(credential);
+
+var operation = await client.DeleteAsync(WaitUntil.Completed, "<measurementId>", "<operationId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("measurementId").ToString());
+Console.WriteLine(result.GetProperty("location").ToString());
+Console.WriteLine(result.GetProperty("ingestTimestampUtc").ToString());
+Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+Console.WriteLine(result.GetProperty("externalPackageId").ToString());
+Console.WriteLine(result.GetProperty("uploadId").ToString());
+Console.WriteLine(result.GetProperty("discoveryId").ToString());
+Console.WriteLine(result.GetProperty("recordTimestampUtc").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>Measurement</c>:
+<code>{
+  measurementId: string, # Required.
+  location: string, # Required.
+  ingestTimestampUtc: string (date &amp; time), # Optional.
+  resourceEndpoint: string, # Optional.
+  externalPackageId: string, # Optional.
+  uploadId: string, # Optional.
+  discoveryId: string, # Optional.
+  recordTimestampUtc: string (date &amp; time), # Optional.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="Delete(WaitUntil,String,String,RequestContext)">
+<example>
+This sample shows how to call Delete with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new MeasurementClient(credential);
+
+var operation = client.Delete(WaitUntil.Completed, "<measurementId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("measurementId").ToString());
+Console.WriteLine(result.GetProperty("location").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+This sample shows how to call Delete with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new MeasurementClient(credential);
+
+var operation = client.Delete(WaitUntil.Completed, "<measurementId>", "<operationId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("measurementId").ToString());
+Console.WriteLine(result.GetProperty("location").ToString());
+Console.WriteLine(result.GetProperty("ingestTimestampUtc").ToString());
+Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+Console.WriteLine(result.GetProperty("externalPackageId").ToString());
+Console.WriteLine(result.GetProperty("uploadId").ToString());
+Console.WriteLine(result.GetProperty("discoveryId").ToString());
+Console.WriteLine(result.GetProperty("recordTimestampUtc").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>Measurement</c>:
+<code>{
+  measurementId: string, # Required.
+  location: string, # Required.
+  ingestTimestampUtc: string (date &amp; time), # Optional.
+  resourceEndpoint: string, # Optional.
+  externalPackageId: string, # Optional.
+  uploadId: string, # Optional.
+  discoveryId: string, # Optional.
+  recordTimestampUtc: string (date &amp; time), # Optional.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+  </members>
+</doc>

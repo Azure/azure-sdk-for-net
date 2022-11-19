@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace ADP.DataManagement.Ingestion.Uploads
+namespace Adp
 {
     /// <summary> Known upload operation types. </summary>
     public readonly partial struct UploadOperationType : IEquatable<UploadOperationType>

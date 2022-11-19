@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetAsync(String,RequestContext)">
+<example>
+This sample shows how to call GetAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new MeasurementProcessingResultsClient(credential);
+
+Response response = await client.GetAsync("<measurementId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("validationPassed").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("ruleCategory").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("ruleName").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("details").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("validationPassed").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("validationError").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>MeasurementProcessingResultsBase</c>:
+<code>{
+  validationPassed: boolean, # Optional.
+  results: [
+    {
+      ruleCategory: string, # Optional.
+      ruleName: string, # Optional.
+      details: Dictionary&lt;string, string&gt;, # Optional.
+      validationPassed: boolean, # Optional.
+      validationError: string, # Optional.
+    }
+  ], # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="Get(String,RequestContext)">
+<example>
+This sample shows how to call Get with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new MeasurementProcessingResultsClient(credential);
+
+Response response = client.Get("<measurementId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("validationPassed").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("ruleCategory").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("ruleName").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("details").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("validationPassed").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("validationError").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>MeasurementProcessingResultsBase</c>:
+<code>{
+  validationPassed: boolean, # Optional.
+  results: [
+    {
+      ruleCategory: string, # Optional.
+      ruleName: string, # Optional.
+      details: Dictionary&lt;string, string&gt;, # Optional.
+      validationPassed: boolean, # Optional.
+      validationError: string, # Optional.
+    }
+  ], # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+  </members>
+</doc>

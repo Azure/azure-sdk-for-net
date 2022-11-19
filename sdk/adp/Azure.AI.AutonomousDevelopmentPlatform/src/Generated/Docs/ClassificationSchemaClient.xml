@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetAsync(String,RequestContext)">
+<example>
+This sample shows how to call GetAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ClassificationSchemaClient(credential);
+
+Response response = await client.GetAsync("<name>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("schemaDefinition").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>ClassificationSchema</c>:
+<code>{
+  name: string, # Required.
+  schemaDefinition: string, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="Get(String,RequestContext)">
+<example>
+This sample shows how to call Get with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ClassificationSchemaClient(credential);
+
+Response response = client.Get("<name>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("schemaDefinition").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>ClassificationSchema</c>:
+<code>{
+  name: string, # Required.
+  schemaDefinition: string, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="ListAsync(RequestContext)">
+<example>
+This sample shows how to call ListAsync and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ClassificationSchemaClient(credential);
+
+await foreach (var data in client.ListAsync())
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("schemaDefinition").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  name: string, # Required.
+  schemaDefinition: string, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="List(RequestContext)">
+<example>
+This sample shows how to call List and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ClassificationSchemaClient(credential);
+
+foreach (var data in client.List())
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("schemaDefinition").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  name: string, # Required.
+  schemaDefinition: string, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CreateAsync(WaitUntil,RequestContent,String,RequestContext)">
+<example>
+This sample shows how to call CreateAsync with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ClassificationSchemaClient(credential);
+
+var data = new {
+    schemaDefinition = "<schemaDefinition>",
+};
+
+var operation = await client.CreateAsync(WaitUntil.Completed, RequestContent.Create(data));
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("schemaDefinition").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+This sample shows how to call CreateAsync with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ClassificationSchemaClient(credential);
+
+var data = new {
+    schemaDefinition = "<schemaDefinition>",
+};
+
+var operation = await client.CreateAsync(WaitUntil.Completed, RequestContent.Create(data), "<operationId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("schemaDefinition").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>ClassificationSchemaCreationParameters</c>:
+<code>{
+  schemaDefinition: string, # Required.
+}
+</code>
+
+Response Body:
+
+Schema for <c>ClassificationSchema</c>:
+<code>{
+  name: string, # Required.
+  schemaDefinition: string, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="Create(WaitUntil,RequestContent,String,RequestContext)">
+<example>
+This sample shows how to call Create with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ClassificationSchemaClient(credential);
+
+var data = new {
+    schemaDefinition = "<schemaDefinition>",
+};
+
+var operation = client.Create(WaitUntil.Completed, RequestContent.Create(data));
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("schemaDefinition").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+This sample shows how to call Create with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ClassificationSchemaClient(credential);
+
+var data = new {
+    schemaDefinition = "<schemaDefinition>",
+};
+
+var operation = client.Create(WaitUntil.Completed, RequestContent.Create(data), "<operationId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("schemaDefinition").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>ClassificationSchemaCreationParameters</c>:
+<code>{
+  schemaDefinition: string, # Required.
+}
+</code>
+
+Response Body:
+
+Schema for <c>ClassificationSchema</c>:
+<code>{
+  name: string, # Required.
+  schemaDefinition: string, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="DeleteAsync(WaitUntil,String,String,RequestContext)">
+<example>
+This sample shows how to call DeleteAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ClassificationSchemaClient(credential);
+
+var operation = await client.DeleteAsync(WaitUntil.Completed, "<name>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("schemaDefinition").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+This sample shows how to call DeleteAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ClassificationSchemaClient(credential);
+
+var operation = await client.DeleteAsync(WaitUntil.Completed, "<name>", "<operationId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("schemaDefinition").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>ClassificationSchema</c>:
+<code>{
+  name: string, # Required.
+  schemaDefinition: string, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="Delete(WaitUntil,String,String,RequestContext)">
+<example>
+This sample shows how to call Delete with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ClassificationSchemaClient(credential);
+
+var operation = client.Delete(WaitUntil.Completed, "<name>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("schemaDefinition").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+This sample shows how to call Delete with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ClassificationSchemaClient(credential);
+
+var operation = client.Delete(WaitUntil.Completed, "<name>", "<operationId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("schemaDefinition").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>ClassificationSchema</c>:
+<code>{
+  name: string, # Required.
+  schemaDefinition: string, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+  </members>
+</doc>

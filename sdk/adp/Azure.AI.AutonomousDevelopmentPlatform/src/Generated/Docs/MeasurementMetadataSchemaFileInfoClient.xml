@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetAsync(String,RequestContext)">
+<example>
+This sample shows how to call GetAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new MeasurementMetadataSchemaFileInfoClient(credential);
+
+Response response = await client.GetAsync("<measurementId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("schemaFileName").ToString());
+Console.WriteLine(result.GetProperty("schemaFileUri").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>MeasurementMetadataSchemaFileInfoBase</c>:
+<code>{
+  schemaFileName: string, # Optional.
+  schemaFileUri: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="Get(String,RequestContext)">
+<example>
+This sample shows how to call Get with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new MeasurementMetadataSchemaFileInfoClient(credential);
+
+Response response = client.Get("<measurementId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("schemaFileName").ToString());
+Console.WriteLine(result.GetProperty("schemaFileUri").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>MeasurementMetadataSchemaFileInfoBase</c>:
+<code>{
+  schemaFileName: string, # Optional.
+  schemaFileUri: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+  </members>
+</doc>

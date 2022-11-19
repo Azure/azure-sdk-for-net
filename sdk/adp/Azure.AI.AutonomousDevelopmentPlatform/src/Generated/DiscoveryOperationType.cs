@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace ADP.DataManagement.Ingestion.Discoveries
+namespace Adp
 {
     /// <summary> Known discovery operation types. </summary>
     public readonly partial struct DiscoveryOperationType : IEquatable<DiscoveryOperationType>

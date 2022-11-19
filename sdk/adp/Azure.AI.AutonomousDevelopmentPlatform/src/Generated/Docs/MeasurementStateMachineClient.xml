@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetAsync(String,String,RequestContext)">
+<example>
+This sample shows how to call GetAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new MeasurementStateMachineClient(credential);
+
+Response response = await client.GetAsync("<measurementId>", "<id>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("availableActionNames")[0].ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>StateMachine</c>:
+<code>{
+  id: string, # Required.
+  type: string, # Required.
+  availableActionNames: [string], # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="Get(String,String,RequestContext)">
+<example>
+This sample shows how to call Get with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new MeasurementStateMachineClient(credential);
+
+Response response = client.Get("<measurementId>", "<id>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("availableActionNames")[0].ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>StateMachine</c>:
+<code>{
+  id: string, # Required.
+  type: string, # Required.
+  availableActionNames: [string], # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="ListAsync(String,RequestContext)">
+<example>
+This sample shows how to call ListAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new MeasurementStateMachineClient(credential);
+
+await foreach (var data in client.ListAsync("<measurementId>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("availableActionNames")[0].ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  id: string, # Required.
+  type: string, # Required.
+  availableActionNames: [string], # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="List(String,RequestContext)">
+<example>
+This sample shows how to call List with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new MeasurementStateMachineClient(credential);
+
+foreach (var data in client.List("<measurementId>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("availableActionNames")[0].ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  id: string, # Required.
+  type: string, # Required.
+  availableActionNames: [string], # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="ActAsync(WaitUntil,String,String,RequestContent,String,RequestContext)">
+<example>
+This sample shows how to call ActAsync with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new MeasurementStateMachineClient(credential);
+
+var data = new {
+    actionName = "<actionName>",
+};
+
+var operation = await client.ActAsync(WaitUntil.Completed, "<measurementId>", "<id>", RequestContent.Create(data));
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("availableActionNames")[0].ToString());
+]]></code>
+This sample shows how to call ActAsync with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new MeasurementStateMachineClient(credential);
+
+var data = new {
+    actionName = "<actionName>",
+};
+
+var operation = await client.ActAsync(WaitUntil.Completed, "<measurementId>", "<id>", RequestContent.Create(data), "<operationId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("availableActionNames")[0].ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>StateMachineAction</c>:
+<code>{
+  actionName: string, # Required.
+}
+</code>
+
+Response Body:
+
+Schema for <c>StateMachine</c>:
+<code>{
+  id: string, # Required.
+  type: string, # Required.
+  availableActionNames: [string], # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="Act(WaitUntil,String,String,RequestContent,String,RequestContext)">
+<example>
+This sample shows how to call Act with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new MeasurementStateMachineClient(credential);
+
+var data = new {
+    actionName = "<actionName>",
+};
+
+var operation = client.Act(WaitUntil.Completed, "<measurementId>", "<id>", RequestContent.Create(data));
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("availableActionNames")[0].ToString());
+]]></code>
+This sample shows how to call Act with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new MeasurementStateMachineClient(credential);
+
+var data = new {
+    actionName = "<actionName>",
+};
+
+var operation = client.Act(WaitUntil.Completed, "<measurementId>", "<id>", RequestContent.Create(data), "<operationId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("availableActionNames")[0].ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>StateMachineAction</c>:
+<code>{
+  actionName: string, # Required.
+}
+</code>
+
+Response Body:
+
+Schema for <c>StateMachine</c>:
+<code>{
+  id: string, # Required.
+  type: string, # Required.
+  availableActionNames: [string], # Required.
+}
+</code>
+
+</remarks>
+    </member>
+  </members>
+</doc>

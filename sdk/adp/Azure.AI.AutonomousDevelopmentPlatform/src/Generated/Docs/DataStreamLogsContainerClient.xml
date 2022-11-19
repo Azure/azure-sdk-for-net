@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetWritableUriAsync(String,String,RequestContext)">
+<example>
+This sample shows how to call GetWritableUriAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataStreamLogsContainerClient(credential);
+
+Response response = await client.GetWritableUriAsync("<measurementId>", "<dataStreamId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("logFolderUri").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>DataStreamLogsContainerBase</c>:
+<code>{
+  logFolderUri: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetWritableUri(String,String,RequestContext)">
+<example>
+This sample shows how to call GetWritableUri with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataStreamLogsContainerClient(credential);
+
+Response response = client.GetWritableUri("<measurementId>", "<dataStreamId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("logFolderUri").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>DataStreamLogsContainerBase</c>:
+<code>{
+  logFolderUri: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+  </members>
+</doc>

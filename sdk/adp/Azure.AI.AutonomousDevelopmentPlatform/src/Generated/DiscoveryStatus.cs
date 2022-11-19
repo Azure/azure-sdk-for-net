@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace ADP.DataManagement.Ingestion.Discoveries
+namespace Adp
 {
     /// <summary> Known discovery statuses. </summary>
     public readonly partial struct DiscoveryStatus : IEquatable<DiscoveryStatus>

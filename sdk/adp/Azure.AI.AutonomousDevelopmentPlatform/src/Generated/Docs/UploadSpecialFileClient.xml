@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="ListAsync(String,RequestContext)">
+<example>
+This sample shows how to call ListAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new UploadSpecialFileClient(credential);
+
+await foreach (var data in client.ListAsync("<uploadId>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("clientFileName").ToString());
+    Console.WriteLine(result.GetProperty("fileUri").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  clientFileName: string, # Required.
+  fileUri: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="List(String,RequestContext)">
+<example>
+This sample shows how to call List with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new UploadSpecialFileClient(credential);
+
+foreach (var data in client.List("<uploadId>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("clientFileName").ToString());
+    Console.WriteLine(result.GetProperty("fileUri").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  clientFileName: string, # Required.
+  fileUri: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="ListWritableUrisAsync(String,RequestContext)">
+<example>
+This sample shows how to call ListWritableUrisAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new UploadSpecialFileClient(credential);
+
+await foreach (var data in client.ListWritableUrisAsync("<uploadId>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("clientFileName").ToString());
+    Console.WriteLine(result.GetProperty("fileUri").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  clientFileName: string, # Required.
+  fileUri: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="ListWritableUris(String,RequestContext)">
+<example>
+This sample shows how to call ListWritableUris with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new UploadSpecialFileClient(credential);
+
+foreach (var data in client.ListWritableUris("<uploadId>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("clientFileName").ToString());
+    Console.WriteLine(result.GetProperty("fileUri").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  clientFileName: string, # Required.
+  fileUri: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GenerateAsync(WaitUntil,String,String,RequestContext)">
+<example>
+This sample shows how to call GenerateAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new UploadSpecialFileClient(credential);
+
+var operation = await client.GenerateAsync(WaitUntil.Completed, "<uploadId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("clientFileName").ToString());
+Console.WriteLine(result.GetProperty("fileUri").ToString());
+]]></code>
+This sample shows how to call GenerateAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new UploadSpecialFileClient(credential);
+
+var operation = await client.GenerateAsync(WaitUntil.Completed, "<uploadId>", "<operationId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("clientFileName").ToString());
+Console.WriteLine(result.GetProperty("fileUri").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>UploadSpecialFile</c>:
+<code>{
+  clientFileName: string, # Required.
+  fileUri: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="Generate(WaitUntil,String,String,RequestContext)">
+<example>
+This sample shows how to call Generate with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new UploadSpecialFileClient(credential);
+
+var operation = client.Generate(WaitUntil.Completed, "<uploadId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("clientFileName").ToString());
+Console.WriteLine(result.GetProperty("fileUri").ToString());
+]]></code>
+This sample shows how to call Generate with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new UploadSpecialFileClient(credential);
+
+var operation = client.Generate(WaitUntil.Completed, "<uploadId>", "<operationId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("clientFileName").ToString());
+Console.WriteLine(result.GetProperty("fileUri").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>UploadSpecialFile</c>:
+<code>{
+  clientFileName: string, # Required.
+  fileUri: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+  </members>
+</doc>

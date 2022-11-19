@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetAsync(String,String,String,RequestContext)">
+<example>
+This sample shows how to call GetAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataStreamClassificationClient(credential);
+
+Response response = await client.GetAsync("<measurementId>", "<dataStreamId>", "<schemaName>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("schemaName").ToString());
+Console.WriteLine(result.GetProperty("classificationObject").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>DataStreamClassification</c>:
+<code>{
+  schemaName: string, # Required.
+  classificationObject: string, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="Get(String,String,String,RequestContext)">
+<example>
+This sample shows how to call Get with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataStreamClassificationClient(credential);
+
+Response response = client.Get("<measurementId>", "<dataStreamId>", "<schemaName>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("schemaName").ToString());
+Console.WriteLine(result.GetProperty("classificationObject").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>DataStreamClassification</c>:
+<code>{
+  schemaName: string, # Required.
+  classificationObject: string, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="ListAsync(String,String,RequestContext)">
+<example>
+This sample shows how to call ListAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataStreamClassificationClient(credential);
+
+await foreach (var data in client.ListAsync("<measurementId>", "<dataStreamId>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("schemaName").ToString());
+    Console.WriteLine(result.GetProperty("classificationObject").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  schemaName: string, # Required.
+  classificationObject: string, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="List(String,String,RequestContext)">
+<example>
+This sample shows how to call List with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataStreamClassificationClient(credential);
+
+foreach (var data in client.List("<measurementId>", "<dataStreamId>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("schemaName").ToString());
+    Console.WriteLine(result.GetProperty("classificationObject").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  schemaName: string, # Required.
+  classificationObject: string, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CreateAsync(WaitUntil,String,String,RequestContent,String,RequestContext)">
+<example>
+This sample shows how to call CreateAsync with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataStreamClassificationClient(credential);
+
+var data = new {
+    schemaName = "<schemaName>",
+    classificationObject = "<classificationObject>",
+};
+
+var operation = await client.CreateAsync(WaitUntil.Completed, "<measurementId>", "<dataStreamId>", RequestContent.Create(data));
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("schemaName").ToString());
+Console.WriteLine(result.GetProperty("classificationObject").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+This sample shows how to call CreateAsync with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataStreamClassificationClient(credential);
+
+var data = new {
+    schemaName = "<schemaName>",
+    classificationObject = "<classificationObject>",
+};
+
+var operation = await client.CreateAsync(WaitUntil.Completed, "<measurementId>", "<dataStreamId>", RequestContent.Create(data), "<operationId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("schemaName").ToString());
+Console.WriteLine(result.GetProperty("classificationObject").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>DataStreamClassificationCreationParameters</c>:
+<code>{
+  schemaName: string, # Required.
+  classificationObject: string, # Required.
+}
+</code>
+
+Response Body:
+
+Schema for <c>DataStreamClassification</c>:
+<code>{
+  schemaName: string, # Required.
+  classificationObject: string, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="Create(WaitUntil,String,String,RequestContent,String,RequestContext)">
+<example>
+This sample shows how to call Create with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataStreamClassificationClient(credential);
+
+var data = new {
+    schemaName = "<schemaName>",
+    classificationObject = "<classificationObject>",
+};
+
+var operation = client.Create(WaitUntil.Completed, "<measurementId>", "<dataStreamId>", RequestContent.Create(data));
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("schemaName").ToString());
+Console.WriteLine(result.GetProperty("classificationObject").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+This sample shows how to call Create with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataStreamClassificationClient(credential);
+
+var data = new {
+    schemaName = "<schemaName>",
+    classificationObject = "<classificationObject>",
+};
+
+var operation = client.Create(WaitUntil.Completed, "<measurementId>", "<dataStreamId>", RequestContent.Create(data), "<operationId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("schemaName").ToString());
+Console.WriteLine(result.GetProperty("classificationObject").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>DataStreamClassificationCreationParameters</c>:
+<code>{
+  schemaName: string, # Required.
+  classificationObject: string, # Required.
+}
+</code>
+
+Response Body:
+
+Schema for <c>DataStreamClassification</c>:
+<code>{
+  schemaName: string, # Required.
+  classificationObject: string, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="DeleteAsync(WaitUntil,String,String,String,String,RequestContext)">
+<example>
+This sample shows how to call DeleteAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataStreamClassificationClient(credential);
+
+var operation = await client.DeleteAsync(WaitUntil.Completed, "<measurementId>", "<dataStreamId>", "<schemaName>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("schemaName").ToString());
+Console.WriteLine(result.GetProperty("classificationObject").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+This sample shows how to call DeleteAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataStreamClassificationClient(credential);
+
+var operation = await client.DeleteAsync(WaitUntil.Completed, "<measurementId>", "<dataStreamId>", "<schemaName>", "<operationId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("schemaName").ToString());
+Console.WriteLine(result.GetProperty("classificationObject").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>DataStreamClassification</c>:
+<code>{
+  schemaName: string, # Required.
+  classificationObject: string, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="Delete(WaitUntil,String,String,String,String,RequestContext)">
+<example>
+This sample shows how to call Delete with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataStreamClassificationClient(credential);
+
+var operation = client.Delete(WaitUntil.Completed, "<measurementId>", "<dataStreamId>", "<schemaName>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("schemaName").ToString());
+Console.WriteLine(result.GetProperty("classificationObject").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+This sample shows how to call Delete with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataStreamClassificationClient(credential);
+
+var operation = client.Delete(WaitUntil.Completed, "<measurementId>", "<dataStreamId>", "<schemaName>", "<operationId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("schemaName").ToString());
+Console.WriteLine(result.GetProperty("classificationObject").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>DataStreamClassification</c>:
+<code>{
+  schemaName: string, # Required.
+  classificationObject: string, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+  </members>
+</doc>

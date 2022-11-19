@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="CreateAsync(String,String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call CreateAsync with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataStreamsStorageClient(credential);
+
+var data = new {
+    type = "<type>",
+};
+
+Response response = await client.CreateAsync("<measurementId>", "<dataStreamId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("manifestUri").ToString());
+Console.WriteLine(result.GetProperty("shards")[0].GetProperty("shardFolderUri").ToString());
+Console.WriteLine(result.GetProperty("shards")[0].GetProperty("manifestFileUri").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+This sample shows how to call CreateAsync with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataStreamsStorageClient(credential);
+
+var data = new {
+    type = "<type>",
+    rollingInformation = new {
+        strategy = "Time",
+        unit = "Seconds",
+        value = 1234,
+    },
+};
+
+Response response = await client.CreateAsync("<measurementId>", "<dataStreamId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("rollingInformation").GetProperty("strategy").ToString());
+Console.WriteLine(result.GetProperty("rollingInformation").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("rollingInformation").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("manifestUri").ToString());
+Console.WriteLine(result.GetProperty("dataFolderUri").ToString());
+Console.WriteLine(result.GetProperty("shards")[0].GetProperty("shardFolderUri").ToString());
+Console.WriteLine(result.GetProperty("shards")[0].GetProperty("manifestFileUri").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>StorageCreationParameters</c>:
+<code>{
+  type: string, # Required.
+  rollingInformation: {
+    strategy: &quot;Time&quot; | &quot;Size&quot;, # Required.
+    unit: &quot;Seconds&quot; | &quot;Minutes&quot; | &quot;kB&quot; | &quot;MB&quot; | &quot;GB&quot;, # Required.
+    value: number, # Required.
+  }, # Optional.
+}
+</code>
+
+Response Body:
+
+Schema for <c>Storage</c>:
+<code>{
+  id: string, # Required.
+  type: string, # Required.
+  rollingInformation: {
+    strategy: &quot;Time&quot; | &quot;Size&quot;, # Required.
+    unit: &quot;Seconds&quot; | &quot;Minutes&quot; | &quot;kB&quot; | &quot;MB&quot; | &quot;GB&quot;, # Required.
+    value: number, # Required.
+  }, # Optional.
+  manifestUri: string, # Required.
+  dataFolderUri: string, # Optional.
+  shards: [
+    {
+      shardFolderUri: string, # Required.
+      manifestFileUri: string, # Required.
+    }
+  ], # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="Create(String,String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call Create with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataStreamsStorageClient(credential);
+
+var data = new {
+    type = "<type>",
+};
+
+Response response = client.Create("<measurementId>", "<dataStreamId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("manifestUri").ToString());
+Console.WriteLine(result.GetProperty("shards")[0].GetProperty("shardFolderUri").ToString());
+Console.WriteLine(result.GetProperty("shards")[0].GetProperty("manifestFileUri").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+This sample shows how to call Create with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataStreamsStorageClient(credential);
+
+var data = new {
+    type = "<type>",
+    rollingInformation = new {
+        strategy = "Time",
+        unit = "Seconds",
+        value = 1234,
+    },
+};
+
+Response response = client.Create("<measurementId>", "<dataStreamId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("rollingInformation").GetProperty("strategy").ToString());
+Console.WriteLine(result.GetProperty("rollingInformation").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("rollingInformation").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("manifestUri").ToString());
+Console.WriteLine(result.GetProperty("dataFolderUri").ToString());
+Console.WriteLine(result.GetProperty("shards")[0].GetProperty("shardFolderUri").ToString());
+Console.WriteLine(result.GetProperty("shards")[0].GetProperty("manifestFileUri").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>StorageCreationParameters</c>:
+<code>{
+  type: string, # Required.
+  rollingInformation: {
+    strategy: &quot;Time&quot; | &quot;Size&quot;, # Required.
+    unit: &quot;Seconds&quot; | &quot;Minutes&quot; | &quot;kB&quot; | &quot;MB&quot; | &quot;GB&quot;, # Required.
+    value: number, # Required.
+  }, # Optional.
+}
+</code>
+
+Response Body:
+
+Schema for <c>Storage</c>:
+<code>{
+  id: string, # Required.
+  type: string, # Required.
+  rollingInformation: {
+    strategy: &quot;Time&quot; | &quot;Size&quot;, # Required.
+    unit: &quot;Seconds&quot; | &quot;Minutes&quot; | &quot;kB&quot; | &quot;MB&quot; | &quot;GB&quot;, # Required.
+    value: number, # Required.
+  }, # Optional.
+  manifestUri: string, # Required.
+  dataFolderUri: string, # Optional.
+  shards: [
+    {
+      shardFolderUri: string, # Required.
+      manifestFileUri: string, # Required.
+    }
+  ], # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetWritableUrisAsync(String,String,RequestContext)">
+<example>
+This sample shows how to call GetWritableUrisAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataStreamsStorageClient(credential);
+
+Response response = await client.GetWritableUrisAsync("<measurementId>", "<dataStreamId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("rollingInformation").GetProperty("strategy").ToString());
+Console.WriteLine(result.GetProperty("rollingInformation").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("rollingInformation").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("manifestUri").ToString());
+Console.WriteLine(result.GetProperty("dataFolderUri").ToString());
+Console.WriteLine(result.GetProperty("shards")[0].GetProperty("shardFolderUri").ToString());
+Console.WriteLine(result.GetProperty("shards")[0].GetProperty("manifestFileUri").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>StorageBase</c>:
+<code>{
+  type: string, # Required.
+  rollingInformation: {
+    strategy: &quot;Time&quot; | &quot;Size&quot;, # Required.
+    unit: &quot;Seconds&quot; | &quot;Minutes&quot; | &quot;kB&quot; | &quot;MB&quot; | &quot;GB&quot;, # Required.
+    value: number, # Required.
+  }, # Optional.
+  manifestUri: string, # Required.
+  dataFolderUri: string, # Optional.
+  shards: [
+    {
+      shardFolderUri: string, # Required.
+      manifestFileUri: string, # Required.
+    }
+  ], # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetWritableUris(String,String,RequestContext)">
+<example>
+This sample shows how to call GetWritableUris with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataStreamsStorageClient(credential);
+
+Response response = client.GetWritableUris("<measurementId>", "<dataStreamId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("rollingInformation").GetProperty("strategy").ToString());
+Console.WriteLine(result.GetProperty("rollingInformation").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("rollingInformation").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("manifestUri").ToString());
+Console.WriteLine(result.GetProperty("dataFolderUri").ToString());
+Console.WriteLine(result.GetProperty("shards")[0].GetProperty("shardFolderUri").ToString());
+Console.WriteLine(result.GetProperty("shards")[0].GetProperty("manifestFileUri").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>StorageBase</c>:
+<code>{
+  type: string, # Required.
+  rollingInformation: {
+    strategy: &quot;Time&quot; | &quot;Size&quot;, # Required.
+    unit: &quot;Seconds&quot; | &quot;Minutes&quot; | &quot;kB&quot; | &quot;MB&quot; | &quot;GB&quot;, # Required.
+    value: number, # Required.
+  }, # Optional.
+  manifestUri: string, # Required.
+  dataFolderUri: string, # Optional.
+  shards: [
+    {
+      shardFolderUri: string, # Required.
+      manifestFileUri: string, # Required.
+    }
+  ], # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+  </members>
+</doc>

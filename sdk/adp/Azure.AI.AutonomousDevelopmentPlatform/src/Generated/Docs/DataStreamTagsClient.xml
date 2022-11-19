@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetAsync(String,String,RequestContext)">
+<example>
+This sample shows how to call GetAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataStreamTagsClient(credential);
+
+Response response = await client.GetAsync("<measurementId>", "<dataStreamId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("tags")[0].GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("tags")[0].GetProperty("value").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>TagSet</c>:
+<code>{
+  id: string, # Required.
+  tags: [
+    {
+      key: string, # Required.
+      value: string, # Required.
+    }
+  ], # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="Get(String,String,RequestContext)">
+<example>
+This sample shows how to call Get with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataStreamTagsClient(credential);
+
+Response response = client.Get("<measurementId>", "<dataStreamId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("tags")[0].GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("tags")[0].GetProperty("value").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>TagSet</c>:
+<code>{
+  id: string, # Required.
+  tags: [
+    {
+      key: string, # Required.
+      value: string, # Required.
+    }
+  ], # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CreateAsync(String,String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call CreateAsync with required parameters and request content and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataStreamTagsClient(credential);
+
+var data = new {
+    tags = new[] {
+        new {
+            key = "<key>",
+            value = "<value>",
+        }
+    },
+};
+
+Response response = await client.CreateAsync("<measurementId>", "<dataStreamId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("tags")[0].GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("tags")[0].GetProperty("value").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>TagSetCreationParameters</c>:
+<code>{
+  tags: [
+    {
+      key: string, # Required.
+      value: string, # Required.
+    }
+  ], # Required.
+}
+</code>
+
+Response Body:
+
+Schema for <c>TagSet</c>:
+<code>{
+  id: string, # Required.
+  tags: [
+    {
+      key: string, # Required.
+      value: string, # Required.
+    }
+  ], # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="Create(String,String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call Create with required parameters and request content and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataStreamTagsClient(credential);
+
+var data = new {
+    tags = new[] {
+        new {
+            key = "<key>",
+            value = "<value>",
+        }
+    },
+};
+
+Response response = client.Create("<measurementId>", "<dataStreamId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("tags")[0].GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("tags")[0].GetProperty("value").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>TagSetCreationParameters</c>:
+<code>{
+  tags: [
+    {
+      key: string, # Required.
+      value: string, # Required.
+    }
+  ], # Required.
+}
+</code>
+
+Response Body:
+
+Schema for <c>TagSet</c>:
+<code>{
+  id: string, # Required.
+  tags: [
+    {
+      key: string, # Required.
+      value: string, # Required.
+    }
+  ], # Required.
+}
+</code>
+
+</remarks>
+    </member>
+  </members>
+</doc>
