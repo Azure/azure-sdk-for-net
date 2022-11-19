@@ -852,7 +852,7 @@ Schema for <c>ArtifactListResultValue</c>:
   id: string, # Optional. Artifact identifier
   name: string, # Optional. Artifact name
   isDirectory: boolean, # Optional. Whether artifact is a directory
-  downloadUri: string, # Optional. Uri where the file contents can be downloaded
+  downloadUri: Uri, # Optional. Uri where the file contents can be downloaded
   fileSize: number, # Optional. Size of file in bytes, if the artifact is a file
   createdTime: string (ISO 8601 Format), # Optional. Time the artifact was created
   lastModifiedTime: string (ISO 8601 Format), # Optional. Time the artifact was last modified
@@ -902,7 +902,7 @@ Schema for <c>ArtifactListResultValue</c>:
   id: string, # Optional. Artifact identifier
   name: string, # Optional. Artifact name
   isDirectory: boolean, # Optional. Whether artifact is a directory
-  downloadUri: string, # Optional. Uri where the file contents can be downloaded
+  downloadUri: Uri, # Optional. Uri where the file contents can be downloaded
   fileSize: number, # Optional. Size of file in bytes, if the artifact is a file
   createdTime: string (ISO 8601 Format), # Optional. Time the artifact was created
   lastModifiedTime: string (ISO 8601 Format), # Optional. Time the artifact was last modified
@@ -952,7 +952,7 @@ Schema for <c>ArtifactListResultValue</c>:
   id: string, # Optional. Artifact identifier
   name: string, # Optional. Artifact name
   isDirectory: boolean, # Optional. Whether artifact is a directory
-  downloadUri: string, # Optional. Uri where the file contents can be downloaded
+  downloadUri: Uri, # Optional. Uri where the file contents can be downloaded
   fileSize: number, # Optional. Size of file in bytes, if the artifact is a file
   createdTime: string (ISO 8601 Format), # Optional. Time the artifact was created
   lastModifiedTime: string (ISO 8601 Format), # Optional. Time the artifact was last modified
@@ -1002,7 +1002,7 @@ Schema for <c>ArtifactListResultValue</c>:
   id: string, # Optional. Artifact identifier
   name: string, # Optional. Artifact name
   isDirectory: boolean, # Optional. Whether artifact is a directory
-  downloadUri: string, # Optional. Uri where the file contents can be downloaded
+  downloadUri: Uri, # Optional. Uri where the file contents can be downloaded
   fileSize: number, # Optional. Size of file in bytes, if the artifact is a file
   createdTime: string (ISO 8601 Format), # Optional. Time the artifact was created
   lastModifiedTime: string (ISO 8601 Format), # Optional. Time the artifact was last modified

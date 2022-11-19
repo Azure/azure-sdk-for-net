@@ -1292,6 +1292,7 @@ namespace Azure.Data.Tables.Tests
             TableEntity entityResults;
             List<TableEntity> entitiesToCreate = CreateTableEntities(PartitionKeyValue, 1);
             entitiesToCreate[0].RowKey = string.Empty;
+            entitiesToCreate[0].PartitionKey = string.Empty;
 
             // Upsert the new entities.
 
@@ -1299,7 +1300,7 @@ namespace Azure.Data.Tables.Tests
 
             // Get the single entity by PartitionKey and RowKey.
 
-            entityResults = (await client.GetEntityAsync<TableEntity>(PartitionKeyValue, string.Empty).ConfigureAwait(false)).Value;
+            entityResults = (await client.GetEntityAsync<TableEntity>(string.Empty, string.Empty).ConfigureAwait(false)).Value;
 
             Assert.That(entityResults, Is.Not.Null, "The entity should not be null.");
         }

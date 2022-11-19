@@ -70,9 +70,3 @@ while (true)
     Console.WriteLine($"Brand: {receivedMessage.Subject}, Price: {receivedMessage.ApplicationProperties["Price"]}");
 }
 ```
-
-## Source
-
-To see the full example source, see:
-
-* [Sample12_ManagingRules.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample12_ManagingRules.cs)

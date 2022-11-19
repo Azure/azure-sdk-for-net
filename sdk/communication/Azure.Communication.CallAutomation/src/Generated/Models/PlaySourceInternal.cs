@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Communication.CallAutomation.Models;
+
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The PlaySource. </summary>
@@ -23,5 +25,7 @@ namespace Azure.Communication.CallAutomation
         public string PlaySourceId { get; set; }
         /// <summary> Defines the file source info to be used for play. </summary>
         public FileSourceInternal FileSource { get; set; }
+        /// <summary> Defines the text source info to be used for play. </summary>
+        public TextSourceInternal TextSource { get; set; }
     }
 }
