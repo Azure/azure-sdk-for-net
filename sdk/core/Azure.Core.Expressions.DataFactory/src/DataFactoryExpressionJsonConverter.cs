@@ -49,32 +49,49 @@ namespace Azure.Core.Expressions.DataFactory
 
         public override void Write(Utf8JsonWriter writer, object? value, JsonSerializerOptions options)
         {
-            if (value is null)
-                writer.WriteNullValue();
-            else if (value is DataFactoryExpression<string?> stringExpression)
-                Serialize(writer, stringExpression);
-            else if (value is DataFactoryExpression<int> intExpression)
-                Serialize(writer, intExpression);
-            else if (value is DataFactoryExpression<int?> nullableIntExpression)
-                Serialize(writer, nullableIntExpression);
-            else if (value is DataFactoryExpression<double> doubleExpression)
-                Serialize(writer, doubleExpression);
-            else if (value is DataFactoryExpression<double?> nullableDoubleExpression)
-                Serialize(writer, nullableDoubleExpression);
-            else if (value is DataFactoryExpression<Array?> arrayExpression)
-                Serialize(writer, arrayExpression);
-            else if (value is DataFactoryExpression<bool> boolExpression)
-                Serialize(writer, boolExpression);
-            else if (value is DataFactoryExpression<bool?> nullableBoolExpression)
-                Serialize(writer, nullableBoolExpression);
-            else if (TryGetGenericDataFactoryList(value.GetType(), out Type? genericListType))
+            switch (value)
             {
-                var methodInfo = GetGenericSerializationMethod(genericListType!, nameof(SerializeList));
-                    methodInfo!.Invoke(null, new object[] { writer, value });
-            }
-            else
-            {
-                throw new InvalidOperationException($"Unable to convert {value.GetType().Name} into a DataFactoryExpression<T>");
+                case null:
+                    writer.WriteNullValue();
+                    break;
+                case DataFactoryExpression<string?> stringExpression:
+                    Serialize(writer, stringExpression);
+                    break;
+                case DataFactoryExpression<int> intExpression:
+                    Serialize(writer, intExpression);
+                    break;
+                case DataFactoryExpression<int?> nullableIntExpression:
+                    Serialize(writer, nullableIntExpression);
+                    break;
+                case DataFactoryExpression<double> doubleExpression:
+                    Serialize(writer, doubleExpression);
+                    break;
+                case DataFactoryExpression<double?> nullableDoubleExpression:
+                    Serialize(writer, nullableDoubleExpression);
+                    break;
+                case DataFactoryExpression<Array?> arrayExpression:
+                    Serialize(writer, arrayExpression);
+                    break;
+                case DataFactoryExpression<bool> boolExpression:
+                    Serialize(writer, boolExpression);
+                    break;
+                case DataFactoryExpression<bool?> nullableBoolExpression:
+                    Serialize(writer, nullableBoolExpression);
+                    break;
+                default:
+                {
+                    if (TryGetGenericDataFactoryList(value.GetType(), out Type? genericListType))
+                    {
+                        var methodInfo = GetGenericSerializationMethod(genericListType!, nameof(SerializeList));
+                        methodInfo!.Invoke(null, new object[] { writer, value });
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException($"Unable to convert {value.GetType().Name} into a DataFactoryExpression<T>");
+                    }
+
+                    break;
+                }
             }
         }
 
@@ -89,12 +106,19 @@ namespace Azure.Core.Expressions.DataFactory
 
         private static bool TryGetGenericDataFactoryList(Type type, out Type? genericType)
         {
-            if (type.IsGenericType &&
-                type.GetGenericTypeDefinition() == typeof(DataFactoryExpression<>) &&
-                type.GenericTypeArguments[0].IsGenericType &&
-                IsGenericListType(type.GenericTypeArguments[0].GetGenericTypeDefinition()) &&
-                type.GenericTypeArguments[0].GenericTypeArguments[0].GetCustomAttributes()
-                    .Any(a => a.GetType() == typeof(JsonConverterAttribute)))
+            genericType = null;
+
+            if (!type.IsGenericType || type.GetGenericTypeDefinition() != typeof(DataFactoryExpression<>))
+                return false;
+
+            Type firstGeneric = type.GenericTypeArguments[0];
+
+            if (!firstGeneric.IsGenericType || !IsGenericListType(type.GenericTypeArguments[0].GetGenericTypeDefinition()))
+                return false;
+
+            Type secondGeneric = type.GenericTypeArguments[0].GenericTypeArguments[0];
+
+            if (secondGeneric.GetCustomAttributes().Any(a => a.GetType() == typeof(JsonConverterAttribute)))
             {
                 genericType = type;
                 return true;
@@ -120,13 +144,14 @@ namespace Azure.Core.Expressions.DataFactory
 
         private static void SerializeList<T>(Utf8JsonWriter writer, DataFactoryExpression<IList<T?>> expression)
         {
-            if (expression.HasLiteral && expression.Literal == null)
-            {
-                writer.WriteNullValue();
-                return;
-            }
             if (expression.HasLiteral)
             {
+                if (expression.Literal == null)
+                {
+                    writer.WriteNullValue();
+                    return;
+                }
+
                 writer.WriteStartArray();
                 foreach (T? elem in expression.Literal!)
                 {
@@ -179,6 +204,10 @@ namespace Azure.Core.Expressions.DataFactory
             {
                 return null;
             }
+
+            // TODO - The current assumption is that if we have a JSON object, then the value must be an expression.
+            // This may not always be true in the future, in which case we would need to check the payload to see if it is
+            // an expression or a literal.
 
             if (element.ValueKind == JsonValueKind.Object)
             {
