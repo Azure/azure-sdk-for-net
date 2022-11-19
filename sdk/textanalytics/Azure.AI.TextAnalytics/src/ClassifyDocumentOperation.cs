@@ -297,5 +297,10 @@ namespace Azure.AI.TextAnalytics
 
             return OperationState<AsyncPageable<ClassifyDocumentResultCollection>>.Failure(rawResponse, requestFailedException);
         }
+
+        /// <summary>
+        /// To get the Id of the operation.
+        /// </summary>
+        public string GetOperationId() => Id;
     }
 }

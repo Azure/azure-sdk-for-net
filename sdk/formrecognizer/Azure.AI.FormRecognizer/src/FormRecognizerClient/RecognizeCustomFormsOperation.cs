@@ -234,5 +234,10 @@ namespace Azure.AI.FormRecognizer.Models
             }
             return new RecognizedFormCollection(forms);
         }
+
+        /// <summary>
+        /// To get the Id of the operation.
+        /// </summary>
+        public string GetOperationId() => Id;
     }
 }

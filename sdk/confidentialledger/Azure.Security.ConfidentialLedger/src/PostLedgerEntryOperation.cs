@@ -88,5 +88,10 @@ namespace Azure.Security.ConfidentialLedger
 
         /// <inheritdoc />
         public override bool HasCompleted => _operationInternal.HasCompleted;
+
+        /// <summary>
+        /// To get the Id of the operation.
+        /// </summary>
+        public string GetOperationId() => Id;
     }
 }

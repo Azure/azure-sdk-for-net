@@ -206,5 +206,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             return OperationState<AnalyzeResult>.Pending(rawResponse);
         }
+
+        /// <summary>
+        /// To get the Id of the operation.
+        /// </summary>
+        public string GetOperationId() => Id;
     }
 }

@@ -215,5 +215,10 @@ namespace Azure.AI.FormRecognizer.Training
                 result.CreatedDateTime,
                 result.LastUpdatedDateTime);
         }
+
+        /// <summary>
+        /// To get the Id of the operation.
+        /// </summary>
+        public string GetOperationId() => Id;
     }
 }

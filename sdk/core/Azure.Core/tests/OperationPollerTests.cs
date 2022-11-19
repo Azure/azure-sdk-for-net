@@ -65,6 +65,8 @@ namespace Azure.Core.Tests.DelayStrategies
         private class EndlessOperation : IOperation
         {
             public ValueTask<OperationState> UpdateStateAsync(bool async, CancellationToken cancellationToken) => new(OperationState.Pending(new MockResponse(200)));
+
+            public string GetOperationId() => "testId";
         }
 
         private class TestDelayStrategy : DelayStrategy

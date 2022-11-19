@@ -172,5 +172,10 @@ namespace Azure.AI.FormRecognizer.Models
 
             return OperationState<RecognizedFormCollection>.Pending(rawResponse);
         }
+
+        /// <summary>
+        /// To get the Id of the operation.
+        /// </summary>
+        public string GetOperationId() => Id;
     }
 }

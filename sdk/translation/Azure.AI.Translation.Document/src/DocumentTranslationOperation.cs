@@ -477,5 +477,10 @@ namespace Azure.AI.Translation.Document
                 return null;
             return new Dictionary<string, string>(1) { { "AdditionalInformation", error.ToString() } };
         }
+
+        /// <summary>
+        /// To get the Id of the operation.
+        /// </summary>
+        public string GetOperationId() => Id;
     }
 }
