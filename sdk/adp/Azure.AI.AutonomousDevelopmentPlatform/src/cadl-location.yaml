@@ -3,3 +3,4 @@ additionalDirectories:
   - specification/adp/Adp.Shared
 commit: 0a40c2068a51ac6935df60f252908a47845d4cc7
 repo: Azure/azure-rest-api-specs-pr
+cleanup: false
