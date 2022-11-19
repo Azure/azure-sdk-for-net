@@ -124,7 +124,6 @@ namespace Azure.Core.Expressions.DataFactory
                 return true;
             }
 
-            genericType = null;
             return false;
         }
 
