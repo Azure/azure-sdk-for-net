@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
-    internal class PrivateEndpointConnectionResourceOperationSource : IOperationSource<PrivateEndpointConnectionResource>
+    internal class PrivateEndpointConnectionResourceOperationSource : Core.IOperationSource<PrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             _client = client;
         }
 
-        PrivateEndpointConnectionResource IOperationSource<PrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        PrivateEndpointConnectionResource Core.IOperationSource<PrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = PrivateEndpointConnectionResourceData.DeserializePrivateEndpointConnectionResourceData(document.RootElement);
             return new PrivateEndpointConnectionResource(_client, data);
         }
 
-        async ValueTask<PrivateEndpointConnectionResource> IOperationSource<PrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PrivateEndpointConnectionResource> Core.IOperationSource<PrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = PrivateEndpointConnectionResourceData.DeserializePrivateEndpointConnectionResourceData(document.RootElement);

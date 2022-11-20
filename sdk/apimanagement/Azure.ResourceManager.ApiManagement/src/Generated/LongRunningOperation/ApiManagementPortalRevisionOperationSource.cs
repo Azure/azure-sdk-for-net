@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    internal class ApiManagementPortalRevisionOperationSource : IOperationSource<ApiManagementPortalRevisionResource>
+    internal class ApiManagementPortalRevisionOperationSource : Core.IOperationSource<ApiManagementPortalRevisionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ApiManagement
             _client = client;
         }
 
-        ApiManagementPortalRevisionResource IOperationSource<ApiManagementPortalRevisionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ApiManagementPortalRevisionResource Core.IOperationSource<ApiManagementPortalRevisionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ApiManagementPortalRevisionData.DeserializeApiManagementPortalRevisionData(document.RootElement);
             return new ApiManagementPortalRevisionResource(_client, data);
         }
 
-        async ValueTask<ApiManagementPortalRevisionResource> IOperationSource<ApiManagementPortalRevisionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ApiManagementPortalRevisionResource> Core.IOperationSource<ApiManagementPortalRevisionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ApiManagementPortalRevisionData.DeserializeApiManagementPortalRevisionData(document.RootElement);

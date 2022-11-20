@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SignalR
 {
-    internal class SignalROperationSource : IOperationSource<SignalRResource>
+    internal class SignalROperationSource : Core.IOperationSource<SignalRResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.SignalR
             _client = client;
         }
 
-        SignalRResource IOperationSource<SignalRResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SignalRResource Core.IOperationSource<SignalRResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SignalRData.DeserializeSignalRData(document.RootElement);
             return new SignalRResource(_client, data);
         }
 
-        async ValueTask<SignalRResource> IOperationSource<SignalRResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SignalRResource> Core.IOperationSource<SignalRResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SignalRData.DeserializeSignalRData(document.RootElement);

@@ -15,7 +15,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Cdn
 {
-    internal class CdnCustomDomainOperationSource : IOperationSource<CdnCustomDomainResource>
+    internal class CdnCustomDomainOperationSource : Core.IOperationSource<CdnCustomDomainResource>
     {
         private readonly ArmClient _client;
         private readonly Dictionary<string, string> _idMappings = new Dictionary<string, string>()
@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.Cdn
             _client = client;
         }
 
-        CdnCustomDomainResource IOperationSource<CdnCustomDomainResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        CdnCustomDomainResource Core.IOperationSource<CdnCustomDomainResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ScrubId(CdnCustomDomainData.DeserializeCdnCustomDomainData(document.RootElement));
             return new CdnCustomDomainResource(_client, data);
         }
 
-        async ValueTask<CdnCustomDomainResource> IOperationSource<CdnCustomDomainResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CdnCustomDomainResource> Core.IOperationSource<CdnCustomDomainResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ScrubId(CdnCustomDomainData.DeserializeCdnCustomDomainData(document.RootElement));

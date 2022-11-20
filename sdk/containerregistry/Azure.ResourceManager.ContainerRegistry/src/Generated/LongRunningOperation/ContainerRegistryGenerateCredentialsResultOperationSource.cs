@@ -14,15 +14,15 @@ using Azure.ResourceManager.ContainerRegistry.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
-    internal class ContainerRegistryGenerateCredentialsResultOperationSource : IOperationSource<ContainerRegistryGenerateCredentialsResult>
+    internal class ContainerRegistryGenerateCredentialsResultOperationSource : Core.IOperationSource<ContainerRegistryGenerateCredentialsResult>
     {
-        ContainerRegistryGenerateCredentialsResult IOperationSource<ContainerRegistryGenerateCredentialsResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        ContainerRegistryGenerateCredentialsResult Core.IOperationSource<ContainerRegistryGenerateCredentialsResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return ContainerRegistryGenerateCredentialsResult.DeserializeContainerRegistryGenerateCredentialsResult(document.RootElement);
         }
 
-        async ValueTask<ContainerRegistryGenerateCredentialsResult> IOperationSource<ContainerRegistryGenerateCredentialsResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ContainerRegistryGenerateCredentialsResult> Core.IOperationSource<ContainerRegistryGenerateCredentialsResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return ContainerRegistryGenerateCredentialsResult.DeserializeContainerRegistryGenerateCredentialsResult(document.RootElement);

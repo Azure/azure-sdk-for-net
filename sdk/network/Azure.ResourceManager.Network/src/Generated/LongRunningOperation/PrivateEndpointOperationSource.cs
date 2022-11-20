@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class PrivateEndpointOperationSource : IOperationSource<PrivateEndpointResource>
+    internal class PrivateEndpointOperationSource : Core.IOperationSource<PrivateEndpointResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        PrivateEndpointResource IOperationSource<PrivateEndpointResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        PrivateEndpointResource Core.IOperationSource<PrivateEndpointResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = PrivateEndpointData.DeserializePrivateEndpointData(document.RootElement);
             return new PrivateEndpointResource(_client, data);
         }
 
-        async ValueTask<PrivateEndpointResource> IOperationSource<PrivateEndpointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PrivateEndpointResource> Core.IOperationSource<PrivateEndpointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = PrivateEndpointData.DeserializePrivateEndpointData(document.RootElement);

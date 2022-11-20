@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.FrontDoor
 {
-    internal class FrontDoorWebApplicationFirewallPolicyOperationSource : IOperationSource<FrontDoorWebApplicationFirewallPolicyResource>
+    internal class FrontDoorWebApplicationFirewallPolicyOperationSource : Core.IOperationSource<FrontDoorWebApplicationFirewallPolicyResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.FrontDoor
             _client = client;
         }
 
-        FrontDoorWebApplicationFirewallPolicyResource IOperationSource<FrontDoorWebApplicationFirewallPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        FrontDoorWebApplicationFirewallPolicyResource Core.IOperationSource<FrontDoorWebApplicationFirewallPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = FrontDoorWebApplicationFirewallPolicyData.DeserializeFrontDoorWebApplicationFirewallPolicyData(document.RootElement);
             return new FrontDoorWebApplicationFirewallPolicyResource(_client, data);
         }
 
-        async ValueTask<FrontDoorWebApplicationFirewallPolicyResource> IOperationSource<FrontDoorWebApplicationFirewallPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<FrontDoorWebApplicationFirewallPolicyResource> Core.IOperationSource<FrontDoorWebApplicationFirewallPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = FrontDoorWebApplicationFirewallPolicyData.DeserializeFrontDoorWebApplicationFirewallPolicyData(document.RootElement);

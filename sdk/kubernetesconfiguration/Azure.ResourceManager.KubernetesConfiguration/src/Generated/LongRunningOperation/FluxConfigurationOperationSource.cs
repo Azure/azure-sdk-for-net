@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.KubernetesConfiguration
 {
-    internal class FluxConfigurationOperationSource : IOperationSource<FluxConfigurationResource>
+    internal class FluxConfigurationOperationSource : Core.IOperationSource<FluxConfigurationResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             _client = client;
         }
 
-        FluxConfigurationResource IOperationSource<FluxConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        FluxConfigurationResource Core.IOperationSource<FluxConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = FluxConfigurationData.DeserializeFluxConfigurationData(document.RootElement);
             return new FluxConfigurationResource(_client, data);
         }
 
-        async ValueTask<FluxConfigurationResource> IOperationSource<FluxConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<FluxConfigurationResource> Core.IOperationSource<FluxConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = FluxConfigurationData.DeserializeFluxConfigurationData(document.RootElement);

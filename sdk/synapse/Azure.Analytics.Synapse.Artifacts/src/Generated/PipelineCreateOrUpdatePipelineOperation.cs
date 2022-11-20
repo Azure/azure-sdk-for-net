@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Analytics.Synapse.Artifacts
 {
     /// <summary> Creates or updates a pipeline. </summary>
-    public partial class PipelineCreateOrUpdatePipelineOperation : Operation<PipelineResource>, IOperationSource<PipelineResource>
+    public partial class PipelineCreateOrUpdatePipelineOperation : Operation<PipelineResource>, Core.IOperationSource<PipelineResource>
     {
         private readonly OperationInternal<PipelineResource> _operation;
 
@@ -67,13 +67,13 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <inheritdoc />
         public override ValueTask<Response<PipelineResource>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        PipelineResource IOperationSource<PipelineResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        PipelineResource Core.IOperationSource<PipelineResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return PipelineResource.DeserializePipelineResource(document.RootElement);
         }
 
-        async ValueTask<PipelineResource> IOperationSource<PipelineResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PipelineResource> Core.IOperationSource<PipelineResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return PipelineResource.DeserializePipelineResource(document.RootElement);

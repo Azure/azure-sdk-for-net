@@ -14,15 +14,15 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class InboundSecurityRuleOperationSource : IOperationSource<InboundSecurityRule>
+    internal class InboundSecurityRuleOperationSource : Core.IOperationSource<InboundSecurityRule>
     {
-        InboundSecurityRule IOperationSource<InboundSecurityRule>.CreateResult(Response response, CancellationToken cancellationToken)
+        InboundSecurityRule Core.IOperationSource<InboundSecurityRule>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return InboundSecurityRule.DeserializeInboundSecurityRule(document.RootElement);
         }
 
-        async ValueTask<InboundSecurityRule> IOperationSource<InboundSecurityRule>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<InboundSecurityRule> Core.IOperationSource<InboundSecurityRule>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return InboundSecurityRule.DeserializeInboundSecurityRule(document.RootElement);

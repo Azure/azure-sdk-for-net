@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    internal class EventGridTopicPrivateEndpointConnectionOperationSource : IOperationSource<EventGridTopicPrivateEndpointConnectionResource>
+    internal class EventGridTopicPrivateEndpointConnectionOperationSource : Core.IOperationSource<EventGridTopicPrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.EventGrid
             _client = client;
         }
 
-        EventGridTopicPrivateEndpointConnectionResource IOperationSource<EventGridTopicPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        EventGridTopicPrivateEndpointConnectionResource Core.IOperationSource<EventGridTopicPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = EventGridPrivateEndpointConnectionData.DeserializeEventGridPrivateEndpointConnectionData(document.RootElement);
             return new EventGridTopicPrivateEndpointConnectionResource(_client, data);
         }
 
-        async ValueTask<EventGridTopicPrivateEndpointConnectionResource> IOperationSource<EventGridTopicPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<EventGridTopicPrivateEndpointConnectionResource> Core.IOperationSource<EventGridTopicPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = EventGridPrivateEndpointConnectionData.DeserializeEventGridPrivateEndpointConnectionData(document.RootElement);

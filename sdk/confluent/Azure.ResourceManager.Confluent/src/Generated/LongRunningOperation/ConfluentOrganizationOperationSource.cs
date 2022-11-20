@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Confluent
 {
-    internal class ConfluentOrganizationOperationSource : IOperationSource<ConfluentOrganizationResource>
+    internal class ConfluentOrganizationOperationSource : Core.IOperationSource<ConfluentOrganizationResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Confluent
             _client = client;
         }
 
-        ConfluentOrganizationResource IOperationSource<ConfluentOrganizationResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ConfluentOrganizationResource Core.IOperationSource<ConfluentOrganizationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ConfluentOrganizationData.DeserializeConfluentOrganizationData(document.RootElement);
             return new ConfluentOrganizationResource(_client, data);
         }
 
-        async ValueTask<ConfluentOrganizationResource> IOperationSource<ConfluentOrganizationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ConfluentOrganizationResource> Core.IOperationSource<ConfluentOrganizationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ConfluentOrganizationData.DeserializeConfluentOrganizationData(document.RootElement);

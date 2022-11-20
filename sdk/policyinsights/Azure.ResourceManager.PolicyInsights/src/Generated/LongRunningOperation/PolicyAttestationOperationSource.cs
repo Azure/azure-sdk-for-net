@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.PolicyInsights
 {
-    internal class PolicyAttestationOperationSource : IOperationSource<PolicyAttestationResource>
+    internal class PolicyAttestationOperationSource : Core.IOperationSource<PolicyAttestationResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.PolicyInsights
             _client = client;
         }
 
-        PolicyAttestationResource IOperationSource<PolicyAttestationResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        PolicyAttestationResource Core.IOperationSource<PolicyAttestationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = PolicyAttestationData.DeserializePolicyAttestationData(document.RootElement);
             return new PolicyAttestationResource(_client, data);
         }
 
-        async ValueTask<PolicyAttestationResource> IOperationSource<PolicyAttestationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PolicyAttestationResource> Core.IOperationSource<PolicyAttestationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = PolicyAttestationData.DeserializePolicyAttestationData(document.RootElement);

@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Analytics.Synapse.Artifacts
 {
     /// <summary> Creates or updates a KQL Script. </summary>
-    public partial class KqlScriptCreateOrUpdateOperation : Operation<KqlScriptResource>, IOperationSource<KqlScriptResource>
+    public partial class KqlScriptCreateOrUpdateOperation : Operation<KqlScriptResource>, Core.IOperationSource<KqlScriptResource>
     {
         private readonly OperationInternal<KqlScriptResource> _operation;
 
@@ -67,13 +67,13 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <inheritdoc />
         public override ValueTask<Response<KqlScriptResource>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        KqlScriptResource IOperationSource<KqlScriptResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        KqlScriptResource Core.IOperationSource<KqlScriptResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return KqlScriptResource.DeserializeKqlScriptResource(document.RootElement);
         }
 
-        async ValueTask<KqlScriptResource> IOperationSource<KqlScriptResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<KqlScriptResource> Core.IOperationSource<KqlScriptResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return KqlScriptResource.DeserializeKqlScriptResource(document.RootElement);

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HybridData
 {
-    internal class HybridDataJobDefinitionOperationSource : IOperationSource<HybridDataJobDefinitionResource>
+    internal class HybridDataJobDefinitionOperationSource : Core.IOperationSource<HybridDataJobDefinitionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.HybridData
             _client = client;
         }
 
-        HybridDataJobDefinitionResource IOperationSource<HybridDataJobDefinitionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        HybridDataJobDefinitionResource Core.IOperationSource<HybridDataJobDefinitionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = HybridDataJobDefinitionData.DeserializeHybridDataJobDefinitionData(document.RootElement);
             return new HybridDataJobDefinitionResource(_client, data);
         }
 
-        async ValueTask<HybridDataJobDefinitionResource> IOperationSource<HybridDataJobDefinitionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<HybridDataJobDefinitionResource> Core.IOperationSource<HybridDataJobDefinitionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = HybridDataJobDefinitionData.DeserializeHybridDataJobDefinitionData(document.RootElement);

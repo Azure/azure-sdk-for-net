@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DeviceUpdate
 {
-    internal class DeviceUpdatePrivateEndpointConnectionOperationSource : IOperationSource<DeviceUpdatePrivateEndpointConnectionResource>
+    internal class DeviceUpdatePrivateEndpointConnectionOperationSource : Core.IOperationSource<DeviceUpdatePrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.DeviceUpdate
             _client = client;
         }
 
-        DeviceUpdatePrivateEndpointConnectionResource IOperationSource<DeviceUpdatePrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DeviceUpdatePrivateEndpointConnectionResource Core.IOperationSource<DeviceUpdatePrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DeviceUpdatePrivateEndpointConnectionData.DeserializeDeviceUpdatePrivateEndpointConnectionData(document.RootElement);
             return new DeviceUpdatePrivateEndpointConnectionResource(_client, data);
         }
 
-        async ValueTask<DeviceUpdatePrivateEndpointConnectionResource> IOperationSource<DeviceUpdatePrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DeviceUpdatePrivateEndpointConnectionResource> Core.IOperationSource<DeviceUpdatePrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DeviceUpdatePrivateEndpointConnectionData.DeserializeDeviceUpdatePrivateEndpointConnectionData(document.RootElement);

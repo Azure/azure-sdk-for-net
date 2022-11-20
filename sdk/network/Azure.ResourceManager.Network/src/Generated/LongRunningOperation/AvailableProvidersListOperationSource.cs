@@ -14,15 +14,15 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class AvailableProvidersListOperationSource : IOperationSource<AvailableProvidersList>
+    internal class AvailableProvidersListOperationSource : Core.IOperationSource<AvailableProvidersList>
     {
-        AvailableProvidersList IOperationSource<AvailableProvidersList>.CreateResult(Response response, CancellationToken cancellationToken)
+        AvailableProvidersList Core.IOperationSource<AvailableProvidersList>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return AvailableProvidersList.DeserializeAvailableProvidersList(document.RootElement);
         }
 
-        async ValueTask<AvailableProvidersList> IOperationSource<AvailableProvidersList>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<AvailableProvidersList> Core.IOperationSource<AvailableProvidersList>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return AvailableProvidersList.DeserializeAvailableProvidersList(document.RootElement);

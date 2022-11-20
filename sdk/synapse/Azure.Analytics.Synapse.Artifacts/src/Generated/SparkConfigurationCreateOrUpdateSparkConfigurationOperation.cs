@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Analytics.Synapse.Artifacts
 {
     /// <summary> Creates or updates a sparkconfiguration. </summary>
-    public partial class SparkConfigurationCreateOrUpdateSparkConfigurationOperation : Operation<SparkConfigurationResource>, IOperationSource<SparkConfigurationResource>
+    public partial class SparkConfigurationCreateOrUpdateSparkConfigurationOperation : Operation<SparkConfigurationResource>, Core.IOperationSource<SparkConfigurationResource>
     {
         private readonly OperationInternal<SparkConfigurationResource> _operation;
 
@@ -67,13 +67,13 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <inheritdoc />
         public override ValueTask<Response<SparkConfigurationResource>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        SparkConfigurationResource IOperationSource<SparkConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SparkConfigurationResource Core.IOperationSource<SparkConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return SparkConfigurationResource.DeserializeSparkConfigurationResource(document.RootElement);
         }
 
-        async ValueTask<SparkConfigurationResource> IOperationSource<SparkConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SparkConfigurationResource> Core.IOperationSource<SparkConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return SparkConfigurationResource.DeserializeSparkConfigurationResource(document.RootElement);

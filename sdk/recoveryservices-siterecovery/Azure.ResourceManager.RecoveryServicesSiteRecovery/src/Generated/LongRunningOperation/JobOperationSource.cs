@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
-    internal class JobOperationSource : IOperationSource<JobResource>
+    internal class JobOperationSource : Core.IOperationSource<JobResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             _client = client;
         }
 
-        JobResource IOperationSource<JobResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        JobResource Core.IOperationSource<JobResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = JobData.DeserializeJobData(document.RootElement);
             return new JobResource(_client, data);
         }
 
-        async ValueTask<JobResource> IOperationSource<JobResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<JobResource> Core.IOperationSource<JobResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = JobData.DeserializeJobData(document.RootElement);

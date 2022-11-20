@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HybridContainerService
 {
-    internal class ProvisionedClusterOperationSource : IOperationSource<ProvisionedClusterResource>
+    internal class ProvisionedClusterOperationSource : Core.IOperationSource<ProvisionedClusterResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.HybridContainerService
             _client = client;
         }
 
-        ProvisionedClusterResource IOperationSource<ProvisionedClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ProvisionedClusterResource Core.IOperationSource<ProvisionedClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ProvisionedClusterData.DeserializeProvisionedClusterData(document.RootElement);
             return new ProvisionedClusterResource(_client, data);
         }
 
-        async ValueTask<ProvisionedClusterResource> IOperationSource<ProvisionedClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ProvisionedClusterResource> Core.IOperationSource<ProvisionedClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ProvisionedClusterData.DeserializeProvisionedClusterData(document.RootElement);

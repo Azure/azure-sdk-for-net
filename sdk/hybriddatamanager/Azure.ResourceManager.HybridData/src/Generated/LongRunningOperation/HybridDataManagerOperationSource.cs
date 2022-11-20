@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HybridData
 {
-    internal class HybridDataManagerOperationSource : IOperationSource<HybridDataManagerResource>
+    internal class HybridDataManagerOperationSource : Core.IOperationSource<HybridDataManagerResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.HybridData
             _client = client;
         }
 
-        HybridDataManagerResource IOperationSource<HybridDataManagerResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        HybridDataManagerResource Core.IOperationSource<HybridDataManagerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = HybridDataManagerData.DeserializeHybridDataManagerData(document.RootElement);
             return new HybridDataManagerResource(_client, data);
         }
 
-        async ValueTask<HybridDataManagerResource> IOperationSource<HybridDataManagerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<HybridDataManagerResource> Core.IOperationSource<HybridDataManagerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = HybridDataManagerData.DeserializeHybridDataManagerData(document.RootElement);

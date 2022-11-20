@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class BackendAddressPoolOperationSource : IOperationSource<BackendAddressPoolResource>
+    internal class BackendAddressPoolOperationSource : Core.IOperationSource<BackendAddressPoolResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        BackendAddressPoolResource IOperationSource<BackendAddressPoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        BackendAddressPoolResource Core.IOperationSource<BackendAddressPoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = BackendAddressPoolData.DeserializeBackendAddressPoolData(document.RootElement);
             return new BackendAddressPoolResource(_client, data);
         }
 
-        async ValueTask<BackendAddressPoolResource> IOperationSource<BackendAddressPoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<BackendAddressPoolResource> Core.IOperationSource<BackendAddressPoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = BackendAddressPoolData.DeserializeBackendAddressPoolData(document.RootElement);

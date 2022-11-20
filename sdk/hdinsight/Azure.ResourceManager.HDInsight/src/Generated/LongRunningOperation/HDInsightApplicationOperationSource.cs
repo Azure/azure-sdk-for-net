@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HDInsight
 {
-    internal class HDInsightApplicationOperationSource : IOperationSource<HDInsightApplicationResource>
+    internal class HDInsightApplicationOperationSource : Core.IOperationSource<HDInsightApplicationResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.HDInsight
             _client = client;
         }
 
-        HDInsightApplicationResource IOperationSource<HDInsightApplicationResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        HDInsightApplicationResource Core.IOperationSource<HDInsightApplicationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = HDInsightApplicationData.DeserializeHDInsightApplicationData(document.RootElement);
             return new HDInsightApplicationResource(_client, data);
         }
 
-        async ValueTask<HDInsightApplicationResource> IOperationSource<HDInsightApplicationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<HDInsightApplicationResource> Core.IOperationSource<HDInsightApplicationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = HDInsightApplicationData.DeserializeHDInsightApplicationData(document.RootElement);

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RedisEnterprise
 {
-    internal class RedisEnterprisePrivateEndpointConnectionOperationSource : IOperationSource<RedisEnterprisePrivateEndpointConnectionResource>
+    internal class RedisEnterprisePrivateEndpointConnectionOperationSource : Core.IOperationSource<RedisEnterprisePrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.RedisEnterprise
             _client = client;
         }
 
-        RedisEnterprisePrivateEndpointConnectionResource IOperationSource<RedisEnterprisePrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        RedisEnterprisePrivateEndpointConnectionResource Core.IOperationSource<RedisEnterprisePrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = RedisEnterprisePrivateEndpointConnectionData.DeserializeRedisEnterprisePrivateEndpointConnectionData(document.RootElement);
             return new RedisEnterprisePrivateEndpointConnectionResource(_client, data);
         }
 
-        async ValueTask<RedisEnterprisePrivateEndpointConnectionResource> IOperationSource<RedisEnterprisePrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<RedisEnterprisePrivateEndpointConnectionResource> Core.IOperationSource<RedisEnterprisePrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = RedisEnterprisePrivateEndpointConnectionData.DeserializeRedisEnterprisePrivateEndpointConnectionData(document.RootElement);

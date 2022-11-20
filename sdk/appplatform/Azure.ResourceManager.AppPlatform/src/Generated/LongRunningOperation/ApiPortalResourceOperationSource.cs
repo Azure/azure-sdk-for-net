@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppPlatform
 {
-    internal class ApiPortalResourceOperationSource : IOperationSource<ApiPortalResource>
+    internal class ApiPortalResourceOperationSource : Core.IOperationSource<ApiPortalResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.AppPlatform
             _client = client;
         }
 
-        ApiPortalResource IOperationSource<ApiPortalResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ApiPortalResource Core.IOperationSource<ApiPortalResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ApiPortalResourceData.DeserializeApiPortalResourceData(document.RootElement);
             return new ApiPortalResource(_client, data);
         }
 
-        async ValueTask<ApiPortalResource> IOperationSource<ApiPortalResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ApiPortalResource> Core.IOperationSource<ApiPortalResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ApiPortalResourceData.DeserializeApiPortalResourceData(document.RootElement);

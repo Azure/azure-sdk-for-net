@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
-    internal class FabricOperationSource : IOperationSource<FabricResource>
+    internal class FabricOperationSource : Core.IOperationSource<FabricResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             _client = client;
         }
 
-        FabricResource IOperationSource<FabricResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        FabricResource Core.IOperationSource<FabricResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = FabricData.DeserializeFabricData(document.RootElement);
             return new FabricResource(_client, data);
         }
 
-        async ValueTask<FabricResource> IOperationSource<FabricResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<FabricResource> Core.IOperationSource<FabricResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = FabricData.DeserializeFabricData(document.RootElement);

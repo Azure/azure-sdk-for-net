@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class HubIPConfigurationOperationSource : IOperationSource<HubIPConfigurationResource>
+    internal class HubIPConfigurationOperationSource : Core.IOperationSource<HubIPConfigurationResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        HubIPConfigurationResource IOperationSource<HubIPConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        HubIPConfigurationResource Core.IOperationSource<HubIPConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = HubIPConfigurationData.DeserializeHubIPConfigurationData(document.RootElement);
             return new HubIPConfigurationResource(_client, data);
         }
 
-        async ValueTask<HubIPConfigurationResource> IOperationSource<HubIPConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<HubIPConfigurationResource> Core.IOperationSource<HubIPConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = HubIPConfigurationData.DeserializeHubIPConfigurationData(document.RootElement);

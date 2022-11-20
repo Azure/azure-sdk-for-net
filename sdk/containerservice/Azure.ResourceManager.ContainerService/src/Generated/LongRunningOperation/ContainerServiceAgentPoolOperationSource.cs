@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    internal class ContainerServiceAgentPoolOperationSource : IOperationSource<ContainerServiceAgentPoolResource>
+    internal class ContainerServiceAgentPoolOperationSource : Core.IOperationSource<ContainerServiceAgentPoolResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ContainerService
             _client = client;
         }
 
-        ContainerServiceAgentPoolResource IOperationSource<ContainerServiceAgentPoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ContainerServiceAgentPoolResource Core.IOperationSource<ContainerServiceAgentPoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ContainerServiceAgentPoolData.DeserializeContainerServiceAgentPoolData(document.RootElement);
             return new ContainerServiceAgentPoolResource(_client, data);
         }
 
-        async ValueTask<ContainerServiceAgentPoolResource> IOperationSource<ContainerServiceAgentPoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ContainerServiceAgentPoolResource> Core.IOperationSource<ContainerServiceAgentPoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ContainerServiceAgentPoolData.DeserializeContainerServiceAgentPoolData(document.RootElement);

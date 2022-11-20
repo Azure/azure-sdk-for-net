@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DnsResolver
 {
-    internal class DnsForwardingRulesetVirtualNetworkLinkOperationSource : IOperationSource<DnsForwardingRulesetVirtualNetworkLinkResource>
+    internal class DnsForwardingRulesetVirtualNetworkLinkOperationSource : Core.IOperationSource<DnsForwardingRulesetVirtualNetworkLinkResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.DnsResolver
             _client = client;
         }
 
-        DnsForwardingRulesetVirtualNetworkLinkResource IOperationSource<DnsForwardingRulesetVirtualNetworkLinkResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DnsForwardingRulesetVirtualNetworkLinkResource Core.IOperationSource<DnsForwardingRulesetVirtualNetworkLinkResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DnsForwardingRulesetVirtualNetworkLinkData.DeserializeDnsForwardingRulesetVirtualNetworkLinkData(document.RootElement);
             return new DnsForwardingRulesetVirtualNetworkLinkResource(_client, data);
         }
 
-        async ValueTask<DnsForwardingRulesetVirtualNetworkLinkResource> IOperationSource<DnsForwardingRulesetVirtualNetworkLinkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DnsForwardingRulesetVirtualNetworkLinkResource> Core.IOperationSource<DnsForwardingRulesetVirtualNetworkLinkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DnsForwardingRulesetVirtualNetworkLinkData.DeserializeDnsForwardingRulesetVirtualNetworkLinkData(document.RootElement);

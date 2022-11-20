@@ -14,15 +14,15 @@ using Azure.ResourceManager.DataFactory.Models;
 
 namespace Azure.ResourceManager.DataFactory
 {
-    internal class SsisObjectMetadataStatusResultOperationSource : IOperationSource<SsisObjectMetadataStatusResult>
+    internal class SsisObjectMetadataStatusResultOperationSource : Core.IOperationSource<SsisObjectMetadataStatusResult>
     {
-        SsisObjectMetadataStatusResult IOperationSource<SsisObjectMetadataStatusResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        SsisObjectMetadataStatusResult Core.IOperationSource<SsisObjectMetadataStatusResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return SsisObjectMetadataStatusResult.DeserializeSsisObjectMetadataStatusResult(document.RootElement);
         }
 
-        async ValueTask<SsisObjectMetadataStatusResult> IOperationSource<SsisObjectMetadataStatusResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SsisObjectMetadataStatusResult> Core.IOperationSource<SsisObjectMetadataStatusResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return SsisObjectMetadataStatusResult.DeserializeSsisObjectMetadataStatusResult(document.RootElement);

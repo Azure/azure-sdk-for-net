@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class CustomIPPrefixOperationSource : IOperationSource<CustomIPPrefixResource>
+    internal class CustomIPPrefixOperationSource : Core.IOperationSource<CustomIPPrefixResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        CustomIPPrefixResource IOperationSource<CustomIPPrefixResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        CustomIPPrefixResource Core.IOperationSource<CustomIPPrefixResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CustomIPPrefixData.DeserializeCustomIPPrefixData(document.RootElement);
             return new CustomIPPrefixResource(_client, data);
         }
 
-        async ValueTask<CustomIPPrefixResource> IOperationSource<CustomIPPrefixResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CustomIPPrefixResource> Core.IOperationSource<CustomIPPrefixResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CustomIPPrefixData.DeserializeCustomIPPrefixData(document.RootElement);

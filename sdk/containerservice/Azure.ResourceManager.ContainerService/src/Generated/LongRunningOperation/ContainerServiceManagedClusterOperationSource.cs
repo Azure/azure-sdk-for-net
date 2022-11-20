@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    internal class ContainerServiceManagedClusterOperationSource : IOperationSource<ContainerServiceManagedClusterResource>
+    internal class ContainerServiceManagedClusterOperationSource : Core.IOperationSource<ContainerServiceManagedClusterResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ContainerService
             _client = client;
         }
 
-        ContainerServiceManagedClusterResource IOperationSource<ContainerServiceManagedClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ContainerServiceManagedClusterResource Core.IOperationSource<ContainerServiceManagedClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ContainerServiceManagedClusterData.DeserializeContainerServiceManagedClusterData(document.RootElement);
             return new ContainerServiceManagedClusterResource(_client, data);
         }
 
-        async ValueTask<ContainerServiceManagedClusterResource> IOperationSource<ContainerServiceManagedClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ContainerServiceManagedClusterResource> Core.IOperationSource<ContainerServiceManagedClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ContainerServiceManagedClusterData.DeserializeContainerServiceManagedClusterData(document.RootElement);

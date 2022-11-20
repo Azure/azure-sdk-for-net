@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
-    internal class RecoveryServicesProviderOperationSource : IOperationSource<RecoveryServicesProviderResource>
+    internal class RecoveryServicesProviderOperationSource : Core.IOperationSource<RecoveryServicesProviderResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             _client = client;
         }
 
-        RecoveryServicesProviderResource IOperationSource<RecoveryServicesProviderResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        RecoveryServicesProviderResource Core.IOperationSource<RecoveryServicesProviderResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = RecoveryServicesProviderData.DeserializeRecoveryServicesProviderData(document.RootElement);
             return new RecoveryServicesProviderResource(_client, data);
         }
 
-        async ValueTask<RecoveryServicesProviderResource> IOperationSource<RecoveryServicesProviderResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<RecoveryServicesProviderResource> Core.IOperationSource<RecoveryServicesProviderResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = RecoveryServicesProviderData.DeserializeRecoveryServicesProviderData(document.RootElement);

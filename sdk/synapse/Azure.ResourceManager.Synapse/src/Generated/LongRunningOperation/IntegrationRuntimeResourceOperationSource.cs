@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Synapse
 {
-    internal class IntegrationRuntimeResourceOperationSource : IOperationSource<IntegrationRuntimeResource>
+    internal class IntegrationRuntimeResourceOperationSource : Core.IOperationSource<IntegrationRuntimeResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Synapse
             _client = client;
         }
 
-        IntegrationRuntimeResource IOperationSource<IntegrationRuntimeResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        IntegrationRuntimeResource Core.IOperationSource<IntegrationRuntimeResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = IntegrationRuntimeResourceData.DeserializeIntegrationRuntimeResourceData(document.RootElement);
             return new IntegrationRuntimeResource(_client, data);
         }
 
-        async ValueTask<IntegrationRuntimeResource> IOperationSource<IntegrationRuntimeResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<IntegrationRuntimeResource> Core.IOperationSource<IntegrationRuntimeResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = IntegrationRuntimeResourceData.DeserializeIntegrationRuntimeResourceData(document.RootElement);

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Datadog
 {
-    internal class DatadogMonitorResourceOperationSource : IOperationSource<DatadogMonitorResource>
+    internal class DatadogMonitorResourceOperationSource : Core.IOperationSource<DatadogMonitorResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Datadog
             _client = client;
         }
 
-        DatadogMonitorResource IOperationSource<DatadogMonitorResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DatadogMonitorResource Core.IOperationSource<DatadogMonitorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DatadogMonitorResourceData.DeserializeDatadogMonitorResourceData(document.RootElement);
             return new DatadogMonitorResource(_client, data);
         }
 
-        async ValueTask<DatadogMonitorResource> IOperationSource<DatadogMonitorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DatadogMonitorResource> Core.IOperationSource<DatadogMonitorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DatadogMonitorResourceData.DeserializeDatadogMonitorResourceData(document.RootElement);

@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Analytics.Synapse.Artifacts
 {
     /// <summary> Unsubscribe event trigger from events. </summary>
-    public partial class TriggerUnsubscribeTriggerFromEventsOperation : Operation<TriggerSubscriptionOperationStatus>, IOperationSource<TriggerSubscriptionOperationStatus>
+    public partial class TriggerUnsubscribeTriggerFromEventsOperation : Operation<TriggerSubscriptionOperationStatus>, Core.IOperationSource<TriggerSubscriptionOperationStatus>
     {
         private readonly OperationInternal<TriggerSubscriptionOperationStatus> _operation;
 
@@ -67,13 +67,13 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <inheritdoc />
         public override ValueTask<Response<TriggerSubscriptionOperationStatus>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        TriggerSubscriptionOperationStatus IOperationSource<TriggerSubscriptionOperationStatus>.CreateResult(Response response, CancellationToken cancellationToken)
+        TriggerSubscriptionOperationStatus Core.IOperationSource<TriggerSubscriptionOperationStatus>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return TriggerSubscriptionOperationStatus.DeserializeTriggerSubscriptionOperationStatus(document.RootElement);
         }
 
-        async ValueTask<TriggerSubscriptionOperationStatus> IOperationSource<TriggerSubscriptionOperationStatus>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<TriggerSubscriptionOperationStatus> Core.IOperationSource<TriggerSubscriptionOperationStatus>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return TriggerSubscriptionOperationStatus.DeserializeTriggerSubscriptionOperationStatus(document.RootElement);

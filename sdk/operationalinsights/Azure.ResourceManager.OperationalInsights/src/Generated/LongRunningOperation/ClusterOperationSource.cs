@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    internal class ClusterOperationSource : IOperationSource<ClusterResource>
+    internal class ClusterOperationSource : Core.IOperationSource<ClusterResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.OperationalInsights
             _client = client;
         }
 
-        ClusterResource IOperationSource<ClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ClusterResource Core.IOperationSource<ClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ClusterData.DeserializeClusterData(document.RootElement);
             return new ClusterResource(_client, data);
         }
 
-        async ValueTask<ClusterResource> IOperationSource<ClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ClusterResource> Core.IOperationSource<ClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ClusterData.DeserializeClusterData(document.RootElement);

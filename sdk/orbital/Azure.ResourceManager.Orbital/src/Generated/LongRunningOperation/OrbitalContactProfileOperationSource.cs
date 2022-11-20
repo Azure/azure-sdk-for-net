@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Orbital
 {
-    internal class OrbitalContactProfileOperationSource : IOperationSource<OrbitalContactProfileResource>
+    internal class OrbitalContactProfileOperationSource : Core.IOperationSource<OrbitalContactProfileResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Orbital
             _client = client;
         }
 
-        OrbitalContactProfileResource IOperationSource<OrbitalContactProfileResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        OrbitalContactProfileResource Core.IOperationSource<OrbitalContactProfileResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = OrbitalContactProfileData.DeserializeOrbitalContactProfileData(document.RootElement);
             return new OrbitalContactProfileResource(_client, data);
         }
 
-        async ValueTask<OrbitalContactProfileResource> IOperationSource<OrbitalContactProfileResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<OrbitalContactProfileResource> Core.IOperationSource<OrbitalContactProfileResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = OrbitalContactProfileData.DeserializeOrbitalContactProfileData(document.RootElement);

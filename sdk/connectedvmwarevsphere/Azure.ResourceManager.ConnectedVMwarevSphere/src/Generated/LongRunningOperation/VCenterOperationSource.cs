@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    internal class VCenterOperationSource : IOperationSource<VCenterResource>
+    internal class VCenterOperationSource : Core.IOperationSource<VCenterResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             _client = client;
         }
 
-        VCenterResource IOperationSource<VCenterResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        VCenterResource Core.IOperationSource<VCenterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VCenterData.DeserializeVCenterData(document.RootElement);
             return new VCenterResource(_client, data);
         }
 
-        async ValueTask<VCenterResource> IOperationSource<VCenterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VCenterResource> Core.IOperationSource<VCenterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VCenterData.DeserializeVCenterData(document.RootElement);

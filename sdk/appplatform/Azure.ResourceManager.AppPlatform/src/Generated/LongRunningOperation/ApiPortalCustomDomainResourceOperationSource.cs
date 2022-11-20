@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppPlatform
 {
-    internal class ApiPortalCustomDomainResourceOperationSource : IOperationSource<ApiPortalCustomDomainResource>
+    internal class ApiPortalCustomDomainResourceOperationSource : Core.IOperationSource<ApiPortalCustomDomainResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.AppPlatform
             _client = client;
         }
 
-        ApiPortalCustomDomainResource IOperationSource<ApiPortalCustomDomainResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ApiPortalCustomDomainResource Core.IOperationSource<ApiPortalCustomDomainResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ApiPortalCustomDomainResourceData.DeserializeApiPortalCustomDomainResourceData(document.RootElement);
             return new ApiPortalCustomDomainResource(_client, data);
         }
 
-        async ValueTask<ApiPortalCustomDomainResource> IOperationSource<ApiPortalCustomDomainResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ApiPortalCustomDomainResource> Core.IOperationSource<ApiPortalCustomDomainResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ApiPortalCustomDomainResourceData.DeserializeApiPortalCustomDomainResourceData(document.RootElement);

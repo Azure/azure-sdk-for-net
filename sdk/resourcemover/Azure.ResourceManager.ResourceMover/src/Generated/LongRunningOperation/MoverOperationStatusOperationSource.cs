@@ -14,15 +14,15 @@ using Azure.ResourceManager.ResourceMover.Models;
 
 namespace Azure.ResourceManager.ResourceMover
 {
-    internal class MoverOperationStatusOperationSource : IOperationSource<MoverOperationStatus>
+    internal class MoverOperationStatusOperationSource : Core.IOperationSource<MoverOperationStatus>
     {
-        MoverOperationStatus IOperationSource<MoverOperationStatus>.CreateResult(Response response, CancellationToken cancellationToken)
+        MoverOperationStatus Core.IOperationSource<MoverOperationStatus>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return MoverOperationStatus.DeserializeMoverOperationStatus(document.RootElement);
         }
 
-        async ValueTask<MoverOperationStatus> IOperationSource<MoverOperationStatus>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<MoverOperationStatus> Core.IOperationSource<MoverOperationStatus>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return MoverOperationStatus.DeserializeMoverOperationStatus(document.RootElement);
