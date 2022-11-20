@@ -1,0 +1,286 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-72ce2656d3cf761fa0b650ffa97244d3-0c2d16eeb3662980-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "4b52bec799dc347c8b88bb3f6a50324b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "531",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 20 Nov 2022 05:24:53 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "e19652a6-a5ae-493b-9a31-d1ae710deec9",
+        "x-ms-ratelimit-remaining-subscription-reads": "11992",
+        "x-ms-request-id": "e19652a6-a5ae-493b-9a31-d1ae710deec9",
+        "x-ms-routing-request-id": "SOUTHINDIA:20221120T052454Z:e19652a6-a5ae-493b-9a31-d1ae710deec9"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "SkipGreenTeamLinuxSSHAuthForSub": "1081476937",
+          "NRMSBreakGlassNonHighRisk": "322946830",
+          "NRMS15526970": "20230411"
+        },
+        "subscriptionId": "7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": "Cloud-Native-Testing-IDC-Test",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-7cb2558e9713b4be7b96a56b64231beb-a528ef7f62c17877-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "bc097675e4e666a8095e9ecfea6e7710",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "531",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 20 Nov 2022 05:24:53 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "4985bcd0-054b-48c3-9334-1f70e55ee084",
+        "x-ms-ratelimit-remaining-subscription-reads": "11991",
+        "x-ms-request-id": "4985bcd0-054b-48c3-9334-1f70e55ee084",
+        "x-ms-routing-request-id": "SOUTHINDIA:20221120T052454Z:4985bcd0-054b-48c3-9334-1f70e55ee084"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "SkipGreenTeamLinuxSSHAuthForSub": "1081476937",
+          "NRMSBreakGlassNonHighRisk": "322946830",
+          "NRMS15526970": "20230411"
+        },
+        "subscriptionId": "7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": "Cloud-Native-Testing-IDC-Test",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a/providers/Microsoft.LoadTestService/locations/westus2/quotas?api-version=2022-12-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-62b8a3d8c00b49328c2f7a137af1324f-28750da2bc96bd59-00",
+        "User-Agent": "azsdk-net-ResourceManager.LoadTesting/1.0.0-alpha.20221120.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "956a6c9f754574101def8b999b5bf9ff",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "831",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 20 Nov 2022 05:24:54 GMT",
+        "Expires": "-1",
+        "mise-correlation-id": "ac948256-7e23-4d5b-8195-37491e6a1d00",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "956a6c9f754574101def8b999b5bf9ff",
+        "x-ms-correlation-request-id": "6d5e5ccd-902f-456c-95db-4fb9183f80fa",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11990",
+        "x-ms-request-id": "4505182e-acce-46d4-bf90-9893f1745963",
+        "x-ms-routing-request-id": "SOUTHINDIA:20221120T052454Z:6d5e5ccd-902f-456c-95db-4fb9183f80fa"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a/providers/Microsoft.LoadTestService/locations/westus2/quotas/maxConcurrentTestRuns",
+            "name": "maxConcurrentTestRuns",
+            "type": "Microsoft.LoadTestService/Locations/Quotas",
+            "properties": {
+              "usage": 24,
+              "limit": 25
+            }
+          },
+          {
+            "id": "/subscriptions/7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a/providers/Microsoft.LoadTestService/locations/westus2/quotas/maxConcurrentEngineInstances",
+            "name": "maxConcurrentEngineInstances",
+            "type": "Microsoft.LoadTestService/Locations/Quotas",
+            "properties": {
+              "usage": 24,
+              "limit": 100
+            }
+          },
+          {
+            "id": "/subscriptions/7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a/providers/Microsoft.LoadTestService/locations/westus2/quotas/maxEngineInstancesPerTestRun",
+            "name": "maxEngineInstancesPerTestRun",
+            "type": "Microsoft.LoadTestService/Locations/Quotas",
+            "properties": {
+              "usage": 0,
+              "limit": 45
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a/providers/Microsoft.LoadTestService/locations/westus2/quotas/maxConcurrentTestRuns?api-version=2022-12-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-ef4dfe28156713feaf35e144f66ca2b7-a4549f57ad5a7701-00",
+        "User-Agent": "azsdk-net-ResourceManager.LoadTesting/1.0.0-alpha.20221120.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a4094ffdd470e25115eb417efbac491c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "263",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 20 Nov 2022 05:24:54 GMT",
+        "Expires": "-1",
+        "mise-correlation-id": "b9b2fc94-5f69-4bbf-acc5-196ec068d4c7",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "a4094ffdd470e25115eb417efbac491c",
+        "x-ms-correlation-request-id": "e2b03b9b-5c79-48d9-8cd5-ef4f0e8b23eb",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11989",
+        "x-ms-request-id": "45ae5c53-6633-4018-99a3-5793a8acc6d9",
+        "x-ms-routing-request-id": "SOUTHINDIA:20221120T052455Z:e2b03b9b-5c79-48d9-8cd5-ef4f0e8b23eb"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a/providers/Microsoft.LoadTestService/locations/westus2/quotas/maxConcurrentTestRuns",
+        "name": "maxConcurrentTestRuns",
+        "type": "Microsoft.LoadTestService/Locations/Quotas",
+        "properties": {
+          "usage": 24,
+          "limit": 25
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a/providers/Microsoft.LoadTestService/locations/westus2/quotas/maxConcurrentEngineInstances?api-version=2022-12-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-7bff0d6d2aa65a87665d2d0314dff7f2-ca51e8af3ce9c0cc-00",
+        "User-Agent": "azsdk-net-ResourceManager.LoadTesting/1.0.0-alpha.20221120.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "fea0aa109de5000666959ef6590ecbae",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "278",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 20 Nov 2022 05:24:54 GMT",
+        "Expires": "-1",
+        "mise-correlation-id": "b848f2f8-826d-4a07-9a3d-e245982247bc",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "fea0aa109de5000666959ef6590ecbae",
+        "x-ms-correlation-request-id": "8cbac986-79d8-4cee-bbd9-9eb737f85eef",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11988",
+        "x-ms-request-id": "0e571cc5-7a44-4c2f-b9b1-6bd2037ef14f",
+        "x-ms-routing-request-id": "SOUTHINDIA:20221120T052455Z:8cbac986-79d8-4cee-bbd9-9eb737f85eef"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a/providers/Microsoft.LoadTestService/locations/westus2/quotas/maxConcurrentEngineInstances",
+        "name": "maxConcurrentEngineInstances",
+        "type": "Microsoft.LoadTestService/Locations/Quotas",
+        "properties": {
+          "usage": 24,
+          "limit": 100
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a/providers/Microsoft.LoadTestService/locations/westus2/quotas/maxEngineInstancesPerTestRun?api-version=2022-12-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-46ec5bd8adff446f665804d86c2ca92b-435a155650908655-00",
+        "User-Agent": "azsdk-net-ResourceManager.LoadTesting/1.0.0-alpha.20221120.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "9ad29f64d364ca9f1a887f5933927871",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "276",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 20 Nov 2022 05:24:55 GMT",
+        "Expires": "-1",
+        "mise-correlation-id": "c3d282f5-5855-4d44-81a2-f222ac41a353",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "9ad29f64d364ca9f1a887f5933927871",
+        "x-ms-correlation-request-id": "9d11726a-ba66-4d41-8945-cce6787b41dc",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11987",
+        "x-ms-request-id": "d3810765-1f2c-40a0-9975-4d78dd426679",
+        "x-ms-routing-request-id": "SOUTHINDIA:20221120T052456Z:9d11726a-ba66-4d41-8945-cce6787b41dc"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a/providers/Microsoft.LoadTestService/locations/westus2/quotas/maxEngineInstancesPerTestRun",
+        "name": "maxEngineInstancesPerTestRun",
+        "type": "Microsoft.LoadTestService/Locations/Quotas",
+        "properties": {
+          "usage": 0,
+          "limit": 45
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "RandomSeed": "2071653671",
+    "RESOURCE_MANAGER_URL": "https://management.azure.com/",
+    "SUBSCRIPTION_ID": "7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a"
+  }
+}
