@@ -11,4 +11,11 @@
     <PackageReference Include="System.CommandLine" VersionOverride="2.0.0-beta1.21216.1" />
   </ItemGroup>
 
+  <!-- Use decentralized package references when building outside https://github.com/Azure/azure-sdk-for-net -->
+  <ItemGroup Condition="'$(IsSamplesProject)' != 'true'">
+    <PackageReference Update="Azure.Identity" Version="1.7.0" />
+    <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.11.1" />
+    <PackageReference Update="System.CommandLine" Version="%(VersionOverride)" />
+  </ItemGroup>
+
 </Project>
