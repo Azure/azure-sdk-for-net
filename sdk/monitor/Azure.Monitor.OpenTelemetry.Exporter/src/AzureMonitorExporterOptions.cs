@@ -57,7 +57,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public string StorageDirectory { get; set; }
 
         /// <summary>
-        /// Disable offilne storage.
+        /// Disable offline storage.
         /// </summary>
         public bool DisableOfflineStorage { get; set; }
     }
