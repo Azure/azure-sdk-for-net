@@ -83,13 +83,6 @@ DecryptResult decrypted = decryptClient.Decrypt(DecryptParameters.RsaOaepParamet
 Debug.WriteLine($"Decrypted: {Encoding.UTF8.GetString(decrypted.Plaintext)}");
 ```
 
-## Source
-
-To see the full example source, see:
-
-* [Synchronous Sample7_SerializeJsonWebKey.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/tests/samples/Sample7_SerializeJsonWebKey.cs)
-* [Asynchronous Sample7_SerializeJsonWebKeyAsync.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/tests/samples/Sample7_SerializeJsonWebKeyAsync.cs)
-
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
 [JWK]: https://datatracker.ietf.org/doc/html/rfc7517
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/README.md

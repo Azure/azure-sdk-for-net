@@ -84,7 +84,7 @@ namespace Azure.Storage.Blobs.Models
         private const string CopyIdMismatchValue = "CopyIdMismatch";
         private const string FeatureVersionMismatchValue = "FeatureVersionMismatch";
         private const string IncrementalCopyBlobMismatchValue = "IncrementalCopyBlobMismatch";
-        private const string IncrementalCopyOfEralierVersionSnapshotNotAllowedValue = "IncrementalCopyOfEralierVersionSnapshotNotAllowed";
+        private const string IncrementalCopyOfEarlierVersionSnapshotNotAllowedValue = "IncrementalCopyOfEarlierVersionSnapshotNotAllowed";
         private const string IncrementalCopySourceMustBeSnapshotValue = "IncrementalCopySourceMustBeSnapshot";
         private const string InfiniteLeaseDurationRequiredValue = "InfiniteLeaseDurationRequired";
         private const string InvalidBlobOrBlockValue = "InvalidBlobOrBlock";
@@ -260,8 +260,8 @@ namespace Azure.Storage.Blobs.Models
         public static BlobErrorCode FeatureVersionMismatch { get; } = new BlobErrorCode(FeatureVersionMismatchValue);
         /// <summary> IncrementalCopyBlobMismatch. </summary>
         public static BlobErrorCode IncrementalCopyBlobMismatch { get; } = new BlobErrorCode(IncrementalCopyBlobMismatchValue);
-        /// <summary> IncrementalCopyOfEralierVersionSnapshotNotAllowed. </summary>
-        public static BlobErrorCode IncrementalCopyOfEralierVersionSnapshotNotAllowed { get; } = new BlobErrorCode(IncrementalCopyOfEralierVersionSnapshotNotAllowedValue);
+        /// <summary> IncrementalCopyOfEarlierVersionSnapshotNotAllowed. </summary>
+        public static BlobErrorCode IncrementalCopyOfEarlierVersionSnapshotNotAllowed { get; } = new BlobErrorCode(IncrementalCopyOfEarlierVersionSnapshotNotAllowedValue);
         /// <summary> IncrementalCopySourceMustBeSnapshot. </summary>
         public static BlobErrorCode IncrementalCopySourceMustBeSnapshot { get; } = new BlobErrorCode(IncrementalCopySourceMustBeSnapshotValue);
         /// <summary> InfiniteLeaseDurationRequired. </summary>

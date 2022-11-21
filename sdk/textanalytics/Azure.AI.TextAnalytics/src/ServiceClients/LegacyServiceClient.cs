@@ -1563,6 +1563,10 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             {
                 throw Validation.NotSupported(nameof(ExtractSummaryAction), TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview, ServiceVersion);
             }
+            if (actions.AbstractSummaryActions != null && actions.AbstractSummaryActions.Count > 0)
+            {
+                throw Validation.NotSupported(nameof(AbstractSummaryAction), TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+            }
             return tasks;
         }
 

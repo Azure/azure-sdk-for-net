@@ -86,5 +86,10 @@ namespace Azure.AI.TextAnalytics
         /// The set of <see cref="ExtractSummaryAction"/> that will get executed on the input documents.
         /// </summary>
         public IReadOnlyCollection<ExtractSummaryAction> ExtractSummaryActions { get; set; }
+
+        /// <summary>
+        /// The set of <see cref="AbstractSummaryAction"/> that will get executed on the input documents.
+        /// </summary>
+        public IReadOnlyCollection<AbstractSummaryAction> AbstractSummaryActions { get; set; }
     }
 }
