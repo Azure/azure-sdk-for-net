@@ -19,6 +19,8 @@ namespace Azure.Communication.Rooms.Tests
         private const string DateTimeStampRegEx = @"[0-9]*-[0-9]*-[0-9]*T[0-9]*:[0-9]*:[0-9]*.[0-9]*Z";
         private const string URIDomainNameReplacerRegEx = @"https://([^/?]+)";
         private const string URIIdentityReplacerRegEx = @"/identities/([^/?]+)";
+        private const string URIRoomsIdReplacerRegEx = @"/rooms/\d*";
+        private const string RequestBodyIdReplacerRegex = @"8:acs:[a-zA-Z0-9-_]*";
 
         public RoomsClientLiveTestBase(bool isAsync) : base(isAsync)
         {
@@ -28,10 +30,11 @@ namespace Azure.Communication.Rooms.Tests
             JsonPathSanitizers.Add("$..token");
             JsonPathSanitizers.Add("$..appId");
             JsonPathSanitizers.Add("$..userId");
-            JsonPathSanitizers.Add("$..id");
             BodyRegexSanitizers.Add(new BodyRegexSanitizer(DateTimeStampRegEx, SanitizeValue));
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(RequestBodyIdReplacerRegex, SanitizeValue));
             UriRegexSanitizers.Add(new UriRegexSanitizer(URIIdentityReplacerRegEx, "/identities/Sanitized"));
             UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainNameReplacerRegEx, "https://sanitized.communication.azure.com"));
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIRoomsIdReplacerRegEx, "/rooms/Sanitized"));
         }
         protected RoomsClient CreateInstrumentedRoomsClient(ServiceVersion version)
         {
