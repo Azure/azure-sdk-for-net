@@ -5,6 +5,8 @@ $PackageRepository = "Nuget"
 $packagePattern = "*.nupkg"
 $MetadataUri = "https://raw.githubusercontent.com/Azure/azure-sdk/main/_data/releases/latest/dotnet-packages.csv"
 $BlobStorageUrl = "https://azuresdkdocs.blob.core.windows.net/%24web?restype=container&comp=list&prefix=dotnet%2F&delimiter=%2F"
+$GithubUri = "https://github.com/Azure/azure-sdk-for-net"
+$PackageRepositoryUri = "https://www.nuget.org/packages"
 
 . "$PSScriptRoot/docs/Docs-ToC.ps1"
 
@@ -38,7 +40,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
       $defaultDll = Get-ChildItem "$dllFolder/Release/netstandard2.0/*" -Filter "$pkgName.dll" -Recurse
       if ($defaultDll -and (Test-Path $defaultDll)) {
         Write-Verbose "Here is the dll file path: $($defaultDll.FullName)"
-        $namespaces = @(Get-NamepspacesFromDll $defaultDll.FullName)
+        $namespaces = @(Get-NamespacesFromDll $defaultDll.FullName)
       }
     }
     $pkgProp = [PackageProps]::new($pkgName, $pkgVersion, $pkgPath, $serviceDirectory)
@@ -320,6 +322,10 @@ function Get-DocsCiConfig($configPath) {
       # Split the rows by the comma
       $fields = $row.Split(',')
 
+      if (!$fields -or $fields.Count -lt 2) {
+        LogError "Please check the csv entry: $configPath."
+        LogError "Do include the package name for each of the csv entry."
+      }
       # If the {package_ID} field contains optional properties inside square
       # brackets, parse those properties into key value pairs. In the case of 
       # duplicate keys, the last one wins.
@@ -347,7 +353,7 @@ function Get-DocsCiConfig($configPath) {
       # Remaining entries in the row are versions, add them to the package 
       # properties
       $outputVersions = @()
-      if ($fields[2]) {
+      if ($fields.Count -gt 2 -and $fields[2]) {
         $outputVersions = $fields[2..($fields.Count - 1)]
       }
 
@@ -405,11 +411,17 @@ function EnsureCustomSource($package) {
   }
 
   Write-Host "Checking custom package source for $($package.Name)"
-  $existingVersions = Find-Package `
-    -Name $package.Name `
-    -Source CustomPackageSource `
-    -AllVersions `
-    -AllowPrereleaseVersions
+  try {
+    $existingVersions = Find-Package `
+      -Name $package.Name `
+      -Source CustomPackageSource `
+      -AllVersions `
+      -AllowPrereleaseVersions
+  }
+  catch {
+    Write-Error $_ -ErrorAction Continue
+    return $package
+  }
   
   # Matches package version against output: 
   # "Azure.Security.KeyVault.Secrets 4.3.0-alpha.20210915.3"

@@ -8,10 +8,10 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
     /// <summary> The reference point that the ordinal number denotes. </summary>
-    internal readonly partial struct RelativeTo : IEquatable<RelativeTo>
+    public readonly partial struct RelativeTo : IEquatable<RelativeTo>
     {
         private readonly string _value;
 

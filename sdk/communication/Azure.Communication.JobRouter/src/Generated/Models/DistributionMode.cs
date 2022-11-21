@@ -7,8 +7,12 @@
 
 namespace Azure.Communication.JobRouter
 {
-    /// <summary> Abstract base class for defining a distribution mode. </summary>
-    public partial class DistributionMode
+    /// <summary>
+    /// Abstract base class for defining a distribution mode
+    /// Please note <see cref="DistributionMode"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="BestWorkerMode"/>, <see cref="LongestIdleMode"/> and <see cref="RoundRobinMode"/>.
+    /// </summary>
+    public abstract partial class DistributionMode
     {
         /// <summary> Initializes a new instance of DistributionMode. </summary>
         /// <param name="minConcurrentOffers"> Governs the minimum desired number of active concurrent offers a job can have. </param>

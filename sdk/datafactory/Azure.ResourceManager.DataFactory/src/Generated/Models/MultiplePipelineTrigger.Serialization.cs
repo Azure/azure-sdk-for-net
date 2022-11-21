@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             Optional<IList<TriggerPipelineReference>> pipelines = default;
-            string type = default;
+            string type = "MultiplePipelineTrigger";
             Optional<string> description = default;
             Optional<FactoryTriggerRuntimeState> runtimeState = default;
             Optional<IList<BinaryData>> annotations = default;

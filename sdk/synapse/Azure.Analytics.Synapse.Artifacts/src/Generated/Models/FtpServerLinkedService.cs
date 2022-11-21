@@ -36,7 +36,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="port"> The TCP port number that the FTP server uses to listen for client connections. Default value is 21. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="authenticationType"> The authentication type to be used to connect to the FTP server. </param>
         /// <param name="userName"> Username to logon the FTP server. Type: string (or Expression with resultType string). </param>
-        /// <param name="password"> Password to logon the FTP server. </param>
+        /// <param name="password">
+        /// Password to logon the FTP server.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
         /// <param name="enableSsl"> If true, connect to the FTP server over SSL/TLS channel. Default value is true. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="enableServerCertificateValidation"> If true, validate the FTP server SSL certificate when connect over SSL/TLS channel. Default value is true. Type: boolean (or Expression with resultType boolean). </param>
@@ -61,7 +65,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public FtpAuthenticationType? AuthenticationType { get; set; }
         /// <summary> Username to logon the FTP server. Type: string (or Expression with resultType string). </summary>
         public object UserName { get; set; }
-        /// <summary> Password to logon the FTP server. </summary>
+        /// <summary>
+        /// Password to logon the FTP server.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </summary>
         public SecretBase Password { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public object EncryptedCredential { get; set; }

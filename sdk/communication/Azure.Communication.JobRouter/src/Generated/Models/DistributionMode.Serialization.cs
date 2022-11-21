@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -41,7 +40,7 @@ namespace Azure.Communication.JobRouter
                     case "round-robin": return RoundRobinMode.DeserializeRoundRobinMode(element);
                 }
             }
-            throw new NotSupportedException("Deserialization of abstract type 'global::Azure.Communication.JobRouter.DistributionMode' not supported.");
+            return UnknownDistributionMode.DeserializeUnknownDistributionMode(element);
         }
     }
 }

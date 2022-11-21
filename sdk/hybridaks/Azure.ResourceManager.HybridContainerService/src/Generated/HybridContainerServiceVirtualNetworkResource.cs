@@ -20,10 +20,10 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.HybridContainerService
 {
     /// <summary>
-    /// A Class representing a VirtualNetwork along with the instance operations that can be performed on it.
+    /// A Class representing a HybridContainerServiceVirtualNetwork along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HybridContainerServiceVirtualNetworkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetVirtualNetworkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetVirtualNetwork method.
+    /// from an instance of <see cref="ArmClient" /> using the GetHybridContainerServiceVirtualNetworkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetHybridContainerServiceVirtualNetwork method.
     /// </summary>
     public partial class HybridContainerServiceVirtualNetworkResource : ArmResource
     {
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.HybridContainerService
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _virtualNetworkvirtualNetworksClientDiagnostics;
-        private readonly VirtualNetworksRestOperations _virtualNetworkvirtualNetworksRestClient;
+        private readonly ClientDiagnostics _hybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics;
+        private readonly VirtualNetworksRestOperations _hybridContainerServiceVirtualNetworkvirtualNetworksRestClient;
         private readonly HybridContainerServiceVirtualNetworkData _data;
 
         /// <summary> Initializes a new instance of the <see cref="HybridContainerServiceVirtualNetworkResource"/> class for mocking. </summary>
@@ -57,9 +57,9 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HybridContainerServiceVirtualNetworkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _virtualNetworkvirtualNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridContainerService", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string virtualNetworkvirtualNetworksApiVersion);
-            _virtualNetworkvirtualNetworksRestClient = new VirtualNetworksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, virtualNetworkvirtualNetworksApiVersion);
+            _hybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridContainerService", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string hybridContainerServiceVirtualNetworkvirtualNetworksApiVersion);
+            _hybridContainerServiceVirtualNetworkvirtualNetworksRestClient = new VirtualNetworksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hybridContainerServiceVirtualNetworkvirtualNetworksApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<HybridContainerServiceVirtualNetworkResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _virtualNetworkvirtualNetworksClientDiagnostics.CreateScope("HybridContainerServiceVirtualNetworkResource.Get");
+            using var scope = _hybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics.CreateScope("HybridContainerServiceVirtualNetworkResource.Get");
             scope.Start();
             try
             {
-                var response = await _virtualNetworkvirtualNetworksRestClient.RetrieveAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _hybridContainerServiceVirtualNetworkvirtualNetworksRestClient.RetrieveAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new HybridContainerServiceVirtualNetworkResource(Client, response.Value), response.GetRawResponse());
@@ -121,11 +121,11 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<HybridContainerServiceVirtualNetworkResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _virtualNetworkvirtualNetworksClientDiagnostics.CreateScope("HybridContainerServiceVirtualNetworkResource.Get");
+            using var scope = _hybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics.CreateScope("HybridContainerServiceVirtualNetworkResource.Get");
             scope.Start();
             try
             {
-                var response = _virtualNetworkvirtualNetworksRestClient.Retrieve(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _hybridContainerServiceVirtualNetworkvirtualNetworksRestClient.Retrieve(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new HybridContainerServiceVirtualNetworkResource(Client, response.Value), response.GetRawResponse());
@@ -146,11 +146,11 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _virtualNetworkvirtualNetworksClientDiagnostics.CreateScope("HybridContainerServiceVirtualNetworkResource.Delete");
+            using var scope = _hybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics.CreateScope("HybridContainerServiceVirtualNetworkResource.Delete");
             scope.Start();
             try
             {
-                var response = await _virtualNetworkvirtualNetworksRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _hybridContainerServiceVirtualNetworkvirtualNetworksRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new HybridContainerServiceArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -172,11 +172,11 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _virtualNetworkvirtualNetworksClientDiagnostics.CreateScope("HybridContainerServiceVirtualNetworkResource.Delete");
+            using var scope = _hybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics.CreateScope("HybridContainerServiceVirtualNetworkResource.Delete");
             scope.Start();
             try
             {
-                var response = _virtualNetworkvirtualNetworksRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _hybridContainerServiceVirtualNetworkvirtualNetworksRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 var operation = new HybridContainerServiceArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -195,19 +195,19 @@ namespace Azure.ResourceManager.HybridContainerService
         /// Operation Id: virtualNetworks_Update
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The VirtualNetworkPatch to use. </param>
+        /// <param name="patch"> The HybridContainerServiceVirtualNetworkPatch to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<HybridContainerServiceVirtualNetworkResource>> UpdateAsync(WaitUntil waitUntil, VirtualNetworkPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<HybridContainerServiceVirtualNetworkResource>> UpdateAsync(WaitUntil waitUntil, HybridContainerServiceVirtualNetworkPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _virtualNetworkvirtualNetworksClientDiagnostics.CreateScope("HybridContainerServiceVirtualNetworkResource.Update");
+            using var scope = _hybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics.CreateScope("HybridContainerServiceVirtualNetworkResource.Update");
             scope.Start();
             try
             {
-                var response = await _virtualNetworkvirtualNetworksRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridContainerServiceArmOperation<HybridContainerServiceVirtualNetworkResource>(new HybridContainerServiceVirtualNetworkOperationSource(Client), _virtualNetworkvirtualNetworksClientDiagnostics, Pipeline, _virtualNetworkvirtualNetworksRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _hybridContainerServiceVirtualNetworkvirtualNetworksRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new HybridContainerServiceArmOperation<HybridContainerServiceVirtualNetworkResource>(new HybridContainerServiceVirtualNetworkOperationSource(Client), _hybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics, Pipeline, _hybridContainerServiceVirtualNetworkvirtualNetworksRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -225,19 +225,19 @@ namespace Azure.ResourceManager.HybridContainerService
         /// Operation Id: virtualNetworks_Update
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The VirtualNetworkPatch to use. </param>
+        /// <param name="patch"> The HybridContainerServiceVirtualNetworkPatch to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<HybridContainerServiceVirtualNetworkResource> Update(WaitUntil waitUntil, VirtualNetworkPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<HybridContainerServiceVirtualNetworkResource> Update(WaitUntil waitUntil, HybridContainerServiceVirtualNetworkPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _virtualNetworkvirtualNetworksClientDiagnostics.CreateScope("HybridContainerServiceVirtualNetworkResource.Update");
+            using var scope = _hybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics.CreateScope("HybridContainerServiceVirtualNetworkResource.Update");
             scope.Start();
             try
             {
-                var response = _virtualNetworkvirtualNetworksRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new HybridContainerServiceArmOperation<HybridContainerServiceVirtualNetworkResource>(new HybridContainerServiceVirtualNetworkOperationSource(Client), _virtualNetworkvirtualNetworksClientDiagnostics, Pipeline, _virtualNetworkvirtualNetworksRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _hybridContainerServiceVirtualNetworkvirtualNetworksRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                var operation = new HybridContainerServiceArmOperation<HybridContainerServiceVirtualNetworkResource>(new HybridContainerServiceVirtualNetworkOperationSource(Client), _hybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics, Pipeline, _hybridContainerServiceVirtualNetworkvirtualNetworksRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.HybridContainerService
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _virtualNetworkvirtualNetworksClientDiagnostics.CreateScope("HybridContainerServiceVirtualNetworkResource.AddTag");
+            using var scope = _hybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics.CreateScope("HybridContainerServiceVirtualNetworkResource.AddTag");
             scope.Start();
             try
             {
@@ -272,13 +272,13 @@ namespace Azure.ResourceManager.HybridContainerService
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _virtualNetworkvirtualNetworksRestClient.RetrieveAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _hybridContainerServiceVirtualNetworkvirtualNetworksRestClient.RetrieveAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new HybridContainerServiceVirtualNetworkResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new VirtualNetworkPatch();
+                    var patch = new HybridContainerServiceVirtualNetworkPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.HybridContainerService
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _virtualNetworkvirtualNetworksClientDiagnostics.CreateScope("HybridContainerServiceVirtualNetworkResource.AddTag");
+            using var scope = _hybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics.CreateScope("HybridContainerServiceVirtualNetworkResource.AddTag");
             scope.Start();
             try
             {
@@ -318,13 +318,13 @@ namespace Azure.ResourceManager.HybridContainerService
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _virtualNetworkvirtualNetworksRestClient.Retrieve(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    var originalResponse = _hybridContainerServiceVirtualNetworkvirtualNetworksRestClient.Retrieve(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                     return Response.FromValue(new HybridContainerServiceVirtualNetworkResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new VirtualNetworkPatch();
+                    var patch = new HybridContainerServiceVirtualNetworkPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.HybridContainerService
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _virtualNetworkvirtualNetworksClientDiagnostics.CreateScope("HybridContainerServiceVirtualNetworkResource.SetTags");
+            using var scope = _hybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics.CreateScope("HybridContainerServiceVirtualNetworkResource.SetTags");
             scope.Start();
             try
             {
@@ -363,13 +363,13 @@ namespace Azure.ResourceManager.HybridContainerService
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _virtualNetworkvirtualNetworksRestClient.RetrieveAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _hybridContainerServiceVirtualNetworkvirtualNetworksRestClient.RetrieveAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new HybridContainerServiceVirtualNetworkResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new VirtualNetworkPatch();
+                    var patch = new HybridContainerServiceVirtualNetworkPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.HybridContainerService
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _virtualNetworkvirtualNetworksClientDiagnostics.CreateScope("HybridContainerServiceVirtualNetworkResource.SetTags");
+            using var scope = _hybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics.CreateScope("HybridContainerServiceVirtualNetworkResource.SetTags");
             scope.Start();
             try
             {
@@ -404,13 +404,13 @@ namespace Azure.ResourceManager.HybridContainerService
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _virtualNetworkvirtualNetworksRestClient.Retrieve(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    var originalResponse = _hybridContainerServiceVirtualNetworkvirtualNetworksRestClient.Retrieve(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                     return Response.FromValue(new HybridContainerServiceVirtualNetworkResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new VirtualNetworkPatch();
+                    var patch = new HybridContainerServiceVirtualNetworkPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.HybridContainerService
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _virtualNetworkvirtualNetworksClientDiagnostics.CreateScope("HybridContainerServiceVirtualNetworkResource.RemoveTag");
+            using var scope = _hybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics.CreateScope("HybridContainerServiceVirtualNetworkResource.RemoveTag");
             scope.Start();
             try
             {
@@ -444,13 +444,13 @@ namespace Azure.ResourceManager.HybridContainerService
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _virtualNetworkvirtualNetworksRestClient.RetrieveAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _hybridContainerServiceVirtualNetworkvirtualNetworksRestClient.RetrieveAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new HybridContainerServiceVirtualNetworkResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new VirtualNetworkPatch();
+                    var patch = new HybridContainerServiceVirtualNetworkPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.HybridContainerService
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _virtualNetworkvirtualNetworksClientDiagnostics.CreateScope("HybridContainerServiceVirtualNetworkResource.RemoveTag");
+            using var scope = _hybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics.CreateScope("HybridContainerServiceVirtualNetworkResource.RemoveTag");
             scope.Start();
             try
             {
@@ -488,13 +488,13 @@ namespace Azure.ResourceManager.HybridContainerService
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _virtualNetworkvirtualNetworksRestClient.Retrieve(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    var originalResponse = _hybridContainerServiceVirtualNetworkvirtualNetworksRestClient.Retrieve(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                     return Response.FromValue(new HybridContainerServiceVirtualNetworkResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new VirtualNetworkPatch();
+                    var patch = new HybridContainerServiceVirtualNetworkPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

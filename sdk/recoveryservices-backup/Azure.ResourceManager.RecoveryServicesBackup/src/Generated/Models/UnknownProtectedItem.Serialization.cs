@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static UnknownProtectedItem DeserializeUnknownProtectedItem(JsonElement element)
         {
-            string protectedItemType = default;
+            string protectedItemType = "Unknown";
             Optional<BackupManagementType> backupManagementType = default;
             Optional<DataSourceType> workloadType = default;
             Optional<string> containerName = default;

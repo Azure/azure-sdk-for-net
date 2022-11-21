@@ -37,7 +37,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="endpoint"> The endpoint of the Responsys server. </param>
         /// <param name="clientId"> The client ID associated with the Responsys application. Type: string (or Expression with resultType string). </param>
-        /// <param name="clientSecret"> The client secret associated with the Responsys application. Type: string (or Expression with resultType string). </param>
+        /// <param name="clientSecret">
+        /// The client secret associated with the Responsys application. Type: string (or Expression with resultType string).
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
         /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server&apos;s certificate to match the host name of the server when connecting over SSL. The default value is true. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. Type: boolean (or Expression with resultType boolean). </param>
@@ -58,7 +62,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object Endpoint { get; set; }
         /// <summary> The client ID associated with the Responsys application. Type: string (or Expression with resultType string). </summary>
         public object ClientId { get; set; }
-        /// <summary> The client secret associated with the Responsys application. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The client secret associated with the Responsys application. Type: string (or Expression with resultType string).
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </summary>
         public SecretBase ClientSecret { get; set; }
         /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. Type: boolean (or Expression with resultType boolean). </summary>
         public object UseEncryptedEndpoints { get; set; }
