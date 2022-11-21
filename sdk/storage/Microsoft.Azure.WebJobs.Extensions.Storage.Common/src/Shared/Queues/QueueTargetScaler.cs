@@ -47,28 +47,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
         /// <returns>Returns a TargetScalerResult with a TargetWorkerCount.</returns>
         public async Task<TargetScalerResult> GetScaleResultAsync(TargetScalerContext context)
         {
-            try
-            {
-                int queueLength = await _queueMetricsProvider.GetQueueLength().ConfigureAwait(false);
-                return GetScaleResultInternal(context, queueLength);
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                throw new NotSupportedException("Target scaler is not supported. Unable to access queue to determine queue length.", ex);
-            }
-            catch (RequestFailedException ex)
-            {
-                if (ex.IsNotFoundQueueNotFound() ||
-                    ex.IsConflictQueueBeingDeletedOrDisabled() ||
-                    ex.IsServerSideError())
-                {
-                    // ignore transient errors, and return default metrics
-                    // E.g. if the queue doesn't exist, we'll return a zero queue length
-                    // and scale in
-                    _logger.LogWarning($"Error querying for queue scale status for QueueTargetScaler: {ex.Message}");
-                }
-                return GetScaleResultInternal(context, 0);
-            }
+            int queueLength = await _queueMetricsProvider.GetQueueLengthAsync().ConfigureAwait(false);
+            return GetScaleResultInternal(context, queueLength);
         }
 
         internal TargetScalerResult GetScaleResultInternal(TargetScalerContext context, int queueLength)

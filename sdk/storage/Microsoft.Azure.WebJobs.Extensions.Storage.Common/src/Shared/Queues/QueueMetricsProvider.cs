@@ -30,13 +30,29 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
         }
 
         /// <summary>
-        /// Caller of this function is responsible for wrapping this in try/catch.
+        /// Retrieve queue length from the specified queue entity.
         /// </summary>
         /// <returns>The queue length from the associated queue entity.</returns>
-        public async Task<int> GetQueueLength()
+        public async Task<int> GetQueueLengthAsync()
         {
-            QueueProperties queueProperties = await _queue.GetPropertiesAsync().ConfigureAwait(false);
-            return queueProperties.ApproximateMessagesCount;
+            try
+            {
+                QueueProperties queueProperties = await _queue.GetPropertiesAsync().ConfigureAwait(false);
+                return queueProperties.ApproximateMessagesCount;
+            }
+            catch (RequestFailedException ex)
+            {
+                if (ex.IsNotFoundQueueNotFound() ||
+                    ex.IsConflictQueueBeingDeletedOrDisabled() ||
+                    ex.IsServerSideError())
+                {
+                    // ignore transient errors, and return default metrics
+                    // E.g. if the queue doesn't exist, we'll return a zero queue length
+                    // and scale in
+                    _logger.LogWarning($"Error querying for queue scale status: {ex.Message}");
+                }
+            }
+            return 0;
         }
 
         /// <summary>
@@ -50,7 +66,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
 
             try
             {
-                queueLength = await GetQueueLength().ConfigureAwait(false);
+                QueueProperties queueProperties = await _queue.GetPropertiesAsync().ConfigureAwait(false);
+                queueLength = queueProperties.ApproximateMessagesCount;
 
                 if (queueLength > 0)
                 {
