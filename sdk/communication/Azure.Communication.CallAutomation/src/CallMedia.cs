@@ -7,6 +7,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Communication.CallAutomation.Models;
+using Azure.Communication.CallAutomation.Models.Misc;
+using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Communication.CallAutomation
@@ -18,15 +20,17 @@ namespace Azure.Communication.CallAutomation
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         internal ContentRestClient ContentRestClient { get; }
+        internal CallConnectionsRestClient CallConnectionRestClient { get; }
 
         /// <summary>
         /// The call connection id.
         /// </summary>
         public virtual string CallConnectionId { get; internal set; }
 
-        internal CallMedia(string callConnectionId, ContentRestClient callContentRestClient, ClientDiagnostics clientDiagnostics)
+        internal CallMedia(string callConnectionId, CallConnectionsRestClient callConnectionRestClient, ContentRestClient callContentRestClient, ClientDiagnostics clientDiagnostics)
         {
             CallConnectionId = callConnectionId;
+            CallConnectionRestClient = callConnectionRestClient;
             ContentRestClient = callContentRestClient;
             _clientDiagnostics = clientDiagnostics;
         }
@@ -232,8 +236,47 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                RecognizeRequestInternal request = CreateRecognizeRequest(recognizeOptions);
-                return await ContentRestClient.RecognizeAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
+                if (recognizeOptions is CallMediaRecognizeNluOptions nluRecognizeNluOptions)
+                {
+                    var isNuance = nluRecognizeNluOptions.NluRecognizer.Equals(NluRecognizer.Nuance);
+                    var ivrBot = isNuance ? new CommunicationUserIdentifier("8:acs:4c3e963e-ab47-488f-a83a-d04994237db3_00000014-f2fc-1f19-28df-444822005ad8")
+                        : new CommunicationUserIdentifier("8:acs:4c3e963e-ab47-488f-a83a-d04994237db3_00000015-1d2a-5fbd-3dfe-9c3a0d00e842");
+
+                    var addParticipantOptions = new AddParticipantsOptions(new[] { ivrBot });
+                    addParticipantOptions.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
+                    AddParticipantsRequestInternal addParticipantsRequest = CreateAddParticipantRequest(addParticipantOptions);
+
+                    var addParticipantResponse = await CallConnectionRestClient.AddParticipantAsync(
+                        callConnectionId: CallConnectionId,
+                        addParticipantsRequest,
+                        addParticipantOptions.RepeatabilityHeaders?.RepeatabilityRequestId,
+                        addParticipantOptions.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
+                        cancellationToken: cancellationToken
+                    ).ConfigureAwait(false);
+
+                    var addParticipantResult = Response.FromValue(new AddParticipantsResult(addParticipantResponse), addParticipantResponse.GetRawResponse());
+                    if (addParticipantResult.GetRawResponse().Status != 202) return addParticipantResponse.GetRawResponse();
+
+                    var nluOptions = new NluOptionsInternal(nluRecognizeNluOptions.NluRecognizer)
+                    {
+                        PlayDialog = nluRecognizeNluOptions.PlayDialog,
+                        PlayIntent = nluRecognizeNluOptions.PlayIntent,
+                        SendNluUri = nluRecognizeNluOptions.CallbackUri
+                    };
+
+                    var recognizeResult = await ContentRestClient.RecognizeNluAsync(CallConnectionId, nluOptions, cancellationToken).ConfigureAwait(false);
+
+                    for (var i = 0; i < 10 && recognizeResult.Status != 200; i++)
+                    {
+                        await Task.Delay(TimeSpan.FromSeconds(1), cancellationToken).ConfigureAwait(false);
+                        recognizeResult = await ContentRestClient.RecognizeNluAsync(CallConnectionId, nluOptions, cancellationToken).ConfigureAwait(false);
+                    }
+
+                    return recognizeResult;
+                }
+
+                RecognizeRequestInternal recognizeRequest = CreateRecognizeRequest(recognizeOptions);
+                return await ContentRestClient.RecognizeAsync(CallConnectionId, recognizeRequest, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -254,8 +297,53 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                RecognizeRequestInternal request = CreateRecognizeRequest(recognizeOptions);
-                return ContentRestClient.Recognize(CallConnectionId, request, cancellationToken);
+                if (recognizeOptions is CallMediaRecognizeNluOptions nluRecognizeNluOptions)
+                {
+                    var isNuance = nluRecognizeNluOptions.NluRecognizer.Equals(NluRecognizer.Nuance);
+                    var ivrBot = isNuance
+                        ? new CommunicationUserIdentifier(
+                            "8:acs:4c3e963e-ab47-488f-a83a-d04994237db3_00000014-f2fc-1f19-28df-444822005ad8")
+                        : new CommunicationUserIdentifier(
+                            "8:acs:4c3e963e-ab47-488f-a83a-d04994237db3_00000015-1d2a-5fbd-3dfe-9c3a0d00e842");
+
+                    var addParticipantOptions = new AddParticipantsOptions(new[] { ivrBot });
+                    addParticipantOptions.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
+                    AddParticipantsRequestInternal addParticipantsRequest =
+                        CreateAddParticipantRequest(addParticipantOptions);
+
+                    var addParticipantResponse = CallConnectionRestClient.AddParticipant(
+                        callConnectionId: CallConnectionId,
+                        addParticipantsRequest,
+                        addParticipantOptions.RepeatabilityHeaders?.RepeatabilityRequestId,
+                        addParticipantOptions.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
+                        cancellationToken: cancellationToken
+                    );
+
+                    var addParticipantResult = Response.FromValue(new AddParticipantsResult(addParticipantResponse),
+                        addParticipantResponse.GetRawResponse());
+                    if (addParticipantResult.GetRawResponse().Status != 202)
+                        return addParticipantResponse.GetRawResponse();
+
+                    var nluOptions = new NluOptionsInternal(nluRecognizeNluOptions.NluRecognizer)
+                    {
+                        PlayDialog = nluRecognizeNluOptions.PlayDialog,
+                        PlayIntent = nluRecognizeNluOptions.PlayIntent,
+                        SendNluUri = nluRecognizeNluOptions.CallbackUri
+                    };
+
+                    var recognizeResult = ContentRestClient.RecognizeNlu(CallConnectionId, nluOptions, cancellationToken);
+
+                    for (var i = 0; i < 10 && recognizeResult.Status != 200; i++)
+                    {
+                        new ManualResetEvent(false).WaitOne(TimeSpan.FromSeconds(1));
+                        recognizeResult = ContentRestClient.RecognizeNlu(CallConnectionId, nluOptions, cancellationToken);
+                    }
+
+                    return recognizeResult;
+                }
+
+                RecognizeRequestInternal recognizeRequest = CreateRecognizeRequest(recognizeOptions);
+                return ContentRestClient.Recognize(CallConnectionId, recognizeRequest, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -309,6 +397,35 @@ namespace Azure.Communication.CallAutomation
             {
                 throw new NotSupportedException(recognizeOptions.GetType().Name);
             }
+        }
+
+        private static AddParticipantsRequestInternal CreateAddParticipantRequest(AddParticipantsOptions options)
+        {
+            // when add PSTN participants, the SourceCallerId must be provided.
+            if (options.ParticipantsToAdd.Any(participant => participant is PhoneNumberIdentifier))
+            {
+                Argument.AssertNotNull(options.SourceCallerId, nameof(options.SourceCallerId));
+            }
+
+            // validate ParticipantsToAdd is not null or empty
+            Argument.AssertNotNullOrEmpty(options.ParticipantsToAdd, nameof(options.ParticipantsToAdd));
+
+            AddParticipantsRequestInternal request = new AddParticipantsRequestInternal(options.ParticipantsToAdd.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList());
+
+            request.SourceCallerId = options.SourceCallerId == null ? null : new PhoneNumberIdentifierModel(options.SourceCallerId.PhoneNumber);
+            request.OperationContext = options.OperationContext;
+            if (options.InvitationTimeoutInSeconds != null &&
+                (options.InvitationTimeoutInSeconds < CallAutomationConstants.InputValidation.MinInvitationTimeoutInSeconds ||
+                 options.InvitationTimeoutInSeconds > CallAutomationConstants.InputValidation.MaxInvitationTimeoutInSeconds))
+            {
+                throw new ArgumentException(CallAutomationErrorMessages.InvalidInvitationTimeoutInSeconds);
+            }
+            else
+            {
+                request.InvitationTimeoutInSeconds = options.InvitationTimeoutInSeconds;
+            }
+
+            return request;
         }
     }
 }

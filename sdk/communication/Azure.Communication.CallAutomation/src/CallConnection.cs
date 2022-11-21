@@ -618,7 +618,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                return new CallMedia(CallConnectionId, ContentRestClient, _clientDiagnostics);
+                return new CallMedia(CallConnectionId, RestClient, ContentRestClient, _clientDiagnostics);
             }
             catch (Exception ex)
             {
