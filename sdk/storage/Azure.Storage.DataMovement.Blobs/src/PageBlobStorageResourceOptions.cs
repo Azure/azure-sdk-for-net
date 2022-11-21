@@ -18,15 +18,14 @@ namespace Azure.Storage.DataMovement.Blobs
         public PageBlobStorageResourceServiceCopyOptions CopyOptions { get; set; }
 
         /// <summary>
-        /// When calling <see cref="PageBlobStorageResource.WriteFromStreamAsync(System.IO.Stream, System.Threading.CancellationToken)"/>,
-        /// <see cref="PageBlobStorageResource.WriteStreamToOffsetAsync(long, long, System.IO.Stream, Storage.DataMovement.Models.StorageResourceWriteToOffsetOptions, System.Threading.CancellationToken)"/>,
+        /// When calling <see cref="PageBlobStorageResource.WriteFromStreamAsync(System.IO.Stream, long, long?, StorageResourceWriteToOffsetOptions, System.Threading.CancellationToken)"/>,
         /// and <see cref="PageBlobStorageResource.CompleteTransferAsync(System.Threading.CancellationToken)"/>.
         /// These options will apply to the blob service requests to complete uploading to the block blob.
         /// </summary>
         public PageBlobStorageResourceUploadOptions UploadOptions { get; set; }
 
         /// <summary>
-        /// When calling for <see cref="PageBlobStorageResource.WriteStreamToOffsetAsync(long, long, System.IO.Stream, Storage.DataMovement.Models.StorageResourceWriteToOffsetOptions, System.Threading.CancellationToken)"/>
+        /// When calling for <see cref="PageBlobStorageResource.ReadStreamAsync(long, long?, System.Threading.CancellationToken)"/>
         ///
         /// these options will apply to the blob service requests.
         /// </summary>

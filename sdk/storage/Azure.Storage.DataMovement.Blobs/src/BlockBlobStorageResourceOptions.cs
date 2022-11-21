@@ -20,15 +20,14 @@ namespace Azure.Storage.DataMovement.Blobs
         public BlockBlobStorageResourceServiceCopyOptions CopyOptions { get; set; }
 
         /// <summary>
-        /// When calling <see cref="BlockBlobStorageResource.WriteFromStreamAsync(System.IO.Stream, System.Threading.CancellationToken)"/>,
-        /// <see cref="BlockBlobStorageResource.WriteStreamToOffsetAsync(long, long, System.IO.Stream, Storage.DataMovement.Models.StorageResourceWriteToOffsetOptions, System.Threading.CancellationToken)"/>,
+        /// When calling <see cref="BlockBlobStorageResource.WriteFromStreamAsync(System.IO.Stream, long, long?, StorageResourceWriteToOffsetOptions, System.Threading.CancellationToken)"/>,
         /// and <see cref="BlockBlobStorageResource.CompleteTransferAsync(System.Threading.CancellationToken)"/>.
         /// These options will apply to the blob service requests to complete uploading to the block blob.
         /// </summary>
         public BlockBlobStorageResourceUploadOptions UploadOptions { get; set; }
 
         /// <summary>
-        /// When calling for <see cref="BlockBlobStorageResource.WriteStreamToOffsetAsync(long, long, System.IO.Stream, Storage.DataMovement.Models.StorageResourceWriteToOffsetOptions, System.Threading.CancellationToken)"/>
+        /// When calling for <see cref="BlockBlobStorageResource.ReadStreamAsync(long, long?, System.Threading.CancellationToken)"/>
         ///
         /// these options will apply to the blob service requests.
         /// </summary>

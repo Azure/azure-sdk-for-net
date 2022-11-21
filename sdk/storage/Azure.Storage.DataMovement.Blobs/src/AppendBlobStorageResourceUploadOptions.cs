@@ -14,11 +14,6 @@ namespace Azure.Storage.DataMovement.Blobs
     public class AppendBlobStorageResourceUploadOptions
     {
         /// <summary>
-        /// Optional. See <see cref="TransferCopyMethod"/>
-        /// </summary>
-        public TransferCopyMethod CopyMethod { get; set; }
-
-        /// <summary>
         /// Optional <see cref="AppendBlobRequestConditions"/> to add
         /// conditions on the upload of this Append Blob.
         /// </summary>

@@ -52,44 +52,40 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Can consume stream. Will append stream to end of file.
-        /// Will create file if it doesn't already exist.
+        /// Consumes the readable stream to upload
         /// </summary>
-        /// <param name="stream">Stream to append to the local file</param>
-        /// <param name="token">Cancellation Token</param>
+        /// <param name="position">
+        /// The offset which the stream will be copied to.
+        /// </param>
+        /// <param name="length">
+        /// The length of the stream.
+        /// </param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public override async Task WriteFromStreamAsync(
-            Stream stream,
-            CancellationToken token = default)
+        public override Task<ReadStreamStorageResourceResult> ReadStreamAsync(
+            long position = 0,
+            long? length = default,
+            CancellationToken cancellationToken = default)
         {
-            // Appends incoming stream to the local file resource
-            using (FileStream fileStream = new FileStream(
-                    _path,
-                    FileMode.Append,
-                    FileAccess.Write))
-            {
-                await stream.CopyToAsync(
-                    fileStream,
-                    Constants.DefaultDownloadCopyBufferSize,
-                    token)
-                    .ConfigureAwait(false);
-            }
+            FileStream stream = new FileStream(_path, FileMode.Open, FileAccess.Read);
+            stream.Position = position;
+            return Task.FromResult(new ReadStreamStorageResourceResult(stream));
         }
 
         /// <summary>
         /// Consumes the readable stream to upload
         /// </summary>
-        /// <param name="offset"></param>
+        /// <param name="position"></param>
         /// <param name="length"></param>
         /// <param name="stream"></param>
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public override async Task WriteStreamToOffsetAsync(
-            long offset,
-            long length,
+        public override async Task WriteFromStreamAsync(
             Stream stream,
-            StorageResourceWriteToOffsetOptions options,
+            long position = 0,
+            long? length = default,
+            StorageResourceWriteToOffsetOptions options = default,
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
@@ -100,7 +96,10 @@ namespace Azure.Storage.DataMovement
                     FileMode.OpenOrCreate,
                     FileAccess.Write))
             {
-                fileStream.Seek(offset, SeekOrigin.Begin);
+                if (position > 0)
+                {
+                    fileStream.Seek(position, SeekOrigin.Begin);
+                }
                 await stream.CopyToAsync(
                     fileStream,
                     (int) length,
@@ -142,60 +141,10 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Get length of the file
-        /// </summary>
-        /// <returns>Returns the lenght of the local file, however if the local file does not exist default will be returned.</returns>
-        internal Task<long?> GetLength()
-        {
-            FileInfo fileInfo = new FileInfo(_path);
-
-            if (fileInfo.Exists)
-            {
-                return Task.FromResult<long?>(fileInfo.Length);
-            }
-            // File does not exist, no length.
-            return Task.FromResult<long?>(default);
-        }
-
-        /// <summary>
-        /// Gets the readable input stream.
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public override Task<ReadStreamStorageResourceResult> ReadStreamAsync(
-            long? position = default,
-            CancellationToken cancellationToken = default)
-        {
-            FileStream stream = new FileStream(_path, FileMode.Open, FileAccess.Read);
-            return Task.FromResult(new ReadStreamStorageResourceResult(stream));
-        }
-
-        /// <summary>
-        /// Consumes the readable stream to upload
-        /// </summary>
-        /// <param name="offset">
-        /// The offset which the stream will be copied to.
-        /// </param>
-        /// <param name="length">
-        /// The length of the stream.
-        /// </param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public override Task<ReadStreamStorageResourceResult> ReadPartialStreamAsync(
-            long offset,
-            long length,
-            CancellationToken cancellationToken = default)
-        {
-            FileStream stream = new FileStream(_path, FileMode.Open, FileAccess.Read);
-            stream.Position = offset;
-            return Task.FromResult(new ReadStreamStorageResourceResult(stream));
-        }
-
-        /// <summary>
         /// Get properties of the resource.
         /// </summary>
         /// <returns>Returns the length of the storage resource</returns>
-        public override Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken)
+        public override Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
             FileInfo fileInfo = new FileInfo(_path);
             if (fileInfo.Exists)
@@ -211,7 +160,7 @@ namespace Azure.Storage.DataMovement
         /// If the transfer requires client-side encryption, necessary
         /// operations will occur here.
         /// </summary>
-        public override Task CompleteTransferAsync(CancellationToken cancellationToken)
+        public override Task CompleteTransferAsync(CancellationToken cancellationToken = default)
         {
             if (File.Exists(_path))
             {

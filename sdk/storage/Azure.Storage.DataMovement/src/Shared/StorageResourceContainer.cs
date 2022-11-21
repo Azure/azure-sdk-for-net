@@ -43,7 +43,7 @@ namespace Azure.Storage.DataMovement
         /// Lists all the child storage resources in the path.
         /// </summary>
         /// <returns></returns>
-        public abstract IAsyncEnumerable<StorageResource> GetStorageResources(
+        public abstract IAsyncEnumerable<StorageResource> GetStorageResourcesAsync(
             CancellationToken cancellationToken = default);
 
         /// <summary>

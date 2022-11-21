@@ -108,7 +108,84 @@ namespace Azure.Storage.DataMovement.Blobs
             // Recreate the blobName using the existing parent directory path
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(_blobContainerClient.Uri);
             blobUriBuilder.BlobName += string.Concat("/", encodedPath);
-            return new BlockBlobStorageResource(new BlockBlobClient(blobUriBuilder.ToUri()));
+            return new BlockBlobStorageResource(
+                new BlockBlobClient(blobUriBuilder.ToUri()),
+                new BlockBlobStorageResourceOptions()
+                {
+                    CopyOptions = _options.CopyOptions,
+                    UploadOptions = _options.UploadOptions,
+                    DownloadOptions= _options.DownloadOptions,
+                });
+        }
+
+        /// <summary>
+        /// Retrieves a single blob resoruce based on this respective resource.
+        /// </summary>
+        /// <param name="encodedPath"></param>
+        /// <param name="type"></param>
+        /// <returns>
+        /// <see cref="StorageResource"/> which represents the child blob client of
+        /// this respective blob virtual directory resource.
+        /// </returns>
+        internal StorageResource GetChildStorageResource(string encodedPath, BlobType type = BlobType.Block)
+        {
+            // Recreate the blobName using the existing parent directory path
+            if (type == BlobType.Append)
+            {
+                AppendBlobClient client = _blobContainerClient.GetAppendBlobClient(encodedPath);
+                return new AppendBlobStorageResource(
+                    client,
+                    new AppendBlobStorageResourceOptions()
+                    {
+                        // TODO: change options bag to be applicable to child resources
+                        CopyOptions = new AppendBlobStorageResourceServiceCopyOptions()
+                        {
+                            CopyMethod = (TransferCopyMethod) _options?.CopyOptions?.CopyMethod,
+                        },
+                        UploadOptions = new AppendBlobStorageResourceUploadOptions()
+                        {
+                            Conditions = new AppendBlobRequestConditions(),
+                        },
+                        DownloadOptions = new BlobStorageResourceDownloadOptions()
+                        {
+                            Conditions = (BlobRequestConditions)_options?.UploadOptions?.Conditions,
+                        }
+                    });
+            }
+            else if (type == BlobType.Page)
+            {
+                PageBlobClient client = _blobContainerClient.GetPageBlobClient(encodedPath);
+                return new PageBlobStorageResource(
+                    client,
+                    new PageBlobStorageResourceOptions()
+                    {
+                        // TODO: change options bag to be applicable to child resources
+                        CopyOptions = new PageBlobStorageResourceServiceCopyOptions()
+                        {
+                            CopyMethod = (TransferCopyMethod)_options?.CopyOptions?.CopyMethod,
+                        },
+                        UploadOptions = new PageBlobStorageResourceUploadOptions()
+                        {
+                            Conditions = new PageBlobRequestConditions(),
+                        },
+                        DownloadOptions = new BlobStorageResourceDownloadOptions()
+                        {
+                            Conditions = (BlobRequestConditions)_options?.UploadOptions?.Conditions,
+                        }
+                    });
+            }
+            else // (type == BlobType.Block)
+            {
+                BlockBlobClient client = _blobContainerClient.GetBlockBlobClient(encodedPath);
+                return new BlockBlobStorageResource(
+                    client,
+                    new BlockBlobStorageResourceOptions()
+                    {
+                        CopyOptions = _options?.CopyOptions,
+                        UploadOptions = _options?.UploadOptions,
+                        DownloadOptions = _options?.DownloadOptions,
+                    });
+            }
         }
 
         /// <summary>
@@ -117,6 +194,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <returns></returns>
         public override StorageResourceContainer GetParentStorageResourceContainer()
         {
+            // TODO: if there's no parent directory, that means we should return the BlobStorageResourceContainer instead
             // Recreate the blobName using the existing parent directory path
             return new BlobDirectoryStorageResourceContainer(_blobContainerClient, _directoryPrefix.Substring(0, _directoryPrefix.LastIndexOf('/')));
         }
@@ -125,7 +203,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Retrieves a directory blob resource based on this respective resource.
         /// </summary>
         /// <returns></returns>
-        public StorageResourceContainer GetStorageResourceParentContainer()
+        internal StorageResourceContainer GetStorageResourceParentContainer()
         {
             // Recreate the blobName using the existing parent directory path
             return new BlobStorageResourceContainer(_blobContainerClient);
@@ -136,7 +214,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         /// <param name="cancellationToken">Cancellation Token</param>
         /// <returns>List of the child resources in the storage container</returns>
-        public override async IAsyncEnumerable<StorageResource> GetStorageResources(
+        public override async IAsyncEnumerable<StorageResource> GetStorageResourcesAsync(
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             AsyncPageable<BlobItem> pages = _blobContainerClient.GetBlobsAsync(
@@ -144,7 +222,9 @@ namespace Azure.Storage.DataMovement.Blobs
                 cancellationToken: cancellationToken);
             await foreach (BlobItem blobItem in pages.ConfigureAwait(false))
             {
-                yield return GetChildStorageResource(blobItem.Name);
+                yield return GetChildStorageResource(
+                    blobItem.Name,
+                    blobItem.Properties.BlobType.HasValue ? blobItem.Properties.BlobType.Value : BlobType.Block);
             }
         }
     }

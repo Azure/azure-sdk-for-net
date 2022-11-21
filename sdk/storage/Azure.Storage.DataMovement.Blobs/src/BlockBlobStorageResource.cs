@@ -8,6 +8,8 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Schema;
+using Azure.Core;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.DataMovement;
@@ -68,80 +70,63 @@ namespace Azure.Storage.DataMovement.Blobs
         }
 
         /// <summary>
-        /// Creates readable stream to download
-        /// </summary>
-        /// <returns></returns>
-        public override async Task<ReadStreamStorageResourceResult> ReadStreamAsync(
-            long? position = default,
-            CancellationToken cancellationToken = default)
-        {
-            Response<BlobDownloadStreamingResult> response = await _blobClient.DownloadStreamingAsync(
-                new BlobDownloadOptions()
-                {
-                    Range = position.HasValue ? new HttpRange(position.Value) : default,
-                },
-                cancellationToken).ConfigureAwait(false);
-            return response.Value.ToReadStreamStorageResourceInfo();
-        }
-
-        /// <summary>
         /// Consumes the readable stream to upload
         /// </summary>
-        /// <param name="offset">
-        /// The offset which the stream will be copied to.
+        /// <param name="position">
+        /// The offset which the stream will be copied to. Will default to 0.
         /// </param>
         /// <param name="length">
         /// The length of the stream.
         /// </param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public override async Task<ReadStreamStorageResourceResult> ReadPartialStreamAsync(
-            long offset,
-            long length,
+        public override async Task<ReadStreamStorageResourceResult> ReadStreamAsync(
+            long position = 0,
+            long? length = default,
             CancellationToken cancellationToken = default)
         {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             Response<BlobDownloadStreamingResult> response = await _blobClient.DownloadStreamingAsync(
                 new BlobDownloadOptions()
                 {
-                    Range = new HttpRange(offset, length)
+                    Range = new HttpRange(position, length)
                 },
                 cancellationToken).ConfigureAwait(false);
             return response.Value.ToReadStreamStorageResourceInfo();
         }
 
         /// <summary>
-        /// Consumes stream to upload
-        /// </summary>
-        /// <param name="stream"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        public override async Task WriteFromStreamAsync(
-            Stream stream,
-            CancellationToken token = default)
-        {
-            await _blobClient.UploadAsync(stream, new BlobUploadOptions(), cancellationToken:token).ConfigureAwait(false);
-        }
-
-        /// <summary>
         /// Consumes the readable stream to upload
         /// </summary>
-        /// <param name="offset"></param>
+        /// <param name="position"></param>
         /// <param name="length"></param>
         /// <param name="stream"></param>
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public override async Task WriteStreamToOffsetAsync(
-            long offset,
-            long length,
+        public override async Task WriteFromStreamAsync(
             Stream stream,
-            StorageResourceWriteToOffsetOptions options,
+            long position = 0,
+            long? length = default,
+            StorageResourceWriteToOffsetOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            string id = Shared.StorageExtensions.GenerateBlockId(offset);
-            if (!_blocks.TryAdd(offset, id))
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+
+            if (!length.HasValue && position == 0)
             {
-                throw new ArgumentException($"Cannot Stage Block to the specific offset \"{offset}\", it already exists in the existing list");
+                // Default to Upload
+                await _blobClient.UploadAsync(
+                    stream,
+                    new BlobUploadOptions(),
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+                return;
+            }
+
+            string id = Shared.StorageExtensions.GenerateBlockId(position);
+            if (!_blocks.TryAdd(position, id))
+            {
+                throw new ArgumentException($"Cannot Stage Block to the specific offset \"{position}\", it already exists in the existing block list.");
             }
             await _blobClient.StageBlockAsync(
                 id,
@@ -154,14 +139,16 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Consumes blob Url to upload / copy
         /// </summary>
         /// <param name="sourceResource"></param>
-        /// <param name="sourceAuthorization"></param>
+        /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public override async Task CopyFromUriAsync(
             StorageResource sourceResource,
-            StorageResourceCopyFromUriOptions sourceAuthorization = default,
+            StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
         {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+
             if (ServiceCopyMethod == TransferCopyMethod.AsyncCopy)
             {
                 await _blobClient.StartCopyFromUriAsync(sourceResource.Uri, cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -188,6 +175,8 @@ namespace Azure.Storage.DataMovement.Blobs
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
         {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+
             if (ServiceCopyMethod == TransferCopyMethod.SyncCopy)
             {
                 string id = options?.BlockId ?? Shared.StorageExtensions.GenerateBlockId(range.Offset);
@@ -214,8 +203,9 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Get properties of the resource.
         /// </summary>
         /// <returns>Returns the length of the storage resource</returns>
-        public override async Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken)
+        public override async Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             BlobProperties properties = await _blobClient.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
             return properties.ToStorageResourceProperties();
         }
@@ -223,8 +213,9 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Commits the block list given.
         /// </summary>
-        public override async Task CompleteTransferAsync(CancellationToken cancellationToken)
+        public override async Task CompleteTransferAsync(CancellationToken cancellationToken = default)
         {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             if (_blocks != null && !_blocks.IsEmpty)
             {
                 IEnumerable<string> blockIds = _blocks.OrderBy(x => x.Key).Select(x => x.Value);

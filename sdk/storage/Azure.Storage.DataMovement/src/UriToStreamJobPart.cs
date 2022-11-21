@@ -131,8 +131,8 @@ namespace Azure.Storage.DataMovement
 
             try
             {
-                Task<ReadStreamStorageResourceResult> initialTask = _sourceResource.ReadPartialStreamAsync(
-                    offset: 0,
+                Task<ReadStreamStorageResourceResult> initialTask = _sourceResource.ReadStreamAsync(
+                    position: 0,
                     length: _initialTransferSize,
                     _cancellationTokenSource.Token);
 
@@ -232,7 +232,7 @@ namespace Azure.Storage.DataMovement
         {
             try
             {
-                ReadStreamStorageResourceResult result = await _sourceResource.ReadPartialStreamAsync(
+                ReadStreamStorageResourceResult result = await _sourceResource.ReadStreamAsync(
                     range.Offset,
                     (long) range.Length,
                     _cancellationTokenSource.Token).ConfigureAwait(false);
@@ -264,10 +264,10 @@ namespace Azure.Storage.DataMovement
             try
             {
                 // TODO: change to custom offset based on chunk offset
-                await _destinationResource.WriteStreamToOffsetAsync(
+                await _destinationResource.WriteFromStreamAsync(
+                    source,
                     offset,
                     sourceLength,
-                    source,
                     default,
                     _cancellationTokenSource.Token).ConfigureAwait(false);
             }

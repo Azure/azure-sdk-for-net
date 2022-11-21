@@ -49,17 +49,9 @@ namespace Azure.Storage.DataMovement
         public abstract ProduceUriType CanProduceUri { get; }
 
         /// <summary>
-        /// Produces readable stream to download
-        /// </summary>
-        /// <returns></returns>
-        public abstract Task<ReadStreamStorageResourceResult> ReadStreamAsync(
-            long? position = default,
-            CancellationToken cancellationToken = default);
-
-        /// <summary>
         /// Consumes the readable stream to upload
         /// </summary>
-        /// <param name="offset">
+        /// <param name="position">
         /// The offset which the stream will be copied to.
         /// </param>
         /// <param name="length">
@@ -67,25 +59,15 @@ namespace Azure.Storage.DataMovement
         /// </param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public abstract Task<ReadStreamStorageResourceResult> ReadPartialStreamAsync(
-            long offset,
-            long length,
+        public abstract Task<ReadStreamStorageResourceResult> ReadStreamAsync(
+            long position = 0,
+            long? length = default,
             CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Consumes the readable stream to upload
         /// </summary>
-        /// <param name="stream"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public abstract Task WriteFromStreamAsync(
-            Stream stream,
-            CancellationToken cancellationToken = default);
-
-        /// <summary>
-        /// Consumes the readable stream to upload
-        /// </summary>
-        /// <param name="offset">
+        /// <param name="position">
         /// The offset which the stream will be copied to.
         /// </param>
         /// <param name="length">
@@ -95,11 +77,11 @@ namespace Azure.Storage.DataMovement
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public abstract Task WriteStreamToOffsetAsync(
-            long offset,
-            long length,
+        public abstract Task WriteFromStreamAsync(
             Stream stream,
-            StorageResourceWriteToOffsetOptions options,
+            long position = 0,
+            long? length = default,
+            StorageResourceWriteToOffsetOptions options = default,
             CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -132,12 +114,12 @@ namespace Azure.Storage.DataMovement
         /// Get lengths of the resource.
         /// </summary>
         /// <returns>Returns the properties of the storage resource</returns>
-        public abstract Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken token);
+        public abstract Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken token = default);
 
         /// <summary>
         /// If the operation requires any ending transfers (e.g. Committing a block list, flushing crypto streams)
         /// </summary>
         /// <returns>The Task which Commits the list of ids</returns>
-        public abstract Task CompleteTransferAsync(CancellationToken cancellationToken);
+        public abstract Task CompleteTransferAsync(CancellationToken cancellationToken = default);
     }
 }

@@ -62,25 +62,9 @@ namespace Azure.Storage.DataMovement.Blobs
         }
 
         /// <summary>
-        /// Creates readable stream to download
-        /// </summary>
-        /// <returns></returns>
-        public override async Task<ReadStreamStorageResourceResult> ReadStreamAsync(
-            long? position = default,
-            CancellationToken cancellationToken = default)
-        {
-            Response<BlobDownloadStreamingResult> response = await _blobClient.DownloadStreamingAsync(
-                new HttpRange(position ?? 0, Constants.LargeBufferSize), // TODO: convert to take in max size
-                default, // TODO: convert options to conditions
-                false,
-                cancellationToken).ConfigureAwait(false);
-            return response.Value.ToReadStreamStorageResourceInfo();
-        }
-
-        /// <summary>
         /// Consumes the readable stream to upload
         /// </summary>
-        /// <param name="offset">
+        /// <param name="position">
         /// The offset which the stream will be copied to.
         /// </param>
         /// <param name="length">
@@ -88,15 +72,16 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public override async Task<ReadStreamStorageResourceResult> ReadPartialStreamAsync(
-            long offset,
-            long length,
+        public override async Task<ReadStreamStorageResourceResult> ReadStreamAsync(
+            long position = 0,
+            long? length = default,
             CancellationToken cancellationToken = default)
         {
             Response<BlobDownloadStreamingResult> response = await _blobClient.DownloadStreamingAsync(
-                new HttpRange(offset, length),
-                default, // TODO: convert options to conditions
-                false,
+                new BlobDownloadOptions()
+                {
+                    Range = new HttpRange(position, length)
+                },
                 cancellationToken).ConfigureAwait(false);
             return response.Value.ToReadStreamStorageResourceInfo();
         }
@@ -104,35 +89,30 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Consumes stream to upload
         /// </summary>
-        /// <param name="stream"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public override async Task WriteFromStreamAsync(
-            Stream stream,
-            CancellationToken cancellationToken)
-        {
-            // TODO: change depending on type of blob and type single shot or parallel transfer
-            await _blobClient.AppendBlockAsync(stream, cancellationToken: cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Consumes the readable stream to upload
-        /// </summary>
-        /// <param name="offset"></param>
+        /// <param name="position"></param>
         /// <param name="length"></param>
         /// <param name="stream"></param>
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public override async Task WriteStreamToOffsetAsync(
-            long offset,
-            long length,
+        public override async Task WriteFromStreamAsync(
             Stream stream,
-            StorageResourceWriteToOffsetOptions options,
+            long position = 0,
+            long? length = default,
+            StorageResourceWriteToOffsetOptions options = default,
             CancellationToken cancellationToken = default)
         {
+            // TODO: change depending on type of blob and type single shot or parallel transfer
             await _blobClient.AppendBlockAsync(
-                stream,
+                content: stream,
+                new AppendBlobAppendBlockOptions()
+                {
+                    Conditions = new AppendBlobRequestConditions()
+                    {
+                        IfAppendPositionEqual = position,
+                        IfMaxSizeLessThanOrEqual = length
+                    },
+                },
                 cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
@@ -148,14 +128,18 @@ namespace Azure.Storage.DataMovement.Blobs
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
         {
-             await _blobClient.AppendBlockFromUriAsync(
-               sourceResource.Uri,
-               options: new AppendBlobAppendBlockFromUriOptions()
-               {
-                   SourceAuthentication = options.SourceAuthentication,
-                   //TODO: convert options to this options bag
-               },
-               cancellationToken: cancellationToken).ConfigureAwait(false);
+            if (ServiceCopyMethod == TransferCopyMethod.AsyncCopy)
+            {
+                await _blobClient.StartCopyFromUriAsync(
+                    sourceResource.Uri,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            else //(ServiceCopyMethod == TransferCopyMethod.SyncCopy)
+            {
+                // We use SyncUploadFromUri over SyncCopyUploadFromUri in this case because it accepts any blob type as the source.
+                // TODO: subject to change as we scale to suppport resource types outside of blobs.
+                await _blobClient.SyncCopyFromUriAsync(sourceResource.Uri, cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
         }
 
         /// <summary>
@@ -172,22 +156,29 @@ namespace Azure.Storage.DataMovement.Blobs
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            await _blobClient.AppendBlockFromUriAsync(
+            if (ServiceCopyMethod == TransferCopyMethod.SyncCopy)
+            {
+                await _blobClient.AppendBlockFromUriAsync(
                 sourceResource.Uri,
                 options: new AppendBlobAppendBlockFromUriOptions()
                 {
                     SourceRange = range,
-                    SourceAuthentication = options.SourceAuthentication,
+                    SourceAuthentication = options?.SourceAuthentication,
                     //TODO: convert options to this options bag
                 },
                 cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            else
+            {
+                throw new NotSupportedException("TransferCopyMethod specified is not supported in this resource");
+            }
         }
 
         /// <summary>
         /// Get properties of the resource.
         /// </summary>
         /// <returns>Returns the length of the storage resource</returns>
-        public override async Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken)
+        public override async Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
             BlobProperties properties = await _blobClient.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
             return properties.ToStorageResourceProperties();
@@ -196,7 +187,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Commits the block list given.
         /// </summary>
-        public override Task CompleteTransferAsync(CancellationToken cancellationToken)
+        public override Task CompleteTransferAsync(CancellationToken cancellationToken = default)
         {
             // no-op for now
             return Task.CompletedTask;

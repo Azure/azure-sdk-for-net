@@ -22,11 +22,6 @@ namespace Azure.Storage.DataMovement.Tests
     /// <summary>
     /// Base class for Common tests
     /// </summary>
-    [ClientTestFixture(
-    BlobClientOptions.ServiceVersion.V2020_06_12,
-    BlobClientOptions.ServiceVersion.V2020_08_04,
-    RecordingServiceVersion = BlobClientOptions.ServiceVersion.V2020_08_04,
-    LiveServiceVersions = new object[] { BlobClientOptions.ServiceVersion.V2020_06_12 })]
     public abstract class DataMovementBlobTestBase : DataMovementTestBase
     {
         /// <summary>
