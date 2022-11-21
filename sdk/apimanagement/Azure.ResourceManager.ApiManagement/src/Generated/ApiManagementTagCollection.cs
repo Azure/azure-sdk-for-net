@@ -185,41 +185,40 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tags
         /// Operation Id: Tag_ListByService
         /// </summary>
-        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
-        /// <param name="top"> Number of records to return. </param>
-        /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="scope"> Scope like &apos;apis&apos;, &apos;products&apos; or &apos;apis/{apiId}. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApiManagementTagResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiManagementTagResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, string scope = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ApiManagementTagResource> GetAllAsync(ApiManagementTagGetAllOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new ApiManagementTagGetAllOptions();
+
             async Task<Page<ApiManagementTagResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _apiManagementTagTagClientDiagnostics.CreateScope("ApiManagementTagCollection.GetAll");
-                scope0.Start();
+                using var scope = _apiManagementTagTagClientDiagnostics.CreateScope("ApiManagementTagCollection.GetAll");
+                scope.Start();
                 try
                 {
-                    var response = await _apiManagementTagTagRestClient.ListByServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, scope, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _apiManagementTagTagRestClient.ListByServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Filter, options.Top, options.Skip, options.Scope, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ApiManagementTagResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
             async Task<Page<ApiManagementTagResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope0 = _apiManagementTagTagClientDiagnostics.CreateScope("ApiManagementTagCollection.GetAll");
-                scope0.Start();
+                using var scope = _apiManagementTagTagClientDiagnostics.CreateScope("ApiManagementTagCollection.GetAll");
+                scope.Start();
                 try
                 {
-                    var response = await _apiManagementTagTagRestClient.ListByServiceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, scope, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _apiManagementTagTagRestClient.ListByServiceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Filter, options.Top, options.Skip, options.Scope, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ApiManagementTagResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
@@ -231,41 +230,40 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tags
         /// Operation Id: Tag_ListByService
         /// </summary>
-        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
-        /// <param name="top"> Number of records to return. </param>
-        /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="scope"> Scope like &apos;apis&apos;, &apos;products&apos; or &apos;apis/{apiId}. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApiManagementTagResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiManagementTagResource> GetAll(string filter = null, int? top = null, int? skip = null, string scope = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ApiManagementTagResource> GetAll(ApiManagementTagGetAllOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new ApiManagementTagGetAllOptions();
+
             Page<ApiManagementTagResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _apiManagementTagTagClientDiagnostics.CreateScope("ApiManagementTagCollection.GetAll");
-                scope0.Start();
+                using var scope = _apiManagementTagTagClientDiagnostics.CreateScope("ApiManagementTagCollection.GetAll");
+                scope.Start();
                 try
                 {
-                    var response = _apiManagementTagTagRestClient.ListByService(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, scope, cancellationToken: cancellationToken);
+                    var response = _apiManagementTagTagRestClient.ListByService(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Filter, options.Top, options.Skip, options.Scope, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ApiManagementTagResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
             Page<ApiManagementTagResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope0 = _apiManagementTagTagClientDiagnostics.CreateScope("ApiManagementTagCollection.GetAll");
-                scope0.Start();
+                using var scope = _apiManagementTagTagClientDiagnostics.CreateScope("ApiManagementTagCollection.GetAll");
+                scope.Start();
                 try
                 {
-                    var response = _apiManagementTagTagRestClient.ListByServiceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, scope, cancellationToken: cancellationToken);
+                    var response = _apiManagementTagTagRestClient.ListByServiceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Filter, options.Top, options.Skip, options.Scope, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ApiManagementTagResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
@@ -328,17 +326,17 @@ namespace Azure.ResourceManager.ApiManagement
 
         IEnumerator<ApiManagementTagResource> IEnumerable<ApiManagementTagResource>.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IAsyncEnumerator<ApiManagementTagResource> IAsyncEnumerable<ApiManagementTagResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

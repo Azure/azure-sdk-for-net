@@ -171,20 +171,20 @@ namespace Azure.ResourceManager.Authorization
         /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignments
         /// Operation Id: RoleAssignments_ListForScope
         /// </summary>
-        /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
-        /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
-        /// <param name="skipToken"> The skipToken to apply on the operation. Use $skipToken={skiptoken} to return paged role assignments following the skipToken passed. Only supported on provider level calls. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RoleAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RoleAssignmentResource> GetAllAsync(string filter = null, string tenantId = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<RoleAssignmentResource> GetAllAsync(RoleAssignmentGetAllOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new RoleAssignmentGetAllOptions();
+
             async Task<Page<RoleAssignmentResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _roleAssignmentClientDiagnostics.CreateScope("RoleAssignmentCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _roleAssignmentRestClient.ListForScopeAsync(Id, filter, tenantId, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _roleAssignmentRestClient.ListForScopeAsync(Id, options.Filter, options.TenantId, options.SkipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new RoleAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Authorization
                 scope.Start();
                 try
                 {
-                    var response = await _roleAssignmentRestClient.ListForScopeNextPageAsync(nextLink, Id, filter, tenantId, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _roleAssignmentRestClient.ListForScopeNextPageAsync(nextLink, Id, options.Filter, options.TenantId, options.SkipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new RoleAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -216,20 +216,20 @@ namespace Azure.ResourceManager.Authorization
         /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignments
         /// Operation Id: RoleAssignments_ListForScope
         /// </summary>
-        /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
-        /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
-        /// <param name="skipToken"> The skipToken to apply on the operation. Use $skipToken={skiptoken} to return paged role assignments following the skipToken passed. Only supported on provider level calls. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RoleAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RoleAssignmentResource> GetAll(string filter = null, string tenantId = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<RoleAssignmentResource> GetAll(RoleAssignmentGetAllOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new RoleAssignmentGetAllOptions();
+
             Page<RoleAssignmentResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _roleAssignmentClientDiagnostics.CreateScope("RoleAssignmentCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _roleAssignmentRestClient.ListForScope(Id, filter, tenantId, skipToken, cancellationToken: cancellationToken);
+                    var response = _roleAssignmentRestClient.ListForScope(Id, options.Filter, options.TenantId, options.SkipToken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new RoleAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Authorization
                 scope.Start();
                 try
                 {
-                    var response = _roleAssignmentRestClient.ListForScopeNextPage(nextLink, Id, filter, tenantId, skipToken, cancellationToken: cancellationToken);
+                    var response = _roleAssignmentRestClient.ListForScopeNextPage(nextLink, Id, options.Filter, options.TenantId, options.SkipToken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new RoleAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -312,17 +312,17 @@ namespace Azure.ResourceManager.Authorization
 
         IEnumerator<RoleAssignmentResource> IEnumerable<RoleAssignmentResource>.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IAsyncEnumerator<RoleAssignmentResource> IAsyncEnumerable<RoleAssignmentResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

@@ -516,12 +516,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Operation Id: ReplicationMigrationItems_List
         /// </summary>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="skipToken"> The pagination token. </param>
-        /// <param name="takeToken"> The page size. </param>
-        /// <param name="filter"> OData filter options. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MigrationItemResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MigrationItemResource> GetMigrationItemsAsync(string resourceName, string skipToken = null, string takeToken = null, string filter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MigrationItemResource> GetMigrationItemsAsync(string resourceName, RecoveryServicesSiteRecoveryExtensionsGetMigrationItemsOptions options, CancellationToken cancellationToken = default)
         {
             async Task<Page<MigrationItemResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -529,7 +527,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 scope.Start();
                 try
                 {
-                    var response = await MigrationItemReplicationMigrationItemsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, skipToken, takeToken, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await MigrationItemReplicationMigrationItemsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, options.SkipToken, options.TakeToken, options.Filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new MigrationItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -544,7 +542,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 scope.Start();
                 try
                 {
-                    var response = await MigrationItemReplicationMigrationItemsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, skipToken, takeToken, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await MigrationItemReplicationMigrationItemsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, options.SkipToken, options.TakeToken, options.Filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new MigrationItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -562,12 +560,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Operation Id: ReplicationMigrationItems_List
         /// </summary>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="skipToken"> The pagination token. </param>
-        /// <param name="takeToken"> The page size. </param>
-        /// <param name="filter"> OData filter options. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MigrationItemResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MigrationItemResource> GetMigrationItems(string resourceName, string skipToken = null, string takeToken = null, string filter = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<MigrationItemResource> GetMigrationItems(string resourceName, RecoveryServicesSiteRecoveryExtensionsGetMigrationItemsOptions options, CancellationToken cancellationToken = default)
         {
             Page<MigrationItemResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -575,7 +571,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 scope.Start();
                 try
                 {
-                    var response = MigrationItemReplicationMigrationItemsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, resourceName, skipToken, takeToken, filter, cancellationToken: cancellationToken);
+                    var response = MigrationItemReplicationMigrationItemsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, resourceName, options.SkipToken, options.TakeToken, options.Filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new MigrationItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -590,7 +586,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 scope.Start();
                 try
                 {
-                    var response = MigrationItemReplicationMigrationItemsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, skipToken, takeToken, filter, cancellationToken: cancellationToken);
+                    var response = MigrationItemReplicationMigrationItemsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, options.SkipToken, options.TakeToken, options.Filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new MigrationItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

@@ -224,13 +224,10 @@ namespace Azure.ResourceManager.Peering
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Peering/legacyPeerings
         /// Operation Id: LegacyPeerings_List
         /// </summary>
-        /// <param name="peeringLocation"> The location of the peering. </param>
-        /// <param name="kind"> The kind of the peering. </param>
-        /// <param name="asn"> The ASN number associated with a legacy peering. </param>
-        /// <param name="directPeeringType"> The direct peering type. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PeeringResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PeeringResource> GetPeeringsByLegacyPeeringAsync(string peeringLocation, LegacyPeeringsKind kind, int? asn = null, DirectPeeringType? directPeeringType = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PeeringResource> GetPeeringsByLegacyPeeringAsync(PeeringExtensionsGetPeeringsByLegacyPeeringOptions options, CancellationToken cancellationToken = default)
         {
             async Task<Page<PeeringResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -238,7 +235,7 @@ namespace Azure.ResourceManager.Peering
                 scope.Start();
                 try
                 {
-                    var response = await LegacyPeeringsRestClient.ListAsync(Id.SubscriptionId, peeringLocation, kind, asn, directPeeringType, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await LegacyPeeringsRestClient.ListAsync(Id.SubscriptionId, options.PeeringLocation, options.Kind, options.Asn, options.DirectPeeringType, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new PeeringResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -253,7 +250,7 @@ namespace Azure.ResourceManager.Peering
                 scope.Start();
                 try
                 {
-                    var response = await LegacyPeeringsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, peeringLocation, kind, asn, directPeeringType, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await LegacyPeeringsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, options.PeeringLocation, options.Kind, options.Asn, options.DirectPeeringType, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new PeeringResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -270,13 +267,10 @@ namespace Azure.ResourceManager.Peering
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Peering/legacyPeerings
         /// Operation Id: LegacyPeerings_List
         /// </summary>
-        /// <param name="peeringLocation"> The location of the peering. </param>
-        /// <param name="kind"> The kind of the peering. </param>
-        /// <param name="asn"> The ASN number associated with a legacy peering. </param>
-        /// <param name="directPeeringType"> The direct peering type. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PeeringResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PeeringResource> GetPeeringsByLegacyPeering(string peeringLocation, LegacyPeeringsKind kind, int? asn = null, DirectPeeringType? directPeeringType = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<PeeringResource> GetPeeringsByLegacyPeering(PeeringExtensionsGetPeeringsByLegacyPeeringOptions options, CancellationToken cancellationToken = default)
         {
             Page<PeeringResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -284,7 +278,7 @@ namespace Azure.ResourceManager.Peering
                 scope.Start();
                 try
                 {
-                    var response = LegacyPeeringsRestClient.List(Id.SubscriptionId, peeringLocation, kind, asn, directPeeringType, cancellationToken: cancellationToken);
+                    var response = LegacyPeeringsRestClient.List(Id.SubscriptionId, options.PeeringLocation, options.Kind, options.Asn, options.DirectPeeringType, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new PeeringResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -299,7 +293,7 @@ namespace Azure.ResourceManager.Peering
                 scope.Start();
                 try
                 {
-                    var response = LegacyPeeringsRestClient.ListNextPage(nextLink, Id.SubscriptionId, peeringLocation, kind, asn, directPeeringType, cancellationToken: cancellationToken);
+                    var response = LegacyPeeringsRestClient.ListNextPage(nextLink, Id.SubscriptionId, options.PeeringLocation, options.Kind, options.Asn, options.DirectPeeringType, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new PeeringResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -316,18 +310,15 @@ namespace Azure.ResourceManager.Peering
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Peering/lookingGlass
         /// Operation Id: LookingGlass_Invoke
         /// </summary>
-        /// <param name="command"> The command to be executed: ping, traceroute, bgpRoute. </param>
-        /// <param name="sourceType"> The type of the source: Edge site or Azure Region. </param>
-        /// <param name="sourceLocation"> The location of the source. </param>
-        /// <param name="destinationIP"> The IP address of the destination. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LookingGlassOutput>> InvokeLookingGlassAsync(LookingGlassCommand command, LookingGlassSourceType sourceType, string sourceLocation, string destinationIP, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LookingGlassOutput>> InvokeLookingGlassAsync(PeeringExtensionsInvokeLookingGlassOptions options, CancellationToken cancellationToken = default)
         {
             using var scope = LookingGlassClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.InvokeLookingGlass");
             scope.Start();
             try
             {
-                var response = await LookingGlassRestClient.InvokeAsync(Id.SubscriptionId, command, sourceType, sourceLocation, destinationIP, cancellationToken).ConfigureAwait(false);
+                var response = await LookingGlassRestClient.InvokeAsync(Id.SubscriptionId, options.Command, options.SourceType, options.SourceLocation, options.DestinationIP, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -342,18 +333,15 @@ namespace Azure.ResourceManager.Peering
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Peering/lookingGlass
         /// Operation Id: LookingGlass_Invoke
         /// </summary>
-        /// <param name="command"> The command to be executed: ping, traceroute, bgpRoute. </param>
-        /// <param name="sourceType"> The type of the source: Edge site or Azure Region. </param>
-        /// <param name="sourceLocation"> The location of the source. </param>
-        /// <param name="destinationIP"> The IP address of the destination. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LookingGlassOutput> InvokeLookingGlass(LookingGlassCommand command, LookingGlassSourceType sourceType, string sourceLocation, string destinationIP, CancellationToken cancellationToken = default)
+        public virtual Response<LookingGlassOutput> InvokeLookingGlass(PeeringExtensionsInvokeLookingGlassOptions options, CancellationToken cancellationToken = default)
         {
             using var scope = LookingGlassClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.InvokeLookingGlass");
             scope.Start();
             try
             {
-                var response = LookingGlassRestClient.Invoke(Id.SubscriptionId, command, sourceType, sourceLocation, destinationIP, cancellationToken);
+                var response = LookingGlassRestClient.Invoke(Id.SubscriptionId, options.Command, options.SourceType, options.SourceLocation, options.DestinationIP, cancellationToken);
                 return response;
             }
             catch (Exception e)

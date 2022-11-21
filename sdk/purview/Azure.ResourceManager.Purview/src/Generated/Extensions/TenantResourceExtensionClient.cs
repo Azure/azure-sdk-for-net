@@ -48,22 +48,20 @@ namespace Azure.ResourceManager.Purview
         /// Request Path: /providers/Microsoft.Purview/getDefaultAccount
         /// Operation Id: DefaultAccounts_Get
         /// </summary>
-        /// <param name="scopeTenantId"> The tenant ID. </param>
-        /// <param name="scopeType"> The scope for the default account. </param>
-        /// <param name="scope"> The Id of the scope object, for example if the scope is &quot;Subscription&quot; then it is the ID of that subscription. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DefaultPurviewAccountPayload>> GetDefaultAccountAsync(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DefaultPurviewAccountPayload>> GetDefaultAccountAsync(PurviewExtensionsGetDefaultAccountOptions options, CancellationToken cancellationToken = default)
         {
-            using var scope0 = DefaultAccountsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetDefaultAccount");
-            scope0.Start();
+            using var scope = DefaultAccountsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetDefaultAccount");
+            scope.Start();
             try
             {
-                var response = await DefaultAccountsRestClient.GetAsync(scopeTenantId, scopeType, scope, cancellationToken).ConfigureAwait(false);
+                var response = await DefaultAccountsRestClient.GetAsync(options.ScopeTenantId, options.ScopeType, options.Scope, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -73,22 +71,20 @@ namespace Azure.ResourceManager.Purview
         /// Request Path: /providers/Microsoft.Purview/getDefaultAccount
         /// Operation Id: DefaultAccounts_Get
         /// </summary>
-        /// <param name="scopeTenantId"> The tenant ID. </param>
-        /// <param name="scopeType"> The scope for the default account. </param>
-        /// <param name="scope"> The Id of the scope object, for example if the scope is &quot;Subscription&quot; then it is the ID of that subscription. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DefaultPurviewAccountPayload> GetDefaultAccount(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
+        public virtual Response<DefaultPurviewAccountPayload> GetDefaultAccount(PurviewExtensionsGetDefaultAccountOptions options, CancellationToken cancellationToken = default)
         {
-            using var scope0 = DefaultAccountsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetDefaultAccount");
-            scope0.Start();
+            using var scope = DefaultAccountsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetDefaultAccount");
+            scope.Start();
             try
             {
-                var response = DefaultAccountsRestClient.Get(scopeTenantId, scopeType, scope, cancellationToken);
+                var response = DefaultAccountsRestClient.Get(options.ScopeTenantId, options.ScopeType, options.Scope, cancellationToken);
                 return response;
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -144,22 +140,20 @@ namespace Azure.ResourceManager.Purview
         /// Request Path: /providers/Microsoft.Purview/removeDefaultAccount
         /// Operation Id: DefaultAccounts_Remove
         /// </summary>
-        /// <param name="scopeTenantId"> The tenant ID. </param>
-        /// <param name="scopeType"> The scope for the default account. </param>
-        /// <param name="scope"> The Id of the scope object, for example if the scope is &quot;Subscription&quot; then it is the ID of that subscription. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> RemoveDefaultAccountAsync(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RemoveDefaultAccountAsync(PurviewExtensionsRemoveDefaultAccountOptions options, CancellationToken cancellationToken = default)
         {
-            using var scope0 = DefaultAccountsClientDiagnostics.CreateScope("TenantResourceExtensionClient.RemoveDefaultAccount");
-            scope0.Start();
+            using var scope = DefaultAccountsClientDiagnostics.CreateScope("TenantResourceExtensionClient.RemoveDefaultAccount");
+            scope.Start();
             try
             {
-                var response = await DefaultAccountsRestClient.RemoveAsync(scopeTenantId, scopeType, scope, cancellationToken).ConfigureAwait(false);
+                var response = await DefaultAccountsRestClient.RemoveAsync(options.ScopeTenantId, options.ScopeType, options.Scope, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -169,22 +163,20 @@ namespace Azure.ResourceManager.Purview
         /// Request Path: /providers/Microsoft.Purview/removeDefaultAccount
         /// Operation Id: DefaultAccounts_Remove
         /// </summary>
-        /// <param name="scopeTenantId"> The tenant ID. </param>
-        /// <param name="scopeType"> The scope for the default account. </param>
-        /// <param name="scope"> The Id of the scope object, for example if the scope is &quot;Subscription&quot; then it is the ID of that subscription. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response RemoveDefaultAccount(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
+        public virtual Response RemoveDefaultAccount(PurviewExtensionsRemoveDefaultAccountOptions options, CancellationToken cancellationToken = default)
         {
-            using var scope0 = DefaultAccountsClientDiagnostics.CreateScope("TenantResourceExtensionClient.RemoveDefaultAccount");
-            scope0.Start();
+            using var scope = DefaultAccountsClientDiagnostics.CreateScope("TenantResourceExtensionClient.RemoveDefaultAccount");
+            scope.Start();
             try
             {
-                var response = DefaultAccountsRestClient.Remove(scopeTenantId, scopeType, scope, cancellationToken);
+                var response = DefaultAccountsRestClient.Remove(options.ScopeTenantId, options.ScopeType, options.Scope, cancellationToken);
                 return response;
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }

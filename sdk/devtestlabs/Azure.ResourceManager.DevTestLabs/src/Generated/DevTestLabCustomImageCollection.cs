@@ -16,6 +16,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DevTestLabs.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
@@ -184,21 +185,20 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/customimages
         /// Operation Id: CustomImages_List
         /// </summary>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=vm)&apos;. </param>
-        /// <param name="filter"> The filter to apply to the operation. Example: &apos;$filter=contains(name,&apos;myName&apos;). </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
-        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: &apos;$orderby=name desc&apos;. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DevTestLabCustomImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DevTestLabCustomImageResource> GetAllAsync(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DevTestLabCustomImageResource> GetAllAsync(DevTestLabCustomImageGetAllOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new DevTestLabCustomImageGetAllOptions();
+
             async Task<Page<DevTestLabCustomImageResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _devTestLabCustomImageCustomImagesClientDiagnostics.CreateScope("DevTestLabCustomImageCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _devTestLabCustomImageCustomImagesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _devTestLabCustomImageCustomImagesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Expand, options.Filter, options.Top, options.Orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new DevTestLabCustomImageResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 scope.Start();
                 try
                 {
-                    var response = await _devTestLabCustomImageCustomImagesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _devTestLabCustomImageCustomImagesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Expand, options.Filter, options.Top, options.Orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new DevTestLabCustomImageResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -230,21 +230,20 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/customimages
         /// Operation Id: CustomImages_List
         /// </summary>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=vm)&apos;. </param>
-        /// <param name="filter"> The filter to apply to the operation. Example: &apos;$filter=contains(name,&apos;myName&apos;). </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
-        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: &apos;$orderby=name desc&apos;. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DevTestLabCustomImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DevTestLabCustomImageResource> GetAll(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<DevTestLabCustomImageResource> GetAll(DevTestLabCustomImageGetAllOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new DevTestLabCustomImageGetAllOptions();
+
             Page<DevTestLabCustomImageResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _devTestLabCustomImageCustomImagesClientDiagnostics.CreateScope("DevTestLabCustomImageCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _devTestLabCustomImageCustomImagesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby, cancellationToken: cancellationToken);
+                    var response = _devTestLabCustomImageCustomImagesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Expand, options.Filter, options.Top, options.Orderby, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new DevTestLabCustomImageResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -259,7 +258,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 scope.Start();
                 try
                 {
-                    var response = _devTestLabCustomImageCustomImagesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby, cancellationToken: cancellationToken);
+                    var response = _devTestLabCustomImageCustomImagesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Expand, options.Filter, options.Top, options.Orderby, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new DevTestLabCustomImageResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -329,17 +328,17 @@ namespace Azure.ResourceManager.DevTestLabs
 
         IEnumerator<DevTestLabCustomImageResource> IEnumerable<DevTestLabCustomImageResource>.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IAsyncEnumerator<DevTestLabCustomImageResource> IAsyncEnumerable<DevTestLabCustomImageResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

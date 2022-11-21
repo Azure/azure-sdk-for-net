@@ -325,5 +325,209 @@ namespace Azure.ResourceManager.AppService
                 throw;
             }
         }
+
+        /// <summary>
+        /// Description for Get site detector response
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/detectors/{detectorName}
+        /// Operation Id: Diagnostics_GetSiteDetectorResponse
+        /// </summary>
+        /// <param name="detectorName"> Detector Resource Name. </param>
+        /// <param name="startTime"> Start Time. </param>
+        /// <param name="endTime"> End Time. </param>
+        /// <param name="timeGrain"> Time Grain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SiteDetectorResource>> GetSiteDetectorAsync(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
+        {
+            return await GetSiteDetectors().GetAsync(detectorName, startTime, endTime, timeGrain, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Get site detector response
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/detectors/{detectorName}
+        /// Operation Id: Diagnostics_GetSiteDetectorResponse
+        /// </summary>
+        /// <param name="detectorName"> Detector Resource Name. </param>
+        /// <param name="startTime"> Start Time. </param>
+        /// <param name="endTime"> End Time. </param>
+        /// <param name="timeGrain"> Time Grain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SiteDetectorResource> GetSiteDetector(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
+        {
+            return GetSiteDetectors().Get(detectorName, startTime, endTime, timeGrain, cancellationToken);
+        }
+
+#pragma warning disable CA1054
+        /// <summary>
+        /// Description for Start capturing network packets for the site (To be deprecated).
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/networkTrace/start
+        /// Operation Id: WebApps_StartWebSiteNetworkTrace
+        /// </summary>
+        /// <param name="durationInSeconds"> The duration to keep capturing in seconds. </param>
+        /// <param name="maxFrameLength"> The maximum frame length in bytes (Optional). </param>
+        /// <param name="sasUrl"> The Blob URL to store capture file. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<string>> StartWebSiteNetworkTraceAsync(int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.StartWebSiteNetworkTrace");
+            scope.Start();
+            try
+            {
+                var response = await _webSiteWebAppsRestClient.StartWebSiteNetworkTraceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Start capturing network packets for the site (To be deprecated).
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/networkTrace/start
+        /// Operation Id: WebApps_StartWebSiteNetworkTrace
+        /// </summary>
+        /// <param name="durationInSeconds"> The duration to keep capturing in seconds. </param>
+        /// <param name="maxFrameLength"> The maximum frame length in bytes (Optional). </param>
+        /// <param name="sasUrl"> The Blob URL to store capture file. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<string> StartWebSiteNetworkTrace(int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.StartWebSiteNetworkTrace");
+            scope.Start();
+            try
+            {
+                var response = _webSiteWebAppsRestClient.StartWebSiteNetworkTrace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Start capturing network packets for the site.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/networkTrace/startOperation
+        /// Operation Id: WebApps_StartWebSiteNetworkTraceOperation
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="durationInSeconds"> The duration to keep capturing in seconds. </param>
+        /// <param name="maxFrameLength"> The maximum frame length in bytes (Optional). </param>
+        /// <param name="sasUrl"> The Blob URL to store capture file. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<IList<WebAppNetworkTrace>>> StartWebSiteNetworkTraceOperationAsync(WaitUntil waitUntil, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.StartWebSiteNetworkTraceOperation");
+            scope.Start();
+            try
+            {
+                var response = await _webSiteWebAppsRestClient.StartWebSiteNetworkTraceOperationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl, cancellationToken).ConfigureAwait(false);
+                var operation = new AppServiceArmOperation<IList<WebAppNetworkTrace>>(new IListOperationSource(), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateStartWebSiteNetworkTraceOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Start capturing network packets for the site.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/networkTrace/startOperation
+        /// Operation Id: WebApps_StartWebSiteNetworkTraceOperation
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="durationInSeconds"> The duration to keep capturing in seconds. </param>
+        /// <param name="maxFrameLength"> The maximum frame length in bytes (Optional). </param>
+        /// <param name="sasUrl"> The Blob URL to store capture file. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<IList<WebAppNetworkTrace>> StartWebSiteNetworkTraceOperation(WaitUntil waitUntil, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.StartWebSiteNetworkTraceOperation");
+            scope.Start();
+            try
+            {
+                var response = _webSiteWebAppsRestClient.StartWebSiteNetworkTraceOperation(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl, cancellationToken);
+                var operation = new AppServiceArmOperation<IList<WebAppNetworkTrace>>(new IListOperationSource(), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateStartWebSiteNetworkTraceOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Start capturing network packets for the site.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/startNetworkTrace
+        /// Operation Id: WebApps_StartNetworkTrace
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="durationInSeconds"> The duration to keep capturing in seconds. </param>
+        /// <param name="maxFrameLength"> The maximum frame length in bytes (Optional). </param>
+        /// <param name="sasUrl"> The Blob URL to store capture file. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<IList<WebAppNetworkTrace>>> StartNetworkTraceAsync(WaitUntil waitUntil, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.StartNetworkTrace");
+            scope.Start();
+            try
+            {
+                var response = await _webSiteWebAppsRestClient.StartNetworkTraceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl, cancellationToken).ConfigureAwait(false);
+                var operation = new AppServiceArmOperation<IList<WebAppNetworkTrace>>(new IListOperationSource(), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateStartNetworkTraceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Start capturing network packets for the site.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/startNetworkTrace
+        /// Operation Id: WebApps_StartNetworkTrace
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="durationInSeconds"> The duration to keep capturing in seconds. </param>
+        /// <param name="maxFrameLength"> The maximum frame length in bytes (Optional). </param>
+        /// <param name="sasUrl"> The Blob URL to store capture file. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<IList<WebAppNetworkTrace>> StartNetworkTrace(WaitUntil waitUntil, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.StartNetworkTrace");
+            scope.Start();
+            try
+            {
+                var response = _webSiteWebAppsRestClient.StartNetworkTrace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl, cancellationToken);
+                var operation = new AppServiceArmOperation<IList<WebAppNetworkTrace>>(new IListOperationSource(), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateStartNetworkTraceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+#pragma warning restore CA1054
     }
 }

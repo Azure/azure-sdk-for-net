@@ -15,6 +15,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Advisor.Models;
 
 namespace Azure.ResourceManager.Advisor
 {
@@ -106,20 +107,20 @@ namespace Azure.ResourceManager.Advisor
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/recommendations
         /// Operation Id: Recommendations_List
         /// </summary>
-        /// <param name="filter"> The filter to apply to the recommendations.&lt;br&gt;Filter can be applied to properties [&apos;ResourceId&apos;, &apos;ResourceGroup&apos;, &apos;RecommendationTypeGuid&apos;, &apos;[Category](#category)&apos;] with operators [&apos;eq&apos;, &apos;and&apos;, &apos;or&apos;].&lt;br&gt;Example:&lt;br&gt;- $filter=Category eq &apos;Cost&apos; and ResourceGroup eq &apos;MyResourceGroup&apos;. </param>
-        /// <param name="top"> The number of recommendations per page if a paged version of this API is being used. </param>
-        /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceRecommendationBaseResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceRecommendationBaseResource> GetAllAsync(string filter = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ResourceRecommendationBaseResource> GetAllAsync(RecommendationBaseGetAllOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new RecommendationBaseGetAllOptions();
+
             async Task<Page<ResourceRecommendationBaseResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _resourceRecommendationBaseRecommendationsClientDiagnostics.CreateScope("ResourceRecommendationBaseCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _resourceRecommendationBaseRecommendationsRestClient.ListAsync(Id.SubscriptionId, filter, top, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _resourceRecommendationBaseRecommendationsRestClient.ListAsync(Id.SubscriptionId, options.Filter, options.Top, options.SkipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ResourceRecommendationBaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.Advisor
                 scope.Start();
                 try
                 {
-                    var response = await _resourceRecommendationBaseRecommendationsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, filter, top, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _resourceRecommendationBaseRecommendationsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, options.Filter, options.Top, options.SkipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ResourceRecommendationBaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -151,20 +152,20 @@ namespace Azure.ResourceManager.Advisor
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/recommendations
         /// Operation Id: Recommendations_List
         /// </summary>
-        /// <param name="filter"> The filter to apply to the recommendations.&lt;br&gt;Filter can be applied to properties [&apos;ResourceId&apos;, &apos;ResourceGroup&apos;, &apos;RecommendationTypeGuid&apos;, &apos;[Category](#category)&apos;] with operators [&apos;eq&apos;, &apos;and&apos;, &apos;or&apos;].&lt;br&gt;Example:&lt;br&gt;- $filter=Category eq &apos;Cost&apos; and ResourceGroup eq &apos;MyResourceGroup&apos;. </param>
-        /// <param name="top"> The number of recommendations per page if a paged version of this API is being used. </param>
-        /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceRecommendationBaseResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceRecommendationBaseResource> GetAll(string filter = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ResourceRecommendationBaseResource> GetAll(RecommendationBaseGetAllOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new RecommendationBaseGetAllOptions();
+
             Page<ResourceRecommendationBaseResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _resourceRecommendationBaseRecommendationsClientDiagnostics.CreateScope("ResourceRecommendationBaseCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _resourceRecommendationBaseRecommendationsRestClient.List(Id.SubscriptionId, filter, top, skipToken, cancellationToken: cancellationToken);
+                    var response = _resourceRecommendationBaseRecommendationsRestClient.List(Id.SubscriptionId, options.Filter, options.Top, options.SkipToken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ResourceRecommendationBaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -179,7 +180,7 @@ namespace Azure.ResourceManager.Advisor
                 scope.Start();
                 try
                 {
-                    var response = _resourceRecommendationBaseRecommendationsRestClient.ListNextPage(nextLink, Id.SubscriptionId, filter, top, skipToken, cancellationToken: cancellationToken);
+                    var response = _resourceRecommendationBaseRecommendationsRestClient.ListNextPage(nextLink, Id.SubscriptionId, options.Filter, options.Top, options.SkipToken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ResourceRecommendationBaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -247,17 +248,17 @@ namespace Azure.ResourceManager.Advisor
 
         IEnumerator<ResourceRecommendationBaseResource> IEnumerable<ResourceRecommendationBaseResource>.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IAsyncEnumerator<ResourceRecommendationBaseResource> IAsyncEnumerable<ResourceRecommendationBaseResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

@@ -16,6 +16,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.WorkloadMonitor.Models;
 
 namespace Azure.ResourceManager.WorkloadMonitor
 {
@@ -118,21 +119,20 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}/history
         /// Operation Id: HealthMonitors_ListStateChanges
         /// </summary>
-        /// <param name="filter"> Optionally filter by heartbeat condition. Example: $filter=isHeartbeat eq false. </param>
-        /// <param name="expand"> Optionally expand the monitor’s evidence and/or configuration. Example: $expand=evidence,configuration. </param>
-        /// <param name="startTimestampUtc"> The start of the time window. </param>
-        /// <param name="endTimestampUtc"> The end of the time window. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="HealthMonitorStateChangeResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<HealthMonitorStateChangeResource> GetAllAsync(string filter = null, string expand = null, DateTimeOffset? startTimestampUtc = null, DateTimeOffset? endTimestampUtc = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<HealthMonitorStateChangeResource> GetAllAsync(HealthMonitorStateChangeGetAllOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new HealthMonitorStateChangeGetAllOptions();
+
             async Task<Page<HealthMonitorStateChangeResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _healthMonitorStateChangeHealthMonitorsClientDiagnostics.CreateScope("HealthMonitorStateChangeCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _healthMonitorStateChangeHealthMonitorsRestClient.ListStateChangesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, filter, expand, startTimestampUtc, endTimestampUtc, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _healthMonitorStateChangeHealthMonitorsRestClient.ListStateChangesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, options.Filter, options.Expand, options.StartTimestampUtc, options.EndTimestampUtc, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new HealthMonitorStateChangeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 scope.Start();
                 try
                 {
-                    var response = await _healthMonitorStateChangeHealthMonitorsRestClient.ListStateChangesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, filter, expand, startTimestampUtc, endTimestampUtc, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _healthMonitorStateChangeHealthMonitorsRestClient.ListStateChangesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, options.Filter, options.Expand, options.StartTimestampUtc, options.EndTimestampUtc, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new HealthMonitorStateChangeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -164,21 +164,20 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}/history
         /// Operation Id: HealthMonitors_ListStateChanges
         /// </summary>
-        /// <param name="filter"> Optionally filter by heartbeat condition. Example: $filter=isHeartbeat eq false. </param>
-        /// <param name="expand"> Optionally expand the monitor’s evidence and/or configuration. Example: $expand=evidence,configuration. </param>
-        /// <param name="startTimestampUtc"> The start of the time window. </param>
-        /// <param name="endTimestampUtc"> The end of the time window. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HealthMonitorStateChangeResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<HealthMonitorStateChangeResource> GetAll(string filter = null, string expand = null, DateTimeOffset? startTimestampUtc = null, DateTimeOffset? endTimestampUtc = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<HealthMonitorStateChangeResource> GetAll(HealthMonitorStateChangeGetAllOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new HealthMonitorStateChangeGetAllOptions();
+
             Page<HealthMonitorStateChangeResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _healthMonitorStateChangeHealthMonitorsClientDiagnostics.CreateScope("HealthMonitorStateChangeCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _healthMonitorStateChangeHealthMonitorsRestClient.ListStateChanges(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, filter, expand, startTimestampUtc, endTimestampUtc, cancellationToken: cancellationToken);
+                    var response = _healthMonitorStateChangeHealthMonitorsRestClient.ListStateChanges(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, options.Filter, options.Expand, options.StartTimestampUtc, options.EndTimestampUtc, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new HealthMonitorStateChangeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -193,7 +192,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 scope.Start();
                 try
                 {
-                    var response = _healthMonitorStateChangeHealthMonitorsRestClient.ListStateChangesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, filter, expand, startTimestampUtc, endTimestampUtc, cancellationToken: cancellationToken);
+                    var response = _healthMonitorStateChangeHealthMonitorsRestClient.ListStateChangesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, options.Filter, options.Expand, options.StartTimestampUtc, options.EndTimestampUtc, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new HealthMonitorStateChangeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -263,17 +262,17 @@ namespace Azure.ResourceManager.WorkloadMonitor
 
         IEnumerator<HealthMonitorStateChangeResource> IEnumerable<HealthMonitorStateChangeResource>.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IAsyncEnumerator<HealthMonitorStateChangeResource> IAsyncEnumerable<HealthMonitorStateChangeResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

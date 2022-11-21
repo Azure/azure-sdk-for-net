@@ -1771,21 +1771,20 @@ namespace Azure.ResourceManager.Automation
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationRuns
         /// Operation Id: SoftwareUpdateConfigurationRuns_List
         /// </summary>
-        /// <param name="clientRequestId"> Identifies this specific client request. </param>
-        /// <param name="filter"> The filter to apply on the operation. You can use the following filters: &apos;properties/osType&apos;, &apos;properties/status&apos;, &apos;properties/startTime&apos;, and &apos;properties/softwareUpdateConfiguration/name&apos;. </param>
-        /// <param name="skip"> Number of entries you skip before returning results. </param>
-        /// <param name="top"> Maximum number of entries returned in the results collection. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SoftwareUpdateConfigurationRun" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SoftwareUpdateConfigurationRun> GetSoftwareUpdateConfigurationRunsAsync(string clientRequestId = null, string filter = null, string skip = null, string top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SoftwareUpdateConfigurationRun> GetSoftwareUpdateConfigurationRunsAsync(AutomationAccountGetSoftwareUpdateConfigurationRunsOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new AutomationAccountGetSoftwareUpdateConfigurationRunsOptions();
+
             async Task<Page<SoftwareUpdateConfigurationRun>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _softwareUpdateConfigurationRunsClientDiagnostics.CreateScope("AutomationAccountResource.GetSoftwareUpdateConfigurationRuns");
                 scope.Start();
                 try
                 {
-                    var response = await _softwareUpdateConfigurationRunsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, clientRequestId, filter, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _softwareUpdateConfigurationRunsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.ClientRequestId, options.Filter, options.Skip, options.Top, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1802,21 +1801,20 @@ namespace Azure.ResourceManager.Automation
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationRuns
         /// Operation Id: SoftwareUpdateConfigurationRuns_List
         /// </summary>
-        /// <param name="clientRequestId"> Identifies this specific client request. </param>
-        /// <param name="filter"> The filter to apply on the operation. You can use the following filters: &apos;properties/osType&apos;, &apos;properties/status&apos;, &apos;properties/startTime&apos;, and &apos;properties/softwareUpdateConfiguration/name&apos;. </param>
-        /// <param name="skip"> Number of entries you skip before returning results. </param>
-        /// <param name="top"> Maximum number of entries returned in the results collection. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SoftwareUpdateConfigurationRun" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SoftwareUpdateConfigurationRun> GetSoftwareUpdateConfigurationRuns(string clientRequestId = null, string filter = null, string skip = null, string top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<SoftwareUpdateConfigurationRun> GetSoftwareUpdateConfigurationRuns(AutomationAccountGetSoftwareUpdateConfigurationRunsOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new AutomationAccountGetSoftwareUpdateConfigurationRunsOptions();
+
             Page<SoftwareUpdateConfigurationRun> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _softwareUpdateConfigurationRunsClientDiagnostics.CreateScope("AutomationAccountResource.GetSoftwareUpdateConfigurationRuns");
                 scope.Start();
                 try
                 {
-                    var response = _softwareUpdateConfigurationRunsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, clientRequestId, filter, skip, top, cancellationToken: cancellationToken);
+                    var response = _softwareUpdateConfigurationRunsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.ClientRequestId, options.Filter, options.Skip, options.Top, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1881,21 +1879,20 @@ namespace Azure.ResourceManager.Automation
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationMachineRuns
         /// Operation Id: SoftwareUpdateConfigurationMachineRuns_List
         /// </summary>
-        /// <param name="clientRequestId"> Identifies this specific client request. </param>
-        /// <param name="filter"> The filter to apply on the operation. You can use the following filters: &apos;properties/osType&apos;, &apos;properties/status&apos;, &apos;properties/startTime&apos;, and &apos;properties/softwareUpdateConfiguration/name&apos;. </param>
-        /// <param name="skip"> number of entries you skip before returning results. </param>
-        /// <param name="top"> Maximum number of entries returned in the results collection. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SoftwareUpdateConfigurationMachineRun" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SoftwareUpdateConfigurationMachineRun> GetSoftwareUpdateConfigurationMachineRunsAsync(string clientRequestId = null, string filter = null, string skip = null, string top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SoftwareUpdateConfigurationMachineRun> GetSoftwareUpdateConfigurationMachineRunsAsync(AutomationAccountGetSoftwareUpdateConfigurationMachineRunsOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new AutomationAccountGetSoftwareUpdateConfigurationMachineRunsOptions();
+
             async Task<Page<SoftwareUpdateConfigurationMachineRun>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _softwareUpdateConfigurationMachineRunsClientDiagnostics.CreateScope("AutomationAccountResource.GetSoftwareUpdateConfigurationMachineRuns");
                 scope.Start();
                 try
                 {
-                    var response = await _softwareUpdateConfigurationMachineRunsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, clientRequestId, filter, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _softwareUpdateConfigurationMachineRunsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.ClientRequestId, options.Filter, options.Skip, options.Top, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1912,21 +1909,20 @@ namespace Azure.ResourceManager.Automation
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationMachineRuns
         /// Operation Id: SoftwareUpdateConfigurationMachineRuns_List
         /// </summary>
-        /// <param name="clientRequestId"> Identifies this specific client request. </param>
-        /// <param name="filter"> The filter to apply on the operation. You can use the following filters: &apos;properties/osType&apos;, &apos;properties/status&apos;, &apos;properties/startTime&apos;, and &apos;properties/softwareUpdateConfiguration/name&apos;. </param>
-        /// <param name="skip"> number of entries you skip before returning results. </param>
-        /// <param name="top"> Maximum number of entries returned in the results collection. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SoftwareUpdateConfigurationMachineRun" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SoftwareUpdateConfigurationMachineRun> GetSoftwareUpdateConfigurationMachineRuns(string clientRequestId = null, string filter = null, string skip = null, string top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<SoftwareUpdateConfigurationMachineRun> GetSoftwareUpdateConfigurationMachineRuns(AutomationAccountGetSoftwareUpdateConfigurationMachineRunsOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new AutomationAccountGetSoftwareUpdateConfigurationMachineRunsOptions();
+
             Page<SoftwareUpdateConfigurationMachineRun> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _softwareUpdateConfigurationMachineRunsClientDiagnostics.CreateScope("AutomationAccountResource.GetSoftwareUpdateConfigurationMachineRuns");
                 scope.Start();
                 try
                 {
-                    var response = _softwareUpdateConfigurationMachineRunsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, clientRequestId, filter, skip, top, cancellationToken: cancellationToken);
+                    var response = _softwareUpdateConfigurationMachineRunsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.ClientRequestId, options.Filter, options.Skip, options.Top, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)

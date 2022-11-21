@@ -257,19 +257,18 @@ namespace Azure.ResourceManager.DataFactory
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/pipelines/{pipelineName}/createRun
         /// Operation Id: Pipelines_CreateRun
         /// </summary>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="parameterValueSpecification"> Parameters of the pipeline run. These parameters will be used only if the runId is not specified. </param>
-        /// <param name="referencePipelineRunId"> The pipeline run identifier. If run ID is specified the parameters of the specified run will be used to create a new run. </param>
-        /// <param name="isRecovery"> Recovery mode flag. If recovery mode is set to true, the specified referenced pipeline run and the new run will be grouped under the same groupId. </param>
-        /// <param name="startActivityName"> In recovery mode, the rerun will start from this activity. If not specified, all activities will run. </param>
-        /// <param name="startFromFailure"> In recovery mode, if set to true, the rerun will start from failed activities. The property will be used only if startActivityName is not specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PipelineCreateRunResult>> CreateRunAsync(IDictionary<string, BinaryData> parameterValueSpecification = null, string referencePipelineRunId = null, bool? isRecovery = null, string startActivityName = null, bool? startFromFailure = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PipelineCreateRunResult>> CreateRunAsync(FactoryPipelineCreateRunOptions options, IDictionary<string, BinaryData> parameterValueSpecification = null, CancellationToken cancellationToken = default)
         {
+            options ??= new FactoryPipelineCreateRunOptions();
+
             using var scope = _factoryPipelinePipelinesClientDiagnostics.CreateScope("FactoryPipelineResource.CreateRun");
             scope.Start();
             try
             {
-                var response = await _factoryPipelinePipelinesRestClient.CreateRunAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameterValueSpecification, referencePipelineRunId, isRecovery, startActivityName, startFromFailure, cancellationToken).ConfigureAwait(false);
+                var response = await _factoryPipelinePipelinesRestClient.CreateRunAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameterValueSpecification, options.ReferencePipelineRunId, options.IsRecovery, options.StartActivityName, options.StartFromFailure, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -284,19 +283,18 @@ namespace Azure.ResourceManager.DataFactory
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/pipelines/{pipelineName}/createRun
         /// Operation Id: Pipelines_CreateRun
         /// </summary>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="parameterValueSpecification"> Parameters of the pipeline run. These parameters will be used only if the runId is not specified. </param>
-        /// <param name="referencePipelineRunId"> The pipeline run identifier. If run ID is specified the parameters of the specified run will be used to create a new run. </param>
-        /// <param name="isRecovery"> Recovery mode flag. If recovery mode is set to true, the specified referenced pipeline run and the new run will be grouped under the same groupId. </param>
-        /// <param name="startActivityName"> In recovery mode, the rerun will start from this activity. If not specified, all activities will run. </param>
-        /// <param name="startFromFailure"> In recovery mode, if set to true, the rerun will start from failed activities. The property will be used only if startActivityName is not specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PipelineCreateRunResult> CreateRun(IDictionary<string, BinaryData> parameterValueSpecification = null, string referencePipelineRunId = null, bool? isRecovery = null, string startActivityName = null, bool? startFromFailure = null, CancellationToken cancellationToken = default)
+        public virtual Response<PipelineCreateRunResult> CreateRun(FactoryPipelineCreateRunOptions options, IDictionary<string, BinaryData> parameterValueSpecification = null, CancellationToken cancellationToken = default)
         {
+            options ??= new FactoryPipelineCreateRunOptions();
+
             using var scope = _factoryPipelinePipelinesClientDiagnostics.CreateScope("FactoryPipelineResource.CreateRun");
             scope.Start();
             try
             {
-                var response = _factoryPipelinePipelinesRestClient.CreateRun(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameterValueSpecification, referencePipelineRunId, isRecovery, startActivityName, startFromFailure, cancellationToken);
+                var response = _factoryPipelinePipelinesRestClient.CreateRun(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameterValueSpecification, options.ReferencePipelineRunId, options.IsRecovery, options.StartActivityName, options.StartFromFailure, cancellationToken);
                 return response;
             }
             catch (Exception e)

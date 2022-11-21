@@ -717,12 +717,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="skus"> A valid image SKU. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. </param>
-        /// <param name="top"> The Integer to use. </param>
-        /// <param name="orderby"> The String to use. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesAsync(AzureLocation location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesAsync(AzureLocation location, string publisherName, string offer, string skus, ComputeExtensionsGetVirtualMachineImagesOptions options, CancellationToken cancellationToken = default)
         {
             async Task<Page<VirtualMachineImageBase>> FirstPageFunc(int? pageSizeHint)
             {
@@ -730,7 +728,7 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = await VirtualMachineImagesRestClient.ListAsync(Id.SubscriptionId, location, publisherName, offer, skus, expand, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await VirtualMachineImagesRestClient.ListAsync(Id.SubscriptionId, location, publisherName, offer, skus, options.Expand, options.Top, options.Orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -751,12 +749,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="skus"> A valid image SKU. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. </param>
-        /// <param name="top"> The Integer to use. </param>
-        /// <param name="orderby"> The String to use. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImages(AzureLocation location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImages(AzureLocation location, string publisherName, string offer, string skus, ComputeExtensionsGetVirtualMachineImagesOptions options, CancellationToken cancellationToken = default)
         {
             Page<VirtualMachineImageBase> FirstPageFunc(int? pageSizeHint)
             {
@@ -764,7 +760,7 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = VirtualMachineImagesRestClient.List(Id.SubscriptionId, location, publisherName, offer, skus, expand, top, orderby, cancellationToken: cancellationToken);
+                    var response = VirtualMachineImagesRestClient.List(Id.SubscriptionId, location, publisherName, offer, skus, options.Expand, options.Top, options.Orderby, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1074,12 +1070,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="skus"> A valid image SKU. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. </param>
-        /// <param name="top"> An integer value specifying the number of images to return that matches supplied values. </param>
-        /// <param name="orderby"> Specifies the order of the results returned. Formatted as an OData query. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesEdgeZonesAsync(AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesEdgeZonesAsync(AzureLocation location, string edgeZone, string publisherName, string offer, string skus, ComputeExtensionsGetVirtualMachineImagesEdgeZonesOptions options, CancellationToken cancellationToken = default)
         {
             async Task<Page<VirtualMachineImageBase>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1087,7 +1081,7 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = await VirtualMachineImagesEdgeZoneRestClient.ListAsync(Id.SubscriptionId, location, edgeZone, publisherName, offer, skus, expand, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await VirtualMachineImagesEdgeZoneRestClient.ListAsync(Id.SubscriptionId, location, edgeZone, publisherName, offer, skus, options.Expand, options.Top, options.Orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1109,12 +1103,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="skus"> A valid image SKU. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. </param>
-        /// <param name="top"> An integer value specifying the number of images to return that matches supplied values. </param>
-        /// <param name="orderby"> Specifies the order of the results returned. Formatted as an OData query. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImagesEdgeZones(AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImagesEdgeZones(AzureLocation location, string edgeZone, string publisherName, string offer, string skus, ComputeExtensionsGetVirtualMachineImagesEdgeZonesOptions options, CancellationToken cancellationToken = default)
         {
             Page<VirtualMachineImageBase> FirstPageFunc(int? pageSizeHint)
             {
@@ -1122,7 +1114,7 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = VirtualMachineImagesEdgeZoneRestClient.List(Id.SubscriptionId, location, edgeZone, publisherName, offer, skus, expand, top, orderby, cancellationToken: cancellationToken);
+                    var response = VirtualMachineImagesEdgeZoneRestClient.List(Id.SubscriptionId, location, edgeZone, publisherName, offer, skus, options.Expand, options.Top, options.Orderby, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)

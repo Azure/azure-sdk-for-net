@@ -102,16 +102,14 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Diagnostics_GetSiteDetectorResponseSlot
         /// </summary>
         /// <param name="detectorName"> Detector Resource Name. </param>
-        /// <param name="startTime"> Start Time. </param>
-        /// <param name="endTime"> End Time. </param>
-        /// <param name="timeGrain"> Time Grain. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SiteSlotDetectorResource>> GetSiteSlotDetectorAsync(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSlotDetectorResource>> GetSiteSlotDetectorAsync(string detectorName, SiteSlotDetectorGetOptions options, CancellationToken cancellationToken = default)
         {
-            return await GetSiteSlotDetectors().GetAsync(detectorName, startTime, endTime, timeGrain, cancellationToken).ConfigureAwait(false);
+            return await GetSiteSlotDetectors().GetAsync(detectorName, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -120,16 +118,14 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Diagnostics_GetSiteDetectorResponseSlot
         /// </summary>
         /// <param name="detectorName"> Detector Resource Name. </param>
-        /// <param name="startTime"> Start Time. </param>
-        /// <param name="endTime"> End Time. </param>
-        /// <param name="timeGrain"> Time Grain. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SiteSlotDetectorResource> GetSiteSlotDetector(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
+        public virtual Response<SiteSlotDetectorResource> GetSiteSlotDetector(string detectorName, SiteSlotDetectorGetOptions options, CancellationToken cancellationToken = default)
         {
-            return GetSiteSlotDetectors().Get(detectorName, startTime, endTime, timeGrain, cancellationToken);
+            return GetSiteSlotDetectors().Get(detectorName, options, cancellationToken);
         }
 
         /// <summary> Gets a collection of SiteSlotPrivateEndpointConnectionResources in the WebSiteSlot. </summary>
@@ -2744,17 +2740,17 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkTrace/start
         /// Operation Id: WebApps_StartWebSiteNetworkTraceSlot
         /// </summary>
-        /// <param name="durationInSeconds"> The duration to keep capturing in seconds. </param>
-        /// <param name="maxFrameLength"> The maximum frame length in bytes (Optional). </param>
-        /// <param name="sasUrl"> The Blob URL to store capture file. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<string>> StartWebSiteNetworkTraceSlotAsync(int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<string>> StartWebSiteNetworkTraceSlotAsync(WebSiteSlotStartWebSiteNetworkTraceSlotOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new WebSiteSlotStartWebSiteNetworkTraceSlotOptions();
+
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.StartWebSiteNetworkTraceSlot");
             scope.Start();
             try
             {
-                var response = await _webSiteSlotWebAppsRestClient.StartWebSiteNetworkTraceSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, durationInSeconds, maxFrameLength, sasUrl, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteSlotWebAppsRestClient.StartWebSiteNetworkTraceSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.DurationInSeconds, options.MaxFrameLength, options.SasUrl, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -2769,17 +2765,17 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkTrace/start
         /// Operation Id: WebApps_StartWebSiteNetworkTraceSlot
         /// </summary>
-        /// <param name="durationInSeconds"> The duration to keep capturing in seconds. </param>
-        /// <param name="maxFrameLength"> The maximum frame length in bytes (Optional). </param>
-        /// <param name="sasUrl"> The Blob URL to store capture file. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<string> StartWebSiteNetworkTraceSlot(int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
+        public virtual Response<string> StartWebSiteNetworkTraceSlot(WebSiteSlotStartWebSiteNetworkTraceSlotOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new WebSiteSlotStartWebSiteNetworkTraceSlotOptions();
+
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.StartWebSiteNetworkTraceSlot");
             scope.Start();
             try
             {
-                var response = _webSiteSlotWebAppsRestClient.StartWebSiteNetworkTraceSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, durationInSeconds, maxFrameLength, sasUrl, cancellationToken);
+                var response = _webSiteSlotWebAppsRestClient.StartWebSiteNetworkTraceSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.DurationInSeconds, options.MaxFrameLength, options.SasUrl, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -2795,18 +2791,18 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_StartWebSiteNetworkTraceOperationSlot
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="durationInSeconds"> The duration to keep capturing in seconds. </param>
-        /// <param name="maxFrameLength"> The maximum frame length in bytes (Optional). </param>
-        /// <param name="sasUrl"> The Blob URL to store capture file. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<IList<WebAppNetworkTrace>>> StartWebSiteNetworkTraceOperationSlotAsync(WaitUntil waitUntil, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<IList<WebAppNetworkTrace>>> StartWebSiteNetworkTraceOperationSlotAsync(WaitUntil waitUntil, WebSiteSlotStartWebSiteNetworkTraceOperationSlotOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new WebSiteSlotStartWebSiteNetworkTraceOperationSlotOptions();
+
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.StartWebSiteNetworkTraceOperationSlot");
             scope.Start();
             try
             {
-                var response = await _webSiteSlotWebAppsRestClient.StartWebSiteNetworkTraceOperationSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, durationInSeconds, maxFrameLength, sasUrl, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<IList<WebAppNetworkTrace>>(new IListOperationSource(), _webSiteSlotWebAppsClientDiagnostics, Pipeline, _webSiteSlotWebAppsRestClient.CreateStartWebSiteNetworkTraceOperationSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, durationInSeconds, maxFrameLength, sasUrl).Request, response, OperationFinalStateVia.Location);
+                var response = await _webSiteSlotWebAppsRestClient.StartWebSiteNetworkTraceOperationSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.DurationInSeconds, options.MaxFrameLength, options.SasUrl, cancellationToken).ConfigureAwait(false);
+                var operation = new AppServiceArmOperation<IList<WebAppNetworkTrace>>(new IListOperationSource(), _webSiteSlotWebAppsClientDiagnostics, Pipeline, _webSiteSlotWebAppsRestClient.CreateStartWebSiteNetworkTraceOperationSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.DurationInSeconds, options.MaxFrameLength, options.SasUrl).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -2824,18 +2820,18 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_StartWebSiteNetworkTraceOperationSlot
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="durationInSeconds"> The duration to keep capturing in seconds. </param>
-        /// <param name="maxFrameLength"> The maximum frame length in bytes (Optional). </param>
-        /// <param name="sasUrl"> The Blob URL to store capture file. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<IList<WebAppNetworkTrace>> StartWebSiteNetworkTraceOperationSlot(WaitUntil waitUntil, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<IList<WebAppNetworkTrace>> StartWebSiteNetworkTraceOperationSlot(WaitUntil waitUntil, WebSiteSlotStartWebSiteNetworkTraceOperationSlotOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new WebSiteSlotStartWebSiteNetworkTraceOperationSlotOptions();
+
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.StartWebSiteNetworkTraceOperationSlot");
             scope.Start();
             try
             {
-                var response = _webSiteSlotWebAppsRestClient.StartWebSiteNetworkTraceOperationSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, durationInSeconds, maxFrameLength, sasUrl, cancellationToken);
-                var operation = new AppServiceArmOperation<IList<WebAppNetworkTrace>>(new IListOperationSource(), _webSiteSlotWebAppsClientDiagnostics, Pipeline, _webSiteSlotWebAppsRestClient.CreateStartWebSiteNetworkTraceOperationSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, durationInSeconds, maxFrameLength, sasUrl).Request, response, OperationFinalStateVia.Location);
+                var response = _webSiteSlotWebAppsRestClient.StartWebSiteNetworkTraceOperationSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.DurationInSeconds, options.MaxFrameLength, options.SasUrl, cancellationToken);
+                var operation = new AppServiceArmOperation<IList<WebAppNetworkTrace>>(new IListOperationSource(), _webSiteSlotWebAppsClientDiagnostics, Pipeline, _webSiteSlotWebAppsRestClient.CreateStartWebSiteNetworkTraceOperationSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.DurationInSeconds, options.MaxFrameLength, options.SasUrl).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -4005,18 +4001,18 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_StartNetworkTraceSlot
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="durationInSeconds"> The duration to keep capturing in seconds. </param>
-        /// <param name="maxFrameLength"> The maximum frame length in bytes (Optional). </param>
-        /// <param name="sasUrl"> The Blob URL to store capture file. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<IList<WebAppNetworkTrace>>> StartNetworkTraceSlotAsync(WaitUntil waitUntil, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<IList<WebAppNetworkTrace>>> StartNetworkTraceSlotAsync(WaitUntil waitUntil, WebSiteSlotStartNetworkTraceSlotOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new WebSiteSlotStartNetworkTraceSlotOptions();
+
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.StartNetworkTraceSlot");
             scope.Start();
             try
             {
-                var response = await _webSiteSlotWebAppsRestClient.StartNetworkTraceSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, durationInSeconds, maxFrameLength, sasUrl, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<IList<WebAppNetworkTrace>>(new IListOperationSource(), _webSiteSlotWebAppsClientDiagnostics, Pipeline, _webSiteSlotWebAppsRestClient.CreateStartNetworkTraceSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, durationInSeconds, maxFrameLength, sasUrl).Request, response, OperationFinalStateVia.Location);
+                var response = await _webSiteSlotWebAppsRestClient.StartNetworkTraceSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.DurationInSeconds, options.MaxFrameLength, options.SasUrl, cancellationToken).ConfigureAwait(false);
+                var operation = new AppServiceArmOperation<IList<WebAppNetworkTrace>>(new IListOperationSource(), _webSiteSlotWebAppsClientDiagnostics, Pipeline, _webSiteSlotWebAppsRestClient.CreateStartNetworkTraceSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.DurationInSeconds, options.MaxFrameLength, options.SasUrl).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -4034,18 +4030,18 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_StartNetworkTraceSlot
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="durationInSeconds"> The duration to keep capturing in seconds. </param>
-        /// <param name="maxFrameLength"> The maximum frame length in bytes (Optional). </param>
-        /// <param name="sasUrl"> The Blob URL to store capture file. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<IList<WebAppNetworkTrace>> StartNetworkTraceSlot(WaitUntil waitUntil, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<IList<WebAppNetworkTrace>> StartNetworkTraceSlot(WaitUntil waitUntil, WebSiteSlotStartNetworkTraceSlotOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new WebSiteSlotStartNetworkTraceSlotOptions();
+
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.StartNetworkTraceSlot");
             scope.Start();
             try
             {
-                var response = _webSiteSlotWebAppsRestClient.StartNetworkTraceSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, durationInSeconds, maxFrameLength, sasUrl, cancellationToken);
-                var operation = new AppServiceArmOperation<IList<WebAppNetworkTrace>>(new IListOperationSource(), _webSiteSlotWebAppsClientDiagnostics, Pipeline, _webSiteSlotWebAppsRestClient.CreateStartNetworkTraceSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, durationInSeconds, maxFrameLength, sasUrl).Request, response, OperationFinalStateVia.Location);
+                var response = _webSiteSlotWebAppsRestClient.StartNetworkTraceSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.DurationInSeconds, options.MaxFrameLength, options.SasUrl, cancellationToken);
+                var operation = new AppServiceArmOperation<IList<WebAppNetworkTrace>>(new IListOperationSource(), _webSiteSlotWebAppsClientDiagnostics, Pipeline, _webSiteSlotWebAppsRestClient.CreateStartNetworkTraceSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.DurationInSeconds, options.MaxFrameLength, options.SasUrl).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

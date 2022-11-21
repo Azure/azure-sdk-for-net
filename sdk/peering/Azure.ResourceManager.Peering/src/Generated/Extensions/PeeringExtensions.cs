@@ -140,18 +140,15 @@ namespace Azure.ResourceManager.Peering
         /// Operation Id: LegacyPeerings_List
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="peeringLocation"> The location of the peering. </param>
-        /// <param name="kind"> The kind of the peering. </param>
-        /// <param name="asn"> The ASN number associated with a legacy peering. </param>
-        /// <param name="directPeeringType"> The direct peering type. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="peeringLocation"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns> An async collection of <see cref="PeeringResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PeeringResource> GetPeeringsByLegacyPeeringAsync(this SubscriptionResource subscriptionResource, string peeringLocation, LegacyPeeringsKind kind, int? asn = null, DirectPeeringType? directPeeringType = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<PeeringResource> GetPeeringsByLegacyPeeringAsync(this SubscriptionResource subscriptionResource, PeeringExtensionsGetPeeringsByLegacyPeeringOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(peeringLocation, nameof(peeringLocation));
+            Argument.AssertNotNull(options, nameof(options));
 
-            return GetExtensionClient(subscriptionResource).GetPeeringsByLegacyPeeringAsync(peeringLocation, kind, asn, directPeeringType, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetPeeringsByLegacyPeeringAsync(options, cancellationToken);
         }
 
         /// <summary>
@@ -160,18 +157,15 @@ namespace Azure.ResourceManager.Peering
         /// Operation Id: LegacyPeerings_List
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="peeringLocation"> The location of the peering. </param>
-        /// <param name="kind"> The kind of the peering. </param>
-        /// <param name="asn"> The ASN number associated with a legacy peering. </param>
-        /// <param name="directPeeringType"> The direct peering type. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="peeringLocation"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns> A collection of <see cref="PeeringResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PeeringResource> GetPeeringsByLegacyPeering(this SubscriptionResource subscriptionResource, string peeringLocation, LegacyPeeringsKind kind, int? asn = null, DirectPeeringType? directPeeringType = null, CancellationToken cancellationToken = default)
+        public static Pageable<PeeringResource> GetPeeringsByLegacyPeering(this SubscriptionResource subscriptionResource, PeeringExtensionsGetPeeringsByLegacyPeeringOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(peeringLocation, nameof(peeringLocation));
+            Argument.AssertNotNull(options, nameof(options));
 
-            return GetExtensionClient(subscriptionResource).GetPeeringsByLegacyPeering(peeringLocation, kind, asn, directPeeringType, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetPeeringsByLegacyPeering(options, cancellationToken);
         }
 
         /// <summary>
@@ -180,18 +174,14 @@ namespace Azure.ResourceManager.Peering
         /// Operation Id: LookingGlass_Invoke
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="command"> The command to be executed: ping, traceroute, bgpRoute. </param>
-        /// <param name="sourceType"> The type of the source: Edge site or Azure Region. </param>
-        /// <param name="sourceLocation"> The location of the source. </param>
-        /// <param name="destinationIP"> The IP address of the destination. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceLocation"/> or <paramref name="destinationIP"/> is null. </exception>
-        public static async Task<Response<LookingGlassOutput>> InvokeLookingGlassAsync(this SubscriptionResource subscriptionResource, LookingGlassCommand command, LookingGlassSourceType sourceType, string sourceLocation, string destinationIP, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public static async Task<Response<LookingGlassOutput>> InvokeLookingGlassAsync(this SubscriptionResource subscriptionResource, PeeringExtensionsInvokeLookingGlassOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(sourceLocation, nameof(sourceLocation));
-            Argument.AssertNotNull(destinationIP, nameof(destinationIP));
+            Argument.AssertNotNull(options, nameof(options));
 
-            return await GetExtensionClient(subscriptionResource).InvokeLookingGlassAsync(command, sourceType, sourceLocation, destinationIP, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).InvokeLookingGlassAsync(options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -200,18 +190,14 @@ namespace Azure.ResourceManager.Peering
         /// Operation Id: LookingGlass_Invoke
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="command"> The command to be executed: ping, traceroute, bgpRoute. </param>
-        /// <param name="sourceType"> The type of the source: Edge site or Azure Region. </param>
-        /// <param name="sourceLocation"> The location of the source. </param>
-        /// <param name="destinationIP"> The IP address of the destination. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceLocation"/> or <paramref name="destinationIP"/> is null. </exception>
-        public static Response<LookingGlassOutput> InvokeLookingGlass(this SubscriptionResource subscriptionResource, LookingGlassCommand command, LookingGlassSourceType sourceType, string sourceLocation, string destinationIP, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public static Response<LookingGlassOutput> InvokeLookingGlass(this SubscriptionResource subscriptionResource, PeeringExtensionsInvokeLookingGlassOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(sourceLocation, nameof(sourceLocation));
-            Argument.AssertNotNull(destinationIP, nameof(destinationIP));
+            Argument.AssertNotNull(options, nameof(options));
 
-            return GetExtensionClient(subscriptionResource).InvokeLookingGlass(command, sourceType, sourceLocation, destinationIP, cancellationToken);
+            return GetExtensionClient(subscriptionResource).InvokeLookingGlass(options, cancellationToken);
         }
 
         /// <summary>

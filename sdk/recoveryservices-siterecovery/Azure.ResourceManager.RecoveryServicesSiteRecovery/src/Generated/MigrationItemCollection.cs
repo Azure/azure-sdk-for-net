@@ -183,20 +183,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems
         /// Operation Id: ReplicationMigrationItems_ListByReplicationProtectionContainers
         /// </summary>
-        /// <param name="skipToken"> The pagination token. </param>
-        /// <param name="takeToken"> The page size. </param>
-        /// <param name="filter"> OData filter options. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MigrationItemResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MigrationItemResource> GetAllAsync(string skipToken = null, string takeToken = null, string filter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MigrationItemResource> GetAllAsync(MigrationItemGetAllOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new MigrationItemGetAllOptions();
+
             async Task<Page<MigrationItemResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _migrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("MigrationItemCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _migrationItemReplicationMigrationItemsRestClient.ListByReplicationProtectionContainersAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skipToken, takeToken, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _migrationItemReplicationMigrationItemsRestClient.ListByReplicationProtectionContainersAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options.SkipToken, options.TakeToken, options.Filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new MigrationItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 scope.Start();
                 try
                 {
-                    var response = await _migrationItemReplicationMigrationItemsRestClient.ListByReplicationProtectionContainersNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skipToken, takeToken, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _migrationItemReplicationMigrationItemsRestClient.ListByReplicationProtectionContainersNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options.SkipToken, options.TakeToken, options.Filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new MigrationItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -228,20 +228,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems
         /// Operation Id: ReplicationMigrationItems_ListByReplicationProtectionContainers
         /// </summary>
-        /// <param name="skipToken"> The pagination token. </param>
-        /// <param name="takeToken"> The page size. </param>
-        /// <param name="filter"> OData filter options. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MigrationItemResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MigrationItemResource> GetAll(string skipToken = null, string takeToken = null, string filter = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<MigrationItemResource> GetAll(MigrationItemGetAllOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new MigrationItemGetAllOptions();
+
             Page<MigrationItemResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _migrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("MigrationItemCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _migrationItemReplicationMigrationItemsRestClient.ListByReplicationProtectionContainers(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skipToken, takeToken, filter, cancellationToken: cancellationToken);
+                    var response = _migrationItemReplicationMigrationItemsRestClient.ListByReplicationProtectionContainers(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options.SkipToken, options.TakeToken, options.Filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new MigrationItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 scope.Start();
                 try
                 {
-                    var response = _migrationItemReplicationMigrationItemsRestClient.ListByReplicationProtectionContainersNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skipToken, takeToken, filter, cancellationToken: cancellationToken);
+                    var response = _migrationItemReplicationMigrationItemsRestClient.ListByReplicationProtectionContainersNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options.SkipToken, options.TakeToken, options.Filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new MigrationItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -324,17 +324,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 
         IEnumerator<MigrationItemResource> IEnumerable<MigrationItemResource>.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IAsyncEnumerator<MigrationItemResource> IAsyncEnumerable<MigrationItemResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

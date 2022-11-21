@@ -185,21 +185,20 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/namedValues
         /// Operation Id: NamedValue_ListByService
         /// </summary>
-        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| tags | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith, any, all |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
-        /// <param name="top"> Number of records to return. </param>
-        /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="isKeyVaultRefreshFailed"> When set to true, the response contains only named value entities which failed refresh. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApiManagementNamedValueResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiManagementNamedValueResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, bool? isKeyVaultRefreshFailed = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ApiManagementNamedValueResource> GetAllAsync(ApiManagementNamedValueGetAllOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new ApiManagementNamedValueGetAllOptions();
+
             async Task<Page<ApiManagementNamedValueResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _apiManagementNamedValueNamedValueClientDiagnostics.CreateScope("ApiManagementNamedValueCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _apiManagementNamedValueNamedValueRestClient.ListByServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, isKeyVaultRefreshFailed, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _apiManagementNamedValueNamedValueRestClient.ListByServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Filter, options.Top, options.Skip, options.IsKeyVaultRefreshFailed, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ApiManagementNamedValueResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -214,7 +213,7 @@ namespace Azure.ResourceManager.ApiManagement
                 scope.Start();
                 try
                 {
-                    var response = await _apiManagementNamedValueNamedValueRestClient.ListByServiceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, isKeyVaultRefreshFailed, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _apiManagementNamedValueNamedValueRestClient.ListByServiceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Filter, options.Top, options.Skip, options.IsKeyVaultRefreshFailed, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ApiManagementNamedValueResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -231,21 +230,20 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/namedValues
         /// Operation Id: NamedValue_ListByService
         /// </summary>
-        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| tags | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith, any, all |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
-        /// <param name="top"> Number of records to return. </param>
-        /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="isKeyVaultRefreshFailed"> When set to true, the response contains only named value entities which failed refresh. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApiManagementNamedValueResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiManagementNamedValueResource> GetAll(string filter = null, int? top = null, int? skip = null, bool? isKeyVaultRefreshFailed = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ApiManagementNamedValueResource> GetAll(ApiManagementNamedValueGetAllOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new ApiManagementNamedValueGetAllOptions();
+
             Page<ApiManagementNamedValueResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _apiManagementNamedValueNamedValueClientDiagnostics.CreateScope("ApiManagementNamedValueCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _apiManagementNamedValueNamedValueRestClient.ListByService(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, isKeyVaultRefreshFailed, cancellationToken: cancellationToken);
+                    var response = _apiManagementNamedValueNamedValueRestClient.ListByService(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Filter, options.Top, options.Skip, options.IsKeyVaultRefreshFailed, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ApiManagementNamedValueResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -260,7 +258,7 @@ namespace Azure.ResourceManager.ApiManagement
                 scope.Start();
                 try
                 {
-                    var response = _apiManagementNamedValueNamedValueRestClient.ListByServiceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, isKeyVaultRefreshFailed, cancellationToken: cancellationToken);
+                    var response = _apiManagementNamedValueNamedValueRestClient.ListByServiceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Filter, options.Top, options.Skip, options.IsKeyVaultRefreshFailed, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ApiManagementNamedValueResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -328,17 +326,17 @@ namespace Azure.ResourceManager.ApiManagement
 
         IEnumerator<ApiManagementNamedValueResource> IEnumerable<ApiManagementNamedValueResource>.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IAsyncEnumerator<ApiManagementNamedValueResource> IAsyncEnumerable<ApiManagementNamedValueResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

@@ -49,12 +49,10 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// Operation Id: ResourceChanges_List
         /// </summary>
         /// <param name="resourceId"> The identifier of the resource. </param>
-        /// <param name="startTime"> Specifies the start time of the changes request. </param>
-        /// <param name="endTime"> Specifies the end time of the changes request. </param>
-        /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DetectedChangeData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DetectedChangeData> GetResourceChangesAsync(string resourceId, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DetectedChangeData> GetResourceChangesAsync(string resourceId, ChangeAnalysisExtensionsGetResourceChangesOptions options, CancellationToken cancellationToken = default)
         {
             async Task<Page<DetectedChangeData>> FirstPageFunc(int? pageSizeHint)
             {
@@ -62,7 +60,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
                 scope.Start();
                 try
                 {
-                    var response = await ResourceChangesRestClient.ListAsync(resourceId, startTime, endTime, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await ResourceChangesRestClient.ListAsync(resourceId, options.StartTime, options.EndTime, options.SkipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -77,7 +75,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
                 scope.Start();
                 try
                 {
-                    var response = await ResourceChangesRestClient.ListNextPageAsync(nextLink, resourceId, startTime, endTime, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await ResourceChangesRestClient.ListNextPageAsync(nextLink, resourceId, options.StartTime, options.EndTime, options.SkipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -95,12 +93,10 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// Operation Id: ResourceChanges_List
         /// </summary>
         /// <param name="resourceId"> The identifier of the resource. </param>
-        /// <param name="startTime"> Specifies the start time of the changes request. </param>
-        /// <param name="endTime"> Specifies the end time of the changes request. </param>
-        /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DetectedChangeData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DetectedChangeData> GetResourceChanges(string resourceId, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<DetectedChangeData> GetResourceChanges(string resourceId, ChangeAnalysisExtensionsGetResourceChangesOptions options, CancellationToken cancellationToken = default)
         {
             Page<DetectedChangeData> FirstPageFunc(int? pageSizeHint)
             {
@@ -108,7 +104,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
                 scope.Start();
                 try
                 {
-                    var response = ResourceChangesRestClient.List(resourceId, startTime, endTime, skipToken, cancellationToken: cancellationToken);
+                    var response = ResourceChangesRestClient.List(resourceId, options.StartTime, options.EndTime, options.SkipToken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -123,7 +119,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
                 scope.Start();
                 try
                 {
-                    var response = ResourceChangesRestClient.ListNextPage(nextLink, resourceId, startTime, endTime, skipToken, cancellationToken: cancellationToken);
+                    var response = ResourceChangesRestClient.ListNextPage(nextLink, resourceId, options.StartTime, options.EndTime, options.SkipToken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

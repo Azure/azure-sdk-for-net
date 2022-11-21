@@ -183,21 +183,20 @@ namespace Azure.ResourceManager.Automation
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/configurations
         /// Operation Id: DscConfiguration_ListByAutomationAccount
         /// </summary>
-        /// <param name="filter"> The filter to apply on the operation. </param>
-        /// <param name="skip"> The number of rows to skip. </param>
-        /// <param name="top"> The number of rows to take. </param>
-        /// <param name="inlinecount"> Return total rows. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DscConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DscConfigurationResource> GetAllAsync(string filter = null, int? skip = null, int? top = null, string inlinecount = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DscConfigurationResource> GetAllAsync(DscConfigurationGetAllOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new DscConfigurationGetAllOptions();
+
             async Task<Page<DscConfigurationResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _dscConfigurationClientDiagnostics.CreateScope("DscConfigurationCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _dscConfigurationRestClient.ListByAutomationAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skip, top, inlinecount, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _dscConfigurationRestClient.ListByAutomationAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Filter, options.Skip, options.Top, options.Inlinecount, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new DscConfigurationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -212,7 +211,7 @@ namespace Azure.ResourceManager.Automation
                 scope.Start();
                 try
                 {
-                    var response = await _dscConfigurationRestClient.ListByAutomationAccountNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skip, top, inlinecount, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _dscConfigurationRestClient.ListByAutomationAccountNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Filter, options.Skip, options.Top, options.Inlinecount, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new DscConfigurationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -229,21 +228,20 @@ namespace Azure.ResourceManager.Automation
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/configurations
         /// Operation Id: DscConfiguration_ListByAutomationAccount
         /// </summary>
-        /// <param name="filter"> The filter to apply on the operation. </param>
-        /// <param name="skip"> The number of rows to skip. </param>
-        /// <param name="top"> The number of rows to take. </param>
-        /// <param name="inlinecount"> Return total rows. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DscConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DscConfigurationResource> GetAll(string filter = null, int? skip = null, int? top = null, string inlinecount = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<DscConfigurationResource> GetAll(DscConfigurationGetAllOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new DscConfigurationGetAllOptions();
+
             Page<DscConfigurationResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _dscConfigurationClientDiagnostics.CreateScope("DscConfigurationCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _dscConfigurationRestClient.ListByAutomationAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skip, top, inlinecount, cancellationToken: cancellationToken);
+                    var response = _dscConfigurationRestClient.ListByAutomationAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Filter, options.Skip, options.Top, options.Inlinecount, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new DscConfigurationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -258,7 +256,7 @@ namespace Azure.ResourceManager.Automation
                 scope.Start();
                 try
                 {
-                    var response = _dscConfigurationRestClient.ListByAutomationAccountNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skip, top, inlinecount, cancellationToken: cancellationToken);
+                    var response = _dscConfigurationRestClient.ListByAutomationAccountNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Filter, options.Skip, options.Top, options.Inlinecount, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new DscConfigurationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -326,17 +324,17 @@ namespace Azure.ResourceManager.Automation
 
         IEnumerator<DscConfigurationResource> IEnumerable<DscConfigurationResource>.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IAsyncEnumerator<DscConfigurationResource> IAsyncEnumerable<DscConfigurationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

@@ -16,6 +16,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.AgFoodPlatform.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AgFoodPlatform
@@ -117,25 +118,20 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// Request Path: /providers/Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions
         /// Operation Id: FarmBeatsExtensions_List
         /// </summary>
-        /// <param name="farmBeatsExtensionIds"> FarmBeatsExtension ids. </param>
-        /// <param name="farmBeatsExtensionNames"> FarmBeats extension names. </param>
-        /// <param name="extensionCategories"> Extension categories. </param>
-        /// <param name="publisherIds"> Publisher ids. </param>
-        /// <param name="maxPageSize">
-        /// Maximum number of items needed (inclusive).
-        /// Minimum = 10, Maximum = 1000, Default value = 50.
-        /// </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="FarmBeatsExtensionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FarmBeatsExtensionResource> GetAllAsync(IEnumerable<string> farmBeatsExtensionIds = null, IEnumerable<string> farmBeatsExtensionNames = null, IEnumerable<string> extensionCategories = null, IEnumerable<string> publisherIds = null, int? maxPageSize = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<FarmBeatsExtensionResource> GetAllAsync(FarmBeatsExtensionGetAllOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new FarmBeatsExtensionGetAllOptions();
+
             async Task<Page<FarmBeatsExtensionResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _farmBeatsExtensionClientDiagnostics.CreateScope("FarmBeatsExtensionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _farmBeatsExtensionRestClient.ListAsync(farmBeatsExtensionIds, farmBeatsExtensionNames, extensionCategories, publisherIds, pageSizeHint, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _farmBeatsExtensionRestClient.ListAsync(options.FarmBeatsExtensionIds, options.FarmBeatsExtensionNames, options.ExtensionCategories, options.PublisherIds, pageSizeHint, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new FarmBeatsExtensionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -150,7 +146,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 scope.Start();
                 try
                 {
-                    var response = await _farmBeatsExtensionRestClient.ListNextPageAsync(nextLink, farmBeatsExtensionIds, farmBeatsExtensionNames, extensionCategories, publisherIds, pageSizeHint, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _farmBeatsExtensionRestClient.ListNextPageAsync(nextLink, options.FarmBeatsExtensionIds, options.FarmBeatsExtensionNames, options.ExtensionCategories, options.PublisherIds, pageSizeHint, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new FarmBeatsExtensionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -167,25 +163,20 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// Request Path: /providers/Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions
         /// Operation Id: FarmBeatsExtensions_List
         /// </summary>
-        /// <param name="farmBeatsExtensionIds"> FarmBeatsExtension ids. </param>
-        /// <param name="farmBeatsExtensionNames"> FarmBeats extension names. </param>
-        /// <param name="extensionCategories"> Extension categories. </param>
-        /// <param name="publisherIds"> Publisher ids. </param>
-        /// <param name="maxPageSize">
-        /// Maximum number of items needed (inclusive).
-        /// Minimum = 10, Maximum = 1000, Default value = 50.
-        /// </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FarmBeatsExtensionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FarmBeatsExtensionResource> GetAll(IEnumerable<string> farmBeatsExtensionIds = null, IEnumerable<string> farmBeatsExtensionNames = null, IEnumerable<string> extensionCategories = null, IEnumerable<string> publisherIds = null, int? maxPageSize = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<FarmBeatsExtensionResource> GetAll(FarmBeatsExtensionGetAllOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new FarmBeatsExtensionGetAllOptions();
+
             Page<FarmBeatsExtensionResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _farmBeatsExtensionClientDiagnostics.CreateScope("FarmBeatsExtensionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _farmBeatsExtensionRestClient.List(farmBeatsExtensionIds, farmBeatsExtensionNames, extensionCategories, publisherIds, pageSizeHint, cancellationToken: cancellationToken);
+                    var response = _farmBeatsExtensionRestClient.List(options.FarmBeatsExtensionIds, options.FarmBeatsExtensionNames, options.ExtensionCategories, options.PublisherIds, pageSizeHint, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new FarmBeatsExtensionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -200,7 +191,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 scope.Start();
                 try
                 {
-                    var response = _farmBeatsExtensionRestClient.ListNextPage(nextLink, farmBeatsExtensionIds, farmBeatsExtensionNames, extensionCategories, publisherIds, pageSizeHint, cancellationToken: cancellationToken);
+                    var response = _farmBeatsExtensionRestClient.ListNextPage(nextLink, options.FarmBeatsExtensionIds, options.FarmBeatsExtensionNames, options.ExtensionCategories, options.PublisherIds, pageSizeHint, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new FarmBeatsExtensionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -268,17 +259,17 @@ namespace Azure.ResourceManager.AgFoodPlatform
 
         IEnumerator<FarmBeatsExtensionResource> IEnumerable<FarmBeatsExtensionResource>.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IAsyncEnumerator<FarmBeatsExtensionResource> IAsyncEnumerable<FarmBeatsExtensionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

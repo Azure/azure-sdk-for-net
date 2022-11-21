@@ -257,17 +257,18 @@ namespace Azure.ResourceManager.FrontDoor
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}/LatencyScorecard
         /// Operation Id: Reports_GetLatencyScorecards
         /// </summary>
-        /// <param name="aggregationInterval"> The aggregation interval of the Latency Scorecard. </param>
-        /// <param name="endOn"> The end DateTime of the Latency Scorecard in UTC. </param>
-        /// <param name="country"> The country associated with the Latency Scorecard. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LatencyScorecard>> GetLatencyScorecardsReportAsync(LatencyScorecardAggregationInterval aggregationInterval, DateTimeOffset? endOn = null, string country = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual async Task<Response<LatencyScorecard>> GetLatencyScorecardsReportAsync(FrontDoorExperimentGetLatencyScorecardsReportOptions options, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(options, nameof(options));
+
             using var scope = _reportsClientDiagnostics.CreateScope("FrontDoorExperimentResource.GetLatencyScorecardsReport");
             scope.Start();
             try
             {
-                var response = await _reportsRestClient.GetLatencyScorecardsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, aggregationInterval, endOn, country, cancellationToken).ConfigureAwait(false);
+                var response = await _reportsRestClient.GetLatencyScorecardsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.AggregationInterval, options.EndOn, options.Country, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -282,17 +283,18 @@ namespace Azure.ResourceManager.FrontDoor
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}/LatencyScorecard
         /// Operation Id: Reports_GetLatencyScorecards
         /// </summary>
-        /// <param name="aggregationInterval"> The aggregation interval of the Latency Scorecard. </param>
-        /// <param name="endOn"> The end DateTime of the Latency Scorecard in UTC. </param>
-        /// <param name="country"> The country associated with the Latency Scorecard. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LatencyScorecard> GetLatencyScorecardsReport(LatencyScorecardAggregationInterval aggregationInterval, DateTimeOffset? endOn = null, string country = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<LatencyScorecard> GetLatencyScorecardsReport(FrontDoorExperimentGetLatencyScorecardsReportOptions options, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(options, nameof(options));
+
             using var scope = _reportsClientDiagnostics.CreateScope("FrontDoorExperimentResource.GetLatencyScorecardsReport");
             scope.Start();
             try
             {
-                var response = _reportsRestClient.GetLatencyScorecards(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, aggregationInterval, endOn, country, cancellationToken);
+                var response = _reportsRestClient.GetLatencyScorecards(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.AggregationInterval, options.EndOn, options.Country, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -307,20 +309,18 @@ namespace Azure.ResourceManager.FrontDoor
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}/Timeseries
         /// Operation Id: Reports_GetTimeseries
         /// </summary>
-        /// <param name="startOn"> The start DateTime of the Timeseries in UTC. </param>
-        /// <param name="endOn"> The end DateTime of the Timeseries in UTC. </param>
-        /// <param name="aggregationInterval"> The aggregation interval of the Timeseries. </param>
-        /// <param name="timeSeriesType"> The type of Timeseries. </param>
-        /// <param name="endpoint"> The specific endpoint. </param>
-        /// <param name="country"> The country associated with the Timeseries. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<FrontDoorTimeSeriesInfo>> GetTimeSeriesReportAsync(DateTimeOffset startOn, DateTimeOffset endOn, FrontDoorTimeSeriesAggregationInterval aggregationInterval, FrontDoorTimeSeriesType timeSeriesType, string endpoint = null, string country = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual async Task<Response<FrontDoorTimeSeriesInfo>> GetTimeSeriesReportAsync(FrontDoorExperimentGetTimeSeriesReportOptions options, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(options, nameof(options));
+
             using var scope = _reportsClientDiagnostics.CreateScope("FrontDoorExperimentResource.GetTimeSeriesReport");
             scope.Start();
             try
             {
-                var response = await _reportsRestClient.GetTimeSeriesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, startOn, endOn, aggregationInterval, timeSeriesType, endpoint, country, cancellationToken).ConfigureAwait(false);
+                var response = await _reportsRestClient.GetTimeSeriesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.StartOn, options.EndOn, options.AggregationInterval, options.TimeSeriesType, options.Endpoint, options.Country, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -335,20 +335,18 @@ namespace Azure.ResourceManager.FrontDoor
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}/Timeseries
         /// Operation Id: Reports_GetTimeseries
         /// </summary>
-        /// <param name="startOn"> The start DateTime of the Timeseries in UTC. </param>
-        /// <param name="endOn"> The end DateTime of the Timeseries in UTC. </param>
-        /// <param name="aggregationInterval"> The aggregation interval of the Timeseries. </param>
-        /// <param name="timeSeriesType"> The type of Timeseries. </param>
-        /// <param name="endpoint"> The specific endpoint. </param>
-        /// <param name="country"> The country associated with the Timeseries. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<FrontDoorTimeSeriesInfo> GetTimeSeriesReport(DateTimeOffset startOn, DateTimeOffset endOn, FrontDoorTimeSeriesAggregationInterval aggregationInterval, FrontDoorTimeSeriesType timeSeriesType, string endpoint = null, string country = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<FrontDoorTimeSeriesInfo> GetTimeSeriesReport(FrontDoorExperimentGetTimeSeriesReportOptions options, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(options, nameof(options));
+
             using var scope = _reportsClientDiagnostics.CreateScope("FrontDoorExperimentResource.GetTimeSeriesReport");
             scope.Start();
             try
             {
-                var response = _reportsRestClient.GetTimeSeries(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, startOn, endOn, aggregationInterval, timeSeriesType, endpoint, country, cancellationToken);
+                var response = _reportsRestClient.GetTimeSeries(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.StartOn, options.EndOn, options.AggregationInterval, options.TimeSeriesType, options.Endpoint, options.Country, cancellationToken);
                 return response;
             }
             catch (Exception e)

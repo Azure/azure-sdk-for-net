@@ -370,24 +370,20 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/executions
         /// Operation Id: JobExecutions_ListByAgent
         /// </summary>
-        /// <param name="createTimeMin"> If specified, only job executions created at or after the specified time are included. </param>
-        /// <param name="createTimeMax"> If specified, only job executions created before the specified time are included. </param>
-        /// <param name="endTimeMin"> If specified, only job executions completed at or after the specified time are included. </param>
-        /// <param name="endTimeMax"> If specified, only job executions completed before the specified time are included. </param>
-        /// <param name="isActive"> If specified, only active or only completed job executions are included. </param>
-        /// <param name="skip"> The number of elements in the collection to skip. </param>
-        /// <param name="top"> The number of elements to return from the collection. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SqlServerJobExecutionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SqlServerJobExecutionResource> GetJobExecutionsByAgentAsync(DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SqlServerJobExecutionResource> GetJobExecutionsByAgentAsync(SqlServerJobAgentGetJobExecutionsByAgentOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new SqlServerJobAgentGetJobExecutionsByAgentOptions();
+
             async Task<Page<SqlServerJobExecutionResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _sqlServerJobExecutionJobExecutionsClientDiagnostics.CreateScope("SqlServerJobAgentResource.GetJobExecutionsByAgent");
                 scope.Start();
                 try
                 {
-                    var response = await _sqlServerJobExecutionJobExecutionsRestClient.ListByAgentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _sqlServerJobExecutionJobExecutionsRestClient.ListByAgentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.CreateTimeMin, options.CreateTimeMax, options.EndTimeMin, options.EndTimeMax, options.IsActive, options.Skip, options.Top, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new SqlServerJobExecutionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -402,7 +398,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = await _sqlServerJobExecutionJobExecutionsRestClient.ListByAgentNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _sqlServerJobExecutionJobExecutionsRestClient.ListByAgentNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.CreateTimeMin, options.CreateTimeMax, options.EndTimeMin, options.EndTimeMax, options.IsActive, options.Skip, options.Top, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new SqlServerJobExecutionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -419,24 +415,20 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/executions
         /// Operation Id: JobExecutions_ListByAgent
         /// </summary>
-        /// <param name="createTimeMin"> If specified, only job executions created at or after the specified time are included. </param>
-        /// <param name="createTimeMax"> If specified, only job executions created before the specified time are included. </param>
-        /// <param name="endTimeMin"> If specified, only job executions completed at or after the specified time are included. </param>
-        /// <param name="endTimeMax"> If specified, only job executions completed before the specified time are included. </param>
-        /// <param name="isActive"> If specified, only active or only completed job executions are included. </param>
-        /// <param name="skip"> The number of elements in the collection to skip. </param>
-        /// <param name="top"> The number of elements to return from the collection. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SqlServerJobExecutionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SqlServerJobExecutionResource> GetJobExecutionsByAgent(DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<SqlServerJobExecutionResource> GetJobExecutionsByAgent(SqlServerJobAgentGetJobExecutionsByAgentOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new SqlServerJobAgentGetJobExecutionsByAgentOptions();
+
             Page<SqlServerJobExecutionResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _sqlServerJobExecutionJobExecutionsClientDiagnostics.CreateScope("SqlServerJobAgentResource.GetJobExecutionsByAgent");
                 scope.Start();
                 try
                 {
-                    var response = _sqlServerJobExecutionJobExecutionsRestClient.ListByAgent(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken: cancellationToken);
+                    var response = _sqlServerJobExecutionJobExecutionsRestClient.ListByAgent(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.CreateTimeMin, options.CreateTimeMax, options.EndTimeMin, options.EndTimeMax, options.IsActive, options.Skip, options.Top, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new SqlServerJobExecutionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -451,7 +443,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = _sqlServerJobExecutionJobExecutionsRestClient.ListByAgentNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken: cancellationToken);
+                    var response = _sqlServerJobExecutionJobExecutionsRestClient.ListByAgentNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.CreateTimeMin, options.CreateTimeMax, options.EndTimeMin, options.EndTimeMax, options.IsActive, options.Skip, options.Top, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new SqlServerJobExecutionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

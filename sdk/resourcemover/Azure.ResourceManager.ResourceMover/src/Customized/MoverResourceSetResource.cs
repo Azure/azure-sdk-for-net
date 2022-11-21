@@ -5,14 +5,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ResourceMover.Models;
 using Azure.ResourceManager.Resources;
 
@@ -236,6 +231,96 @@ namespace Azure.ResourceManager.ResourceMover
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Gets a list of unresolved dependencies.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/unresolvedDependencies
+        /// Operation Id: UnresolvedDependencies_Get
+        /// </summary>
+        /// <param name="dependencyLevel"> Defines the dependency level. </param>
+        /// <param name="orderby"> OData order by query option. For example, you can use $orderby=Count desc. </param>
+        /// <param name="filter"> The filter to apply on the operation. For example, $apply=filter(count eq 2). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="MoverUnresolvedDependency" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MoverUnresolvedDependency> GetUnresolvedDependenciesAsync(MoverDependencyLevel? dependencyLevel = null, string orderby = null, string filter = null, CancellationToken cancellationToken = default)
+        {
+            async Task<Page<MoverUnresolvedDependency>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _unresolvedDependenciesClientDiagnostics.CreateScope("MoverResourceSetResource.GetUnresolvedDependencies");
+                scope.Start();
+                try
+                {
+                    var response = await _unresolvedDependenciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dependencyLevel, orderby, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<MoverUnresolvedDependency>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _unresolvedDependenciesClientDiagnostics.CreateScope("MoverResourceSetResource.GetUnresolvedDependencies");
+                scope.Start();
+                try
+                {
+                    var response = await _unresolvedDependenciesRestClient.GetNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dependencyLevel, orderby, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Gets a list of unresolved dependencies.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/unresolvedDependencies
+        /// Operation Id: UnresolvedDependencies_Get
+        /// </summary>
+        /// <param name="dependencyLevel"> Defines the dependency level. </param>
+        /// <param name="orderby"> OData order by query option. For example, you can use $orderby=Count desc. </param>
+        /// <param name="filter"> The filter to apply on the operation. For example, $apply=filter(count eq 2). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MoverUnresolvedDependency" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MoverUnresolvedDependency> GetUnresolvedDependencies(MoverDependencyLevel? dependencyLevel = null, string orderby = null, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Page<MoverUnresolvedDependency> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _unresolvedDependenciesClientDiagnostics.CreateScope("MoverResourceSetResource.GetUnresolvedDependencies");
+                scope.Start();
+                try
+                {
+                    var response = _unresolvedDependenciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dependencyLevel, orderby, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<MoverUnresolvedDependency> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _unresolvedDependenciesClientDiagnostics.CreateScope("MoverResourceSetResource.GetUnresolvedDependencies");
+                scope.Start();
+                try
+                {
+                    var response = _unresolvedDependenciesRestClient.GetNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dependencyLevel, orderby, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
     }
 }

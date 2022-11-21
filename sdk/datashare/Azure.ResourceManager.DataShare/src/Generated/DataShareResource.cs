@@ -401,15 +401,14 @@ namespace Azure.ResourceManager.DataShare
         /// Operation Id: Shares_ListSynchronizationDetails
         /// </summary>
         /// <param name="shareSynchronization"> Share Synchronization payload. </param>
-        /// <param name="skipToken"> Continuation token. </param>
-        /// <param name="filter"> Filters the results using OData syntax. </param>
-        /// <param name="orderby"> Sorts the results using OData syntax. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shareSynchronization"/> is null. </exception>
         /// <returns> An async collection of <see cref="SynchronizationDetails" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SynchronizationDetails> GetSynchronizationDetailsAsync(ShareSynchronization shareSynchronization, string skipToken = null, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SynchronizationDetails> GetSynchronizationDetailsAsync(ShareSynchronization shareSynchronization, DataShareGetSynchronizationDetailsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(shareSynchronization, nameof(shareSynchronization));
+            options ??= new DataShareGetSynchronizationDetailsOptions();
 
             async Task<Page<SynchronizationDetails>> FirstPageFunc(int? pageSizeHint)
             {
@@ -417,7 +416,7 @@ namespace Azure.ResourceManager.DataShare
                 scope.Start();
                 try
                 {
-                    var response = await _dataShareSharesRestClient.ListSynchronizationDetailsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSynchronization, skipToken, filter, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _dataShareSharesRestClient.ListSynchronizationDetailsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSynchronization, options.SkipToken, options.Filter, options.Orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -432,7 +431,7 @@ namespace Azure.ResourceManager.DataShare
                 scope.Start();
                 try
                 {
-                    var response = await _dataShareSharesRestClient.ListSynchronizationDetailsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSynchronization, skipToken, filter, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _dataShareSharesRestClient.ListSynchronizationDetailsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSynchronization, options.SkipToken, options.Filter, options.Orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -450,15 +449,14 @@ namespace Azure.ResourceManager.DataShare
         /// Operation Id: Shares_ListSynchronizationDetails
         /// </summary>
         /// <param name="shareSynchronization"> Share Synchronization payload. </param>
-        /// <param name="skipToken"> Continuation token. </param>
-        /// <param name="filter"> Filters the results using OData syntax. </param>
-        /// <param name="orderby"> Sorts the results using OData syntax. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shareSynchronization"/> is null. </exception>
         /// <returns> A collection of <see cref="SynchronizationDetails" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SynchronizationDetails> GetSynchronizationDetails(ShareSynchronization shareSynchronization, string skipToken = null, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<SynchronizationDetails> GetSynchronizationDetails(ShareSynchronization shareSynchronization, DataShareGetSynchronizationDetailsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(shareSynchronization, nameof(shareSynchronization));
+            options ??= new DataShareGetSynchronizationDetailsOptions();
 
             Page<SynchronizationDetails> FirstPageFunc(int? pageSizeHint)
             {
@@ -466,7 +464,7 @@ namespace Azure.ResourceManager.DataShare
                 scope.Start();
                 try
                 {
-                    var response = _dataShareSharesRestClient.ListSynchronizationDetails(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSynchronization, skipToken, filter, orderby, cancellationToken: cancellationToken);
+                    var response = _dataShareSharesRestClient.ListSynchronizationDetails(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSynchronization, options.SkipToken, options.Filter, options.Orderby, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -481,7 +479,7 @@ namespace Azure.ResourceManager.DataShare
                 scope.Start();
                 try
                 {
-                    var response = _dataShareSharesRestClient.ListSynchronizationDetailsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSynchronization, skipToken, filter, orderby, cancellationToken: cancellationToken);
+                    var response = _dataShareSharesRestClient.ListSynchronizationDetailsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSynchronization, options.SkipToken, options.Filter, options.Orderby, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -498,20 +496,20 @@ namespace Azure.ResourceManager.DataShare
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/listSynchronizations
         /// Operation Id: Shares_ListSynchronizations
         /// </summary>
-        /// <param name="skipToken"> Continuation token. </param>
-        /// <param name="filter"> Filters the results using OData syntax. </param>
-        /// <param name="orderby"> Sorts the results using OData syntax. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ShareSynchronization" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ShareSynchronization> GetSynchronizationsAsync(string skipToken = null, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ShareSynchronization> GetSynchronizationsAsync(DataShareGetSynchronizationsOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new DataShareGetSynchronizationsOptions();
+
             async Task<Page<ShareSynchronization>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _dataShareSharesClientDiagnostics.CreateScope("DataShareResource.GetSynchronizations");
                 scope.Start();
                 try
                 {
-                    var response = await _dataShareSharesRestClient.ListSynchronizationsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _dataShareSharesRestClient.ListSynchronizationsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.SkipToken, options.Filter, options.Orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -526,7 +524,7 @@ namespace Azure.ResourceManager.DataShare
                 scope.Start();
                 try
                 {
-                    var response = await _dataShareSharesRestClient.ListSynchronizationsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _dataShareSharesRestClient.ListSynchronizationsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.SkipToken, options.Filter, options.Orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -543,20 +541,20 @@ namespace Azure.ResourceManager.DataShare
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/listSynchronizations
         /// Operation Id: Shares_ListSynchronizations
         /// </summary>
-        /// <param name="skipToken"> Continuation token. </param>
-        /// <param name="filter"> Filters the results using OData syntax. </param>
-        /// <param name="orderby"> Sorts the results using OData syntax. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ShareSynchronization" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ShareSynchronization> GetSynchronizations(string skipToken = null, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ShareSynchronization> GetSynchronizations(DataShareGetSynchronizationsOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new DataShareGetSynchronizationsOptions();
+
             Page<ShareSynchronization> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _dataShareSharesClientDiagnostics.CreateScope("DataShareResource.GetSynchronizations");
                 scope.Start();
                 try
                 {
-                    var response = _dataShareSharesRestClient.ListSynchronizations(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby, cancellationToken: cancellationToken);
+                    var response = _dataShareSharesRestClient.ListSynchronizations(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.SkipToken, options.Filter, options.Orderby, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -571,7 +569,7 @@ namespace Azure.ResourceManager.DataShare
                 scope.Start();
                 try
                 {
-                    var response = _dataShareSharesRestClient.ListSynchronizationsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby, cancellationToken: cancellationToken);
+                    var response = _dataShareSharesRestClient.ListSynchronizationsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.SkipToken, options.Filter, options.Orderby, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

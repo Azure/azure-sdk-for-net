@@ -44,13 +44,13 @@ namespace Azure.ResourceManager.Consumption
         /// Operation Id: PriceSheet_Get
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="expand"> May be used to expand the properties/meterDetails within a price sheet. By default, these fields are not included when returning price sheet. </param>
-        /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="top"> May be used to limit the number of results to the top N results. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<PriceSheetResult>> GetPriceSheetAsync(this SubscriptionResource subscriptionResource, string expand = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<PriceSheetResult>> GetPriceSheetAsync(this SubscriptionResource subscriptionResource, ConsumptionExtensionsGetPriceSheetOptions options, CancellationToken cancellationToken = default)
         {
-            return await GetExtensionClient(subscriptionResource).GetPriceSheetAsync(expand, skipToken, top, cancellationToken).ConfigureAwait(false);
+            options ??= new ConsumptionExtensionsGetPriceSheetOptions();
+
+            return await GetExtensionClient(subscriptionResource).GetPriceSheetAsync(options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -59,13 +59,13 @@ namespace Azure.ResourceManager.Consumption
         /// Operation Id: PriceSheet_Get
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="expand"> May be used to expand the properties/meterDetails within a price sheet. By default, these fields are not included when returning price sheet. </param>
-        /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="top"> May be used to limit the number of results to the top N results. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<PriceSheetResult> GetPriceSheet(this SubscriptionResource subscriptionResource, string expand = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
+        public static Response<PriceSheetResult> GetPriceSheet(this SubscriptionResource subscriptionResource, ConsumptionExtensionsGetPriceSheetOptions options, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetPriceSheet(expand, skipToken, top, cancellationToken);
+            options ??= new ConsumptionExtensionsGetPriceSheetOptions();
+
+            return GetExtensionClient(subscriptionResource).GetPriceSheet(options, cancellationToken);
         }
 
         private static ManagementGroupResourceExtensionClient GetExtensionClient(ManagementGroupResource managementGroupResource)

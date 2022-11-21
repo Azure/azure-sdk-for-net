@@ -13,6 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DevTestLabs.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
@@ -52,13 +53,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DevTestLab/labs
         /// Operation Id: Labs_ListBySubscription
         /// </summary>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=defaultStorageAccount)&apos;. </param>
-        /// <param name="filter"> The filter to apply to the operation. Example: &apos;$filter=contains(name,&apos;myName&apos;). </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
-        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: &apos;$orderby=name desc&apos;. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DevTestLabResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DevTestLabResource> GetDevTestLabsAsync(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DevTestLabResource> GetDevTestLabsAsync(DevTestLabsExtensionsGetDevTestLabsOptions options, CancellationToken cancellationToken = default)
         {
             async Task<Page<DevTestLabResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -66,7 +64,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 scope.Start();
                 try
                 {
-                    var response = await DevTestLabLabsRestClient.ListBySubscriptionAsync(Id.SubscriptionId, expand, filter, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await DevTestLabLabsRestClient.ListBySubscriptionAsync(Id.SubscriptionId, options.Expand, options.Filter, options.Top, options.Orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new DevTestLabResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -81,7 +79,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 scope.Start();
                 try
                 {
-                    var response = await DevTestLabLabsRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, expand, filter, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await DevTestLabLabsRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, options.Expand, options.Filter, options.Top, options.Orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new DevTestLabResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -98,13 +96,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DevTestLab/labs
         /// Operation Id: Labs_ListBySubscription
         /// </summary>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=defaultStorageAccount)&apos;. </param>
-        /// <param name="filter"> The filter to apply to the operation. Example: &apos;$filter=contains(name,&apos;myName&apos;). </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
-        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: &apos;$orderby=name desc&apos;. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DevTestLabResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DevTestLabResource> GetDevTestLabs(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<DevTestLabResource> GetDevTestLabs(DevTestLabsExtensionsGetDevTestLabsOptions options, CancellationToken cancellationToken = default)
         {
             Page<DevTestLabResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -112,7 +107,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 scope.Start();
                 try
                 {
-                    var response = DevTestLabLabsRestClient.ListBySubscription(Id.SubscriptionId, expand, filter, top, orderby, cancellationToken: cancellationToken);
+                    var response = DevTestLabLabsRestClient.ListBySubscription(Id.SubscriptionId, options.Expand, options.Filter, options.Top, options.Orderby, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new DevTestLabResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -127,7 +122,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 scope.Start();
                 try
                 {
-                    var response = DevTestLabLabsRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, expand, filter, top, orderby, cancellationToken: cancellationToken);
+                    var response = DevTestLabLabsRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, options.Expand, options.Filter, options.Top, options.Orderby, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new DevTestLabResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -144,13 +139,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DevTestLab/schedules
         /// Operation Id: GlobalSchedules_ListBySubscription
         /// </summary>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=status)&apos;. </param>
-        /// <param name="filter"> The filter to apply to the operation. Example: &apos;$filter=contains(name,&apos;myName&apos;). </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
-        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: &apos;$orderby=name desc&apos;. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DevTestLabGlobalScheduleResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedulesAsync(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedulesAsync(DevTestLabsExtensionsGetDevTestLabGlobalSchedulesOptions options, CancellationToken cancellationToken = default)
         {
             async Task<Page<DevTestLabGlobalScheduleResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -158,7 +150,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 scope.Start();
                 try
                 {
-                    var response = await DevTestLabGlobalScheduleGlobalSchedulesRestClient.ListBySubscriptionAsync(Id.SubscriptionId, expand, filter, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await DevTestLabGlobalScheduleGlobalSchedulesRestClient.ListBySubscriptionAsync(Id.SubscriptionId, options.Expand, options.Filter, options.Top, options.Orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new DevTestLabGlobalScheduleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -173,7 +165,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 scope.Start();
                 try
                 {
-                    var response = await DevTestLabGlobalScheduleGlobalSchedulesRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, expand, filter, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await DevTestLabGlobalScheduleGlobalSchedulesRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, options.Expand, options.Filter, options.Top, options.Orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new DevTestLabGlobalScheduleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -190,13 +182,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DevTestLab/schedules
         /// Operation Id: GlobalSchedules_ListBySubscription
         /// </summary>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=status)&apos;. </param>
-        /// <param name="filter"> The filter to apply to the operation. Example: &apos;$filter=contains(name,&apos;myName&apos;). </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
-        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: &apos;$orderby=name desc&apos;. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DevTestLabGlobalScheduleResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedules(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedules(DevTestLabsExtensionsGetDevTestLabGlobalSchedulesOptions options, CancellationToken cancellationToken = default)
         {
             Page<DevTestLabGlobalScheduleResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -204,7 +193,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 scope.Start();
                 try
                 {
-                    var response = DevTestLabGlobalScheduleGlobalSchedulesRestClient.ListBySubscription(Id.SubscriptionId, expand, filter, top, orderby, cancellationToken: cancellationToken);
+                    var response = DevTestLabGlobalScheduleGlobalSchedulesRestClient.ListBySubscription(Id.SubscriptionId, options.Expand, options.Filter, options.Top, options.Orderby, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new DevTestLabGlobalScheduleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -219,7 +208,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 scope.Start();
                 try
                 {
-                    var response = DevTestLabGlobalScheduleGlobalSchedulesRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, expand, filter, top, orderby, cancellationToken: cancellationToken);
+                    var response = DevTestLabGlobalScheduleGlobalSchedulesRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, options.Expand, options.Filter, options.Top, options.Orderby, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new DevTestLabGlobalScheduleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

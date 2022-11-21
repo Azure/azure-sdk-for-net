@@ -16,6 +16,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ApiManagement.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
@@ -184,20 +185,20 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/hostnameConfigurations
         /// Operation Id: GatewayHostnameConfiguration_ListByService
         /// </summary>
-        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| hostname | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
-        /// <param name="top"> Number of records to return. </param>
-        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApiManagementGatewayHostnameConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiManagementGatewayHostnameConfigurationResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ApiManagementGatewayHostnameConfigurationResource> GetAllAsync(ApiManagementGatewayHostnameConfigurationGetAllOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new ApiManagementGatewayHostnameConfigurationGetAllOptions();
+
             async Task<Page<ApiManagementGatewayHostnameConfigurationResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _apiManagementGatewayHostnameConfigurationGatewayHostnameConfigurationClientDiagnostics.CreateScope("ApiManagementGatewayHostnameConfigurationCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _apiManagementGatewayHostnameConfigurationGatewayHostnameConfigurationRestClient.ListByServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _apiManagementGatewayHostnameConfigurationGatewayHostnameConfigurationRestClient.ListByServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Filter, options.Top, options.Skip, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ApiManagementGatewayHostnameConfigurationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -212,7 +213,7 @@ namespace Azure.ResourceManager.ApiManagement
                 scope.Start();
                 try
                 {
-                    var response = await _apiManagementGatewayHostnameConfigurationGatewayHostnameConfigurationRestClient.ListByServiceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _apiManagementGatewayHostnameConfigurationGatewayHostnameConfigurationRestClient.ListByServiceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Filter, options.Top, options.Skip, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ApiManagementGatewayHostnameConfigurationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -229,20 +230,20 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/hostnameConfigurations
         /// Operation Id: GatewayHostnameConfiguration_ListByService
         /// </summary>
-        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| hostname | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
-        /// <param name="top"> Number of records to return. </param>
-        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApiManagementGatewayHostnameConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiManagementGatewayHostnameConfigurationResource> GetAll(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ApiManagementGatewayHostnameConfigurationResource> GetAll(ApiManagementGatewayHostnameConfigurationGetAllOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new ApiManagementGatewayHostnameConfigurationGetAllOptions();
+
             Page<ApiManagementGatewayHostnameConfigurationResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _apiManagementGatewayHostnameConfigurationGatewayHostnameConfigurationClientDiagnostics.CreateScope("ApiManagementGatewayHostnameConfigurationCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _apiManagementGatewayHostnameConfigurationGatewayHostnameConfigurationRestClient.ListByService(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken);
+                    var response = _apiManagementGatewayHostnameConfigurationGatewayHostnameConfigurationRestClient.ListByService(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Filter, options.Top, options.Skip, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ApiManagementGatewayHostnameConfigurationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -257,7 +258,7 @@ namespace Azure.ResourceManager.ApiManagement
                 scope.Start();
                 try
                 {
-                    var response = _apiManagementGatewayHostnameConfigurationGatewayHostnameConfigurationRestClient.ListByServiceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken);
+                    var response = _apiManagementGatewayHostnameConfigurationGatewayHostnameConfigurationRestClient.ListByServiceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Filter, options.Top, options.Skip, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ApiManagementGatewayHostnameConfigurationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -325,17 +326,17 @@ namespace Azure.ResourceManager.ApiManagement
 
         IEnumerator<ApiManagementGatewayHostnameConfigurationResource> IEnumerable<ApiManagementGatewayHostnameConfigurationResource>.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IAsyncEnumerator<ApiManagementGatewayHostnameConfigurationResource> IAsyncEnumerable<ApiManagementGatewayHostnameConfigurationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

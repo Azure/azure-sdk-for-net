@@ -111,16 +111,14 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Diagnostics_GetHostingEnvironmentDetectorResponse
         /// </summary>
         /// <param name="detectorName"> Detector Resource Name. </param>
-        /// <param name="startTime"> Start Time. </param>
-        /// <param name="endTime"> End Time. </param>
-        /// <param name="timeGrain"> Time Grain. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<HostingEnvironmentDetectorResource>> GetHostingEnvironmentDetectorAsync(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HostingEnvironmentDetectorResource>> GetHostingEnvironmentDetectorAsync(string detectorName, HostingEnvironmentDetectorGetOptions options, CancellationToken cancellationToken = default)
         {
-            return await GetHostingEnvironmentDetectors().GetAsync(detectorName, startTime, endTime, timeGrain, cancellationToken).ConfigureAwait(false);
+            return await GetHostingEnvironmentDetectors().GetAsync(detectorName, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -129,16 +127,14 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Diagnostics_GetHostingEnvironmentDetectorResponse
         /// </summary>
         /// <param name="detectorName"> Detector Resource Name. </param>
-        /// <param name="startTime"> Start Time. </param>
-        /// <param name="endTime"> End Time. </param>
-        /// <param name="timeGrain"> Time Grain. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<HostingEnvironmentDetectorResource> GetHostingEnvironmentDetector(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
+        public virtual Response<HostingEnvironmentDetectorResource> GetHostingEnvironmentDetector(string detectorName, HostingEnvironmentDetectorGetOptions options, CancellationToken cancellationToken = default)
         {
-            return GetHostingEnvironmentDetectors().Get(detectorName, startTime, endTime, timeGrain, cancellationToken);
+            return GetHostingEnvironmentDetectors().Get(detectorName, options, cancellationToken);
         }
 
         /// <summary> Gets an object representing a AseV3NetworkingConfigurationResource along with the instance operations that can be performed on it in the AppServiceEnvironment. </summary>

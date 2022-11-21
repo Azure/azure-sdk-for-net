@@ -7,10 +7,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Consumption.Models;
 
 namespace Azure.ResourceManager.Consumption
@@ -98,6 +96,56 @@ namespace Azure.ResourceManager.Consumption
             try
             {
                 var response = _priceSheetRestClient.GetByBillingPeriod(Id.SubscriptionId, Id.Name, expand, skipToken, top, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the price sheet for a scope by subscriptionId and billing period. Price sheet is available via this API only for May 1, 2014 or later.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/pricesheets/default
+        /// Operation Id: PriceSheet_GetByBillingPeriod
+        /// </summary>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<PriceSheetResult>> GetPriceSheetAsync(SubscriptionBillingPeriodConsumptionGetPriceSheetOptions options, CancellationToken cancellationToken = default)
+        {
+            options ??= new SubscriptionBillingPeriodConsumptionGetPriceSheetOptions();
+
+            using var scope = _priceSheetClientDiagnostics.CreateScope("SubscriptionBillingPeriodConsumptionResource.GetPriceSheet");
+            scope.Start();
+            try
+            {
+                var response = await _priceSheetRestClient.GetByBillingPeriodAsync(Id.SubscriptionId, Id.Name, options.Expand, options.SkipToken, options.Top, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the price sheet for a scope by subscriptionId and billing period. Price sheet is available via this API only for May 1, 2014 or later.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/pricesheets/default
+        /// Operation Id: PriceSheet_GetByBillingPeriod
+        /// </summary>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<PriceSheetResult> GetPriceSheet(SubscriptionBillingPeriodConsumptionGetPriceSheetOptions options, CancellationToken cancellationToken = default)
+        {
+            options ??= new SubscriptionBillingPeriodConsumptionGetPriceSheetOptions();
+
+            using var scope = _priceSheetClientDiagnostics.CreateScope("SubscriptionBillingPeriodConsumptionResource.GetPriceSheet");
+            scope.Start();
+            try
+            {
+                var response = _priceSheetRestClient.GetByBillingPeriod(Id.SubscriptionId, Id.Name, options.Expand, options.SkipToken, options.Top, cancellationToken);
                 return response;
             }
             catch (Exception e)

@@ -16,6 +16,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DataShare.Models;
 
 namespace Azure.ResourceManager.DataShare
 {
@@ -182,20 +183,20 @@ namespace Azure.ResourceManager.DataShare
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/invitations
         /// Operation Id: Invitations_ListByShare
         /// </summary>
-        /// <param name="skipToken"> The continuation token. </param>
-        /// <param name="filter"> Filters the results using OData syntax. </param>
-        /// <param name="orderby"> Sorts the results using OData syntax. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataShareInvitationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataShareInvitationResource> GetAllAsync(string skipToken = null, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DataShareInvitationResource> GetAllAsync(DataShareInvitationGetAllOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new DataShareInvitationGetAllOptions();
+
             async Task<Page<DataShareInvitationResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _dataShareInvitationInvitationsClientDiagnostics.CreateScope("DataShareInvitationCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _dataShareInvitationInvitationsRestClient.ListByShareAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _dataShareInvitationInvitationsRestClient.ListByShareAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.SkipToken, options.Filter, options.Orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new DataShareInvitationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -210,7 +211,7 @@ namespace Azure.ResourceManager.DataShare
                 scope.Start();
                 try
                 {
-                    var response = await _dataShareInvitationInvitationsRestClient.ListByShareNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _dataShareInvitationInvitationsRestClient.ListByShareNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.SkipToken, options.Filter, options.Orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new DataShareInvitationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -227,20 +228,20 @@ namespace Azure.ResourceManager.DataShare
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/invitations
         /// Operation Id: Invitations_ListByShare
         /// </summary>
-        /// <param name="skipToken"> The continuation token. </param>
-        /// <param name="filter"> Filters the results using OData syntax. </param>
-        /// <param name="orderby"> Sorts the results using OData syntax. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataShareInvitationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataShareInvitationResource> GetAll(string skipToken = null, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<DataShareInvitationResource> GetAll(DataShareInvitationGetAllOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new DataShareInvitationGetAllOptions();
+
             Page<DataShareInvitationResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _dataShareInvitationInvitationsClientDiagnostics.CreateScope("DataShareInvitationCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _dataShareInvitationInvitationsRestClient.ListByShare(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby, cancellationToken: cancellationToken);
+                    var response = _dataShareInvitationInvitationsRestClient.ListByShare(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.SkipToken, options.Filter, options.Orderby, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new DataShareInvitationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -255,7 +256,7 @@ namespace Azure.ResourceManager.DataShare
                 scope.Start();
                 try
                 {
-                    var response = _dataShareInvitationInvitationsRestClient.ListByShareNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby, cancellationToken: cancellationToken);
+                    var response = _dataShareInvitationInvitationsRestClient.ListByShareNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.SkipToken, options.Filter, options.Orderby, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new DataShareInvitationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -323,17 +324,17 @@ namespace Azure.ResourceManager.DataShare
 
         IEnumerator<DataShareInvitationResource> IEnumerable<DataShareInvitationResource>.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IAsyncEnumerator<DataShareInvitationResource> IAsyncEnumerable<DataShareInvitationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

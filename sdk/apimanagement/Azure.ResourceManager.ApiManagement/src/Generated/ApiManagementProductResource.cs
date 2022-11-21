@@ -334,20 +334,20 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/apis
         /// Operation Id: ProductApi_ListByProduct
         /// </summary>
-        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| serviceUrl | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| path | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
-        /// <param name="top"> Number of records to return. </param>
-        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ProductApiData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProductApiData> GetProductApisAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ProductApiData> GetProductApisAsync(ApiManagementProductGetProductApisOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new ApiManagementProductGetProductApisOptions();
+
             async Task<Page<ProductApiData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _productApiClientDiagnostics.CreateScope("ApiManagementProductResource.GetProductApis");
                 scope.Start();
                 try
                 {
-                    var response = await _productApiRestClient.ListByProductAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _productApiRestClient.ListByProductAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Filter, options.Top, options.Skip, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.ApiManagement
                 scope.Start();
                 try
                 {
-                    var response = await _productApiRestClient.ListByProductNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _productApiRestClient.ListByProductNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Filter, options.Top, options.Skip, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -379,20 +379,20 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/apis
         /// Operation Id: ProductApi_ListByProduct
         /// </summary>
-        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| serviceUrl | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| path | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
-        /// <param name="top"> Number of records to return. </param>
-        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ProductApiData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ProductApiData> GetProductApis(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ProductApiData> GetProductApis(ApiManagementProductGetProductApisOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new ApiManagementProductGetProductApisOptions();
+
             Page<ProductApiData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _productApiClientDiagnostics.CreateScope("ApiManagementProductResource.GetProductApis");
                 scope.Start();
                 try
                 {
-                    var response = _productApiRestClient.ListByProduct(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken);
+                    var response = _productApiRestClient.ListByProduct(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Filter, options.Top, options.Skip, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.ApiManagement
                 scope.Start();
                 try
                 {
-                    var response = _productApiRestClient.ListByProductNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken);
+                    var response = _productApiRestClient.ListByProductNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Filter, options.Top, options.Skip, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -586,20 +586,20 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/groups
         /// Operation Id: ProductGroup_ListByProduct
         /// </summary>
-        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt |     |&lt;/br&gt;| displayName | filter | eq, ne |     |&lt;/br&gt;| description | filter | eq, ne |     |&lt;/br&gt;. </param>
-        /// <param name="top"> Number of records to return. </param>
-        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ProductGroupData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProductGroupData> GetProductGroupsAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ProductGroupData> GetProductGroupsAsync(ApiManagementProductGetProductGroupsOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new ApiManagementProductGetProductGroupsOptions();
+
             async Task<Page<ProductGroupData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _productGroupClientDiagnostics.CreateScope("ApiManagementProductResource.GetProductGroups");
                 scope.Start();
                 try
                 {
-                    var response = await _productGroupRestClient.ListByProductAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _productGroupRestClient.ListByProductAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Filter, options.Top, options.Skip, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -614,7 +614,7 @@ namespace Azure.ResourceManager.ApiManagement
                 scope.Start();
                 try
                 {
-                    var response = await _productGroupRestClient.ListByProductNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _productGroupRestClient.ListByProductNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Filter, options.Top, options.Skip, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -631,20 +631,20 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/groups
         /// Operation Id: ProductGroup_ListByProduct
         /// </summary>
-        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt |     |&lt;/br&gt;| displayName | filter | eq, ne |     |&lt;/br&gt;| description | filter | eq, ne |     |&lt;/br&gt;. </param>
-        /// <param name="top"> Number of records to return. </param>
-        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ProductGroupData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ProductGroupData> GetProductGroups(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ProductGroupData> GetProductGroups(ApiManagementProductGetProductGroupsOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new ApiManagementProductGetProductGroupsOptions();
+
             Page<ProductGroupData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _productGroupClientDiagnostics.CreateScope("ApiManagementProductResource.GetProductGroups");
                 scope.Start();
                 try
                 {
-                    var response = _productGroupRestClient.ListByProduct(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken);
+                    var response = _productGroupRestClient.ListByProduct(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Filter, options.Top, options.Skip, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -659,7 +659,7 @@ namespace Azure.ResourceManager.ApiManagement
                 scope.Start();
                 try
                 {
-                    var response = _productGroupRestClient.ListByProductNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken);
+                    var response = _productGroupRestClient.ListByProductNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Filter, options.Top, options.Skip, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -831,6 +831,96 @@ namespace Azure.ResourceManager.ApiManagement
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Lists the collection of subscriptions to the specified product.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/subscriptions
+        /// Operation Id: ProductSubscriptions_List
+        /// </summary>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SubscriptionContractData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SubscriptionContractData> GetAllProductSubscriptionDataAsync(ApiManagementProductGetAllProductSubscriptionDataOptions options, CancellationToken cancellationToken = default)
+        {
+            options ??= new ApiManagementProductGetAllProductSubscriptionDataOptions();
+
+            async Task<Page<SubscriptionContractData>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _productSubscriptionsClientDiagnostics.CreateScope("ApiManagementProductResource.GetAllProductSubscriptionData");
+                scope.Start();
+                try
+                {
+                    var response = await _productSubscriptionsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Filter, options.Top, options.Skip, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<SubscriptionContractData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _productSubscriptionsClientDiagnostics.CreateScope("ApiManagementProductResource.GetAllProductSubscriptionData");
+                scope.Start();
+                try
+                {
+                    var response = await _productSubscriptionsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Filter, options.Top, options.Skip, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Lists the collection of subscriptions to the specified product.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/subscriptions
+        /// Operation Id: ProductSubscriptions_List
+        /// </summary>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SubscriptionContractData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SubscriptionContractData> GetAllProductSubscriptionData(ApiManagementProductGetAllProductSubscriptionDataOptions options, CancellationToken cancellationToken = default)
+        {
+            options ??= new ApiManagementProductGetAllProductSubscriptionDataOptions();
+
+            Page<SubscriptionContractData> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _productSubscriptionsClientDiagnostics.CreateScope("ApiManagementProductResource.GetAllProductSubscriptionData");
+                scope.Start();
+                try
+                {
+                    var response = _productSubscriptionsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Filter, options.Top, options.Skip, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<SubscriptionContractData> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _productSubscriptionsClientDiagnostics.CreateScope("ApiManagementProductResource.GetAllProductSubscriptionData");
+                scope.Start();
+                try
+                {
+                    var response = _productSubscriptionsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Filter, options.Top, options.Skip, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary>

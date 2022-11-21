@@ -16,6 +16,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.AgFoodPlatform.Models;
 
 namespace Azure.ResourceManager.AgFoodPlatform
 {
@@ -178,24 +179,20 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}/extensions
         /// Operation Id: Extensions_ListByFarmBeats
         /// </summary>
-        /// <param name="extensionIds"> Installed extension ids. </param>
-        /// <param name="extensionCategories"> Installed extension categories. </param>
-        /// <param name="maxPageSize">
-        /// Maximum number of items needed (inclusive).
-        /// Minimum = 10, Maximum = 1000, Default value = 50.
-        /// </param>
-        /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ExtensionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ExtensionResource> GetAllAsync(IEnumerable<string> extensionIds = null, IEnumerable<string> extensionCategories = null, int? maxPageSize = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ExtensionResource> GetAllAsync(ExtensionGetAllOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new ExtensionGetAllOptions();
+
             async Task<Page<ExtensionResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _extensionClientDiagnostics.CreateScope("ExtensionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _extensionRestClient.ListByFarmBeatsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionIds, extensionCategories, pageSizeHint, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _extensionRestClient.ListByFarmBeatsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.ExtensionIds, options.ExtensionCategories, pageSizeHint, options.SkipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ExtensionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -210,7 +207,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 scope.Start();
                 try
                 {
-                    var response = await _extensionRestClient.ListByFarmBeatsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionIds, extensionCategories, pageSizeHint, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _extensionRestClient.ListByFarmBeatsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.ExtensionIds, options.ExtensionCategories, pageSizeHint, options.SkipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ExtensionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -227,24 +224,20 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}/extensions
         /// Operation Id: Extensions_ListByFarmBeats
         /// </summary>
-        /// <param name="extensionIds"> Installed extension ids. </param>
-        /// <param name="extensionCategories"> Installed extension categories. </param>
-        /// <param name="maxPageSize">
-        /// Maximum number of items needed (inclusive).
-        /// Minimum = 10, Maximum = 1000, Default value = 50.
-        /// </param>
-        /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ExtensionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ExtensionResource> GetAll(IEnumerable<string> extensionIds = null, IEnumerable<string> extensionCategories = null, int? maxPageSize = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ExtensionResource> GetAll(ExtensionGetAllOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new ExtensionGetAllOptions();
+
             Page<ExtensionResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _extensionClientDiagnostics.CreateScope("ExtensionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _extensionRestClient.ListByFarmBeats(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionIds, extensionCategories, pageSizeHint, skipToken, cancellationToken: cancellationToken);
+                    var response = _extensionRestClient.ListByFarmBeats(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.ExtensionIds, options.ExtensionCategories, pageSizeHint, options.SkipToken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ExtensionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -259,7 +252,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 scope.Start();
                 try
                 {
-                    var response = _extensionRestClient.ListByFarmBeatsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionIds, extensionCategories, pageSizeHint, skipToken, cancellationToken: cancellationToken);
+                    var response = _extensionRestClient.ListByFarmBeatsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.ExtensionIds, options.ExtensionCategories, pageSizeHint, options.SkipToken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ExtensionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -327,17 +320,17 @@ namespace Azure.ResourceManager.AgFoodPlatform
 
         IEnumerator<ExtensionResource> IEnumerable<ExtensionResource>.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IAsyncEnumerator<ExtensionResource> IAsyncEnumerable<ExtensionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

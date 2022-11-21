@@ -495,12 +495,10 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/orderItems
         /// Operation Id: ListOrderItemsAtSubscriptionLevel
         /// </summary>
-        /// <param name="filter"> $filter is supported to filter based on order id. Filter supports only equals operation. </param>
-        /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
-        /// <param name="skipToken"> $skipToken is supported on Get list of order items, which provides the next page in the list of order items. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EdgeOrderItemResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EdgeOrderItemResource> GetEdgeOrderItemsAsync(string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<EdgeOrderItemResource> GetEdgeOrderItemsAsync(EdgeOrderExtensionsGetEdgeOrderItemsOptions options, CancellationToken cancellationToken = default)
         {
             async Task<Page<EdgeOrderItemResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -508,7 +506,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 scope.Start();
                 try
                 {
-                    var response = await EdgeOrderItemRestClient.ListOrderItemsAtSubscriptionLevelAsync(Id.SubscriptionId, filter, expand, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await EdgeOrderItemRestClient.ListOrderItemsAtSubscriptionLevelAsync(Id.SubscriptionId, options.Filter, options.Expand, options.SkipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new EdgeOrderItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -523,7 +521,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 scope.Start();
                 try
                 {
-                    var response = await EdgeOrderItemRestClient.ListOrderItemsAtSubscriptionLevelNextPageAsync(nextLink, Id.SubscriptionId, filter, expand, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await EdgeOrderItemRestClient.ListOrderItemsAtSubscriptionLevelNextPageAsync(nextLink, Id.SubscriptionId, options.Filter, options.Expand, options.SkipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new EdgeOrderItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -540,12 +538,10 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/orderItems
         /// Operation Id: ListOrderItemsAtSubscriptionLevel
         /// </summary>
-        /// <param name="filter"> $filter is supported to filter based on order id. Filter supports only equals operation. </param>
-        /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
-        /// <param name="skipToken"> $skipToken is supported on Get list of order items, which provides the next page in the list of order items. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EdgeOrderItemResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EdgeOrderItemResource> GetEdgeOrderItems(string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<EdgeOrderItemResource> GetEdgeOrderItems(EdgeOrderExtensionsGetEdgeOrderItemsOptions options, CancellationToken cancellationToken = default)
         {
             Page<EdgeOrderItemResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -553,7 +549,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 scope.Start();
                 try
                 {
-                    var response = EdgeOrderItemRestClient.ListOrderItemsAtSubscriptionLevel(Id.SubscriptionId, filter, expand, skipToken, cancellationToken: cancellationToken);
+                    var response = EdgeOrderItemRestClient.ListOrderItemsAtSubscriptionLevel(Id.SubscriptionId, options.Filter, options.Expand, options.SkipToken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new EdgeOrderItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -568,7 +564,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 scope.Start();
                 try
                 {
-                    var response = EdgeOrderItemRestClient.ListOrderItemsAtSubscriptionLevelNextPage(nextLink, Id.SubscriptionId, filter, expand, skipToken, cancellationToken: cancellationToken);
+                    var response = EdgeOrderItemRestClient.ListOrderItemsAtSubscriptionLevelNextPage(nextLink, Id.SubscriptionId, options.Filter, options.Expand, options.SkipToken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new EdgeOrderItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

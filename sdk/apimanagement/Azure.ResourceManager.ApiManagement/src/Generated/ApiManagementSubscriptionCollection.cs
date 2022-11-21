@@ -62,26 +62,21 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sid"> Subscription entity Identifier. The entity represents the association between a user and a product in API Management. </param>
         /// <param name="content"> Create parameters. </param>
-        /// <param name="notify">
-        /// Notify change in Subscription State. 
-        ///  - If false, do not send any email notification for change of state of subscription 
-        ///  - If true, send email notification of change of state of subscription 
-        /// </param>
-        /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
-        /// <param name="appType"> Determines the type of application which send the create user request. Default is legacy publisher portal. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sid"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<ApiManagementSubscriptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sid, ApiManagementSubscriptionCreateOrUpdateContent content, bool? notify = null, ETag? ifMatch = null, AppType? appType = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ApiManagementSubscriptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sid, ApiManagementSubscriptionCreateOrUpdateContent content, ApiManagementSubscriptionCreateOrUpdateOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sid, nameof(sid));
             Argument.AssertNotNull(content, nameof(content));
+            options ??= new ApiManagementSubscriptionCreateOrUpdateOptions();
 
             using var scope = _apiManagementSubscriptionSubscriptionClientDiagnostics.CreateScope("ApiManagementSubscriptionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _apiManagementSubscriptionSubscriptionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sid, content, notify, ifMatch, appType, cancellationToken).ConfigureAwait(false);
+                var response = await _apiManagementSubscriptionSubscriptionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sid, content, options.Notify, options.IfMatch, options.AppType, cancellationToken).ConfigureAwait(false);
                 var operation = new ApiManagementArmOperation<ApiManagementSubscriptionResource>(Response.FromValue(new ApiManagementSubscriptionResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -102,26 +97,21 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sid"> Subscription entity Identifier. The entity represents the association between a user and a product in API Management. </param>
         /// <param name="content"> Create parameters. </param>
-        /// <param name="notify">
-        /// Notify change in Subscription State. 
-        ///  - If false, do not send any email notification for change of state of subscription 
-        ///  - If true, send email notification of change of state of subscription 
-        /// </param>
-        /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
-        /// <param name="appType"> Determines the type of application which send the create user request. Default is legacy publisher portal. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sid"/> or <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<ApiManagementSubscriptionResource> CreateOrUpdate(WaitUntil waitUntil, string sid, ApiManagementSubscriptionCreateOrUpdateContent content, bool? notify = null, ETag? ifMatch = null, AppType? appType = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ApiManagementSubscriptionResource> CreateOrUpdate(WaitUntil waitUntil, string sid, ApiManagementSubscriptionCreateOrUpdateContent content, ApiManagementSubscriptionCreateOrUpdateOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sid, nameof(sid));
             Argument.AssertNotNull(content, nameof(content));
+            options ??= new ApiManagementSubscriptionCreateOrUpdateOptions();
 
             using var scope = _apiManagementSubscriptionSubscriptionClientDiagnostics.CreateScope("ApiManagementSubscriptionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _apiManagementSubscriptionSubscriptionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sid, content, notify, ifMatch, appType, cancellationToken);
+                var response = _apiManagementSubscriptionSubscriptionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sid, content, options.Notify, options.IfMatch, options.AppType, cancellationToken);
                 var operation = new ApiManagementArmOperation<ApiManagementSubscriptionResource>(Response.FromValue(new ApiManagementSubscriptionResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
@@ -197,20 +187,20 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/subscriptions
         /// Operation Id: Subscription_List
         /// </summary>
-        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| stateComment | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| ownerId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| scope | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| userId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| productId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| state | filter | eq |     |&lt;/br&gt;| user | expand |     |     |&lt;/br&gt;. </param>
-        /// <param name="top"> Number of records to return. </param>
-        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApiManagementSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiManagementSubscriptionResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ApiManagementSubscriptionResource> GetAllAsync(ApiManagementSubscriptionGetAllOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new ApiManagementSubscriptionGetAllOptions();
+
             async Task<Page<ApiManagementSubscriptionResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _apiManagementSubscriptionSubscriptionClientDiagnostics.CreateScope("ApiManagementSubscriptionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _apiManagementSubscriptionSubscriptionRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _apiManagementSubscriptionSubscriptionRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Filter, options.Top, options.Skip, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ApiManagementSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -225,7 +215,7 @@ namespace Azure.ResourceManager.ApiManagement
                 scope.Start();
                 try
                 {
-                    var response = await _apiManagementSubscriptionSubscriptionRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _apiManagementSubscriptionSubscriptionRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Filter, options.Top, options.Skip, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ApiManagementSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -242,20 +232,20 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/subscriptions
         /// Operation Id: Subscription_List
         /// </summary>
-        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| stateComment | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| ownerId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| scope | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| userId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| productId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| state | filter | eq |     |&lt;/br&gt;| user | expand |     |     |&lt;/br&gt;. </param>
-        /// <param name="top"> Number of records to return. </param>
-        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApiManagementSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiManagementSubscriptionResource> GetAll(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ApiManagementSubscriptionResource> GetAll(ApiManagementSubscriptionGetAllOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new ApiManagementSubscriptionGetAllOptions();
+
             Page<ApiManagementSubscriptionResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _apiManagementSubscriptionSubscriptionClientDiagnostics.CreateScope("ApiManagementSubscriptionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _apiManagementSubscriptionSubscriptionRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, cancellationToken: cancellationToken);
+                    var response = _apiManagementSubscriptionSubscriptionRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Filter, options.Top, options.Skip, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ApiManagementSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -270,7 +260,7 @@ namespace Azure.ResourceManager.ApiManagement
                 scope.Start();
                 try
                 {
-                    var response = _apiManagementSubscriptionSubscriptionRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, cancellationToken: cancellationToken);
+                    var response = _apiManagementSubscriptionSubscriptionRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Filter, options.Top, options.Skip, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ApiManagementSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -338,17 +328,17 @@ namespace Azure.ResourceManager.ApiManagement
 
         IEnumerator<ApiManagementSubscriptionResource> IEnumerable<ApiManagementSubscriptionResource>.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IAsyncEnumerator<ApiManagementSubscriptionResource> IAsyncEnumerable<ApiManagementSubscriptionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

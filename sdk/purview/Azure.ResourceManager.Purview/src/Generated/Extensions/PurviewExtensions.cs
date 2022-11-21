@@ -34,13 +34,14 @@ namespace Azure.ResourceManager.Purview
         /// Operation Id: DefaultAccounts_Get
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="scopeTenantId"> The tenant ID. </param>
-        /// <param name="scopeType"> The scope for the default account. </param>
-        /// <param name="scope"> The Id of the scope object, for example if the scope is &quot;Subscription&quot; then it is the ID of that subscription. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<DefaultPurviewAccountPayload>> GetDefaultAccountAsync(this TenantResource tenantResource, Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public static async Task<Response<DefaultPurviewAccountPayload>> GetDefaultAccountAsync(this TenantResource tenantResource, PurviewExtensionsGetDefaultAccountOptions options, CancellationToken cancellationToken = default)
         {
-            return await GetExtensionClient(tenantResource).GetDefaultAccountAsync(scopeTenantId, scopeType, scope, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(options, nameof(options));
+
+            return await GetExtensionClient(tenantResource).GetDefaultAccountAsync(options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -49,13 +50,14 @@ namespace Azure.ResourceManager.Purview
         /// Operation Id: DefaultAccounts_Get
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="scopeTenantId"> The tenant ID. </param>
-        /// <param name="scopeType"> The scope for the default account. </param>
-        /// <param name="scope"> The Id of the scope object, for example if the scope is &quot;Subscription&quot; then it is the ID of that subscription. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<DefaultPurviewAccountPayload> GetDefaultAccount(this TenantResource tenantResource, Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public static Response<DefaultPurviewAccountPayload> GetDefaultAccount(this TenantResource tenantResource, PurviewExtensionsGetDefaultAccountOptions options, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(tenantResource).GetDefaultAccount(scopeTenantId, scopeType, scope, cancellationToken);
+            Argument.AssertNotNull(options, nameof(options));
+
+            return GetExtensionClient(tenantResource).GetDefaultAccount(options, cancellationToken);
         }
 
         /// <summary>
@@ -96,13 +98,14 @@ namespace Azure.ResourceManager.Purview
         /// Operation Id: DefaultAccounts_Remove
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="scopeTenantId"> The tenant ID. </param>
-        /// <param name="scopeType"> The scope for the default account. </param>
-        /// <param name="scope"> The Id of the scope object, for example if the scope is &quot;Subscription&quot; then it is the ID of that subscription. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response> RemoveDefaultAccountAsync(this TenantResource tenantResource, Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public static async Task<Response> RemoveDefaultAccountAsync(this TenantResource tenantResource, PurviewExtensionsRemoveDefaultAccountOptions options, CancellationToken cancellationToken = default)
         {
-            return await GetExtensionClient(tenantResource).RemoveDefaultAccountAsync(scopeTenantId, scopeType, scope, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(options, nameof(options));
+
+            return await GetExtensionClient(tenantResource).RemoveDefaultAccountAsync(options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -111,13 +114,14 @@ namespace Azure.ResourceManager.Purview
         /// Operation Id: DefaultAccounts_Remove
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="scopeTenantId"> The tenant ID. </param>
-        /// <param name="scopeType"> The scope for the default account. </param>
-        /// <param name="scope"> The Id of the scope object, for example if the scope is &quot;Subscription&quot; then it is the ID of that subscription. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response RemoveDefaultAccount(this TenantResource tenantResource, Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public static Response RemoveDefaultAccount(this TenantResource tenantResource, PurviewExtensionsRemoveDefaultAccountOptions options, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(tenantResource).RemoveDefaultAccount(scopeTenantId, scopeType, scope, cancellationToken);
+            Argument.AssertNotNull(options, nameof(options));
+
+            return GetExtensionClient(tenantResource).RemoveDefaultAccount(options, cancellationToken);
         }
 
         private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)

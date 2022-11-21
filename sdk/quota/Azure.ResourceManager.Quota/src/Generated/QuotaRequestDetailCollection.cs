@@ -15,6 +15,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Quota.Models;
 
 namespace Azure.ResourceManager.Quota
 {
@@ -106,28 +107,20 @@ namespace Azure.ResourceManager.Quota
         /// Request Path: /{scope}/providers/Microsoft.Quota/quotaRequests
         /// Operation Id: QuotaRequestStatus_List
         /// </summary>
-        /// <param name="filter">
-        /// | Field                    | Supported operators  
-        /// |---------------------|------------------------
-        /// 
-        /// |requestSubmitTime | ge, le, eq, gt, lt
-        ///  |provisioningState eq {QuotaRequestState}
-        ///  |resourceName eq {resourceName}
-        /// 
-        /// </param>
-        /// <param name="top"> Number of records to return. </param>
-        /// <param name="skiptoken"> The **Skiptoken** parameter is used only if a previous operation returned a partial result. If a previous response contains a **nextLink** element, its value includes a **skiptoken** parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="QuotaRequestDetailResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<QuotaRequestDetailResource> GetAllAsync(string filter = null, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<QuotaRequestDetailResource> GetAllAsync(QuotaRequestDetailGetAllOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new QuotaRequestDetailGetAllOptions();
+
             async Task<Page<QuotaRequestDetailResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _quotaRequestDetailQuotaRequestStatusClientDiagnostics.CreateScope("QuotaRequestDetailCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _quotaRequestDetailQuotaRequestStatusRestClient.ListAsync(Id, filter, top, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _quotaRequestDetailQuotaRequestStatusRestClient.ListAsync(Id, options.Filter, options.Top, options.Skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new QuotaRequestDetailResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -142,7 +135,7 @@ namespace Azure.ResourceManager.Quota
                 scope.Start();
                 try
                 {
-                    var response = await _quotaRequestDetailQuotaRequestStatusRestClient.ListNextPageAsync(nextLink, Id, filter, top, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _quotaRequestDetailQuotaRequestStatusRestClient.ListNextPageAsync(nextLink, Id, options.Filter, options.Top, options.Skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new QuotaRequestDetailResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -159,28 +152,20 @@ namespace Azure.ResourceManager.Quota
         /// Request Path: /{scope}/providers/Microsoft.Quota/quotaRequests
         /// Operation Id: QuotaRequestStatus_List
         /// </summary>
-        /// <param name="filter">
-        /// | Field                    | Supported operators  
-        /// |---------------------|------------------------
-        /// 
-        /// |requestSubmitTime | ge, le, eq, gt, lt
-        ///  |provisioningState eq {QuotaRequestState}
-        ///  |resourceName eq {resourceName}
-        /// 
-        /// </param>
-        /// <param name="top"> Number of records to return. </param>
-        /// <param name="skiptoken"> The **Skiptoken** parameter is used only if a previous operation returned a partial result. If a previous response contains a **nextLink** element, its value includes a **skiptoken** parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="QuotaRequestDetailResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<QuotaRequestDetailResource> GetAll(string filter = null, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<QuotaRequestDetailResource> GetAll(QuotaRequestDetailGetAllOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new QuotaRequestDetailGetAllOptions();
+
             Page<QuotaRequestDetailResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _quotaRequestDetailQuotaRequestStatusClientDiagnostics.CreateScope("QuotaRequestDetailCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _quotaRequestDetailQuotaRequestStatusRestClient.List(Id, filter, top, skiptoken, cancellationToken: cancellationToken);
+                    var response = _quotaRequestDetailQuotaRequestStatusRestClient.List(Id, options.Filter, options.Top, options.Skiptoken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new QuotaRequestDetailResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -195,7 +180,7 @@ namespace Azure.ResourceManager.Quota
                 scope.Start();
                 try
                 {
-                    var response = _quotaRequestDetailQuotaRequestStatusRestClient.ListNextPage(nextLink, Id, filter, top, skiptoken, cancellationToken: cancellationToken);
+                    var response = _quotaRequestDetailQuotaRequestStatusRestClient.ListNextPage(nextLink, Id, options.Filter, options.Top, options.Skiptoken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new QuotaRequestDetailResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -263,17 +248,17 @@ namespace Azure.ResourceManager.Quota
 
         IEnumerator<QuotaRequestDetailResource> IEnumerable<QuotaRequestDetailResource>.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IAsyncEnumerator<QuotaRequestDetailResource> IAsyncEnumerable<QuotaRequestDetailResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

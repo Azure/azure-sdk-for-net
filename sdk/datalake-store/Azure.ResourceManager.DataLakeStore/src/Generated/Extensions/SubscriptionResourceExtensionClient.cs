@@ -52,15 +52,10 @@ namespace Azure.ResourceManager.DataLakeStore
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataLakeStore/accounts
         /// Operation Id: Accounts_List
         /// </summary>
-        /// <param name="filter"> OData filter. Optional. </param>
-        /// <param name="top"> The number of items to return. Optional. </param>
-        /// <param name="skip"> The number of items to skip over before returning elements. Optional. </param>
-        /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. Categories?$select=CategoryName,Description. Optional. </param>
-        /// <param name="orderby"> OrderBy clause. One or more comma-separated expressions with an optional &quot;asc&quot; (the default) or &quot;desc&quot; depending on the order you&apos;d like the values sorted, e.g. Categories?$orderby=CategoryName desc. Optional. </param>
-        /// <param name="count"> The Boolean value of true or false to request a count of the matching resources included with the resources in the response, e.g. Categories?$count=true. Optional. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataLakeStoreAccountBasic" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataLakeStoreAccountBasic> GetAccountsAsync(string filter = null, int? top = null, int? skip = null, string select = null, string orderby = null, bool? count = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DataLakeStoreAccountBasic> GetAccountsAsync(DataLakeStoreExtensionsGetAccountsOptions options, CancellationToken cancellationToken = default)
         {
             async Task<Page<DataLakeStoreAccountBasic>> FirstPageFunc(int? pageSizeHint)
             {
@@ -68,7 +63,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 scope.Start();
                 try
                 {
-                    var response = await DataLakeStoreAccountAccountsRestClient.ListAsync(Id.SubscriptionId, filter, top, skip, select, orderby, count, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await DataLakeStoreAccountAccountsRestClient.ListAsync(Id.SubscriptionId, options.Filter, options.Top, options.Skip, options.Select, options.Orderby, options.Count, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -83,7 +78,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 scope.Start();
                 try
                 {
-                    var response = await DataLakeStoreAccountAccountsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, filter, top, skip, select, orderby, count, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await DataLakeStoreAccountAccountsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, options.Filter, options.Top, options.Skip, options.Select, options.Orderby, options.Count, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -100,15 +95,10 @@ namespace Azure.ResourceManager.DataLakeStore
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataLakeStore/accounts
         /// Operation Id: Accounts_List
         /// </summary>
-        /// <param name="filter"> OData filter. Optional. </param>
-        /// <param name="top"> The number of items to return. Optional. </param>
-        /// <param name="skip"> The number of items to skip over before returning elements. Optional. </param>
-        /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. Categories?$select=CategoryName,Description. Optional. </param>
-        /// <param name="orderby"> OrderBy clause. One or more comma-separated expressions with an optional &quot;asc&quot; (the default) or &quot;desc&quot; depending on the order you&apos;d like the values sorted, e.g. Categories?$orderby=CategoryName desc. Optional. </param>
-        /// <param name="count"> The Boolean value of true or false to request a count of the matching resources included with the resources in the response, e.g. Categories?$count=true. Optional. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataLakeStoreAccountBasic" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataLakeStoreAccountBasic> GetAccounts(string filter = null, int? top = null, int? skip = null, string select = null, string orderby = null, bool? count = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<DataLakeStoreAccountBasic> GetAccounts(DataLakeStoreExtensionsGetAccountsOptions options, CancellationToken cancellationToken = default)
         {
             Page<DataLakeStoreAccountBasic> FirstPageFunc(int? pageSizeHint)
             {
@@ -116,7 +106,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 scope.Start();
                 try
                 {
-                    var response = DataLakeStoreAccountAccountsRestClient.List(Id.SubscriptionId, filter, top, skip, select, orderby, count, cancellationToken: cancellationToken);
+                    var response = DataLakeStoreAccountAccountsRestClient.List(Id.SubscriptionId, options.Filter, options.Top, options.Skip, options.Select, options.Orderby, options.Count, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -131,7 +121,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 scope.Start();
                 try
                 {
-                    var response = DataLakeStoreAccountAccountsRestClient.ListNextPage(nextLink, Id.SubscriptionId, filter, top, skip, select, orderby, count, cancellationToken: cancellationToken);
+                    var response = DataLakeStoreAccountAccountsRestClient.ListNextPage(nextLink, Id.SubscriptionId, options.Filter, options.Top, options.Skip, options.Select, options.Orderby, options.Count, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

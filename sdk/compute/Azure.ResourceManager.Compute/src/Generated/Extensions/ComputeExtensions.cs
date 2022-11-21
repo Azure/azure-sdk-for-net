@@ -477,20 +477,19 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="skus"> A valid image SKU. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. </param>
-        /// <param name="top"> The Integer to use. </param>
-        /// <param name="orderby"> The String to use. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is null. </exception>
         /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publisherName, string offer, string skus, ComputeExtensionsGetVirtualMachineImagesOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
             Argument.AssertNotNullOrEmpty(skus, nameof(skus));
+            options ??= new ComputeExtensionsGetVirtualMachineImagesOptions();
 
-            return GetExtensionClient(subscriptionResource).GetVirtualMachineImagesAsync(location, publisherName, offer, skus, expand, top, orderby, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetVirtualMachineImagesAsync(location, publisherName, offer, skus, options, cancellationToken);
         }
 
         /// <summary>
@@ -503,20 +502,19 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="skus"> A valid image SKU. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. </param>
-        /// <param name="top"> The Integer to use. </param>
-        /// <param name="orderby"> The String to use. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is null. </exception>
         /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualMachineImageBase> GetVirtualMachineImages(this SubscriptionResource subscriptionResource, AzureLocation location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        public static Pageable<VirtualMachineImageBase> GetVirtualMachineImages(this SubscriptionResource subscriptionResource, AzureLocation location, string publisherName, string offer, string skus, ComputeExtensionsGetVirtualMachineImagesOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
             Argument.AssertNotNullOrEmpty(skus, nameof(skus));
+            options ??= new ComputeExtensionsGetVirtualMachineImagesOptions();
 
-            return GetExtensionClient(subscriptionResource).GetVirtualMachineImages(location, publisherName, offer, skus, expand, top, orderby, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetVirtualMachineImages(location, publisherName, offer, skus, options, cancellationToken);
         }
 
         /// <summary>
@@ -728,21 +726,20 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="skus"> A valid image SKU. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. </param>
-        /// <param name="top"> An integer value specifying the number of images to return that matches supplied values. </param>
-        /// <param name="orderby"> Specifies the order of the results returned. Formatted as an OData query. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is null. </exception>
         /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesEdgeZonesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesEdgeZonesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, string publisherName, string offer, string skus, ComputeExtensionsGetVirtualMachineImagesEdgeZonesOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
             Argument.AssertNotNullOrEmpty(skus, nameof(skus));
+            options ??= new ComputeExtensionsGetVirtualMachineImagesEdgeZonesOptions();
 
-            return GetExtensionClient(subscriptionResource).GetVirtualMachineImagesEdgeZonesAsync(location, edgeZone, publisherName, offer, skus, expand, top, orderby, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetVirtualMachineImagesEdgeZonesAsync(location, edgeZone, publisherName, offer, skus, options, cancellationToken);
         }
 
         /// <summary>
@@ -756,21 +753,20 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="skus"> A valid image SKU. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. </param>
-        /// <param name="top"> An integer value specifying the number of images to return that matches supplied values. </param>
-        /// <param name="orderby"> Specifies the order of the results returned. Formatted as an OData query. </param>
+        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is null. </exception>
         /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualMachineImageBase> GetVirtualMachineImagesEdgeZones(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        public static Pageable<VirtualMachineImageBase> GetVirtualMachineImagesEdgeZones(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, string publisherName, string offer, string skus, ComputeExtensionsGetVirtualMachineImagesEdgeZonesOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
             Argument.AssertNotNullOrEmpty(skus, nameof(skus));
+            options ??= new ComputeExtensionsGetVirtualMachineImagesEdgeZonesOptions();
 
-            return GetExtensionClient(subscriptionResource).GetVirtualMachineImagesEdgeZones(location, edgeZone, publisherName, offer, skus, expand, top, orderby, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetVirtualMachineImagesEdgeZones(location, edgeZone, publisherName, offer, skus, options, cancellationToken);
         }
 
         /// <summary>
