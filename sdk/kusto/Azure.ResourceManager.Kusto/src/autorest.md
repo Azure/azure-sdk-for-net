@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: Kusto
 namespace: Azure.ResourceManager.Kusto
-require: https://github.com/Azure/azure-rest-api-specs/blob/aa8a23b8f92477d0fdce7af6ccffee1c604b3c56/specification/azure-kusto/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/05a9cdab363b8ec824094ee73950c04594325172/specification/azure-kusto/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -131,6 +131,24 @@ rename-mapping:
   AzureSkuName.Standard_E8s_v5+2TB_PS: StandardE8sV52TBPS
   AzureSkuName.Standard_E16s_v5+3TB_PS: StandardE16sV53TBPS
   AzureSkuName.Standard_E16s_v5+4TB_PS: StandardE16sV54TBPS
+  AzureSkuName.Standard_L8s_v3: StandardL8sV3
+  AzureSkuName.Standard_L16s_v3: StandardL16sV3
+  AzureSkuName.Standard_L8as_v3: StandardL8asV3
+  AzureSkuName.Standard_L16as_v3: StandardL16asV3
+  AzureSkuName.Standard_EC8as_v5+1TB_PS: StandardEC8asV51TBPS
+  AzureSkuName.Standard_EC8as_v5+2TB_PS: StandardEC8asV52TBPS
+  AzureSkuName.Standard_EC16as_v5+3TB_PS: StandardEC16asV53TBPS
+  AzureSkuName.Standard_EC16as_v5+4TB_PS: StandardEC16asV54TBPS
+  AzureSkuName.Standard_EC8ads_v5: StandardEC8adsV5
+  AzureSkuName.Standard_EC16ads_v5: StandardEC16adsV5
+  AzureSkuName.Standard_E2d_v4: StandardE2dV4
+  AzureSkuName.Standard_E4d_v4: StandardE4dV4
+  AzureSkuName.Standard_E8d_v4: StandardE8dV4
+  AzureSkuName.Standard_E16d_v4: StandardE16dV4
+  AzureSkuName.Standard_E2d_v5: StandardE2dV5
+  AzureSkuName.Standard_E4d_v5: StandardE4dV5
+  AzureSkuName.Standard_E8d_v5: StandardE8dV5
+  AzureSkuName.Standard_E16d_v5: StandardE16dV5
   AzureSkuTier: KustoSkuTier
   Reason: KustoNameUnavailableReason
   ClusterType: KustoClusterType
@@ -194,6 +212,8 @@ rename-mapping:
   DefaultPrincipalsModificationKind: KustoDatabaseDefaultPrincipalsModificationKind
   TableLevelSharingProperties: KustoDatabaseTableLevelSharingProperties
   TrustedExternalTenant: KustoClusterTrustedExternalTenant
+  CallerRole: KustoDatabaseCallerRole
+  DatabaseShareOrigin: KustoDatabaseShareOrigin
 
 
 format-by-name-rules:

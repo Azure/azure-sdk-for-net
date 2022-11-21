@@ -1171,7 +1171,7 @@ Schema for <c>QnaSourcesMetadata</c>:
 <code>{
   displayName: string, # Optional. Friendly name of the Source.
   source: string, # Optional. Unique source identifier. Name of the file if it&apos;s a &apos;file&apos; source; otherwise, the complete URL if it&apos;s a &apos;url&apos; source.
-  sourceUri: string, # Required. URI location for the file or url.
+  sourceUri: Uri, # Required. URI location for the file or url.
   sourceKind: &quot;file&quot; | &quot;url&quot;, # Required. Supported source types.
   contentStructureKind: &quot;unstructured&quot;, # Optional. Content structure type for sources.
 }
@@ -1209,7 +1209,7 @@ Schema for <c>QnaSourcesMetadata</c>:
 <code>{
   displayName: string, # Optional. Friendly name of the Source.
   source: string, # Optional. Unique source identifier. Name of the file if it&apos;s a &apos;file&apos; source; otherwise, the complete URL if it&apos;s a &apos;url&apos; source.
-  sourceUri: string, # Required. URI location for the file or url.
+  sourceUri: Uri, # Required. URI location for the file or url.
   sourceKind: &quot;file&quot; | &quot;url&quot;, # Required. Supported source types.
   contentStructureKind: &quot;unstructured&quot;, # Optional. Content structure type for sources.
 }
@@ -2023,7 +2023,7 @@ var data = new[] {
         value = new {
             displayName = "<displayName>",
             source = "<source>",
-            sourceUri = "<sourceUri>",
+            sourceUri = new {},
             sourceKind = "file",
             contentStructureKind = "unstructured",
         },
@@ -2057,7 +2057,7 @@ Schema for <c>UpdateSourceRecord</c>:
   value: {
     displayName: string, # Optional. Friendly name of the Source.
     source: string, # Optional. Unique source identifier. Name of the file if it&apos;s a &apos;file&apos; source; otherwise, the complete URL if it&apos;s a &apos;url&apos; source.
-    sourceUri: string, # Required. URI location for the file or url.
+    sourceUri: Uri, # Required. URI location for the file or url.
     sourceKind: &quot;file&quot; | &quot;url&quot;, # Required. Supported source types.
     contentStructureKind: &quot;unstructured&quot;, # Optional. Content structure type for sources.
   }, # Required. Update source record.
@@ -2070,7 +2070,7 @@ Schema for <c>QnaSourcesMetadata</c>:
 <code>{
   displayName: string, # Optional. Friendly name of the Source.
   source: string, # Optional. Unique source identifier. Name of the file if it&apos;s a &apos;file&apos; source; otherwise, the complete URL if it&apos;s a &apos;url&apos; source.
-  sourceUri: string, # Required. URI location for the file or url.
+  sourceUri: Uri, # Required. URI location for the file or url.
   sourceKind: &quot;file&quot; | &quot;url&quot;, # Required. Supported source types.
   contentStructureKind: &quot;unstructured&quot;, # Optional. Content structure type for sources.
 }
@@ -2092,7 +2092,7 @@ var data = new[] {
         value = new {
             displayName = "<displayName>",
             source = "<source>",
-            sourceUri = "<sourceUri>",
+            sourceUri = new {},
             sourceKind = "file",
             contentStructureKind = "unstructured",
         },
@@ -2126,7 +2126,7 @@ Schema for <c>UpdateSourceRecord</c>:
   value: {
     displayName: string, # Optional. Friendly name of the Source.
     source: string, # Optional. Unique source identifier. Name of the file if it&apos;s a &apos;file&apos; source; otherwise, the complete URL if it&apos;s a &apos;url&apos; source.
-    sourceUri: string, # Required. URI location for the file or url.
+    sourceUri: Uri, # Required. URI location for the file or url.
     sourceKind: &quot;file&quot; | &quot;url&quot;, # Required. Supported source types.
     contentStructureKind: &quot;unstructured&quot;, # Optional. Content structure type for sources.
   }, # Required. Update source record.
@@ -2139,7 +2139,7 @@ Schema for <c>QnaSourcesMetadata</c>:
 <code>{
   displayName: string, # Optional. Friendly name of the Source.
   source: string, # Optional. Unique source identifier. Name of the file if it&apos;s a &apos;file&apos; source; otherwise, the complete URL if it&apos;s a &apos;url&apos; source.
-  sourceUri: string, # Required. URI location for the file or url.
+  sourceUri: Uri, # Required. URI location for the file or url.
   sourceKind: &quot;file&quot; | &quot;url&quot;, # Required. Supported source types.
   contentStructureKind: &quot;unstructured&quot;, # Optional. Content structure type for sources.
 }

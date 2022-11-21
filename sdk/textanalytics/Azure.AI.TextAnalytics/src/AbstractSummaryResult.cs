@@ -39,12 +39,12 @@ namespace Azure.AI.TextAnalytics
         internal AbstractSummaryResult(string id, TextAnalyticsError error) : base(id, error) { }
 
         /// <summary>
-        /// The warnings the resulted from processing the document.
+        /// The warnings that resulted from processing the document.
         /// </summary>
         public IReadOnlyCollection<TextAnalyticsWarning> Warnings { get; } = new List<TextAnalyticsWarning>();
 
         /// <summary>
-        /// The collection of resulting summaries for the given document.
+        /// The collection of resulting summaries corresponding to the input document.
         /// </summary>
         public IReadOnlyCollection<AbstractiveSummary> Summaries
         {
