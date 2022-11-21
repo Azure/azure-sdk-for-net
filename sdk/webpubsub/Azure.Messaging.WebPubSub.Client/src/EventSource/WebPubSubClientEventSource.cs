@@ -35,7 +35,7 @@ namespace Azure.Messaging.WebPubSub.Clients
 
         public static WebPubSubClientEventSource Log { get; } = new WebPubSubClientEventSource();
 
-        [Event(1, Level = EventLevel.Verbose, Message = "Client starting.")]
+        [Event(1, Level = EventLevel.Informational, Message = "Client is starting.")]
         public virtual void ClientStarting()
         {
             if (IsEnabled())
@@ -44,7 +44,7 @@ namespace Azure.Messaging.WebPubSub.Clients
             }
         }
 
-        [Event(2, Level = EventLevel.Verbose, Message = "The client state transient from the '{0}' state to the '{1}' state.")]
+        [Event(2, Level = EventLevel.Verbose, Message = "The client state changed from the '{0}' state to the '{1}' state.")]
         public virtual void ClientStateChanged(string newState, string currentState)
         {
             if (IsEnabled())
@@ -53,7 +53,7 @@ namespace Azure.Messaging.WebPubSub.Clients
             }
         }
 
-        [Event(3, Level = EventLevel.Verbose, Message = "A new WebSocket connection start to connect with subprotocol {0}.")]
+        [Event(3, Level = EventLevel.Verbose, Message = "A new WebSocket connection is starting to connect with subprotocol {0}.")]
         public virtual void WebSocketConnecting(string subprotocol)
         {
             if (IsEnabled())
@@ -62,7 +62,7 @@ namespace Azure.Messaging.WebPubSub.Clients
             }
         }
 
-        [Event(4, Level = EventLevel.Verbose, Message = "WebSocket connection closed.")]
+        [Event(4, Level = EventLevel.Verbose, Message = "WebSocket connection is closed.")]
         public virtual void WebSocketClosed()
         {
             if (IsEnabled())
@@ -71,7 +71,7 @@ namespace Azure.Messaging.WebPubSub.Clients
             }
         }
 
-        [Event(5, Level = EventLevel.Warning, Message = "An exception occurred while process message from the service. Error Message: {0}")]
+        [Event(5, Level = EventLevel.Warning, Message = "An exception occurred while processing message from the service. Error Message: {0}")]
         public virtual void FailedToProcessMessage(string errorMessage)
         {
             if (IsEnabled())
@@ -89,7 +89,7 @@ namespace Azure.Messaging.WebPubSub.Clients
             }
         }
 
-        [Event(7, Level = EventLevel.Warning, Message = "The client failed to transition from the '{0}' state to the '{1}' state because it was actually in the '{2}' state.")]
+        [Event(7, Level = EventLevel.Warning, Message = "The client failed to change from the '{0}' state to the '{1}' state because it was actually in the '{2}' state.")]
         public virtual void FailedToChangeClientState(string expectedState, string newState, string currentState)
         {
             if (IsEnabled())
@@ -125,7 +125,7 @@ namespace Azure.Messaging.WebPubSub.Clients
             }
         }
 
-        [Event(11, Level = EventLevel.Informational, Message = "Connection with connection ID: {0} connected.")]
+        [Event(11, Level = EventLevel.Informational, Message = "Connection with connection ID: {0} is connected.")]
         public virtual void ConnectionConnected(string connectionId)
         {
             if (IsEnabled())
@@ -134,7 +134,7 @@ namespace Azure.Messaging.WebPubSub.Clients
             }
         }
 
-        [Event(12, Level = EventLevel.Informational, Message = "Connection with connection ID: {0} disconnected.")]
+        [Event(12, Level = EventLevel.Informational, Message = "Connection with connection ID: {0} is disconnected.")]
         public virtual void ConnectionDisconnected(string connectionId)
         {
             if (IsEnabled())
