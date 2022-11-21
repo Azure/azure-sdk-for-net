@@ -45,7 +45,8 @@ function GetGitRemoteValue([string]$repo) {
         {
             if ($remote.StartsWith("origin")) {
                 if ($remote -match 'https://github.com/\S+[\.git]') {
-                    $result = "https://github.com/$repo.git"
+                    $result = "git@github.com:$repo.git"
+                    #$result = "https://github.com/$repo.git"
                     break
                 } elseif ($remote -match "git@github.com:(\S+)\.git"){
                     $result = "git@github.com:$repo.git"
