@@ -1,14 +1,8 @@
 # Release History
 
 ## 12.13.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added support for service version 2021-12-02.
+- Added support for invalid XML characters in file and directory names for ShareDirectoryClient.GetfilesAndDirectories(), .GetHandles(), and ShareFileClient.GetHandles().
 
 ## 12.12.1 (2022-10-25)
 - Fixed bug where ShareFileClient Download() and DownloadAsync() would return a consumed stream when TransferValidation was enabled.

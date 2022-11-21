@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal static UnknownAutoMLVertical DeserializeUnknownAutoMLVertical(JsonElement element)
         {
             Optional<LogVerbosity> logVerbosity = default;
-            TaskType taskType = default;
+            TaskType taskType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("logVerbosity"))

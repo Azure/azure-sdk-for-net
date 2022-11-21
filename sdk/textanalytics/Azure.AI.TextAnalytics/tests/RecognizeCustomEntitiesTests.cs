@@ -359,6 +359,8 @@ namespace Azure.AI.TextAnalytics.Tests
                 {
                     Assert.IsNotEmpty(entity.SubCategory);
                 }
+
+                Assert.IsNotNull(entity.Resolutions);
             }
         }
 

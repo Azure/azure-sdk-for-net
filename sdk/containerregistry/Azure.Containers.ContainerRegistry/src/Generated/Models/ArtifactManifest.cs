@@ -8,7 +8,7 @@
 namespace Azure.Containers.ContainerRegistry.Specialized
 {
     /// <summary> Returns the requested manifest file. </summary>
-    public partial class ArtifactManifest
+    public abstract partial class ArtifactManifest
     {
         /// <summary> Initializes a new instance of ArtifactManifest. </summary>
         public ArtifactManifest()

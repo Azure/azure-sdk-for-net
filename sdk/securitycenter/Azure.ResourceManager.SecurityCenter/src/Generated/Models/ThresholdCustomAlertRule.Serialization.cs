@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> displayName = default;
             Optional<string> description = default;
             bool isEnabled = default;
-            string ruleType = default;
+            string ruleType = "ThresholdCustomAlertRule";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minThreshold"))

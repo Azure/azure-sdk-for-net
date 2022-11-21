@@ -243,3 +243,11 @@ directive:
   transform: >
     $["x-namespace"] = "Azure.AI.FormRecognizer.DocumentAnalysis"
 ```
+
+``` yaml
+directive:
+- from: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/2fd7dcd89afa70ff5ba7be88bee987da62099a28/specification/cognitiveservices/data-plane/FormRecognizer/stable/2022-08-31/FormRecognizer.json
+  where: $.definitions.AnalyzeDocumentRequest.properties.urlSource
+  transform: >
+    $["x-ms-client-name"] = "uriSource";
+```

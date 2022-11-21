@@ -43,7 +43,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="thriftTransportProtocol"> The transport protocol to use in the Thrift layer. </param>
         /// <param name="authenticationType"> The authentication method used to access the Spark server. </param>
         /// <param name="username"> The user name that you use to access Spark Server. </param>
-        /// <param name="password"> The password corresponding to the user name that you provided in the Username field. </param>
+        /// <param name="password">
+        /// The password corresponding to the user name that you provided in the Username field
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
         /// <param name="httpPath"> The partial URL corresponding to the Spark server. </param>
         /// <param name="enableSsl"> Specifies whether the connections to the server are encrypted using SSL. The default value is false. </param>
         /// <param name="trustedCertPath"> The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR. </param>
@@ -82,7 +86,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public SparkAuthenticationType AuthenticationType { get; set; }
         /// <summary> The user name that you use to access Spark Server. </summary>
         public object Username { get; set; }
-        /// <summary> The password corresponding to the user name that you provided in the Username field. </summary>
+        /// <summary>
+        /// The password corresponding to the user name that you provided in the Username field
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </summary>
         public SecretBase Password { get; set; }
         /// <summary> The partial URL corresponding to the Spark server. </summary>
         public object HttpPath { get; set; }
