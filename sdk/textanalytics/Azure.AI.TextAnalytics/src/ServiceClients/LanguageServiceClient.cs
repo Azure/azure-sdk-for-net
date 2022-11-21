@@ -7,11 +7,9 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using Azure.AI.TextAnalytics.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using static System.Collections.Specialized.BitVector32;
 
 namespace Azure.AI.TextAnalytics.ServiceClients
 {

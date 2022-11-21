@@ -1,14 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.AI.TextAnalytics.ServiceClients;
-using Azure.Core;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.TextAnalytics.ServiceClients;
+using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
