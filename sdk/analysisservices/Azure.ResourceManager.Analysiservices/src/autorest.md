@@ -18,8 +18,8 @@ modelerfour:
 
 
 rename-mapping:
-  State: AnalysiservicesState
-  Status: AnalysiservicesStatus
+  State: AnalysisServicesState
+  Status: AnalysisServicesStatus
 
 format-by-name-rules:
   'tenantId': 'uuid'
