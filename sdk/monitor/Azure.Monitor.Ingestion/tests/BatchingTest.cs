@@ -46,7 +46,7 @@ namespace Azure.Monitor.Ingestion.Tests
             }
             IEnumerable<LogsIngestionClient.BatchedLogs<IEnumerable>> x = LogsIngestionClient.Batch(entries);
             Assert.Greater(x.Count(), 1); //ideally should be 2 batches
-            Assert.Less(x.Count(), 5);
+            Assert.Less(x.Count(), 3);
         }
     }
 }

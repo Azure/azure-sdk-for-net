@@ -100,6 +100,7 @@ namespace Azure.Monitor.Ingestion
             foreach (var log in logEntries)
             {
                 BinaryData entry;
+                bool isLastEntry = ((entryCount + 1) == logEntries.Count()) ? true : false;
                 // If log is already BinaryData, no need to serialize it
                 if (log is BinaryData d)
                     entry = d;
@@ -125,8 +126,22 @@ namespace Azure.Monitor.Ingestion
                     yield return new BatchedLogs<T>(new List<T>{log}, BinaryData.FromStream(tempStream));
                 }
                 // if adding this entry makes stream > 1 Mb send current stream now
-                else if ((writer.BytesCommitted + memory.Length + 1) >= SingleUploadThreshold)
+                // if last entry is reached, add last entry to current batch, send batch, and end batching
+                else if (((writer.BytesPending + memory.Length + 1) >= SingleUploadThreshold) || isLastEntry)
                 {
+                    if (isLastEntry)
+                    {
+                        // Reached end of logs and we haven't returned yet
+                        WriteMemory(writer, memory);
+                        writer.WriteEndArray();
+                        writer.Flush();
+                        currentLogList.Add(log);
+                        stream.Position = 0;
+                        yield return new BatchedLogs<T>(currentLogList, BinaryData.FromStream(stream));
+                        // since the last batch has been returned, stop iterating here
+                        break;
+                    }
+
                     writer.WriteEndArray();
                     writer.Flush();
                     stream.Position = 0;
@@ -138,30 +153,20 @@ namespace Azure.Monitor.Ingestion
                     // Rent storage from ArrayPool for the next batch
                     buffer = ArrayPool<byte>.Shared.Rent(SingleUploadThreshold);
                     // reset stream and currentLogList
-                    stream = new MemoryStream(SingleUploadThreshold);
-                    writer.Flush();
+                    stream = new MemoryStream(buffer);
+                    writer.Reset();
+                    writer.WriteStartArray();
                     // reset log list
                     currentLogList = new List<T>();
-                    // add log to memory and currentLogList
+                    // add current log to memory and currentLogList
                     WriteMemory(writer, memory);
                     currentLogList.Add(log);
                 }
                 else
                 {
+                    // Add entry to existing stream and update logList
                     WriteMemory(writer, memory);
-                    if ((entryCount + 1) == logEntries.Count())
-                    {
-                        // Reached end of logs and we haven't returned yet
-                        writer.WriteEndArray();
-                        writer.Flush();
-                        currentLogList.Add(log);
-                        stream.Position = 0;
-                        yield return new BatchedLogs<T>(currentLogList, BinaryData.FromStream(stream));
-                    }
-                    else
-                    {
-                        currentLogList.Add(log);
-                    }
+                    currentLogList.Add(log);
                 }
                 entryCount++;
             }
