@@ -243,6 +243,14 @@ namespace Azure.Communication.CallAutomation
         public int MaxTonesToCollect { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.CallAutomation.DtmfTone> StopTones { get { throw null; } set { } }
     }
+    public partial class CallMediaRecognizeNluOptions : Azure.Communication.CallAutomation.CallMediaRecognizeOptions
+    {
+        public CallMediaRecognizeNluOptions(Azure.Communication.CallAutomation.NluRecognizer nluRecognizer) : base (default(Azure.Communication.CallAutomation.RecognizeInputType), default(Azure.Communication.CommunicationIdentifier)) { }
+        public System.Uri CallbackUri { get { throw null; } set { } }
+        public Azure.Communication.CallAutomation.NluRecognizer NluRecognizer { get { throw null; } }
+        public bool PlayDialog { get { throw null; } set { } }
+        public bool PlayIntent { get { throw null; } set { } }
+    }
     public abstract partial class CallMediaRecognizeOptions
     {
         protected CallMediaRecognizeOptions(Azure.Communication.CallAutomation.RecognizeInputType inputType, Azure.Communication.CommunicationIdentifier targetParticipant) { }
@@ -510,6 +518,24 @@ namespace Azure.Communication.CallAutomation
         public static bool operator !=(Azure.Communication.CallAutomation.MediaStreamingTransport left, Azure.Communication.CallAutomation.MediaStreamingTransport right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct NluRecognizer : System.IEquatable<Azure.Communication.CallAutomation.NluRecognizer>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public NluRecognizer(string value) { throw null; }
+        public static Azure.Communication.CallAutomation.NluRecognizer Luis { get { throw null; } }
+        public static Azure.Communication.CallAutomation.NluRecognizer Nuance { get { throw null; } }
+        public bool Equals(Azure.Communication.CallAutomation.NluRecognizer other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Communication.CallAutomation.NluRecognizer left, Azure.Communication.CallAutomation.NluRecognizer right) { throw null; }
+        public static implicit operator Azure.Communication.CallAutomation.NluRecognizer (string value) { throw null; }
+        public static bool operator !=(Azure.Communication.CallAutomation.NluRecognizer left, Azure.Communication.CallAutomation.NluRecognizer right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ParticipantsUpdated : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
         internal ParticipantsUpdated() { }
@@ -599,6 +625,7 @@ namespace Azure.Communication.CallAutomation
         public RecognizeInputType(string value) { throw null; }
         public static Azure.Communication.CallAutomation.RecognizeInputType Dtmf { get { throw null; } }
         public static Azure.Communication.CallAutomation.RecognizeInputType IvrChoices { get { throw null; } }
+        public static Azure.Communication.CallAutomation.RecognizeInputType Nlu { get { throw null; } }
         public bool Equals(Azure.Communication.CallAutomation.RecognizeInputType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
