@@ -63,8 +63,5 @@ foreach (KeyValuePair<string, DocumentTypeDetails> documentType in model.Documen
 }
 ```
 
-To see the full example source files, see:
-* [Build a model](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_BuildCustomModelAsync.cs)
-
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started
 [labeling_tool]: https://aka.ms/azsdk/formrecognizer/labelingtool

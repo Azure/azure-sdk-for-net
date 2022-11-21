@@ -39,5 +39,3 @@ catch (Exception e)
     Console.WriteLine(String.Format("Error : ", e.Message));
 }
 ```
-To see the full example source files, see:
-* [Sample2_UploadTestFileAsync.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/loadtestservice/Azure.Developer.LoadTesting/tests/Samples/Sample2_UploadTestFileAsync.cs)

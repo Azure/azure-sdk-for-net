@@ -235,16 +235,15 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         private void ValidateSummaryDocumentResult(
-            SummarySentenceCollection sentences,
+            IReadOnlyCollection<SummarySentence> sentences,
             int maxSentenceCount,
             SummarySentencesOrder expectedOrder)
         {
-            Assert.IsNotNull(sentences.Warnings);
             Assert.LessOrEqual(sentences.Count, maxSentenceCount);
 
             for (int i = 0; i < sentences.Count; i++)
             {
-                SummarySentence sentence = sentences[i];
+                SummarySentence sentence = sentences.ElementAt(i);
                 string originalDocument = s_extractSummaryBatchConvenienceDocuments.Where(document => document.Contains(sentence.Text)).FirstOrDefault();
 
                 Assert.False(string.IsNullOrEmpty(originalDocument));
@@ -256,7 +255,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
                 if (i > 0)
                 {
-                    SummarySentence previousSentence = sentences[i - 1];
+                    SummarySentence previousSentence = sentences.ElementAt(i - 1);
 
                     if (expectedOrder == SummarySentencesOrder.Offset)
                     {
@@ -295,6 +294,7 @@ namespace Azure.AI.TextAnalytics.Tests
             {
                 Assert.That(result.Id, Is.Not.Null.And.Not.Empty);
                 Assert.False(result.HasError);
+                Assert.IsNotNull(result.Warnings);
 
                 if (includeStatistics)
                 {

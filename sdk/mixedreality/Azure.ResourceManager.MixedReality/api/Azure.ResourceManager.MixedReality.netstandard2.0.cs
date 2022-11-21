@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.MixedReality.Models
     }
     public enum Serial
     {
-        Primary = 0,
-        Secondary = 1,
+        Primary = 1,
+        Secondary = 2,
     }
 }
