@@ -19,7 +19,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> Initializes a new instance of MediaJobOutputProcessingEventData. </summary>
         /// <param name="previousState"> The previous state of the Job. </param>
-        /// <param name="output"> Gets the output. </param>
+        /// <param name="output">
+        /// Gets the output.
+        /// Please note <see cref="MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MediaJobOutputAsset"/>.
+        /// </param>
         /// <param name="jobCorrelationData"> Gets the Job correlation data. </param>
         internal MediaJobOutputProcessingEventData(MediaJobState? previousState, MediaJobOutput output, IReadOnlyDictionary<string, string> jobCorrelationData) : base(previousState, output, jobCorrelationData)
         {

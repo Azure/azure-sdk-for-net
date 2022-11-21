@@ -1,12 +1,20 @@
 # Release History
 
-## 4.5.0-beta.1 (Unreleased)
+## 4.5.0-beta.2 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
+
+### Other Changes
+
+## 4.5.0-beta.1 (2022-11-09)
+
+### Bugs Fixed
+
+- Fixed possible "ObjectIsBeingRecovered" error immediately after restoring certificates, keys, or secrets. ([#31581](https://github.com/Azure/azure-sdk-for-net/issues/31581))
 
 ### Other Changes
 

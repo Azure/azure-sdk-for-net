@@ -117,13 +117,15 @@ namespace Azure.Core
             }
         }
 
-        private bool HasQuery => _queryIndex != -1;
+        /// <summary> Gets whether or not this instance of <see cref="RequestUriBuilder"/> has a path. </summary>
+        protected bool HasPath => PathLength > 0;
 
-        /// <summary> Gets the length of the path in this instance of <see cref="RequestUriBuilder"/>. </summary>
-        protected int PathLength => HasQuery ? _queryIndex : _pathAndQuery.Length;
+        /// <summary> Gets whether or not this instance of <see cref="RequestUriBuilder"/> has a query. </summary>
+        protected bool HasQuery => _queryIndex != -1;
 
-        /// <summary> Gets the length of the query in this instance of <see cref="RequestUriBuilder"/>. </summary>
-        protected int QueryLength => HasQuery ? _pathAndQuery.Length - _queryIndex : 0;
+        private int PathLength => HasQuery ? _queryIndex : _pathAndQuery.Length;
+
+        private int QueryLength => HasQuery ? _pathAndQuery.Length - _queryIndex : 0;
 
         /// <summary>
         /// Gets the path and query string to the resource referenced by the URI.

@@ -32,6 +32,16 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("dtmfOptions");
                 writer.WriteObjectValue(DtmfOptions);
             }
+            if (Optional.IsCollectionDefined(IvrChoiceOptions))
+            {
+                writer.WritePropertyName("ivrChoiceOptions");
+                writer.WriteStartArray();
+                foreach (var item in IvrChoiceOptions)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
         }
     }
