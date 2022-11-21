@@ -46,6 +46,7 @@ namespace Azure.ResourceManager.TestFramework
             SessionEnvironment = new TEnvironment();
             SessionEnvironment.Mode = Mode;
             Initialize();
+            InherentCheck();
         }
 
         protected ManagementRecordedTestBase(bool isAsync, ResourceType resourceType, string apiVersion, RecordedTestMode? mode = default)
@@ -256,6 +257,28 @@ namespace Azure.ResourceManager.TestFramework
 
             if (!(GlobalClient is null))
                 throw new InvalidOperationException("StopSessionRecording was never called please make sure you call that at the end of your OneTimeSetup");
+        }
+
+        //[Test]
+        public void InherentCheck()
+        {
+            var testName = Assembly.GetExecutingAssembly().FullName;
+            var RPName = testName.Substring(0, testName.IndexOf(".Tests")) + ".dll";
+            var query = from t in Assembly.LoadFrom(RPName).GetTypes()
+                    where t.IsClass && t.Name.EndsWith("Resource")
+                    select t;
+            foreach (var item in query.ToList())
+            {
+                Assert.AreEqual(item.BaseType.Name, "ArmResource");
+            }
+
+            query = from t in Assembly.LoadFrom(RPName).GetTypes()
+                    where t.IsClass && t.Name.EndsWith("Collection")
+                    select t;
+            foreach (var item in query.ToList())
+            {
+                Assert.AreEqual(item.BaseType.Name, "ArmCollection");
+            }
         }
     }
 }
