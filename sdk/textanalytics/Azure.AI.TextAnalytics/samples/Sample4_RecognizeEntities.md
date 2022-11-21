@@ -68,7 +68,7 @@ string documentB = @"Last week we stayed at Hotel Foo to celebrate our anniversa
 
 string documentC = @"That was the best day of my life! We went on a 4 day trip where we stayed at Hotel Foo.
                     They had great amenities that included an indoor pool, a spa, and a bar.
-                    The spa offered couples massages which were really good. 
+                    The spa offered couples massages which were really good.
                     The spa was clean and felt very peaceful. Overall the whole experience was great.
                     We will definitely come back.";
 
@@ -137,7 +137,7 @@ string documentB = @"Nos hospedamos en el Hotel Foo la semana pasada por nuestro
 
 string documentC = @"That was the best day of my life! We went on a 4 day trip where we stayed at Hotel Foo.
                     They had great amenities that included an indoor pool, a spa, and a bar.
-                    The spa offered couples massages which were really good. 
+                    The spa offered couples massages which were really good.
                     The spa was clean and felt very peaceful. Overall the whole experience was great.
                     We will definitely come back.";
 
@@ -208,15 +208,6 @@ Console.WriteLine($"  Invalid document count: {entitiesInDocuments.Statistics.In
 Console.WriteLine($"  Transaction count: {entitiesInDocuments.Statistics.TransactionCount}");
 Console.WriteLine("");
 ```
-
-To see the full example source files, see:
-
-* [Synchronously RecognizeEntities](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample4_RecognizeEntities.cs)
-* [Asynchronously RecognizeEntities](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample4_RecognizeEntitiesAsync.cs)
-* [Synchronously RecognizeEntitiesBatch](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample4_RecognizeEntitiesBatch.cs)
-* [Asynchronously RecognizeEntitiesBatch](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample4_RecognizeEntitiesBatchAsync.cs)
-* [Synchronously RecognizeEntitiesBatchConvenience](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample4_RecognizeEntitiesBatchConvenience.cs)
-* [Asynchronously RecognizeEntitiesBatchConvenience](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample4_RecognizeEntitiesBatchConvenienceAsync.cs)
 
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/README.md
