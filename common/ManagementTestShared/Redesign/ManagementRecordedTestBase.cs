@@ -8,6 +8,7 @@ using Castle.DynamicProxy;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -262,9 +263,11 @@ namespace Azure.ResourceManager.TestFramework
         //[Test]
         public void InherentCheck()
         {
-            var testName = Assembly.GetExecutingAssembly().FullName;
-            var RPName = testName.Substring(0, testName.IndexOf(".Tests")) + ".dll";
-            var query = from t in Assembly.LoadFrom(RPName).GetTypes()
+            var dllPath = Path.Combine(
+                Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+                Assembly.GetExecutingAssembly().FullName.Substring(0,
+                    Assembly.GetExecutingAssembly().FullName.IndexOf(".Tests")) + ".dll");
+            var query = from t in Assembly.LoadFrom(dllPath).GetTypes()
                     where t.IsClass && t.Name.EndsWith("Resource")
                     && !t.Name.Equals("ArmResource")
                     && !t.Name.Equals("WritableSubResource")
@@ -275,7 +278,7 @@ namespace Azure.ResourceManager.TestFramework
                 Assert.AreEqual("ArmResource", item.BaseType.Name);
             }
 
-            query = from t in Assembly.LoadFrom(RPName).GetTypes()
+            query = from t in Assembly.LoadFrom(dllPath).GetTypes()
                     where t.IsClass && t.Name.EndsWith("Collection") && !t.Name.Equals("ArmCollection")
                     select t;
             foreach (var item in query.ToList())
