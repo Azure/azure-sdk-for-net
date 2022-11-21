@@ -266,18 +266,21 @@ namespace Azure.ResourceManager.TestFramework
             var RPName = testName.Substring(0, testName.IndexOf(".Tests")) + ".dll";
             var query = from t in Assembly.LoadFrom(RPName).GetTypes()
                     where t.IsClass && t.Name.EndsWith("Resource")
-                    select t;
+                    && !t.Name.Equals("ArmResource")
+                    && !t.Name.Equals("WritableSubResource")
+                    && !t.Name.Equals("SubResource")
+                        select t;
             foreach (var item in query.ToList())
             {
-                Assert.AreEqual(item.BaseType.Name, "ArmResource");
+                Assert.AreEqual("ArmResource", item.BaseType.Name);
             }
 
             query = from t in Assembly.LoadFrom(RPName).GetTypes()
-                    where t.IsClass && t.Name.EndsWith("Collection")
+                    where t.IsClass && t.Name.EndsWith("Collection") && !t.Name.Equals("ArmCollection")
                     select t;
             foreach (var item in query.ToList())
             {
-                Assert.AreEqual(item.BaseType.Name, "ArmCollection");
+                Assert.AreEqual("ArmCollection", item.BaseType.Name);
             }
         }
     }
