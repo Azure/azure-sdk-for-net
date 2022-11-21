@@ -17,6 +17,15 @@
 - Added the `CategorizedEntity.Resolutions` property.
 - Added the following classes: `AgeResolution`, `AreaResolution`, `BaseResolution`, `BooleanResolution`, `CurrencyResolution`, `DateTimeResolution`, `InformationResolution`, `LengthResolution`, `NumberResolution`, `NumericRangeResolution`, `OrdinalResolution`, `SpeedResolution`, `TemperatureResolution`, `TemporalSpanResolution` `VolumeResolution`, and `WeightResolution`.
 - Added the following enums: `AgeUnit`, `AreaUnit`, `DateTimeSubKind`, `InformationUnit`,`LengthUnit`, `NumberKind`, `RangeKind`, `RelativeTo`, `SpeedUnit`, `TemperatureUnit`,`TemporalModifier`, `VolumeUnit`, and `WeightUnit`.
+- Added the `AbstractSummaryResult.DetectedLanguage` property.
+- Added the `AnalyzeHealthcareEntitiesResult.DetectedLanguage` property.
+- Added the `AnalyzeSentimentResult.DetectedLanguage` property.
+- Added the `ClassifyDocumentResult.DetectedLanguage` property.
+- Added the `ExtractKeyPhrasesResult.DetectedLanguage` property.
+- Added the `ExtractSummaryResult.DetectedLanguage` property.
+- Added the `RecognizeEntitiesResult.DetectedLanguage` property.
+- Added the `RecognizeLinkedEntitiesResult.DetectedLanguage` property.
+- Added the `RecognizePiiEntitiesResult.DetectedLanguage` property.
 
 ### Breaking Changes
 

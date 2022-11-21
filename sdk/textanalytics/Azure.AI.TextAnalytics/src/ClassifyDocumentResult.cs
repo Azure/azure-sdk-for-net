@@ -13,14 +13,26 @@ namespace Azure.AI.TextAnalytics
     public class ClassifyDocumentResult : TextAnalyticsResult
     {
         private readonly ClassificationCategoryCollection _classifications;
-        internal ClassifyDocumentResult(string id, TextDocumentStatistics statistics, ClassificationCategoryCollection classifications, IReadOnlyCollection<TextAnalyticsWarning> warnings)
+        internal ClassifyDocumentResult(
+            string id,
+            TextDocumentStatistics statistics,
+            ClassificationCategoryCollection classifications,
+            DetectedLanguage? detectedLanguage,
+            IReadOnlyCollection<TextAnalyticsWarning> warnings)
             : base(id, statistics)
         {
             _classifications = classifications;
+            DetectedLanguage = detectedLanguage;
             Warnings = warnings;
         }
 
         internal ClassifyDocumentResult(string id, TextAnalyticsError error) : base(id, error) { }
+
+        /// <summary>
+        /// The language of the input document as detected by the service when requested to perform automatic language
+        /// detection, which is possible by specifying "auto" as the language of the input document.
+        /// </summary>
+        public DetectedLanguage? DetectedLanguage { get; }
 
         /// <summary>
         /// Warnings encountered while processing the document.

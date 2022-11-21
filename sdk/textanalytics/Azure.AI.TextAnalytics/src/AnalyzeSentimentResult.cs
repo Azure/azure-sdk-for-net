@@ -14,13 +14,24 @@ namespace Azure.AI.TextAnalytics
     {
         private readonly DocumentSentiment _documentSentiment;
 
-        internal AnalyzeSentimentResult(string id, TextDocumentStatistics statistics, DocumentSentiment documentSentiment)
+        internal AnalyzeSentimentResult(
+            string id,
+            TextDocumentStatistics statistics,
+            DocumentSentiment documentSentiment,
+            DetectedLanguage? detectedLanguage)
             : base(id, statistics)
         {
             _documentSentiment = documentSentiment;
+            DetectedLanguage = detectedLanguage;
         }
 
         internal AnalyzeSentimentResult(string id, TextAnalyticsError error) : base(id, error) { }
+
+        /// <summary>
+        /// The language of the input document as detected by the service when requested to perform automatic language
+        /// detection, which is possible by specifying "auto" as the language of the input document.
+        /// </summary>
+        public DetectedLanguage? DetectedLanguage { get; }
 
         /// <summary>
         /// Gets the predicted sentiment for the full document.
