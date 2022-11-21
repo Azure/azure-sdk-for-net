@@ -11,8 +11,6 @@ namespace Azure.Developer.LoadTesting
     public partial class LoadTestAdministrationClient
     {
         protected LoadTestAdministrationClient() { }
-        public LoadTestAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
-        public LoadTestAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Developer.LoadTesting.AzureLoadTestingClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Developer.LoadTesting.TestFileValidationStatus CheckTestFileValidationStatus(string testId, int refreshTime = 10000, int timeOut = 600000) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Developer.LoadTesting.TestFileValidationStatus> CheckTestFileValidationStatusAsync(string testId, int refreshTime = 10000, int timeOut = 600000) { throw null; }

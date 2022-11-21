@@ -18,4 +18,4 @@ Please find code snippets to some commong use cases.
 - [Sample3_CreateOrUpdateAppComponents.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/loadtestservice/Azure.Developer.LoadTesting/tests/Samples/Sample3_CreateOrUpdateAppComponents.cs)
 - [Sample3_CreateOrUpdateAppComponentsAsync.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/loadtestservice/Azure.Developer.LoadTesting/tests/Samples/Sample3_CreateOrUpdateAppComponentsAsync.cs)
 - [Sample4_CreateOrUpdateTestRun.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/loadtestservice/Azure.Developer.LoadTesting/tests/Samples/Sample4_CreateOrUpdateTestRun.cs)
-- [Sample4_CreateOrUpdateTestRunAsync.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/loadtestservice/Azure.Developer.LoadTesting/tests/Samples/Sample4_CreateOrUpdateTestRunAsync.cs)
+- [Sample4_CreateOrUpdateTestRunAsync.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/loadtestservice/Azure.Developer.LoadTesting/tests/Samples/Sample4_CreateAndUpdateTestRunAsync.cs)
