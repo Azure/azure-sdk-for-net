@@ -6,33 +6,33 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-fbbb46a436a7c1ec425ec94ff9fc4b08-99c1d996b61f14fa-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.9; Microsoft Windows 10.0.22622)",
-        "x-ms-client-request-id": "2634336997989f675a7790d253e43b94",
+        "traceparent": "00-4a0aab2a5909ba0d19026b5073b4ac92-f552b60ed5c38918-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "4b33fcb96b6807b244e7d9892d8d5ac9",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "747",
+        "Content-Length": "748",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 30 Sep 2022 02:15:33 GMT",
+        "Date": "Mon, 21 Nov 2022 08:35:50 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "95445866-e8c8-4025-a5dc-46cd1e75998b",
-        "x-ms-ratelimit-remaining-subscription-reads": "11975",
-        "x-ms-request-id": "95445866-e8c8-4025-a5dc-46cd1e75998b",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220930T021533Z:95445866-e8c8-4025-a5dc-46cd1e75998b"
+        "x-ms-correlation-request-id": "37b8431d-d869-43a4-8205-f97599a401f1",
+        "x-ms-ratelimit-remaining-subscription-reads": "11974",
+        "x-ms-request-id": "37b8431d-d869-43a4-8205-f97599a401f1",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221121T083550Z:37b8431d-d869-43a4-8205-f97599a401f1"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
         "authorizationSource": "RoleBased",
         "managedByTenants": [],
         "tags": {
-          "TagKey-9823": "TagValue-566",
+          "TagKey-9823": "TagValue-1254",
           "TagKey-3481": "TagValue-320",
           "TagKey-4926": "TagValue-1187",
           "TagKey-751": "TagValue-3921",
@@ -56,16 +56,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG-7248?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG-6664?api-version=2021-04-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "43",
         "Content-Type": "application/json",
-        "traceparent": "00-2a7e1a714b4d6972f7e483efd3998c3a-fd89952bddca00e4-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.9; Microsoft Windows 10.0.22622)",
-        "x-ms-client-request-id": "7a471a1cf00104ae8894be4777d679d3",
+        "traceparent": "00-24817d61c6616eb02342870196ee0e31-c565634ad17bdb99-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "84f9c6af1c14cf17664ab73b007b621f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -79,19 +79,19 @@
         "Cache-Control": "no-cache",
         "Content-Length": "241",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 30 Sep 2022 02:15:34 GMT",
+        "Date": "Mon, 21 Nov 2022 08:35:51 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "4947fe2f-9aa1-411f-b46d-4daf4e565707",
+        "x-ms-correlation-request-id": "7b3d8289-2fa7-47e4-92d6-58389bbebfe9",
         "x-ms-ratelimit-remaining-subscription-writes": "1168",
-        "x-ms-request-id": "4947fe2f-9aa1-411f-b46d-4daf4e565707",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220930T021535Z:4947fe2f-9aa1-411f-b46d-4daf4e565707"
+        "x-ms-request-id": "7b3d8289-2fa7-47e4-92d6-58389bbebfe9",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221121T083552Z:7b3d8289-2fa7-47e4-92d6-58389bbebfe9"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7248",
-        "name": "testRG-7248",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-6664",
+        "name": "testRG-6664",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "eastus",
         "tags": {
@@ -103,16 +103,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7248/providers/Microsoft.Compute/availabilitySets/testAS-5491?api-version=2022-08-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-6664/providers/Microsoft.Compute/availabilitySets/testAS-519?api-version=2020-06-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "60",
         "Content-Type": "application/json",
-        "traceparent": "00-6aa4ffe4c2822a875b9de3295817896c-0407f34dd06ee0d3-00",
-        "User-Agent": "azsdk-net-ResourceManager.Compute/1.1.0-alpha.20220930.1 (.NET 6.0.9; Microsoft Windows 10.0.22622)",
-        "x-ms-client-request-id": "1e79675de7fa4ecb1865aca2b48c3c8b",
+        "traceparent": "00-7ba9d87136b99803ff5e7188397c636e-b5f1578c59b39622-00",
+        "User-Agent": "azsdk-net-ResourceManager.Compute/1.1.0-alpha.20221121.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "1e133f7c13006dfec51b424ac3e40a64",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -125,9 +125,9 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "428",
+        "Content-Length": "426",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 30 Sep 2022 02:15:37 GMT",
+        "Date": "Mon, 21 Nov 2022 08:35:54 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -136,16 +136,16 @@
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "1e79675de7fa4ecb1865aca2b48c3c8b",
-        "x-ms-correlation-request-id": "d0b26bd7-ad94-4c78-a921-43dde8331f0a",
+        "x-ms-client-request-id": "1e133f7c13006dfec51b424ac3e40a64",
+        "x-ms-correlation-request-id": "214ee0ab-9980-4ab5-8ee8-6d5673b04b42",
         "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/PutVM3Min;221,Microsoft.Compute/PutVM30Min;1181",
         "x-ms-ratelimit-remaining-subscription-writes": "1167",
-        "x-ms-request-id": "c419bf51-5542-4d1b-9cf1-948812b1bd3b",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220930T021537Z:d0b26bd7-ad94-4c78-a921-43dde8331f0a"
+        "x-ms-request-id": "8cdd5511-792a-4b0f-9ff4-81df6b1535e4",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221121T083555Z:214ee0ab-9980-4ab5-8ee8-6d5673b04b42"
       },
       "ResponseBody": {
-        "name": "testAS-5491",
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7248/providers/Microsoft.Compute/availabilitySets/testAS-5491",
+        "name": "testAS-519",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-6664/providers/Microsoft.Compute/availabilitySets/testAS-519",
         "type": "Microsoft.Compute/availabilitySets",
         "location": "eastus",
         "tags": {
@@ -166,26 +166,26 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-58b13f51bdc348d9400f5e487585ce2e-d5b5d53a4387e5e7-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.9; Microsoft Windows 10.0.22622)",
-        "x-ms-client-request-id": "3cc34c22ef6d443277930fd3e01300b9",
+        "traceparent": "00-64ce12c85717e12b6f0773f666687cd2-371b86ae4f2f7974-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "8d02d04f349116e7349904675008e65e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "86418",
+        "Content-Length": "88414",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 30 Sep 2022 02:15:37 GMT",
+        "Date": "Mon, 21 Nov 2022 08:35:54 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "d6522b08-bbea-4359-8e4a-d00498579c06",
+        "x-ms-correlation-request-id": "c0aaed8d-e6b5-463e-bfe8-efa8bc71313b",
         "x-ms-ratelimit-remaining-tenant-reads": "11999",
-        "x-ms-request-id": "d6522b08-bbea-4359-8e4a-d00498579c06",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220930T021538Z:d6522b08-bbea-4359-8e4a-d00498579c06"
+        "x-ms-request-id": "c0aaed8d-e6b5-463e-bfe8-efa8bc71313b",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221121T083555Z:c0aaed8d-e6b5-463e-bfe8-efa8bc71313b"
       },
       "ResponseBody": {
         "namespace": "Microsoft.Compute",
@@ -242,12 +242,14 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-11-01",
               "2022-08-01",
               "2022-03-01",
               "2021-11-01",
@@ -347,12 +349,14 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-11-01",
               "2022-08-01",
               "2022-03-01",
               "2021-11-01",
@@ -453,12 +457,14 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-11-01",
               "2022-08-01",
               "2022-03-01",
               "2021-11-01",
@@ -558,12 +564,14 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-11-01",
               "2022-08-01",
               "2022-03-01",
               "2021-11-01",
@@ -665,12 +673,14 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-11-01",
               "2022-08-01",
               "2022-03-01",
               "2021-11-01",
@@ -771,12 +781,14 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-11-01",
               "2022-08-01",
               "2022-03-01",
               "2021-11-01",
@@ -877,12 +889,14 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-11-01",
               "2022-08-01",
               "2022-03-01",
               "2021-11-01",
@@ -982,12 +996,14 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-11-01",
               "2022-08-01",
               "2022-03-01",
               "2021-11-01",
@@ -1089,12 +1105,14 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-11-01",
               "2022-08-01",
               "2022-03-01",
               "2021-11-01",
@@ -1196,12 +1214,14 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-11-01",
               "2022-08-01",
               "2022-03-01",
               "2021-11-01",
@@ -1243,6 +1263,7 @@
             "resourceType": "locations",
             "locations": [],
             "apiVersions": [
+              "2022-11-01",
               "2022-08-01",
               "2022-03-01",
               "2021-11-01",
@@ -1319,12 +1340,14 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-11-01",
               "2022-08-01",
               "2022-03-01",
               "2021-11-01",
@@ -1424,12 +1447,14 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-11-01",
               "2022-08-01",
               "2022-03-01",
               "2021-11-01",
@@ -1528,12 +1553,14 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-11-01",
               "2022-08-01",
               "2022-03-01",
               "2021-11-01",
@@ -1623,12 +1650,14 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-11-01",
               "2022-08-01",
               "2022-03-01",
               "2021-11-01",
@@ -1727,12 +1756,14 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-11-01",
               "2022-08-01",
               "2022-03-01",
               "2021-11-01",
@@ -1803,12 +1834,14 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-11-01",
               "2022-08-01",
               "2022-03-01",
               "2021-11-01",
@@ -1900,12 +1933,14 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-11-01",
               "2022-08-01",
               "2022-03-01",
               "2021-11-01",
@@ -1997,12 +2032,14 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-11-01",
               "2022-08-01",
               "2022-03-03",
               "2022-03-01",
@@ -2104,12 +2141,14 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-11-01",
               "2022-08-01",
               "2022-03-01",
               "2021-11-01",
@@ -2177,6 +2216,7 @@
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-11-01",
               "2022-08-01",
               "2022-03-01",
               "2021-11-01",
@@ -2242,12 +2282,14 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-11-01",
               "2022-08-01",
               "2022-03-01",
               "2021-11-01",
@@ -2308,12 +2350,14 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-11-01",
               "2022-08-01",
               "2022-03-01",
               "2021-11-01",
@@ -2326,6 +2370,7 @@
             "resourceType": "locations/edgeZones",
             "locations": [],
             "apiVersions": [
+              "2022-11-01",
               "2022-08-01",
               "2022-03-01",
               "2021-11-01",
@@ -2375,9 +2420,27 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
-              "Qatar Central"
+              "Qatar Central",
+              "France South",
+              "Australia Central 2",
+              "South Africa West",
+              "UAE Central",
+              "Switzerland West",
+              "Germany North",
+              "Norway West",
+              "Brazil Southeast",
+              "Jio India Central",
+              "Sweden South",
+              "Israel Central",
+              "Poland Central",
+              "Malaysia South",
+              "East US STG",
+              "South Central US STG",
+              "East US 2 EUAP",
+              "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-11-01",
               "2022-08-01",
               "2022-03-01",
               "2021-11-01",
@@ -2440,12 +2503,14 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-11-01",
               "2022-08-01",
               "2022-03-01",
               "2021-11-01",
@@ -2508,12 +2573,14 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-11-01",
               "2022-08-01",
               "2022-03-01",
               "2021-11-01",
@@ -2586,12 +2653,14 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-11-01",
               "2022-08-01",
               "2022-03-01",
               "2021-11-01",
@@ -2663,12 +2732,14 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-11-01",
               "2022-08-01",
               "2022-03-01",
               "2021-11-01",
@@ -2740,12 +2811,14 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-11-01",
               "2022-08-01",
               "2022-03-01",
               "2021-11-01",
@@ -2813,10 +2886,12 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG"
             ],
             "apiVersions": [
+              "2022-11-01",
               "2022-08-01",
               "2022-03-01",
               "2021-11-01",
@@ -2884,10 +2959,12 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG"
             ],
             "apiVersions": [
+              "2022-11-01",
               "2022-08-01",
               "2022-03-01",
               "2021-11-01",
@@ -2955,6 +3032,7 @@
               "Qatar Central",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG"
             ],
@@ -3015,12 +3093,14 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-11-01",
               "2022-08-01",
               "2022-03-01",
               "2021-11-01",
@@ -3085,12 +3165,14 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-11-01",
               "2022-08-01",
               "2022-03-01",
               "2021-11-01",
@@ -3155,12 +3237,14 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-11-01",
               "2022-08-01",
               "2022-03-01",
               "2021-11-01",
@@ -3221,12 +3305,14 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-11-01",
               "2022-08-01",
               "2022-03-03",
               "2022-03-01",
@@ -3328,12 +3414,14 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-11-01",
               "2022-08-01",
               "2022-03-03",
               "2022-03-01",
@@ -3566,6 +3654,7 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
@@ -3639,6 +3728,7 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
@@ -3712,6 +3802,7 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
@@ -3785,6 +3876,7 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
@@ -3858,6 +3950,7 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
@@ -3931,6 +4024,7 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
@@ -4003,6 +4097,7 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
@@ -4041,6 +4136,7 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "Southeast Asia",
@@ -4111,6 +4207,7 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "Southeast Asia",
@@ -4181,6 +4278,7 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "West Central US",
@@ -4278,6 +4376,7 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
@@ -4368,6 +4467,7 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
@@ -4457,6 +4557,7 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
@@ -4547,6 +4648,7 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG"
             ],
@@ -4620,6 +4722,7 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG"
             ],
@@ -4691,6 +4794,7 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG"
             ],
@@ -4760,6 +4864,7 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG"
             ],
@@ -4833,12 +4938,14 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-09-04",
               "2022-04-04",
               "2021-03-01",
               "2020-10-01-preview"
@@ -4901,10 +5008,12 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG"
             ],
             "apiVersions": [
+              "2022-09-04",
               "2022-04-04",
               "2021-03-01",
               "2020-10-01-preview"
@@ -4966,10 +5075,12 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG"
             ],
             "apiVersions": [
+              "2022-09-04",
               "2022-04-04",
               "2021-03-01",
               "2020-10-01-preview"
@@ -5031,10 +5142,12 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG"
             ],
             "apiVersions": [
+              "2022-09-04",
               "2022-04-04",
               "2021-03-01",
               "2020-10-01-preview"
@@ -5095,10 +5208,12 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG"
             ],
             "apiVersions": [
+              "2022-09-04",
               "2022-04-04",
               "2021-03-01"
             ],
@@ -5159,10 +5274,12 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG"
             ],
             "apiVersions": [
+              "2022-09-04",
               "2022-04-04",
               "2021-03-01"
             ],
@@ -5223,6 +5340,7 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG"
             ],
@@ -5286,6 +5404,7 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG"
             ],
@@ -5349,6 +5468,7 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG"
             ],
@@ -5410,12 +5530,14 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-11-01",
               "2022-08-01",
               "2022-03-01",
               "2021-11-01",
@@ -5622,12 +5744,14 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-11-01",
               "2022-08-01",
               "2022-03-01",
               "2021-11-01",
@@ -5700,10 +5824,12 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG"
             ],
             "apiVersions": [
+              "2022-11-01",
               "2022-08-01",
               "2022-03-01",
               "2021-11-01",
@@ -5775,10 +5901,12 @@
               "Sweden South",
               "Israel Central",
               "Poland Central",
+              "Malaysia South",
               "East US STG",
               "South Central US STG"
             ],
             "apiVersions": [
+              "2022-11-01",
               "2022-08-01",
               "2022-03-01",
               "2021-11-01",
@@ -5801,8 +5929,8 @@
     }
   ],
   "Variables": {
-    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
-    "RandomSeed": "2063391294",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "RandomSeed": "524572464",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
