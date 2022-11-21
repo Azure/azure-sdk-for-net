@@ -429,7 +429,7 @@ namespace Azure.Messaging.WebPubSub.Clients
                     var span = buffer.GetSpan(length);
                     span[0] = ListSeparator;
                     span[1] = Quote;
-                    DataPropertyNameBytes.EncodedUtf8Bytes.CopyTo(span[2..]);
+                    DataPropertyNameBytes.EncodedUtf8Bytes.CopyTo(span.Slice(2));
                     span[length - 2] = Quote;
                     span[length - 1] = KeyValueSeperator;
                     buffer.Advance(length);

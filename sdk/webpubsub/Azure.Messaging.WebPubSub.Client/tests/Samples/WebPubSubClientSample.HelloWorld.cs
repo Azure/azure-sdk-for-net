@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#if NETCOREAPP3_1_OR_GREATER || SNIPPET
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +8,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.WebPubSub.Clients;
-using Xunit;
 
 namespace Azure.Messaging.WebPubSub.Client.Tests
 {
@@ -124,4 +122,3 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
         }
     }
 }
-#endif

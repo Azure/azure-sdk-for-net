@@ -129,7 +129,3 @@ foreach (TableEntity entityToDelete in entityList)
 // Submit the batch.
 await client.SubmitTransactionAsync(deleteEntitiesBatch).ConfigureAwait(false);
 ```
-
----
-To see the full example source files, see:
-- [Transactional batches](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/tests/samples/Sample6_TransactionalBatchAsync.cs)

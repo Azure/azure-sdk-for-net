@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed an issue where LINQ predicates containing New expressions, such as `ent => ent.TimeStamp > new DateTimeOffset(...)`, threw an exception.
 
 ### Other Changes
 
