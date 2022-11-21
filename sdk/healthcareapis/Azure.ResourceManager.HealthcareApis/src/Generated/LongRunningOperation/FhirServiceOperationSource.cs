@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
-    internal class FhirServiceOperationSource : Core.IOperationSource<FhirServiceResource>
+    internal class FhirServiceOperationSource : IOperationSource<FhirServiceResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.HealthcareApis
             _client = client;
         }
 
-        FhirServiceResource Core.IOperationSource<FhirServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        FhirServiceResource IOperationSource<FhirServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = FhirServiceData.DeserializeFhirServiceData(document.RootElement);
             return new FhirServiceResource(_client, data);
         }
 
-        async ValueTask<FhirServiceResource> Core.IOperationSource<FhirServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<FhirServiceResource> IOperationSource<FhirServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = FhirServiceData.DeserializeFhirServiceData(document.RootElement);

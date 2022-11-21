@@ -14,15 +14,15 @@ using Azure.ResourceManager.EnergyServices.Models;
 
 namespace Azure.ResourceManager.EnergyServices
 {
-    internal class DataPartitionAddOrRemoveContentOperationSource : Core.IOperationSource<DataPartitionAddOrRemoveContent>
+    internal class DataPartitionAddOrRemoveContentOperationSource : IOperationSource<DataPartitionAddOrRemoveContent>
     {
-        DataPartitionAddOrRemoveContent Core.IOperationSource<DataPartitionAddOrRemoveContent>.CreateResult(Response response, CancellationToken cancellationToken)
+        DataPartitionAddOrRemoveContent IOperationSource<DataPartitionAddOrRemoveContent>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return DataPartitionAddOrRemoveContent.DeserializeDataPartitionAddOrRemoveContent(document.RootElement);
         }
 
-        async ValueTask<DataPartitionAddOrRemoveContent> Core.IOperationSource<DataPartitionAddOrRemoveContent>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DataPartitionAddOrRemoveContent> IOperationSource<DataPartitionAddOrRemoveContent>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return DataPartitionAddOrRemoveContent.DeserializeDataPartitionAddOrRemoveContent(document.RootElement);

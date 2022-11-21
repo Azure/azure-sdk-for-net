@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DevSpaces
 {
-    internal class ControllerOperationSource : Core.IOperationSource<ControllerResource>
+    internal class ControllerOperationSource : IOperationSource<ControllerResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.DevSpaces
             _client = client;
         }
 
-        ControllerResource Core.IOperationSource<ControllerResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ControllerResource IOperationSource<ControllerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ControllerData.DeserializeControllerData(document.RootElement);
             return new ControllerResource(_client, data);
         }
 
-        async ValueTask<ControllerResource> Core.IOperationSource<ControllerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ControllerResource> IOperationSource<ControllerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ControllerData.DeserializeControllerData(document.RootElement);

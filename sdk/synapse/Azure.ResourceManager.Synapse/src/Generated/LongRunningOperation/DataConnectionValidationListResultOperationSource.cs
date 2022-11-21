@@ -14,15 +14,15 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    internal class DataConnectionValidationListResultOperationSource : Core.IOperationSource<DataConnectionValidationListResult>
+    internal class DataConnectionValidationListResultOperationSource : IOperationSource<DataConnectionValidationListResult>
     {
-        DataConnectionValidationListResult Core.IOperationSource<DataConnectionValidationListResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        DataConnectionValidationListResult IOperationSource<DataConnectionValidationListResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return DataConnectionValidationListResult.DeserializeDataConnectionValidationListResult(document.RootElement);
         }
 
-        async ValueTask<DataConnectionValidationListResult> Core.IOperationSource<DataConnectionValidationListResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DataConnectionValidationListResult> IOperationSource<DataConnectionValidationListResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return DataConnectionValidationListResult.DeserializeDataConnectionValidationListResult(document.RootElement);

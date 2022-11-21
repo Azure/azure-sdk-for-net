@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class InboundNatRuleOperationSource : Core.IOperationSource<InboundNatRuleResource>
+    internal class InboundNatRuleOperationSource : IOperationSource<InboundNatRuleResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        InboundNatRuleResource Core.IOperationSource<InboundNatRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        InboundNatRuleResource IOperationSource<InboundNatRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = InboundNatRuleData.DeserializeInboundNatRuleData(document.RootElement);
             return new InboundNatRuleResource(_client, data);
         }
 
-        async ValueTask<InboundNatRuleResource> Core.IOperationSource<InboundNatRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<InboundNatRuleResource> IOperationSource<InboundNatRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = InboundNatRuleData.DeserializeInboundNatRuleData(document.RootElement);

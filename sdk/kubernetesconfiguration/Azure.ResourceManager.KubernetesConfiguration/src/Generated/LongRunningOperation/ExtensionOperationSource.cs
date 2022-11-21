@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.KubernetesConfiguration
 {
-    internal class ExtensionOperationSource : Core.IOperationSource<ExtensionResource>
+    internal class ExtensionOperationSource : IOperationSource<ExtensionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             _client = client;
         }
 
-        ExtensionResource Core.IOperationSource<ExtensionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ExtensionResource IOperationSource<ExtensionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ExtensionData.DeserializeExtensionData(document.RootElement);
             return new ExtensionResource(_client, data);
         }
 
-        async ValueTask<ExtensionResource> Core.IOperationSource<ExtensionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ExtensionResource> IOperationSource<ExtensionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ExtensionData.DeserializeExtensionData(document.RootElement);

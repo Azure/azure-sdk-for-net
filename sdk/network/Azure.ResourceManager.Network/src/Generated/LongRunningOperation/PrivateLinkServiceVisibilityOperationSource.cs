@@ -14,15 +14,15 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class PrivateLinkServiceVisibilityOperationSource : Core.IOperationSource<PrivateLinkServiceVisibility>
+    internal class PrivateLinkServiceVisibilityOperationSource : IOperationSource<PrivateLinkServiceVisibility>
     {
-        PrivateLinkServiceVisibility Core.IOperationSource<PrivateLinkServiceVisibility>.CreateResult(Response response, CancellationToken cancellationToken)
+        PrivateLinkServiceVisibility IOperationSource<PrivateLinkServiceVisibility>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return PrivateLinkServiceVisibility.DeserializePrivateLinkServiceVisibility(document.RootElement);
         }
 
-        async ValueTask<PrivateLinkServiceVisibility> Core.IOperationSource<PrivateLinkServiceVisibility>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PrivateLinkServiceVisibility> IOperationSource<PrivateLinkServiceVisibility>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return PrivateLinkServiceVisibility.DeserializePrivateLinkServiceVisibility(document.RootElement);

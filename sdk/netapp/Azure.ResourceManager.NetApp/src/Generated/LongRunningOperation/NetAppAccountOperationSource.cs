@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
-    internal class NetAppAccountOperationSource : Core.IOperationSource<NetAppAccountResource>
+    internal class NetAppAccountOperationSource : IOperationSource<NetAppAccountResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.NetApp
             _client = client;
         }
 
-        NetAppAccountResource Core.IOperationSource<NetAppAccountResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        NetAppAccountResource IOperationSource<NetAppAccountResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = NetAppAccountData.DeserializeNetAppAccountData(document.RootElement);
             return new NetAppAccountResource(_client, data);
         }
 
-        async ValueTask<NetAppAccountResource> Core.IOperationSource<NetAppAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NetAppAccountResource> IOperationSource<NetAppAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = NetAppAccountData.DeserializeNetAppAccountData(document.RootElement);

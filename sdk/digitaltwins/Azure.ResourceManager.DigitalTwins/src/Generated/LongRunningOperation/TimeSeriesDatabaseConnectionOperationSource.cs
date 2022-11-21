@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DigitalTwins
 {
-    internal class TimeSeriesDatabaseConnectionOperationSource : Core.IOperationSource<TimeSeriesDatabaseConnectionResource>
+    internal class TimeSeriesDatabaseConnectionOperationSource : IOperationSource<TimeSeriesDatabaseConnectionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.DigitalTwins
             _client = client;
         }
 
-        TimeSeriesDatabaseConnectionResource Core.IOperationSource<TimeSeriesDatabaseConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        TimeSeriesDatabaseConnectionResource IOperationSource<TimeSeriesDatabaseConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = TimeSeriesDatabaseConnectionData.DeserializeTimeSeriesDatabaseConnectionData(document.RootElement);
             return new TimeSeriesDatabaseConnectionResource(_client, data);
         }
 
-        async ValueTask<TimeSeriesDatabaseConnectionResource> Core.IOperationSource<TimeSeriesDatabaseConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<TimeSeriesDatabaseConnectionResource> IOperationSource<TimeSeriesDatabaseConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = TimeSeriesDatabaseConnectionData.DeserializeTimeSeriesDatabaseConnectionData(document.RootElement);

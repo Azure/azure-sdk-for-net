@@ -31,13 +31,13 @@ namespace Azure.ResourceManager.DataProtectionBackup
             _operation = OperationInternal<T>.Succeeded(response.GetRawResponse(), response.Value);
         }
 
-        internal DataProtectionBackupArmOperation(Core.IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
+        internal DataProtectionBackupArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia);
             _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, response, "DataProtectionBackupArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
         }
 
-        internal DataProtectionBackupArmOperation(Core.IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string id)
+        internal DataProtectionBackupArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string id)
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, id, out string finalResponse);
             _operation = OperationInternal<T>.Create(source, clientDiagnostics, nextLinkOperation, finalResponse, "DataProtectionBackupArmOperation", fallbackStrategy: new ExponentialDelayStrategy());

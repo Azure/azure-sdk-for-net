@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class VirtualNetworkGatewayNatRuleOperationSource : Core.IOperationSource<VirtualNetworkGatewayNatRuleResource>
+    internal class VirtualNetworkGatewayNatRuleOperationSource : IOperationSource<VirtualNetworkGatewayNatRuleResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        VirtualNetworkGatewayNatRuleResource Core.IOperationSource<VirtualNetworkGatewayNatRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        VirtualNetworkGatewayNatRuleResource IOperationSource<VirtualNetworkGatewayNatRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VirtualNetworkGatewayNatRuleData.DeserializeVirtualNetworkGatewayNatRuleData(document.RootElement);
             return new VirtualNetworkGatewayNatRuleResource(_client, data);
         }
 
-        async ValueTask<VirtualNetworkGatewayNatRuleResource> Core.IOperationSource<VirtualNetworkGatewayNatRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VirtualNetworkGatewayNatRuleResource> IOperationSource<VirtualNetworkGatewayNatRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VirtualNetworkGatewayNatRuleData.DeserializeVirtualNetworkGatewayNatRuleData(document.RootElement);

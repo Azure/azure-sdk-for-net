@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    internal class DiagnosticRemoteSupportSettingOperationSource : Core.IOperationSource<DiagnosticRemoteSupportSettingResource>
+    internal class DiagnosticRemoteSupportSettingOperationSource : IOperationSource<DiagnosticRemoteSupportSettingResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.DataBoxEdge
             _client = client;
         }
 
-        DiagnosticRemoteSupportSettingResource Core.IOperationSource<DiagnosticRemoteSupportSettingResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DiagnosticRemoteSupportSettingResource IOperationSource<DiagnosticRemoteSupportSettingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DiagnosticRemoteSupportSettingData.DeserializeDiagnosticRemoteSupportSettingData(document.RootElement);
             return new DiagnosticRemoteSupportSettingResource(_client, data);
         }
 
-        async ValueTask<DiagnosticRemoteSupportSettingResource> Core.IOperationSource<DiagnosticRemoteSupportSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DiagnosticRemoteSupportSettingResource> IOperationSource<DiagnosticRemoteSupportSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DiagnosticRemoteSupportSettingData.DeserializeDiagnosticRemoteSupportSettingData(document.RootElement);

@@ -14,15 +14,15 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    internal class ArmDeploymentValidateResultOperationSource : Core.IOperationSource<ArmDeploymentValidateResult>
+    internal class ArmDeploymentValidateResultOperationSource : IOperationSource<ArmDeploymentValidateResult>
     {
-        ArmDeploymentValidateResult Core.IOperationSource<ArmDeploymentValidateResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        ArmDeploymentValidateResult IOperationSource<ArmDeploymentValidateResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return ArmDeploymentValidateResult.DeserializeArmDeploymentValidateResult(document.RootElement);
         }
 
-        async ValueTask<ArmDeploymentValidateResult> Core.IOperationSource<ArmDeploymentValidateResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ArmDeploymentValidateResult> IOperationSource<ArmDeploymentValidateResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return ArmDeploymentValidateResult.DeserializeArmDeploymentValidateResult(document.RootElement);

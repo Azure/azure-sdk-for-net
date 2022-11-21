@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Kusto
 {
-    internal class KustoDatabasePrincipalAssignmentOperationSource : Core.IOperationSource<KustoDatabasePrincipalAssignmentResource>
+    internal class KustoDatabasePrincipalAssignmentOperationSource : IOperationSource<KustoDatabasePrincipalAssignmentResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Kusto
             _client = client;
         }
 
-        KustoDatabasePrincipalAssignmentResource Core.IOperationSource<KustoDatabasePrincipalAssignmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        KustoDatabasePrincipalAssignmentResource IOperationSource<KustoDatabasePrincipalAssignmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = KustoDatabasePrincipalAssignmentData.DeserializeKustoDatabasePrincipalAssignmentData(document.RootElement);
             return new KustoDatabasePrincipalAssignmentResource(_client, data);
         }
 
-        async ValueTask<KustoDatabasePrincipalAssignmentResource> Core.IOperationSource<KustoDatabasePrincipalAssignmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<KustoDatabasePrincipalAssignmentResource> IOperationSource<KustoDatabasePrincipalAssignmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = KustoDatabasePrincipalAssignmentData.DeserializeKustoDatabasePrincipalAssignmentData(document.RootElement);

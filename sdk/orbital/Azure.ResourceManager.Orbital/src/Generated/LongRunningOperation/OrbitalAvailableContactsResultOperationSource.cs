@@ -14,15 +14,15 @@ using Azure.ResourceManager.Orbital.Models;
 
 namespace Azure.ResourceManager.Orbital
 {
-    internal class OrbitalAvailableContactsResultOperationSource : Core.IOperationSource<OrbitalAvailableContactsResult>
+    internal class OrbitalAvailableContactsResultOperationSource : IOperationSource<OrbitalAvailableContactsResult>
     {
-        OrbitalAvailableContactsResult Core.IOperationSource<OrbitalAvailableContactsResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        OrbitalAvailableContactsResult IOperationSource<OrbitalAvailableContactsResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return OrbitalAvailableContactsResult.DeserializeOrbitalAvailableContactsResult(document.RootElement);
         }
 
-        async ValueTask<OrbitalAvailableContactsResult> Core.IOperationSource<OrbitalAvailableContactsResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<OrbitalAvailableContactsResult> IOperationSource<OrbitalAvailableContactsResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return OrbitalAvailableContactsResult.DeserializeOrbitalAvailableContactsResult(document.RootElement);

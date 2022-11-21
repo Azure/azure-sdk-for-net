@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppPlatform
 {
-    internal class BuildpackBindingResourceOperationSource : Core.IOperationSource<BuildpackBindingResource>
+    internal class BuildpackBindingResourceOperationSource : IOperationSource<BuildpackBindingResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.AppPlatform
             _client = client;
         }
 
-        BuildpackBindingResource Core.IOperationSource<BuildpackBindingResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        BuildpackBindingResource IOperationSource<BuildpackBindingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = BuildpackBindingResourceData.DeserializeBuildpackBindingResourceData(document.RootElement);
             return new BuildpackBindingResource(_client, data);
         }
 
-        async ValueTask<BuildpackBindingResource> Core.IOperationSource<BuildpackBindingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<BuildpackBindingResource> IOperationSource<BuildpackBindingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = BuildpackBindingResourceData.DeserializeBuildpackBindingResourceData(document.RootElement);

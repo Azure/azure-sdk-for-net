@@ -31,13 +31,13 @@ namespace Azure.ResourceManager.DevTestLabs
             _operation = OperationInternal<T>.Succeeded(response.GetRawResponse(), response.Value);
         }
 
-        internal DevTestLabsArmOperation(Core.IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
+        internal DevTestLabsArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia);
             _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, response, "DevTestLabsArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
         }
 
-        internal DevTestLabsArmOperation(Core.IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string id)
+        internal DevTestLabsArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string id)
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, id, out string finalResponse);
             _operation = OperationInternal<T>.Create(source, clientDiagnostics, nextLinkOperation, finalResponse, "DevTestLabsArmOperation", fallbackStrategy: new ExponentialDelayStrategy());

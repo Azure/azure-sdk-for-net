@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal class HostingEnvironmentWorkerPoolOperationSource : Core.IOperationSource<HostingEnvironmentWorkerPoolResource>
+    internal class HostingEnvironmentWorkerPoolOperationSource : IOperationSource<HostingEnvironmentWorkerPoolResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.AppService
             _client = client;
         }
 
-        HostingEnvironmentWorkerPoolResource Core.IOperationSource<HostingEnvironmentWorkerPoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        HostingEnvironmentWorkerPoolResource IOperationSource<HostingEnvironmentWorkerPoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = AppServiceWorkerPoolData.DeserializeAppServiceWorkerPoolData(document.RootElement);
             return new HostingEnvironmentWorkerPoolResource(_client, data);
         }
 
-        async ValueTask<HostingEnvironmentWorkerPoolResource> Core.IOperationSource<HostingEnvironmentWorkerPoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<HostingEnvironmentWorkerPoolResource> IOperationSource<HostingEnvironmentWorkerPoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = AppServiceWorkerPoolData.DeserializeAppServiceWorkerPoolData(document.RootElement);

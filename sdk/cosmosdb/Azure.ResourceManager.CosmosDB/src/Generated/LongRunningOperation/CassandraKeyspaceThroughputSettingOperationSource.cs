@@ -15,7 +15,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal class CassandraKeyspaceThroughputSettingOperationSource : Core.IOperationSource<CassandraKeyspaceThroughputSettingResource>
+    internal class CassandraKeyspaceThroughputSettingOperationSource : IOperationSource<CassandraKeyspaceThroughputSettingResource>
     {
         private readonly ArmClient _client;
         private readonly Dictionary<string, string> _idMappings = new Dictionary<string, string>()
@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.CosmosDB
             _client = client;
         }
 
-        CassandraKeyspaceThroughputSettingResource Core.IOperationSource<CassandraKeyspaceThroughputSettingResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        CassandraKeyspaceThroughputSettingResource IOperationSource<CassandraKeyspaceThroughputSettingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ScrubId(ThroughputSettingData.DeserializeThroughputSettingData(document.RootElement));
             return new CassandraKeyspaceThroughputSettingResource(_client, data);
         }
 
-        async ValueTask<CassandraKeyspaceThroughputSettingResource> Core.IOperationSource<CassandraKeyspaceThroughputSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CassandraKeyspaceThroughputSettingResource> IOperationSource<CassandraKeyspaceThroughputSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ScrubId(ThroughputSettingData.DeserializeThroughputSettingData(document.RootElement));

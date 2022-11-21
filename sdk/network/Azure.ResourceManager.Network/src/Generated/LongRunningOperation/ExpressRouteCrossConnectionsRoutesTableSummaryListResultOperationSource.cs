@@ -14,15 +14,15 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class ExpressRouteCrossConnectionsRoutesTableSummaryListResultOperationSource : Core.IOperationSource<ExpressRouteCrossConnectionsRoutesTableSummaryListResult>
+    internal class ExpressRouteCrossConnectionsRoutesTableSummaryListResultOperationSource : IOperationSource<ExpressRouteCrossConnectionsRoutesTableSummaryListResult>
     {
-        ExpressRouteCrossConnectionsRoutesTableSummaryListResult Core.IOperationSource<ExpressRouteCrossConnectionsRoutesTableSummaryListResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        ExpressRouteCrossConnectionsRoutesTableSummaryListResult IOperationSource<ExpressRouteCrossConnectionsRoutesTableSummaryListResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return ExpressRouteCrossConnectionsRoutesTableSummaryListResult.DeserializeExpressRouteCrossConnectionsRoutesTableSummaryListResult(document.RootElement);
         }
 
-        async ValueTask<ExpressRouteCrossConnectionsRoutesTableSummaryListResult> Core.IOperationSource<ExpressRouteCrossConnectionsRoutesTableSummaryListResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ExpressRouteCrossConnectionsRoutesTableSummaryListResult> IOperationSource<ExpressRouteCrossConnectionsRoutesTableSummaryListResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return ExpressRouteCrossConnectionsRoutesTableSummaryListResult.DeserializeExpressRouteCrossConnectionsRoutesTableSummaryListResult(document.RootElement);

@@ -31,13 +31,13 @@ namespace Azure.ResourceManager.DeploymentManager
             _operation = OperationInternal<T>.Succeeded(response.GetRawResponse(), response.Value);
         }
 
-        internal DeploymentManagerArmOperation(Core.IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
+        internal DeploymentManagerArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia);
             _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, response, "DeploymentManagerArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
         }
 
-        internal DeploymentManagerArmOperation(Core.IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string id)
+        internal DeploymentManagerArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string id)
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, id, out string finalResponse);
             _operation = OperationInternal<T>.Create(source, clientDiagnostics, nextLinkOperation, finalResponse, "DeploymentManagerArmOperation", fallbackStrategy: new ExponentialDelayStrategy());

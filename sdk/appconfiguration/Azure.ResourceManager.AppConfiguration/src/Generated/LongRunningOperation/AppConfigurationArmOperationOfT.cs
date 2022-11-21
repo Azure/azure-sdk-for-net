@@ -31,13 +31,13 @@ namespace Azure.ResourceManager.AppConfiguration
             _operation = OperationInternal<T>.Succeeded(response.GetRawResponse(), response.Value);
         }
 
-        internal AppConfigurationArmOperation(Core.IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
+        internal AppConfigurationArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia);
             _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, response, "AppConfigurationArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
         }
 
-        internal AppConfigurationArmOperation(Core.IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string id)
+        internal AppConfigurationArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string id)
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, id, out string finalResponse);
             _operation = OperationInternal<T>.Create(source, clientDiagnostics, nextLinkOperation, finalResponse, "AppConfigurationArmOperation", fallbackStrategy: new ExponentialDelayStrategy());

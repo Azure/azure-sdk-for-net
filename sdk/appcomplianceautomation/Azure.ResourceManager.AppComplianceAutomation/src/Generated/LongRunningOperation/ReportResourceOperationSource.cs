@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppComplianceAutomation
 {
-    internal class ReportResourceOperationSource : Core.IOperationSource<ReportResource>
+    internal class ReportResourceOperationSource : IOperationSource<ReportResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             _client = client;
         }
 
-        ReportResource Core.IOperationSource<ReportResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ReportResource IOperationSource<ReportResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ReportResourceData.DeserializeReportResourceData(document.RootElement);
             return new ReportResource(_client, data);
         }
 
-        async ValueTask<ReportResource> Core.IOperationSource<ReportResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ReportResource> IOperationSource<ReportResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ReportResourceData.DeserializeReportResourceData(document.RootElement);

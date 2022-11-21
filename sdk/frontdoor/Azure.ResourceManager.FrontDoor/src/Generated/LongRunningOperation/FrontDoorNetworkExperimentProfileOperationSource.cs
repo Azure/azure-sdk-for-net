@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.FrontDoor
 {
-    internal class FrontDoorNetworkExperimentProfileOperationSource : Core.IOperationSource<FrontDoorNetworkExperimentProfileResource>
+    internal class FrontDoorNetworkExperimentProfileOperationSource : IOperationSource<FrontDoorNetworkExperimentProfileResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.FrontDoor
             _client = client;
         }
 
-        FrontDoorNetworkExperimentProfileResource Core.IOperationSource<FrontDoorNetworkExperimentProfileResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        FrontDoorNetworkExperimentProfileResource IOperationSource<FrontDoorNetworkExperimentProfileResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = FrontDoorNetworkExperimentProfileData.DeserializeFrontDoorNetworkExperimentProfileData(document.RootElement);
             return new FrontDoorNetworkExperimentProfileResource(_client, data);
         }
 
-        async ValueTask<FrontDoorNetworkExperimentProfileResource> Core.IOperationSource<FrontDoorNetworkExperimentProfileResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<FrontDoorNetworkExperimentProfileResource> IOperationSource<FrontDoorNetworkExperimentProfileResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = FrontDoorNetworkExperimentProfileData.DeserializeFrontDoorNetworkExperimentProfileData(document.RootElement);

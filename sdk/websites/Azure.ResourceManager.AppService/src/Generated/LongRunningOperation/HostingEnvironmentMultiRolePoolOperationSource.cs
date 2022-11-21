@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal class HostingEnvironmentMultiRolePoolOperationSource : Core.IOperationSource<HostingEnvironmentMultiRolePoolResource>
+    internal class HostingEnvironmentMultiRolePoolOperationSource : IOperationSource<HostingEnvironmentMultiRolePoolResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.AppService
             _client = client;
         }
 
-        HostingEnvironmentMultiRolePoolResource Core.IOperationSource<HostingEnvironmentMultiRolePoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        HostingEnvironmentMultiRolePoolResource IOperationSource<HostingEnvironmentMultiRolePoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = AppServiceWorkerPoolData.DeserializeAppServiceWorkerPoolData(document.RootElement);
             return new HostingEnvironmentMultiRolePoolResource(_client, data);
         }
 
-        async ValueTask<HostingEnvironmentMultiRolePoolResource> Core.IOperationSource<HostingEnvironmentMultiRolePoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<HostingEnvironmentMultiRolePoolResource> IOperationSource<HostingEnvironmentMultiRolePoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = AppServiceWorkerPoolData.DeserializeAppServiceWorkerPoolData(document.RootElement);

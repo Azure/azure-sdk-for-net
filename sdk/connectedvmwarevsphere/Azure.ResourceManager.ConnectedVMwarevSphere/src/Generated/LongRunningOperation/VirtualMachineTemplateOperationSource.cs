@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    internal class VirtualMachineTemplateOperationSource : Core.IOperationSource<VirtualMachineTemplateResource>
+    internal class VirtualMachineTemplateOperationSource : IOperationSource<VirtualMachineTemplateResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             _client = client;
         }
 
-        VirtualMachineTemplateResource Core.IOperationSource<VirtualMachineTemplateResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        VirtualMachineTemplateResource IOperationSource<VirtualMachineTemplateResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VirtualMachineTemplateData.DeserializeVirtualMachineTemplateData(document.RootElement);
             return new VirtualMachineTemplateResource(_client, data);
         }
 
-        async ValueTask<VirtualMachineTemplateResource> Core.IOperationSource<VirtualMachineTemplateResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VirtualMachineTemplateResource> IOperationSource<VirtualMachineTemplateResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VirtualMachineTemplateData.DeserializeVirtualMachineTemplateData(document.RootElement);

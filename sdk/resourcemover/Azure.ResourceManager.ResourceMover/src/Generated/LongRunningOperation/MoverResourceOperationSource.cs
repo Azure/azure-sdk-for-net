@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ResourceMover
 {
-    internal class MoverResourceOperationSource : Core.IOperationSource<MoverResource>
+    internal class MoverResourceOperationSource : IOperationSource<MoverResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ResourceMover
             _client = client;
         }
 
-        MoverResource Core.IOperationSource<MoverResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        MoverResource IOperationSource<MoverResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = MoverResourceData.DeserializeMoverResourceData(document.RootElement);
             return new MoverResource(_client, data);
         }
 
-        async ValueTask<MoverResource> Core.IOperationSource<MoverResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<MoverResource> IOperationSource<MoverResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = MoverResourceData.DeserializeMoverResourceData(document.RootElement);

@@ -31,13 +31,13 @@ namespace Azure.ResourceManager.ManagementPartner
             _operation = OperationInternal<T>.Succeeded(response.GetRawResponse(), response.Value);
         }
 
-        internal ManagementPartnerArmOperation(Core.IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
+        internal ManagementPartnerArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia);
             _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, response, "ManagementPartnerArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
         }
 
-        internal ManagementPartnerArmOperation(Core.IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string id)
+        internal ManagementPartnerArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string id)
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, id, out string finalResponse);
             _operation = OperationInternal<T>.Create(source, clientDiagnostics, nextLinkOperation, finalResponse, "ManagementPartnerArmOperation", fallbackStrategy: new ExponentialDelayStrategy());

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
-    internal class NetworkMappingOperationSource : Core.IOperationSource<NetworkMappingResource>
+    internal class NetworkMappingOperationSource : IOperationSource<NetworkMappingResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             _client = client;
         }
 
-        NetworkMappingResource Core.IOperationSource<NetworkMappingResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        NetworkMappingResource IOperationSource<NetworkMappingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = NetworkMappingData.DeserializeNetworkMappingData(document.RootElement);
             return new NetworkMappingResource(_client, data);
         }
 
-        async ValueTask<NetworkMappingResource> Core.IOperationSource<NetworkMappingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NetworkMappingResource> IOperationSource<NetworkMappingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = NetworkMappingData.DeserializeNetworkMappingData(document.RootElement);

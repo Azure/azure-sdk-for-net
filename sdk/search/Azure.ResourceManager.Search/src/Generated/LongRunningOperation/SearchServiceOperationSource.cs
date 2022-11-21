@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Search
 {
-    internal class SearchServiceOperationSource : Core.IOperationSource<SearchServiceResource>
+    internal class SearchServiceOperationSource : IOperationSource<SearchServiceResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Search
             _client = client;
         }
 
-        SearchServiceResource Core.IOperationSource<SearchServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SearchServiceResource IOperationSource<SearchServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SearchServiceData.DeserializeSearchServiceData(document.RootElement);
             return new SearchServiceResource(_client, data);
         }
 
-        async ValueTask<SearchServiceResource> Core.IOperationSource<SearchServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SearchServiceResource> IOperationSource<SearchServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SearchServiceData.DeserializeSearchServiceData(document.RootElement);

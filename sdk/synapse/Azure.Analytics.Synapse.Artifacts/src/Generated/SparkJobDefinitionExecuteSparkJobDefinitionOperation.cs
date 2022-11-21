@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Analytics.Synapse.Artifacts
 {
     /// <summary> Executes the spark job definition. </summary>
-    public partial class SparkJobDefinitionExecuteSparkJobDefinitionOperation : Operation<SparkBatchJob>, Core.IOperationSource<SparkBatchJob>
+    public partial class SparkJobDefinitionExecuteSparkJobDefinitionOperation : Operation<SparkBatchJob>, IOperationSource<SparkBatchJob>
     {
         private readonly OperationInternal<SparkBatchJob> _operation;
 
@@ -67,13 +67,13 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <inheritdoc />
         public override ValueTask<Response<SparkBatchJob>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        SparkBatchJob Core.IOperationSource<SparkBatchJob>.CreateResult(Response response, CancellationToken cancellationToken)
+        SparkBatchJob IOperationSource<SparkBatchJob>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return SparkBatchJob.DeserializeSparkBatchJob(document.RootElement);
         }
 
-        async ValueTask<SparkBatchJob> Core.IOperationSource<SparkBatchJob>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SparkBatchJob> IOperationSource<SparkBatchJob>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return SparkBatchJob.DeserializeSparkBatchJob(document.RootElement);

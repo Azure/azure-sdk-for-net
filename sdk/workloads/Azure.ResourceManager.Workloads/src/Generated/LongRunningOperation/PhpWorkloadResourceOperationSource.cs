@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Workloads
 {
-    internal class PhpWorkloadResourceOperationSource : Core.IOperationSource<PhpWorkloadResource>
+    internal class PhpWorkloadResourceOperationSource : IOperationSource<PhpWorkloadResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Workloads
             _client = client;
         }
 
-        PhpWorkloadResource Core.IOperationSource<PhpWorkloadResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        PhpWorkloadResource IOperationSource<PhpWorkloadResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = PhpWorkloadResourceData.DeserializePhpWorkloadResourceData(document.RootElement);
             return new PhpWorkloadResource(_client, data);
         }
 
-        async ValueTask<PhpWorkloadResource> Core.IOperationSource<PhpWorkloadResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PhpWorkloadResource> IOperationSource<PhpWorkloadResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = PhpWorkloadResourceData.DeserializePhpWorkloadResourceData(document.RootElement);

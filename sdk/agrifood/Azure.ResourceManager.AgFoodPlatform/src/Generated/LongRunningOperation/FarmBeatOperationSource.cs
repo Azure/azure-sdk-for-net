@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AgFoodPlatform
 {
-    internal class FarmBeatOperationSource : Core.IOperationSource<FarmBeatResource>
+    internal class FarmBeatOperationSource : IOperationSource<FarmBeatResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
             _client = client;
         }
 
-        FarmBeatResource Core.IOperationSource<FarmBeatResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        FarmBeatResource IOperationSource<FarmBeatResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = FarmBeatData.DeserializeFarmBeatData(document.RootElement);
             return new FarmBeatResource(_client, data);
         }
 
-        async ValueTask<FarmBeatResource> Core.IOperationSource<FarmBeatResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<FarmBeatResource> IOperationSource<FarmBeatResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = FarmBeatData.DeserializeFarmBeatData(document.RootElement);

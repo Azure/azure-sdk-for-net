@@ -14,15 +14,15 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class VerificationIPFlowResultOperationSource : Core.IOperationSource<VerificationIPFlowResult>
+    internal class VerificationIPFlowResultOperationSource : IOperationSource<VerificationIPFlowResult>
     {
-        VerificationIPFlowResult Core.IOperationSource<VerificationIPFlowResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        VerificationIPFlowResult IOperationSource<VerificationIPFlowResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return VerificationIPFlowResult.DeserializeVerificationIPFlowResult(document.RootElement);
         }
 
-        async ValueTask<VerificationIPFlowResult> Core.IOperationSource<VerificationIPFlowResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VerificationIPFlowResult> IOperationSource<VerificationIPFlowResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return VerificationIPFlowResult.DeserializeVerificationIPFlowResult(document.RootElement);

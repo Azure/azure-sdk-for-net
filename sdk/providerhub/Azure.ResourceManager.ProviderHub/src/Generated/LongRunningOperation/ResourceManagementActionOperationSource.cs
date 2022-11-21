@@ -14,15 +14,15 @@ using Azure.ResourceManager.ProviderHub.Models;
 
 namespace Azure.ResourceManager.ProviderHub
 {
-    internal class ResourceManagementActionOperationSource : Core.IOperationSource<ResourceManagementAction>
+    internal class ResourceManagementActionOperationSource : IOperationSource<ResourceManagementAction>
     {
-        ResourceManagementAction Core.IOperationSource<ResourceManagementAction>.CreateResult(Response response, CancellationToken cancellationToken)
+        ResourceManagementAction IOperationSource<ResourceManagementAction>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return ResourceManagementAction.DeserializeResourceManagementAction(document.RootElement);
         }
 
-        async ValueTask<ResourceManagementAction> Core.IOperationSource<ResourceManagementAction>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ResourceManagementAction> IOperationSource<ResourceManagementAction>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return ResourceManagementAction.DeserializeResourceManagementAction(document.RootElement);

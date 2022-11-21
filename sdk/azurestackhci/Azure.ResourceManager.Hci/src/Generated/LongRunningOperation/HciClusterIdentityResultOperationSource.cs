@@ -14,15 +14,15 @@ using Azure.ResourceManager.Hci.Models;
 
 namespace Azure.ResourceManager.Hci
 {
-    internal class HciClusterIdentityResultOperationSource : Core.IOperationSource<HciClusterIdentityResult>
+    internal class HciClusterIdentityResultOperationSource : IOperationSource<HciClusterIdentityResult>
     {
-        HciClusterIdentityResult Core.IOperationSource<HciClusterIdentityResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        HciClusterIdentityResult IOperationSource<HciClusterIdentityResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return HciClusterIdentityResult.DeserializeHciClusterIdentityResult(document.RootElement);
         }
 
-        async ValueTask<HciClusterIdentityResult> Core.IOperationSource<HciClusterIdentityResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<HciClusterIdentityResult> IOperationSource<HciClusterIdentityResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return HciClusterIdentityResult.DeserializeHciClusterIdentityResult(document.RootElement);

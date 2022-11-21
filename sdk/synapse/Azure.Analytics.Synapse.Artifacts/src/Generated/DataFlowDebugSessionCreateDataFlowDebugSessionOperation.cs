@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Analytics.Synapse.Artifacts
 {
     /// <summary> Creates a data flow debug session. </summary>
-    public partial class DataFlowDebugSessionCreateDataFlowDebugSessionOperation : Operation<CreateDataFlowDebugSessionResponse>, Core.IOperationSource<CreateDataFlowDebugSessionResponse>
+    public partial class DataFlowDebugSessionCreateDataFlowDebugSessionOperation : Operation<CreateDataFlowDebugSessionResponse>, IOperationSource<CreateDataFlowDebugSessionResponse>
     {
         private readonly OperationInternal<CreateDataFlowDebugSessionResponse> _operation;
 
@@ -67,13 +67,13 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <inheritdoc />
         public override ValueTask<Response<CreateDataFlowDebugSessionResponse>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        CreateDataFlowDebugSessionResponse Core.IOperationSource<CreateDataFlowDebugSessionResponse>.CreateResult(Response response, CancellationToken cancellationToken)
+        CreateDataFlowDebugSessionResponse IOperationSource<CreateDataFlowDebugSessionResponse>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return CreateDataFlowDebugSessionResponse.DeserializeCreateDataFlowDebugSessionResponse(document.RootElement);
         }
 
-        async ValueTask<CreateDataFlowDebugSessionResponse> Core.IOperationSource<CreateDataFlowDebugSessionResponse>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CreateDataFlowDebugSessionResponse> IOperationSource<CreateDataFlowDebugSessionResponse>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return CreateDataFlowDebugSessionResponse.DeserializeCreateDataFlowDebugSessionResponse(document.RootElement);

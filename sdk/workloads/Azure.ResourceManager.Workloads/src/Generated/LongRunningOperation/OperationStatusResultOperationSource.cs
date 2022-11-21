@@ -14,15 +14,15 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Workloads
 {
-    internal class OperationStatusResultOperationSource : Core.IOperationSource<OperationStatusResult>
+    internal class OperationStatusResultOperationSource : IOperationSource<OperationStatusResult>
     {
-        OperationStatusResult Core.IOperationSource<OperationStatusResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        OperationStatusResult IOperationSource<OperationStatusResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return JsonSerializer.Deserialize<OperationStatusResult>(document.RootElement.ToString());
         }
 
-        async ValueTask<OperationStatusResult> Core.IOperationSource<OperationStatusResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<OperationStatusResult> IOperationSource<OperationStatusResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return JsonSerializer.Deserialize<OperationStatusResult>(document.RootElement.ToString());

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
-    internal class HealthcareApisServicePrivateEndpointConnectionOperationSource : Core.IOperationSource<HealthcareApisServicePrivateEndpointConnectionResource>
+    internal class HealthcareApisServicePrivateEndpointConnectionOperationSource : IOperationSource<HealthcareApisServicePrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.HealthcareApis
             _client = client;
         }
 
-        HealthcareApisServicePrivateEndpointConnectionResource Core.IOperationSource<HealthcareApisServicePrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        HealthcareApisServicePrivateEndpointConnectionResource IOperationSource<HealthcareApisServicePrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = HealthcareApisPrivateEndpointConnectionData.DeserializeHealthcareApisPrivateEndpointConnectionData(document.RootElement);
             return new HealthcareApisServicePrivateEndpointConnectionResource(_client, data);
         }
 
-        async ValueTask<HealthcareApisServicePrivateEndpointConnectionResource> Core.IOperationSource<HealthcareApisServicePrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<HealthcareApisServicePrivateEndpointConnectionResource> IOperationSource<HealthcareApisServicePrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = HealthcareApisPrivateEndpointConnectionData.DeserializeHealthcareApisPrivateEndpointConnectionData(document.RootElement);

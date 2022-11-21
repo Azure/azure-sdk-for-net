@@ -14,15 +14,15 @@ using Azure.ResourceManager.Kusto.Models;
 
 namespace Azure.ResourceManager.Kusto
 {
-    internal class DiagnoseVirtualNetworkResultOperationSource : Core.IOperationSource<DiagnoseVirtualNetworkResult>
+    internal class DiagnoseVirtualNetworkResultOperationSource : IOperationSource<DiagnoseVirtualNetworkResult>
     {
-        DiagnoseVirtualNetworkResult Core.IOperationSource<DiagnoseVirtualNetworkResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        DiagnoseVirtualNetworkResult IOperationSource<DiagnoseVirtualNetworkResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return DiagnoseVirtualNetworkResult.DeserializeDiagnoseVirtualNetworkResult(document.RootElement);
         }
 
-        async ValueTask<DiagnoseVirtualNetworkResult> Core.IOperationSource<DiagnoseVirtualNetworkResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DiagnoseVirtualNetworkResult> IOperationSource<DiagnoseVirtualNetworkResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return DiagnoseVirtualNetworkResult.DeserializeDiagnoseVirtualNetworkResult(document.RootElement);

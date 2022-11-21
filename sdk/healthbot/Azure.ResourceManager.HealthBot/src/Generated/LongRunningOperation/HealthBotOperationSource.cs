@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HealthBot
 {
-    internal class HealthBotOperationSource : Core.IOperationSource<HealthBotResource>
+    internal class HealthBotOperationSource : IOperationSource<HealthBotResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.HealthBot
             _client = client;
         }
 
-        HealthBotResource Core.IOperationSource<HealthBotResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        HealthBotResource IOperationSource<HealthBotResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = HealthBotData.DeserializeHealthBotData(document.RootElement);
             return new HealthBotResource(_client, data);
         }
 
-        async ValueTask<HealthBotResource> Core.IOperationSource<HealthBotResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<HealthBotResource> IOperationSource<HealthBotResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = HealthBotData.DeserializeHealthBotData(document.RootElement);

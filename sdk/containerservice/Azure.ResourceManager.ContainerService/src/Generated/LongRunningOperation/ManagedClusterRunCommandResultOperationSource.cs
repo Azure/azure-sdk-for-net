@@ -14,15 +14,15 @@ using Azure.ResourceManager.ContainerService.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    internal class ManagedClusterRunCommandResultOperationSource : Core.IOperationSource<ManagedClusterRunCommandResult>
+    internal class ManagedClusterRunCommandResultOperationSource : IOperationSource<ManagedClusterRunCommandResult>
     {
-        ManagedClusterRunCommandResult Core.IOperationSource<ManagedClusterRunCommandResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        ManagedClusterRunCommandResult IOperationSource<ManagedClusterRunCommandResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return ManagedClusterRunCommandResult.DeserializeManagedClusterRunCommandResult(document.RootElement);
         }
 
-        async ValueTask<ManagedClusterRunCommandResult> Core.IOperationSource<ManagedClusterRunCommandResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ManagedClusterRunCommandResult> IOperationSource<ManagedClusterRunCommandResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return ManagedClusterRunCommandResult.DeserializeManagedClusterRunCommandResult(document.RootElement);

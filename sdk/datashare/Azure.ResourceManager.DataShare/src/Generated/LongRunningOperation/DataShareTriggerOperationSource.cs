@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataShare
 {
-    internal class DataShareTriggerOperationSource : Core.IOperationSource<DataShareTriggerResource>
+    internal class DataShareTriggerOperationSource : IOperationSource<DataShareTriggerResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.DataShare
             _client = client;
         }
 
-        DataShareTriggerResource Core.IOperationSource<DataShareTriggerResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DataShareTriggerResource IOperationSource<DataShareTriggerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DataShareTriggerData.DeserializeDataShareTriggerData(document.RootElement);
             return new DataShareTriggerResource(_client, data);
         }
 
-        async ValueTask<DataShareTriggerResource> Core.IOperationSource<DataShareTriggerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DataShareTriggerResource> IOperationSource<DataShareTriggerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DataShareTriggerData.DeserializeDataShareTriggerData(document.RootElement);

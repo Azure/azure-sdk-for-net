@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Storage
     {
         private readonly StorageArmOperation<BlobRestoreStatus> _operation;
 
-        private readonly Core.IOperationSource<BlobRestoreStatus> _operationSource;
+        private readonly IOperationSource<BlobRestoreStatus> _operationSource;
 
         private readonly AsyncLockWithValue<BlobRestoreStatus> _stateLock;
 
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Storage
         {
         }
 
-        internal StorageAccountRestoreBlobRangesOperation(Core.IOperationSource<BlobRestoreStatus> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
+        internal StorageAccountRestoreBlobRangesOperation(IOperationSource<BlobRestoreStatus> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
         {
             _operation = new StorageArmOperation<BlobRestoreStatus>(source, clientDiagnostics, pipeline, request, response, finalStateVia);
             _operationSource = source;

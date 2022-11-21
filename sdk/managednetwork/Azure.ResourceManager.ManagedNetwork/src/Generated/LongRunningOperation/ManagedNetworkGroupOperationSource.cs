@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ManagedNetwork
 {
-    internal class ManagedNetworkGroupOperationSource : Core.IOperationSource<ManagedNetworkGroupResource>
+    internal class ManagedNetworkGroupOperationSource : IOperationSource<ManagedNetworkGroupResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ManagedNetwork
             _client = client;
         }
 
-        ManagedNetworkGroupResource Core.IOperationSource<ManagedNetworkGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ManagedNetworkGroupResource IOperationSource<ManagedNetworkGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ManagedNetworkGroupData.DeserializeManagedNetworkGroupData(document.RootElement);
             return new ManagedNetworkGroupResource(_client, data);
         }
 
-        async ValueTask<ManagedNetworkGroupResource> Core.IOperationSource<ManagedNetworkGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ManagedNetworkGroupResource> IOperationSource<ManagedNetworkGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ManagedNetworkGroupData.DeserializeManagedNetworkGroupData(document.RootElement);

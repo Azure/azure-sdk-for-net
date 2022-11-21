@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Grafana
 {
-    internal class ManagedGrafanaOperationSource : Core.IOperationSource<ManagedGrafanaResource>
+    internal class ManagedGrafanaOperationSource : IOperationSource<ManagedGrafanaResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Grafana
             _client = client;
         }
 
-        ManagedGrafanaResource Core.IOperationSource<ManagedGrafanaResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ManagedGrafanaResource IOperationSource<ManagedGrafanaResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ManagedGrafanaData.DeserializeManagedGrafanaData(document.RootElement);
             return new ManagedGrafanaResource(_client, data);
         }
 
-        async ValueTask<ManagedGrafanaResource> Core.IOperationSource<ManagedGrafanaResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ManagedGrafanaResource> IOperationSource<ManagedGrafanaResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ManagedGrafanaData.DeserializeManagedGrafanaData(document.RootElement);

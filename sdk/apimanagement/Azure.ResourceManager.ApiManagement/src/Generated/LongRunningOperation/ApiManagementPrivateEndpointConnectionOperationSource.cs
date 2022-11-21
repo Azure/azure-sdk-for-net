@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    internal class ApiManagementPrivateEndpointConnectionOperationSource : Core.IOperationSource<ApiManagementPrivateEndpointConnectionResource>
+    internal class ApiManagementPrivateEndpointConnectionOperationSource : IOperationSource<ApiManagementPrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ApiManagement
             _client = client;
         }
 
-        ApiManagementPrivateEndpointConnectionResource Core.IOperationSource<ApiManagementPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ApiManagementPrivateEndpointConnectionResource IOperationSource<ApiManagementPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ApiManagementPrivateEndpointConnectionData.DeserializeApiManagementPrivateEndpointConnectionData(document.RootElement);
             return new ApiManagementPrivateEndpointConnectionResource(_client, data);
         }
 
-        async ValueTask<ApiManagementPrivateEndpointConnectionResource> Core.IOperationSource<ApiManagementPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ApiManagementPrivateEndpointConnectionResource> IOperationSource<ApiManagementPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ApiManagementPrivateEndpointConnectionData.DeserializeApiManagementPrivateEndpointConnectionData(document.RootElement);

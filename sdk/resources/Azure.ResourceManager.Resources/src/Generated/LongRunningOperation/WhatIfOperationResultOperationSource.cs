@@ -14,15 +14,15 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    internal class WhatIfOperationResultOperationSource : Core.IOperationSource<WhatIfOperationResult>
+    internal class WhatIfOperationResultOperationSource : IOperationSource<WhatIfOperationResult>
     {
-        WhatIfOperationResult Core.IOperationSource<WhatIfOperationResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        WhatIfOperationResult IOperationSource<WhatIfOperationResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return WhatIfOperationResult.DeserializeWhatIfOperationResult(document.RootElement);
         }
 
-        async ValueTask<WhatIfOperationResult> Core.IOperationSource<WhatIfOperationResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<WhatIfOperationResult> IOperationSource<WhatIfOperationResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return WhatIfOperationResult.DeserializeWhatIfOperationResult(document.RootElement);

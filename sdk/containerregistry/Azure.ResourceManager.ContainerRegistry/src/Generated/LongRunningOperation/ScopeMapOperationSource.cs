@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
-    internal class ScopeMapOperationSource : Core.IOperationSource<ScopeMapResource>
+    internal class ScopeMapOperationSource : IOperationSource<ScopeMapResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ContainerRegistry
             _client = client;
         }
 
-        ScopeMapResource Core.IOperationSource<ScopeMapResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ScopeMapResource IOperationSource<ScopeMapResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ScopeMapData.DeserializeScopeMapData(document.RootElement);
             return new ScopeMapResource(_client, data);
         }
 
-        async ValueTask<ScopeMapResource> Core.IOperationSource<ScopeMapResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ScopeMapResource> IOperationSource<ScopeMapResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ScopeMapData.DeserializeScopeMapData(document.RootElement);

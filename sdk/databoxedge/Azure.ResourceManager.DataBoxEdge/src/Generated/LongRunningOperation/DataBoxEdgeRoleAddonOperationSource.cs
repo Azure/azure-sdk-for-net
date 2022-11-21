@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    internal class DataBoxEdgeRoleAddonOperationSource : Core.IOperationSource<DataBoxEdgeRoleAddonResource>
+    internal class DataBoxEdgeRoleAddonOperationSource : IOperationSource<DataBoxEdgeRoleAddonResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.DataBoxEdge
             _client = client;
         }
 
-        DataBoxEdgeRoleAddonResource Core.IOperationSource<DataBoxEdgeRoleAddonResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DataBoxEdgeRoleAddonResource IOperationSource<DataBoxEdgeRoleAddonResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DataBoxEdgeRoleAddonData.DeserializeDataBoxEdgeRoleAddonData(document.RootElement);
             return new DataBoxEdgeRoleAddonResource(_client, data);
         }
 
-        async ValueTask<DataBoxEdgeRoleAddonResource> Core.IOperationSource<DataBoxEdgeRoleAddonResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DataBoxEdgeRoleAddonResource> IOperationSource<DataBoxEdgeRoleAddonResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DataBoxEdgeRoleAddonData.DeserializeDataBoxEdgeRoleAddonData(document.RootElement);

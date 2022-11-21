@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DeploymentManager
 {
-    internal class ServiceUnitResourceOperationSource : Core.IOperationSource<ServiceUnitResource>
+    internal class ServiceUnitResourceOperationSource : IOperationSource<ServiceUnitResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.DeploymentManager
             _client = client;
         }
 
-        ServiceUnitResource Core.IOperationSource<ServiceUnitResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ServiceUnitResource IOperationSource<ServiceUnitResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ServiceUnitResourceData.DeserializeServiceUnitResourceData(document.RootElement);
             return new ServiceUnitResource(_client, data);
         }
 
-        async ValueTask<ServiceUnitResource> Core.IOperationSource<ServiceUnitResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ServiceUnitResource> IOperationSource<ServiceUnitResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ServiceUnitResourceData.DeserializeServiceUnitResourceData(document.RootElement);

@@ -14,15 +14,15 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    internal class ExecuteRuleStatusOperationSource : Core.IOperationSource<ExecuteRuleStatus>
+    internal class ExecuteRuleStatusOperationSource : IOperationSource<ExecuteRuleStatus>
     {
-        ExecuteRuleStatus Core.IOperationSource<ExecuteRuleStatus>.CreateResult(Response response, CancellationToken cancellationToken)
+        ExecuteRuleStatus IOperationSource<ExecuteRuleStatus>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return ExecuteRuleStatus.DeserializeExecuteRuleStatus(document.RootElement);
         }
 
-        async ValueTask<ExecuteRuleStatus> Core.IOperationSource<ExecuteRuleStatus>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ExecuteRuleStatus> IOperationSource<ExecuteRuleStatus>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return ExecuteRuleStatus.DeserializeExecuteRuleStatus(document.RootElement);

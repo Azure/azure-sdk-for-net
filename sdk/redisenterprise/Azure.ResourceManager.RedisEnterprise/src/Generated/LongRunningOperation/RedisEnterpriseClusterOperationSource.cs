@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RedisEnterprise
 {
-    internal class RedisEnterpriseClusterOperationSource : Core.IOperationSource<RedisEnterpriseClusterResource>
+    internal class RedisEnterpriseClusterOperationSource : IOperationSource<RedisEnterpriseClusterResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.RedisEnterprise
             _client = client;
         }
 
-        RedisEnterpriseClusterResource Core.IOperationSource<RedisEnterpriseClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        RedisEnterpriseClusterResource IOperationSource<RedisEnterpriseClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = RedisEnterpriseClusterData.DeserializeRedisEnterpriseClusterData(document.RootElement);
             return new RedisEnterpriseClusterResource(_client, data);
         }
 
-        async ValueTask<RedisEnterpriseClusterResource> Core.IOperationSource<RedisEnterpriseClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<RedisEnterpriseClusterResource> IOperationSource<RedisEnterpriseClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = RedisEnterpriseClusterData.DeserializeRedisEnterpriseClusterData(document.RootElement);

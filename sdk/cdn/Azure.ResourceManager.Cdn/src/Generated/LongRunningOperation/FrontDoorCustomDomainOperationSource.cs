@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Cdn
 {
-    internal class FrontDoorCustomDomainOperationSource : Core.IOperationSource<FrontDoorCustomDomainResource>
+    internal class FrontDoorCustomDomainOperationSource : IOperationSource<FrontDoorCustomDomainResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Cdn
             _client = client;
         }
 
-        FrontDoorCustomDomainResource Core.IOperationSource<FrontDoorCustomDomainResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        FrontDoorCustomDomainResource IOperationSource<FrontDoorCustomDomainResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = FrontDoorCustomDomainData.DeserializeFrontDoorCustomDomainData(document.RootElement);
             return new FrontDoorCustomDomainResource(_client, data);
         }
 
-        async ValueTask<FrontDoorCustomDomainResource> Core.IOperationSource<FrontDoorCustomDomainResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<FrontDoorCustomDomainResource> IOperationSource<FrontDoorCustomDomainResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = FrontDoorCustomDomainData.DeserializeFrontDoorCustomDomainData(document.RootElement);

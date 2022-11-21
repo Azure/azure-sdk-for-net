@@ -14,15 +14,15 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class ApplicationGatewayBackendHealthOperationSource : Core.IOperationSource<ApplicationGatewayBackendHealth>
+    internal class ApplicationGatewayBackendHealthOperationSource : IOperationSource<ApplicationGatewayBackendHealth>
     {
-        ApplicationGatewayBackendHealth Core.IOperationSource<ApplicationGatewayBackendHealth>.CreateResult(Response response, CancellationToken cancellationToken)
+        ApplicationGatewayBackendHealth IOperationSource<ApplicationGatewayBackendHealth>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return ApplicationGatewayBackendHealth.DeserializeApplicationGatewayBackendHealth(document.RootElement);
         }
 
-        async ValueTask<ApplicationGatewayBackendHealth> Core.IOperationSource<ApplicationGatewayBackendHealth>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ApplicationGatewayBackendHealth> IOperationSource<ApplicationGatewayBackendHealth>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return ApplicationGatewayBackendHealth.DeserializeApplicationGatewayBackendHealth(document.RootElement);

@@ -14,15 +14,15 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class EffectiveNetworkSecurityGroupListResultOperationSource : Core.IOperationSource<EffectiveNetworkSecurityGroupListResult>
+    internal class EffectiveNetworkSecurityGroupListResultOperationSource : IOperationSource<EffectiveNetworkSecurityGroupListResult>
     {
-        EffectiveNetworkSecurityGroupListResult Core.IOperationSource<EffectiveNetworkSecurityGroupListResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        EffectiveNetworkSecurityGroupListResult IOperationSource<EffectiveNetworkSecurityGroupListResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return EffectiveNetworkSecurityGroupListResult.DeserializeEffectiveNetworkSecurityGroupListResult(document.RootElement);
         }
 
-        async ValueTask<EffectiveNetworkSecurityGroupListResult> Core.IOperationSource<EffectiveNetworkSecurityGroupListResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<EffectiveNetworkSecurityGroupListResult> IOperationSource<EffectiveNetworkSecurityGroupListResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return EffectiveNetworkSecurityGroupListResult.DeserializeEffectiveNetworkSecurityGroupListResult(document.RootElement);

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Kubernetes
 {
-    internal class ConnectedClusterOperationSource : Core.IOperationSource<ConnectedClusterResource>
+    internal class ConnectedClusterOperationSource : IOperationSource<ConnectedClusterResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Kubernetes
             _client = client;
         }
 
-        ConnectedClusterResource Core.IOperationSource<ConnectedClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ConnectedClusterResource IOperationSource<ConnectedClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ConnectedClusterData.DeserializeConnectedClusterData(document.RootElement);
             return new ConnectedClusterResource(_client, data);
         }
 
-        async ValueTask<ConnectedClusterResource> Core.IOperationSource<ConnectedClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ConnectedClusterResource> IOperationSource<ConnectedClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ConnectedClusterData.DeserializeConnectedClusterData(document.RootElement);

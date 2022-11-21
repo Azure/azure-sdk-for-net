@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Relay
 {
-    internal class RelayNamespaceOperationSource : Core.IOperationSource<RelayNamespaceResource>
+    internal class RelayNamespaceOperationSource : IOperationSource<RelayNamespaceResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Relay
             _client = client;
         }
 
-        RelayNamespaceResource Core.IOperationSource<RelayNamespaceResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        RelayNamespaceResource IOperationSource<RelayNamespaceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = RelayNamespaceData.DeserializeRelayNamespaceData(document.RootElement);
             return new RelayNamespaceResource(_client, data);
         }
 
-        async ValueTask<RelayNamespaceResource> Core.IOperationSource<RelayNamespaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<RelayNamespaceResource> IOperationSource<RelayNamespaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = RelayNamespaceData.DeserializeRelayNamespaceData(document.RootElement);

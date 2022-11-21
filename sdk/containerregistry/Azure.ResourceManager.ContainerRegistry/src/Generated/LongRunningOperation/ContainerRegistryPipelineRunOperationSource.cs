@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
-    internal class ContainerRegistryPipelineRunOperationSource : Core.IOperationSource<ContainerRegistryPipelineRunResource>
+    internal class ContainerRegistryPipelineRunOperationSource : IOperationSource<ContainerRegistryPipelineRunResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ContainerRegistry
             _client = client;
         }
 
-        ContainerRegistryPipelineRunResource Core.IOperationSource<ContainerRegistryPipelineRunResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ContainerRegistryPipelineRunResource IOperationSource<ContainerRegistryPipelineRunResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ContainerRegistryPipelineRunData.DeserializeContainerRegistryPipelineRunData(document.RootElement);
             return new ContainerRegistryPipelineRunResource(_client, data);
         }
 
-        async ValueTask<ContainerRegistryPipelineRunResource> Core.IOperationSource<ContainerRegistryPipelineRunResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ContainerRegistryPipelineRunResource> IOperationSource<ContainerRegistryPipelineRunResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ContainerRegistryPipelineRunData.DeserializeContainerRegistryPipelineRunData(document.RootElement);

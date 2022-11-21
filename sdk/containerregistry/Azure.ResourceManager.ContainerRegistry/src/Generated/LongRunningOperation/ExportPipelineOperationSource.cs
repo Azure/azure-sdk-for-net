@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
-    internal class ExportPipelineOperationSource : Core.IOperationSource<ExportPipelineResource>
+    internal class ExportPipelineOperationSource : IOperationSource<ExportPipelineResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ContainerRegistry
             _client = client;
         }
 
-        ExportPipelineResource Core.IOperationSource<ExportPipelineResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ExportPipelineResource IOperationSource<ExportPipelineResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ExportPipelineData.DeserializeExportPipelineData(document.RootElement);
             return new ExportPipelineResource(_client, data);
         }
 
-        async ValueTask<ExportPipelineResource> Core.IOperationSource<ExportPipelineResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ExportPipelineResource> IOperationSource<ExportPipelineResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ExportPipelineData.DeserializeExportPipelineData(document.RootElement);

@@ -14,15 +14,15 @@ using Azure.ResourceManager.DataFactory.Models;
 
 namespace Azure.ResourceManager.DataFactory
 {
-    internal class FactoryTriggerSubscriptionOperationResultOperationSource : Core.IOperationSource<FactoryTriggerSubscriptionOperationResult>
+    internal class FactoryTriggerSubscriptionOperationResultOperationSource : IOperationSource<FactoryTriggerSubscriptionOperationResult>
     {
-        FactoryTriggerSubscriptionOperationResult Core.IOperationSource<FactoryTriggerSubscriptionOperationResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        FactoryTriggerSubscriptionOperationResult IOperationSource<FactoryTriggerSubscriptionOperationResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return FactoryTriggerSubscriptionOperationResult.DeserializeFactoryTriggerSubscriptionOperationResult(document.RootElement);
         }
 
-        async ValueTask<FactoryTriggerSubscriptionOperationResult> Core.IOperationSource<FactoryTriggerSubscriptionOperationResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<FactoryTriggerSubscriptionOperationResult> IOperationSource<FactoryTriggerSubscriptionOperationResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return FactoryTriggerSubscriptionOperationResult.DeserializeFactoryTriggerSubscriptionOperationResult(document.RootElement);

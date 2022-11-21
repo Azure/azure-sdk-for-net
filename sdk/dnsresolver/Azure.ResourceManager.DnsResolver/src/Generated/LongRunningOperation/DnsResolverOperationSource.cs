@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DnsResolver
 {
-    internal class DnsResolverOperationSource : Core.IOperationSource<DnsResolverResource>
+    internal class DnsResolverOperationSource : IOperationSource<DnsResolverResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.DnsResolver
             _client = client;
         }
 
-        DnsResolverResource Core.IOperationSource<DnsResolverResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DnsResolverResource IOperationSource<DnsResolverResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DnsResolverData.DeserializeDnsResolverData(document.RootElement);
             return new DnsResolverResource(_client, data);
         }
 
-        async ValueTask<DnsResolverResource> Core.IOperationSource<DnsResolverResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DnsResolverResource> IOperationSource<DnsResolverResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DnsResolverData.DeserializeDnsResolverData(document.RootElement);

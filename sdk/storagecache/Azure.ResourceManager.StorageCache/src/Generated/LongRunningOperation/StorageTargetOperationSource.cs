@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.StorageCache
 {
-    internal class StorageTargetOperationSource : Core.IOperationSource<StorageTargetResource>
+    internal class StorageTargetOperationSource : IOperationSource<StorageTargetResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.StorageCache
             _client = client;
         }
 
-        StorageTargetResource Core.IOperationSource<StorageTargetResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        StorageTargetResource IOperationSource<StorageTargetResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = StorageTargetData.DeserializeStorageTargetData(document.RootElement);
             return new StorageTargetResource(_client, data);
         }
 
-        async ValueTask<StorageTargetResource> Core.IOperationSource<StorageTargetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<StorageTargetResource> IOperationSource<StorageTargetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = StorageTargetData.DeserializeStorageTargetData(document.RootElement);

@@ -14,15 +14,15 @@ using Azure.ResourceManager.Communication.Models;
 
 namespace Azure.ResourceManager.Communication
 {
-    internal class CommunicationServiceKeysOperationSource : Core.IOperationSource<CommunicationServiceKeys>
+    internal class CommunicationServiceKeysOperationSource : IOperationSource<CommunicationServiceKeys>
     {
-        CommunicationServiceKeys Core.IOperationSource<CommunicationServiceKeys>.CreateResult(Response response, CancellationToken cancellationToken)
+        CommunicationServiceKeys IOperationSource<CommunicationServiceKeys>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return CommunicationServiceKeys.DeserializeCommunicationServiceKeys(document.RootElement);
         }
 
-        async ValueTask<CommunicationServiceKeys> Core.IOperationSource<CommunicationServiceKeys>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CommunicationServiceKeys> IOperationSource<CommunicationServiceKeys>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return CommunicationServiceKeys.DeserializeCommunicationServiceKeys(document.RootElement);

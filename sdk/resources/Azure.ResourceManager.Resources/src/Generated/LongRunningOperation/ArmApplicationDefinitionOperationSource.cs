@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources
 {
-    internal class ArmApplicationDefinitionOperationSource : Core.IOperationSource<ArmApplicationDefinitionResource>
+    internal class ArmApplicationDefinitionOperationSource : IOperationSource<ArmApplicationDefinitionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Resources
             _client = client;
         }
 
-        ArmApplicationDefinitionResource Core.IOperationSource<ArmApplicationDefinitionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ArmApplicationDefinitionResource IOperationSource<ArmApplicationDefinitionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ArmApplicationDefinitionData.DeserializeArmApplicationDefinitionData(document.RootElement);
             return new ArmApplicationDefinitionResource(_client, data);
         }
 
-        async ValueTask<ArmApplicationDefinitionResource> Core.IOperationSource<ArmApplicationDefinitionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ArmApplicationDefinitionResource> IOperationSource<ArmApplicationDefinitionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ArmApplicationDefinitionData.DeserializeArmApplicationDefinitionData(document.RootElement);

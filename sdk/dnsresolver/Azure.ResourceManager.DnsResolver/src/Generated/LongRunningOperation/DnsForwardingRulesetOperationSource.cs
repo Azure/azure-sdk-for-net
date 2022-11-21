@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DnsResolver
 {
-    internal class DnsForwardingRulesetOperationSource : Core.IOperationSource<DnsForwardingRulesetResource>
+    internal class DnsForwardingRulesetOperationSource : IOperationSource<DnsForwardingRulesetResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.DnsResolver
             _client = client;
         }
 
-        DnsForwardingRulesetResource Core.IOperationSource<DnsForwardingRulesetResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DnsForwardingRulesetResource IOperationSource<DnsForwardingRulesetResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DnsForwardingRulesetData.DeserializeDnsForwardingRulesetData(document.RootElement);
             return new DnsForwardingRulesetResource(_client, data);
         }
 
-        async ValueTask<DnsForwardingRulesetResource> Core.IOperationSource<DnsForwardingRulesetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DnsForwardingRulesetResource> IOperationSource<DnsForwardingRulesetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DnsForwardingRulesetData.DeserializeDnsForwardingRulesetData(document.RootElement);

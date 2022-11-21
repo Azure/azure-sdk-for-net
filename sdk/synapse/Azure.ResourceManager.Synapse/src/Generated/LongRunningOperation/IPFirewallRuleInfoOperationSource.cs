@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Synapse
 {
-    internal class IPFirewallRuleInfoOperationSource : Core.IOperationSource<IPFirewallRuleInfoResource>
+    internal class IPFirewallRuleInfoOperationSource : IOperationSource<IPFirewallRuleInfoResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Synapse
             _client = client;
         }
 
-        IPFirewallRuleInfoResource Core.IOperationSource<IPFirewallRuleInfoResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        IPFirewallRuleInfoResource IOperationSource<IPFirewallRuleInfoResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = IPFirewallRuleInfoData.DeserializeIPFirewallRuleInfoData(document.RootElement);
             return new IPFirewallRuleInfoResource(_client, data);
         }
 
-        async ValueTask<IPFirewallRuleInfoResource> Core.IOperationSource<IPFirewallRuleInfoResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<IPFirewallRuleInfoResource> IOperationSource<IPFirewallRuleInfoResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = IPFirewallRuleInfoData.DeserializeIPFirewallRuleInfoData(document.RootElement);

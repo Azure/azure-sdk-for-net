@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Analytics.Synapse.Artifacts
 {
     /// <summary> Creates or updates a data flow. </summary>
-    public partial class DataFlowCreateOrUpdateDataFlowOperation : Operation<DataFlowResource>, Core.IOperationSource<DataFlowResource>
+    public partial class DataFlowCreateOrUpdateDataFlowOperation : Operation<DataFlowResource>, IOperationSource<DataFlowResource>
     {
         private readonly OperationInternal<DataFlowResource> _operation;
 
@@ -67,13 +67,13 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <inheritdoc />
         public override ValueTask<Response<DataFlowResource>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        DataFlowResource Core.IOperationSource<DataFlowResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DataFlowResource IOperationSource<DataFlowResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return DataFlowResource.DeserializeDataFlowResource(document.RootElement);
         }
 
-        async ValueTask<DataFlowResource> Core.IOperationSource<DataFlowResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DataFlowResource> IOperationSource<DataFlowResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return DataFlowResource.DeserializeDataFlowResource(document.RootElement);

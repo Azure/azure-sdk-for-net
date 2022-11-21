@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.StreamAnalytics
 {
-    internal class StreamAnalyticsClusterOperationSource : Core.IOperationSource<StreamAnalyticsClusterResource>
+    internal class StreamAnalyticsClusterOperationSource : IOperationSource<StreamAnalyticsClusterResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.StreamAnalytics
             _client = client;
         }
 
-        StreamAnalyticsClusterResource Core.IOperationSource<StreamAnalyticsClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        StreamAnalyticsClusterResource IOperationSource<StreamAnalyticsClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = StreamAnalyticsClusterData.DeserializeStreamAnalyticsClusterData(document.RootElement);
             return new StreamAnalyticsClusterResource(_client, data);
         }
 
-        async ValueTask<StreamAnalyticsClusterResource> Core.IOperationSource<StreamAnalyticsClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<StreamAnalyticsClusterResource> IOperationSource<StreamAnalyticsClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = StreamAnalyticsClusterData.DeserializeStreamAnalyticsClusterData(document.RootElement);

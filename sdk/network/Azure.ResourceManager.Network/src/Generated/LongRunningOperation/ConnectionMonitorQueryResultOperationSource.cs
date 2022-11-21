@@ -14,15 +14,15 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class ConnectionMonitorQueryResultOperationSource : Core.IOperationSource<ConnectionMonitorQueryResult>
+    internal class ConnectionMonitorQueryResultOperationSource : IOperationSource<ConnectionMonitorQueryResult>
     {
-        ConnectionMonitorQueryResult Core.IOperationSource<ConnectionMonitorQueryResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        ConnectionMonitorQueryResult IOperationSource<ConnectionMonitorQueryResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return ConnectionMonitorQueryResult.DeserializeConnectionMonitorQueryResult(document.RootElement);
         }
 
-        async ValueTask<ConnectionMonitorQueryResult> Core.IOperationSource<ConnectionMonitorQueryResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ConnectionMonitorQueryResult> IOperationSource<ConnectionMonitorQueryResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return ConnectionMonitorQueryResult.DeserializeConnectionMonitorQueryResult(document.RootElement);

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ExtendedLocations
 {
-    internal class CustomLocationOperationSource : Core.IOperationSource<CustomLocationResource>
+    internal class CustomLocationOperationSource : IOperationSource<CustomLocationResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ExtendedLocations
             _client = client;
         }
 
-        CustomLocationResource Core.IOperationSource<CustomLocationResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        CustomLocationResource IOperationSource<CustomLocationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CustomLocationData.DeserializeCustomLocationData(document.RootElement);
             return new CustomLocationResource(_client, data);
         }
 
-        async ValueTask<CustomLocationResource> Core.IOperationSource<CustomLocationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CustomLocationResource> IOperationSource<CustomLocationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CustomLocationData.DeserializeCustomLocationData(document.RootElement);

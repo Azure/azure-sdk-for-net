@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Purview
 {
-    internal class PurviewAccountOperationSource : Core.IOperationSource<PurviewAccountResource>
+    internal class PurviewAccountOperationSource : IOperationSource<PurviewAccountResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Purview
             _client = client;
         }
 
-        PurviewAccountResource Core.IOperationSource<PurviewAccountResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        PurviewAccountResource IOperationSource<PurviewAccountResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = PurviewAccountData.DeserializePurviewAccountData(document.RootElement);
             return new PurviewAccountResource(_client, data);
         }
 
-        async ValueTask<PurviewAccountResource> Core.IOperationSource<PurviewAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PurviewAccountResource> IOperationSource<PurviewAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = PurviewAccountData.DeserializePurviewAccountData(document.RootElement);

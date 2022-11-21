@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MySql
 {
-    internal class MySqlVirtualNetworkRuleOperationSource : Core.IOperationSource<MySqlVirtualNetworkRuleResource>
+    internal class MySqlVirtualNetworkRuleOperationSource : IOperationSource<MySqlVirtualNetworkRuleResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.MySql
             _client = client;
         }
 
-        MySqlVirtualNetworkRuleResource Core.IOperationSource<MySqlVirtualNetworkRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        MySqlVirtualNetworkRuleResource IOperationSource<MySqlVirtualNetworkRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = MySqlVirtualNetworkRuleData.DeserializeMySqlVirtualNetworkRuleData(document.RootElement);
             return new MySqlVirtualNetworkRuleResource(_client, data);
         }
 
-        async ValueTask<MySqlVirtualNetworkRuleResource> Core.IOperationSource<MySqlVirtualNetworkRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<MySqlVirtualNetworkRuleResource> IOperationSource<MySqlVirtualNetworkRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = MySqlVirtualNetworkRuleData.DeserializeMySqlVirtualNetworkRuleData(document.RootElement);

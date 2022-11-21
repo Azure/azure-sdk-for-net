@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Analytics.Synapse.Artifacts
 {
     /// <summary> Creates or updates a Spark Job Definition. </summary>
-    public partial class SparkJobDefinitionCreateOrUpdateSparkJobDefinitionOperation : Operation<SparkJobDefinitionResource>, Core.IOperationSource<SparkJobDefinitionResource>
+    public partial class SparkJobDefinitionCreateOrUpdateSparkJobDefinitionOperation : Operation<SparkJobDefinitionResource>, IOperationSource<SparkJobDefinitionResource>
     {
         private readonly OperationInternal<SparkJobDefinitionResource> _operation;
 
@@ -67,13 +67,13 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <inheritdoc />
         public override ValueTask<Response<SparkJobDefinitionResource>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        SparkJobDefinitionResource Core.IOperationSource<SparkJobDefinitionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SparkJobDefinitionResource IOperationSource<SparkJobDefinitionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return SparkJobDefinitionResource.DeserializeSparkJobDefinitionResource(document.RootElement);
         }
 
-        async ValueTask<SparkJobDefinitionResource> Core.IOperationSource<SparkJobDefinitionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SparkJobDefinitionResource> IOperationSource<SparkJobDefinitionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return SparkJobDefinitionResource.DeserializeSparkJobDefinitionResource(document.RootElement);

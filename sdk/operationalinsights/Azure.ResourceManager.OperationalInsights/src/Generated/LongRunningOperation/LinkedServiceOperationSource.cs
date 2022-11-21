@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    internal class LinkedServiceOperationSource : Core.IOperationSource<LinkedServiceResource>
+    internal class LinkedServiceOperationSource : IOperationSource<LinkedServiceResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.OperationalInsights
             _client = client;
         }
 
-        LinkedServiceResource Core.IOperationSource<LinkedServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        LinkedServiceResource IOperationSource<LinkedServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = LinkedServiceData.DeserializeLinkedServiceData(document.RootElement);
             return new LinkedServiceResource(_client, data);
         }
 
-        async ValueTask<LinkedServiceResource> Core.IOperationSource<LinkedServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<LinkedServiceResource> IOperationSource<LinkedServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = LinkedServiceData.DeserializeLinkedServiceData(document.RootElement);

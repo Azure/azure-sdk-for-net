@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataShare
 {
-    internal class ProviderShareSubscriptionOperationSource : Core.IOperationSource<ProviderShareSubscriptionResource>
+    internal class ProviderShareSubscriptionOperationSource : IOperationSource<ProviderShareSubscriptionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.DataShare
             _client = client;
         }
 
-        ProviderShareSubscriptionResource Core.IOperationSource<ProviderShareSubscriptionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ProviderShareSubscriptionResource IOperationSource<ProviderShareSubscriptionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ProviderShareSubscriptionData.DeserializeProviderShareSubscriptionData(document.RootElement);
             return new ProviderShareSubscriptionResource(_client, data);
         }
 
-        async ValueTask<ProviderShareSubscriptionResource> Core.IOperationSource<ProviderShareSubscriptionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ProviderShareSubscriptionResource> IOperationSource<ProviderShareSubscriptionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ProviderShareSubscriptionData.DeserializeProviderShareSubscriptionData(document.RootElement);

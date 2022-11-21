@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ArcScVmm
 {
-    internal class ScVmmVirtualMachineOperationSource : Core.IOperationSource<ScVmmVirtualMachineResource>
+    internal class ScVmmVirtualMachineOperationSource : IOperationSource<ScVmmVirtualMachineResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ArcScVmm
             _client = client;
         }
 
-        ScVmmVirtualMachineResource Core.IOperationSource<ScVmmVirtualMachineResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ScVmmVirtualMachineResource IOperationSource<ScVmmVirtualMachineResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ScVmmVirtualMachineData.DeserializeScVmmVirtualMachineData(document.RootElement);
             return new ScVmmVirtualMachineResource(_client, data);
         }
 
-        async ValueTask<ScVmmVirtualMachineResource> Core.IOperationSource<ScVmmVirtualMachineResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ScVmmVirtualMachineResource> IOperationSource<ScVmmVirtualMachineResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ScVmmVirtualMachineData.DeserializeScVmmVirtualMachineData(document.RootElement);

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Synapse
 {
-    internal class WorkloadGroupOperationSource : Core.IOperationSource<WorkloadGroupResource>
+    internal class WorkloadGroupOperationSource : IOperationSource<WorkloadGroupResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Synapse
             _client = client;
         }
 
-        WorkloadGroupResource Core.IOperationSource<WorkloadGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        WorkloadGroupResource IOperationSource<WorkloadGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = WorkloadGroupData.DeserializeWorkloadGroupData(document.RootElement);
             return new WorkloadGroupResource(_client, data);
         }
 
-        async ValueTask<WorkloadGroupResource> Core.IOperationSource<WorkloadGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<WorkloadGroupResource> IOperationSource<WorkloadGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = WorkloadGroupData.DeserializeWorkloadGroupData(document.RootElement);

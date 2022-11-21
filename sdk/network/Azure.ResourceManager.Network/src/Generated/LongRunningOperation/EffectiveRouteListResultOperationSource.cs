@@ -14,15 +14,15 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class EffectiveRouteListResultOperationSource : Core.IOperationSource<EffectiveRouteListResult>
+    internal class EffectiveRouteListResultOperationSource : IOperationSource<EffectiveRouteListResult>
     {
-        EffectiveRouteListResult Core.IOperationSource<EffectiveRouteListResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        EffectiveRouteListResult IOperationSource<EffectiveRouteListResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return EffectiveRouteListResult.DeserializeEffectiveRouteListResult(document.RootElement);
         }
 
-        async ValueTask<EffectiveRouteListResult> Core.IOperationSource<EffectiveRouteListResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<EffectiveRouteListResult> IOperationSource<EffectiveRouteListResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return EffectiveRouteListResult.DeserializeEffectiveRouteListResult(document.RootElement);

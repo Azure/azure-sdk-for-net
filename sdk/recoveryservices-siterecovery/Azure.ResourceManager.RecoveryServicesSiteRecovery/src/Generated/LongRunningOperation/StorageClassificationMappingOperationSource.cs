@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
-    internal class StorageClassificationMappingOperationSource : Core.IOperationSource<StorageClassificationMappingResource>
+    internal class StorageClassificationMappingOperationSource : IOperationSource<StorageClassificationMappingResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             _client = client;
         }
 
-        StorageClassificationMappingResource Core.IOperationSource<StorageClassificationMappingResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        StorageClassificationMappingResource IOperationSource<StorageClassificationMappingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = StorageClassificationMappingData.DeserializeStorageClassificationMappingData(document.RootElement);
             return new StorageClassificationMappingResource(_client, data);
         }
 
-        async ValueTask<StorageClassificationMappingResource> Core.IOperationSource<StorageClassificationMappingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<StorageClassificationMappingResource> IOperationSource<StorageClassificationMappingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = StorageClassificationMappingData.DeserializeStorageClassificationMappingData(document.RootElement);

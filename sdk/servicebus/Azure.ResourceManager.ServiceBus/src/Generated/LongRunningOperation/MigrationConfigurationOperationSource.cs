@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    internal class MigrationConfigurationOperationSource : Core.IOperationSource<MigrationConfigurationResource>
+    internal class MigrationConfigurationOperationSource : IOperationSource<MigrationConfigurationResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ServiceBus
             _client = client;
         }
 
-        MigrationConfigurationResource Core.IOperationSource<MigrationConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        MigrationConfigurationResource IOperationSource<MigrationConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = MigrationConfigurationData.DeserializeMigrationConfigurationData(document.RootElement);
             return new MigrationConfigurationResource(_client, data);
         }
 
-        async ValueTask<MigrationConfigurationResource> Core.IOperationSource<MigrationConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<MigrationConfigurationResource> IOperationSource<MigrationConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = MigrationConfigurationData.DeserializeMigrationConfigurationData(document.RootElement);

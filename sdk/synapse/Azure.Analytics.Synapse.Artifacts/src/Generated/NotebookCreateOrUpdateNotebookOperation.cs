@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Analytics.Synapse.Artifacts
 {
     /// <summary> Creates or updates a Note Book. </summary>
-    public partial class NotebookCreateOrUpdateNotebookOperation : Operation<NotebookResource>, Core.IOperationSource<NotebookResource>
+    public partial class NotebookCreateOrUpdateNotebookOperation : Operation<NotebookResource>, IOperationSource<NotebookResource>
     {
         private readonly OperationInternal<NotebookResource> _operation;
 
@@ -67,13 +67,13 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <inheritdoc />
         public override ValueTask<Response<NotebookResource>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        NotebookResource Core.IOperationSource<NotebookResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        NotebookResource IOperationSource<NotebookResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return NotebookResource.DeserializeNotebookResource(document.RootElement);
         }
 
-        async ValueTask<NotebookResource> Core.IOperationSource<NotebookResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NotebookResource> IOperationSource<NotebookResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return NotebookResource.DeserializeNotebookResource(document.RootElement);

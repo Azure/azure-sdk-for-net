@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    internal class ManagedHsmPrivateEndpointConnectionOperationSource : Core.IOperationSource<ManagedHsmPrivateEndpointConnectionResource>
+    internal class ManagedHsmPrivateEndpointConnectionOperationSource : IOperationSource<ManagedHsmPrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.KeyVault
             _client = client;
         }
 
-        ManagedHsmPrivateEndpointConnectionResource Core.IOperationSource<ManagedHsmPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ManagedHsmPrivateEndpointConnectionResource IOperationSource<ManagedHsmPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ManagedHsmPrivateEndpointConnectionData.DeserializeManagedHsmPrivateEndpointConnectionData(document.RootElement);
             return new ManagedHsmPrivateEndpointConnectionResource(_client, data);
         }
 
-        async ValueTask<ManagedHsmPrivateEndpointConnectionResource> Core.IOperationSource<ManagedHsmPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ManagedHsmPrivateEndpointConnectionResource> IOperationSource<ManagedHsmPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ManagedHsmPrivateEndpointConnectionData.DeserializeManagedHsmPrivateEndpointConnectionData(document.RootElement);

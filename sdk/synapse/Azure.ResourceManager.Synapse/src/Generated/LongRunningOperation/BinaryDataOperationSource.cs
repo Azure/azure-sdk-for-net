@@ -13,14 +13,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse
 {
-    internal class BinaryDataOperationSource : Core.IOperationSource<BinaryData>
+    internal class BinaryDataOperationSource : IOperationSource<BinaryData>
     {
-        BinaryData Core.IOperationSource<BinaryData>.CreateResult(Response response, CancellationToken cancellationToken)
+        BinaryData IOperationSource<BinaryData>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             return BinaryData.FromStream(response.ContentStream);
         }
 
-        async ValueTask<BinaryData> Core.IOperationSource<BinaryData>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<BinaryData> IOperationSource<BinaryData>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             return await BinaryData.FromStreamAsync(response.ContentStream).ConfigureAwait(false);
         }

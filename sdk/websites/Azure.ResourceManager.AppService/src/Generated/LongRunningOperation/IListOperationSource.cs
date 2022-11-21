@@ -15,9 +15,9 @@ using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal class IListOperationSource : Core.IOperationSource<IList<WebAppNetworkTrace>>
+    internal class IListOperationSource : IOperationSource<IList<WebAppNetworkTrace>>
     {
-        IList<WebAppNetworkTrace> Core.IOperationSource<IList<WebAppNetworkTrace>>.CreateResult(Response response, CancellationToken cancellationToken)
+        IList<WebAppNetworkTrace> IOperationSource<IList<WebAppNetworkTrace>>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             List<WebAppNetworkTrace> array = new List<WebAppNetworkTrace>();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService
             return array;
         }
 
-        async ValueTask<IList<WebAppNetworkTrace>> Core.IOperationSource<IList<WebAppNetworkTrace>>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<IList<WebAppNetworkTrace>> IOperationSource<IList<WebAppNetworkTrace>>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             List<WebAppNetworkTrace> array = new List<WebAppNetworkTrace>();

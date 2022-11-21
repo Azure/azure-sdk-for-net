@@ -14,15 +14,15 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class ExpressRouteCircuitsRoutesTableListResultOperationSource : Core.IOperationSource<ExpressRouteCircuitsRoutesTableListResult>
+    internal class ExpressRouteCircuitsRoutesTableListResultOperationSource : IOperationSource<ExpressRouteCircuitsRoutesTableListResult>
     {
-        ExpressRouteCircuitsRoutesTableListResult Core.IOperationSource<ExpressRouteCircuitsRoutesTableListResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        ExpressRouteCircuitsRoutesTableListResult IOperationSource<ExpressRouteCircuitsRoutesTableListResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return ExpressRouteCircuitsRoutesTableListResult.DeserializeExpressRouteCircuitsRoutesTableListResult(document.RootElement);
         }
 
-        async ValueTask<ExpressRouteCircuitsRoutesTableListResult> Core.IOperationSource<ExpressRouteCircuitsRoutesTableListResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ExpressRouteCircuitsRoutesTableListResult> IOperationSource<ExpressRouteCircuitsRoutesTableListResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return ExpressRouteCircuitsRoutesTableListResult.DeserializeExpressRouteCircuitsRoutesTableListResult(document.RootElement);

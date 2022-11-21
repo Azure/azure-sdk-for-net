@@ -37,11 +37,14 @@ namespace Azure.ResourceManager.Avs
             _operation = new OperationInternal(clientDiagnostics, nextLinkOperation, response, "AvsArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
         }
 
+        internal AvsArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string id)
+        {
+            var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, id, out string finalResponse);
+            _operation = OperationInternal.Create(clientDiagnostics, nextLinkOperation, finalResponse, "AvsArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
+        }
+
         /// <inheritdoc />
-#pragma warning disable CA1822
-        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-        public override string Id => throw new NotImplementedException();
-#pragma warning restore CA1822
+        public override string Id => _operation.GetOperationId();
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;

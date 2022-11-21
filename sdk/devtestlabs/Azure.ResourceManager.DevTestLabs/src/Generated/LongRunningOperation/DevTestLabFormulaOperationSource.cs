@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    internal class DevTestLabFormulaOperationSource : Core.IOperationSource<DevTestLabFormulaResource>
+    internal class DevTestLabFormulaOperationSource : IOperationSource<DevTestLabFormulaResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.DevTestLabs
             _client = client;
         }
 
-        DevTestLabFormulaResource Core.IOperationSource<DevTestLabFormulaResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DevTestLabFormulaResource IOperationSource<DevTestLabFormulaResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DevTestLabFormulaData.DeserializeDevTestLabFormulaData(document.RootElement);
             return new DevTestLabFormulaResource(_client, data);
         }
 
-        async ValueTask<DevTestLabFormulaResource> Core.IOperationSource<DevTestLabFormulaResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DevTestLabFormulaResource> IOperationSource<DevTestLabFormulaResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DevTestLabFormulaData.DeserializeDevTestLabFormulaData(document.RootElement);

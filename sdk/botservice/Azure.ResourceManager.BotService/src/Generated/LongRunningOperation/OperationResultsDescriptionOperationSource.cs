@@ -14,15 +14,15 @@ using Azure.ResourceManager.BotService.Models;
 
 namespace Azure.ResourceManager.BotService
 {
-    internal class OperationResultsDescriptionOperationSource : Core.IOperationSource<OperationResultsDescription>
+    internal class OperationResultsDescriptionOperationSource : IOperationSource<OperationResultsDescription>
     {
-        OperationResultsDescription Core.IOperationSource<OperationResultsDescription>.CreateResult(Response response, CancellationToken cancellationToken)
+        OperationResultsDescription IOperationSource<OperationResultsDescription>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return OperationResultsDescription.DeserializeOperationResultsDescription(document.RootElement);
         }
 
-        async ValueTask<OperationResultsDescription> Core.IOperationSource<OperationResultsDescription>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<OperationResultsDescription> IOperationSource<OperationResultsDescription>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return OperationResultsDescription.DeserializeOperationResultsDescription(document.RootElement);

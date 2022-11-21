@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Orbital
 {
-    internal class OrbitalSpacecraftOperationSource : Core.IOperationSource<OrbitalSpacecraftResource>
+    internal class OrbitalSpacecraftOperationSource : IOperationSource<OrbitalSpacecraftResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Orbital
             _client = client;
         }
 
-        OrbitalSpacecraftResource Core.IOperationSource<OrbitalSpacecraftResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        OrbitalSpacecraftResource IOperationSource<OrbitalSpacecraftResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = OrbitalSpacecraftData.DeserializeOrbitalSpacecraftData(document.RootElement);
             return new OrbitalSpacecraftResource(_client, data);
         }
 
-        async ValueTask<OrbitalSpacecraftResource> Core.IOperationSource<OrbitalSpacecraftResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<OrbitalSpacecraftResource> IOperationSource<OrbitalSpacecraftResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = OrbitalSpacecraftData.DeserializeOrbitalSpacecraftData(document.RootElement);

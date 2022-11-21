@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ManagedServices
 {
-    internal class RegistrationAssignmentOperationSource : Core.IOperationSource<RegistrationAssignmentResource>
+    internal class RegistrationAssignmentOperationSource : IOperationSource<RegistrationAssignmentResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ManagedServices
             _client = client;
         }
 
-        RegistrationAssignmentResource Core.IOperationSource<RegistrationAssignmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        RegistrationAssignmentResource IOperationSource<RegistrationAssignmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = RegistrationAssignmentData.DeserializeRegistrationAssignmentData(document.RootElement);
             return new RegistrationAssignmentResource(_client, data);
         }
 
-        async ValueTask<RegistrationAssignmentResource> Core.IOperationSource<RegistrationAssignmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<RegistrationAssignmentResource> IOperationSource<RegistrationAssignmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = RegistrationAssignmentData.DeserializeRegistrationAssignmentData(document.RootElement);

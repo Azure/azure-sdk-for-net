@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
-    internal class ContainerRegistryPrivateEndpointConnectionOperationSource : Core.IOperationSource<ContainerRegistryPrivateEndpointConnectionResource>
+    internal class ContainerRegistryPrivateEndpointConnectionOperationSource : IOperationSource<ContainerRegistryPrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ContainerRegistry
             _client = client;
         }
 
-        ContainerRegistryPrivateEndpointConnectionResource Core.IOperationSource<ContainerRegistryPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ContainerRegistryPrivateEndpointConnectionResource IOperationSource<ContainerRegistryPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ContainerRegistryPrivateEndpointConnectionData.DeserializeContainerRegistryPrivateEndpointConnectionData(document.RootElement);
             return new ContainerRegistryPrivateEndpointConnectionResource(_client, data);
         }
 
-        async ValueTask<ContainerRegistryPrivateEndpointConnectionResource> Core.IOperationSource<ContainerRegistryPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ContainerRegistryPrivateEndpointConnectionResource> IOperationSource<ContainerRegistryPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ContainerRegistryPrivateEndpointConnectionData.DeserializeContainerRegistryPrivateEndpointConnectionData(document.RootElement);

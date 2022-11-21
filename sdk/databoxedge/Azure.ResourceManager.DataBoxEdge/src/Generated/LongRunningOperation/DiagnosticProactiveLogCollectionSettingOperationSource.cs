@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    internal class DiagnosticProactiveLogCollectionSettingOperationSource : Core.IOperationSource<DiagnosticProactiveLogCollectionSettingResource>
+    internal class DiagnosticProactiveLogCollectionSettingOperationSource : IOperationSource<DiagnosticProactiveLogCollectionSettingResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.DataBoxEdge
             _client = client;
         }
 
-        DiagnosticProactiveLogCollectionSettingResource Core.IOperationSource<DiagnosticProactiveLogCollectionSettingResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DiagnosticProactiveLogCollectionSettingResource IOperationSource<DiagnosticProactiveLogCollectionSettingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DiagnosticProactiveLogCollectionSettingData.DeserializeDiagnosticProactiveLogCollectionSettingData(document.RootElement);
             return new DiagnosticProactiveLogCollectionSettingResource(_client, data);
         }
 
-        async ValueTask<DiagnosticProactiveLogCollectionSettingResource> Core.IOperationSource<DiagnosticProactiveLogCollectionSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DiagnosticProactiveLogCollectionSettingResource> IOperationSource<DiagnosticProactiveLogCollectionSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DiagnosticProactiveLogCollectionSettingData.DeserializeDiagnosticProactiveLogCollectionSettingData(document.RootElement);

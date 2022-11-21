@@ -14,15 +14,15 @@ using Azure.ResourceManager.MachineLearning.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    internal class NotebookResourceInfoOperationSource : Core.IOperationSource<NotebookResourceInfo>
+    internal class NotebookResourceInfoOperationSource : IOperationSource<NotebookResourceInfo>
     {
-        NotebookResourceInfo Core.IOperationSource<NotebookResourceInfo>.CreateResult(Response response, CancellationToken cancellationToken)
+        NotebookResourceInfo IOperationSource<NotebookResourceInfo>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return NotebookResourceInfo.DeserializeNotebookResourceInfo(document.RootElement);
         }
 
-        async ValueTask<NotebookResourceInfo> Core.IOperationSource<NotebookResourceInfo>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NotebookResourceInfo> IOperationSource<NotebookResourceInfo>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return NotebookResourceInfo.DeserializeNotebookResourceInfo(document.RootElement);

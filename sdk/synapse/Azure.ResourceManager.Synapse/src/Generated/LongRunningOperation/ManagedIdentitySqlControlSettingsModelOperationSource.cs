@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Synapse
 {
-    internal class ManagedIdentitySqlControlSettingsModelOperationSource : Core.IOperationSource<ManagedIdentitySqlControlSettingsModelResource>
+    internal class ManagedIdentitySqlControlSettingsModelOperationSource : IOperationSource<ManagedIdentitySqlControlSettingsModelResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Synapse
             _client = client;
         }
 
-        ManagedIdentitySqlControlSettingsModelResource Core.IOperationSource<ManagedIdentitySqlControlSettingsModelResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ManagedIdentitySqlControlSettingsModelResource IOperationSource<ManagedIdentitySqlControlSettingsModelResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ManagedIdentitySqlControlSettingsModelData.DeserializeManagedIdentitySqlControlSettingsModelData(document.RootElement);
             return new ManagedIdentitySqlControlSettingsModelResource(_client, data);
         }
 
-        async ValueTask<ManagedIdentitySqlControlSettingsModelResource> Core.IOperationSource<ManagedIdentitySqlControlSettingsModelResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ManagedIdentitySqlControlSettingsModelResource> IOperationSource<ManagedIdentitySqlControlSettingsModelResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ManagedIdentitySqlControlSettingsModelData.DeserializeManagedIdentitySqlControlSettingsModelData(document.RootElement);

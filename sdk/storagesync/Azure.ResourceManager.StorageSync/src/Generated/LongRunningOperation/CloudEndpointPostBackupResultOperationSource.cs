@@ -14,15 +14,15 @@ using Azure.ResourceManager.StorageSync.Models;
 
 namespace Azure.ResourceManager.StorageSync
 {
-    internal class CloudEndpointPostBackupResultOperationSource : Core.IOperationSource<CloudEndpointPostBackupResult>
+    internal class CloudEndpointPostBackupResultOperationSource : IOperationSource<CloudEndpointPostBackupResult>
     {
-        CloudEndpointPostBackupResult Core.IOperationSource<CloudEndpointPostBackupResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        CloudEndpointPostBackupResult IOperationSource<CloudEndpointPostBackupResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return CloudEndpointPostBackupResult.DeserializeCloudEndpointPostBackupResult(document.RootElement);
         }
 
-        async ValueTask<CloudEndpointPostBackupResult> Core.IOperationSource<CloudEndpointPostBackupResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CloudEndpointPostBackupResult> IOperationSource<CloudEndpointPostBackupResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return CloudEndpointPostBackupResult.DeserializeCloudEndpointPostBackupResult(document.RootElement);

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    internal class TopicEventSubscriptionOperationSource : Core.IOperationSource<TopicEventSubscriptionResource>
+    internal class TopicEventSubscriptionOperationSource : IOperationSource<TopicEventSubscriptionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.EventGrid
             _client = client;
         }
 
-        TopicEventSubscriptionResource Core.IOperationSource<TopicEventSubscriptionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        TopicEventSubscriptionResource IOperationSource<TopicEventSubscriptionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = EventGridSubscriptionData.DeserializeEventGridSubscriptionData(document.RootElement);
             return new TopicEventSubscriptionResource(_client, data);
         }
 
-        async ValueTask<TopicEventSubscriptionResource> Core.IOperationSource<TopicEventSubscriptionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<TopicEventSubscriptionResource> IOperationSource<TopicEventSubscriptionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = EventGridSubscriptionData.DeserializeEventGridSubscriptionData(document.RootElement);
