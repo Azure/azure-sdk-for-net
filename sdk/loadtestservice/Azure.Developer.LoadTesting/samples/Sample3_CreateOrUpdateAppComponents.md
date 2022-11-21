@@ -57,8 +57,5 @@ catch (Exception e)
     Console.WriteLine(String.Format("Error : ", e.Message));
 }
 ```
-<<<<<<< HEAD:sdk/loadtestservice/Azure.Developer.LoadTesting/samples/Sample3_CreateOrUpdateAppComponents.md
 To see the full example source files, see:
 * [Sample3_CreateOrUpdateAppComponent.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/loadtestservice/Azure.Developer.LoadTesting/tests/Samples/Sample3_CreateOrUpdateAppComponents.cs)
-=======
->>>>>>> main:sdk/loadtestservice/Azure.Developer.LoadTesting/samples/Sample3_CreateOrUpdateAppComponent.md
