@@ -2,18 +2,15 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests.Public
 {
     public class JsonDataArrayTests
     {
+        #region Convert tests
+
         [Test]
         public void CanConvertArrayToIEnumerable()
         {
@@ -39,6 +36,18 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
+        public void CanConvertArrayToArray()
+        {
+            dynamic data = JsonDataTestHelpers.CreateFromJson("[1, 2, 3]");
+
+            int[] array = data;
+
+            Assert.AreEqual(1, array[0]);
+            Assert.AreEqual(2, array[1]);
+            Assert.AreEqual(3, array[2]);
+        }
+
+        [Test]
         public void CannotConvertArrayToLeaf()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("[1, 2, 3]");
@@ -55,87 +64,6 @@ namespace Azure.Core.Tests.Public
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("[1, 2, 3]");
             Assert.Throws<JsonException>(() => { var model = (SampleModel)data; });
-        }
-
-        [Test]
-        public void CannotGetMemberOnArray()
-        {
-            dynamic data = JsonDataTestHelpers.CreateFromJson("[1, 2, 3]");
-            Assert.Throws<InvalidOperationException>(() => { var x = data.Property; });
-        }
-
-        [Test]
-        public void CannotSetMemberOnArray()
-        {
-            dynamic data = JsonDataTestHelpers.CreateFromJson("[1, 2, 3]");
-            Assert.Throws<InvalidOperationException>(() => { data.Property = "invalid"; });
-        }
-
-        [Test]
-        public void CannotGetIndexPropertyOnArray()
-        {
-            dynamic data = JsonDataTestHelpers.CreateFromJson("[1, 2, 3]");
-            Assert.Throws<InvalidOperationException>(() => { var x = data["Property"]; });
-        }
-
-        [Test]
-        public void CannotSetIndexPropertyOnArray()
-        {
-            dynamic data = JsonDataTestHelpers.CreateFromJson("[1, 2, 3]");
-            Assert.Throws<InvalidOperationException>(() => { data["Property"] = "invalid"; });
-        }
-
-        [Test]
-        public void CanGetArrayIndex()
-        {
-            dynamic data = JsonDataTestHelpers.CreateFromJson("[1, 2, 3]");
-
-            Assert.AreEqual(1, (int)data[0]);
-            Assert.AreEqual(2, (int)data[1]);
-            Assert.AreEqual(3, (int)data[2]);
-        }
-
-        [Test]
-        public void CanGetArrayLength()
-        {
-            dynamic data = JsonDataTestHelpers.CreateFromJson("[1, 2, 3]");
-            Assert.AreEqual(3, data.Length);
-        }
-
-        [Test]
-        public void CannotSetArrayLength()
-        {
-            dynamic data = JsonDataTestHelpers.CreateFromJson("[1, 2, 3]");
-            Assert.Throws<InvalidOperationException>(() => { data.Length = 5; });
-        }
-
-        [Test]
-        public void CanSetArrayIndex()
-        {
-            dynamic data = JsonDataTestHelpers.CreateFromJson("[1, 2, 3]");
-
-            data[0] = 5;
-            data[1] = "valid";
-            data[2] = null;
-
-            Assert.AreEqual(5, (int)data[0]);
-            Assert.AreEqual("valid", (string)data[1]);
-
-            // TODO: to check for null, we have to cast to string.  Is that
-            // what we want?
-            Assert.AreEqual(null, (string)data[2]);
-        }
-
-        [Test]
-        public void CanEnumerateArray()
-        {
-            dynamic data = JsonDataTestHelpers.CreateFromJson("[1, 2, 3]");
-
-            int i = 1;
-            foreach (int item in data)
-            {
-                Assert.AreEqual(i++, item);
-            }
         }
 
         [Test]
@@ -157,6 +85,17 @@ namespace Azure.Core.Tests.Public
             Assert.Throws<JsonException>(() => { var model = (SampleModel)data.value; });
         }
 
+        #endregion
+
+        #region GetMember tests
+
+        [Test]
+        public void CannotGetMemberOnArray()
+        {
+            dynamic data = JsonDataTestHelpers.CreateFromJson("[1, 2, 3]");
+            Assert.Throws<InvalidOperationException>(() => { var x = data.Property; });
+        }
+
         [Test]
         public void CannotGetMemberOnArrayProperty()
         {
@@ -164,11 +103,33 @@ namespace Azure.Core.Tests.Public
             Assert.Throws<InvalidOperationException>(() => { var x = data.value.Property; });
         }
 
+        #endregion
+
+        #region SetMember tests
+
+        [Test]
+        public void CannotSetMemberOnArray()
+        {
+            dynamic data = JsonDataTestHelpers.CreateFromJson("[1, 2, 3]");
+            Assert.Throws<InvalidOperationException>(() => { data.Property = "invalid"; });
+        }
+
         [Test]
         public void CannotSetMemberOnArrayProperty()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""value"": [1, 2, 3] }");
             Assert.Throws<InvalidOperationException>(() => { data.value.Property = "invalid"; });
+        }
+
+        #endregion
+
+        #region GetIndex tests
+
+        [Test]
+        public void CannotGetIndexPropertyOnArray()
+        {
+            dynamic data = JsonDataTestHelpers.CreateFromJson("[1, 2, 3]");
+            Assert.Throws<InvalidOperationException>(() => { var x = data["Property"]; });
         }
 
         [Test]
@@ -179,10 +140,13 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
-        public void CannotSetIndexPropertyOnArrayProperty()
+        public void CanGetArrayIndex()
         {
-            dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""value"": [1, 2, 3] }");
-            Assert.Throws<InvalidOperationException>(() => { data.value["Property"] = "invalid"; });
+            dynamic data = JsonDataTestHelpers.CreateFromJson("[1, 2, 3]");
+
+            Assert.AreEqual(1, (int)data[0]);
+            Assert.AreEqual(2, (int)data[1]);
+            Assert.AreEqual(3, (int)data[2]);
         }
 
         [Test]
@@ -196,17 +160,48 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
-        public void CanGetArrayPropertyLength()
+        public void CanGetObjectMemberViaArrayIndex()
         {
-            dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""value"": [1, 2, 3] }");
-            Assert.AreEqual(3, data.value.Length);
+            dynamic data = JsonDataTestHelpers.CreateFromJson(
+                @"{ ""value"": [ { ""tag"": ""tagValue"" }, 2, 3] }"
+            );
+
+            Assert.AreEqual("tagValue", (string)data.value[0].tag);
+        }
+
+        #endregion
+
+        #region SetIndex tests
+
+        [Test]
+        public void CannotSetIndexPropertyOnArray()
+        {
+            dynamic data = JsonDataTestHelpers.CreateFromJson("[1, 2, 3]");
+            Assert.Throws<InvalidOperationException>(() => { data["Property"] = "invalid"; });
         }
 
         [Test]
-        public void CannotSetArrayPropertyLength()
+        public void CannotSetIndexPropertyOnArrayProperty()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""value"": [1, 2, 3] }");
-            Assert.Throws<InvalidOperationException>(() => { data.value.Length = 5; });
+            Assert.Throws<InvalidOperationException>(() => { data.value["Property"] = "invalid"; });
+        }
+
+        [Test]
+        public void CanSetArrayIndex()
+        {
+            dynamic data = JsonDataTestHelpers.CreateFromJson("[1, 2, 3]");
+
+            data[0] = 5;
+            data[1] = "valid";
+            data[2] = null;
+
+            Assert.AreEqual(5, (int)data[0]);
+            Assert.AreEqual("valid", (string)data[1]);
+
+            // TODO: to check for null, we have to cast to string.  Is that
+            // what we want?
+            Assert.AreEqual(null, (string)data[2]);
         }
 
         [Test]
@@ -227,6 +222,62 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
+        public void CanSetObjectMemberViaArrayIndex()
+        {
+            dynamic data = JsonDataTestHelpers.CreateFromJson(
+                @"{ ""value"": [ { ""tag"": ""tagValue"" }, 2, 3] }"
+            );
+
+            data.value[0].tag = "newValue";
+
+            Assert.AreEqual("newValue", (string)data.value[0].tag);
+        }
+
+        #endregion
+
+        #region Array behaviors tests
+
+        [Test]
+        public void CanGetArrayLength()
+        {
+            dynamic data = JsonDataTestHelpers.CreateFromJson("[1, 2, 3]");
+            Assert.AreEqual(3, data.Length);
+        }
+
+        [Test]
+        public void CanGetArrayPropertyLength()
+        {
+            dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""value"": [1, 2, 3] }");
+            Assert.AreEqual(3, data.value.Length);
+        }
+
+        [Test]
+        public void CannotSetArrayLength()
+        {
+            dynamic data = JsonDataTestHelpers.CreateFromJson("[1, 2, 3]");
+            Assert.Throws<InvalidOperationException>(() => { data.Length = 5; });
+        }
+
+        [Test]
+        public void CannotSetArrayPropertyLength()
+        {
+            dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""value"": [1, 2, 3] }");
+            Assert.Throws<InvalidOperationException>(() => { data.value.Length = 5; });
+        }
+
+        [Test]
+        public void CanEnumerateArray()
+        {
+            dynamic data = JsonDataTestHelpers.CreateFromJson("[1, 2, 3]");
+
+            int i = 1;
+            foreach (int item in data)
+            {
+                Assert.AreEqual(i++, item);
+            }
+        }
+
+        [Test]
         public void CanEnumerateArrayProperty()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""value"": [1, 2, 3] }");
@@ -238,26 +289,6 @@ namespace Azure.Core.Tests.Public
             }
         }
 
-        [Test]
-        public void CanGetObjectMemberNestedInArray()
-        {
-            dynamic data = JsonDataTestHelpers.CreateFromJson(
-                @"{ ""value"": [ { ""tag"": ""tagValue"" }, 2, 3] }"
-            );
-
-            Assert.AreEqual("tagValue", (string)data.value[0].tag);
-        }
-
-        [Test]
-        public void CanSetObjectMemberNestedInArray()
-        {
-            dynamic data = JsonDataTestHelpers.CreateFromJson(
-                @"{ ""value"": [ { ""tag"": ""tagValue"" }, 2, 3] }"
-            );
-
-            data.value[0].tag = "newValue";
-
-            Assert.AreEqual("newValue", (string)data.value[0].tag);
-        }
+        #endregion
     }
 }
