@@ -384,7 +384,7 @@ namespace Azure.AI.TextAnalytics
 
             foreach (var entity in entities)
             {
-                entityList.Add(new CategorizedEntity(entity.Text, entity.Category, entity.Subcategory, entity.ConfidenceScore, entity.Offset, entity.Length));
+                entityList.Add(new CategorizedEntity(entity.Text, entity.Category, entity.Subcategory, entity.ConfidenceScore, entity.Offset, entity.Length, default));
             }
 
             return entityList;

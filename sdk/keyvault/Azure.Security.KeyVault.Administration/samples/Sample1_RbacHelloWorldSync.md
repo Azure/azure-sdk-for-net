@@ -67,5 +67,5 @@ client.DeleteRoleAssignment(KeyVaultRoleScope.Global, createdAssignment.Name);
 ```
 
 <!-- LINKS -->
-[azure_cli]: https://docs.microsoft.com/cli/azure
+[azure_cli]: https://learn.microsoft.com/cli/azure
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential

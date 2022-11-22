@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataShare.Models
     {
         internal static UnknownSourceShareSynchronizationSetting DeserializeUnknownSourceShareSynchronizationSetting(JsonElement element)
         {
-            SourceShareSynchronizationSettingKind kind = default;
+            SourceShareSynchronizationSettingKind kind = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))

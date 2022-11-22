@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal static UnknownWebLinkedServiceTypeProperties DeserializeUnknownWebLinkedServiceTypeProperties(JsonElement element)
         {
             BinaryData url = default;
-            WebAuthenticationType authenticationType = default;
+            WebAuthenticationType authenticationType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("url"))

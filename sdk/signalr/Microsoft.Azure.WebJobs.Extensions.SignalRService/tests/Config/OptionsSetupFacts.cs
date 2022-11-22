@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Reflection;
 using Azure.Core.Serialization;
 using Microsoft.Azure.SignalR.Management;
 using Microsoft.Azure.WebJobs.Extensions.SignalRService;
@@ -81,7 +82,9 @@ namespace SignalRServiceExtension.Tests.Config
             var options = new ServiceManagerOptions();
             var setup = new OptionsSetup(configuration, SingletonAzureComponentFactory.Instance, "key");
             setup.Configure(options);
-            Assert.Equal(objectSerializerType, options.ObjectSerializer?.GetType());
+            // hack to access internal member
+            var serializer = typeof(ServiceManagerOptions).GetProperty("ObjectSerializer", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(options);
+            Assert.Equal(objectSerializerType, serializer?.GetType());
         }
     }
 }

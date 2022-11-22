@@ -102,12 +102,23 @@ jobs:
           SubscriptionConfiguration: ${{ parameters.CloudConfig.SubscriptionConfiguration }}
           SubscriptionConfigurations: ${{ parameters.CloudConfig.SubscriptionConfigurations }}
 
+      - pwsh: |
+          $project = "${{ parameters.Project }}"
+          $directory = "${{ parameters.ServiceDirectory }}"
+          if ($project -and $project -ne "**" -and (Test-Path "$(Build.SourcesDirectory)/sdk/$directory/$project/test-resources.*")) {
+            $directory = "$directory/$project"
+          }
+          Write-Host "Setting TestResourcesDirectory to '$directory'"
+          Write-Host "##vso[task.setvariable variable=TestResourcesDirectory]$directory"
+        displayName: Set TestResources Location
+
       - ${{ if parameters.DeployTestResources }}:
         - template: /eng/common/TestResources/deploy-test-resources.yml
           parameters:
             ${{ if or(parameters.Location, parameters.CloudConfig.Location) }}:
               Location: ${{ coalesce(parameters.Location, parameters.CloudConfig.Location) }}
             ServiceDirectory: '${{ parameters.ServiceDirectory }}'
+            TestResourcesDirectory: '$(TestResourcesDirectory)'
             SubscriptionConfiguration: $(SubscriptionConfiguration)
             ArmTemplateParameters: $(ArmTemplateParameters)
 
@@ -120,11 +131,11 @@ jobs:
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
         parameters:
           Container: ${{ parameters.UsePlatformContainer }}
-      - pwsh: >
+      - script: >
           dotnet test eng/service.proj
           --framework $(TestTargetFramework)
-          --filter 'TestCategory!=Manually & ($(AdditionalTestFilters))'
-          --logger 'trx'
+          --filter "TestCategory!=Manually & ($(AdditionalTestFilters))"
+          --logger "trx"
           --logger:"console;verbosity=normal"
           --blame-crash-dump-type full --blame-hang-dump-type full --blame-hang-timeout ${{parameters.TimeoutInMinutes}}minutes
           /p:SDKType=${{ parameters.SDKType }}

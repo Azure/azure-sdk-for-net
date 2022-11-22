@@ -288,10 +288,5 @@ if (invoice.Fields.TryGetValue("InvoiceTotal", out FormField invoiceTotalField))
 }
 ```
 
-To see the full example source files, see:
-
-* [Recognize invoices from URI](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/V3.1/Sample13_RecognizeInvoicesFromUri.cs)
-* [Recognize invoices from file](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/V3.1/Sample13_RecognizeInvoicesFromFile.cs)
-
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started
 [strongly_typing_a_recognized_form]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/V3.1/Sample4_StronglyTypingARecognizedForm.md
