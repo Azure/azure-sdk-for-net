@@ -330,10 +330,10 @@ namespace Azure.Core.Pipeline
             var count = values.Count;
             // Explicitly handle most common cases
             switch (count) {
-                case 1:
-                    return values.ToString();
                 case 0:
                     return string.Empty;
+                case 1:
+                    return values.ToString();
                 case 2:
                     using (var enumerator = values.GetEnumerator())
                     {

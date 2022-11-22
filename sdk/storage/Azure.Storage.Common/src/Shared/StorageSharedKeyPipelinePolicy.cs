@@ -51,7 +51,7 @@ namespace Azure.Storage
                 request.Headers.SetValue(Constants.HeaderNames.Date, date);
             }
 
-            var stringToSign = BuildStringToSign(request.Method, request.Uri.ToUri(), request.Content, request.Headers.ToDictionary(h => h.Name, h => h.Value));
+            var stringToSign = BuildStringToSign(request.Method, request.Uri.ToUri(), request.Content, request.Headers.ToDictionary(h => h.Name, h => h.Value, StringComparer.OrdinalIgnoreCase));
             var signature = StorageSharedKeyCredentialInternals.ComputeSasSignature(_credentials, stringToSign);
 
             var key = new AuthenticationHeaderValue(Constants.HeaderNames.SharedKey, _credentials.AccountName + ":" + signature).ToString();

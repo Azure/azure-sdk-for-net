@@ -7,6 +7,12 @@
       "commands": [
         "reportgenerator"
       ]
+    },
+    "jetbrains.dottrace.globaltools": {
+      "version": "2022.2.4",
+      "commands": [
+        "dottrace"
+      ]
     }
   }
 }
