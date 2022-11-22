@@ -14,6 +14,7 @@ namespace Azure.AI.AnomalyDetector.Tests
             {
                 JsonPathSanitizers.Add("$..accessToken");
                 JsonPathSanitizers.Add("$..source");
+                SanitizedHeaders.Add(Constants.AuthorizationHeader);
             };
         }
 
