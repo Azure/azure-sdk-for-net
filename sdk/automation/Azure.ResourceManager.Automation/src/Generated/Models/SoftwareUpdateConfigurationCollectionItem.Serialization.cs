@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.Automation.Models
         internal static SoftwareUpdateConfigurationCollectionItem DeserializeSoftwareUpdateConfigurationCollectionItem(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<string> id = default;
-            Optional<UpdateConfiguration> updateConfiguration = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<SoftwareUpdateConfigurationSpecificProperties> updateConfiguration = default;
             Optional<SoftwareUpdateConfigurationTasks> tasks = default;
-            Optional<ScheduleFrequency> frequency = default;
+            Optional<AutomationScheduleFrequency> frequency = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> creationTime = default;
             Optional<DateTimeOffset> lastModifiedTime = default;
@@ -34,7 +34,12 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -53,7 +58,7 @@ namespace Azure.ResourceManager.Automation.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            updateConfiguration = UpdateConfiguration.DeserializeUpdateConfiguration(property0.Value);
+                            updateConfiguration = SoftwareUpdateConfigurationSpecificProperties.DeserializeSoftwareUpdateConfigurationSpecificProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("tasks"))
@@ -73,7 +78,7 @@ namespace Azure.ResourceManager.Automation.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            frequency = new ScheduleFrequency(property0.Value.GetString());
+                            frequency = new AutomationScheduleFrequency(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("startTime"))

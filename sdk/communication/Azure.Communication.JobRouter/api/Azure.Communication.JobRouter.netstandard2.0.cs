@@ -159,7 +159,7 @@ namespace Azure.Communication.JobRouter
         public FunctionRule(System.Uri functionAppUri) { }
         public FunctionRule(System.Uri functionAppUri, Azure.Communication.JobRouter.FunctionRuleCredential credential) { }
         public Azure.Communication.JobRouter.FunctionRuleCredential Credential { get { throw null; } set { } }
-        public string FunctionUri { get { throw null; } set { } }
+        public System.Uri FunctionUri { get { throw null; } set { } }
     }
     public partial class FunctionRuleCredential
     {

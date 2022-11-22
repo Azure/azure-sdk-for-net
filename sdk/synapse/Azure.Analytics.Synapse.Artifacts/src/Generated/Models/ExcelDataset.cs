@@ -34,7 +34,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="location"> The location of the excel storage. </param>
+        /// <param name="location">
+        /// The location of the excel storage.
+        /// Please note <see cref="DatasetLocation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AmazonS3Location"/>, <see cref="AzureBlobFSLocation"/>, <see cref="AzureBlobStorageLocation"/>, <see cref="AzureDataLakeStoreLocation"/>, <see cref="AzureFileStorageLocation"/>, <see cref="FileServerLocation"/>, <see cref="FtpServerLocation"/>, <see cref="GoogleCloudStorageLocation"/>, <see cref="HdfsLocation"/>, <see cref="HttpServerLocation"/> and <see cref="SftpLocation"/>.
+        /// </param>
         /// <param name="sheetName"> The sheet name of excel file. Type: string (or Expression with resultType string). </param>
         /// <param name="sheetIndex"> The sheet index of excel file and default value is 0. Type: integer (or Expression with resultType integer). </param>
         /// <param name="range"> The partial data of one sheet. Type: string (or Expression with resultType string). </param>
@@ -53,7 +57,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "Excel";
         }
 
-        /// <summary> The location of the excel storage. </summary>
+        /// <summary>
+        /// The location of the excel storage.
+        /// Please note <see cref="DatasetLocation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AmazonS3Location"/>, <see cref="AzureBlobFSLocation"/>, <see cref="AzureBlobStorageLocation"/>, <see cref="AzureDataLakeStoreLocation"/>, <see cref="AzureFileStorageLocation"/>, <see cref="FileServerLocation"/>, <see cref="FtpServerLocation"/>, <see cref="GoogleCloudStorageLocation"/>, <see cref="HdfsLocation"/>, <see cref="HttpServerLocation"/> and <see cref="SftpLocation"/>.
+        /// </summary>
         public DatasetLocation Location { get; set; }
         /// <summary> The sheet name of excel file. Type: string (or Expression with resultType string). </summary>
         public object SheetName { get; set; }

@@ -82,7 +82,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             }
             catch (Exception ex)
             {
-                Response = Request.Failed(ex).Result;
+                Response = Request.Failed(ex, true).Result;
             }
 
             return Task.CompletedTask;
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             //If the request was unsuccessful we return the IActionResult based on the error and do no further processing.
             if (Request.RequestStatus != RequestStatusType.Successful)
             {
-                return Request.Failed(null).Result;
+                return Request.Failed(null, true).Result;
             }
             else if (result is string strResult)//A string was returned from the function execution
             {
@@ -113,7 +113,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             {
                 jResult = GetJsonObjectFromStream(stream);
             }
-            else//An unexpected return type was found
+            //As we do not reference Newstonsoft objects there still is a possibility that Newtonsoft objects can be parsed down from func.exe
+            else if (result != null && result.GetType().ToString().ToLower(CultureInfo.CurrentCulture).Contains("newtonsoft"))
+            {
+                jResult = GetJsonObjectFromString(result.ToString());
+            }
+            else
             {
                 throw new InvalidCastException(AuthenticationEventResource.Ex_Invalid_Return);
             }

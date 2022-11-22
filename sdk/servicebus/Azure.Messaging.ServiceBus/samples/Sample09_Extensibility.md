@@ -360,9 +360,3 @@ processor.ProcessErrorAsync += args =>
 await processor.StartProcessingAsync();
 Console.ReadKey();
 ```
-
-## Source
-
-To see the full example source, see:
-
-* [Sample09_Extensibility.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample09_Extensibility.cs)

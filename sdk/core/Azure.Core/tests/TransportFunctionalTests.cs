@@ -370,7 +370,7 @@ namespace Azure.Core.Tests
 
             Response response = await ExecuteRequest(request, transport);
 
-            Assert.True(response.Headers.Contains(headerName));
+            Assert.True(response.Headers.Contains(headerName), $"response.Headers contains the following headers: {string.Join(", ", response.Headers.Select(h => $"\"{h.Name}\": \"{h.Value}\""))}");
 
             Assert.True(response.Headers.TryGetValue(headerName, out var value));
             Assert.AreEqual(headerValue, value);

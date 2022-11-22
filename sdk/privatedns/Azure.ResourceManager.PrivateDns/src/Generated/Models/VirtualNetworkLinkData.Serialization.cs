@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.PrivateDns
             Optional<WritableSubResource> virtualNetwork = default;
             Optional<bool> registrationEnabled = default;
             Optional<VirtualNetworkLinkState> virtualNetworkLinkState = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<PrivateDnsProvisioningState> privateDnsProvisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -170,14 +170,14 @@ namespace Azure.ResourceManager.PrivateDns
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            privateDnsProvisioningState = new PrivateDnsProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new VirtualNetworkLinkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), virtualNetwork, Optional.ToNullable(registrationEnabled), Optional.ToNullable(virtualNetworkLinkState), Optional.ToNullable(provisioningState));
+            return new VirtualNetworkLinkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), virtualNetwork, Optional.ToNullable(registrationEnabled), Optional.ToNullable(virtualNetworkLinkState), Optional.ToNullable(privateDnsProvisioningState));
         }
     }
 }

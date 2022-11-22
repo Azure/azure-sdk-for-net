@@ -1,53 +1,40 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/65634139-3762-476b-946d-e221f4cdc2bf?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Connection": "keep-alive",
-        "traceparent": "00-5f8d97eb939e9a448fc4fa2243aaa6c3-3fe69bcbbcefb64f-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "35ff278e70261f4f52a4152864d12032",
+        "traceparent": "00-a2a25ad913d29540bba8aa2309460da5-5b3a7d31689f9d46-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "ae17276ab74da63eeee44de1b56a2e17",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "747",
+        "Content-Length": "394",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 13 Sep 2022 03:22:36 GMT",
+        "Date": "Thu, 10 Nov 2022 01:33:45 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "0ab94fbb-cb98-4051-aaf7-cfc785a0afbc",
-        "x-ms-ratelimit-remaining-subscription-reads": "11987",
-        "x-ms-request-id": "0ab94fbb-cb98-4051-aaf7-cfc785a0afbc",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220913T032236Z:0ab94fbb-cb98-4051-aaf7-cfc785a0afbc"
+        "x-ms-correlation-request-id": "72758e83-fbd0-4ac7-a95d-29702a0a41f5",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "72758e83-fbd0-4ac7-a95d-29702a0a41f5",
+        "x-ms-routing-request-id": "WESTUS:20221110T013346Z:72758e83-fbd0-4ac7-a95d-29702a0a41f5"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "id": "/subscriptions/65634139-3762-476b-946d-e221f4cdc2bf",
         "authorizationSource": "RoleBased",
         "managedByTenants": [],
-        "tags": {
-          "TagKey-9823": "TagValue-566",
-          "TagKey-3481": "TagValue-320",
-          "TagKey-4926": "TagValue-1187",
-          "TagKey-751": "TagValue-3921",
-          "TagKey-1866": "TagValue-8559",
-          "TagKey-3094": "TagValue-9190",
-          "TagKey-2449": "TagValue-9",
-          "TagKey-8379": "TagValue-164",
-          "TagKey-7470": "TagValue-2205",
-          "TagKey-4236": "TagValue-3698",
-          "TagKey-5316": "TagValue-2725"
-        },
-        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "subscriptionId": "65634139-3762-476b-946d-e221f4cdc2bf",
         "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
-        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+        "displayName": "WA-Batch-Test4",
         "state": "Enabled",
         "subscriptionPolicies": {
           "locationPlacementId": "Internal_2014-09-01",
@@ -57,16 +44,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG-9924?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/65634139-3762-476b-946d-e221f4cdc2bf/resourcegroups/testRG-9426?api-version=2021-04-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "43",
         "Content-Type": "application/json",
-        "traceparent": "00-568f52c8f05d7d40a8b7815d6f56ee82-e633088fbd9ea44a-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "e8ffdfd4040e20e28dd30206d1e15188",
+        "traceparent": "00-985c6342083f014d83716ba978ee3523-56633a7138678a40-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "3f453ca7bab99c6803f057a16c6798a4",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -80,19 +67,19 @@
         "Cache-Control": "no-cache",
         "Content-Length": "241",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 13 Sep 2022 03:22:39 GMT",
+        "Date": "Thu, 10 Nov 2022 01:33:46 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "1a5dec90-9ff0-4ed0-a4ae-b55ea15b5968",
-        "x-ms-ratelimit-remaining-subscription-writes": "1193",
-        "x-ms-request-id": "1a5dec90-9ff0-4ed0-a4ae-b55ea15b5968",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220913T032239Z:1a5dec90-9ff0-4ed0-a4ae-b55ea15b5968"
+        "x-ms-correlation-request-id": "60491f00-3364-49c3-8445-9c946ebe9be7",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "60491f00-3364-49c3-8445-9c946ebe9be7",
+        "x-ms-routing-request-id": "WESTUS:20221110T013346Z:60491f00-3364-49c3-8445-9c946ebe9be7"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-9924",
-        "name": "testRG-9924",
+        "id": "/subscriptions/65634139-3762-476b-946d-e221f4cdc2bf/resourceGroups/testRG-9426",
+        "name": "testRG-9426",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "westus",
         "tags": {
@@ -104,16 +91,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-9924/providers/Microsoft.Storage/storageAccounts/accountforbatch1591?api-version=2022-05-01",
+      "RequestUri": "https://management.azure.com/subscriptions/65634139-3762-476b-946d-e221f4cdc2bf/resourceGroups/testRG-9426/providers/Microsoft.Storage/storageAccounts/accountforbatch5156?api-version=2022-05-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "398",
         "Content-Type": "application/json",
-        "traceparent": "00-15d1fe7d88a08744bcda7e2e618d91bf-aaf859db01ecc949-00",
-        "User-Agent": "azsdk-net-ResourceManager.Storage/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "7a973f005f6becbf1fc524cab1faad69",
+        "traceparent": "00-06318297e119264aa57aa2fdaab9b400-91fbc6e0716bdb48-00",
+        "User-Agent": "azsdk-net-ResourceManager.Storage/1.0.0 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "4ce3b2cb7d20812c456f87207c6a60a5",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -150,30 +137,30 @@
         "Cache-Control": "no-cache",
         "Content-Length": "0",
         "Content-Type": "text/plain; charset=utf-8",
-        "Date": "Tue, 13 Sep 2022 03:22:47 GMT",
+        "Date": "Thu, 10 Nov 2022 01:33:50 GMT",
         "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/westus2/asyncoperations/9488f80b-d775-4282-aef0-03475064428a?monitor=true\u0026api-version=2022-05-01",
+        "Location": "https://management.azure.com/subscriptions/65634139-3762-476b-946d-e221f4cdc2bf/providers/Microsoft.Storage/locations/westus2/asyncoperations/50846a0f-40f2-45fb-a795-9563671e228a?monitor=true\u0026api-version=2022-05-01",
         "Pragma": "no-cache",
         "Retry-After": "17",
         "Server": "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "7a973f005f6becbf1fc524cab1faad69",
-        "x-ms-correlation-request-id": "c98e3369-c4a6-490a-a528-430c9be8ed93",
-        "x-ms-ratelimit-remaining-subscription-writes": "1192",
-        "x-ms-request-id": "9488f80b-d775-4282-aef0-03475064428a",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220913T032247Z:c98e3369-c4a6-490a-a528-430c9be8ed93"
+        "x-ms-client-request-id": "4ce3b2cb7d20812c456f87207c6a60a5",
+        "x-ms-correlation-request-id": "ddbaa0bf-cc60-4212-be62-359bd902de8f",
+        "x-ms-ratelimit-remaining-subscription-writes": "1198",
+        "x-ms-request-id": "50846a0f-40f2-45fb-a795-9563671e228a",
+        "x-ms-routing-request-id": "WESTUS:20221110T013350Z:ddbaa0bf-cc60-4212-be62-359bd902de8f"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/westus2/asyncoperations/9488f80b-d775-4282-aef0-03475064428a?monitor=true\u0026api-version=2022-05-01",
+      "RequestUri": "https://management.azure.com/subscriptions/65634139-3762-476b-946d-e221f4cdc2bf/providers/Microsoft.Storage/locations/westus2/asyncoperations/50846a0f-40f2-45fb-a795-9563671e228a?monitor=true\u0026api-version=2022-05-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-15d1fe7d88a08744bcda7e2e618d91bf-421d8259c1257343-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "f31f95dc5d9b7f6940fbee3fbe55dbd8",
+        "traceparent": "00-06318297e119264aa57aa2fdaab9b400-f7844298dd117745-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "64634e10bf29bf8719be734be17c8785",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -182,62 +169,30 @@
         "Cache-Control": "no-cache",
         "Content-Length": "0",
         "Content-Type": "text/plain; charset=utf-8",
-        "Date": "Tue, 13 Sep 2022 03:22:47 GMT",
+        "Date": "Thu, 10 Nov 2022 01:33:50 GMT",
         "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/westus2/asyncoperations/9488f80b-d775-4282-aef0-03475064428a?monitor=true\u0026api-version=2022-05-01",
+        "Location": "https://management.azure.com/subscriptions/65634139-3762-476b-946d-e221f4cdc2bf/providers/Microsoft.Storage/locations/westus2/asyncoperations/50846a0f-40f2-45fb-a795-9563671e228a?monitor=true\u0026api-version=2022-05-01",
         "Pragma": "no-cache",
         "Retry-After": "17",
         "Server": "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "f31f95dc5d9b7f6940fbee3fbe55dbd8",
-        "x-ms-correlation-request-id": "d0799b0b-1b64-462d-bea9-fc9629bdc4fe",
-        "x-ms-ratelimit-remaining-subscription-reads": "11986",
-        "x-ms-request-id": "e8a8cc02-27a0-4d61-819c-13f108d168aa",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220913T032248Z:d0799b0b-1b64-462d-bea9-fc9629bdc4fe"
+        "x-ms-client-request-id": "64634e10bf29bf8719be734be17c8785",
+        "x-ms-correlation-request-id": "8420aaf5-35e3-47c4-a717-fc0bb67ea4dc",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "e06b005b-8970-4daf-bd7b-2ddaea766287",
+        "x-ms-routing-request-id": "WESTUS:20221110T013350Z:8420aaf5-35e3-47c4-a717-fc0bb67ea4dc"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/westus2/asyncoperations/9488f80b-d775-4282-aef0-03475064428a?monitor=true\u0026api-version=2022-05-01",
+      "RequestUri": "https://management.azure.com/subscriptions/65634139-3762-476b-946d-e221f4cdc2bf/providers/Microsoft.Storage/locations/westus2/asyncoperations/50846a0f-40f2-45fb-a795-9563671e228a?monitor=true\u0026api-version=2022-05-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-15d1fe7d88a08744bcda7e2e618d91bf-368f9f36fdfd5f4d-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "49d69d545ce0e79544457488e3a1a04c",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 202,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "0",
-        "Content-Type": "text/plain; charset=utf-8",
-        "Date": "Tue, 13 Sep 2022 03:23:04 GMT",
-        "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/westus2/asyncoperations/9488f80b-d775-4282-aef0-03475064428a?monitor=true\u0026api-version=2022-05-01",
-        "Pragma": "no-cache",
-        "Retry-After": "3",
-        "Server": "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "49d69d545ce0e79544457488e3a1a04c",
-        "x-ms-correlation-request-id": "f71d31de-2f3f-4732-9dd0-ea00e381dacf",
-        "x-ms-ratelimit-remaining-subscription-reads": "11985",
-        "x-ms-request-id": "267d298b-d7c7-4e71-bd12-8b4d1fb63ae4",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220913T032305Z:f71d31de-2f3f-4732-9dd0-ea00e381dacf"
-      },
-      "ResponseBody": null
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/westus2/asyncoperations/9488f80b-d775-4282-aef0-03475064428a?monitor=true\u0026api-version=2022-05-01",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-15d1fe7d88a08744bcda7e2e618d91bf-bdf1c2b4728c794f-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "1bee4d91badb9dcd2ef1ebaa2bbc93b0",
+        "traceparent": "00-06318297e119264aa57aa2fdaab9b400-187ce3cb58686044-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "1e51fcf7392b5df1559d9b6c2fdd34cd",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -246,17 +201,17 @@
         "Cache-Control": "no-cache",
         "Content-Length": "1916",
         "Content-Type": "application/json",
-        "Date": "Tue, 13 Sep 2022 03:23:07 GMT",
+        "Date": "Thu, 10 Nov 2022 01:34:07 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "1bee4d91badb9dcd2ef1ebaa2bbc93b0",
-        "x-ms-correlation-request-id": "75f0fb2b-f139-410d-b898-de2ec9aed274",
-        "x-ms-ratelimit-remaining-subscription-reads": "11984",
-        "x-ms-request-id": "8990929b-381d-4913-940f-e8a8b99605ef",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220913T032308Z:75f0fb2b-f139-410d-b898-de2ec9aed274"
+        "x-ms-client-request-id": "1e51fcf7392b5df1559d9b6c2fdd34cd",
+        "x-ms-correlation-request-id": "2e7b5229-9f85-4213-95f3-366e74809bad",
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "0b9183d1-82bb-4557-8156-95f9c4ac4028",
+        "x-ms-routing-request-id": "WESTUS:20221110T013408Z:2e7b5229-9f85-4213-95f3-366e74809bad"
       },
       "ResponseBody": {
         "sku": {
@@ -264,15 +219,15 @@
           "tier": "Standard"
         },
         "kind": "StorageV2",
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-9924/providers/Microsoft.Storage/storageAccounts/accountforbatch1591",
-        "name": "accountforbatch1591",
+        "id": "/subscriptions/65634139-3762-476b-946d-e221f4cdc2bf/resourceGroups/testRG-9426/providers/Microsoft.Storage/storageAccounts/accountforbatch5156",
+        "name": "accountforbatch5156",
         "type": "Microsoft.Storage/storageAccounts",
         "location": "westus2",
         "tags": {},
         "properties": {
           "keyCreationTime": {
-            "key1": "2022-09-13T03:22:44.8816791Z",
-            "key2": "2022-09-13T03:22:44.8816791Z"
+            "key1": "2022-11-10T01:33:47.2644316Z",
+            "key2": "2022-11-10T01:33:47.2644316Z"
           },
           "privateEndpointConnections": [],
           "minimumTlsVersion": "TLS1_2",
@@ -290,52 +245,52 @@
               "file": {
                 "keyType": "Account",
                 "enabled": true,
-                "lastEnabledTime": "2022-09-13T03:22:45.3035959Z"
+                "lastEnabledTime": "2022-11-10T01:33:47.8269159Z"
               },
               "blob": {
                 "keyType": "Account",
                 "enabled": true,
-                "lastEnabledTime": "2022-09-13T03:22:45.3035959Z"
+                "lastEnabledTime": "2022-11-10T01:33:47.8269159Z"
               }
             },
             "keySource": "Microsoft.Storage"
           },
           "accessTier": "Hot",
           "provisioningState": "Succeeded",
-          "creationTime": "2022-09-13T03:22:44.8035563Z",
+          "creationTime": "2022-11-10T01:33:47.1706732Z",
           "primaryEndpoints": {
-            "dfs": "https://accountforbatch1591.dfs.core.windows.net/",
-            "web": "https://accountforbatch1591.z5.web.core.windows.net/",
-            "blob": "https://accountforbatch1591.blob.core.windows.net/",
-            "queue": "https://accountforbatch1591.queue.core.windows.net/",
-            "table": "https://accountforbatch1591.table.core.windows.net/",
-            "file": "https://accountforbatch1591.file.core.windows.net/"
+            "dfs": "https://accountforbatch5156.dfs.core.windows.net/",
+            "web": "https://accountforbatch5156.z5.web.core.windows.net/",
+            "blob": "https://accountforbatch5156.blob.core.windows.net/",
+            "queue": "https://accountforbatch5156.queue.core.windows.net/",
+            "table": "https://accountforbatch5156.table.core.windows.net/",
+            "file": "https://accountforbatch5156.file.core.windows.net/"
           },
           "primaryLocation": "westus2",
           "statusOfPrimary": "available",
           "secondaryLocation": "westcentralus",
           "statusOfSecondary": "available",
           "secondaryEndpoints": {
-            "dfs": "https://accountforbatch1591-secondary.dfs.core.windows.net/",
-            "web": "https://accountforbatch1591-secondary.z5.web.core.windows.net/",
-            "blob": "https://accountforbatch1591-secondary.blob.core.windows.net/",
-            "queue": "https://accountforbatch1591-secondary.queue.core.windows.net/",
-            "table": "https://accountforbatch1591-secondary.table.core.windows.net/"
+            "dfs": "https://accountforbatch5156-secondary.dfs.core.windows.net/",
+            "web": "https://accountforbatch5156-secondary.z5.web.core.windows.net/",
+            "blob": "https://accountforbatch5156-secondary.blob.core.windows.net/",
+            "queue": "https://accountforbatch5156-secondary.queue.core.windows.net/",
+            "table": "https://accountforbatch5156-secondary.table.core.windows.net/"
           }
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG-229?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/65634139-3762-476b-946d-e221f4cdc2bf/resourcegroups/testRG-5151?api-version=2021-04-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "43",
         "Content-Type": "application/json",
-        "traceparent": "00-ddf46b91d2a85d48b51ea042bbc10a8a-c282aed2c223014e-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "fcaec8a3f6ea007f38ae56e8e19b9e5b",
+        "traceparent": "00-ddd98d9f3134834fb192b9b67b12d27a-df411a39c9cdad4f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "072e0f3e7bfcc15bad526df91264352c",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -347,21 +302,21 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "239",
+        "Content-Length": "241",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 13 Sep 2022 03:23:09 GMT",
+        "Date": "Thu, 10 Nov 2022 01:34:07 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "d861bc34-b119-4307-91a4-d991c4bf444f",
-        "x-ms-ratelimit-remaining-subscription-writes": "1191",
-        "x-ms-request-id": "d861bc34-b119-4307-91a4-d991c4bf444f",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220913T032309Z:d861bc34-b119-4307-91a4-d991c4bf444f"
+        "x-ms-correlation-request-id": "72697187-6f78-4b54-8f8a-29848c90193e",
+        "x-ms-ratelimit-remaining-subscription-writes": "1197",
+        "x-ms-request-id": "72697187-6f78-4b54-8f8a-29848c90193e",
+        "x-ms-routing-request-id": "WESTUS:20221110T013408Z:72697187-6f78-4b54-8f8a-29848c90193e"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-229",
-        "name": "testRG-229",
+        "id": "/subscriptions/65634139-3762-476b-946d-e221f4cdc2bf/resourceGroups/testRG-5151",
+        "name": "testRG-5151",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "westus",
         "tags": {
@@ -373,23 +328,23 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-229/providers/Microsoft.Batch/batchAccounts/testaccount4475?api-version=2022-06-01",
+      "RequestUri": "https://management.azure.com/subscriptions/65634139-3762-476b-946d-e221f4cdc2bf/resourceGroups/testRG-5151/providers/Microsoft.Batch/batchAccounts/testaccount8802?api-version=2022-10-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "216",
         "Content-Type": "application/json",
-        "traceparent": "00-a5dc5c6a07544441b40aa492dbbc2fc6-f60e4e5b69ead741-00",
-        "User-Agent": "azsdk-net-ResourceManager.Batch/1.0.0-alpha.20220913.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "bf6770ad99fd39cf1bee71eabb88b1c3",
+        "traceparent": "00-da82b07e0d4e0c469796dc4af0239566-8a007de3565cef44-00",
+        "User-Agent": "azsdk-net-ResourceManager.Batch/1.1.0-alpha.20221109.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "c7264f57d71d055c0e8c231a903b89a6",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "location": "westus",
         "properties": {
           "autoStorage": {
-            "storageAccountId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-9924/providers/Microsoft.Storage/storageAccounts/accountforbatch1591"
+            "storageAccountId": "/subscriptions/65634139-3762-476b-946d-e221f4cdc2bf/resourceGroups/testRG-9426/providers/Microsoft.Storage/storageAccounts/accountforbatch5156"
           }
         }
       },
@@ -397,29 +352,29 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Tue, 13 Sep 2022 03:23:11 GMT",
+        "Date": "Thu, 10 Nov 2022 01:34:08 GMT",
         "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-229/providers/Microsoft.Batch/batchAccounts/testaccount4475/operationResults/27851228-46ff-4b35-a46e-e6cfc3bfcd1c?api-version=2022-06-01",
+        "Location": "https://management.azure.com/subscriptions/65634139-3762-476b-946d-e221f4cdc2bf/resourceGroups/testRG-5151/providers/Microsoft.Batch/batchAccounts/testaccount8802/operationResults/526090cf-0aba-4c71-bf2c-07f5823ac130?api-version=2022-10-01",
         "Pragma": "no-cache",
         "Retry-After": "15",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "509c233b-6f29-4e2b-bf12-6b70566c5453",
-        "x-ms-ratelimit-remaining-subscription-writes": "1190",
-        "x-ms-request-id": "27851228-46ff-4b35-a46e-e6cfc3bfcd1c",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220913T032312Z:509c233b-6f29-4e2b-bf12-6b70566c5453"
+        "x-ms-correlation-request-id": "44b9a3c1-ec0b-44d2-8923-03e8c6536d44",
+        "x-ms-ratelimit-remaining-subscription-writes": "1196",
+        "x-ms-request-id": "526090cf-0aba-4c71-bf2c-07f5823ac130",
+        "x-ms-routing-request-id": "WESTUS:20221110T013409Z:44b9a3c1-ec0b-44d2-8923-03e8c6536d44"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-229/providers/Microsoft.Batch/batchAccounts/testaccount4475/operationResults/27851228-46ff-4b35-a46e-e6cfc3bfcd1c?api-version=2022-06-01",
+      "RequestUri": "https://management.azure.com/subscriptions/65634139-3762-476b-946d-e221f4cdc2bf/resourceGroups/testRG-5151/providers/Microsoft.Batch/batchAccounts/testaccount8802/operationResults/526090cf-0aba-4c71-bf2c-07f5823ac130?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-a5dc5c6a07544441b40aa492dbbc2fc6-932f6751252dc14e-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "220e884e48492fa6dfc3ce070e167c25",
+        "traceparent": "00-da82b07e0d4e0c469796dc4af0239566-f4ce277db5f1ec42-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "e5866640c2a63820d101edee38a61d17",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -427,115 +382,64 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Tue, 13 Sep 2022 03:23:12 GMT",
+        "Date": "Thu, 10 Nov 2022 01:34:08 GMT",
         "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-229/providers/Microsoft.Batch/batchAccounts/testaccount4475/operationResults/27851228-46ff-4b35-a46e-e6cfc3bfcd1c?api-version=2022-06-01",
+        "Location": "https://management.azure.com/subscriptions/65634139-3762-476b-946d-e221f4cdc2bf/resourceGroups/testRG-5151/providers/Microsoft.Batch/batchAccounts/testaccount8802/operationResults/526090cf-0aba-4c71-bf2c-07f5823ac130?api-version=2022-10-01",
         "Pragma": "no-cache",
         "Retry-After": "15",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "b1f41399-4337-49d0-97d6-0b21de0fab58",
-        "x-ms-ratelimit-remaining-subscription-reads": "11983",
-        "x-ms-request-id": "3e2988ab-8228-425d-bb38-95a76510d15a",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220913T032313Z:b1f41399-4337-49d0-97d6-0b21de0fab58"
+        "x-ms-correlation-request-id": "d9f040ed-3e19-4845-ad86-4f02a6ff4b51",
+        "x-ms-ratelimit-remaining-subscription-reads": "11996",
+        "x-ms-request-id": "3ef2e588-dbdd-45bd-a721-0014534457b3",
+        "x-ms-routing-request-id": "WESTUS:20221110T013409Z:d9f040ed-3e19-4845-ad86-4f02a6ff4b51"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-229/providers/Microsoft.Batch/batchAccounts/testaccount4475/operationResults/27851228-46ff-4b35-a46e-e6cfc3bfcd1c?api-version=2022-06-01",
+      "RequestUri": "https://management.azure.com/subscriptions/65634139-3762-476b-946d-e221f4cdc2bf/resourceGroups/testRG-5151/providers/Microsoft.Batch/batchAccounts/testaccount8802/operationResults/526090cf-0aba-4c71-bf2c-07f5823ac130?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-a5dc5c6a07544441b40aa492dbbc2fc6-29762bcf563ef044-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "5b6125a569c5055219f8a4598d5884ce",
+        "traceparent": "00-da82b07e0d4e0c469796dc4af0239566-f40abffa492e4844-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "c25053e3d3c85c4ace30699ff1d8a2cb",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "3585",
+        "Content-Length": "3685",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 13 Sep 2022 03:23:28 GMT",
-        "ETag": "\u00220x8DA953753935922\u0022",
+        "Date": "Thu, 10 Nov 2022 01:34:23 GMT",
+        "ETag": "\u00220x8DAC2BBB31F732E\u0022",
         "Expires": "-1",
-        "Last-Modified": "Tue, 13 Sep 2022 03:23:28 GMT",
+        "Last-Modified": "Thu, 10 Nov 2022 01:34:24 GMT",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "803f5707-cea6-4f82-aa2f-aeb081c1511f",
-        "x-ms-ratelimit-remaining-subscription-reads": "11982",
-        "x-ms-request-id": "c1ebf7bc-0cb6-4dff-af73-e0568920c18c",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220913T032328Z:803f5707-cea6-4f82-aa2f-aeb081c1511f"
+        "x-ms-correlation-request-id": "6628ed16-8cef-43fd-a6a9-f66b93ca12a7",
+        "x-ms-ratelimit-remaining-subscription-reads": "11995",
+        "x-ms-request-id": "ae6f9b31-c680-4205-857f-972d1bb51945",
+        "x-ms-routing-request-id": "WESTUS:20221110T013424Z:6628ed16-8cef-43fd-a6a9-f66b93ca12a7"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-229/providers/Microsoft.Batch/batchAccounts/testaccount4475",
-        "name": "testaccount4475",
+        "id": "/subscriptions/65634139-3762-476b-946d-e221f4cdc2bf/resourceGroups/testrg-5151/providers/Microsoft.Batch/batchAccounts/testaccount8802",
+        "name": "testaccount8802",
         "type": "Microsoft.Batch/batchAccounts",
         "location": "westus",
         "properties": {
-          "accountEndpoint": "testaccount4475.westus.batch.azure.com",
+          "accountEndpoint": "testaccount8802.westus.batch.azure.com",
+          "nodeManagementEndpoint": "5fba68b7-25e6-4575-855e-6073e59160df.westus.service.batch.azure.com",
           "provisioningState": "Succeeded",
           "dedicatedCoreQuota": 0,
           "dedicatedCoreQuotaPerVMFamily": [
             {
-              "name": "standardAv2Family",
-              "coreQuota": 0
-            },
-            {
-              "name": "standardDv2Family",
-              "coreQuota": 0
-            },
-            {
-              "name": "standardDv3Family",
-              "coreQuota": 0
-            },
-            {
-              "name": "standardEv3Family",
-              "coreQuota": 0
-            },
-            {
-              "name": "standardDSv2Family",
-              "coreQuota": 0
-            },
-            {
               "name": "standardDSv3Family",
-              "coreQuota": 0
-            },
-            {
-              "name": "standardESv3Family",
-              "coreQuota": 0
-            },
-            {
-              "name": "standardFSv2Family",
-              "coreQuota": 0
-            },
-            {
-              "name": "standardNCFamily",
-              "coreQuota": 0
-            },
-            {
-              "name": "standardNVFamily",
-              "coreQuota": 0
-            },
-            {
-              "name": "standardDDv4Family",
-              "coreQuota": 0
-            },
-            {
-              "name": "standardDDSv4Family",
-              "coreQuota": 0
-            },
-            {
-              "name": "standardEDv4Family",
-              "coreQuota": 0
-            },
-            {
-              "name": "standardEDSv4Family",
-              "coreQuota": 0
+              "coreQuota": 100
             },
             {
               "name": "standardA0_A7Family",
@@ -547,6 +451,10 @@
             },
             {
               "name": "standardDFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDv2Family",
               "coreQuota": 0
             },
             {
@@ -562,7 +470,15 @@
               "coreQuota": 0
             },
             {
+              "name": "standardNVFamily",
+              "coreQuota": 0
+            },
+            {
               "name": "standardNVPromoFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNCFamily",
               "coreQuota": 0
             },
             {
@@ -578,7 +494,19 @@
               "coreQuota": 0
             },
             {
+              "name": "standardAv2Family",
+              "coreQuota": 0
+            },
+            {
               "name": "standardMSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEv3Family",
               "coreQuota": 0
             },
             {
@@ -586,7 +514,15 @@
               "coreQuota": 0
             },
             {
+              "name": "standardDSv2Family",
+              "coreQuota": 0
+            },
+            {
               "name": "standardFSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardESv3Family",
               "coreQuota": 0
             },
             {
@@ -611,6 +547,10 @@
             },
             {
               "name": "standardNCSv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardFSv2Family",
               "coreQuota": 0
             },
             {
@@ -643,6 +583,22 @@
             },
             {
               "name": "standardEASv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDDv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDDSv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEDv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEDSv4Family",
               "coreQuota": 0
             },
             {
@@ -715,12 +671,12 @@
             }
           ],
           "dedicatedCoreQuotaPerVMFamilyEnforced": true,
-          "lowPriorityCoreQuota": 0,
+          "lowPriorityCoreQuota": 100,
           "poolQuota": 100,
           "activeJobAndJobScheduleQuota": 300,
           "autoStorage": {
-            "storageAccountId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-9924/providers/Microsoft.Storage/storageAccounts/accountforbatch1591",
-            "lastKeySync": "2022-09-13T03:23:12.2257381Z",
+            "storageAccountId": "/subscriptions/65634139-3762-476b-946d-e221f4cdc2bf/resourceGroups/testRG-9426/providers/Microsoft.Storage/storageAccounts/accountforbatch5156",
+            "lastKeySync": "2022-11-10T01:34:09.2277643Z",
             "authenticationMode": "StorageKeys"
           },
           "poolAllocationMode": "BatchService",
@@ -741,16 +697,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-229/providers/Microsoft.Batch/batchAccounts/testaccount4475/applications/testapplication-3147?api-version=2022-06-01",
+      "RequestUri": "https://management.azure.com/subscriptions/65634139-3762-476b-946d-e221f4cdc2bf/resourceGroups/testrg-5151/providers/Microsoft.Batch/batchAccounts/testaccount8802/applications/testapplication-5376?api-version=2022-10-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "64",
         "Content-Type": "application/json",
-        "traceparent": "00-8125acd3f9e4e04dadea11853c1c850a-97a3748680ff104e-00",
-        "User-Agent": "azsdk-net-ResourceManager.Batch/1.0.0-alpha.20220913.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "7a329c24798e9a37a9128cd850600427",
+        "traceparent": "00-33ef7d2dd1c111429138b26b9d4aa0d7-67690d10d80d8748-00",
+        "User-Agent": "azsdk-net-ResourceManager.Batch/1.1.0-alpha.20221109.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "b529dabcffa381ff34867c0d92beb65f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -762,26 +718,26 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "354",
+        "Content-Length": "355",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 13 Sep 2022 03:23:29 GMT",
-        "ETag": "W/\u00220x8DA9537540C8CBB\u0022",
+        "Date": "Thu, 10 Nov 2022 01:34:24 GMT",
+        "ETag": "W/\u00220x8DAC2BBB3641CD2\u0022",
         "Expires": "-1",
-        "Last-Modified": "Tue, 13 Sep 2022 03:23:29 GMT",
+        "Last-Modified": "Thu, 10 Nov 2022 01:34:25 GMT",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "b8d94df8-ec96-4940-86a1-6ef93d747f87",
-        "x-ms-ratelimit-remaining-subscription-writes": "1189",
-        "x-ms-request-id": "43794dd5-253e-4f12-a08d-2ce263222103",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220913T032329Z:b8d94df8-ec96-4940-86a1-6ef93d747f87"
+        "x-ms-correlation-request-id": "eaeb7a5d-8552-405b-a8fe-40e56f90f3d1",
+        "x-ms-ratelimit-remaining-subscription-writes": "1195",
+        "x-ms-request-id": "d2dfa17a-bf1e-427a-862f-df4d509e9de8",
+        "x-ms-routing-request-id": "WESTUS:20221110T013425Z:eaeb7a5d-8552-405b-a8fe-40e56f90f3d1"
       },
       "ResponseBody": {
         "type": "Microsoft.Batch/batchAccounts/applications",
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-229/providers/Microsoft.Batch/batchAccounts/testaccount4475/applications/testapplication-3147",
-        "name": "testapplication-3147",
-        "etag": "W/\u00220x8DA9537540C8CBB\u0022",
+        "id": "/subscriptions/65634139-3762-476b-946d-e221f4cdc2bf/resourceGroups/testrg-5151/providers/Microsoft.Batch/batchAccounts/testaccount8802/applications/testapplication-5376",
+        "name": "testapplication-5376",
+        "etag": "W/\u00220x8DAC2BBB3641CD2\u0022",
         "properties": {
           "displayName": "displayName",
           "allowUpdates": true
@@ -789,16 +745,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-229/providers/Microsoft.Batch/batchAccounts/testaccount4475/applications/testapplication-3147/versions/testApplicationPackage-6970?api-version=2022-06-01",
+      "RequestUri": "https://management.azure.com/subscriptions/65634139-3762-476b-946d-e221f4cdc2bf/resourceGroups/testrg-5151/providers/Microsoft.Batch/batchAccounts/testaccount8802/applications/testapplication-5376/versions/testApplicationPackage-9807?api-version=2022-10-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "17",
         "Content-Type": "application/json",
-        "traceparent": "00-21f259c3b5eff745a723afc54a18ad5b-bb6ba21c9bfe9d43-00",
-        "User-Agent": "azsdk-net-ResourceManager.Batch/1.0.0-alpha.20220913.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "eb8fd1e687fb36e4080951a34ca2863e",
+        "traceparent": "00-bcd4bdc83cfa7244b70a3879f1a19dd2-d0807fef3c063c4f-00",
+        "User-Agent": "azsdk-net-ResourceManager.Batch/1.1.0-alpha.20221109.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "f210a0ce9d761b6c2a1675588146f95e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -807,84 +763,84 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "714",
+        "Content-Length": "485",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 13 Sep 2022 03:23:31 GMT",
-        "ETag": "W/\u00220x8DA9537554E53A2\u0022",
+        "Date": "Thu, 10 Nov 2022 01:34:24 GMT",
+        "ETag": "W/\u00220x8DAC2BBB3A2C9E8\u0022",
         "Expires": "-1",
-        "Last-Modified": "Tue, 13 Sep 2022 03:23:31 GMT",
+        "Last-Modified": "Thu, 10 Nov 2022 01:34:25 GMT",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "d00fa119-8fc3-4913-9942-cf3e15e592f3",
-        "x-ms-ratelimit-remaining-subscription-writes": "1188",
-        "x-ms-request-id": "2235b07d-0ff8-49fc-ae1e-c662c9004c97",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220913T032331Z:d00fa119-8fc3-4913-9942-cf3e15e592f3"
+        "x-ms-correlation-request-id": "f3f1eadd-4442-40f2-a2c2-459304b7e694",
+        "x-ms-ratelimit-remaining-subscription-writes": "1194",
+        "x-ms-request-id": "6db16c67-ba56-41a0-acbd-4988ca21948d",
+        "x-ms-routing-request-id": "WESTUS:20221110T013425Z:f3f1eadd-4442-40f2-a2c2-459304b7e694"
       },
       "ResponseBody": {
         "type": "Microsoft.Batch/batchAccounts/applications/versions",
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-229/providers/Microsoft.Batch/batchAccounts/testaccount4475/applications/testapplication-3147/versions/testApplicationPackage-6970",
-        "name": "testApplicationPackage-6970",
-        "etag": "W/\u00220x8DA9537554E53A2\u0022",
+        "id": "/subscriptions/65634139-3762-476b-946d-e221f4cdc2bf/resourceGroups/testrg-5151/providers/Microsoft.Batch/batchAccounts/testaccount8802/applications/testapplication-5376/versions/testApplicationPackage-9807",
+        "name": "testApplicationPackage-9807",
+        "etag": "W/\u00220x8DAC2BBB3A2C9E8\u0022",
         "properties": {
-          "storageUrl": "https://accountforbatch1591.blob.core.windows.net/app-testapplication-3147-b3fbe1063fbb4dd28979642ce6e5f4e5/testapplicationpackage-6970?sv=2018-03-28\u0026sr=b\u0026sig=%2FgI2U1ijUNn97Y5ZpGXz0eYCj1%2F5V0Fv5ByAyPuZCQg%3D\u0026st=2022-09-13T03%3A18%3A31Z\u0026se=2022-09-13T07%3A23%3A31Z\u0026sp=rw",
-          "storageUrlExpiry": "2022-09-13T07:23:31.3430743Z",
+          "storageUrl": "https://fakeaccount.blob.core.windows.net",
+          "storageUrlExpiry": "2022-11-10T05:34:25.5153252Z",
           "state": "Pending"
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-229/providers/Microsoft.Batch/batchAccounts/testaccount4475/applications/testapplication-3147/versions/testApplicationPackage-6970?api-version=2022-06-01",
+      "RequestUri": "https://management.azure.com/subscriptions/65634139-3762-476b-946d-e221f4cdc2bf/resourceGroups/testrg-5151/providers/Microsoft.Batch/batchAccounts/testaccount8802/applications/testapplication-5376/versions/testApplicationPackage-9807?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-d563c384724a1746b0cbc6491ddb2aee-c0a198001215f249-00",
-        "User-Agent": "azsdk-net-ResourceManager.Batch/1.0.0-alpha.20220913.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "7aea6f00ab49ab1629c01b57c62dc998",
+        "traceparent": "00-83ecf6e5d3209f49bec277a51c70505c-87584656f1076440-00",
+        "User-Agent": "azsdk-net-ResourceManager.Batch/1.1.0-alpha.20221109.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "cc7b9a2162f453405140944cce4e3c72",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "710",
+        "Content-Length": "485",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 13 Sep 2022 03:23:31 GMT",
-        "ETag": "W/\u00220x8DA9537554E53A2\u0022",
+        "Date": "Thu, 10 Nov 2022 01:34:24 GMT",
+        "ETag": "W/\u00220x8DAC2BBB3A2C9E8\u0022",
         "Expires": "-1",
-        "Last-Modified": "Tue, 13 Sep 2022 03:23:31 GMT",
+        "Last-Modified": "Thu, 10 Nov 2022 01:34:25 GMT",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "24bb9a77-59d7-44a8-9e4f-2613f13ac305",
-        "x-ms-ratelimit-remaining-subscription-reads": "11981",
-        "x-ms-request-id": "686f2d93-a844-4cd2-b0fe-417bd64a36fe",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220913T032332Z:24bb9a77-59d7-44a8-9e4f-2613f13ac305"
+        "x-ms-correlation-request-id": "fbd5dd77-1bca-42ff-b38f-e8125ceb89de",
+        "x-ms-ratelimit-remaining-subscription-reads": "11994",
+        "x-ms-request-id": "2275b4b0-63c0-46ab-9e06-74c8f7b5fe41",
+        "x-ms-routing-request-id": "WESTUS:20221110T013425Z:fbd5dd77-1bca-42ff-b38f-e8125ceb89de"
       },
       "ResponseBody": {
         "type": "Microsoft.Batch/batchAccounts/applications/versions",
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-229/providers/Microsoft.Batch/batchAccounts/testaccount4475/applications/testapplication-3147/versions/testApplicationPackage-6970",
-        "name": "testApplicationPackage-6970",
-        "etag": "W/\u00220x8DA9537554E53A2\u0022",
+        "id": "/subscriptions/65634139-3762-476b-946d-e221f4cdc2bf/resourceGroups/testrg-5151/providers/Microsoft.Batch/batchAccounts/testaccount8802/applications/testapplication-5376/versions/testApplicationPackage-9807",
+        "name": "testApplicationPackage-9807",
+        "etag": "W/\u00220x8DAC2BBB3A2C9E8\u0022",
         "properties": {
-          "storageUrl": "https://accountforbatch1591.blob.core.windows.net/app-testapplication-3147-b3fbe1063fbb4dd28979642ce6e5f4e5/testapplicationpackage-6970?sv=2018-03-28\u0026sr=b\u0026sig=DEZUZ9VA2oUKx8rwliOf89wPTph8qsSDn5qiJ8nkNOA%3D\u0026st=2022-09-13T03%3A18%3A32Z\u0026se=2022-09-13T07%3A23%3A32Z\u0026sp=rw",
-          "storageUrlExpiry": "2022-09-13T07:23:32.0123534Z",
+          "storageUrl": "https://fakeaccount.blob.core.windows.net",
+          "storageUrlExpiry": "2022-11-10T05:34:25.7191701Z",
           "state": "Pending"
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-229/providers/Microsoft.Batch/batchAccounts/testaccount4475/applications/testapplication-3147/versions/testApplicationPackage-6970?api-version=2022-06-01",
+      "RequestUri": "https://management.azure.com/subscriptions/65634139-3762-476b-946d-e221f4cdc2bf/resourceGroups/testrg-5151/providers/Microsoft.Batch/batchAccounts/testaccount8802/applications/testapplication-5376/versions/testApplicationPackage-9807?api-version=2022-10-01",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-e15757133dc9d841bb8f1b793f14b521-8bd46fa60b76934c-00",
-        "User-Agent": "azsdk-net-ResourceManager.Batch/1.0.0-alpha.20220913.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "86a6329fe2f59c9db7fc718428934d07",
+        "traceparent": "00-b49e8fdf87c8174190a54fd2929d721d-854d9f4a7bb24141-00",
+        "User-Agent": "azsdk-net-ResourceManager.Batch/1.1.0-alpha.20221109.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "382240b3d8921fde6d0e8a8d89a600ed",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -892,24 +848,24 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Tue, 13 Sep 2022 03:23:32 GMT",
+        "Date": "Thu, 10 Nov 2022 01:34:25 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "c570ccc0-4e9d-416d-ade2-7d903d0f645f",
-        "x-ms-ratelimit-remaining-subscription-deletes": "14998",
-        "x-ms-request-id": "9499b73e-c9c9-4b30-bd2a-761bd299c1a3",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220913T032332Z:c570ccc0-4e9d-416d-ade2-7d903d0f645f"
+        "x-ms-correlation-request-id": "ce332fa0-5c08-481e-897a-3df8455f6434",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14999",
+        "x-ms-request-id": "1f57456d-9729-4895-995b-7c6803bc5b46",
+        "x-ms-routing-request-id": "WESTUS:20221110T013426Z:ce332fa0-5c08-481e-897a-3df8455f6434"
       },
       "ResponseBody": null
     }
   ],
   "Variables": {
-    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
-    "RandomSeed": "1200754792",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1592331275",
     "RESOURCE_MANAGER_URL": null,
-    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+    "SUBSCRIPTION_ID": "65634139-3762-476b-946d-e221f4cdc2bf"
   }
 }

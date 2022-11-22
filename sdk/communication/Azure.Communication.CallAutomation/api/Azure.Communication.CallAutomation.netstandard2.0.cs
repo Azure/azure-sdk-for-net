@@ -67,15 +67,19 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class CallAutomationClientOptions : Azure.Core.ClientOptions
     {
-        public CallAutomationClientOptions(Azure.Communication.CallAutomation.CallAutomationClientOptions.ServiceVersion version = Azure.Communication.CallAutomation.CallAutomationClientOptions.ServiceVersion.V2022_04_07_Preview) { }
+        public CallAutomationClientOptions(Azure.Communication.CallAutomation.CallAutomationClientOptions.ServiceVersion version = Azure.Communication.CallAutomation.CallAutomationClientOptions.ServiceVersion.V2023_01_15_Preview) { }
         public enum ServiceVersion
         {
-            V2022_04_07_Preview = 1,
+            V2023_01_15_Preview = 1,
         }
     }
     public static partial class CallAutomationErrorMessages
     {
+        public const string InvalidHttpsUriMessage = "Callback Uri has to be in well-formed, valid https format.";
+        public const string InvalidInvitationTimeoutInSeconds = "InvitationTimeoutInSeconds has to be between 1 and 180 seconds.";
         public const string InvalidRepeatabilityHeadersMessage = "Invalid RepeatabilityHeaders. RepeatabilityHeaders is only valid when RepeatabilityRequestId and RepeatabilityFirstSent are set to non-default value.";
+        public const string OperationContextExceedsMaxLength = "UserToUserInformation exceeds maximum string length of 5000.";
+        public const string UserToUserInformationExceedsMaxLength = "UserToUserInformation exceeds maximum string length of 5000.";
     }
     public abstract partial class CallAutomationEventBase
     {
@@ -389,6 +393,24 @@ namespace Azure.Communication.CallAutomation
         public FileSource(System.Uri fileUri) { }
         public System.Uri FileUri { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct GenderType : System.IEquatable<Azure.Communication.CallAutomation.GenderType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public GenderType(string value) { throw null; }
+        public static Azure.Communication.CallAutomation.GenderType F { get { throw null; } }
+        public static Azure.Communication.CallAutomation.GenderType M { get { throw null; } }
+        public bool Equals(Azure.Communication.CallAutomation.GenderType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Communication.CallAutomation.GenderType left, Azure.Communication.CallAutomation.GenderType right) { throw null; }
+        public static implicit operator Azure.Communication.CallAutomation.GenderType (string value) { throw null; }
+        public static bool operator !=(Azure.Communication.CallAutomation.GenderType left, Azure.Communication.CallAutomation.GenderType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class GroupCallLocator : Azure.Communication.CallAutomation.CallLocator
     {
         public GroupCallLocator(string id) { }
@@ -550,6 +572,13 @@ namespace Azure.Communication.CallAutomation
         internal RecognizeCanceled() { }
         public static Azure.Communication.CallAutomation.RecognizeCanceled Deserialize(string content) { throw null; }
     }
+    public partial class RecognizeChoice
+    {
+        public RecognizeChoice(string label, System.Collections.Generic.IEnumerable<string> phrases) { }
+        public string Label { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Phrases { get { throw null; } }
+        public Azure.Communication.CallAutomation.DtmfTone? Tone { get { throw null; } set { } }
+    }
     public partial class RecognizeCompleted : Azure.Communication.CallAutomation.CallAutomationEventWithReasonCodeName
     {
         internal RecognizeCompleted() { }
@@ -569,6 +598,7 @@ namespace Azure.Communication.CallAutomation
         private readonly int _dummyPrimitive;
         public RecognizeInputType(string value) { throw null; }
         public static Azure.Communication.CallAutomation.RecognizeInputType Dtmf { get { throw null; } }
+        public static Azure.Communication.CallAutomation.RecognizeInputType IvrChoices { get { throw null; } }
         public bool Equals(Azure.Communication.CallAutomation.RecognizeInputType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -666,6 +696,24 @@ namespace Azure.Communication.CallAutomation
         public string RecordingId { get { throw null; } }
         public Azure.Communication.CallAutomation.RecordingState? RecordingState { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RecordingStorageType : System.IEquatable<Azure.Communication.CallAutomation.RecordingStorageType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RecordingStorageType(string value) { throw null; }
+        public static Azure.Communication.CallAutomation.RecordingStorageType ACS { get { throw null; } }
+        public static Azure.Communication.CallAutomation.RecordingStorageType External { get { throw null; } }
+        public bool Equals(Azure.Communication.CallAutomation.RecordingStorageType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Communication.CallAutomation.RecordingStorageType left, Azure.Communication.CallAutomation.RecordingStorageType right) { throw null; }
+        public static implicit operator Azure.Communication.CallAutomation.RecordingStorageType (string value) { throw null; }
+        public static bool operator !=(Azure.Communication.CallAutomation.RecordingStorageType left, Azure.Communication.CallAutomation.RecordingStorageType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class RedirectCallOptions
     {
         public RedirectCallOptions(string incomingCallContext, Azure.Communication.CommunicationIdentifier target) { }
@@ -721,7 +769,17 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CallAutomation.RecordingContent RecordingContent { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.RecordingFormat RecordingFormat { get { throw null; } set { } }
         public System.Uri RecordingStateCallbackEndpoint { get { throw null; } set { } }
+        public Azure.Communication.CallAutomation.RecordingStorageType? RecordingStorageType { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.RepeatabilityHeaders RepeatabilityHeaders { get { throw null; } set { } }
+    }
+    public partial class TextSource : Azure.Communication.CallAutomation.PlaySource
+    {
+        public TextSource(string text) { }
+        public string SourceLocale { get { throw null; } set { } }
+        public string TargetLocale { get { throw null; } set { } }
+        public string Text { get { throw null; } }
+        public Azure.Communication.CallAutomation.GenderType? VoiceGender { get { throw null; } set { } }
+        public string VoiceName { get { throw null; } set { } }
     }
     public partial class TransferCallToParticipantResult
     {

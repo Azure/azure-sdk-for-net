@@ -29,16 +29,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     case "AzureBackupDiscreteRecoveryPoint": return DataProtectionBackupDiscreteRecoveryPointProperties.DeserializeDataProtectionBackupDiscreteRecoveryPointProperties(element);
                 }
             }
-            string objectType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("objectType"))
-                {
-                    objectType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownDataProtectionBackupRecoveryPointProperties(objectType);
+            return UnknownAzureBackupRecoveryPoint.DeserializeUnknownAzureBackupRecoveryPoint(element);
         }
     }
 }

@@ -1848,6 +1848,35 @@ namespace Azure.ResourceManager.SecurityCenter
 }
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AadConnectivityStateType : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.AadConnectivityStateType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AadConnectivityStateType(string value) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.Models.AadConnectivityStateType Connected { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.AadConnectivityStateType Discovered { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.AadConnectivityStateType NotLicensed { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.AadConnectivityStateType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.AadConnectivityStateType left, Azure.ResourceManager.SecurityCenter.Models.AadConnectivityStateType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.AadConnectivityStateType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.AadConnectivityStateType left, Azure.ResourceManager.SecurityCenter.Models.AadConnectivityStateType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class AadExternalSecuritySolution : Azure.ResourceManager.SecurityCenter.Models.ExternalSecuritySolution
+    {
+        public AadExternalSecuritySolution() { }
+        public Azure.ResourceManager.SecurityCenter.Models.AadSolutionProperties Properties { get { throw null; } set { } }
+    }
+    public partial class AadSolutionProperties : Azure.ResourceManager.SecurityCenter.Models.ExternalSecuritySolutionProperties
+    {
+        public AadSolutionProperties() { }
+        public Azure.ResourceManager.SecurityCenter.Models.AadConnectivityStateType? ConnectivityState { get { throw null; } set { } }
+    }
     public partial class ActiveConnectionsNotInAllowedRange : Azure.ResourceManager.SecurityCenter.Models.TimeWindowCustomAlertRule
     {
         public ActiveConnectionsNotInAllowedRange(bool isEnabled, int minThreshold, int maxThreshold, System.TimeSpan timeWindowSize) : base (default(bool), default(int), default(int), default(System.TimeSpan)) { }
@@ -2001,6 +2030,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.ApplicationSourceResourceType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.ApplicationSourceResourceType left, Azure.ResourceManager.SecurityCenter.Models.ApplicationSourceResourceType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class AtaExternalSecuritySolution : Azure.ResourceManager.SecurityCenter.Models.ExternalSecuritySolution
+    {
+        public AtaExternalSecuritySolution() { }
+        public Azure.ResourceManager.SecurityCenter.Models.AtaSolutionProperties Properties { get { throw null; } set { } }
+    }
+    public partial class AtaSolutionProperties : Azure.ResourceManager.SecurityCenter.Models.ExternalSecuritySolutionProperties
+    {
+        public AtaSolutionProperties() { }
+        public string LastEventReceived { get { throw null; } set { } }
     }
     public abstract partial class AuthenticationDetailsProperties
     {
@@ -2170,6 +2209,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public BenchmarkReference() { }
         public string Benchmark { get { throw null; } set { } }
         public string Reference { get { throw null; } set { } }
+    }
+    public partial class CefExternalSecuritySolution : Azure.ResourceManager.SecurityCenter.Models.ExternalSecuritySolution
+    {
+        public CefExternalSecuritySolution() { }
+        public Azure.ResourceManager.SecurityCenter.Models.CefSolutionProperties Properties { get { throw null; } set { } }
+    }
+    public partial class CefSolutionProperties : Azure.ResourceManager.SecurityCenter.Models.ExternalSecuritySolutionProperties
+    {
+        public CefSolutionProperties() { }
+        public string Agent { get { throw null; } set { } }
+        public string Hostname { get { throw null; } set { } }
+        public string LastEventReceived { get { throw null; } set { } }
     }
     public partial class ComplianceSegment
     {
@@ -2546,6 +2597,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.ExternalSecuritySolutionKind (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.ExternalSecuritySolutionKind left, Azure.ResourceManager.SecurityCenter.Models.ExternalSecuritySolutionKind right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class ExternalSecuritySolutionProperties
+    {
+        public ExternalSecuritySolutionProperties() { }
+        public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
+        public string DeviceType { get { throw null; } set { } }
+        public string DeviceVendor { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier WorkspaceId { get { throw null; } set { } }
     }
     public partial class FailedLocalLoginsNotInAllowedRange : Azure.ResourceManager.SecurityCenter.Models.TimeWindowCustomAlertRule
     {

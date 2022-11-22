@@ -81,7 +81,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanmcccanary3.file.core.windows.net/test-share-c167677a-693d-bc50-998f-9179bf651a7b/test-file-6b5a8548-6ebb-6a85-7757-2816d2ceff7f?sv=2021-10-04&se=2021-01-26T20%3A31%3A09Z&sr=f&sp=r&sig=Sanitized&comp=range",
+      "RequestUri": "https://seanmcccanary3.file.core.windows.net/test-share-c167677a-693d-bc50-998f-9179bf651a7b/test-file-6b5a8548-6ebb-6a85-7757-2816d2ceff7f?sv=2021-12-02&se=2021-01-26T20%3A31%3A09Z&sr=f&sp=r&sig=Sanitized&comp=range",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",

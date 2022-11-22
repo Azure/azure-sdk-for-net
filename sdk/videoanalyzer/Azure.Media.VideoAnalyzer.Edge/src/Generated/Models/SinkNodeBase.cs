@@ -12,7 +12,11 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> Base class for topology sink nodes. </summary>
+    /// <summary>
+    /// Base class for topology sink nodes.
+    /// Please note <see cref="SinkNodeBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="FileSink"/>, <see cref="IotHubMessageSink"/> and <see cref="VideoSink"/>.
+    /// </summary>
     public partial class SinkNodeBase
     {
         /// <summary> Initializes a new instance of SinkNodeBase. </summary>
