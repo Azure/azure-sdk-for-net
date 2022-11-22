@@ -1,14 +1,16 @@
 # Release History
 
-## 5.8.0-beta.1 (Unreleased)
+## 5.7.5 (2022-11-22)
 
-### Features Added
+### Acknowledgments
 
-### Breaking Changes
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Jason Gilbertson _([GitHub](https://github.com/jagilber))_
 
 ### Bugs Fixed
 
-### Other Changes
+- Corrected an indexing issue with the log event source, causing an exception to surface when the buffered producer completed its idle state.
 
 ## 5.7.4 (2022-11-08)
 
