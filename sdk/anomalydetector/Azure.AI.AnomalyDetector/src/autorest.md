@@ -4,8 +4,9 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 tag: release_1_1
-require:
-    -  https://github.com/Azure/azure-rest-api-specs/blob/f47eeea0df3a5a81ea42945ed96290b3fb8e588a/specification/cognitiveservices/data-plane/AnomalyDetector/readme.md
+input-file:
+- https://github.com/Azure/azure-rest-api-specs/blob/5e3597f1dde2da7f3abd8c956eb652c38338633d/specification/cognitiveservices/data-plane/AnomalyDetector/stable/v1.1/MultivariateAnomalyDetector.json
+- https://github.com/Azure/azure-rest-api-specs/blob/5e3597f1dde2da7f3abd8c956eb652c38338633d/specification/cognitiveservices/data-plane/AnomalyDetector/stable/v1.1/UnivariateAnomalyDetector.json
 namespace: Azure.AI.AnomalyDetector
 public-clients: true
 security:
@@ -23,3 +24,4 @@ directive:
   where: $.parameters.Endpoint
   transform: $.format = "url"
 ```
+
