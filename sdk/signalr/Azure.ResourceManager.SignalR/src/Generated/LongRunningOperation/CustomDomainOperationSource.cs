@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SignalR
 {
-    internal class CustomDomainOperationSource : Core.IOperationSource<CustomDomainResource>
+    internal class CustomDomainOperationSource : IOperationSource<CustomDomainResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.SignalR
             _client = client;
         }
 
-        CustomDomainResource Core.IOperationSource<CustomDomainResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        CustomDomainResource IOperationSource<CustomDomainResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CustomDomainData.DeserializeCustomDomainData(document.RootElement);
             return new CustomDomainResource(_client, data);
         }
 
-        async ValueTask<CustomDomainResource> Core.IOperationSource<CustomDomainResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CustomDomainResource> IOperationSource<CustomDomainResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CustomDomainData.DeserializeCustomDomainData(document.RootElement);
