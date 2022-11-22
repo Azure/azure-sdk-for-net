@@ -512,10 +512,11 @@ namespace Azure.AI.TextAnalytics
         /// <param name="end">Sets the <see cref="TemporalSpanResolution.End"/> property.</param>
         /// <param name="duration">Sets the <see cref="TemporalSpanResolution.Duration"/> property.</param>
         /// <param name="modifier">Sets the <see cref="TemporalSpanResolution.Modifier"/> property.</param>
+        /// /// <param name="timex">Sets the <see cref="TemporalSpanResolution.Timex"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.TemporalSpanResolution"/> for mocking purposes.</returns>
-        public static TemporalSpanResolution TemporalSpanResolution(string begin, string end, string duration, TemporalModifier? modifier)
+        public static TemporalSpanResolution TemporalSpanResolution(string begin, string end, string duration, TemporalModifier? modifier, string timex)
         {
-            return new TemporalSpanResolution(ResolutionKind.TemporalSpanResolution, begin, end, duration, modifier);
+            return new TemporalSpanResolution(ResolutionKind.TemporalSpanResolution, begin, end, duration, modifier, timex);
         }
 
         /// <summary>

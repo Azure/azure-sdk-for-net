@@ -6,7 +6,7 @@ jobs:
   - job: UpdateDocsMsBuildConfig
     pool:
       name: azsdk-pool-mms-ubuntu-2004-general
-      vmImage: MMSUbuntu20.04Compliant
+      vmImage: Ubuntu20.04
     variables:
       DocRepoLocation: $(Pipeline.Workspace)/docs
       DocRepoOwner: Azure
@@ -16,6 +16,9 @@ jobs:
       - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
         parameters:
           SkipCheckoutNone: true
+          Paths: 
+            # This is for retrieving code owners for service level readme metadata
+            - .github/CODEOWNERS
 
       # Sync docs repo
       - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
@@ -24,6 +27,7 @@ jobs:
             - bundlepackages/
             - metadata/
             - docs-ref-toc/
+            - api/overview/azure
           Repositories:
             - Name: $(DocRepoOwner)/$(DocRepoName)
               WorkingDirectory: $(DocRepoLocation)
@@ -38,9 +42,20 @@ jobs:
           pwsh: true
           filePath: eng/common/scripts/Update-DocsMsPackages.ps1
           arguments: -DocRepoLocation $(DocRepoLocation)
-        displayName: Update Docs Onboarding
+        displayName: Update Docs Onboarding for main branch
         condition: and(succeeded(), or(eq(variables['Build.Reason'], 'Schedule'), eq(variables['Force.MainUpdate'], 'true')))
-
+      - task: Powershell@2
+        inputs:
+          pwsh: true
+          filePath: eng/common/scripts/Service-Level-Readme-Automation.ps1
+          arguments: >-
+            -DocRepoLocation $(DocRepoLocation)
+            -TenantId '$(opensource-aad-tenant-id)'
+            -ClientId '$(opensource-aad-app-id)'
+            -ClientSecret '$(opensource-aad-secret)'
+            -ReadmeFolderRoot 'api/overview/azure'
+        displayName: Generate Service Level Readme for main branch
+        condition: and(succeeded(), or(eq(variables['Build.Reason'], 'Schedule'), eq(variables['Force.MainUpdate'], 'true')))
       - task: Powershell@2
         inputs:
           pwsh: true
@@ -88,7 +103,18 @@ jobs:
           arguments: >
             -DocRepoLocation $(DocRepoLocation)
             -PackageSourceOverride $(PackageSourceOverride)
-        displayName: Update Docs Onboarding for Daily branch
+        displayName: Update Docs Onboarding for Daily docs
+      - task: Powershell@2
+        inputs:
+          pwsh: true
+          filePath: eng/common/scripts/Service-Level-Readme-Automation.ps1
+          arguments: >-
+            -DocRepoLocation $(DocRepoLocation)
+            -TenantId '$(opensource-aad-tenant-id)'
+            -ClientId '$(opensource-aad-app-id)'
+            -ClientSecret '$(opensource-aad-secret)'
+            -ReadmeFolderRoot 'api/overview/azure'
+        displayName: Generate Service Level Readme for Daily docs
       - task: Powershell@2
         inputs:
           pwsh: true
@@ -98,7 +124,7 @@ jobs:
             -OutputLocation $(DocRepoLocation)/docs-ref-toc/reference-unified.yml
             -ReadmeFolderRoot "api/overview/azure"
             -PackageSourceOverride $(PackageSourceOverride)
-        displayName: Generate ToC for Daily Branches
+        displayName: Generate ToC for Daily docs
 
       - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
         parameters:
