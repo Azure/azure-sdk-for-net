@@ -145,7 +145,8 @@
 
   <Import Project="ApiListing.targets" />
 
-  <Import Project="CodeCoverage.targets" />
+  <!-- Only generate code coverage reports on latest test target framework. -->
+  <Import Project="CodeCoverage.targets" Condition="'$(CodeCoverageTargetFramework)' != '' and '$(TargetFramework)' == '$(CodeCoverageTargetFramework)'" />
 
   <Import Project="CodeGeneration.targets" Condition="'$(TemporaryUsePreviousGeneratorVersion)' == 'true'" />
 
