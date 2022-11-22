@@ -29,7 +29,6 @@ namespace Azure.AI.AnomalyDetector.Tests
         public AnomalyDetectorClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
-        /*
         [Test]
         public async Task GetResultForEntireDetect()
         {
@@ -37,16 +36,17 @@ namespace Azure.AI.AnomalyDetector.Tests
             dynamic request = TestData.request;
             request.MaxAnomalyRatio = 0.25F;
             request.Sensitivity = 95;
-            Response response = await client.DetectEntireSeriesAsync(RequestContent.Create(JsonConvert.SerializeObject(request)));
+            Response response = await client.DetectUnivariateEntireSeriesAsync(RequestContent.Create(JsonConvert.SerializeObject(request)));
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 
-            // Assert.AreEqual(TestData.ExpectedEntireDetectResult.GetValue("expectedValues"), JArray.Parse(result.GetProperty("expectedValues").ToString()));
-            // Assert.AreEqual(TestData.ExpectedEntireDetectResult.GetValue("upperMargins"), JArray.Parse(result.GetProperty("upperMargins").ToString()));
-            // Assert.AreEqual(TestData.ExpectedEntireDetectResult.GetValue("lowerMargins"), JArray.Parse(result.GetProperty("lowerMargins").ToString()));
-            // Assert.AreEqual(TestData.ExpectedEntireDetectResult.GetValue("isAnomaly"), JArray.Parse(result.GetProperty("isAnomaly").ToString()));
-            // Assert.AreEqual(TestData.ExpectedEntireDetectResult.GetValue("isPositiveAnomaly"), JArray.Parse(result.GetProperty("isPositiveAnomaly").ToString()));
-            // Assert.AreEqual(TestData.ExpectedEntireDetectResult.GetValue("isNegativeAnomaly"), JArray.Parse(result.GetProperty("isNegativeAnomaly").ToString()));
-            // Assert.AreEqual(TestData.ExpectedEntireDetectResult.GetValue("severity"), JArray.Parse(result.GetProperty("severity").ToString()));
+            Assert.IsNotNull(result.GetProperty("expectedValues"));
+            Assert.IsNotNull(result.GetProperty("expectedValues"));
+            Assert.IsNotNull(result.GetProperty("upperMargins"));
+            Assert.IsNotNull(result.GetProperty("lowerMargins"));
+            Assert.IsNotNull(result.GetProperty("isAnomaly"));
+            Assert.IsNotNull(result.GetProperty("isPositiveAnomaly"));
+            Assert.IsNotNull(result.GetProperty("isNegativeAnomaly"));
+            Assert.IsNotNull(result.GetProperty("severity"));
         }
 
         [Test]
@@ -57,18 +57,18 @@ namespace Azure.AI.AnomalyDetector.Tests
             dynamic request = TestData.request;
             request.MaxAnomalyRatio = 0.25F;
             request.Sensitivity = 95;
-            Response response = await client.DetectLastPointAsync(RequestContent.Create(JsonConvert.SerializeObject(request)));
+            Response response = await client.DetectUnivariateLastPointAsync(RequestContent.Create(JsonConvert.SerializeObject(request)));
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 
-            // Assert.AreEqual(809.5658016931228F, float.Parse(result.GetProperty("expectedValue").ToString()));
-            // Assert.AreEqual(false, bool.Parse(result.GetProperty("isAnomaly").ToString()));
-            // Assert.AreEqual(false, bool.Parse(result.GetProperty("isNegativeAnomaly").ToString()));
-            // Assert.AreEqual(false, bool.Parse(result.GetProperty("isPositiveAnomaly").ToString()));
-            // Assert.AreEqual(40.47829008465612F, float.Parse(result.GetProperty("lowerMargin").ToString()));
-            // Assert.AreEqual(12, int.Parse(result.GetProperty("period").ToString()));
-            // Assert.AreEqual(49, int.Parse(result.GetProperty("suggestedWindow").ToString()));
-            // Assert.AreEqual(40.47829008465612F, float.Parse(result.GetProperty("upperMargin").ToString()));
-            // Assert.AreEqual(0.0f, float.Parse(result.GetProperty("severity").ToString()));
+            Assert.IsNotNull(result.GetProperty("expectedValue"));
+            Assert.IsNotNull(result.GetProperty("isAnomaly"));
+            Assert.IsNotNull(result.GetProperty("isNegativeAnomaly"));
+            Assert.IsNotNull(result.GetProperty("isPositiveAnomaly"));
+            Assert.IsNotNull(result.GetProperty("lowerMargin"));
+            Assert.IsNotNull(result.GetProperty("period"));
+            Assert.IsNotNull(result.GetProperty("suggestedWindow"));
+            Assert.IsNotNull(result.GetProperty("upperMargin"));
+            Assert.IsNotNull(result.GetProperty("severity"));
         }
 
         [Test]
@@ -81,13 +81,12 @@ namespace Azure.AI.AnomalyDetector.Tests
             request.StableTrendWindow = 10;
             request.Threshold = 0.5F;
             request.Period = 0;
-            Response response = await client.DetectChangePointAsync(RequestContent.Create(JsonConvert.SerializeObject(request)));
+            Response response = await client.DetectUnivariateChangePointAsync(RequestContent.Create(JsonConvert.SerializeObject(request)));
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 
-            // Assert.AreEqual(TestData.ExpectedChangePointResult.GetValue("period"), int.Parse(result.GetProperty("period").ToString()));
-            // Assert.AreEqual(TestData.ExpectedChangePointResult.GetValue("isChangePoint"), JArray.Parse(result.GetProperty("isChangePoint").ToString()));
-            // Assert.AreEqual(TestData.ExpectedChangePointResult.GetValue("confidenceScores"), JArray.Parse(result.GetProperty("confidenceScores").ToString()));
+            Assert.IsNotNull(result.GetProperty("period"));
+            Assert.IsNotNull(result.GetProperty("isChangePoint"));
+            Assert.IsNotNull(result.GetProperty("confidenceScores"));
         }
-        */
     }
 }
