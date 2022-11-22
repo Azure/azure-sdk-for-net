@@ -19,5 +19,5 @@ extends:
     ServiceDirectory: analysisservices
     LimitForPullRequest: true
     Artifacts:
-    - name: sdk/analysisservices/Azure.ResourceManager.AnalysisServices
+    - name: Azure.ResourceManager.AnalysisServices
       safeName: AzureResourceManagerAnalysisServices
