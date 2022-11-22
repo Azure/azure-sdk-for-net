@@ -148,6 +148,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
         private void RegisterCommonConverters<T>(FluentBindingRule<T> rule) where T : Attribute
 #pragma warning restore CS0618 // Type or member is obsolete
         {
+             rule.AddConverter<BlobBaseClient, ParameterBindingData>(ConvertToInputParameterBindingData);
+
             // Converter manager already has Stream-->Byte[],String,TextReader
             rule.AddConverter<BlobBaseClient, Stream>(ConvertToStreamAsync);
 
@@ -207,6 +209,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
             return (T)blob.BlobClient;
         }
 
+        private ParameterBindingData ConvertToInputParameterBindingData(BlobBaseClient input)
+        {
+            var blobDetails = new BlobParameterBindingDataContent()
+            {
+                Connection = Constants.DefaultAzureStorageConnectionName,
+                BlobName = input.Name,
+                ContainerName = input.BlobContainerName
+            };
+            return CreateParameterBindingData(blobDetails);
+        }
+
         private ParameterBindingData ConvertToParameterBindingData(BlobAttribute blobAttribute)
         {
             var blobPath = BlobPath.ParseAndValidate(blobAttribute.BlobPath);
@@ -258,6 +271,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
                 typeof(BlockBlobClient),
                 typeof(PageBlobClient),
                 typeof(AppendBlobClient),
+                typeof(ParameterBindingData),
                 typeof(TextReader),
                 typeof(Stream),
                 typeof(BinaryData),
@@ -311,6 +325,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
                     switch (blobItem.Properties.BlobType)
                     {
                         case BlobType.Block:
+                            if (typeof(T) == typeof(ParameterBindingData))
+                            {
+                                src = blobContainerClient.GetBlobClient(blobItem.Name);
+                            }
                             if (typeof(T) == typeof(BlobClient))
                             {
                                 // BlobClient is simplified version of BlockBlobClient, i.e. upload results in creation of block blob.
