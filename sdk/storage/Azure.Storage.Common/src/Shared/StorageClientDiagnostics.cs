@@ -37,8 +37,8 @@ namespace Azure.Core.Pipeline
                 if (responseHeaders.ContentType.Contains(Constants.ContentTypeApplicationXml))
                 {
                     XDocument xml = XDocument.Parse(content);
-                    var errorCode = xml.Root.Element(Constants.ErrorCode).Value;
-                    var message = xml.Root.Element(Constants.ErrorMessage).Value;
+                    var errorCode = xml.Root!.Element(Constants.ErrorCode)!.Value;
+                    var message = xml.Root.Element(Constants.ErrorMessage)!.Value;
 
                     foreach (XElement element in xml.Root.Elements())
                     {
@@ -68,7 +68,7 @@ namespace Azure.Core.Pipeline
                         details = new Dictionary<string, string>();
                         foreach (JsonProperty property in detail.EnumerateObject())
                         {
-                            details[property.Name] = property.Value.GetString();
+                            details[property.Name] = property.Value.GetString()!;
                         }
                     }
 
