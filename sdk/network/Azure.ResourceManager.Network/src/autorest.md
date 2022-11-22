@@ -99,6 +99,7 @@ rename-mapping:
   EndpointType: ConnectionMonitorEndpointType
   ConnectionState: NetworkConnectionState
   ApplicationGatewayAvailableSslOptions: ApplicationGatewayAvailableSslOptionsInfo
+  UnknownFirewallPolicyRuleCollection: UnknownFirewallPolicyRuleList
 
 format-by-name-rules:
   'tenantId': 'uuid'

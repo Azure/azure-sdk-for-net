@@ -259,6 +259,7 @@ rename-mapping:
   RestorePoint: SqlServerDatabaseRestorePoint
   BackupStorageRedundancy: SqlBackupStorageRedundancy
   PrimaryAggregationType: SqlMetricPrimaryAggregationType
+  SecurityEventCollection: SecurityEventList
 
 prompted-enum-values:
   - Default

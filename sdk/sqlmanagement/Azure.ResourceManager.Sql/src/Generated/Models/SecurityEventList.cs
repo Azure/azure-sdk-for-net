@@ -11,18 +11,18 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A list of security events. </summary>
-    internal partial class SecurityEventCollection
+    internal partial class SecurityEventList
     {
-        /// <summary> Initializes a new instance of SecurityEventCollection. </summary>
-        internal SecurityEventCollection()
+        /// <summary> Initializes a new instance of SecurityEventList. </summary>
+        internal SecurityEventList()
         {
             Value = new ChangeTrackingList<SecurityEvent>();
         }
 
-        /// <summary> Initializes a new instance of SecurityEventCollection. </summary>
+        /// <summary> Initializes a new instance of SecurityEventList. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal SecurityEventCollection(IReadOnlyList<SecurityEvent> value, string nextLink)
+        internal SecurityEventList(IReadOnlyList<SecurityEvent> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;

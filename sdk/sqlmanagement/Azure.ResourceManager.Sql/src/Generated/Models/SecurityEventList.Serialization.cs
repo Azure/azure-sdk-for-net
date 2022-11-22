@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    internal partial class SecurityEventCollection
+    internal partial class SecurityEventList
     {
-        internal static SecurityEventCollection DeserializeSecurityEventCollection(JsonElement element)
+        internal static SecurityEventList DeserializeSecurityEventList(JsonElement element)
         {
             Optional<IReadOnlyList<SecurityEvent>> value = default;
             Optional<string> nextLink = default;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new SecurityEventCollection(Optional.ToList(value), nextLink.Value);
+            return new SecurityEventList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

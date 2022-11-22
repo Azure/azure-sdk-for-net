@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
                     case "FirewallPolicyNatRuleCollection": return FirewallPolicyNatRuleCollectionInfo.DeserializeFirewallPolicyNatRuleCollectionInfo(element);
                 }
             }
-            return UnknownFirewallPolicyRuleCollection.DeserializeUnknownFirewallPolicyRuleCollection(element);
+            return UnknownFirewallPolicyRuleList.DeserializeUnknownFirewallPolicyRuleList(element);
         }
     }
 }
