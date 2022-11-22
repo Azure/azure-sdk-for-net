@@ -4,7 +4,8 @@
 
 ### Features Added
 - Added support for dynamic classification.
-  - Added the following methods: `TextAnalyticsClient.DynamicClassify` and `TextAnalyicsClient.DynamicClassifyBatch`.
+  - Added the following methods: `TextAnalyticsClient.DynamicClassify` and `TextAnalyticsClient.DynamicClassifyAsync`.
+  - Added the following methods: `TextAnalyticsClient.DynamicClassifyBatch` and `TextAnalyticsClient.DynamicClassifyBatchAsync`.
   - Added the following classes: `DynamicClassifyDocumentResultCollection` and `DynamicClassifyOptions`.
   - Added the `ClassificationType` enum.
 - Added support for extractive summarization.
