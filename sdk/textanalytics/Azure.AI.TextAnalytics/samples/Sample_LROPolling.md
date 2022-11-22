@@ -91,11 +91,6 @@ while (true)
 Console.WriteLine($"AnalyzeHealthcareEntities operation was completed");
 ```
 
-To see the full example source files, see:
-
-* [Asynchronous AnalyzeHealthcareEntities Convenience](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntitiesConvenienceAsync.cs)
-* [Synchronous AnalyzeHealthcareEntities Convenience ](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntitiesConvenience.cs)
-
 [analyze-healthcare-entities]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample7_AnalyzeHealthcareEntities.md
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/README.md

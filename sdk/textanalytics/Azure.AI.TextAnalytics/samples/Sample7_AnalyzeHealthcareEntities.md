@@ -137,14 +137,5 @@ await foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in heal
 }
 ```
 
-To see the full example source files, see:
-
-* [Synchronous AnalyzeHealthcareEntities](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntities.cs)
-* [Asynchronous AnalyzeHealthcareEntities](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntitiesAsync.cs)
-* [Synchronous AnalyzeHealthcareEntities Convenience](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntitiesConvenience.cs)
-* [Asynchronous AnalyzeHealthcareEntities Convenience ](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntitiesConvenienceAsync.cs)
-* [Synchronous AnalyzeHealthcareEntities Cancellation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntities_Cancellation.cs)
-* [Asynchronous AnalyzeHealthcareEntitiesAsync Cancellation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntitiesAsync_Cancellation.cs)
-
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/README.md

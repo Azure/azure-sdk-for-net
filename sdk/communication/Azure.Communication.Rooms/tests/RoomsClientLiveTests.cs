@@ -118,19 +118,14 @@ namespace Azure.Communication.Rooms.Tests
                 Assert.IsTrue(getRoomParticipantsResult.Any(x => x.Role == RoleType.Attendee), "Expected GetRoom to contain role2");
 
                 // Update Room
-                List<RoomParticipant> updateRoomParticipants = new List<RoomParticipant>();
-                RoomParticipant participant3 = new RoomParticipant(new CommunicationUserIdentifier(communicationUser3), RoleType.Presenter);
-                updateRoomParticipants.Add(participant3);
+                validFrom = validFrom.AddHours(1);
 
-                Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(createdRoomId, validFrom, validUntil, RoomJoinPolicy.InviteOnly, updateRoomParticipants);
+                Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(createdRoomId, validFrom, validUntil, roomJoinPolicy:RoomJoinPolicy.CommunicationServiceUsers);
                 CommunicationRoom updateCommunicationRoom = updateRoomResponse.Value;
                 List<RoomParticipant> updateRoomParticipantsResult = updateCommunicationRoom.Participants.ToList();
                 Assert.AreEqual(createdRoomId, updateCommunicationRoom.Id);
-                Assert.AreEqual(1, updateRoomParticipantsResult.Count, "Expected UpdateRoom participants count to be 1");
-                Assert.IsTrue(updateRoomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant3.CommunicationIdentifier)), "Expected UpdateRoom to contain user3");
-                Assert.IsFalse(updateRoomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant1.CommunicationIdentifier)), "Expected UpdateRoom to not contain user1");
-                Assert.IsFalse(updateRoomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant2.CommunicationIdentifier)), "Expected UpdateRoom to not contain user2");
-                Assert.AreEqual(updateCommunicationRoom.ValidUntil, updateCommunicationRoom.ValidUntil);
+                Assert.AreEqual(2, updateRoomParticipantsResult.Count, "Expected UpdateRoom participants count to be 2");
+                Assert.AreEqual(RoomJoinPolicy.CommunicationServiceUsers , updateCommunicationRoom.RoomJoinPolicy, "Expected RoomJoinPolicy to be updated");
 
                 // Delete Room
                 Response deleteRoomResponse = await roomsClient.DeleteRoomAsync(createdRoomId);

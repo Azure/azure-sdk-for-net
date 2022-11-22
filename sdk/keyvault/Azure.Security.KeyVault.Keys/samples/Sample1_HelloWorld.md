@@ -102,9 +102,4 @@ await operation.WaitForCompletionAsync();
 await client.PurgeDeletedKeyAsync(rsaKeyName);
 ```
 
-## Source
-
-* [Synchronous Sample1_HelloWorld.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/tests/samples/Sample1_HelloWorld.cs)
-* [Asynchronous Sample1_HelloWorldAsync.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/tests/samples/Sample1_HelloWorldAsync.cs)
-
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
