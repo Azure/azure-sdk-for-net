@@ -22,19 +22,19 @@ namespace Azure.Communication
                 {
                     if (IsAnonymous)
                     {
-                        _rawId = $"8:teamsvisitor:{UserId}";
+                        _rawId = $"{TEAMS_USER_VISITOR_PREFIX}{UserId}";
                     }
                     else if (Cloud == CommunicationCloudEnvironment.Dod)
                     {
-                        _rawId = $"8:dod:{UserId}";
+                        _rawId = $"{TEAMS_USER_DOD_PREFIX}{UserId}";
                     }
                     else if (Cloud == CommunicationCloudEnvironment.Gcch)
                     {
-                        _rawId = $"8:gcch:{UserId}";
+                        _rawId = $"{TEAMS_USER_GCCH_PREFIX}{UserId}";
                     }
                     else
                     {
-                        _rawId = $"8:orgid:{UserId}";
+                        _rawId = $"{TEAMS_USER_ORGID_PREFIX}{UserId}";
                     }
                 }
                 return _rawId;

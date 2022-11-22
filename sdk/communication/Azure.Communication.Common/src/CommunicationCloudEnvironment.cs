@@ -19,6 +19,9 @@ namespace Azure.Communication
         private const string PublicValue = "public";
         private const string DodValue = "dod";
         private const string GcchValue = "gcch";
+        private const string AirGap08Value = "airgap08";
+        private const string AirGap09Value = "airgap09";
+        private const string GallatinValue = "gallatin";
 
         /// <summary> public. </summary>
         public static CommunicationCloudEnvironment Public { get; } = new CommunicationCloudEnvironment(PublicValue);
@@ -26,6 +29,12 @@ namespace Azure.Communication
         public static CommunicationCloudEnvironment Dod { get; } = new CommunicationCloudEnvironment(DodValue);
         /// <summary> gcch. </summary>
         public static CommunicationCloudEnvironment Gcch { get; } = new CommunicationCloudEnvironment(GcchValue);
+        /// <summary> airgap08. </summary>
+        public static CommunicationCloudEnvironment AirGap08 { get; } = new CommunicationCloudEnvironment(AirGap08Value);
+        /// <summary> airgap09. </summary>
+        public static CommunicationCloudEnvironment AirGap09 { get; } = new CommunicationCloudEnvironment(AirGap09Value);
+        /// <summary> gallatin. </summary>
+        public static CommunicationCloudEnvironment Gallatin { get; } = new CommunicationCloudEnvironment(GallatinValue);
         /// <summary> Determines if two <see cref="CommunicationCloudEnvironment"/> values are the same. </summary>
         public static bool operator ==(CommunicationCloudEnvironment left, CommunicationCloudEnvironment right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CommunicationCloudEnvironment"/> values are not the same. </summary>

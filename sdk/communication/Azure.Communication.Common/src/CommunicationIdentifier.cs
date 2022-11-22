@@ -10,6 +10,18 @@ namespace Azure.Communication
     /// <summary>Represents an identifier in Azure Communication Services.</summary>
     public abstract class CommunicationIdentifier : IEquatable<CommunicationIdentifier>
     {
+        internal const string TEAMS_USER_VISITOR_PREFIX = "8:teamsvisitor:";
+        internal const string TEAMS_USER_ORGID_PREFIX = "8:orgid:";
+        internal const string TEAMS_USER_DOD_PREFIX = "8:dod:";
+        internal const string TEAMS_USER_GCCH_PREFIX = "8:gcch:";
+        internal const string ACS_USER_ACS_PREFIX = "8:acs:";
+        internal const string ACS_USER_SPOOL_PREFIX = "8:spool:";
+        internal const string ACS_USER_GCCH_PREFIX = "8:gcch-acs:";
+        internal const string ACS_USER_AIR_GAP_08_PREFIX = "8:ag08-acs:";
+        internal const string ACS_USER_AIR_GAP_09_PREFIX = "8:ag09-acs:";
+        internal const string ACS_GALLATIN_PREFIX = "8:gal-acs:";
+        internal const string ACS_USER_DOD_PREFIX = "8:dod-acs:";
+
         /// <summary>
         /// Returns the canonical string representation of the <see cref="CommunicationIdentifier"/>.
         /// You can use the <see cref="RawId"/> for encoding the identifier and then use it as a key in a database.
@@ -68,11 +80,16 @@ namespace Azure.Communication
 
             return prefix switch
             {
-                "8:teamsvisitor:" => new MicrosoftTeamsUserIdentifier(suffix, true),
-                "8:orgid:" => new MicrosoftTeamsUserIdentifier(suffix, false, CommunicationCloudEnvironment.Public),
-                "8:dod:" => new MicrosoftTeamsUserIdentifier(suffix, false, CommunicationCloudEnvironment.Dod),
-                "8:gcch:" => new MicrosoftTeamsUserIdentifier(suffix, false, CommunicationCloudEnvironment.Gcch),
-                "8:acs:" or "8:spool:" or "8:dod-acs:" or "8:gcch-acs:" => new CommunicationUserIdentifier(rawId),
+                TEAMS_USER_VISITOR_PREFIX => new MicrosoftTeamsUserIdentifier(suffix, true),
+                TEAMS_USER_ORGID_PREFIX => new MicrosoftTeamsUserIdentifier(suffix, false, CommunicationCloudEnvironment.Public),
+                TEAMS_USER_DOD_PREFIX => new MicrosoftTeamsUserIdentifier(suffix, false, CommunicationCloudEnvironment.Dod),
+                TEAMS_USER_GCCH_PREFIX => new MicrosoftTeamsUserIdentifier(suffix, false, CommunicationCloudEnvironment.Gcch),
+                ACS_USER_ACS_PREFIX or ACS_USER_SPOOL_PREFIX => new CommunicationUserIdentifier(rawId, CommunicationCloudEnvironment.Public),
+                ACS_USER_GCCH_PREFIX => new CommunicationUserIdentifier(rawId, CommunicationCloudEnvironment.Gcch),
+                ACS_USER_AIR_GAP_08_PREFIX => new CommunicationUserIdentifier(rawId, CommunicationCloudEnvironment.AirGap08),
+                ACS_USER_AIR_GAP_09_PREFIX => new CommunicationUserIdentifier(rawId, CommunicationCloudEnvironment.AirGap09),
+                ACS_GALLATIN_PREFIX => new CommunicationUserIdentifier(rawId, CommunicationCloudEnvironment.Gallatin),
+                ACS_USER_DOD_PREFIX => new CommunicationUserIdentifier(rawId),
                 _ => new UnknownIdentifier(rawId),
             };
         }

@@ -6,7 +6,10 @@ namespace Azure.Communication
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public CommunicationCloudEnvironment(string value) { throw null; }
+        public static Azure.Communication.CommunicationCloudEnvironment AirGap08 { get { throw null; } }
+        public static Azure.Communication.CommunicationCloudEnvironment AirGap09 { get { throw null; } }
         public static Azure.Communication.CommunicationCloudEnvironment Dod { get { throw null; } }
+        public static Azure.Communication.CommunicationCloudEnvironment Gallatin { get { throw null; } }
         public static Azure.Communication.CommunicationCloudEnvironment Gcch { get { throw null; } }
         public static Azure.Communication.CommunicationCloudEnvironment Public { get { throw null; } }
         public bool Equals(Azure.Communication.CommunicationCloudEnvironment other) { throw null; }
@@ -48,6 +51,8 @@ namespace Azure.Communication
     public partial class CommunicationUserIdentifier : Azure.Communication.CommunicationIdentifier
     {
         public CommunicationUserIdentifier(string id) { }
+        public CommunicationUserIdentifier(string id, Azure.Communication.CommunicationCloudEnvironment cloud) { }
+        public Azure.Communication.CommunicationCloudEnvironment Cloud { get { throw null; } }
         public string Id { get { throw null; } }
         public override string RawId { get { throw null; } }
         public override bool Equals(Azure.Communication.CommunicationIdentifier other) { throw null; }
