@@ -17,19 +17,18 @@ string datasource = TestEnvironment.DataSource;
 Console.WriteLine(endpoint);
 var endpointUri = new Uri(endpoint);
 var credential = new AzureKeyCredential(apiKey);
-String apiVersion = "v1.1";
 
 //create client
-AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, apiVersion, credential);
+AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, credential);
 ```
 
 ## Train the model
 
-Create a new private async task as below to handle training your model. You will use `CreateMultivariateModel` to train the model and `GetMultivariateModel` to check when training is complete.
+Create a new private async task as below to handle training your model. You will use `CreateAndTrainMultivariateModel` to train the model and `GetMultivariateModel` to check when training is complete.
 
-You could add the data source, along with start time and end time to the input of `CreateMultivariateModel`. The data source is a shared access signature(SAS) link in the format https://\[placeholder\]/. To generate the datasource link, you could first download our [sample data][datasource], then upload it to a azure container according to the [Upload a block blob][upload_blob] documentation and get the SAS link of the data according to the [Create SAS tokens for blobs in the Azure portal][generate_sas] documentation.
+You could add the data source, along with start time and end time to the input of `CreateAndTrainMultivariateModel`. The data source is a shared access signature(SAS) link in the format https://\[placeholder\]/. To generate the datasource link, you could first download our [sample data][datasource], then upload it to a azure container according to the [Upload a block blob][upload_blob] documentation and get the SAS link of the data according to the [Create SAS tokens for blobs in the Azure portal][generate_sas] documentation.
 
-Call `CreateMultivariateModel` with the data and extract the model ID from the response. Afterwards, you can get the model info, including the model status, by calling `GetMultivariateModel` with the model ID . Wait until the model status is ready. 
+Call `CreateAndTrainMultivariateModel` with the data and extract the model ID from the response. Afterwards, you can get the model info, including the model status, by calling `GetMultivariateModel` with the model ID . Wait until the model status is ready. 
 
 ```C# Snippet:TrainMultivariateModel
 private Guid? TrainModel(AnomalyDetectorClient client, string datasource, DateTimeOffset start_time, DateTimeOffset end_time, int max_tryout = 500)
@@ -48,7 +47,7 @@ private Guid? TrainModel(AnomalyDetectorClient client, string datasource, DateTi
         };
 
         TestContext.Progress.WriteLine("Training new model...(it may take a few minutes)");
-        Response response = client.CreateMultivariateModel(RequestContent.Create(data));
+        Response response = client.CreateAndTrainMultivariateModel(RequestContent.Create(data));
         JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         Guid trained_model_id = Guid.Parse(result.GetProperty("modelId").ToString());
         Console.WriteLine(String.Format("Training model id is {0}", trained_model_id));
@@ -98,7 +97,7 @@ private Guid? TrainModel(AnomalyDetectorClient client, string datasource, DateTi
 
 ## Detect anomalies
 
-To detect anomalies using your newly trained model, create a private function named `BatchDetect`. You will pass data to `BatchDetectAnomaly` and get resultId from the response. With the resultId, you could get the detection content and detection status by `GetBatchDetectionResult`. Return the detection content when the detection status is ready. 
+To detect anomalies using your newly trained model, create a private function named `BatchDetect`. You will pass data to `DetectMultivariateBatchAnomaly` and get resultId from the response. With the resultId, you could get the detection content and detection status by `GetMultivariateBatchDetectionResult`. Return the detection content when the detection status is ready. 
 
 ```C# Snippet:DetectMultivariateAnomaly
 private JsonElement? BatchDetect(AnomalyDetectorClient client, string datasource, Guid model_id,DateTimeOffset start_time, DateTimeOffset end_time, int max_tryout = 500)
@@ -114,20 +113,20 @@ private JsonElement? BatchDetect(AnomalyDetectorClient client, string datasource
         };
 
         TestContext.Progress.WriteLine("Start batch detection, this might take a few minutes...");
-        Response response = client.BatchDetectAnomaly(model_id, RequestContent.Create(data));
+        Response response = client.DetectMultivariateBatchAnomaly(model_id, RequestContent.Create(data));
         JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         Guid result_id = Guid.Parse(result.GetProperty("resultId").ToString());
         TestContext.Progress.WriteLine(String.Format("result id is: {0}", result_id));
 
         // get detection result
-        response = client.GetBatchDetectionResult(result_id);
+        response = client.GetMultivariateBatchDetectionResult(result_id);
         JsonElement detection_result = JsonDocument.Parse(response.ContentStream).RootElement;
         String result_status = result.GetProperty("summary").GetProperty("status").ToString();
         int tryout_count = 0;
         while (tryout_count < max_tryout & result_status != "READY" & result_status != "FAILED")
         {
             System.Threading.Thread.Sleep(1000);
-            response = client.GetBatchDetectionResult(result_id);
+            response = client.GetMultivariateBatchDetectionResult(result_id);
             detection_result = JsonDocument.Parse(response.ContentStream).RootElement;
             result_status = detection_result.GetProperty("summary").GetProperty("status").ToString();
             TestContext.Progress.WriteLine(String.Format("try: {0}, result id: {1} Detection status is {2}", tryout_count, result_id, result_status));
@@ -159,7 +158,7 @@ private JsonElement? BatchDetect(AnomalyDetectorClient client, string datasource
 
 ## Detect last anomalies
 
-To detect anomalies using your newly trained model, create a private function named `DetectLast`. You will you could read data from local file and pass the data to `LastDetectAnomaly`. Result can be found in the response. 
+To detect anomalies using your newly trained model, create a private function named `DetectLast`. You will you could read data from local file and pass the data to `DetectMultivariateLastAnomaly`. Result can be found in the response. 
 
 ```C# Snippet:DetectLastMultivariateAnomaly
 private JsonElement DetectLast(AnomalyDetectorClient client, Guid model_id)
@@ -173,7 +172,7 @@ private JsonElement DetectLast(AnomalyDetectorClient client, Guid model_id)
             string json = r.ReadToEnd();
             data = JsonDocument.Parse(json).RootElement;
         }
-        Response response = client.LastDetectAnomaly(model_id, RequestContent.Create(data));
+        Response response = client.DetectMultivariateLastAnomaly(model_id, RequestContent.Create(data));
         return JsonDocument.Parse(response.ContentStream).RootElement;
     }
     catch (Exception ex)
@@ -186,7 +185,7 @@ private JsonElement DetectLast(AnomalyDetectorClient client, Guid model_id)
 
 ## Delete model
 
-To delete a model that you have created previously use `DeleteMultivariateModelAsync` and pass the model ID of the model you wish to delete. You can check the number of models after deletion with `getModelNumberAsync`.
+To delete a model that you have created previously use `DeleteMultivariateModel` and pass the model ID of the model you wish to delete. You can check the number of models after deletion with `GetModelNumber`.
 
 ```C# Snippet:DeleteMultivariateModel
 private void DeleteModel(AnomalyDetectorClient client, Guid model_id)

@@ -16,10 +16,9 @@ string apiKey = TestEnvironment.ApiKey;
 
 var endpointUri = new Uri(endpoint);
 var credential = new AzureKeyCredential(apiKey);
-String apiVersion = "v1.1";
 
 //create client
-AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, apiVersion, credential);
+AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, credential);
 ```
 
 ## Load time series and create ChangePointDetectRequest
@@ -46,7 +45,7 @@ using (StreamReader reader = new StreamReader("./samples/data/request-data.csv")
 ```
 
 ## Detect change point
-Call the client's `DetectChangePoint` method with the data and get the response. Iterate through the response's `isChangePoint` values and print any that are true. These values correspond to the index of change points, if any were found.
+Call the client's `DetectUnivariateChangePoint` method with the data and get the response. Iterate through the response's `isChangePoint` values and print any that are true. These values correspond to the index of change points, if any were found.
 
 ```C# Snippet:DetectChangePoint
 //detect
@@ -56,7 +55,7 @@ var data = new
     series = data_points,
     granularity = "daily"
 };
-Response response = client.DetectChangePoint(RequestContent.Create(data));
+Response response = client.DetectUnivariateChangePoint(RequestContent.Create(data));
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 
 List<int> change_point_indexs = new List<int>();

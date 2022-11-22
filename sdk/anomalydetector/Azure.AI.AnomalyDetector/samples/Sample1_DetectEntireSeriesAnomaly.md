@@ -16,10 +16,9 @@ string apiKey = TestEnvironment.ApiKey;
 
 var endpointUri = new Uri(endpoint);
 var credential = new AzureKeyCredential(apiKey);
-String apiVersion = "v1.1";
 
 //create client
-AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, apiVersion, credential);
+AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, credential);
 ```
 
 ## Load time series and create DetectRequest
@@ -46,7 +45,7 @@ using (StreamReader reader = new StreamReader("./samples/data/request-data.csv")
 ```
 
 ## Detect anomalies of the entire series
-Call the client's `DetectEntireSeries` method with the data and get the response. Iterate through the response's `isAnomaly` values and print any that are true. These values correspond to the index of anomalous data points, if any were found.
+Call the client's `DetectUnivariateEntireSeries` method with the data and get the response. Iterate through the response's `isAnomaly` values and print any that are true. These values correspond to the index of anomalous data points, if any were found.
 
 ```C# Snippet:DetectEntireSeriesAnomaly
 //detect
@@ -59,7 +58,7 @@ try
         series = data_points,
         granularity = "daily"
     };
-    Response response = client.DetectEntireSeries(RequestContent.Create(data));
+    Response response = client.DetectUnivariateEntireSeries(RequestContent.Create(data));
     JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
     bool hasAnomaly = false;
     for (int i = 0; i < result.GetProperty("isAnomaly").GetArrayLength(); ++i)
