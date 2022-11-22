@@ -34,10 +34,9 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
             Console.WriteLine(endpoint);
             var endpointUri = new Uri(endpoint);
             var credential = new AzureKeyCredential(apiKey);
-            String apiVersion = "v1.1";
 
             //create client
-            AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, apiVersion, credential);
+            AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, credential);
             #endregion
 
             // train
@@ -106,7 +105,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
                 };
 
                 TestContext.Progress.WriteLine("Training new model...(it may take a few minutes)");
-                Response response = client.CreateMultivariateModel(RequestContent.Create(data));
+                Response response = client.CreateAndTrainMultivariateModel(RequestContent.Create(data));
                 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
                 Guid trained_model_id = Guid.Parse(result.GetProperty("modelId").ToString());
                 Console.WriteLine(String.Format("Training model id is {0}", trained_model_id));
@@ -168,20 +167,20 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
                 };
 
                 TestContext.Progress.WriteLine("Start batch detection, this might take a few minutes...");
-                Response response = client.BatchDetectAnomaly(model_id, RequestContent.Create(data));
+                Response response = client.DetectMultivariateBatchAnomaly(model_id, RequestContent.Create(data));
                 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
                 Guid result_id = Guid.Parse(result.GetProperty("resultId").ToString());
                 TestContext.Progress.WriteLine(String.Format("result id is: {0}", result_id));
 
                 // get detection result
-                response = client.GetBatchDetectionResult(result_id);
+                response = client.GetMultivariateBatchDetectionResult(result_id);
                 JsonElement detection_result = JsonDocument.Parse(response.ContentStream).RootElement;
                 String result_status = result.GetProperty("summary").GetProperty("status").ToString();
                 int tryout_count = 0;
                 while (tryout_count < max_tryout & result_status != "READY" & result_status != "FAILED")
                 {
                     System.Threading.Thread.Sleep(1000);
-                    response = client.GetBatchDetectionResult(result_id);
+                    response = client.GetMultivariateBatchDetectionResult(result_id);
                     detection_result = JsonDocument.Parse(response.ContentStream).RootElement;
                     result_status = detection_result.GetProperty("summary").GetProperty("status").ToString();
                     TestContext.Progress.WriteLine(String.Format("try: {0}, result id: {1} Detection status is {2}", tryout_count, result_id, result_status));
@@ -223,7 +222,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
                     string json = r.ReadToEnd();
                     data = JsonDocument.Parse(json).RootElement;
                 }
-                Response response = client.LastDetectAnomaly(model_id, RequestContent.Create(data));
+                Response response = client.DetectMultivariateLastAnomaly(model_id, RequestContent.Create(data));
                 return JsonDocument.Parse(response.ContentStream).RootElement;
             }
             catch (Exception ex)

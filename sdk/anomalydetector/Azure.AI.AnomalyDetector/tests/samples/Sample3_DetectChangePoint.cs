@@ -29,10 +29,9 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
 
             var endpointUri = new Uri(endpoint);
             var credential = new AzureKeyCredential(apiKey);
-            String apiVersion = "v1.1";
 
             //create client
-            AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, apiVersion, credential);
+            AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, credential);
             #endregion
 
             #region Snippet:ReadSeriesDataForChangePoint
@@ -62,7 +61,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
                 series = data_points,
                 granularity = "daily"
             };
-            Response response = client.DetectChangePoint(RequestContent.Create(data));
+            Response response = client.DetectUnivariateChangePoint(RequestContent.Create(data));
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 
             List<int> change_point_indexs = new List<int>();

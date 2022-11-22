@@ -29,10 +29,9 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
 
             var endpointUri = new Uri(endpoint);
             var credential = new AzureKeyCredential(apiKey);
-            String apiVersion = "v1.1";
 
             //create client
-            AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, apiVersion, credential);
+            AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, credential);
             #endregion
 
             #region Snippet:ReadSeriesDataLast
@@ -64,7 +63,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
                     series = data_points,
                     granularity = "daily"
                 };
-                Response response = client.DetectLastPoint(RequestContent.Create(data));
+                Response response = client.DetectUnivariateLastPoint(RequestContent.Create(data));
                 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 
                 if (bool.Parse(result.GetProperty("isAnomaly").ToString()))
