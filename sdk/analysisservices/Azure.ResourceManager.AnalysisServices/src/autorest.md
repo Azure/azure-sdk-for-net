@@ -17,9 +17,16 @@ modelerfour:
   flatten-payloads: false
 
 
-rename-mapping:
-  State: AnalysisServicesState
-  Status: AnalysisServicesStatus
+# rename-mapping:
+#   State: AnalysisServicesState
+#   Status: AnalysisServicesStatus
+#   AnalysisServicesServers.value: Resources
+#   SkuEnumerationForNewResourceResult.value: SKUs
+#   SkuEnumerationForExistingResourceResult.value: SKUs
+#   Resource.sku: AnalysisServicesSKU
+#   AnalysisServicesServer.properties.sku: AnalysisServicesServerSKU
+#   ServerAdministrators.members: AdministratorIdentities
+#   SkuEnumerationForExistingResourceResult.value: ExistingResources
 
 format-by-name-rules:
   'tenantId': 'uuid'

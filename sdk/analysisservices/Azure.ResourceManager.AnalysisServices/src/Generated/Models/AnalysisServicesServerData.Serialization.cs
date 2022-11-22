@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AnalysisServices
             Optional<ConnectionMode> querypoolConnectionMode = default;
             Optional<ManagedMode> managedMode = default;
             Optional<ServerMonitorMode> serverMonitorMode = default;
-            Optional<AnalysisServicesState> state = default;
+            Optional<State> state = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<string> serverFullName = default;
             Optional<ResourceSku> sku0 = default;
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.AnalysisServices
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            state = new AnalysisServicesState(property0.Value.GetString());
+                            state = new State(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))

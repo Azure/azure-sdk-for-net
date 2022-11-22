@@ -9,9 +9,6 @@ Corrected the format of all `uuid` type properties / parameters.
 Corrected the format of all `Uri` type properties / parameters.
 Corrected the format of all `ETag` type properties / parameters.
 Corrected the format of all `AzureLocation` type properties / parameters.
-Corrected all acronyms which not follow [.Net Naming Guidelines](https://docs.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
-Corrected the name of model class `Status` from `Status` to `AnalysisServiceStatus`.
-Corrected the name of model class `State` from `State` to `AnalysisServiceState`.
 
 ### General New Features
 
