@@ -64,12 +64,12 @@ namespace Azure.ResourceManager.AnalysisServices
             if (Optional.IsDefined(ManagedMode))
             {
                 writer.WritePropertyName("managedMode");
-                writer.WriteStringValue(ManagedMode.Value.ToSerialString());
+                writer.WriteStringValue(ManagedMode.Value.ToString());
             }
             if (Optional.IsDefined(ServerMonitorMode))
             {
                 writer.WritePropertyName("serverMonitorMode");
-                writer.WriteStringValue(ServerMonitorMode.Value.ToSerialString());
+                writer.WriteStringValue(ServerMonitorMode.Value.ToString());
             }
             if (Optional.IsDefined(SkuPropertiesSku))
             {
