@@ -9,7 +9,7 @@ Corrected the format of all `uuid` type properties / parameters.
 Corrected the format of all `Uri` type properties / parameters.
 Corrected the format of all `ETag` type properties / parameters.
 Corrected the format of all `AzureLocation` type properties / parameters.
-
+The value of the int type generates an error when using ToSerialString() for type conversion, so the modelAsString in the corresponding property['x-ms-enum'] is converted to true in the autorest.md
 ### General New Features
 
 This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
