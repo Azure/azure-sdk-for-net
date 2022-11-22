@@ -24,7 +24,7 @@ namespace Azure.AI.TextAnalytics
             IList<HealthcareEntity> healthcareEntities,
             IList<HealthcareEntityRelation> entityRelations,
             IDictionary<string, object> fhirBundle,
-            DetectedLanguage? detectedLanguage,
+            string detectedLanguage,
             IList<TextAnalyticsWarning> warnings)
             : base(id, statistics)
         {
@@ -57,7 +57,7 @@ namespace Azure.AI.TextAnalytics
         /// The language of the input document as detected by the service when requested to perform automatic language
         /// detection, which is possible by specifying "auto" as the language of the input document.
         /// </summary>
-        public DetectedLanguage? DetectedLanguage { get; }
+        public string DetectedLanguage { get; }
 
         /// <summary>
         /// Gets the collection of healthcare entities in the document.

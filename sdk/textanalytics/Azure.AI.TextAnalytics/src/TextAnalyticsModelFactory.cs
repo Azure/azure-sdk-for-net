@@ -1773,7 +1773,7 @@ namespace Azure.AI.TextAnalytics
             IEnumerable<HealthcareEntity> healthcareEntities,
             IEnumerable<HealthcareEntityRelation> entityRelations,
             IDictionary<string, object> fhirBundle,
-            DetectedLanguage? detectedLanguage,
+            string detectedLanguage,
             IEnumerable<TextAnalyticsWarning> warnings)
         {
             return new AnalyzeHealthcareEntitiesResult(id, statistics, healthcareEntities.ToList(), entityRelations.ToList(), fhirBundle, detectedLanguage, warnings.ToList());

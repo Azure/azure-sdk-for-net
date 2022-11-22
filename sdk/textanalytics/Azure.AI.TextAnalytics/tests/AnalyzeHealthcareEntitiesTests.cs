@@ -607,8 +607,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
                 if (isLanguageAutoDetected)
                 {
-                    Assert.IsNotNull(result.DetectedLanguage);
-                    Assert.That(result.DetectedLanguage.Value.Name, Is.Not.Null.And.Not.Empty);
+                    Assert.That(result.DetectedLanguage, Is.Not.Null.And.Not.Empty);
                 }
                 else
                 {

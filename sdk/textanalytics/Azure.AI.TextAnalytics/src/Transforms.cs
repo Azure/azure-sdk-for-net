@@ -408,17 +408,13 @@ namespace Azure.AI.TextAnalytics
             // Read entities.
             foreach (var document in results.Documents)
             {
-                DetectedLanguage? detectedLanguage = !string.IsNullOrEmpty(document.DetectedLanguage)
-                    ? new DetectedLanguage(document.DetectedLanguage, default, default, default, default)
-                    : null;
-
                 healthcareEntitiesResults.Add(new AnalyzeHealthcareEntitiesResult(
                     document.Id,
                     document.Statistics ?? default,
                     ConvertToHealthcareEntityCollection(document.Entities),
                     ConvertToHealthcareEntityRelationsCollection(document.Entities, document.Relations),
                     document.FhirBundle,
-                    detectedLanguage,
+                    document.DetectedLanguage,
                     ConvertToWarnings(document.Warnings)));
             }
 
