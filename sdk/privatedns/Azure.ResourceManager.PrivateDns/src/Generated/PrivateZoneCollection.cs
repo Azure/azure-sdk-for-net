@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateZoneName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<PrivateZoneResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateZoneName, PrivateZoneData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PrivateZoneResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateZoneName, PrivateZoneData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
             Argument.AssertNotNull(data, nameof(data));
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateZoneName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<PrivateZoneResource> CreateOrUpdate(WaitUntil waitUntil, string privateZoneName, PrivateZoneData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PrivateZoneResource> CreateOrUpdate(WaitUntil waitUntil, string privateZoneName, PrivateZoneData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
             Argument.AssertNotNull(data, nameof(data));

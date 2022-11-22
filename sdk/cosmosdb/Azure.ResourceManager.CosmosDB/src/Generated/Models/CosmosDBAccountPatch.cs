@@ -120,5 +120,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 Capacity.TotalThroughputLimit = value;
             }
         }
+
+        /// <summary> This property is ignored during the update operation, as the metadata is read-only. The object represents the metadata for the Account Keys of the Cosmos DB account. </summary>
+        public DatabaseAccountKeysMetadata KeysMetadata { get; }
+        /// <summary> Flag to indicate enabling/disabling of Partition Merge feature on the account. </summary>
+        public bool? EnablePartitionMerge { get; set; }
     }
 }
