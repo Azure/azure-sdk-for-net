@@ -1474,8 +1474,8 @@ namespace Azure.ResourceManager.Synapse
         public virtual Azure.ResourceManager.Synapse.MaintenanceWindowResource GetMaintenanceWindow() { throw null; }
         public virtual Azure.ResourceManager.Synapse.MaintenanceWindowOptionResource GetMaintenanceWindowOption() { throw null; }
         public virtual Azure.ResourceManager.Synapse.MetadataSyncConfigResource GetMetadataSyncConfig() { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Synapse.SensitivityLabelResource> GetRecommendedSqlPoolSensitivityLabels(bool? includeDisabledRecommendations = default(bool?), string skipToken = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Synapse.SensitivityLabelResource> GetRecommendedSqlPoolSensitivityLabelsAsync(bool? includeDisabledRecommendations = default(bool?), string skipToken = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Synapse.SensitivityLabelResource> GetRecommendedSqlPoolSensitivityLabels(Azure.ResourceManager.Synapse.Models.SqlPoolGetRecommendedSqlPoolSensitivityLabelsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Synapse.SensitivityLabelResource> GetRecommendedSqlPoolSensitivityLabelsAsync(Azure.ResourceManager.Synapse.Models.SqlPoolGetRecommendedSqlPoolSensitivityLabelsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Synapse.ReplicationLinkResource> GetReplicationLink(string linkId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.ReplicationLinkResource>> GetReplicationLinkAsync(string linkId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Synapse.ReplicationLinkCollection GetReplicationLinks() { throw null; }
@@ -3921,6 +3921,13 @@ namespace Azure.ResourceManager.Synapse.Models
         public string Content { get { throw null; } set { } }
         public string Filename { get { throw null; } set { } }
         public System.DateTimeOffset? Time { get { throw null; } }
+    }
+    public partial class SqlPoolGetRecommendedSqlPoolSensitivityLabelsOptions
+    {
+        public SqlPoolGetRecommendedSqlPoolSensitivityLabelsOptions() { }
+        public string Filter { get { throw null; } set { } }
+        public bool? IncludeDisabledRecommendations { get { throw null; } set { } }
+        public string SkipToken { get { throw null; } set { } }
     }
     public partial class SqlPoolOperation : Azure.ResourceManager.Models.ResourceData
     {

@@ -429,6 +429,10 @@ directive:
     where: $.definitions.Alias.properties.type["x-ms-enum"]
     transform:
       $["name"] = "ResourceTypeAliasType";
+  - from: resources.json
+    where: $.paths["/{resourceId}"].get.parameters[0]
+    transform:
+      $["x-ms-format"] = "arm-id";
   - from: policyDefinitions.json
     where: $.definitions.ParameterDefinitionsValue
     transform:

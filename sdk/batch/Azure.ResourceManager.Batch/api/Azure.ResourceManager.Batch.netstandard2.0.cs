@@ -8,7 +8,9 @@ namespace Azure.ResourceManager.Batch
         public virtual Azure.Response<bool> Exists(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Batch.BatchAccountCertificateResource> Get(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Batch.BatchAccountCertificateResource> GetAll(Azure.ResourceManager.Batch.Models.BatchAccountCertificateGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Batch.BatchAccountCertificateResource> GetAll(int? maxresults = default(int?), string select = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Batch.BatchAccountCertificateResource> GetAllAsync(Azure.ResourceManager.Batch.Models.BatchAccountCertificateGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Batch.BatchAccountCertificateResource> GetAllAsync(int? maxresults = default(int?), string select = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.BatchAccountCertificateResource>> GetAsync(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Batch.BatchAccountCertificateResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Batch.BatchAccountCertificateResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -121,7 +123,9 @@ namespace Azure.ResourceManager.Batch
         public virtual Azure.Response<bool> Exists(string poolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string poolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Batch.BatchAccountPoolResource> Get(string poolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Batch.BatchAccountPoolResource> GetAll(Azure.ResourceManager.Batch.Models.BatchAccountPoolGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Batch.BatchAccountPoolResource> GetAll(int? maxresults = default(int?), string select = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Batch.BatchAccountPoolResource> GetAllAsync(Azure.ResourceManager.Batch.Models.BatchAccountPoolGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Batch.BatchAccountPoolResource> GetAllAsync(int? maxresults = default(int?), string select = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.BatchAccountPoolResource>> GetAsync(string poolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Batch.BatchAccountPoolResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Batch.BatchAccountPoolResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -433,6 +437,13 @@ namespace Azure.ResourceManager.Batch.Models
         Pfx = 0,
         Cer = 1,
     }
+    public partial class BatchAccountCertificateGetAllOptions
+    {
+        public BatchAccountCertificateGetAllOptions() { }
+        public string Filter { get { throw null; } set { } }
+        public int? Maxresults { get { throw null; } set { } }
+        public string Select { get { throw null; } set { } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BatchAccountCertificateProvisioningState : System.IEquatable<Azure.ResourceManager.Batch.Models.BatchAccountCertificateProvisioningState>
     {
@@ -538,6 +549,13 @@ namespace Azure.ResourceManager.Batch.Models
         public Azure.ResponseError Error { get { throw null; } }
         public System.DateTimeOffset EvaluationOn { get { throw null; } }
         public string Results { get { throw null; } }
+    }
+    public partial class BatchAccountPoolGetAllOptions
+    {
+        public BatchAccountPoolGetAllOptions() { }
+        public string Filter { get { throw null; } set { } }
+        public int? Maxresults { get { throw null; } set { } }
+        public string Select { get { throw null; } set { } }
     }
     public partial class BatchAccountPoolMetadataItem
     {

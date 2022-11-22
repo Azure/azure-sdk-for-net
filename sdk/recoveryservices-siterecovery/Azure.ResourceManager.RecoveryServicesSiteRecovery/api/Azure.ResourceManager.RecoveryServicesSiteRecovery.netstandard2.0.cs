@@ -197,8 +197,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         public virtual Azure.Response<bool> Exists(string migrationItemName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string migrationItemName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.RecoveryServicesSiteRecovery.MigrationItemResource> Get(string migrationItemName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.MigrationItemResource> GetAll(string skipToken = null, string takeToken = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.MigrationItemResource> GetAllAsync(string skipToken = null, string takeToken = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.MigrationItemResource> GetAll(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.MigrationItemGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.MigrationItemResource> GetAllAsync(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.MigrationItemGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServicesSiteRecovery.MigrationItemResource>> GetAsync(string migrationItemName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.RecoveryServicesSiteRecovery.MigrationItemResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.MigrationItemResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.RecoveryServicesSiteRecovery.MigrationItemResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.MigrationItemResource>.GetEnumerator() { throw null; }
@@ -376,8 +376,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         public virtual Azure.Response<bool> Exists(string protectableItemName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string protectableItemName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.RecoveryServicesSiteRecovery.ProtectableItemResource> Get(string protectableItemName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.ProtectableItemResource> GetAll(string filter = null, string take = null, string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.ProtectableItemResource> GetAllAsync(string filter = null, string take = null, string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.ProtectableItemResource> GetAll(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ProtectableItemGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.ProtectableItemResource> GetAllAsync(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ProtectableItemGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServicesSiteRecovery.ProtectableItemResource>> GetAsync(string protectableItemName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.RecoveryServicesSiteRecovery.ProtectableItemResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.ProtectableItemResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.RecoveryServicesSiteRecovery.ProtectableItemResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.ProtectableItemResource>.GetEnumerator() { throw null; }
@@ -622,8 +622,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.JobCollection GetJobs(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceName) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.LogicalNetworkResource GetLogicalNetworkResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.MigrationItemResource GetMigrationItemResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.MigrationItemResource> GetMigrationItems(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceName, string skipToken = null, string takeToken = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.MigrationItemResource> GetMigrationItemsAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceName, string skipToken = null, string takeToken = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.MigrationItemResource> GetMigrationItems(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceName, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.RecoveryServicesSiteRecoveryExtensionsGetMigrationItemsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.MigrationItemResource> GetMigrationItemsAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceName, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.RecoveryServicesSiteRecoveryExtensionsGetMigrationItemsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.MigrationRecoveryPointResource GetMigrationRecoveryPointResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.NetworkMappingResource GetNetworkMappingResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.NetworkMappingResource> GetNetworkMappings(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3748,6 +3748,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public MigrationItemCreateOrUpdateContent(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.EnableMigrationInputProperties properties) { }
         public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.EnableMigrationInputProperties Properties { get { throw null; } }
     }
+    public partial class MigrationItemGetAllOptions
+    {
+        public MigrationItemGetAllOptions() { }
+        public string Filter { get { throw null; } set { } }
+        public string SkipToken { get { throw null; } set { } }
+        public string TakeToken { get { throw null; } set { } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MigrationItemOperation : System.IEquatable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.MigrationItemOperation>
     {
@@ -4176,6 +4183,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public long? UsedMemoryInBytes { get { throw null; } }
         public long? UsedSpaceInBytes { get { throw null; } }
         public string Version { get { throw null; } }
+    }
+    public partial class ProtectableItemGetAllOptions
+    {
+        public ProtectableItemGetAllOptions() { }
+        public string Filter { get { throw null; } set { } }
+        public string SkipToken { get { throw null; } set { } }
+        public string Take { get { throw null; } set { } }
     }
     public partial class ProtectableItemProperties
     {
@@ -4659,6 +4673,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string ProviderVersionState { get { throw null; } }
         public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.IdentityProviderDetails ResourceAccessIdentityDetails { get { throw null; } }
         public string ServerVersion { get { throw null; } }
+    }
+    public partial class RecoveryServicesSiteRecoveryExtensionsGetMigrationItemsOptions
+    {
+        public RecoveryServicesSiteRecoveryExtensionsGetMigrationItemsOptions() { }
+        public string Filter { get { throw null; } set { } }
+        public string SkipToken { get { throw null; } set { } }
+        public string TakeToken { get { throw null; } set { } }
     }
     public abstract partial class RecoveryVirtualNetworkCustomDetails
     {

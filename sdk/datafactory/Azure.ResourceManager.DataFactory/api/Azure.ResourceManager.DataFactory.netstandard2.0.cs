@@ -380,8 +380,8 @@ namespace Azure.ResourceManager.DataFactory
         public virtual Azure.ResourceManager.DataFactory.FactoryPipelineData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string factoryName, string pipelineName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataFactory.Models.PipelineCreateRunResult> CreateRun(System.Collections.Generic.IDictionary<string, System.BinaryData> parameterValueSpecification = null, string referencePipelineRunId = null, bool? isRecovery = default(bool?), string startActivityName = null, bool? startFromFailure = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataFactory.Models.PipelineCreateRunResult>> CreateRunAsync(System.Collections.Generic.IDictionary<string, System.BinaryData> parameterValueSpecification = null, string referencePipelineRunId = null, bool? isRecovery = default(bool?), string startActivityName = null, bool? startFromFailure = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataFactory.Models.PipelineCreateRunResult> CreateRun(Azure.ResourceManager.DataFactory.Models.FactoryPipelineCreateRunOptions options, System.Collections.Generic.IDictionary<string, System.BinaryData> parameterValueSpecification = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataFactory.Models.PipelineCreateRunResult>> CreateRunAsync(Azure.ResourceManager.DataFactory.Models.FactoryPipelineCreateRunOptions options, System.Collections.Generic.IDictionary<string, System.BinaryData> parameterValueSpecification = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataFactory.FactoryPipelineResource> Get(string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2895,6 +2895,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         public FactoryMetadataItemInfo() { }
         public System.BinaryData Name { get { throw null; } set { } }
         public System.BinaryData Value { get { throw null; } set { } }
+    }
+    public partial class FactoryPipelineCreateRunOptions
+    {
+        public FactoryPipelineCreateRunOptions() { }
+        public bool? IsRecovery { get { throw null; } set { } }
+        public string ReferencePipelineRunId { get { throw null; } set { } }
+        public string StartActivityName { get { throw null; } set { } }
+        public bool? StartFromFailure { get { throw null; } set { } }
     }
     public partial class FactoryPipelineReference
     {
