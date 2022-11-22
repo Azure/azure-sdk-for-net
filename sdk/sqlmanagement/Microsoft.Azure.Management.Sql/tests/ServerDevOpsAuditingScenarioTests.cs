@@ -34,10 +34,10 @@ namespace Sql.Tests
                     IsAzureMonitorTargetEnabled = true
                 };
 
-                ServerDevOpsAuditingSettings resultDevOpsSettings = await client.ServerDevOpsAuditSettings.CreateOrUpdateAsync(resourceGroup.Name, server.Name, PolicyName, devOpsSettings);
+                ServerDevOpsAuditingSettings resultDevOpsSettings = await client.ServerDevOpsAuditSettings.CreateOrUpdateAsync(resourceGroup.Name, server.Name, devOpsSettings);
                 VerifyPolicy(devOpsSettings, resultDevOpsSettings);
 
-                resultDevOpsSettings = await client.ServerDevOpsAuditSettings.GetAsync(resourceGroup.Name, server.Name, PolicyName);
+                resultDevOpsSettings = await client.ServerDevOpsAuditSettings.GetAsync(resourceGroup.Name, server.Name);
                 VerifyPolicy(devOpsSettings, resultDevOpsSettings);
 
                 IPage<ServerDevOpsAuditingSettings> resultItems = await client.ServerDevOpsAuditSettings.ListByServerAsync(resourceGroup.Name, server.Name);
