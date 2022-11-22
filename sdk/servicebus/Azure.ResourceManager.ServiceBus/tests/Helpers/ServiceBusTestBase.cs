@@ -25,8 +25,9 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Helpers
         protected const string Key1 = "key1";
         protected const string Key2 = "key2";
         protected const string Key3 = "key3";
+        protected static string[] ExceptionList = { "ServiceBusPrivateLinkResource" };
 
-        protected ServiceBusTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
+        protected ServiceBusTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode, exceptionList: ExceptionList)
         {
             // Lazy sanitize fields in the request and response bodies
             JsonPathSanitizers.Add("$..aliasPrimaryConnectionString");

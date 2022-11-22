@@ -20,16 +20,18 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
     public class NetworkServiceClientTestBase : ManagementRecordedTestBase<NetworkManagementTestEnvironment>
     {
         private const string dummySSHKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+wWK73dCr+jgQOAxNsHAnNNNMEMWOHYEccp6wJm2gotpr9katuF/ZAdou5AaW1C61slRkHRkpRRX9FA9CYBiitZgvCCz+3nWNN7l/Up54Zps/pHWGZLHNJZRYyAB6j5yVLMVHIHriY49d/GZTZVNB8GoJv9Gakwc/fuEZYYl4YDFiGMBP///TzlI4jhiJzjKnEvqPFki5p2ZRJqcbCiF4pJrxUQR/RXqVFQdbRLZgYfJ8xGB878RENq3yQ39d8dVOkq4edbkzwcUmwwwkYVPIoDGsYLaRHnG+To7FvMeyO7xDVQkMKzopTQV8AuKpyvpqu0a9pWOMaiCyDytO7GGN you@me.com";
-        public NetworkServiceClientTestBase(bool isAsync) : base(isAsync)
+        protected static string[] ExceptionList = { "ApplicationGatewayPrivateLinkResource" };
+
+        public NetworkServiceClientTestBase(bool isAsync) : base(isAsync, exceptionList: ExceptionList)
         {
         }
 
-        public NetworkServiceClientTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
+        public NetworkServiceClientTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode, exceptionList: ExceptionList)
         {
         }
 
         protected NetworkServiceClientTestBase(bool isAsync, ResourceType resourceType, string apiVersion, RecordedTestMode? mode = null)
-            : base(isAsync, resourceType, apiVersion, mode)
+            : base(isAsync, resourceType, apiVersion, mode, exceptionList: ExceptionList)
         {
         }
 

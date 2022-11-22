@@ -12,9 +12,9 @@ using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    internal partial class DiagnosticSettingsResourceCollection
+    internal partial class DiagnosticSettingsResourceList
     {
-        internal static DiagnosticSettingsResourceCollection DeserializeDiagnosticSettingsResourceCollection(JsonElement element)
+        internal static DiagnosticSettingsResourceList DeserializeDiagnosticSettingsResourceList(JsonElement element)
         {
             Optional<IReadOnlyList<DiagnosticSettingData>> value = default;
             foreach (var property in element.EnumerateObject())
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new DiagnosticSettingsResourceCollection(Optional.ToList(value));
+            return new DiagnosticSettingsResourceList(Optional.ToList(value));
         }
     }
 }

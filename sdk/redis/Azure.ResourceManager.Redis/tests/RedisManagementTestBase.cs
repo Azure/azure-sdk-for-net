@@ -18,13 +18,15 @@ namespace Azure.ResourceManager.Redis.Tests
 
         protected SubscriptionResource DefaultSubscription { get; private set; }
 
+        protected static string[] ExceptionList = { "RedisPrivateLinkResource" };
+
         protected RedisManagementTestBase(bool isAsync, RecordedTestMode mode)
-        : base(isAsync, mode)
+        : base(isAsync, mode, exceptionList: ExceptionList)
         {
         }
 
         protected RedisManagementTestBase(bool isAsync)
-            : base(isAsync)
+            : base(isAsync, exceptionList: ExceptionList)
         {
         }
 

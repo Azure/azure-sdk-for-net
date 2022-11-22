@@ -25,14 +25,15 @@ namespace Azure.ResourceManager.StorageSync.Tests
         protected static string DefaultStorageSyncGroupRecordingName = "afs-sdk-sg-create";
         protected static string DefaultCloudEndpointRecordingName = "afs-sdk-cep-create";
         protected static string DefaultServerEndpointRecordingName = "afs-sdk-sep-create";
+        protected static string[] ExceptionList = { "StorageSyncPrivateLinkResource" };
 
         protected StorageSyncManagementTestBase(bool isAsync, RecordedTestMode mode)
-        : base(isAsync, mode)
+        : base(isAsync, mode, exceptionList: ExceptionList)
         {
         }
 
         protected StorageSyncManagementTestBase(bool isAsync)
-            : base(isAsync)
+            : base(isAsync, exceptionList: ExceptionList)
         {
         }
 

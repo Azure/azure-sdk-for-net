@@ -12,9 +12,9 @@ using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    internal partial class AlertRuleResourceCollection
+    internal partial class AlertRuleResourceList
     {
-        internal static AlertRuleResourceCollection DeserializeAlertRuleResourceCollection(JsonElement element)
+        internal static AlertRuleResourceList DeserializeAlertRuleResourceList(JsonElement element)
         {
             Optional<IReadOnlyList<AlertRuleData>> value = default;
             foreach (var property in element.EnumerateObject())
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new AlertRuleResourceCollection(Optional.ToList(value));
+            return new AlertRuleResourceList(Optional.ToList(value));
         }
     }
 }

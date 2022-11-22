@@ -12,25 +12,30 @@ using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    internal partial class LogProfileCollection
+    internal partial class MetricAlertResourceList
     {
-        internal static LogProfileCollection DeserializeLogProfileCollection(JsonElement element)
+        internal static MetricAlertResourceList DeserializeMetricAlertResourceList(JsonElement element)
         {
-            IReadOnlyList<LogProfileData> value = default;
+            Optional<IReadOnlyList<MetricAlertData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<LogProfileData> array = new List<LogProfileData>();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<MetricAlertData> array = new List<MetricAlertData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogProfileData.DeserializeLogProfileData(item));
+                        array.Add(MetricAlertData.DeserializeMetricAlertData(item));
                     }
                     value = array;
                     continue;
                 }
             }
-            return new LogProfileCollection(value);
+            return new MetricAlertResourceList(Optional.ToList(value));
         }
     }
 }

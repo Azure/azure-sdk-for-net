@@ -12,18 +12,18 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Represents a collection of scheduled query rule resources. </summary>
-    internal partial class ScheduledQueryRuleResourceCollection
+    internal partial class ScheduledQueryRuleResourceList
     {
-        /// <summary> Initializes a new instance of ScheduledQueryRuleResourceCollection. </summary>
-        internal ScheduledQueryRuleResourceCollection()
+        /// <summary> Initializes a new instance of ScheduledQueryRuleResourceList. </summary>
+        internal ScheduledQueryRuleResourceList()
         {
             Value = new ChangeTrackingList<ScheduledQueryRuleData>();
         }
 
-        /// <summary> Initializes a new instance of ScheduledQueryRuleResourceCollection. </summary>
+        /// <summary> Initializes a new instance of ScheduledQueryRuleResourceList. </summary>
         /// <param name="value"> The values for the scheduled query rule resources. </param>
         /// <param name="nextLink"> Provides the link to retrieve the next set of elements. </param>
-        internal ScheduledQueryRuleResourceCollection(IReadOnlyList<ScheduledQueryRuleData> value, string nextLink)
+        internal ScheduledQueryRuleResourceList(IReadOnlyList<ScheduledQueryRuleData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;

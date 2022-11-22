@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MetricAlertResourceCollection>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<MetricAlertResourceList>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -69,9 +69,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        MetricAlertResourceCollection value = default;
+                        MetricAlertResourceList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MetricAlertResourceCollection.DeserializeMetricAlertResourceCollection(document.RootElement);
+                        value = MetricAlertResourceList.DeserializeMetricAlertResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MetricAlertResourceCollection> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<MetricAlertResourceList> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        MetricAlertResourceCollection value = default;
+                        MetricAlertResourceList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MetricAlertResourceCollection.DeserializeMetricAlertResourceCollection(document.RootElement);
+                        value = MetricAlertResourceList.DeserializeMetricAlertResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MetricAlertResourceCollection>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<MetricAlertResourceList>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -140,9 +140,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        MetricAlertResourceCollection value = default;
+                        MetricAlertResourceList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MetricAlertResourceCollection.DeserializeMetricAlertResourceCollection(document.RootElement);
+                        value = MetricAlertResourceList.DeserializeMetricAlertResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MetricAlertResourceCollection> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<MetricAlertResourceList> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -167,9 +167,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        MetricAlertResourceCollection value = default;
+                        MetricAlertResourceList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MetricAlertResourceCollection.DeserializeMetricAlertResourceCollection(document.RootElement);
+                        value = MetricAlertResourceList.DeserializeMetricAlertResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

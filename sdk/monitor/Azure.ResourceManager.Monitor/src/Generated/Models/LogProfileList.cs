@@ -14,21 +14,21 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Represents a collection of log profiles. </summary>
-    internal partial class LogProfileCollection
+    internal partial class LogProfileList
     {
-        /// <summary> Initializes a new instance of LogProfileCollection. </summary>
+        /// <summary> Initializes a new instance of LogProfileList. </summary>
         /// <param name="value"> the values of the log profiles. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal LogProfileCollection(IEnumerable<LogProfileData> value)
+        internal LogProfileList(IEnumerable<LogProfileData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of LogProfileCollection. </summary>
+        /// <summary> Initializes a new instance of LogProfileList. </summary>
         /// <param name="value"> the values of the log profiles. </param>
-        internal LogProfileCollection(IReadOnlyList<LogProfileData> value)
+        internal LogProfileList(IReadOnlyList<LogProfileData> value)
         {
             Value = value;
         }

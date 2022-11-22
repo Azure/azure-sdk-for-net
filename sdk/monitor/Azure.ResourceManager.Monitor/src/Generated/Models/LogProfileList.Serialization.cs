@@ -8,28 +8,29 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    internal partial class EventCategoryCollection
+    internal partial class LogProfileList
     {
-        internal static EventCategoryCollection DeserializeEventCategoryCollection(JsonElement element)
+        internal static LogProfileList DeserializeLogProfileList(JsonElement element)
         {
-            IReadOnlyList<MonitorLocalizableString> value = default;
+            IReadOnlyList<LogProfileData> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<MonitorLocalizableString> array = new List<MonitorLocalizableString>();
+                    List<LogProfileData> array = new List<LogProfileData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorLocalizableString.DeserializeMonitorLocalizableString(item));
+                        array.Add(LogProfileData.DeserializeLogProfileData(item));
                     }
                     value = array;
                     continue;
                 }
             }
-            return new EventCategoryCollection(value);
+            return new LogProfileList(value);
         }
     }
 }

@@ -242,6 +242,16 @@ rename-mapping:
   Operator: MetricCriteriaOperator
   ComparisonOperationType: MetricTriggerComparisonOperation
   ConditionOperator: MonitorConditionOperator
+  AlertRuleResourceCollection: AlertRuleResourceList
+  AutoscaleSettingResourceCollection: AutoscaleSettingResourceList
+  DiagnosticSettingsCategoryResourceCollection: DiagnosticSettingsCategoryResourceList
+  DiagnosticSettingsResourceCollection: DiagnosticSettingsResourceList
+  EventCategoryCollection: EventCategoryList
+  EventDataCollection: EventDataList
+  LogProfileCollection: LogProfileList
+  MetricAlertResourceCollection: MetricAlertResourceList
+  MetricAlertStatusCollection: MetricAlertStatusList
+  ScheduledQueryRuleResourceCollection: ScheduledQueryRuleResourceList
 
 directive:
   # fixing the format since rename-mapping has bugs on this

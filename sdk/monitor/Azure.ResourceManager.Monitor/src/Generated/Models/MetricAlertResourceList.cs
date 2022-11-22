@@ -12,17 +12,17 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Represents a collection of alert rule resources. </summary>
-    internal partial class MetricAlertResourceCollection
+    internal partial class MetricAlertResourceList
     {
-        /// <summary> Initializes a new instance of MetricAlertResourceCollection. </summary>
-        internal MetricAlertResourceCollection()
+        /// <summary> Initializes a new instance of MetricAlertResourceList. </summary>
+        internal MetricAlertResourceList()
         {
             Value = new ChangeTrackingList<MetricAlertData>();
         }
 
-        /// <summary> Initializes a new instance of MetricAlertResourceCollection. </summary>
+        /// <summary> Initializes a new instance of MetricAlertResourceList. </summary>
         /// <param name="value"> the values for the alert rule resources. </param>
-        internal MetricAlertResourceCollection(IReadOnlyList<MetricAlertData> value)
+        internal MetricAlertResourceList(IReadOnlyList<MetricAlertData> value)
         {
             Value = value;
         }

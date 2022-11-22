@@ -12,11 +12,11 @@ using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    internal partial class MetricAlertResourceCollection
+    internal partial class DiagnosticSettingsCategoryResourceList
     {
-        internal static MetricAlertResourceCollection DeserializeMetricAlertResourceCollection(JsonElement element)
+        internal static DiagnosticSettingsCategoryResourceList DeserializeDiagnosticSettingsCategoryResourceList(JsonElement element)
         {
-            Optional<IReadOnlyList<MetricAlertData>> value = default;
+            Optional<IReadOnlyList<DiagnosticSettingsCategoryData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,16 +26,16 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MetricAlertData> array = new List<MetricAlertData>();
+                    List<DiagnosticSettingsCategoryData> array = new List<DiagnosticSettingsCategoryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricAlertData.DeserializeMetricAlertData(item));
+                        array.Add(DiagnosticSettingsCategoryData.DeserializeDiagnosticSettingsCategoryData(item));
                     }
                     value = array;
                     continue;
                 }
             }
-            return new MetricAlertResourceCollection(Optional.ToList(value));
+            return new DiagnosticSettingsCategoryResourceList(Optional.ToList(value));
         }
     }
 }

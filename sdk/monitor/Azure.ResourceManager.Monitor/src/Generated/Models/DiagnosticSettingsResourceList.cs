@@ -12,17 +12,17 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Represents a collection of alert rule resources. </summary>
-    internal partial class DiagnosticSettingsResourceCollection
+    internal partial class DiagnosticSettingsResourceList
     {
-        /// <summary> Initializes a new instance of DiagnosticSettingsResourceCollection. </summary>
-        internal DiagnosticSettingsResourceCollection()
+        /// <summary> Initializes a new instance of DiagnosticSettingsResourceList. </summary>
+        internal DiagnosticSettingsResourceList()
         {
             Value = new ChangeTrackingList<DiagnosticSettingData>();
         }
 
-        /// <summary> Initializes a new instance of DiagnosticSettingsResourceCollection. </summary>
+        /// <summary> Initializes a new instance of DiagnosticSettingsResourceList. </summary>
         /// <param name="value"> The collection of diagnostic settings resources;. </param>
-        internal DiagnosticSettingsResourceCollection(IReadOnlyList<DiagnosticSettingData> value)
+        internal DiagnosticSettingsResourceList(IReadOnlyList<DiagnosticSettingData> value)
         {
             Value = value;
         }

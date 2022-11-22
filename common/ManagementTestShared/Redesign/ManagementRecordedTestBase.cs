@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.TestFramework
         private ResourceType _resourceType;
         protected string ApiVersion { get; }
 
-        protected ManagementRecordedTestBase(bool isAsync, RecordedTestMode? mode = default)
+        protected ManagementRecordedTestBase(bool isAsync, RecordedTestMode? mode = default, string[] exceptionList = default)
             : base(isAsync, mode)
         {
             AdditionalInterceptors = new[] { new ManagementInterceptor(this) };
@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.TestFramework
             SessionEnvironment = new TEnvironment();
             SessionEnvironment.Mode = Mode;
             Initialize();
-            InherentCheck();
+            InherentCheck(exceptionList);
         }
 
-        protected ManagementRecordedTestBase(bool isAsync, ResourceType resourceType, string apiVersion, RecordedTestMode? mode = default)
-            : this(isAsync, mode)
+        protected ManagementRecordedTestBase(bool isAsync, ResourceType resourceType, string apiVersion, RecordedTestMode? mode = default, string[] exceptionList = default)
+            : this(isAsync, mode, exceptionList)
         {
             _resourceType = resourceType;
             ApiVersion = apiVersion;
@@ -260,8 +260,7 @@ namespace Azure.ResourceManager.TestFramework
                 throw new InvalidOperationException("StopSessionRecording was never called please make sure you call that at the end of your OneTimeSetup");
         }
 
-        //[Test]
-        public void InherentCheck()
+        public void InherentCheck(string[] exceptionList = default)
         {
             var dllPath = Path.Combine(
                 Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
@@ -275,7 +274,10 @@ namespace Azure.ResourceManager.TestFramework
                         select t;
             foreach (var item in query.ToList())
             {
-                Assert.AreEqual("ArmResource", item.BaseType.Name);
+                if (!exceptionList.Contains(item.Name))
+                {
+                    Assert.AreEqual("ArmResource", item.BaseType.Name);
+                }
             }
 
             query = from t in Assembly.LoadFrom(dllPath).GetTypes()
@@ -283,7 +285,10 @@ namespace Azure.ResourceManager.TestFramework
                     select t;
             foreach (var item in query.ToList())
             {
-                Assert.AreEqual("ArmCollection", item.BaseType.Name);
+                if (!exceptionList.Contains(item.Name))
+                {
+                    Assert.AreEqual("ArmCollection", item.BaseType.Name);
+                }
             }
         }
     }

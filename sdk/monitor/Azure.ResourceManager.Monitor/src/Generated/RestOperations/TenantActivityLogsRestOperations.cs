@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="filter"> Reduces the set of data collected. &lt;br&gt;The **$filter** is very restricted and allows only the following patterns.&lt;br&gt;- List events for a resource group: $filter=eventTimestamp ge &apos;&lt;Start Time&gt;&apos; and eventTimestamp le &apos;&lt;End Time&gt;&apos; and eventChannels eq &apos;Admin, Operation&apos; and resourceGroupName eq &apos;&lt;ResourceGroupName&gt;&apos;.&lt;br&gt;- List events for resource: $filter=eventTimestamp ge &apos;&lt;Start Time&gt;&apos; and eventTimestamp le &apos;&lt;End Time&gt;&apos; and eventChannels eq &apos;Admin, Operation&apos; and resourceUri eq &apos;&lt;ResourceURI&gt;&apos;.&lt;br&gt;- List events for a subscription: $filter=eventTimestamp ge &apos;&lt;Start Time&gt;&apos; and eventTimestamp le &apos;&lt;End Time&gt;&apos; and eventChannels eq &apos;Admin, Operation&apos;.&lt;br&gt;- List events for a resource provider: $filter=eventTimestamp ge &apos;&lt;Start Time&gt;&apos; and eventTimestamp le &apos;&lt;End Time&gt;&apos; and eventChannels eq &apos;Admin, Operation&apos; and resourceProvider eq &apos;&lt;ResourceProviderName&gt;&apos;.&lt;br&gt;- List events for a correlation Id: api-version=2014-04-01&amp;$filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos; and eventChannels eq &apos;Admin, Operation&apos; and correlationId eq &apos;&lt;CorrelationID&gt;&apos;.&lt;br&gt;**NOTE**: No other syntax is allowed. </param>
         /// <param name="select"> Used to fetch events with only the given properties.&lt;br&gt;The **$select** argument is a comma separated list of property names to be returned. Possible values are: *authorization*, *claims*, *correlationId*, *description*, *eventDataId*, *eventName*, *eventTimestamp*, *httpRequest*, *level*, *operationId*, *operationName*, *properties*, *resourceGroupName*, *resourceProviderName*, *resourceId*, *status*, *submissionTimestamp*, *subStatus*, *subscriptionId*. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<EventDataCollection>> ListAsync(string filter = null, string select = null, CancellationToken cancellationToken = default)
+        public async Task<Response<EventDataList>> ListAsync(string filter = null, string select = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest(filter, select);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -72,9 +72,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        EventDataCollection value = default;
+                        EventDataList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EventDataCollection.DeserializeEventDataCollection(document.RootElement);
+                        value = EventDataList.DeserializeEventDataList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="filter"> Reduces the set of data collected. &lt;br&gt;The **$filter** is very restricted and allows only the following patterns.&lt;br&gt;- List events for a resource group: $filter=eventTimestamp ge &apos;&lt;Start Time&gt;&apos; and eventTimestamp le &apos;&lt;End Time&gt;&apos; and eventChannels eq &apos;Admin, Operation&apos; and resourceGroupName eq &apos;&lt;ResourceGroupName&gt;&apos;.&lt;br&gt;- List events for resource: $filter=eventTimestamp ge &apos;&lt;Start Time&gt;&apos; and eventTimestamp le &apos;&lt;End Time&gt;&apos; and eventChannels eq &apos;Admin, Operation&apos; and resourceUri eq &apos;&lt;ResourceURI&gt;&apos;.&lt;br&gt;- List events for a subscription: $filter=eventTimestamp ge &apos;&lt;Start Time&gt;&apos; and eventTimestamp le &apos;&lt;End Time&gt;&apos; and eventChannels eq &apos;Admin, Operation&apos;.&lt;br&gt;- List events for a resource provider: $filter=eventTimestamp ge &apos;&lt;Start Time&gt;&apos; and eventTimestamp le &apos;&lt;End Time&gt;&apos; and eventChannels eq &apos;Admin, Operation&apos; and resourceProvider eq &apos;&lt;ResourceProviderName&gt;&apos;.&lt;br&gt;- List events for a correlation Id: api-version=2014-04-01&amp;$filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos; and eventChannels eq &apos;Admin, Operation&apos; and correlationId eq &apos;&lt;CorrelationID&gt;&apos;.&lt;br&gt;**NOTE**: No other syntax is allowed. </param>
         /// <param name="select"> Used to fetch events with only the given properties.&lt;br&gt;The **$select** argument is a comma separated list of property names to be returned. Possible values are: *authorization*, *claims*, *correlationId*, *description*, *eventDataId*, *eventName*, *eventTimestamp*, *httpRequest*, *level*, *operationId*, *operationName*, *properties*, *resourceGroupName*, *resourceProviderName*, *resourceId*, *status*, *submissionTimestamp*, *subStatus*, *subscriptionId*. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<EventDataCollection> List(string filter = null, string select = null, CancellationToken cancellationToken = default)
+        public Response<EventDataList> List(string filter = null, string select = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest(filter, select);
             _pipeline.Send(message, cancellationToken);
@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        EventDataCollection value = default;
+                        EventDataList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EventDataCollection.DeserializeEventDataCollection(document.RootElement);
+                        value = EventDataList.DeserializeEventDataList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="select"> Used to fetch events with only the given properties.&lt;br&gt;The **$select** argument is a comma separated list of property names to be returned. Possible values are: *authorization*, *claims*, *correlationId*, *description*, *eventDataId*, *eventName*, *eventTimestamp*, *httpRequest*, *level*, *operationId*, *operationName*, *properties*, *resourceGroupName*, *resourceProviderName*, *resourceId*, *status*, *submissionTimestamp*, *subStatus*, *subscriptionId*. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<EventDataCollection>> ListNextPageAsync(string nextLink, string filter = null, string select = null, CancellationToken cancellationToken = default)
+        public async Task<Response<EventDataList>> ListNextPageAsync(string nextLink, string filter = null, string select = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
 
@@ -134,9 +134,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        EventDataCollection value = default;
+                        EventDataList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EventDataCollection.DeserializeEventDataCollection(document.RootElement);
+                        value = EventDataList.DeserializeEventDataList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="select"> Used to fetch events with only the given properties.&lt;br&gt;The **$select** argument is a comma separated list of property names to be returned. Possible values are: *authorization*, *claims*, *correlationId*, *description*, *eventDataId*, *eventName*, *eventTimestamp*, *httpRequest*, *level*, *operationId*, *operationName*, *properties*, *resourceGroupName*, *resourceProviderName*, *resourceId*, *status*, *submissionTimestamp*, *subStatus*, *subscriptionId*. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<EventDataCollection> ListNextPage(string nextLink, string filter = null, string select = null, CancellationToken cancellationToken = default)
+        public Response<EventDataList> ListNextPage(string nextLink, string filter = null, string select = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
 
@@ -160,9 +160,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        EventDataCollection value = default;
+                        EventDataList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EventDataCollection.DeserializeEventDataCollection(document.RootElement);
+                        value = EventDataList.DeserializeEventDataList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

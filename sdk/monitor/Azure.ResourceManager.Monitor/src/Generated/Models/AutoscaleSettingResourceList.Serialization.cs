@@ -12,25 +12,20 @@ using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    internal partial class ScheduledQueryRuleResourceCollection
+    internal partial class AutoscaleSettingResourceList
     {
-        internal static ScheduledQueryRuleResourceCollection DeserializeScheduledQueryRuleResourceCollection(JsonElement element)
+        internal static AutoscaleSettingResourceList DeserializeAutoscaleSettingResourceList(JsonElement element)
         {
-            Optional<IReadOnlyList<ScheduledQueryRuleData>> value = default;
+            IReadOnlyList<AutoscaleSettingData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<ScheduledQueryRuleData> array = new List<ScheduledQueryRuleData>();
+                    List<AutoscaleSettingData> array = new List<AutoscaleSettingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScheduledQueryRuleData.DeserializeScheduledQueryRuleData(item));
+                        array.Add(AutoscaleSettingData.DeserializeAutoscaleSettingData(item));
                     }
                     value = array;
                     continue;
@@ -41,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new ScheduledQueryRuleResourceCollection(Optional.ToList(value), nextLink.Value);
+            return new AutoscaleSettingResourceList(value, nextLink.Value);
         }
     }
 }

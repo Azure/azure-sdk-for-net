@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ruleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MetricAlertStatusCollection>> ListAsync(string subscriptionId, string resourceGroupName, string ruleName, CancellationToken cancellationToken = default)
+        public async Task<Response<MetricAlertStatusList>> ListAsync(string subscriptionId, string resourceGroupName, string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        MetricAlertStatusCollection value = default;
+                        MetricAlertStatusList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MetricAlertStatusCollection.DeserializeMetricAlertStatusCollection(document.RootElement);
+                        value = MetricAlertStatusList.DeserializeMetricAlertStatusList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ruleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MetricAlertStatusCollection> List(string subscriptionId, string resourceGroupName, string ruleName, CancellationToken cancellationToken = default)
+        public Response<MetricAlertStatusList> List(string subscriptionId, string resourceGroupName, string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        MetricAlertStatusCollection value = default;
+                        MetricAlertStatusList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MetricAlertStatusCollection.DeserializeMetricAlertStatusCollection(document.RootElement);
+                        value = MetricAlertStatusList.DeserializeMetricAlertStatusList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ruleName"/> or <paramref name="statusName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ruleName"/> or <paramref name="statusName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MetricAlertStatusCollection>> ListByNameAsync(string subscriptionId, string resourceGroupName, string ruleName, string statusName, CancellationToken cancellationToken = default)
+        public async Task<Response<MetricAlertStatusList>> ListByNameAsync(string subscriptionId, string resourceGroupName, string ruleName, string statusName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -159,9 +159,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        MetricAlertStatusCollection value = default;
+                        MetricAlertStatusList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MetricAlertStatusCollection.DeserializeMetricAlertStatusCollection(document.RootElement);
+                        value = MetricAlertStatusList.DeserializeMetricAlertStatusList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ruleName"/> or <paramref name="statusName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ruleName"/> or <paramref name="statusName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MetricAlertStatusCollection> ListByName(string subscriptionId, string resourceGroupName, string ruleName, string statusName, CancellationToken cancellationToken = default)
+        public Response<MetricAlertStatusList> ListByName(string subscriptionId, string resourceGroupName, string ruleName, string statusName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -190,9 +190,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        MetricAlertStatusCollection value = default;
+                        MetricAlertStatusList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MetricAlertStatusCollection.DeserializeMetricAlertStatusCollection(document.RootElement);
+                        value = MetricAlertStatusList.DeserializeMetricAlertStatusList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

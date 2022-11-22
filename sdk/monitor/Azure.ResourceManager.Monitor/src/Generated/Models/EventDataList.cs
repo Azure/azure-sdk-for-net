@@ -13,22 +13,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Represents collection of events. </summary>
-    internal partial class EventDataCollection
+    internal partial class EventDataList
     {
-        /// <summary> Initializes a new instance of EventDataCollection. </summary>
+        /// <summary> Initializes a new instance of EventDataList. </summary>
         /// <param name="value"> this list that includes the Azure audit logs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal EventDataCollection(IEnumerable<EventDataInfo> value)
+        internal EventDataList(IEnumerable<EventDataInfo> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of EventDataCollection. </summary>
+        /// <summary> Initializes a new instance of EventDataList. </summary>
         /// <param name="value"> this list that includes the Azure audit logs. </param>
         /// <param name="nextLink"> Provides the link to retrieve the next set of events. </param>
-        internal EventDataCollection(IReadOnlyList<EventDataInfo> value, string nextLink)
+        internal EventDataList(IReadOnlyList<EventDataInfo> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;

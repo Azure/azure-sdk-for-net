@@ -11,31 +11,25 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    internal partial class EventDataCollection
+    internal partial class EventCategoryList
     {
-        internal static EventDataCollection DeserializeEventDataCollection(JsonElement element)
+        internal static EventCategoryList DeserializeEventCategoryList(JsonElement element)
         {
-            IReadOnlyList<EventDataInfo> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<MonitorLocalizableString> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<EventDataInfo> array = new List<EventDataInfo>();
+                    List<MonitorLocalizableString> array = new List<MonitorLocalizableString>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventDataInfo.DeserializeEventDataInfo(item));
+                        array.Add(MonitorLocalizableString.DeserializeMonitorLocalizableString(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
-                {
-                    nextLink = property.Value.GetString();
-                    continue;
-                }
             }
-            return new EventDataCollection(value, nextLink.Value);
+            return new EventCategoryList(value);
         }
     }
 }

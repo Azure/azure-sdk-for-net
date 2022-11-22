@@ -7,26 +7,27 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Represents a collection of alert rule resources. </summary>
-    internal partial class MetricAlertStatusCollection
+    internal partial class AlertRuleResourceList
     {
-        /// <summary> Initializes a new instance of MetricAlertStatusCollection. </summary>
-        internal MetricAlertStatusCollection()
+        /// <summary> Initializes a new instance of AlertRuleResourceList. </summary>
+        internal AlertRuleResourceList()
         {
-            Value = new ChangeTrackingList<MetricAlertStatus>();
+            Value = new ChangeTrackingList<AlertRuleData>();
         }
 
-        /// <summary> Initializes a new instance of MetricAlertStatusCollection. </summary>
+        /// <summary> Initializes a new instance of AlertRuleResourceList. </summary>
         /// <param name="value"> the values for the alert rule resources. </param>
-        internal MetricAlertStatusCollection(IReadOnlyList<MetricAlertStatus> value)
+        internal AlertRuleResourceList(IReadOnlyList<AlertRuleData> value)
         {
             Value = value;
         }
 
         /// <summary> the values for the alert rule resources. </summary>
-        public IReadOnlyList<MetricAlertStatus> Value { get; }
+        public IReadOnlyList<AlertRuleData> Value { get; }
     }
 }

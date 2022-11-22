@@ -18,13 +18,15 @@ namespace Azure.ResourceManager.Search.Tests
 
         public SubscriptionResource DefaultLSubscription { get; set; }
 
+        protected static string[] ExceptionList = { "SearchPrivateLinkResource" };
+
         protected SearchManagementTestBase(bool isAsync, RecordedTestMode mode)
-        : base(isAsync, mode)
+        : base(isAsync, mode , exceptionList: ExceptionList)
         {
         }
 
         protected SearchManagementTestBase(bool isAsync)
-            : base(isAsync)
+            : base(isAsync, exceptionList: ExceptionList)
         {
         }
 

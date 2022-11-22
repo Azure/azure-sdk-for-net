@@ -8,24 +8,23 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    internal partial class AutoscaleSettingResourceCollection
+    internal partial class EventDataList
     {
-        internal static AutoscaleSettingResourceCollection DeserializeAutoscaleSettingResourceCollection(JsonElement element)
+        internal static EventDataList DeserializeEventDataList(JsonElement element)
         {
-            IReadOnlyList<AutoscaleSettingData> value = default;
+            IReadOnlyList<EventDataInfo> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<AutoscaleSettingData> array = new List<AutoscaleSettingData>();
+                    List<EventDataInfo> array = new List<EventDataInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutoscaleSettingData.DeserializeAutoscaleSettingData(item));
+                        array.Add(EventDataInfo.DeserializeEventDataInfo(item));
                     }
                     value = array;
                     continue;
@@ -36,7 +35,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new AutoscaleSettingResourceCollection(value, nextLink.Value);
+            return new EventDataList(value, nextLink.Value);
         }
     }
 }

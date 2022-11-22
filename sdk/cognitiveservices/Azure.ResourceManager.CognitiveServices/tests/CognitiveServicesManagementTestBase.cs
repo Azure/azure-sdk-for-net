@@ -15,14 +15,15 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
         protected ArmClient Client { get; private set; }
         protected AzureLocation DefaultLocation => AzureLocation.CentralUS;
         protected SubscriptionResource DefaultSubscription { get; private set; }
+        protected static string[] ExceptionList = { "CognitiveServicesPrivateLinkResource" };
 
         protected CognitiveServicesManagementTestBase(bool isAsync, RecordedTestMode mode)
-        : base(isAsync, mode)
+        : base(isAsync, mode, exceptionList: ExceptionList)
         {
         }
 
         protected CognitiveServicesManagementTestBase(bool isAsync)
-            : base(isAsync)
+            : base(isAsync, exceptionList: ExceptionList)
         {
         }
 

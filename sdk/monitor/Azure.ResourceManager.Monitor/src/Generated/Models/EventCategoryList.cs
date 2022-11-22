@@ -13,21 +13,21 @@ using Azure.Core;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> A collection of event categories. Currently possible values are: Administrative, Security, ServiceHealth, Alert, Recommendation, Policy. </summary>
-    internal partial class EventCategoryCollection
+    internal partial class EventCategoryList
     {
-        /// <summary> Initializes a new instance of EventCategoryCollection. </summary>
+        /// <summary> Initializes a new instance of EventCategoryList. </summary>
         /// <param name="value"> the list that includes the Azure event categories. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal EventCategoryCollection(IEnumerable<MonitorLocalizableString> value)
+        internal EventCategoryList(IEnumerable<MonitorLocalizableString> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of EventCategoryCollection. </summary>
+        /// <summary> Initializes a new instance of EventCategoryList. </summary>
         /// <param name="value"> the list that includes the Azure event categories. </param>
-        internal EventCategoryCollection(IReadOnlyList<MonitorLocalizableString> value)
+        internal EventCategoryList(IReadOnlyList<MonitorLocalizableString> value)
         {
             Value = value;
         }

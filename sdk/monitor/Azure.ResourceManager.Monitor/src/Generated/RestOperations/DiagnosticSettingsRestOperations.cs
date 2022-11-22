@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="resourceUri"> The identifier of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
-        public async Task<Response<DiagnosticSettingsResourceCollection>> ListAsync(string resourceUri, CancellationToken cancellationToken = default)
+        public async Task<Response<DiagnosticSettingsResourceList>> ListAsync(string resourceUri, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
@@ -288,9 +288,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        DiagnosticSettingsResourceCollection value = default;
+                        DiagnosticSettingsResourceList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DiagnosticSettingsResourceCollection.DeserializeDiagnosticSettingsResourceCollection(document.RootElement);
+                        value = DiagnosticSettingsResourceList.DeserializeDiagnosticSettingsResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="resourceUri"> The identifier of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
-        public Response<DiagnosticSettingsResourceCollection> List(string resourceUri, CancellationToken cancellationToken = default)
+        public Response<DiagnosticSettingsResourceList> List(string resourceUri, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
@@ -312,9 +312,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        DiagnosticSettingsResourceCollection value = default;
+                        DiagnosticSettingsResourceList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DiagnosticSettingsResourceCollection.DeserializeDiagnosticSettingsResourceCollection(document.RootElement);
+                        value = DiagnosticSettingsResourceList.DeserializeDiagnosticSettingsResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

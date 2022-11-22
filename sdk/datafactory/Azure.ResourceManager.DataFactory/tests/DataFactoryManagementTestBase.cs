@@ -18,14 +18,16 @@ namespace Azure.ResourceManager.DataFactory.Tests
     {
         protected ArmClient Client { get; private set; }
 
+        protected static string[] ExceptionList = { "FactoryPrivateLinkResource" };
+
         protected DataFactoryManagementTestBase(bool isAsync, RecordedTestMode mode)
-        : base(isAsync, mode)
+        : base(isAsync, mode, exceptionList: ExceptionList)
         {
             JsonPathSanitizers.Add("$.keys.[*].value");
         }
 
         protected DataFactoryManagementTestBase(bool isAsync)
-            : base(isAsync)
+            : base(isAsync, exceptionList: ExceptionList)
         {
         }
 

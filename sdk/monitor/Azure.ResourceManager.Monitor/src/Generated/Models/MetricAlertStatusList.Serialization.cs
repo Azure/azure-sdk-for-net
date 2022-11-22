@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    internal partial class MetricAlertStatusCollection
+    internal partial class MetricAlertStatusList
     {
-        internal static MetricAlertStatusCollection DeserializeMetricAlertStatusCollection(JsonElement element)
+        internal static MetricAlertStatusList DeserializeMetricAlertStatusList(JsonElement element)
         {
             Optional<IReadOnlyList<MetricAlertStatus>> value = default;
             foreach (var property in element.EnumerateObject())
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new MetricAlertStatusCollection(Optional.ToList(value));
+            return new MetricAlertStatusList(Optional.ToList(value));
         }
     }
 }

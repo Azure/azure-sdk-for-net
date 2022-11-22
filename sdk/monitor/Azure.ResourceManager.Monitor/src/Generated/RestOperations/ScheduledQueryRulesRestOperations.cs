@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ScheduledQueryRuleResourceCollection>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<ScheduledQueryRuleResourceList>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -69,9 +69,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        ScheduledQueryRuleResourceCollection value = default;
+                        ScheduledQueryRuleResourceList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ScheduledQueryRuleResourceCollection.DeserializeScheduledQueryRuleResourceCollection(document.RootElement);
+                        value = ScheduledQueryRuleResourceList.DeserializeScheduledQueryRuleResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ScheduledQueryRuleResourceCollection> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<ScheduledQueryRuleResourceList> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        ScheduledQueryRuleResourceCollection value = default;
+                        ScheduledQueryRuleResourceList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ScheduledQueryRuleResourceCollection.DeserializeScheduledQueryRuleResourceCollection(document.RootElement);
+                        value = ScheduledQueryRuleResourceList.DeserializeScheduledQueryRuleResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ScheduledQueryRuleResourceCollection>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<ScheduledQueryRuleResourceList>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -140,9 +140,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        ScheduledQueryRuleResourceCollection value = default;
+                        ScheduledQueryRuleResourceList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ScheduledQueryRuleResourceCollection.DeserializeScheduledQueryRuleResourceCollection(document.RootElement);
+                        value = ScheduledQueryRuleResourceList.DeserializeScheduledQueryRuleResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ScheduledQueryRuleResourceCollection> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<ScheduledQueryRuleResourceList> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -167,9 +167,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        ScheduledQueryRuleResourceCollection value = default;
+                        ScheduledQueryRuleResourceList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ScheduledQueryRuleResourceCollection.DeserializeScheduledQueryRuleResourceCollection(document.RootElement);
+                        value = ScheduledQueryRuleResourceList.DeserializeScheduledQueryRuleResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ScheduledQueryRuleResourceCollection>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<ScheduledQueryRuleResourceList>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -534,9 +534,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        ScheduledQueryRuleResourceCollection value = default;
+                        ScheduledQueryRuleResourceList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ScheduledQueryRuleResourceCollection.DeserializeScheduledQueryRuleResourceCollection(document.RootElement);
+                        value = ScheduledQueryRuleResourceList.DeserializeScheduledQueryRuleResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ScheduledQueryRuleResourceCollection> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<ScheduledQueryRuleResourceList> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -561,9 +561,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        ScheduledQueryRuleResourceCollection value = default;
+                        ScheduledQueryRuleResourceList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ScheduledQueryRuleResourceCollection.DeserializeScheduledQueryRuleResourceCollection(document.RootElement);
+                        value = ScheduledQueryRuleResourceList.DeserializeScheduledQueryRuleResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ScheduledQueryRuleResourceCollection>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<ScheduledQueryRuleResourceList>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -604,9 +604,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        ScheduledQueryRuleResourceCollection value = default;
+                        ScheduledQueryRuleResourceList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ScheduledQueryRuleResourceCollection.DeserializeScheduledQueryRuleResourceCollection(document.RootElement);
+                        value = ScheduledQueryRuleResourceList.DeserializeScheduledQueryRuleResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -621,7 +621,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ScheduledQueryRuleResourceCollection> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<ScheduledQueryRuleResourceList> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -633,9 +633,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        ScheduledQueryRuleResourceCollection value = default;
+                        ScheduledQueryRuleResourceList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ScheduledQueryRuleResourceCollection.DeserializeScheduledQueryRuleResourceCollection(document.RootElement);
+                        value = ScheduledQueryRuleResourceList.DeserializeScheduledQueryRuleResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

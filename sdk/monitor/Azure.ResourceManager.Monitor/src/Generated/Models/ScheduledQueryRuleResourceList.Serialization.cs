@@ -12,11 +12,12 @@ using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    internal partial class DiagnosticSettingsCategoryResourceCollection
+    internal partial class ScheduledQueryRuleResourceList
     {
-        internal static DiagnosticSettingsCategoryResourceCollection DeserializeDiagnosticSettingsCategoryResourceCollection(JsonElement element)
+        internal static ScheduledQueryRuleResourceList DeserializeScheduledQueryRuleResourceList(JsonElement element)
         {
-            Optional<IReadOnlyList<DiagnosticSettingsCategoryData>> value = default;
+            Optional<IReadOnlyList<ScheduledQueryRuleData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,16 +27,21 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DiagnosticSettingsCategoryData> array = new List<DiagnosticSettingsCategoryData>();
+                    List<ScheduledQueryRuleData> array = new List<ScheduledQueryRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiagnosticSettingsCategoryData.DeserializeDiagnosticSettingsCategoryData(item));
+                        array.Add(ScheduledQueryRuleData.DeserializeScheduledQueryRuleData(item));
                     }
                     value = array;
                     continue;
                 }
+                if (property.NameEquals("nextLink"))
+                {
+                    nextLink = property.Value.GetString();
+                    continue;
+                }
             }
-            return new DiagnosticSettingsCategoryResourceCollection(Optional.ToList(value));
+            return new ScheduledQueryRuleResourceList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary> Get the list of available event categories supported in the Activity Logs Service.&lt;br&gt;The current list includes the following: Administrative, Security, ServiceHealth, Alert, Recommendation, Policy. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<EventCategoryCollection>> ListAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<EventCategoryList>> ListAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -62,9 +62,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        EventCategoryCollection value = default;
+                        EventCategoryList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EventCategoryCollection.DeserializeEventCategoryCollection(document.RootElement);
+                        value = EventCategoryList.DeserializeEventCategoryList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary> Get the list of available event categories supported in the Activity Logs Service.&lt;br&gt;The current list includes the following: Administrative, Security, ServiceHealth, Alert, Recommendation, Policy. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<EventCategoryCollection> List(CancellationToken cancellationToken = default)
+        public Response<EventCategoryList> List(CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest();
             _pipeline.Send(message, cancellationToken);
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        EventCategoryCollection value = default;
+                        EventCategoryList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EventCategoryCollection.DeserializeEventCategoryCollection(document.RootElement);
+                        value = EventCategoryList.DeserializeEventCategoryList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

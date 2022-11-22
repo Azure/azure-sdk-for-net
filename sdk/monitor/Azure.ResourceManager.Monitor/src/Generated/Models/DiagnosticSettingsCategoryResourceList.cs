@@ -12,17 +12,17 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Represents a collection of diagnostic setting category resources. </summary>
-    internal partial class DiagnosticSettingsCategoryResourceCollection
+    internal partial class DiagnosticSettingsCategoryResourceList
     {
-        /// <summary> Initializes a new instance of DiagnosticSettingsCategoryResourceCollection. </summary>
-        internal DiagnosticSettingsCategoryResourceCollection()
+        /// <summary> Initializes a new instance of DiagnosticSettingsCategoryResourceList. </summary>
+        internal DiagnosticSettingsCategoryResourceList()
         {
             Value = new ChangeTrackingList<DiagnosticSettingsCategoryData>();
         }
 
-        /// <summary> Initializes a new instance of DiagnosticSettingsCategoryResourceCollection. </summary>
+        /// <summary> Initializes a new instance of DiagnosticSettingsCategoryResourceList. </summary>
         /// <param name="value"> The collection of diagnostic settings category resources. </param>
-        internal DiagnosticSettingsCategoryResourceCollection(IReadOnlyList<DiagnosticSettingsCategoryData> value)
+        internal DiagnosticSettingsCategoryResourceList(IReadOnlyList<DiagnosticSettingsCategoryData> value)
         {
             Value = value;
         }
