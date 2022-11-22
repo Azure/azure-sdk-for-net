@@ -11,4 +11,5 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ProjectExtensions><VisualStudio><UserProperties sessionrecords_4clusteroperationtests_4testcreateclusterwithencryptionathost_1json__JsonSchema="https://gitlab.com/fdroid/fdroiddata/-/raw/master/schemas/metadata.json" /></VisualStudio></ProjectExtensions>
 </Project>

@@ -5,4 +5,5 @@
     <PackageReference Include="Azure.ResourceManager.Compute" />
     <PackageReference Include="Azure.ResourceManager.Network" />
   </ItemGroup>
+  <ProjectExtensions><VisualStudio><UserProperties sessionrecords_4sqlvmgrouptests_4settags_x0028_false_x0029__1json__JsonSchema="https://carafe.fm/schema/draft-02/bundle.schema.json" /></VisualStudio></ProjectExtensions>
 </Project>
