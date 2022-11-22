@@ -1258,7 +1258,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"key1\": \"eOMQ/8gnLtMFU1o3XdgrmZZNN0SxJF3RbzJhcpzVWgXTfcYwy7pDe3gm8U1lpZUH0m4v8Rc7Ilz3+AStYj4UVQ==\",\r\n  \"key2\": \"dJKICqSZWXnNEwkmVW2ShCyn57z/OqypBwFUPZeZLCcmQBroeTBIJmml7nudV86oilMGCvPJvTtO+AStJGH+rw==\"\r\n}",
+      "ResponseBody": "{\r\n  \"key1\": \"Sanitized\",\r\n  \"key2\": \"Sanitized\"\r\n}",
       "StatusCode": 200
     },
     {
