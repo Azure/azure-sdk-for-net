@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.AnalysisServices
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            managedMode = property0.Value.GetInt32().ToManagedMode();
+                            managedMode = new ManagedMode(property0.Value.GetInt32());
                             continue;
                         }
                         if (property0.NameEquals("serverMonitorMode"))
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.AnalysisServices
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            serverMonitorMode = property0.Value.GetInt32().ToServerMonitorMode();
+                            serverMonitorMode = new ServerMonitorMode(property0.Value.GetInt32());
                             continue;
                         }
                         if (property0.NameEquals("state"))

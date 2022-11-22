@@ -58,4 +58,17 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+directive:
+  - from: analysisservices.json
+    where: $.definitions
+    transform: >
+      $.AnalysisServicesServerMutableProperties.properties.managedMode['x-ms-enum'] = {
+          "name": "ManagedMode",
+          "modelAsString": true
+        }
+      $.AnalysisServicesServerMutableProperties.properties.serverMonitorMode['x-ms-enum'] = {
+          "name": "ServerMonitorMode",
+          "modelAsString": true
+        }
+
 ```
