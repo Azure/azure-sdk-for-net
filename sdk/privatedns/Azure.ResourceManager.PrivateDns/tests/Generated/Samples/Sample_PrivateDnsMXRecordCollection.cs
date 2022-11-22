@@ -15,7 +15,7 @@ using Azure.ResourceManager.PrivateDns.Models;
 
 namespace Azure.ResourceManager.PrivateDns
 {
-    public partial class Sample_RecordSetCollection
+    public partial class Sample_PrivateDnsMXRecordCollection
     {
         // PUT Private DNS Zone A Record Set
         [NUnit.Framework.Test]
@@ -36,32 +36,32 @@ namespace Azure.ResourceManager.PrivateDns
             ResourceIdentifier privateZoneResourceId = PrivateZoneResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName);
             PrivateZoneResource privateZone = client.GetPrivateZoneResource(privateZoneResourceId);
 
-            // get the collection of this RecordSetResource
-            RecordSetCollection collection = privateZone.GetRecordSets();
+            // get the collection of this PrivateDnsMXRecordResource
+            PrivateDnsMXRecordCollection collection = privateZone.GetPrivateDnsMXRecords();
 
             // invoke the operation
             string relativeRecordSetName = "recordA";
-            RecordSetData data = new RecordSetData()
+            PrivateDnsRecordData data = new PrivateDnsRecordData()
             {
                 Metadata =
 {
 ["key1"] = "value1",
 },
-                Ttl = 3600,
+                TtlInSeconds = 3600,
                 ARecords =
 {
-new ARecord()
+new PrivateDnsARecordInfo()
 {
 IPv4Address = "1.2.3.4",
 }
 },
             };
-            ArmOperation<RecordSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, relativeRecordSetName, data);
-            RecordSetResource result = lro.Value;
+            ArmOperation<PrivateDnsMXRecordResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, relativeRecordSetName, data);
+            PrivateDnsMXRecordResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RecordSetData resourceData = result.Data;
+            PrivateDnsRecordData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -85,32 +85,32 @@ IPv4Address = "1.2.3.4",
             ResourceIdentifier privateZoneResourceId = PrivateZoneResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName);
             PrivateZoneResource privateZone = client.GetPrivateZoneResource(privateZoneResourceId);
 
-            // get the collection of this RecordSetResource
-            RecordSetCollection collection = privateZone.GetRecordSets();
+            // get the collection of this PrivateDnsMXRecordResource
+            PrivateDnsMXRecordCollection collection = privateZone.GetPrivateDnsMXRecords();
 
             // invoke the operation
             string relativeRecordSetName = "recordAAAA";
-            RecordSetData data = new RecordSetData()
+            PrivateDnsRecordData data = new PrivateDnsRecordData()
             {
                 Metadata =
 {
 ["key1"] = "value1",
 },
-                Ttl = 3600,
+                TtlInSeconds = 3600,
                 AaaaRecords =
 {
-new AaaaRecord()
+new PrivateDnsAaaaRecordInfo()
 {
 IPv6Address = "::1",
 }
 },
             };
-            ArmOperation<RecordSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, relativeRecordSetName, data);
-            RecordSetResource result = lro.Value;
+            ArmOperation<PrivateDnsMXRecordResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, relativeRecordSetName, data);
+            PrivateDnsMXRecordResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RecordSetData resourceData = result.Data;
+            PrivateDnsRecordData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -134,26 +134,26 @@ IPv6Address = "::1",
             ResourceIdentifier privateZoneResourceId = PrivateZoneResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName);
             PrivateZoneResource privateZone = client.GetPrivateZoneResource(privateZoneResourceId);
 
-            // get the collection of this RecordSetResource
-            RecordSetCollection collection = privateZone.GetRecordSets();
+            // get the collection of this PrivateDnsMXRecordResource
+            PrivateDnsMXRecordCollection collection = privateZone.GetPrivateDnsMXRecords();
 
             // invoke the operation
             string relativeRecordSetName = "recordCNAME";
-            RecordSetData data = new RecordSetData()
+            PrivateDnsRecordData data = new PrivateDnsRecordData()
             {
                 Metadata =
 {
 ["key1"] = "value1",
 },
-                Ttl = 3600,
+                TtlInSeconds = 3600,
                 Cname = "contoso.com",
             };
-            ArmOperation<RecordSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, relativeRecordSetName, data);
-            RecordSetResource result = lro.Value;
+            ArmOperation<PrivateDnsMXRecordResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, relativeRecordSetName, data);
+            PrivateDnsMXRecordResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RecordSetData resourceData = result.Data;
+            PrivateDnsRecordData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -177,33 +177,33 @@ IPv6Address = "::1",
             ResourceIdentifier privateZoneResourceId = PrivateZoneResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName);
             PrivateZoneResource privateZone = client.GetPrivateZoneResource(privateZoneResourceId);
 
-            // get the collection of this RecordSetResource
-            RecordSetCollection collection = privateZone.GetRecordSets();
+            // get the collection of this PrivateDnsMXRecordResource
+            PrivateDnsMXRecordCollection collection = privateZone.GetPrivateDnsMXRecords();
 
             // invoke the operation
             string relativeRecordSetName = "recordMX";
-            RecordSetData data = new RecordSetData()
+            PrivateDnsRecordData data = new PrivateDnsRecordData()
             {
                 Metadata =
 {
 ["key1"] = "value1",
 },
-                Ttl = 3600,
-                MxRecords =
+                TtlInSeconds = 3600,
+                PrivateDnsMXRecords =
 {
-new MxRecord()
+new PrivateDnsMXRecordInfo()
 {
 Preference = 0,
 Exchange = "mail.privatezone1.com",
 }
 },
             };
-            ArmOperation<RecordSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, relativeRecordSetName, data);
-            RecordSetResource result = lro.Value;
+            ArmOperation<PrivateDnsMXRecordResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, relativeRecordSetName, data);
+            PrivateDnsMXRecordResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RecordSetData resourceData = result.Data;
+            PrivateDnsRecordData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -227,32 +227,32 @@ Exchange = "mail.privatezone1.com",
             ResourceIdentifier privateZoneResourceId = PrivateZoneResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName);
             PrivateZoneResource privateZone = client.GetPrivateZoneResource(privateZoneResourceId);
 
-            // get the collection of this RecordSetResource
-            RecordSetCollection collection = privateZone.GetRecordSets();
+            // get the collection of this PrivateDnsMXRecordResource
+            PrivateDnsMXRecordCollection collection = privateZone.GetPrivateDnsMXRecords();
 
             // invoke the operation
             string relativeRecordSetName = "1";
-            RecordSetData data = new RecordSetData()
+            PrivateDnsRecordData data = new PrivateDnsRecordData()
             {
                 Metadata =
 {
 ["key1"] = "value1",
 },
-                Ttl = 3600,
+                TtlInSeconds = 3600,
                 PtrRecords =
 {
-new PtrRecord()
+new PrivateDnsPtrRecordInfo()
 {
-Ptrdname = "localhost",
+PtrDomainName = "localhost",
 }
 },
             };
-            ArmOperation<RecordSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, relativeRecordSetName, data);
-            RecordSetResource result = lro.Value;
+            ArmOperation<PrivateDnsMXRecordResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, relativeRecordSetName, data);
+            PrivateDnsMXRecordResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RecordSetData resourceData = result.Data;
+            PrivateDnsRecordData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -276,34 +276,34 @@ Ptrdname = "localhost",
             ResourceIdentifier privateZoneResourceId = PrivateZoneResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName);
             PrivateZoneResource privateZone = client.GetPrivateZoneResource(privateZoneResourceId);
 
-            // get the collection of this RecordSetResource
-            RecordSetCollection collection = privateZone.GetRecordSets();
+            // get the collection of this PrivateDnsMXRecordResource
+            PrivateDnsMXRecordCollection collection = privateZone.GetPrivateDnsMXRecords();
 
             // invoke the operation
             string relativeRecordSetName = "@";
-            RecordSetData data = new RecordSetData()
+            PrivateDnsRecordData data = new PrivateDnsRecordData()
             {
                 Metadata =
 {
 ["key1"] = "value1",
 },
-                Ttl = 3600,
-                SoaRecord = new SoaRecord()
+                TtlInSeconds = 3600,
+                PrivateDnsSoaRecordInfo = new PrivateDnsSoaRecordInfo()
                 {
                     Host = "azureprivatedns.net",
                     Email = "azureprivatedns-hostmaster.microsoft.com",
                     SerialNumber = 1,
-                    RefreshTime = 3600,
-                    RetryTime = 300,
-                    ExpireTime = 2419200,
+                    RefreshTimeInSeconds = 3600,
+                    RetryTimeInSeconds = 300,
+                    ExpireTimeInSeconds = 2419200,
                 },
             };
-            ArmOperation<RecordSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, relativeRecordSetName, data);
-            RecordSetResource result = lro.Value;
+            ArmOperation<PrivateDnsMXRecordResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, relativeRecordSetName, data);
+            PrivateDnsMXRecordResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RecordSetData resourceData = result.Data;
+            PrivateDnsRecordData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -327,21 +327,21 @@ Ptrdname = "localhost",
             ResourceIdentifier privateZoneResourceId = PrivateZoneResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName);
             PrivateZoneResource privateZone = client.GetPrivateZoneResource(privateZoneResourceId);
 
-            // get the collection of this RecordSetResource
-            RecordSetCollection collection = privateZone.GetRecordSets();
+            // get the collection of this PrivateDnsMXRecordResource
+            PrivateDnsMXRecordCollection collection = privateZone.GetPrivateDnsMXRecords();
 
             // invoke the operation
             string relativeRecordSetName = "recordSRV";
-            RecordSetData data = new RecordSetData()
+            PrivateDnsRecordData data = new PrivateDnsRecordData()
             {
                 Metadata =
 {
 ["key1"] = "value1",
 },
-                Ttl = 3600,
+                TtlInSeconds = 3600,
                 SrvRecords =
 {
-new SrvRecord()
+new PrivateDnsSrvRecordInfo()
 {
 Priority = 0,
 Weight = 10,
@@ -350,12 +350,12 @@ Target = "contoso.com",
 }
 },
             };
-            ArmOperation<RecordSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, relativeRecordSetName, data);
-            RecordSetResource result = lro.Value;
+            ArmOperation<PrivateDnsMXRecordResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, relativeRecordSetName, data);
+            PrivateDnsMXRecordResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RecordSetData resourceData = result.Data;
+            PrivateDnsRecordData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -379,35 +379,35 @@ Target = "contoso.com",
             ResourceIdentifier privateZoneResourceId = PrivateZoneResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName);
             PrivateZoneResource privateZone = client.GetPrivateZoneResource(privateZoneResourceId);
 
-            // get the collection of this RecordSetResource
-            RecordSetCollection collection = privateZone.GetRecordSets();
+            // get the collection of this PrivateDnsMXRecordResource
+            PrivateDnsMXRecordCollection collection = privateZone.GetPrivateDnsMXRecords();
 
             // invoke the operation
             string relativeRecordSetName = "recordTXT";
-            RecordSetData data = new RecordSetData()
+            PrivateDnsRecordData data = new PrivateDnsRecordData()
             {
                 Metadata =
 {
 ["key1"] = "value1",
 },
-                Ttl = 3600,
+                TtlInSeconds = 3600,
                 TxtRecords =
 {
-new TxtRecord()
+new PrivateDnsTxtRecordInfo()
 {
-Value =
+Values =
 {
 "string1","string2"
 },
 }
 },
             };
-            ArmOperation<RecordSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, relativeRecordSetName, data);
-            RecordSetResource result = lro.Value;
+            ArmOperation<PrivateDnsMXRecordResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, relativeRecordSetName, data);
+            PrivateDnsMXRecordResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RecordSetData resourceData = result.Data;
+            PrivateDnsRecordData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -431,16 +431,16 @@ Value =
             ResourceIdentifier privateZoneResourceId = PrivateZoneResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName);
             PrivateZoneResource privateZone = client.GetPrivateZoneResource(privateZoneResourceId);
 
-            // get the collection of this RecordSetResource
-            RecordSetCollection collection = privateZone.GetRecordSets();
+            // get the collection of this PrivateDnsMXRecordResource
+            PrivateDnsMXRecordCollection collection = privateZone.GetPrivateDnsMXRecords();
 
             // invoke the operation
             string relativeRecordSetName = "recordA";
-            RecordSetResource result = await collection.GetAsync(relativeRecordSetName);
+            PrivateDnsMXRecordResource result = await collection.GetAsync(relativeRecordSetName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RecordSetData resourceData = result.Data;
+            PrivateDnsRecordData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -464,8 +464,8 @@ Value =
             ResourceIdentifier privateZoneResourceId = PrivateZoneResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName);
             PrivateZoneResource privateZone = client.GetPrivateZoneResource(privateZoneResourceId);
 
-            // get the collection of this RecordSetResource
-            RecordSetCollection collection = privateZone.GetRecordSets();
+            // get the collection of this PrivateDnsMXRecordResource
+            PrivateDnsMXRecordCollection collection = privateZone.GetPrivateDnsMXRecords();
 
             // invoke the operation
             string relativeRecordSetName = "recordA";
@@ -493,16 +493,16 @@ Value =
             ResourceIdentifier privateZoneResourceId = PrivateZoneResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName);
             PrivateZoneResource privateZone = client.GetPrivateZoneResource(privateZoneResourceId);
 
-            // get the collection of this RecordSetResource
-            RecordSetCollection collection = privateZone.GetRecordSets();
+            // get the collection of this PrivateDnsMXRecordResource
+            PrivateDnsMXRecordCollection collection = privateZone.GetPrivateDnsMXRecords();
 
             // invoke the operation
             string relativeRecordSetName = "recordAAAA";
-            RecordSetResource result = await collection.GetAsync(relativeRecordSetName);
+            PrivateDnsMXRecordResource result = await collection.GetAsync(relativeRecordSetName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RecordSetData resourceData = result.Data;
+            PrivateDnsRecordData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -526,8 +526,8 @@ Value =
             ResourceIdentifier privateZoneResourceId = PrivateZoneResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName);
             PrivateZoneResource privateZone = client.GetPrivateZoneResource(privateZoneResourceId);
 
-            // get the collection of this RecordSetResource
-            RecordSetCollection collection = privateZone.GetRecordSets();
+            // get the collection of this PrivateDnsMXRecordResource
+            PrivateDnsMXRecordCollection collection = privateZone.GetPrivateDnsMXRecords();
 
             // invoke the operation
             string relativeRecordSetName = "recordAAAA";
@@ -555,16 +555,16 @@ Value =
             ResourceIdentifier privateZoneResourceId = PrivateZoneResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName);
             PrivateZoneResource privateZone = client.GetPrivateZoneResource(privateZoneResourceId);
 
-            // get the collection of this RecordSetResource
-            RecordSetCollection collection = privateZone.GetRecordSets();
+            // get the collection of this PrivateDnsMXRecordResource
+            PrivateDnsMXRecordCollection collection = privateZone.GetPrivateDnsMXRecords();
 
             // invoke the operation
             string relativeRecordSetName = "recordCNAME";
-            RecordSetResource result = await collection.GetAsync(relativeRecordSetName);
+            PrivateDnsMXRecordResource result = await collection.GetAsync(relativeRecordSetName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RecordSetData resourceData = result.Data;
+            PrivateDnsRecordData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -588,8 +588,8 @@ Value =
             ResourceIdentifier privateZoneResourceId = PrivateZoneResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName);
             PrivateZoneResource privateZone = client.GetPrivateZoneResource(privateZoneResourceId);
 
-            // get the collection of this RecordSetResource
-            RecordSetCollection collection = privateZone.GetRecordSets();
+            // get the collection of this PrivateDnsMXRecordResource
+            PrivateDnsMXRecordCollection collection = privateZone.GetPrivateDnsMXRecords();
 
             // invoke the operation
             string relativeRecordSetName = "recordCNAME";
@@ -617,16 +617,16 @@ Value =
             ResourceIdentifier privateZoneResourceId = PrivateZoneResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName);
             PrivateZoneResource privateZone = client.GetPrivateZoneResource(privateZoneResourceId);
 
-            // get the collection of this RecordSetResource
-            RecordSetCollection collection = privateZone.GetRecordSets();
+            // get the collection of this PrivateDnsMXRecordResource
+            PrivateDnsMXRecordCollection collection = privateZone.GetPrivateDnsMXRecords();
 
             // invoke the operation
             string relativeRecordSetName = "recordMX";
-            RecordSetResource result = await collection.GetAsync(relativeRecordSetName);
+            PrivateDnsMXRecordResource result = await collection.GetAsync(relativeRecordSetName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RecordSetData resourceData = result.Data;
+            PrivateDnsRecordData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -650,8 +650,8 @@ Value =
             ResourceIdentifier privateZoneResourceId = PrivateZoneResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName);
             PrivateZoneResource privateZone = client.GetPrivateZoneResource(privateZoneResourceId);
 
-            // get the collection of this RecordSetResource
-            RecordSetCollection collection = privateZone.GetRecordSets();
+            // get the collection of this PrivateDnsMXRecordResource
+            PrivateDnsMXRecordCollection collection = privateZone.GetPrivateDnsMXRecords();
 
             // invoke the operation
             string relativeRecordSetName = "recordMX";
@@ -679,16 +679,16 @@ Value =
             ResourceIdentifier privateZoneResourceId = PrivateZoneResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName);
             PrivateZoneResource privateZone = client.GetPrivateZoneResource(privateZoneResourceId);
 
-            // get the collection of this RecordSetResource
-            RecordSetCollection collection = privateZone.GetRecordSets();
+            // get the collection of this PrivateDnsMXRecordResource
+            PrivateDnsMXRecordCollection collection = privateZone.GetPrivateDnsMXRecords();
 
             // invoke the operation
             string relativeRecordSetName = "1";
-            RecordSetResource result = await collection.GetAsync(relativeRecordSetName);
+            PrivateDnsMXRecordResource result = await collection.GetAsync(relativeRecordSetName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RecordSetData resourceData = result.Data;
+            PrivateDnsRecordData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -712,8 +712,8 @@ Value =
             ResourceIdentifier privateZoneResourceId = PrivateZoneResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName);
             PrivateZoneResource privateZone = client.GetPrivateZoneResource(privateZoneResourceId);
 
-            // get the collection of this RecordSetResource
-            RecordSetCollection collection = privateZone.GetRecordSets();
+            // get the collection of this PrivateDnsMXRecordResource
+            PrivateDnsMXRecordCollection collection = privateZone.GetPrivateDnsMXRecords();
 
             // invoke the operation
             string relativeRecordSetName = "1";
@@ -741,16 +741,16 @@ Value =
             ResourceIdentifier privateZoneResourceId = PrivateZoneResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName);
             PrivateZoneResource privateZone = client.GetPrivateZoneResource(privateZoneResourceId);
 
-            // get the collection of this RecordSetResource
-            RecordSetCollection collection = privateZone.GetRecordSets();
+            // get the collection of this PrivateDnsMXRecordResource
+            PrivateDnsMXRecordCollection collection = privateZone.GetPrivateDnsMXRecords();
 
             // invoke the operation
             string relativeRecordSetName = "@";
-            RecordSetResource result = await collection.GetAsync(relativeRecordSetName);
+            PrivateDnsMXRecordResource result = await collection.GetAsync(relativeRecordSetName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RecordSetData resourceData = result.Data;
+            PrivateDnsRecordData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -774,8 +774,8 @@ Value =
             ResourceIdentifier privateZoneResourceId = PrivateZoneResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName);
             PrivateZoneResource privateZone = client.GetPrivateZoneResource(privateZoneResourceId);
 
-            // get the collection of this RecordSetResource
-            RecordSetCollection collection = privateZone.GetRecordSets();
+            // get the collection of this PrivateDnsMXRecordResource
+            PrivateDnsMXRecordCollection collection = privateZone.GetPrivateDnsMXRecords();
 
             // invoke the operation
             string relativeRecordSetName = "@";
@@ -803,16 +803,16 @@ Value =
             ResourceIdentifier privateZoneResourceId = PrivateZoneResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName);
             PrivateZoneResource privateZone = client.GetPrivateZoneResource(privateZoneResourceId);
 
-            // get the collection of this RecordSetResource
-            RecordSetCollection collection = privateZone.GetRecordSets();
+            // get the collection of this PrivateDnsMXRecordResource
+            PrivateDnsMXRecordCollection collection = privateZone.GetPrivateDnsMXRecords();
 
             // invoke the operation
             string relativeRecordSetName = "recordSRV";
-            RecordSetResource result = await collection.GetAsync(relativeRecordSetName);
+            PrivateDnsMXRecordResource result = await collection.GetAsync(relativeRecordSetName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RecordSetData resourceData = result.Data;
+            PrivateDnsRecordData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -836,8 +836,8 @@ Value =
             ResourceIdentifier privateZoneResourceId = PrivateZoneResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName);
             PrivateZoneResource privateZone = client.GetPrivateZoneResource(privateZoneResourceId);
 
-            // get the collection of this RecordSetResource
-            RecordSetCollection collection = privateZone.GetRecordSets();
+            // get the collection of this PrivateDnsMXRecordResource
+            PrivateDnsMXRecordCollection collection = privateZone.GetPrivateDnsMXRecords();
 
             // invoke the operation
             string relativeRecordSetName = "recordSRV";
@@ -865,16 +865,16 @@ Value =
             ResourceIdentifier privateZoneResourceId = PrivateZoneResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName);
             PrivateZoneResource privateZone = client.GetPrivateZoneResource(privateZoneResourceId);
 
-            // get the collection of this RecordSetResource
-            RecordSetCollection collection = privateZone.GetRecordSets();
+            // get the collection of this PrivateDnsMXRecordResource
+            PrivateDnsMXRecordCollection collection = privateZone.GetPrivateDnsMXRecords();
 
             // invoke the operation
             string relativeRecordSetName = "recordTXT";
-            RecordSetResource result = await collection.GetAsync(relativeRecordSetName);
+            PrivateDnsMXRecordResource result = await collection.GetAsync(relativeRecordSetName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RecordSetData resourceData = result.Data;
+            PrivateDnsRecordData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -898,8 +898,8 @@ Value =
             ResourceIdentifier privateZoneResourceId = PrivateZoneResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName);
             PrivateZoneResource privateZone = client.GetPrivateZoneResource(privateZoneResourceId);
 
-            // get the collection of this RecordSetResource
-            RecordSetCollection collection = privateZone.GetRecordSets();
+            // get the collection of this PrivateDnsMXRecordResource
+            PrivateDnsMXRecordCollection collection = privateZone.GetPrivateDnsMXRecords();
 
             // invoke the operation
             string relativeRecordSetName = "recordTXT";
@@ -927,15 +927,15 @@ Value =
             ResourceIdentifier privateZoneResourceId = PrivateZoneResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName);
             PrivateZoneResource privateZone = client.GetPrivateZoneResource(privateZoneResourceId);
 
-            // get the collection of this RecordSetResource
-            RecordSetCollection collection = privateZone.GetRecordSets();
+            // get the collection of this PrivateDnsMXRecordResource
+            PrivateDnsMXRecordCollection collection = privateZone.GetPrivateDnsMXRecords();
 
             // invoke the operation and iterate over the result
-            await foreach (RecordSetResource item in collection.GetAllAsync())
+            await foreach (PrivateDnsMXRecordResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                RecordSetData resourceData = item.Data;
+                PrivateDnsRecordData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -962,15 +962,15 @@ Value =
             ResourceIdentifier privateZoneResourceId = PrivateZoneResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName);
             PrivateZoneResource privateZone = client.GetPrivateZoneResource(privateZoneResourceId);
 
-            // get the collection of this RecordSetResource
-            RecordSetCollection collection = privateZone.GetRecordSets();
+            // get the collection of this PrivateDnsMXRecordResource
+            PrivateDnsMXRecordCollection collection = privateZone.GetPrivateDnsMXRecords();
 
             // invoke the operation and iterate over the result
-            await foreach (RecordSetResource item in collection.GetAllAsync())
+            await foreach (PrivateDnsMXRecordResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                RecordSetData resourceData = item.Data;
+                PrivateDnsRecordData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -997,15 +997,15 @@ Value =
             ResourceIdentifier privateZoneResourceId = PrivateZoneResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName);
             PrivateZoneResource privateZone = client.GetPrivateZoneResource(privateZoneResourceId);
 
-            // get the collection of this RecordSetResource
-            RecordSetCollection collection = privateZone.GetRecordSets();
+            // get the collection of this PrivateDnsMXRecordResource
+            PrivateDnsMXRecordCollection collection = privateZone.GetPrivateDnsMXRecords();
 
             // invoke the operation and iterate over the result
-            await foreach (RecordSetResource item in collection.GetAllAsync())
+            await foreach (PrivateDnsMXRecordResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                RecordSetData resourceData = item.Data;
+                PrivateDnsRecordData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -1032,15 +1032,15 @@ Value =
             ResourceIdentifier privateZoneResourceId = PrivateZoneResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName);
             PrivateZoneResource privateZone = client.GetPrivateZoneResource(privateZoneResourceId);
 
-            // get the collection of this RecordSetResource
-            RecordSetCollection collection = privateZone.GetRecordSets();
+            // get the collection of this PrivateDnsMXRecordResource
+            PrivateDnsMXRecordCollection collection = privateZone.GetPrivateDnsMXRecords();
 
             // invoke the operation and iterate over the result
-            await foreach (RecordSetResource item in collection.GetAllAsync())
+            await foreach (PrivateDnsMXRecordResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                RecordSetData resourceData = item.Data;
+                PrivateDnsRecordData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -1067,15 +1067,15 @@ Value =
             ResourceIdentifier privateZoneResourceId = PrivateZoneResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName);
             PrivateZoneResource privateZone = client.GetPrivateZoneResource(privateZoneResourceId);
 
-            // get the collection of this RecordSetResource
-            RecordSetCollection collection = privateZone.GetRecordSets();
+            // get the collection of this PrivateDnsMXRecordResource
+            PrivateDnsMXRecordCollection collection = privateZone.GetPrivateDnsMXRecords();
 
             // invoke the operation and iterate over the result
-            await foreach (RecordSetResource item in collection.GetAllAsync())
+            await foreach (PrivateDnsMXRecordResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                RecordSetData resourceData = item.Data;
+                PrivateDnsRecordData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -1102,15 +1102,15 @@ Value =
             ResourceIdentifier privateZoneResourceId = PrivateZoneResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName);
             PrivateZoneResource privateZone = client.GetPrivateZoneResource(privateZoneResourceId);
 
-            // get the collection of this RecordSetResource
-            RecordSetCollection collection = privateZone.GetRecordSets();
+            // get the collection of this PrivateDnsMXRecordResource
+            PrivateDnsMXRecordCollection collection = privateZone.GetPrivateDnsMXRecords();
 
             // invoke the operation and iterate over the result
-            await foreach (RecordSetResource item in collection.GetAllAsync())
+            await foreach (PrivateDnsMXRecordResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                RecordSetData resourceData = item.Data;
+                PrivateDnsRecordData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -1137,15 +1137,15 @@ Value =
             ResourceIdentifier privateZoneResourceId = PrivateZoneResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName);
             PrivateZoneResource privateZone = client.GetPrivateZoneResource(privateZoneResourceId);
 
-            // get the collection of this RecordSetResource
-            RecordSetCollection collection = privateZone.GetRecordSets();
+            // get the collection of this PrivateDnsMXRecordResource
+            PrivateDnsMXRecordCollection collection = privateZone.GetPrivateDnsMXRecords();
 
             // invoke the operation and iterate over the result
-            await foreach (RecordSetResource item in collection.GetAllAsync())
+            await foreach (PrivateDnsMXRecordResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                RecordSetData resourceData = item.Data;
+                PrivateDnsRecordData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -1172,15 +1172,15 @@ Value =
             ResourceIdentifier privateZoneResourceId = PrivateZoneResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName);
             PrivateZoneResource privateZone = client.GetPrivateZoneResource(privateZoneResourceId);
 
-            // get the collection of this RecordSetResource
-            RecordSetCollection collection = privateZone.GetRecordSets();
+            // get the collection of this PrivateDnsMXRecordResource
+            PrivateDnsMXRecordCollection collection = privateZone.GetPrivateDnsMXRecords();
 
             // invoke the operation and iterate over the result
-            await foreach (RecordSetResource item in collection.GetAllAsync())
+            await foreach (PrivateDnsMXRecordResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                RecordSetData resourceData = item.Data;
+                PrivateDnsRecordData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

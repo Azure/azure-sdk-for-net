@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.PrivateDns
 {
-    public partial class Sample_RecordSetResource
+    public partial class Sample_PrivateDnsSrvRecordResource
     {
         // PATCH Private DNS Zone A Record Set
         [NUnit.Framework.Test]
@@ -27,28 +27,28 @@ namespace Azure.ResourceManager.PrivateDns
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
-            // this example assumes you already have this RecordSetResource created on azure
-            // for more information of creating RecordSetResource, please refer to the document of RecordSetResource
+            // this example assumes you already have this PrivateDnsSrvRecordResource created on azure
+            // for more information of creating PrivateDnsSrvRecordResource, please refer to the document of PrivateDnsSrvRecordResource
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroup1";
             string privateZoneName = "privatezone1.com";
             string relativeRecordSetName = "recordA";
-            ResourceIdentifier recordSetResourceId = RecordSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
-            RecordSetResource recordSet = client.GetRecordSetResource(recordSetResourceId);
+            ResourceIdentifier privateDnsPrivateDnsSrvRecordInfoResourceId = PrivateDnsSrvRecordResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
+            PrivateDnsSrvRecordResource privateDnsPrivateDnsSrvRecordInfo = client.GetPrivateDnsSrvRecordResource(privateDnsPrivateDnsSrvRecordInfoResourceId);
 
             // invoke the operation
-            RecordSetData data = new RecordSetData()
+            PrivateDnsRecordData data = new PrivateDnsRecordData()
             {
                 Metadata =
 {
 ["key2"] = "value2",
 },
             };
-            RecordSetResource result = await recordSet.UpdateAsync(data);
+            PrivateDnsSrvRecordResource result = await privateDnsPrivateDnsSrvRecordInfo.UpdateAsync(data);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RecordSetData resourceData = result.Data;
+            PrivateDnsRecordData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -64,28 +64,28 @@ namespace Azure.ResourceManager.PrivateDns
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
-            // this example assumes you already have this RecordSetResource created on azure
-            // for more information of creating RecordSetResource, please refer to the document of RecordSetResource
+            // this example assumes you already have this PrivateDnsSrvRecordResource created on azure
+            // for more information of creating PrivateDnsSrvRecordResource, please refer to the document of PrivateDnsSrvRecordResource
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroup1";
             string privateZoneName = "privatezone1.com";
             string relativeRecordSetName = "recordAAAA";
-            ResourceIdentifier recordSetResourceId = RecordSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
-            RecordSetResource recordSet = client.GetRecordSetResource(recordSetResourceId);
+            ResourceIdentifier privateDnsPrivateDnsSrvRecordInfoResourceId = PrivateDnsSrvRecordResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
+            PrivateDnsSrvRecordResource privateDnsPrivateDnsSrvRecordInfo = client.GetPrivateDnsSrvRecordResource(privateDnsPrivateDnsSrvRecordInfoResourceId);
 
             // invoke the operation
-            RecordSetData data = new RecordSetData()
+            PrivateDnsRecordData data = new PrivateDnsRecordData()
             {
                 Metadata =
 {
 ["key2"] = "value2",
 },
             };
-            RecordSetResource result = await recordSet.UpdateAsync(data);
+            PrivateDnsSrvRecordResource result = await privateDnsPrivateDnsSrvRecordInfo.UpdateAsync(data);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RecordSetData resourceData = result.Data;
+            PrivateDnsRecordData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -101,28 +101,28 @@ namespace Azure.ResourceManager.PrivateDns
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
-            // this example assumes you already have this RecordSetResource created on azure
-            // for more information of creating RecordSetResource, please refer to the document of RecordSetResource
+            // this example assumes you already have this PrivateDnsSrvRecordResource created on azure
+            // for more information of creating PrivateDnsSrvRecordResource, please refer to the document of PrivateDnsSrvRecordResource
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroup1";
             string privateZoneName = "privatezone1.com";
             string relativeRecordSetName = "recordCNAME";
-            ResourceIdentifier recordSetResourceId = RecordSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
-            RecordSetResource recordSet = client.GetRecordSetResource(recordSetResourceId);
+            ResourceIdentifier privateDnsPrivateDnsSrvRecordInfoResourceId = PrivateDnsSrvRecordResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
+            PrivateDnsSrvRecordResource privateDnsPrivateDnsSrvRecordInfo = client.GetPrivateDnsSrvRecordResource(privateDnsPrivateDnsSrvRecordInfoResourceId);
 
             // invoke the operation
-            RecordSetData data = new RecordSetData()
+            PrivateDnsRecordData data = new PrivateDnsRecordData()
             {
                 Metadata =
 {
 ["key2"] = "value2",
 },
             };
-            RecordSetResource result = await recordSet.UpdateAsync(data);
+            PrivateDnsSrvRecordResource result = await privateDnsPrivateDnsSrvRecordInfo.UpdateAsync(data);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RecordSetData resourceData = result.Data;
+            PrivateDnsRecordData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -138,28 +138,28 @@ namespace Azure.ResourceManager.PrivateDns
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
-            // this example assumes you already have this RecordSetResource created on azure
-            // for more information of creating RecordSetResource, please refer to the document of RecordSetResource
+            // this example assumes you already have this PrivateDnsSrvRecordResource created on azure
+            // for more information of creating PrivateDnsSrvRecordResource, please refer to the document of PrivateDnsSrvRecordResource
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroup1";
             string privateZoneName = "privatezone1.com";
             string relativeRecordSetName = "recordMX";
-            ResourceIdentifier recordSetResourceId = RecordSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
-            RecordSetResource recordSet = client.GetRecordSetResource(recordSetResourceId);
+            ResourceIdentifier privateDnsPrivateDnsSrvRecordInfoResourceId = PrivateDnsSrvRecordResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
+            PrivateDnsSrvRecordResource privateDnsPrivateDnsSrvRecordInfo = client.GetPrivateDnsSrvRecordResource(privateDnsPrivateDnsSrvRecordInfoResourceId);
 
             // invoke the operation
-            RecordSetData data = new RecordSetData()
+            PrivateDnsRecordData data = new PrivateDnsRecordData()
             {
                 Metadata =
 {
 ["key2"] = "value2",
 },
             };
-            RecordSetResource result = await recordSet.UpdateAsync(data);
+            PrivateDnsSrvRecordResource result = await privateDnsPrivateDnsSrvRecordInfo.UpdateAsync(data);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RecordSetData resourceData = result.Data;
+            PrivateDnsRecordData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -175,28 +175,28 @@ namespace Azure.ResourceManager.PrivateDns
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
-            // this example assumes you already have this RecordSetResource created on azure
-            // for more information of creating RecordSetResource, please refer to the document of RecordSetResource
+            // this example assumes you already have this PrivateDnsSrvRecordResource created on azure
+            // for more information of creating PrivateDnsSrvRecordResource, please refer to the document of PrivateDnsSrvRecordResource
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroup1";
             string privateZoneName = "0.0.127.in-addr.arpa";
             string relativeRecordSetName = "1";
-            ResourceIdentifier recordSetResourceId = RecordSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
-            RecordSetResource recordSet = client.GetRecordSetResource(recordSetResourceId);
+            ResourceIdentifier privateDnsPrivateDnsSrvRecordInfoResourceId = PrivateDnsSrvRecordResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
+            PrivateDnsSrvRecordResource privateDnsPrivateDnsSrvRecordInfo = client.GetPrivateDnsSrvRecordResource(privateDnsPrivateDnsSrvRecordInfoResourceId);
 
             // invoke the operation
-            RecordSetData data = new RecordSetData()
+            PrivateDnsRecordData data = new PrivateDnsRecordData()
             {
                 Metadata =
 {
 ["key2"] = "value2",
 },
             };
-            RecordSetResource result = await recordSet.UpdateAsync(data);
+            PrivateDnsSrvRecordResource result = await privateDnsPrivateDnsSrvRecordInfo.UpdateAsync(data);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RecordSetData resourceData = result.Data;
+            PrivateDnsRecordData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -212,28 +212,28 @@ namespace Azure.ResourceManager.PrivateDns
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
-            // this example assumes you already have this RecordSetResource created on azure
-            // for more information of creating RecordSetResource, please refer to the document of RecordSetResource
+            // this example assumes you already have this PrivateDnsSrvRecordResource created on azure
+            // for more information of creating PrivateDnsSrvRecordResource, please refer to the document of PrivateDnsSrvRecordResource
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroup1";
             string privateZoneName = "privatezone1.com";
             string relativeRecordSetName = "@";
-            ResourceIdentifier recordSetResourceId = RecordSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
-            RecordSetResource recordSet = client.GetRecordSetResource(recordSetResourceId);
+            ResourceIdentifier privateDnsPrivateDnsSrvRecordInfoResourceId = PrivateDnsSrvRecordResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
+            PrivateDnsSrvRecordResource privateDnsPrivateDnsSrvRecordInfo = client.GetPrivateDnsSrvRecordResource(privateDnsPrivateDnsSrvRecordInfoResourceId);
 
             // invoke the operation
-            RecordSetData data = new RecordSetData()
+            PrivateDnsRecordData data = new PrivateDnsRecordData()
             {
                 Metadata =
 {
 ["key2"] = "value2",
 },
             };
-            RecordSetResource result = await recordSet.UpdateAsync(data);
+            PrivateDnsSrvRecordResource result = await privateDnsPrivateDnsSrvRecordInfo.UpdateAsync(data);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RecordSetData resourceData = result.Data;
+            PrivateDnsRecordData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -249,28 +249,28 @@ namespace Azure.ResourceManager.PrivateDns
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
-            // this example assumes you already have this RecordSetResource created on azure
-            // for more information of creating RecordSetResource, please refer to the document of RecordSetResource
+            // this example assumes you already have this PrivateDnsSrvRecordResource created on azure
+            // for more information of creating PrivateDnsSrvRecordResource, please refer to the document of PrivateDnsSrvRecordResource
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroup1";
             string privateZoneName = "privatezone1.com";
             string relativeRecordSetName = "recordSRV";
-            ResourceIdentifier recordSetResourceId = RecordSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
-            RecordSetResource recordSet = client.GetRecordSetResource(recordSetResourceId);
+            ResourceIdentifier privateDnsPrivateDnsSrvRecordInfoResourceId = PrivateDnsSrvRecordResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
+            PrivateDnsSrvRecordResource privateDnsPrivateDnsSrvRecordInfo = client.GetPrivateDnsSrvRecordResource(privateDnsPrivateDnsSrvRecordInfoResourceId);
 
             // invoke the operation
-            RecordSetData data = new RecordSetData()
+            PrivateDnsRecordData data = new PrivateDnsRecordData()
             {
                 Metadata =
 {
 ["key2"] = "value2",
 },
             };
-            RecordSetResource result = await recordSet.UpdateAsync(data);
+            PrivateDnsSrvRecordResource result = await privateDnsPrivateDnsSrvRecordInfo.UpdateAsync(data);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RecordSetData resourceData = result.Data;
+            PrivateDnsRecordData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -286,28 +286,28 @@ namespace Azure.ResourceManager.PrivateDns
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
-            // this example assumes you already have this RecordSetResource created on azure
-            // for more information of creating RecordSetResource, please refer to the document of RecordSetResource
+            // this example assumes you already have this PrivateDnsSrvRecordResource created on azure
+            // for more information of creating PrivateDnsSrvRecordResource, please refer to the document of PrivateDnsSrvRecordResource
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroup1";
             string privateZoneName = "privatezone1.com";
             string relativeRecordSetName = "recordTXT";
-            ResourceIdentifier recordSetResourceId = RecordSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
-            RecordSetResource recordSet = client.GetRecordSetResource(recordSetResourceId);
+            ResourceIdentifier privateDnsPrivateDnsSrvRecordInfoResourceId = PrivateDnsSrvRecordResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
+            PrivateDnsSrvRecordResource privateDnsPrivateDnsSrvRecordInfo = client.GetPrivateDnsSrvRecordResource(privateDnsPrivateDnsSrvRecordInfoResourceId);
 
             // invoke the operation
-            RecordSetData data = new RecordSetData()
+            PrivateDnsRecordData data = new PrivateDnsRecordData()
             {
                 Metadata =
 {
 ["key2"] = "value2",
 },
             };
-            RecordSetResource result = await recordSet.UpdateAsync(data);
+            PrivateDnsSrvRecordResource result = await privateDnsPrivateDnsSrvRecordInfo.UpdateAsync(data);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RecordSetData resourceData = result.Data;
+            PrivateDnsRecordData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -323,17 +323,17 @@ namespace Azure.ResourceManager.PrivateDns
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
-            // this example assumes you already have this RecordSetResource created on azure
-            // for more information of creating RecordSetResource, please refer to the document of RecordSetResource
+            // this example assumes you already have this PrivateDnsSrvRecordResource created on azure
+            // for more information of creating PrivateDnsSrvRecordResource, please refer to the document of PrivateDnsSrvRecordResource
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroup1";
             string privateZoneName = "privatezone1.com";
             string relativeRecordSetName = "recordA";
-            ResourceIdentifier recordSetResourceId = RecordSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
-            RecordSetResource recordSet = client.GetRecordSetResource(recordSetResourceId);
+            ResourceIdentifier privateDnsPrivateDnsSrvRecordInfoResourceId = PrivateDnsSrvRecordResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
+            PrivateDnsSrvRecordResource privateDnsPrivateDnsSrvRecordInfo = client.GetPrivateDnsSrvRecordResource(privateDnsPrivateDnsSrvRecordInfoResourceId);
 
             // invoke the operation
-            await recordSet.DeleteAsync(WaitUntil.Completed);
+            await privateDnsPrivateDnsSrvRecordInfo.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -349,17 +349,17 @@ namespace Azure.ResourceManager.PrivateDns
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
-            // this example assumes you already have this RecordSetResource created on azure
-            // for more information of creating RecordSetResource, please refer to the document of RecordSetResource
+            // this example assumes you already have this PrivateDnsSrvRecordResource created on azure
+            // for more information of creating PrivateDnsSrvRecordResource, please refer to the document of PrivateDnsSrvRecordResource
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroup1";
             string privateZoneName = "privatezone1.com";
             string relativeRecordSetName = "recordAAAA";
-            ResourceIdentifier recordSetResourceId = RecordSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
-            RecordSetResource recordSet = client.GetRecordSetResource(recordSetResourceId);
+            ResourceIdentifier privateDnsPrivateDnsSrvRecordInfoResourceId = PrivateDnsSrvRecordResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
+            PrivateDnsSrvRecordResource privateDnsPrivateDnsSrvRecordInfo = client.GetPrivateDnsSrvRecordResource(privateDnsPrivateDnsSrvRecordInfoResourceId);
 
             // invoke the operation
-            await recordSet.DeleteAsync(WaitUntil.Completed);
+            await privateDnsPrivateDnsSrvRecordInfo.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -375,17 +375,17 @@ namespace Azure.ResourceManager.PrivateDns
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
-            // this example assumes you already have this RecordSetResource created on azure
-            // for more information of creating RecordSetResource, please refer to the document of RecordSetResource
+            // this example assumes you already have this PrivateDnsSrvRecordResource created on azure
+            // for more information of creating PrivateDnsSrvRecordResource, please refer to the document of PrivateDnsSrvRecordResource
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroup1";
             string privateZoneName = "privatezone1.com";
             string relativeRecordSetName = "recordCNAME";
-            ResourceIdentifier recordSetResourceId = RecordSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
-            RecordSetResource recordSet = client.GetRecordSetResource(recordSetResourceId);
+            ResourceIdentifier privateDnsPrivateDnsSrvRecordInfoResourceId = PrivateDnsSrvRecordResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
+            PrivateDnsSrvRecordResource privateDnsPrivateDnsSrvRecordInfo = client.GetPrivateDnsSrvRecordResource(privateDnsPrivateDnsSrvRecordInfoResourceId);
 
             // invoke the operation
-            await recordSet.DeleteAsync(WaitUntil.Completed);
+            await privateDnsPrivateDnsSrvRecordInfo.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -401,17 +401,17 @@ namespace Azure.ResourceManager.PrivateDns
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
-            // this example assumes you already have this RecordSetResource created on azure
-            // for more information of creating RecordSetResource, please refer to the document of RecordSetResource
+            // this example assumes you already have this PrivateDnsSrvRecordResource created on azure
+            // for more information of creating PrivateDnsSrvRecordResource, please refer to the document of PrivateDnsSrvRecordResource
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroup1";
             string privateZoneName = "privatezone1.com";
             string relativeRecordSetName = "recordMX";
-            ResourceIdentifier recordSetResourceId = RecordSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
-            RecordSetResource recordSet = client.GetRecordSetResource(recordSetResourceId);
+            ResourceIdentifier privateDnsPrivateDnsSrvRecordInfoResourceId = PrivateDnsSrvRecordResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
+            PrivateDnsSrvRecordResource privateDnsPrivateDnsSrvRecordInfo = client.GetPrivateDnsSrvRecordResource(privateDnsPrivateDnsSrvRecordInfoResourceId);
 
             // invoke the operation
-            await recordSet.DeleteAsync(WaitUntil.Completed);
+            await privateDnsPrivateDnsSrvRecordInfo.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -427,17 +427,17 @@ namespace Azure.ResourceManager.PrivateDns
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
-            // this example assumes you already have this RecordSetResource created on azure
-            // for more information of creating RecordSetResource, please refer to the document of RecordSetResource
+            // this example assumes you already have this PrivateDnsSrvRecordResource created on azure
+            // for more information of creating PrivateDnsSrvRecordResource, please refer to the document of PrivateDnsSrvRecordResource
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroup1";
             string privateZoneName = "0.0.127.in-addr.arpa";
             string relativeRecordSetName = "1";
-            ResourceIdentifier recordSetResourceId = RecordSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
-            RecordSetResource recordSet = client.GetRecordSetResource(recordSetResourceId);
+            ResourceIdentifier privateDnsPrivateDnsSrvRecordInfoResourceId = PrivateDnsSrvRecordResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
+            PrivateDnsSrvRecordResource privateDnsPrivateDnsSrvRecordInfo = client.GetPrivateDnsSrvRecordResource(privateDnsPrivateDnsSrvRecordInfoResourceId);
 
             // invoke the operation
-            await recordSet.DeleteAsync(WaitUntil.Completed);
+            await privateDnsPrivateDnsSrvRecordInfo.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -453,17 +453,17 @@ namespace Azure.ResourceManager.PrivateDns
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
-            // this example assumes you already have this RecordSetResource created on azure
-            // for more information of creating RecordSetResource, please refer to the document of RecordSetResource
+            // this example assumes you already have this PrivateDnsSrvRecordResource created on azure
+            // for more information of creating PrivateDnsSrvRecordResource, please refer to the document of PrivateDnsSrvRecordResource
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroup1";
             string privateZoneName = "privatezone1.com";
             string relativeRecordSetName = "recordSRV";
-            ResourceIdentifier recordSetResourceId = RecordSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
-            RecordSetResource recordSet = client.GetRecordSetResource(recordSetResourceId);
+            ResourceIdentifier privateDnsPrivateDnsSrvRecordInfoResourceId = PrivateDnsSrvRecordResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
+            PrivateDnsSrvRecordResource privateDnsPrivateDnsSrvRecordInfo = client.GetPrivateDnsSrvRecordResource(privateDnsPrivateDnsSrvRecordInfoResourceId);
 
             // invoke the operation
-            await recordSet.DeleteAsync(WaitUntil.Completed);
+            await privateDnsPrivateDnsSrvRecordInfo.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -479,17 +479,17 @@ namespace Azure.ResourceManager.PrivateDns
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
-            // this example assumes you already have this RecordSetResource created on azure
-            // for more information of creating RecordSetResource, please refer to the document of RecordSetResource
+            // this example assumes you already have this PrivateDnsSrvRecordResource created on azure
+            // for more information of creating PrivateDnsSrvRecordResource, please refer to the document of PrivateDnsSrvRecordResource
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroup1";
             string privateZoneName = "privatezone1.com";
             string relativeRecordSetName = "recordTXT";
-            ResourceIdentifier recordSetResourceId = RecordSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
-            RecordSetResource recordSet = client.GetRecordSetResource(recordSetResourceId);
+            ResourceIdentifier privateDnsPrivateDnsSrvRecordInfoResourceId = PrivateDnsSrvRecordResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
+            PrivateDnsSrvRecordResource privateDnsPrivateDnsSrvRecordInfo = client.GetPrivateDnsSrvRecordResource(privateDnsPrivateDnsSrvRecordInfoResourceId);
 
             // invoke the operation
-            await recordSet.DeleteAsync(WaitUntil.Completed);
+            await privateDnsPrivateDnsSrvRecordInfo.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -505,21 +505,21 @@ namespace Azure.ResourceManager.PrivateDns
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
-            // this example assumes you already have this RecordSetResource created on azure
-            // for more information of creating RecordSetResource, please refer to the document of RecordSetResource
+            // this example assumes you already have this PrivateDnsSrvRecordResource created on azure
+            // for more information of creating PrivateDnsSrvRecordResource, please refer to the document of PrivateDnsSrvRecordResource
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroup1";
             string privateZoneName = "privatezone1.com";
             string relativeRecordSetName = "recordA";
-            ResourceIdentifier recordSetResourceId = RecordSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
-            RecordSetResource recordSet = client.GetRecordSetResource(recordSetResourceId);
+            ResourceIdentifier privateDnsPrivateDnsSrvRecordInfoResourceId = PrivateDnsSrvRecordResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
+            PrivateDnsSrvRecordResource privateDnsPrivateDnsSrvRecordInfo = client.GetPrivateDnsSrvRecordResource(privateDnsPrivateDnsSrvRecordInfoResourceId);
 
             // invoke the operation
-            RecordSetResource result = await recordSet.GetAsync();
+            PrivateDnsSrvRecordResource result = await privateDnsPrivateDnsSrvRecordInfo.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RecordSetData resourceData = result.Data;
+            PrivateDnsRecordData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -535,21 +535,21 @@ namespace Azure.ResourceManager.PrivateDns
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
-            // this example assumes you already have this RecordSetResource created on azure
-            // for more information of creating RecordSetResource, please refer to the document of RecordSetResource
+            // this example assumes you already have this PrivateDnsSrvRecordResource created on azure
+            // for more information of creating PrivateDnsSrvRecordResource, please refer to the document of PrivateDnsSrvRecordResource
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroup1";
             string privateZoneName = "privatezone1.com";
             string relativeRecordSetName = "recordAAAA";
-            ResourceIdentifier recordSetResourceId = RecordSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
-            RecordSetResource recordSet = client.GetRecordSetResource(recordSetResourceId);
+            ResourceIdentifier privateDnsPrivateDnsSrvRecordInfoResourceId = PrivateDnsSrvRecordResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
+            PrivateDnsSrvRecordResource privateDnsPrivateDnsSrvRecordInfo = client.GetPrivateDnsSrvRecordResource(privateDnsPrivateDnsSrvRecordInfoResourceId);
 
             // invoke the operation
-            RecordSetResource result = await recordSet.GetAsync();
+            PrivateDnsSrvRecordResource result = await privateDnsPrivateDnsSrvRecordInfo.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RecordSetData resourceData = result.Data;
+            PrivateDnsRecordData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -565,21 +565,21 @@ namespace Azure.ResourceManager.PrivateDns
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
-            // this example assumes you already have this RecordSetResource created on azure
-            // for more information of creating RecordSetResource, please refer to the document of RecordSetResource
+            // this example assumes you already have this PrivateDnsSrvRecordResource created on azure
+            // for more information of creating PrivateDnsSrvRecordResource, please refer to the document of PrivateDnsSrvRecordResource
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroup1";
             string privateZoneName = "privatezone1.com";
             string relativeRecordSetName = "recordCNAME";
-            ResourceIdentifier recordSetResourceId = RecordSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
-            RecordSetResource recordSet = client.GetRecordSetResource(recordSetResourceId);
+            ResourceIdentifier privateDnsPrivateDnsSrvRecordInfoResourceId = PrivateDnsSrvRecordResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
+            PrivateDnsSrvRecordResource privateDnsPrivateDnsSrvRecordInfo = client.GetPrivateDnsSrvRecordResource(privateDnsPrivateDnsSrvRecordInfoResourceId);
 
             // invoke the operation
-            RecordSetResource result = await recordSet.GetAsync();
+            PrivateDnsSrvRecordResource result = await privateDnsPrivateDnsSrvRecordInfo.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RecordSetData resourceData = result.Data;
+            PrivateDnsRecordData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -595,21 +595,21 @@ namespace Azure.ResourceManager.PrivateDns
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
-            // this example assumes you already have this RecordSetResource created on azure
-            // for more information of creating RecordSetResource, please refer to the document of RecordSetResource
+            // this example assumes you already have this PrivateDnsSrvRecordResource created on azure
+            // for more information of creating PrivateDnsSrvRecordResource, please refer to the document of PrivateDnsSrvRecordResource
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroup1";
             string privateZoneName = "privatezone1.com";
             string relativeRecordSetName = "recordMX";
-            ResourceIdentifier recordSetResourceId = RecordSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
-            RecordSetResource recordSet = client.GetRecordSetResource(recordSetResourceId);
+            ResourceIdentifier privateDnsPrivateDnsSrvRecordInfoResourceId = PrivateDnsSrvRecordResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
+            PrivateDnsSrvRecordResource privateDnsPrivateDnsSrvRecordInfo = client.GetPrivateDnsSrvRecordResource(privateDnsPrivateDnsSrvRecordInfoResourceId);
 
             // invoke the operation
-            RecordSetResource result = await recordSet.GetAsync();
+            PrivateDnsSrvRecordResource result = await privateDnsPrivateDnsSrvRecordInfo.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RecordSetData resourceData = result.Data;
+            PrivateDnsRecordData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -625,21 +625,21 @@ namespace Azure.ResourceManager.PrivateDns
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
-            // this example assumes you already have this RecordSetResource created on azure
-            // for more information of creating RecordSetResource, please refer to the document of RecordSetResource
+            // this example assumes you already have this PrivateDnsSrvRecordResource created on azure
+            // for more information of creating PrivateDnsSrvRecordResource, please refer to the document of PrivateDnsSrvRecordResource
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroup1";
             string privateZoneName = "0.0.127.in-addr.arpa";
             string relativeRecordSetName = "1";
-            ResourceIdentifier recordSetResourceId = RecordSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
-            RecordSetResource recordSet = client.GetRecordSetResource(recordSetResourceId);
+            ResourceIdentifier privateDnsPrivateDnsSrvRecordInfoResourceId = PrivateDnsSrvRecordResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
+            PrivateDnsSrvRecordResource privateDnsPrivateDnsSrvRecordInfo = client.GetPrivateDnsSrvRecordResource(privateDnsPrivateDnsSrvRecordInfoResourceId);
 
             // invoke the operation
-            RecordSetResource result = await recordSet.GetAsync();
+            PrivateDnsSrvRecordResource result = await privateDnsPrivateDnsSrvRecordInfo.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RecordSetData resourceData = result.Data;
+            PrivateDnsRecordData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -655,21 +655,21 @@ namespace Azure.ResourceManager.PrivateDns
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
-            // this example assumes you already have this RecordSetResource created on azure
-            // for more information of creating RecordSetResource, please refer to the document of RecordSetResource
+            // this example assumes you already have this PrivateDnsSrvRecordResource created on azure
+            // for more information of creating PrivateDnsSrvRecordResource, please refer to the document of PrivateDnsSrvRecordResource
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroup1";
             string privateZoneName = "privatezone1.com";
             string relativeRecordSetName = "@";
-            ResourceIdentifier recordSetResourceId = RecordSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
-            RecordSetResource recordSet = client.GetRecordSetResource(recordSetResourceId);
+            ResourceIdentifier privateDnsPrivateDnsSrvRecordInfoResourceId = PrivateDnsSrvRecordResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
+            PrivateDnsSrvRecordResource privateDnsPrivateDnsSrvRecordInfo = client.GetPrivateDnsSrvRecordResource(privateDnsPrivateDnsSrvRecordInfoResourceId);
 
             // invoke the operation
-            RecordSetResource result = await recordSet.GetAsync();
+            PrivateDnsSrvRecordResource result = await privateDnsPrivateDnsSrvRecordInfo.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RecordSetData resourceData = result.Data;
+            PrivateDnsRecordData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -685,21 +685,21 @@ namespace Azure.ResourceManager.PrivateDns
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
-            // this example assumes you already have this RecordSetResource created on azure
-            // for more information of creating RecordSetResource, please refer to the document of RecordSetResource
+            // this example assumes you already have this PrivateDnsSrvRecordResource created on azure
+            // for more information of creating PrivateDnsSrvRecordResource, please refer to the document of PrivateDnsSrvRecordResource
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroup1";
             string privateZoneName = "privatezone1.com";
             string relativeRecordSetName = "recordSRV";
-            ResourceIdentifier recordSetResourceId = RecordSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
-            RecordSetResource recordSet = client.GetRecordSetResource(recordSetResourceId);
+            ResourceIdentifier privateDnsPrivateDnsSrvRecordInfoResourceId = PrivateDnsSrvRecordResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
+            PrivateDnsSrvRecordResource privateDnsPrivateDnsSrvRecordInfo = client.GetPrivateDnsSrvRecordResource(privateDnsPrivateDnsSrvRecordInfoResourceId);
 
             // invoke the operation
-            RecordSetResource result = await recordSet.GetAsync();
+            PrivateDnsSrvRecordResource result = await privateDnsPrivateDnsSrvRecordInfo.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RecordSetData resourceData = result.Data;
+            PrivateDnsRecordData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -715,21 +715,21 @@ namespace Azure.ResourceManager.PrivateDns
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
-            // this example assumes you already have this RecordSetResource created on azure
-            // for more information of creating RecordSetResource, please refer to the document of RecordSetResource
+            // this example assumes you already have this PrivateDnsSrvRecordResource created on azure
+            // for more information of creating PrivateDnsSrvRecordResource, please refer to the document of PrivateDnsSrvRecordResource
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroup1";
             string privateZoneName = "privatezone1.com";
             string relativeRecordSetName = "recordTXT";
-            ResourceIdentifier recordSetResourceId = RecordSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
-            RecordSetResource recordSet = client.GetRecordSetResource(recordSetResourceId);
+            ResourceIdentifier privateDnsPrivateDnsSrvRecordInfoResourceId = PrivateDnsSrvRecordResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateZoneName, relativeRecordSetName);
+            PrivateDnsSrvRecordResource privateDnsPrivateDnsSrvRecordInfo = client.GetPrivateDnsSrvRecordResource(privateDnsPrivateDnsSrvRecordInfoResourceId);
 
             // invoke the operation
-            RecordSetResource result = await recordSet.GetAsync();
+            PrivateDnsSrvRecordResource result = await privateDnsPrivateDnsSrvRecordInfo.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RecordSetData resourceData = result.Data;
+            PrivateDnsRecordData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

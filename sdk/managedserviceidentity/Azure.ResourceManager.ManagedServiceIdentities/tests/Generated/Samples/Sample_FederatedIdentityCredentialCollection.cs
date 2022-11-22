@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             string federatedIdentityCredentialResourceName = "ficResourceName";
             FederatedIdentityCredentialData data = new FederatedIdentityCredentialData()
             {
-                Issuer = "https://oidc.prod-aks.azure.com/IssuerGUID",
+                IssuerUri = new Uri("https://oidc.prod-aks.azure.com/IssuerGUID"),
                 Subject = "system:serviceaccount:ns:svcaccount",
                 Audiences =
 {

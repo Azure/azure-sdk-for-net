@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Kusto
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_KustoDatabasesListByCluster()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-02-01/examples/KustoDatabasesListByCluster.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-07-07/examples/KustoDatabasesListByCluster.json
             // this example is just showing the usage of "Databases_ListByCluster" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Kusto
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_KustoDatabasesGet()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-02-01/examples/KustoDatabasesGet.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-07-07/examples/KustoDatabasesGet.json
             // this example is just showing the usage of "Databases_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Kusto
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_KustoDatabasesGet()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-02-01/examples/KustoDatabasesGet.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-07-07/examples/KustoDatabasesGet.json
             // this example is just showing the usage of "Databases_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Kusto
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_KustoReadOnlyDatabaseUpdate()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-02-01/examples/KustoDatabaseReadonlyUpdate.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-07-07/examples/KustoDatabaseReadonlyUpdate.json
             // this example is just showing the usage of "Databases_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Kusto
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_KustoReadWriteDatabaseCreateOrUpdate()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-02-01/examples/KustoDatabasesCreateOrUpdate.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-07-07/examples/KustoDatabasesCreateOrUpdate.json
             // this example is just showing the usage of "Databases_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -182,7 +182,8 @@ namespace Azure.ResourceManager.Kusto
                 Location = new AzureLocation("westus"),
                 Kind = KustoKind.ReadWrite,
             };
-            ArmOperation<KustoDatabaseResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, databaseName, data);
+            KustoDatabaseCallerRole? callerRole = KustoDatabaseCallerRole.Admin;
+            ArmOperation<KustoDatabaseResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, databaseName, data, callerRole: callerRole);
             KustoDatabaseResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

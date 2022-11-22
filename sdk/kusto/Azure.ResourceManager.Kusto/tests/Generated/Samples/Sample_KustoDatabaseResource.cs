@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Kusto
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_KustoDatabasesGet()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-02-01/examples/KustoDatabasesGet.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-07-07/examples/KustoDatabasesGet.json
             // this example is just showing the usage of "Databases_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Kusto
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_KustoDatabasesUpdate()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-02-01/examples/KustoDatabasesUpdate.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-07-07/examples/KustoDatabasesUpdate.json
             // this example is just showing the usage of "Databases_Update" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Kusto
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_KustoDatabasesDelete()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-02-01/examples/KustoDatabasesDelete.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-07-07/examples/KustoDatabasesDelete.json
             // this example is just showing the usage of "Databases_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Kusto
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetPrincipals_KustoDatabaseListPrincipals()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-02-01/examples/KustoDatabaseListPrincipals.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-07-07/examples/KustoDatabaseListPrincipals.json
             // this example is just showing the usage of "Databases_ListPrincipals" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Kusto
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task AddPrincipals_KustoDatabaseAddPrincipals()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-02-01/examples/KustoDatabaseAddPrincipals.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-07-07/examples/KustoDatabaseAddPrincipals.json
             // this example is just showing the usage of "Databases_AddPrincipals" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -193,7 +193,7 @@ AppId = "some_guid_app_id",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task RemovePrincipals_KustoDatabaseRemovePrincipals()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-02-01/examples/KustoDatabaseRemovePrincipals.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-07-07/examples/KustoDatabaseRemovePrincipals.json
             // this example is just showing the usage of "Databases_RemovePrincipals" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -244,7 +244,7 @@ AppId = "some_guid_app_id",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CheckKustoDatabasePrincipalAssignmentNameAvailability_KustoDatabaseCheckNameAvailability()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-02-01/examples/KustoDatabasePrincipalAssignmentsCheckNameAvailability.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-07-07/examples/KustoDatabasePrincipalAssignmentsCheckNameAvailability.json
             // this example is just showing the usage of "DatabasePrincipalAssignments_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -271,7 +271,7 @@ AppId = "some_guid_app_id",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CheckKustoScriptNameAvailability_KustoScriptsCheckNameAvailability()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-02-01/examples/KustoScriptsCheckNameAvailability.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-07-07/examples/KustoScriptsCheckNameAvailability.json
             // this example is just showing the usage of "Scripts_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -298,7 +298,7 @@ AppId = "some_guid_app_id",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task ValidateDataConnection_KustoDataConnectionEventGridValidation()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-02-01/examples/KustoDataConnectionEventGridValidationAsync.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-07-07/examples/KustoDataConnectionEventGridValidationAsync.json
             // this example is just showing the usage of "DataConnections_dataConnectionValidation" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -333,7 +333,7 @@ AppId = "some_guid_app_id",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task ValidateDataConnection_KustoDataConnectionValidation()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-02-01/examples/KustoDataConnectionValidationAsync.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-07-07/examples/KustoDataConnectionValidationAsync.json
             // this example is just showing the usage of "DataConnections_dataConnectionValidation" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -368,7 +368,7 @@ AppId = "some_guid_app_id",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CheckKustoDataConnectionNameAvailability_KustoDataConnectionsCheckNameAvailability()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-02-01/examples/KustoDataConnectionsCheckNameAvailability.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-07-07/examples/KustoDataConnectionsCheckNameAvailability.json
             // this example is just showing the usage of "DataConnections_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client

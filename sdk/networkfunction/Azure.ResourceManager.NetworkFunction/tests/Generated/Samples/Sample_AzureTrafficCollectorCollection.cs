@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetworkFunction
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListOfTrafficCollectorsByResourceGroup()
         {
-            // Generated from example definition: specification/networkfunction/resource-manager/Microsoft.NetworkFunction/preview/2021-09-01-preview/examples/AzureTrafficCollectorsByResourceGroupList.json
+            // Generated from example definition: specification/networkfunction/resource-manager/Microsoft.NetworkFunction/stable/2022-11-01/examples/AzureTrafficCollectorsByResourceGroupList.json
             // this example is just showing the usage of "AzureTrafficCollectorsByResourceGroup_List" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.NetworkFunction
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetTrafficCollector()
         {
-            // Generated from example definition: specification/networkfunction/resource-manager/Microsoft.NetworkFunction/preview/2021-09-01-preview/examples/AzureTrafficCollectorGet.json
+            // Generated from example definition: specification/networkfunction/resource-manager/Microsoft.NetworkFunction/stable/2022-11-01/examples/AzureTrafficCollectorGet.json
             // this example is just showing the usage of "AzureTrafficCollectors_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.NetworkFunction
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetTrafficCollector()
         {
-            // Generated from example definition: specification/networkfunction/resource-manager/Microsoft.NetworkFunction/preview/2021-09-01-preview/examples/AzureTrafficCollectorGet.json
+            // Generated from example definition: specification/networkfunction/resource-manager/Microsoft.NetworkFunction/stable/2022-11-01/examples/AzureTrafficCollectorGet.json
             // this example is just showing the usage of "AzureTrafficCollectors_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.NetworkFunction
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateATrafficCollector()
         {
-            // Generated from example definition: specification/networkfunction/resource-manager/Microsoft.NetworkFunction/preview/2021-09-01-preview/examples/AzureTrafficCollectorCreate.json
+            // Generated from example definition: specification/networkfunction/resource-manager/Microsoft.NetworkFunction/stable/2022-11-01/examples/AzureTrafficCollectorCreate.json
             // this example is just showing the usage of "AzureTrafficCollectors_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -136,9 +136,6 @@ namespace Azure.ResourceManager.NetworkFunction
             string azureTrafficCollectorName = "atc";
             AzureTrafficCollectorData data = new AzureTrafficCollectorData(new AzureLocation("West US"))
             {
-                CollectorPolicies =
-{
-},
                 Tags =
 {
 ["key1"] = "value1",

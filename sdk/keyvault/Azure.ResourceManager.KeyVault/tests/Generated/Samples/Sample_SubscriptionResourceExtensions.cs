@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
-using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.KeyVault
@@ -45,30 +44,6 @@ namespace Azure.ResourceManager.KeyVault
             }
 
             Console.WriteLine($"Succeeded");
-        }
-
-        // Validate a vault name
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CheckKeyVaultNameAvailability_ValidateAVaultName()
-        {
-            // Generated from example definition: specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2021-10-01/examples/checkVaultNameAvailability.json
-            // this example is just showing the usage of "Vaults_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
-
-            // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation
-            KeyVaultNameAvailabilityContent content = new KeyVaultNameAvailabilityContent("sample-vault");
-            KeyVaultNameAvailabilityResult result = await subscriptionResource.CheckKeyVaultNameAvailabilityAsync(content);
-
-            Console.WriteLine($"Succeeded: {result}");
         }
 
         // List deleted managed HSMs in the specified subscription

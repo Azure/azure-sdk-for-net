@@ -142,6 +142,30 @@ namespace Azure.ResourceManager.EventHubs
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
+        // NamespacesCheckNameAvailability
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task CheckEventHubsNamespaceNameAvailability_NamespacesCheckNameAvailability()
+        {
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2021-11-01/examples/NameSpaces/EHNameSpaceCheckNameAvailability.json
+            // this example is just showing the usage of "Namespaces_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
+
+            // authenticate your client
+            ArmClient client = new ArmClient(new DefaultAzureCredential());
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation
+            EventHubsNameAvailabilityContent content = new EventHubsNameAvailabilityContent("sdk-Namespace-8458");
+            EventHubsNameAvailabilityResult result = await subscriptionResource.CheckEventHubsNamespaceNameAvailabilityAsync(content);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
         // NameSpacePrivateLinkResourcesGet
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]

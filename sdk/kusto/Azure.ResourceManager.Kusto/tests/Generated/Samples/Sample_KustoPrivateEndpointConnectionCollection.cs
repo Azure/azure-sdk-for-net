@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Kusto
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_KustoPrivateEndpointConnectionsList()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-02-01/examples/KustoPrivateEndpointConnectionsList.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-07-07/examples/KustoPrivateEndpointConnectionsList.json
             // this example is just showing the usage of "PrivateEndpointConnections_List" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Kusto
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetsPrivateEndpointConnection()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-02-01/examples/KustoPrivateEndpointConnectionsGet.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-07-07/examples/KustoPrivateEndpointConnectionsGet.json
             // this example is just showing the usage of "PrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Kusto
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetsPrivateEndpointConnection()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-02-01/examples/KustoPrivateEndpointConnectionsGet.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-07-07/examples/KustoPrivateEndpointConnectionsGet.json
             // this example is just showing the usage of "PrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Kusto
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_ApproveOrRejectAPrivateEndpointConnectionWithAGivenName()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-02-01/examples/KustoPrivateEndpointConnectionsCreateOrUpdate.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-07-07/examples/KustoPrivateEndpointConnectionsCreateOrUpdate.json
             // this example is just showing the usage of "PrivateEndpointConnections_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client

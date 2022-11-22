@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Kusto
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_KustoScriptsList()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-02-01/examples/KustoScriptsListByDatabase.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-07-07/examples/KustoScriptsListByDatabase.json
             // this example is just showing the usage of "Scripts_ListByDatabase" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Kusto
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_KustoScriptsGet()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-02-01/examples/KustoScriptsGet.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-07-07/examples/KustoScriptsGet.json
             // this example is just showing the usage of "Scripts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Kusto
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_KustoScriptsGet()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-02-01/examples/KustoScriptsGet.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-07-07/examples/KustoScriptsGet.json
             // this example is just showing the usage of "Scripts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Kusto
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_KustoScriptsCreateOrUpdate()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-02-01/examples/KustoScriptsCreateOrUpdate.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-07-07/examples/KustoScriptsCreateOrUpdate.json
             // this example is just showing the usage of "Scripts_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client

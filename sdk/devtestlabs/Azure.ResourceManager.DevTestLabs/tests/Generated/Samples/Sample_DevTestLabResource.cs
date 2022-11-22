@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.DevTestLabs
         // PolicySets_EvaluatePolicies
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task EvaluatePoliciesPolicySet_PolicySetsEvaluatePolicies()
+        public async Task EvaluatePolicies_PolicySetsEvaluatePolicies()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/PolicySets_EvaluatePolicies.json
             // this example is just showing the usage of "PolicySets_EvaluatePolicies" operation, for the dependent resources, they will have to be created separately.
@@ -385,7 +385,7 @@ ValueOffset = "1",
 }
 },
             };
-            DevTestLabEvaluatePoliciesResult result = await devTestLab.EvaluatePoliciesPolicySetAsync(name, content);
+            DevTestLabEvaluatePoliciesResult result = await devTestLab.EvaluatePoliciesAsync(name, content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

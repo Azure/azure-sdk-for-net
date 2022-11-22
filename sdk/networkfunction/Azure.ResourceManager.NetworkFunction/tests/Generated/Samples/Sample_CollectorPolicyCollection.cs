@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetworkFunction
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListOfCollectionPolicies()
         {
-            // Generated from example definition: specification/networkfunction/resource-manager/Microsoft.NetworkFunction/preview/2021-09-01-preview/examples/CollectorPoliciesList.json
+            // Generated from example definition: specification/networkfunction/resource-manager/Microsoft.NetworkFunction/stable/2022-11-01/examples/CollectorPoliciesList.json
             // this example is just showing the usage of "CollectorPolicies_List" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NetworkFunction
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetCollectionPolicy()
         {
-            // Generated from example definition: specification/networkfunction/resource-manager/Microsoft.NetworkFunction/preview/2021-09-01-preview/examples/CollectorPolicyGet.json
+            // Generated from example definition: specification/networkfunction/resource-manager/Microsoft.NetworkFunction/stable/2022-11-01/examples/CollectorPolicyGet.json
             // this example is just showing the usage of "CollectorPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.NetworkFunction
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetCollectionPolicy()
         {
-            // Generated from example definition: specification/networkfunction/resource-manager/Microsoft.NetworkFunction/preview/2021-09-01-preview/examples/CollectorPolicyGet.json
+            // Generated from example definition: specification/networkfunction/resource-manager/Microsoft.NetworkFunction/stable/2022-11-01/examples/CollectorPolicyGet.json
             // this example is just showing the usage of "CollectorPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.NetworkFunction
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateACollectionPolicy()
         {
-            // Generated from example definition: specification/networkfunction/resource-manager/Microsoft.NetworkFunction/preview/2021-09-01-preview/examples/CollectorPolicyCreate.json
+            // Generated from example definition: specification/networkfunction/resource-manager/Microsoft.NetworkFunction/stable/2022-11-01/examples/CollectorPolicyCreate.json
             // this example is just showing the usage of "CollectorPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.NetworkFunction
 
             // invoke the operation
             string collectorPolicyName = "cp1";
-            CollectorPolicyData data = new CollectorPolicyData()
+            CollectorPolicyData data = new CollectorPolicyData(new AzureLocation("West US"))
             {
                 IngestionPolicy = new IngestionPolicyPropertiesFormat()
                 {

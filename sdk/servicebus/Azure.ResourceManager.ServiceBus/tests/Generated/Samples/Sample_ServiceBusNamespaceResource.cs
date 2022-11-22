@@ -139,6 +139,30 @@ namespace Azure.ResourceManager.ServiceBus
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
+        // NameSpaceCheckNameAvailability
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task CheckServiceBusNamespaceNameAvailability_NameSpaceCheckNameAvailability()
+        {
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2021-11-01/examples/NameSpaces/SBNameSpaceCheckNameAvailability.json
+            // this example is just showing the usage of "Namespaces_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
+
+            // authenticate your client
+            ArmClient client = new ArmClient(new DefaultAzureCredential());
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation
+            ServiceBusNameAvailabilityContent content = new ServiceBusNameAvailabilityContent("sdk-Namespace-2924");
+            ServiceBusNameAvailabilityResult result = await subscriptionResource.CheckServiceBusNamespaceNameAvailabilityAsync(content);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
         // NameSpacePrivateLinkResourcesGet
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]

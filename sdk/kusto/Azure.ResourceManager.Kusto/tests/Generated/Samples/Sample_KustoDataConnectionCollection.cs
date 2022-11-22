@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Kusto
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_KustoDatabasesListByCluster()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-02-01/examples/KustoDataConnectionsListByDatabase.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-07-07/examples/KustoDataConnectionsListByDatabase.json
             // this example is just showing the usage of "DataConnections_ListByDatabase" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Kusto
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_KustoDataConnectionsEventGridGet()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-02-01/examples/KustoDataConnectionsEventGridGet.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-07-07/examples/KustoDataConnectionsEventGridGet.json
             // this example is just showing the usage of "DataConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Kusto
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_KustoDataConnectionsEventGridGet()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-02-01/examples/KustoDataConnectionsEventGridGet.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-07-07/examples/KustoDataConnectionsEventGridGet.json
             // this example is just showing the usage of "DataConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Kusto
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_KustoDataConnectionsGet()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-02-01/examples/KustoDataConnectionsGet.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-07-07/examples/KustoDataConnectionsGet.json
             // this example is just showing the usage of "DataConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Kusto
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_KustoDataConnectionsGet()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-02-01/examples/KustoDataConnectionsGet.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-07-07/examples/KustoDataConnectionsGet.json
             // this example is just showing the usage of "DataConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Kusto
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_KustoDataConnectionsCreateOrUpdate()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-02-01/examples/KustoDataConnectionsCreateOrUpdate.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-07-07/examples/KustoDataConnectionsCreateOrUpdate.json
             // this example is just showing the usage of "DataConnections_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Kusto
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_KustoDataConnectionsEventGridCreateOrUpdate()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-02-01/examples/KustoDataConnectionsEventGridCreateOrUpdate.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-07-07/examples/KustoDataConnectionsEventGridCreateOrUpdate.json
             // this example is just showing the usage of "DataConnections_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client

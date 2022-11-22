@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Kusto
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_AttachedDatabaseConfigurationsGet()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-02-01/examples/KustoAttachedDatabaseConfigurationsGet.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-07-07/examples/KustoAttachedDatabaseConfigurationsGet.json
             // this example is just showing the usage of "AttachedDatabaseConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Kusto
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_AttachedDatabaseConfigurationsCreateOrUpdate()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-02-01/examples/KustoAttachedDatabaseConfigurationsCreateOrUpdate.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-07-07/examples/KustoAttachedDatabaseConfigurationsCreateOrUpdate.json
             // this example is just showing the usage of "AttachedDatabaseConfigurations_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -101,6 +101,7 @@ namespace Azure.ResourceManager.Kusto
 "MaterializedViewTable2"
 },
                 },
+                DatabaseNameOverride = "overridekustodatabase",
             };
             ArmOperation<KustoAttachedDatabaseConfigurationResource> lro = await kustoAttachedDatabaseConfiguration.UpdateAsync(WaitUntil.Completed, data);
             KustoAttachedDatabaseConfigurationResource result = lro.Value;
@@ -117,7 +118,7 @@ namespace Azure.ResourceManager.Kusto
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_AttachedDatabaseConfigurationsDelete()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-02-01/examples/KustoAttachedDatabaseConfigurationsDelete.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-07-07/examples/KustoAttachedDatabaseConfigurationsDelete.json
             // this example is just showing the usage of "AttachedDatabaseConfigurations_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client

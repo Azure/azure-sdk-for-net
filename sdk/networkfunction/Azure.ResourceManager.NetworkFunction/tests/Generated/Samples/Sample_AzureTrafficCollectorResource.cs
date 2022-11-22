@@ -12,48 +12,17 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.NetworkFunction.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.NetworkFunction
 {
     public partial class Sample_AzureTrafficCollectorResource
     {
-        // List of Traffic Collectors by Subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAzureTrafficCollectors_ListOfTrafficCollectorsBySubscription()
-        {
-            // Generated from example definition: specification/networkfunction/resource-manager/Microsoft.NetworkFunction/preview/2021-09-01-preview/examples/AzureTrafficCollectorsBySubscriptionList.json
-            // this example is just showing the usage of "AzureTrafficCollectorsBySubscription_List" operation, for the dependent resources, they will have to be created separately.
-
-            // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subid";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (AzureTrafficCollectorResource item in subscriptionResource.GetAzureTrafficCollectorsAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                AzureTrafficCollectorData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
         // Get Traffic Collector
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetTrafficCollector()
         {
-            // Generated from example definition: specification/networkfunction/resource-manager/Microsoft.NetworkFunction/preview/2021-09-01-preview/examples/AzureTrafficCollectorGet.json
+            // Generated from example definition: specification/networkfunction/resource-manager/Microsoft.NetworkFunction/stable/2022-11-01/examples/AzureTrafficCollectorGet.json
             // this example is just showing the usage of "AzureTrafficCollectors_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -82,7 +51,7 @@ namespace Azure.ResourceManager.NetworkFunction
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteTrafficCollector()
         {
-            // Generated from example definition: specification/networkfunction/resource-manager/Microsoft.NetworkFunction/preview/2021-09-01-preview/examples/AzureTrafficCollectorDelete.json
+            // Generated from example definition: specification/networkfunction/resource-manager/Microsoft.NetworkFunction/stable/2022-11-01/examples/AzureTrafficCollectorDelete.json
             // this example is just showing the usage of "AzureTrafficCollectors_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -107,7 +76,7 @@ namespace Azure.ResourceManager.NetworkFunction
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_UpdateTrafficCollectorTags()
         {
-            // Generated from example definition: specification/networkfunction/resource-manager/Microsoft.NetworkFunction/preview/2021-09-01-preview/examples/AzureTrafficCollectorUpdateTags.json
+            // Generated from example definition: specification/networkfunction/resource-manager/Microsoft.NetworkFunction/stable/2022-11-01/examples/AzureTrafficCollectorUpdateTags.json
             // this example is just showing the usage of "AzureTrafficCollectors_UpdateTags" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -122,7 +91,7 @@ namespace Azure.ResourceManager.NetworkFunction
             AzureTrafficCollectorResource azureTrafficCollector = client.GetAzureTrafficCollectorResource(azureTrafficCollectorResourceId);
 
             // invoke the operation
-            AzureTrafficCollectorPatch patch = new AzureTrafficCollectorPatch()
+            TagsObject tagsObject = new TagsObject()
             {
                 Tags =
 {
@@ -130,7 +99,7 @@ namespace Azure.ResourceManager.NetworkFunction
 ["key2"] = "value2",
 },
             };
-            AzureTrafficCollectorResource result = await azureTrafficCollector.UpdateAsync(patch);
+            AzureTrafficCollectorResource result = await azureTrafficCollector.UpdateAsync(tagsObject);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

@@ -18,6 +18,30 @@ namespace Azure.ResourceManager.NotificationHubs
 {
     public partial class Sample_NotificationHubNamespaceResource
     {
+        // NameSpaceCheckNameAvailability
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task CheckNotificationHubNamespaceAvailability_NameSpaceCheckNameAvailability()
+        {
+            // Generated from example definition: specification/notificationhubs/resource-manager/Microsoft.NotificationHubs/stable/2017-04-01/examples/Namespaces/NHNameSpaceCheckNameAvailability.json
+            // this example is just showing the usage of "Namespaces_CheckAvailability" operation, for the dependent resources, they will have to be created separately.
+
+            // authenticate your client
+            ArmClient client = new ArmClient(new DefaultAzureCredential());
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "29cfa613-cbbc-4512-b1d6-1b3a92c7fa40";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation
+            NotificationHubAvailabilityContent content = new NotificationHubAvailabilityContent(new AzureLocation("placeholder"));
+            NotificationHubAvailabilityResult result = await subscriptionResource.CheckNotificationHubNamespaceAvailabilityAsync(content);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
         // NameSpaceUpdate
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]

@@ -167,6 +167,30 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             Console.WriteLine($"Succeeded");
         }
 
+        // DPSCheckName
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task CheckDeviceProvisioningServicesNameAvailability_DPSCheckName()
+        {
+            // Generated from example definition: specification/deviceprovisioningservices/resource-manager/Microsoft.Devices/stable/2022-02-05/examples/DPSCheckNameAvailability.json
+            // this example is just showing the usage of "IotDpsResource_CheckProvisioningServiceNameAvailability" operation, for the dependent resources, they will have to be created separately.
+
+            // authenticate your client
+            ArmClient client = new ArmClient(new DefaultAzureCredential());
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "91d12660-3dec-467a-be2a-213b5544ddc0";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation
+            DeviceProvisioningServicesNameAvailabilityContent content = new DeviceProvisioningServicesNameAvailabilityContent("test213123");
+            DeviceProvisioningServicesNameAvailabilityResult result = await subscriptionResource.CheckDeviceProvisioningServicesNameAvailabilityAsync(content);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
         // DPSListKeys
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]

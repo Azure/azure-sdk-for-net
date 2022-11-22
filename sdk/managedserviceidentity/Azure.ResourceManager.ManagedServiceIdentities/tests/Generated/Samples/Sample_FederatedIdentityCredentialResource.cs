@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             // invoke the operation
             FederatedIdentityCredentialData data = new FederatedIdentityCredentialData()
             {
-                Issuer = "https://oidc.prod-aks.azure.com/IssuerGUID",
+                IssuerUri = new Uri("https://oidc.prod-aks.azure.com/IssuerGUID"),
                 Subject = "system:serviceaccount:ns:svcaccount",
                 Audiences =
 {

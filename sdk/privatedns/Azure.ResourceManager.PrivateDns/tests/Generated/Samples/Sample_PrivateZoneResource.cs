@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.PrivateDns
         // GET Private DNS Zone ALL Record Sets
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetRecordSets_GETPrivateDNSZoneALLRecordSets()
+        public async Task GetRecords_GETPrivateDNSZoneALLRecordSets()
         {
             // Generated from example definition: specification/privatedns/resource-manager/Microsoft.Network/stable/2020-06-01/examples/RecordSetALLList.json
             // this example is just showing the usage of "RecordSets_List" operation, for the dependent resources, they will have to be created separately.
@@ -158,13 +158,10 @@ namespace Azure.ResourceManager.PrivateDns
             PrivateZoneResource privateZone = client.GetPrivateZoneResource(privateZoneResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (RecordSetResource item in privateZone.GetRecordSetsAsync())
+            await foreach (PrivateDnsRecordData item in privateZone.GetRecordsAsync())
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                RecordSetData resourceData = item.Data;
                 // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+                Console.WriteLine($"Succeeded on id: {item.Id}");
             }
 
             Console.WriteLine($"Succeeded");

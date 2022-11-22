@@ -10,34 +10,37 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
-using Azure.ResourceManager.IotHub.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.IotHub
+namespace Azure.ResourceManager.NetworkFunction
 {
     public partial class Sample_SubscriptionResourceExtensions
     {
-        // ResourceProviderCommon_GetSubscriptionQuota
+        // List of Traffic Collectors by Subscription
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIotHubUserSubscriptionQuota_ResourceProviderCommonGetSubscriptionQuota()
+        public async Task GetAzureTrafficCollectors_ListOfTrafficCollectorsBySubscription()
         {
-            // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/stable/2021-07-02/examples/iothub_usages.json
-            // this example is just showing the usage of "ResourceProviderCommon_GetSubscriptionQuota" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/networkfunction/resource-manager/Microsoft.NetworkFunction/stable/2022-11-01/examples/AzureTrafficCollectorsBySubscriptionList.json
+            // this example is just showing the usage of "AzureTrafficCollectorsBySubscription_List" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "91d12660-3dec-467a-be2a-213b5544ddc0";
+            string subscriptionId = "subid";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (IotHubUserSubscriptionQuota item in subscriptionResource.GetIotHubUserSubscriptionQuotaAsync())
+            await foreach (AzureTrafficCollectorResource item in subscriptionResource.GetAzureTrafficCollectorsAsync())
             {
-                Console.WriteLine($"Succeeded: {item}");
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                AzureTrafficCollectorData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
             Console.WriteLine($"Succeeded");
