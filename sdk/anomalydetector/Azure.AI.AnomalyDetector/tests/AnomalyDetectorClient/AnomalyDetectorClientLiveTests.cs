@@ -36,7 +36,7 @@ namespace Azure.AI.AnomalyDetector.Tests
             dynamic request = TestData.request;
             request.MaxAnomalyRatio = 0.25F;
             request.Sensitivity = 95;
-            Response response = await client.DetectUnivariateEntireSeriesAsync(RequestContent.Create(JsonConvert.SerializeObject(request)));
+            Response response = await client.DetectUnivariateEntireSeriesAsync(RequestContent.Create(JsonConvert.SerializeObject(request))).ConfigureAwait(false);
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 
             Assert.IsNotNull(result.GetProperty("expectedValues"));
@@ -57,7 +57,7 @@ namespace Azure.AI.AnomalyDetector.Tests
             dynamic request = TestData.request;
             request.MaxAnomalyRatio = 0.25F;
             request.Sensitivity = 95;
-            Response response = await client.DetectUnivariateLastPointAsync(RequestContent.Create(JsonConvert.SerializeObject(request)));
+            Response response = await client.DetectUnivariateLastPointAsync(RequestContent.Create(JsonConvert.SerializeObject(request))).ConfigureAwait(false);
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 
             Assert.IsNotNull(result.GetProperty("expectedValue"));
@@ -81,9 +81,9 @@ namespace Azure.AI.AnomalyDetector.Tests
             request.StableTrendWindow = 10;
             request.Threshold = 0.5F;
             request.Period = 0;
-            Response response = await client.DetectUnivariateChangePointAsync(RequestContent.Create(JsonConvert.SerializeObject(request)));
+            Response response = await client.DetectUnivariateChangePointAsync(RequestContent.Create(JsonConvert.SerializeObject(request))).ConfigureAwait(false);
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-
+            Console.WriteLine(result.ToString());
             Assert.IsNotNull(result.GetProperty("period"));
             Assert.IsNotNull(result.GetProperty("isChangePoint"));
             Assert.IsNotNull(result.GetProperty("confidenceScores"));
