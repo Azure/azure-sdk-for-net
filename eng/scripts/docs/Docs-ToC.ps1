@@ -207,3 +207,7 @@ function Get-Toc-Children($package, $version, $docRepoLocation, $folderName) {
     Set-Content $packageJsonPath -Value ($packageJson | ConvertTo-Json)
     return $namespaces
 }
+
+function Get-dotnet-PackageLevelReadme ($packageMetadata) {
+    return GetPackageReadmeName -packageMetadata $packageMetadata
+}
