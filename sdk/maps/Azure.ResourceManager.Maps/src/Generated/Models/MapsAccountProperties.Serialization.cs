@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -25,14 +26,19 @@ namespace Azure.ResourceManager.Maps.Models
 
         internal static MapsAccountProperties DeserializeMapsAccountProperties(JsonElement element)
         {
-            Optional<string> uniqueId = default;
+            Optional<Guid> uniqueId = default;
             Optional<bool> disableLocalAuth = default;
             Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uniqueId"))
                 {
-                    uniqueId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    uniqueId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("disableLocalAuth"))
@@ -51,7 +57,7 @@ namespace Azure.ResourceManager.Maps.Models
                     continue;
                 }
             }
-            return new MapsAccountProperties(uniqueId.Value, Optional.ToNullable(disableLocalAuth), provisioningState.Value);
+            return new MapsAccountProperties(Optional.ToNullable(uniqueId), Optional.ToNullable(disableLocalAuth), provisioningState.Value);
         }
     }
 }

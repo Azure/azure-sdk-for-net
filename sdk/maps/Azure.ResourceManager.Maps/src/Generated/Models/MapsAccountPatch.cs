@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Maps.Models
         /// <summary> The SKU of this account. </summary>
         public MapsSku Sku { get; set; }
         /// <summary> A unique identifier for the maps account. </summary>
-        public string UniqueId { get; }
+        public Guid? UniqueId { get; }
         /// <summary> Allows toggle functionality on Azure Policy to disable Azure Maps local authentication support. This will disable Shared Keys authentication from any usage. </summary>
         public bool? DisableLocalAuth { get; set; }
         /// <summary> the state of the provisioning. </summary>

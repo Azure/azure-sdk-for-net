@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Maps.Models
 {
-    public partial class CreatorPatch : IUtf8JsonSerializable
+    public partial class MapsCreatorPatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

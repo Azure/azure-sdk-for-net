@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Maps;
 
 namespace Azure.ResourceManager.Maps.Models
 {
-    internal partial class MapsOperations
+    internal partial class MapsCreatorListResult
     {
-        internal static MapsOperations DeserializeMapsOperations(JsonElement element)
+        internal static MapsCreatorListResult DeserializeMapsCreatorListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<OperationDetail>> value = default;
+            Optional<IReadOnlyList<MapsCreatorData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Maps.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<OperationDetail> array = new List<OperationDetail>();
+                    List<MapsCreatorData> array = new List<MapsCreatorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OperationDetail.DeserializeOperationDetail(item));
+                        array.Add(MapsCreatorData.DeserializeMapsCreatorData(item));
                     }
                     value = array;
                     continue;
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Maps.Models
                     continue;
                 }
             }
-            return new MapsOperations(Optional.ToList(value), nextLink.Value);
+            return new MapsCreatorListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

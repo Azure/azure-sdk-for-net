@@ -12,28 +12,28 @@ using Azure.ResourceManager.Maps;
 namespace Azure.ResourceManager.Maps.Models
 {
     /// <summary> A list of Creator resources. </summary>
-    internal partial class CreatorList
+    internal partial class MapsCreatorListResult
     {
-        /// <summary> Initializes a new instance of CreatorList. </summary>
-        internal CreatorList()
+        /// <summary> Initializes a new instance of MapsCreatorListResult. </summary>
+        internal MapsCreatorListResult()
         {
-            Value = new ChangeTrackingList<CreatorData>();
+            Value = new ChangeTrackingList<MapsCreatorData>();
         }
 
-        /// <summary> Initializes a new instance of CreatorList. </summary>
+        /// <summary> Initializes a new instance of MapsCreatorListResult. </summary>
         /// <param name="value"> a Creator account. </param>
         /// <param name="nextLink">
         /// URL client should use to fetch the next page (per server side paging).
         /// It&apos;s null for now, added for future use.
         /// </param>
-        internal CreatorList(IReadOnlyList<CreatorData> value, string nextLink)
+        internal MapsCreatorListResult(IReadOnlyList<MapsCreatorData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> a Creator account. </summary>
-        public IReadOnlyList<CreatorData> Value { get; }
+        public IReadOnlyList<MapsCreatorData> Value { get; }
         /// <summary>
         /// URL client should use to fetch the next page (per server side paging).
         /// It&apos;s null for now, added for future use.

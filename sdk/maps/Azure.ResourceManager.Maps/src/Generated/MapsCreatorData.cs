@@ -13,21 +13,21 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Maps
 {
-    /// <summary> A class representing the Creator data model. </summary>
-    public partial class CreatorData : TrackedResourceData
+    /// <summary> A class representing the MapsCreator data model. </summary>
+    public partial class MapsCreatorData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of CreatorData. </summary>
+        /// <summary> Initializes a new instance of MapsCreatorData. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> The Creator resource properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public CreatorData(AzureLocation location, CreatorProperties properties) : base(location)
+        public MapsCreatorData(AzureLocation location, MapsCreatorProperties properties) : base(location)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of CreatorData. </summary>
+        /// <summary> Initializes a new instance of MapsCreatorData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.Maps
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> The Creator resource properties. </param>
-        internal CreatorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CreatorProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        internal MapsCreatorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MapsCreatorProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
         }
 
         /// <summary> The Creator resource properties. </summary>
-        public CreatorProperties Properties { get; set; }
+        public MapsCreatorProperties Properties { get; set; }
     }
 }

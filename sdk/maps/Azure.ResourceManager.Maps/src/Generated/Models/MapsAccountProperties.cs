@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Maps.Models
 {
     /// <summary> Additional Map account properties. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.Maps.Models
         /// <param name="uniqueId"> A unique identifier for the maps account. </param>
         /// <param name="disableLocalAuth"> Allows toggle functionality on Azure Policy to disable Azure Maps local authentication support. This will disable Shared Keys authentication from any usage. </param>
         /// <param name="provisioningState"> the state of the provisioning. </param>
-        internal MapsAccountProperties(string uniqueId, bool? disableLocalAuth, string provisioningState)
+        internal MapsAccountProperties(Guid? uniqueId, bool? disableLocalAuth, string provisioningState)
         {
             UniqueId = uniqueId;
             DisableLocalAuth = disableLocalAuth;
@@ -27,7 +29,7 @@ namespace Azure.ResourceManager.Maps.Models
         }
 
         /// <summary> A unique identifier for the maps account. </summary>
-        public string UniqueId { get; }
+        public Guid? UniqueId { get; }
         /// <summary> Allows toggle functionality on Azure Policy to disable Azure Maps local authentication support. This will disable Shared Keys authentication from any usage. </summary>
         public bool? DisableLocalAuth { get; set; }
         /// <summary> the state of the provisioning. </summary>

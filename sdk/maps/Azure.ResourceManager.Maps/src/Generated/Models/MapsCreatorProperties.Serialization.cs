@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Maps.Models
 {
-    public partial class CreatorProperties : IUtf8JsonSerializable
+    public partial class MapsCreatorProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Maps.Models
             writer.WriteEndObject();
         }
 
-        internal static CreatorProperties DeserializeCreatorProperties(JsonElement element)
+        internal static MapsCreatorProperties DeserializeMapsCreatorProperties(JsonElement element)
         {
             Optional<string> provisioningState = default;
             int storageUnits = default;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Maps.Models
                     continue;
                 }
             }
-            return new CreatorProperties(provisioningState.Value, storageUnits);
+            return new MapsCreatorProperties(provisioningState.Value, storageUnits);
         }
     }
 }
