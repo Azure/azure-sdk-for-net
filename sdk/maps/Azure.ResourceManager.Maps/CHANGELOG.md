@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (2022-11-24)
+## 1.0.0 (2022-11-24)
 
 This package is the first stable release of the Microsoft Azure Maps management client library.
 
