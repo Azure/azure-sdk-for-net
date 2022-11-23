@@ -535,23 +535,23 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> Get server metric configuration for the given test. </summary>
+        /// <summary> List server metrics configuration for the given test. </summary>
         /// <param name="testId"> Unique name for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetServerMetricsConfigAsync(String,RequestContext)']/*" />
-        public virtual async Task<Response> GetServerMetricsConfigAsync(string testId, RequestContext context = null)
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetServerMetricsConfigsAsync(String,RequestContext)']/*" />
+        public virtual async Task<Response> GetServerMetricsConfigsAsync(string testId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetServerMetricsConfig");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetServerMetricsConfigs");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetServerMetricsConfigRequest(testId, context);
+                using HttpMessage message = CreateGetServerMetricsConfigsRequest(testId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -561,23 +561,23 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> Get server metric configuration for the given test. </summary>
+        /// <summary> List server metrics configuration for the given test. </summary>
         /// <param name="testId"> Unique name for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetServerMetricsConfig(String,RequestContext)']/*" />
-        public virtual Response GetServerMetricsConfig(string testId, RequestContext context = null)
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetServerMetricsConfigs(String,RequestContext)']/*" />
+        public virtual Response GetServerMetricsConfigs(string testId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetServerMetricsConfig");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetServerMetricsConfigs");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetServerMetricsConfigRequest(testId, context);
+                using HttpMessage message = CreateGetServerMetricsConfigsRequest(testId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -589,7 +589,7 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> Get all load tests by the fully qualified resource Id e.g subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}. </summary>
         /// <param name="orderby"> Sort on the supported fields in (field asc/desc) format. eg: lastModifiedDateTime asc. Supported fields - lastModifiedDateTime. </param>
-        /// <param name="search"> Prefix based, case sensitive search on searchable fields - testId, createdBy. </param>
+        /// <param name="search"> Prefix based, case sensitive search on searchable fields - displayName, createdBy. For example, to search for a test, with display name is Login Test, the search parameter can be Login. </param>
         /// <param name="lastModifiedStartTime"> Start DateTime(ISO 8601 literal format) of the last updated time range to filter tests. </param>
         /// <param name="lastModifiedEndTime"> End DateTime(ISO 8601 literal format) of the last updated time range to filter tests. </param>
         /// <param name="continuationToken"> Continuation token to get the next page of response. </param>
@@ -622,7 +622,7 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> Get all load tests by the fully qualified resource Id e.g subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}. </summary>
         /// <param name="orderby"> Sort on the supported fields in (field asc/desc) format. eg: lastModifiedDateTime asc. Supported fields - lastModifiedDateTime. </param>
-        /// <param name="search"> Prefix based, case sensitive search on searchable fields - testId, createdBy. </param>
+        /// <param name="search"> Prefix based, case sensitive search on searchable fields - displayName, createdBy. For example, to search for a test, with display name is Login Test, the search parameter can be Login. </param>
         /// <param name="lastModifiedStartTime"> Start DateTime(ISO 8601 literal format) of the last updated time range to filter tests. </param>
         /// <param name="lastModifiedEndTime"> End DateTime(ISO 8601 literal format) of the last updated time range to filter tests. </param>
         /// <param name="continuationToken"> Continuation token to get the next page of response. </param>
@@ -935,7 +935,7 @@ namespace Azure.Developer.LoadTesting
             uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/tests/", false);
             uri.AppendPath(testId, true);
-            uri.AppendPath("/server-metric-configs", false);
+            uri.AppendPath("/server-metrics-config", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -944,7 +944,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateGetServerMetricsConfigRequest(string testId, RequestContext context)
+        internal HttpMessage CreateGetServerMetricsConfigsRequest(string testId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -954,7 +954,7 @@ namespace Azure.Developer.LoadTesting
             uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/tests/", false);
             uri.AppendPath(testId, true);
-            uri.AppendPath("/server-metric-configs", false);
+            uri.AppendPath("/server-metrics-config", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

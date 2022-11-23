@@ -307,7 +307,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> Lists the metric namespaces for a load test run. </summary>
+        /// <summary> List the metric namespaces for a load test run. </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
@@ -333,7 +333,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> Lists the metric namespaces for a load test run. </summary>
+        /// <summary> List the metric namespaces for a load test run. </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
@@ -359,7 +359,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> Lists the metric definitions for a load test run. </summary>
+        /// <summary> List the metric definitions for a load test run. </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="metricNamespace"> Metric namespace to query metric definitions for. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -387,7 +387,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> Lists the metric definitions for a load test run. </summary>
+        /// <summary> List the metric definitions for a load test run. </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="metricNamespace"> Metric namespace to query metric definitions for. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -415,7 +415,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> Lists the metric values for a load test run. </summary>
+        /// <summary> List the metric values for a load test run. </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="metricname"> Metric name. </param>
         /// <param name="metricNamespace"> Metric namespace to query metric definitions for. </param>
@@ -450,7 +450,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> Lists the metric values for a load test run. </summary>
+        /// <summary> List the metric values for a load test run. </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="metricname"> Metric name. </param>
         /// <param name="metricNamespace"> Metric namespace to query metric definitions for. </param>
@@ -485,7 +485,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> Lists the dimension values for the given metric dimension name. </summary>
+        /// <summary> List the dimension values for the given metric dimension name. </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="name"> Dimension name. </param>
         /// <param name="metricname"> Metric name. </param>
@@ -520,7 +520,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> Lists the dimension values for the given metric dimension name. </summary>
+        /// <summary> List the dimension values for the given metric dimension name. </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="name"> Dimension name. </param>
         /// <param name="metricname"> Metric name. </param>
@@ -719,23 +719,23 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> Get server metric configuration for the given test run. </summary>
+        /// <summary> List server metrics configuration for the given test run. </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetServerMetricsConfigAsync(String,RequestContext)']/*" />
-        public virtual async Task<Response> GetServerMetricsConfigAsync(string testRunId, RequestContext context = null)
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetServerMetricsConfigsAsync(String,RequestContext)']/*" />
+        public virtual async Task<Response> GetServerMetricsConfigsAsync(string testRunId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetServerMetricsConfig");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetServerMetricsConfigs");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetServerMetricsConfigRequest(testRunId, context);
+                using HttpMessage message = CreateGetServerMetricsConfigsRequest(testRunId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -745,23 +745,23 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> Get server metric configuration for the given test run. </summary>
+        /// <summary> List server metrics configuration for the given test run. </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetServerMetricsConfig(String,RequestContext)']/*" />
-        public virtual Response GetServerMetricsConfig(string testRunId, RequestContext context = null)
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetServerMetricsConfigs(String,RequestContext)']/*" />
+        public virtual Response GetServerMetricsConfigs(string testRunId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetServerMetricsConfig");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetServerMetricsConfigs");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetServerMetricsConfigRequest(testRunId, context);
+                using HttpMessage message = CreateGetServerMetricsConfigsRequest(testRunId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -774,7 +774,7 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Get all test runs with given filters. </summary>
         /// <param name="orderby"> Sort on the supported fields in (field asc/desc) format. eg: executedDateTime asc. Supported fields - executedDateTime. </param>
         /// <param name="continuationToken"> Continuation token to get the next page of response. </param>
-        /// <param name="search"> Prefix based, case sensitive search on searchable fields - description, executedUser. </param>
+        /// <param name="search"> Prefix based, case sensitive search on searchable fields - description, executedUser. For example, to search for a test run, with description 500 VUs, the search parameter can be 500. </param>
         /// <param name="testId"> Unique name of an existing load test. </param>
         /// <param name="executionFrom"> Start DateTime(ISO 8601 literal format) of test-run execution time filter range. </param>
         /// <param name="executionTo"> End DateTime(ISO 8601 literal format) of test-run execution time filter range. </param>
@@ -809,7 +809,7 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Get all test runs with given filters. </summary>
         /// <param name="orderby"> Sort on the supported fields in (field asc/desc) format. eg: executedDateTime asc. Supported fields - executedDateTime. </param>
         /// <param name="continuationToken"> Continuation token to get the next page of response. </param>
-        /// <param name="search"> Prefix based, case sensitive search on searchable fields - description, executedUser. </param>
+        /// <param name="search"> Prefix based, case sensitive search on searchable fields - description, executedUser. For example, to search for a test run, with description 500 VUs, the search parameter can be 500. </param>
         /// <param name="testId"> Unique name of an existing load test. </param>
         /// <param name="executionFrom"> Start DateTime(ISO 8601 literal format) of test-run execution time filter range. </param>
         /// <param name="executionTo"> End DateTime(ISO 8601 literal format) of test-run execution time filter range. </param>
@@ -1052,7 +1052,7 @@ namespace Azure.Developer.LoadTesting
             uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/test-runs/", false);
             uri.AppendPath(testRunId, true);
-            uri.AppendPath("/metric-dimension/", false);
+            uri.AppendPath("/metric-dimensions/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/values", false);
             uri.AppendQuery("metricname", metricname, true);
@@ -1114,7 +1114,7 @@ namespace Azure.Developer.LoadTesting
             uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/test-runs/", false);
             uri.AppendPath(testRunId, true);
-            uri.AppendPath("/server-metric-configs", false);
+            uri.AppendPath("/server-metrics-config", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1123,7 +1123,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateGetServerMetricsConfigRequest(string testRunId, RequestContext context)
+        internal HttpMessage CreateGetServerMetricsConfigsRequest(string testRunId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1133,7 +1133,7 @@ namespace Azure.Developer.LoadTesting
             uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/test-runs/", false);
             uri.AppendPath(testRunId, true);
-            uri.AppendPath("/server-metric-configs", false);
+            uri.AppendPath("/server-metrics-config", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

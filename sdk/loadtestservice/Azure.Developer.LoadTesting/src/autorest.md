@@ -6,7 +6,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 > see https://aka.ms/autorest
 
 ``` yaml
-input-file: https://github.com/Azure/azure-rest-api-specs/blob/b32e1896f30e6ea155449cb49719a6286e32b961/specification/loadtestservice/data-plane/Microsoft.LoadTestService/stable/2022-11-01/loadtestservice.json
+input-file: https://github.com/Azure/azure-rest-api-specs/blob/7a54c1a83d14da431c0ae48c4315cba143084bce/specification/loadtestservice/data-plane/Microsoft.LoadTestService/stable/2022-11-01/loadtestservice.json
 namespace: Azure.Developer.LoadTesting
 security: AADToken
 security-scopes: https://cnt-prod.loadtesting.azure.com/.default
@@ -27,9 +27,6 @@ directive:
     - from: swagger-document 
       where: $["paths"]["/tests/{testId}/app-components"].patch
       transform: $["operationId"] = "Test_CreateOrUpdateAppComponents";
-    - from: swagger-document 
-      where: $["paths"]["/test-runs/{testRunId}/app-components"].patch
-      transform: $["operationId"] = "TestRun_CreateOrUpdateAppComponents";
     - from: swagger-document 
       where: $["paths"]["/test-runs/{testRunId}/metric-dimension/{name}/values"].get
       transform: $["operationId"] = "TestRun_ListMetricDimensionValues";
