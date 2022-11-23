@@ -41,8 +41,8 @@ namespace Hero
             string testId = "my-dotnet-test-id";
             string testRunId = "my-dotnet-test-run-id";
             string fileName = "my-dotnet-file-name.jmx";
-            //string subscriptionId = Environment.GetEnvironmentVariable("SUBSCRIPTION_ID");
-            //string appComponentConnectionString = "/subscriptions/" + subscriptionId + "/resourceGroups/App-Service-Sample-Demo-rg/providers/Microsoft.Web/sites/App-Service-Sample-Demo";
+            string subscriptionId = Environment.GetEnvironmentVariable("SUBSCRIPTION_ID");
+            string appComponentConnectionString = "/subscriptions/" + subscriptionId + "/resourceGroups/App-Service-Sample-Demo-rg/providers/Microsoft.Web/sites/App-Service-Sample-Demo";
 
             // create loadtest
             try
@@ -109,29 +109,29 @@ namespace Hero
             }
 
 
-            //// connecting app component
-            //try
-            //{
-            //    var data = new
-            //    {
-            //        testid = testId,
-            //        name = "New App Component",
-            //        value = new
-            //        {
-            //            appComponentConnectionString = new
-            //            {
-            //                resourceId = appComponentConnectionString,
-            //                resourceName = "App-Service-Sample-Demo",
-            //                resourceType = "Microsoft.Web/sites",
-            //                subscriptionId = subscriptionId
-            //            }
-            //        }
-            //    };
-            //}
-            //catch(Exception e)
-            //{
-            //    Console.WriteLine(String.Format("Error : ", e.Message));
-            //}
+            // connecting app component
+            try
+            {
+                var data = new
+                {
+                    testid = testId,
+                    name = "New App Component",
+                    value = new
+                    {
+                        appComponentConnectionString = new
+                        {
+                            resourceId = appComponentConnectionString,
+                            resourceName = "App-Service-Sample-Demo",
+                            resourceType = "Microsoft.Web/sites",
+                            subscriptionId = subscriptionId
+                        }
+                    }
+                };
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(String.Format("Error : ", e.Message));
+            }
 
 
             // running test
