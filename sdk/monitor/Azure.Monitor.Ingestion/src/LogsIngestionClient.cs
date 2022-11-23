@@ -90,10 +90,9 @@ namespace Azure.Monitor.Ingestion
         /// <returns></returns>
         internal static IEnumerable<BatchedLogs<T>> Batch<T>(IEnumerable<T> logEntries, UploadLogsOptions options = null)
         {
-            // Create ArrayPool and rent memory for efficiency
-            byte[] buffer = ArrayPool<byte>.Shared.Rent(SingleUploadThreshold);
-            MemoryStream stream = new MemoryStream(buffer);
-            Utf8JsonWriter writer = new Utf8JsonWriter(stream);
+            // Create an ArrayBufferWriter as backing store for Utf8JsonWriter
+            Azure.Core.ArrayBufferWriter<byte> arrayBuffer = new Azure.Core.ArrayBufferWriter<byte>(SingleUploadThreshold);
+            Utf8JsonWriter writer = new Utf8JsonWriter(arrayBuffer);
             writer.WriteStartArray();
             int entryCount = 0;
             List<T> currentLogList = new List<T>();
@@ -115,32 +114,26 @@ namespace Azure.Monitor.Ingestion
                 // if single log is > 1 Mb send to be gzipped by itself
                 if (memory.Length > SingleUploadThreshold)
                 {
-                    // Create tempWriter and tempStream for individual log
-                    MemoryStream tempStream = new MemoryStream();
-                    Utf8JsonWriter tempWriter = new Utf8JsonWriter(tempStream);
+                    // Create tempArrayBufferWriter (unsized to store log) and tempWriter for individual log
+                    Azure.Core.ArrayBufferWriter<byte> tempArrayBuffer = new Azure.Core.ArrayBufferWriter<byte>();
+                    Utf8JsonWriter tempWriter = new Utf8JsonWriter(tempArrayBuffer);
                     tempWriter.WriteStartArray();
                     WriteMemory(tempWriter, memory);
                     tempWriter.WriteEndArray();
                     tempWriter.Flush();
-                    tempStream.Position = 0;
-                    yield return new BatchedLogs<T>(new List<T>{log}, BinaryData.FromStream(tempStream));
+                    yield return new BatchedLogs<T>(new List<T>{log}, BinaryData.FromBytes(tempArrayBuffer.WrittenMemory));
                 }
                 // if adding this entry makes stream > 1 Mb send current stream now
                 else if ((writer.BytesPending + memory.Length + 1) >= SingleUploadThreshold)
                 {
                     writer.WriteEndArray();
                     writer.Flush();
-                    stream.Position = 0;
-                    var binaryData = BinaryData.FromStream(stream);
-                    // return ArrayPool rented storage because it is no longer needed
-                    ArrayPool<byte>.Shared.Return(buffer);
-                    yield return new BatchedLogs<T>(currentLogList, binaryData);
+                    // This batch is full so send it now
+                    yield return new BatchedLogs<T>(currentLogList, BinaryData.FromBytes(arrayBuffer.WrittenMemory));
 
-                    // Rent storage from ArrayPool for the next batch
-                    buffer = ArrayPool<byte>.Shared.Rent(SingleUploadThreshold);
-                    // reset stream and currentLogList
-                    stream = new MemoryStream(buffer);
-                    writer.Reset(stream);
+                    // Reset arrayBuffer and writer for next batch
+                    arrayBuffer.Clear();
+                    writer.Reset(arrayBuffer);
                     writer.WriteStartArray();
                     // reset log list
                     currentLogList = new List<T>();
@@ -153,11 +146,7 @@ namespace Azure.Monitor.Ingestion
                     {
                         writer.WriteEndArray();
                         writer.Flush();
-                        stream.Position = 0;
-                        var lastBatch = BinaryData.FromStream(stream);
-                        // return ArrayPool rented storage because it is no longer needed
-                        ArrayPool<byte>.Shared.Return(buffer);
-                        yield return new BatchedLogs<T>(currentLogList, lastBatch);
+                        yield return new BatchedLogs<T>(currentLogList, BinaryData.FromBytes(arrayBuffer.WrittenMemory));
                     }
                 }
                 else
@@ -171,11 +160,7 @@ namespace Azure.Monitor.Ingestion
                     {
                         writer.WriteEndArray();
                         writer.Flush();
-                        stream.Position = 0;
-                        var lastBatch = BinaryData.FromStream(stream);
-                        // return ArrayPool rented storage because it is no longer needed
-                        ArrayPool<byte>.Shared.Return(buffer);
-                        yield return new BatchedLogs<T>(currentLogList, lastBatch);
+                        yield return new BatchedLogs<T>(currentLogList, BinaryData.FromBytes(arrayBuffer.WrittenMemory));
                     }
                 }
                 entryCount++;
