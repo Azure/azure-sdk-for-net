@@ -161,7 +161,7 @@ namespace Azure.AI.TextAnalytics
         internal static List<CategorizedEntity> ConvertToCategorizedEntityList(List<EntityWithResolution> entities)
             => entities.Select((entity) => new CategorizedEntity(entity)).ToList();
 
-        internal static CategorizedEntityCollection ConvertToCategorizedEntityCollection(EntitiesResultDocumentsItem documentEntities)
+        internal static CategorizedEntityCollection ConvertToCategorizedEntityCollection(EntitiesResultWithDetectedLanguage documentEntities)
         {
             return new CategorizedEntityCollection(ConvertToCategorizedEntityList(documentEntities.Entities.ToList()), ConvertToWarnings(documentEntities.Warnings));
         }
@@ -242,7 +242,7 @@ namespace Azure.AI.TextAnalytics
             return entityList;
         }
 
-        internal static PiiEntityCollection ConvertToPiiEntityCollection(PiiResultDocumentsItem piiResult)
+        internal static PiiEntityCollection ConvertToPiiEntityCollection(PIIResultWithDetectedLanguage piiResult)
         {
             var entities = new List<PiiEntity>(piiResult.Entities.Count);
             foreach (var entity in piiResult.Entities)
@@ -278,7 +278,7 @@ namespace Azure.AI.TextAnalytics
 
         #region Recognize Linked Entities
 
-        internal static LinkedEntityCollection ConvertToLinkedEntityCollection(EntityLinkingResultDocumentsItem documentEntities)
+        internal static LinkedEntityCollection ConvertToLinkedEntityCollection(EntityLinkingResultWithDetectedLanguage documentEntities)
         {
             return new LinkedEntityCollection(documentEntities.Entities.ToList(), ConvertToWarnings(documentEntities.Warnings));
         }
@@ -294,7 +294,7 @@ namespace Azure.AI.TextAnalytics
             }
 
             //Read document entities
-            foreach (EntityLinkingResultDocumentsItem docEntities in results.Documents)
+            foreach (EntityLinkingResultWithDetectedLanguage docEntities in results.Documents)
             {
                 recognizeLinkedEntities.Add(new RecognizeLinkedEntitiesResult(docEntities.Id, docEntities.Statistics ?? default, ConvertToLinkedEntityCollection(docEntities)));
             }
@@ -462,7 +462,7 @@ namespace Azure.AI.TextAnalytics
             }
 
             // Read results.
-            foreach (ExtractiveSummarizationResultDocumentsItem document in results.Documents)
+            foreach (ExtractedSummaryDocumentResultWithDetectedLanguage document in results.Documents)
             {
                 extractSummaryResults.Add(new ExtractSummaryResult(
                     document.Id,
@@ -508,7 +508,7 @@ namespace Azure.AI.TextAnalytics
             }
 
             // Read results.
-            foreach (AbstractiveSummarizationResultBaseDocumentsItem document in results.Documents)
+            foreach (AbstractiveSummaryDocumentResultWithDetectedLanguage document in results.Documents)
             {
                 abstractSummaryResults.Add(new AbstractSummaryResult(
                     document.Id,

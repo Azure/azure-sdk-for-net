@@ -52,7 +52,7 @@ if ((git remote) -contains $RemoteName)
     exit 1
   }
 }
-else 
+else
 {
   Write-Host "git remote add $RemoteName $GitUrl"
   git remote add $RemoteName $GitUrl
@@ -66,8 +66,8 @@ else
 git show-ref --verify --quiet refs/heads/$PRBranchName
 if ($LASTEXITCODE -eq 0) {
   Write-Host "git checkout $PRBranchName."
-  git checkout $PRBranchName 
-} 
+  git checkout $PRBranchName
+}
 else {
   Write-Host "git checkout -b $PRBranchName."
   git checkout -b $PRBranchName
@@ -83,10 +83,11 @@ if (!$SkipCommit) {
         $amendOption = "--amend"
     }
     else {
-        $amendOption = ""
+        # Explicitly set this to null so that PS command line parser doesn't try to parse pass it as ""
+        $amendOption = $null
     }
-    Write-Host "git -c user.name=`"azure-sdk`" -c user.email=`"azuresdk@microsoft.com`" commit $amendOption -am `"$($CommitMsg)`""
-    git -c user.name="azure-sdk" -c user.email="azuresdk@microsoft.com" commit $amendOption -am "$($CommitMsg)"
+    Write-Host "git -c user.name=`"azure-sdk`" -c user.email=`"azuresdk@microsoft.com`" commit $amendOption -am `"$CommitMsg`""
+    git -c user.name="azure-sdk" -c user.email="azuresdk@microsoft.com" commit $amendOption -am "$CommitMsg"
     if ($LASTEXITCODE -ne 0)
     {
         Write-Error "Unable to add files and create commit LASTEXITCODE=$($LASTEXITCODE), see command output above."
@@ -115,7 +116,7 @@ do
     {
         $needsRetry = $true
         Write-Host "Git push failed with LASTEXITCODE=$($LASTEXITCODE) Need to fetch and rebase: attempt number=$($tryNumber)"
- 
+
         Write-Host "git fetch $RemoteName $PRBranchName"
         # Full fetch will fail when the repo is in a sparse-checkout state, and single branch fetch is faster anyway.
         git fetch $RemoteName $PRBranchName
@@ -162,8 +163,8 @@ do
                 continue
             }
 
-            Write-Host "git -c user.name=`"azure-sdk`" -c user.email=`"azuresdk@microsoft.com`" commit -m `"$($CommitMsg)`""
-            git -c user.name="azure-sdk" -c user.email="azuresdk@microsoft.com" commit -m "$($CommitMsg)"
+            Write-Host "git -c user.name=`"azure-sdk`" -c user.email=`"azuresdk@microsoft.com`" commit -m `"$CommitMsg`""
+            git -c user.name="azure-sdk" -c user.email="azuresdk@microsoft.com" commit -m "$CommitMsg"
             if ($LASTEXITCODE -ne 0)
             {
                 Write-Error "Unable to commit LASTEXITCODE=$($LASTEXITCODE), see command output above."
@@ -183,7 +184,7 @@ do
 if ($LASTEXITCODE -ne 0 -or $tryNumber -gt $numberOfRetries)
 {
     Write-Error "Unable to push commit after $($tryNumber) retries LASTEXITCODE=$($LASTEXITCODE), see command output above."
-    if (0 -eq $LASTEXITCODE) 
+    if (0 -eq $LASTEXITCODE)
     {
         exit 1
     }

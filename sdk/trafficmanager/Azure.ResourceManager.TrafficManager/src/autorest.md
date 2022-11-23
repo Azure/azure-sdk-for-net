@@ -38,6 +38,7 @@ rename-mapping:
   TrafficManagerNameAvailability.reason: UnavailableReason
   TrafficManagerNameAvailability.type: -|resource-type
   UserMetricsModel: TrafficManagerUserMetrics
+  AlwaysServe: TrafficManagerEndpointAlwaysServeStatus
 
 prepend-rp-prefix:
   - DnsConfig

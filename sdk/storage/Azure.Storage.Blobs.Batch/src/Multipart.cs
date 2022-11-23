@@ -204,7 +204,11 @@ namespace Azure.Storage.Blobs.Specialized
                 var responseContent = new MemoryStream();
                 if (async)
                 {
+#if NET6_0_OR_GREATER
+                    await body.CopyToAsync(responseContent, cancellationToken).ConfigureAwait(false);
+#else
                     await body.CopyToAsync(responseContent).ConfigureAwait(false);
+#endif
                 }
                 else
                 {

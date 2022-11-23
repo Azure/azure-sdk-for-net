@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MLTableData : DataVersionProperties
     {
         /// <summary> Initializes a new instance of MLTableData. </summary>
-        /// <param name="dataUri"> [Required] Uri of the data. Usage/meaning depends on Microsoft.MachineLearning.ManagementFrontEnd.Contracts.V20220201Preview.Assets.DataVersionBase.DataType. </param>
+        /// <param name="dataUri"> [Required] Uri of the data. Usage/meaning depends on Microsoft.MachineLearning.ManagementFrontEnd.Contracts.V20221001.Assets.DataVersionBase.DataType. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataUri"/> is null. </exception>
         public MLTableData(Uri dataUri) : base(dataUri)
         {
             Argument.AssertNotNull(dataUri, nameof(dataUri));
 
             ReferencedUris = new ChangeTrackingList<Uri>();
-            DataType = DataType.MLTable;
+            DataType = DataType.Mltable;
         }
 
         /// <summary> Initializes a new instance of MLTableData. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
         /// <param name="dataType"> [Required] Specifies the type of data. </param>
-        /// <param name="dataUri"> [Required] Uri of the data. Usage/meaning depends on Microsoft.MachineLearning.ManagementFrontEnd.Contracts.V20220201Preview.Assets.DataVersionBase.DataType. </param>
+        /// <param name="dataUri"> [Required] Uri of the data. Usage/meaning depends on Microsoft.MachineLearning.ManagementFrontEnd.Contracts.V20221001.Assets.DataVersionBase.DataType. </param>
         /// <param name="referencedUris"> Uris referenced in the MLTable definition (required for lineage). </param>
         internal MLTableData(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived, DataType dataType, Uri dataUri, IList<Uri> referencedUris) : base(description, properties, tags, isAnonymous, isArchived, dataType, dataUri)
         {
