@@ -1,6 +1,6 @@
-# Azure Maps Management client library for .NET
+# Microsoft Azure Maps Management client library for .NET
 
-Azure Maps is a suite of geospatial services that help organizations easily incorporate location-based data into web and mobile solutions. Use location and map data to generate insights, inform data-driven decisions, enhance security, and improve customer experiences.
+Microsoft Azure Maps is a suite of geospatial services that help organizations easily incorporate location-based data into web and mobile solutions. Use location and map data to generate insights, inform data-driven decisions, enhance security, and improve customer experiences.
 
 This library supports managing Microsoft Azure Maps resources.
 
@@ -16,7 +16,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 ### Install the package
 
-Install the Azure Maps management library for .NET with [NuGet](https://www.nuget.org/):
+Install the Microsoft Azure Maps management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
 dotnet add package Azure.ResourceManager.Maps

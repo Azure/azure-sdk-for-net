@@ -18,7 +18,7 @@ modelerfour:
 
 rename-mapping:
   CreatorList: MapsCreatorListResult
-  MapsKind: MapsAccountKind
+  Kind: MapsAccountKind
   Name: MapsSkuName
   MapsAccountProperties.uniqueId: -|uuid
   MapsAccountUpdateParameters.properties.uniqueId: -|uuid

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Maps
         internal static MapsAccountData DeserializeMapsAccountData(JsonElement element)
         {
             MapsSku sku = default;
-            Optional<MapsKind> kind = default;
+            Optional<MapsAccountKind> kind = default;
             Optional<MapsAccountProperties> properties = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Maps
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    kind = new MapsKind(property.Value.GetString());
+                    kind = new MapsAccountKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))

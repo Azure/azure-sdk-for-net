@@ -7,7 +7,7 @@ This package is the first stable release of the Microsoft Azure Maps management 
 ### Breaking Changes
 
 Polishing since last public beta release:
-- Prepended `Maos` prefix to all single / simple model names.
+- Prepended `Maps` prefix to all single / simple model names.
 - Corrected the format of all `Guid` type properties / parameters.
 - Corrected the format of all `ResourceIdentifier` type properties / parameters.
 - Corrected the format of all `Uri` type properties / parameters.

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Maps
     public partial class MapsAccountData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public MapsAccountData(Azure.Core.AzureLocation location, Azure.ResourceManager.Maps.Models.MapsSku sku) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.Maps.Models.MapsKind? Kind { get { throw null; } set { } }
+        public Azure.ResourceManager.Maps.Models.MapsAccountKind? Kind { get { throw null; } set { } }
         public Azure.ResourceManager.Maps.Models.MapsAccountProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.Maps.Models.MapsSku Sku { get { throw null; } set { } }
     }
@@ -110,11 +110,29 @@ namespace Azure.ResourceManager.Maps.Models
         public string SecondaryKey { get { throw null; } }
         public System.DateTimeOffset? SecondaryKeyLastUpdatedOn { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MapsAccountKind : System.IEquatable<Azure.ResourceManager.Maps.Models.MapsAccountKind>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MapsAccountKind(string value) { throw null; }
+        public static Azure.ResourceManager.Maps.Models.MapsAccountKind Gen1 { get { throw null; } }
+        public static Azure.ResourceManager.Maps.Models.MapsAccountKind Gen2 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Maps.Models.MapsAccountKind other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Maps.Models.MapsAccountKind left, Azure.ResourceManager.Maps.Models.MapsAccountKind right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Maps.Models.MapsAccountKind (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Maps.Models.MapsAccountKind left, Azure.ResourceManager.Maps.Models.MapsAccountKind right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class MapsAccountPatch
     {
         public MapsAccountPatch() { }
         public bool? DisableLocalAuth { get { throw null; } set { } }
-        public Azure.ResourceManager.Maps.Models.MapsKind? Kind { get { throw null; } set { } }
+        public Azure.ResourceManager.Maps.Models.MapsAccountKind? Kind { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Maps.Models.MapsSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
@@ -161,24 +179,6 @@ namespace Azure.ResourceManager.Maps.Models
         public static bool operator ==(Azure.ResourceManager.Maps.Models.MapsKeyType left, Azure.ResourceManager.Maps.Models.MapsKeyType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Maps.Models.MapsKeyType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Maps.Models.MapsKeyType left, Azure.ResourceManager.Maps.Models.MapsKeyType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MapsKind : System.IEquatable<Azure.ResourceManager.Maps.Models.MapsKind>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MapsKind(string value) { throw null; }
-        public static Azure.ResourceManager.Maps.Models.MapsKind Gen1 { get { throw null; } }
-        public static Azure.ResourceManager.Maps.Models.MapsKind Gen2 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Maps.Models.MapsKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Maps.Models.MapsKind left, Azure.ResourceManager.Maps.Models.MapsKind right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Maps.Models.MapsKind (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Maps.Models.MapsKind left, Azure.ResourceManager.Maps.Models.MapsKind right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class MapsSku

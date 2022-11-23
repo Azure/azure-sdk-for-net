@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Maps
         /// <param name="sku"> The SKU of this account. </param>
         /// <param name="kind"> Get or Set Kind property. </param>
         /// <param name="properties"> The map account properties. </param>
-        internal MapsAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MapsSku sku, MapsKind? kind, MapsAccountProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        internal MapsAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MapsSku sku, MapsAccountKind? kind, MapsAccountProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Kind = kind;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Maps
         /// <summary> The SKU of this account. </summary>
         public MapsSku Sku { get; set; }
         /// <summary> Get or Set Kind property. </summary>
-        public MapsKind? Kind { get; set; }
+        public MapsAccountKind? Kind { get; set; }
         /// <summary> The map account properties. </summary>
         public MapsAccountProperties Properties { get; set; }
     }
