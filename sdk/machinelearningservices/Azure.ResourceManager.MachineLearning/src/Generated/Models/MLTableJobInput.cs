@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Argument.AssertNotNull(uri, nameof(uri));
 
             Uri = uri;
-            JobInputType = JobInputType.MLTable;
+            JobInputType = JobInputType.Mltable;
         }
 
         /// <summary> Initializes a new instance of MLTableJobInput. </summary>
