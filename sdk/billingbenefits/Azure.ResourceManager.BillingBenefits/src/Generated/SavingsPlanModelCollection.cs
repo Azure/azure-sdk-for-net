@@ -28,8 +28,6 @@ namespace Azure.ResourceManager.BillingBenefits
     {
         private readonly ClientDiagnostics _savingsPlanModelSavingsPlanClientDiagnostics;
         private readonly SavingsPlanRestOperations _savingsPlanModelSavingsPlanRestClient;
-        private readonly ClientDiagnostics _savingsPlanModelSavingsPlansInOrderClientDiagnostics;
-        private readonly SavingsPlansInOrderRestOperations _savingsPlanModelSavingsPlansInOrderRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SavingsPlanModelCollection"/> class for mocking. </summary>
         protected SavingsPlanModelCollection()
@@ -44,9 +42,6 @@ namespace Azure.ResourceManager.BillingBenefits
             _savingsPlanModelSavingsPlanClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", SavingsPlanModelResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SavingsPlanModelResource.ResourceType, out string savingsPlanModelSavingsPlanApiVersion);
             _savingsPlanModelSavingsPlanRestClient = new SavingsPlanRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, savingsPlanModelSavingsPlanApiVersion);
-            _savingsPlanModelSavingsPlansInOrderClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", SavingsPlanModelResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SavingsPlanModelResource.ResourceType, out string savingsPlanModelSavingsPlansInOrderApiVersion);
-            _savingsPlanModelSavingsPlansInOrderRestClient = new SavingsPlansInOrderRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, savingsPlanModelSavingsPlansInOrderApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -119,7 +114,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <summary>
         /// List savings plans in an order.
         /// Request Path: /providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans
-        /// Operation Id: SavingsPlansInOrder_List
+        /// Operation Id: SavingsPlan_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SavingsPlanModelResource" /> that may take multiple service requests to iterate over. </returns>
@@ -127,11 +122,11 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             async Task<Page<SavingsPlanModelResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _savingsPlanModelSavingsPlansInOrderClientDiagnostics.CreateScope("SavingsPlanModelCollection.GetAll");
+                using var scope = _savingsPlanModelSavingsPlanClientDiagnostics.CreateScope("SavingsPlanModelCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _savingsPlanModelSavingsPlansInOrderRestClient.ListAsync(Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _savingsPlanModelSavingsPlanRestClient.ListAsync(Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new SavingsPlanModelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -142,11 +137,11 @@ namespace Azure.ResourceManager.BillingBenefits
             }
             async Task<Page<SavingsPlanModelResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _savingsPlanModelSavingsPlansInOrderClientDiagnostics.CreateScope("SavingsPlanModelCollection.GetAll");
+                using var scope = _savingsPlanModelSavingsPlanClientDiagnostics.CreateScope("SavingsPlanModelCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _savingsPlanModelSavingsPlansInOrderRestClient.ListNextPageAsync(nextLink, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _savingsPlanModelSavingsPlanRestClient.ListNextPageAsync(nextLink, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new SavingsPlanModelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -161,7 +156,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <summary>
         /// List savings plans in an order.
         /// Request Path: /providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans
-        /// Operation Id: SavingsPlansInOrder_List
+        /// Operation Id: SavingsPlan_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SavingsPlanModelResource" /> that may take multiple service requests to iterate over. </returns>
@@ -169,11 +164,11 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             Page<SavingsPlanModelResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _savingsPlanModelSavingsPlansInOrderClientDiagnostics.CreateScope("SavingsPlanModelCollection.GetAll");
+                using var scope = _savingsPlanModelSavingsPlanClientDiagnostics.CreateScope("SavingsPlanModelCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _savingsPlanModelSavingsPlansInOrderRestClient.List(Id.Name, cancellationToken: cancellationToken);
+                    var response = _savingsPlanModelSavingsPlanRestClient.List(Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new SavingsPlanModelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -184,11 +179,11 @@ namespace Azure.ResourceManager.BillingBenefits
             }
             Page<SavingsPlanModelResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _savingsPlanModelSavingsPlansInOrderClientDiagnostics.CreateScope("SavingsPlanModelCollection.GetAll");
+                using var scope = _savingsPlanModelSavingsPlanClientDiagnostics.CreateScope("SavingsPlanModelCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _savingsPlanModelSavingsPlansInOrderRestClient.ListNextPage(nextLink, Id.Name, cancellationToken: cancellationToken);
+                    var response = _savingsPlanModelSavingsPlanRestClient.ListNextPage(nextLink, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new SavingsPlanModelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

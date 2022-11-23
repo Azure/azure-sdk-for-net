@@ -202,7 +202,7 @@
           "renew": false,
           "billingPlan": "P1M",
           "reservedResourceProperties": {
-            "instanceFlexibility": 1
+            "instanceFlexibility": "On"
           },
           "reservedResourceType": "VirtualMachines",
           "reviewDateTime": null,
@@ -743,7 +743,7 @@
           "renew": false,
           "billingPlan": "P1M",
           "reservedResourceProperties": {
-            "instanceFlexibility": 1
+            "instanceFlexibility": "On"
           },
           "reservedResourceType": "VirtualMachines",
           "reviewDateTime": null,
@@ -805,7 +805,7 @@
           "renew": false,
           "billingPlan": "P1M",
           "reservedResourceProperties": {
-            "instanceFlexibility": 1
+            "instanceFlexibility": "On"
           },
           "reservedResourceType": "VirtualMachines",
           "reviewDateTime": null,

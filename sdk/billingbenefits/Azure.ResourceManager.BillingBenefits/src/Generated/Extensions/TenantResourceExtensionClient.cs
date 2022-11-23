@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.BillingBenefits
     /// <summary> A class to add extension methods to TenantResource. </summary>
     internal partial class TenantResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _savingsPlanOrderAliasModelSavingsPlanOrderAliasClientDiagnostics;
-        private SavingsPlanOrderAliasRestOperations _savingsPlanOrderAliasModelSavingsPlanOrderAliasRestClient;
-        private ClientDiagnostics _savingsPlansClientDiagnostics;
-        private SavingsPlansRestOperations _savingsPlansRestClient;
+        private ClientDiagnostics _savingsPlanModelSavingsPlanClientDiagnostics;
+        private SavingsPlanRestOperations _savingsPlanModelSavingsPlanRestClient;
+        private ClientDiagnostics _defaultClientDiagnostics;
+        private BillingBenefitsRPRestOperations _defaultRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="TenantResourceExtensionClient"/> class for mocking. </summary>
         protected TenantResourceExtensionClient()
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.BillingBenefits
         {
         }
 
-        private ClientDiagnostics SavingsPlanOrderAliasModelSavingsPlanOrderAliasClientDiagnostics => _savingsPlanOrderAliasModelSavingsPlanOrderAliasClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", SavingsPlanOrderAliasModelResource.ResourceType.Namespace, Diagnostics);
-        private SavingsPlanOrderAliasRestOperations SavingsPlanOrderAliasModelSavingsPlanOrderAliasRestClient => _savingsPlanOrderAliasModelSavingsPlanOrderAliasRestClient ??= new SavingsPlanOrderAliasRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SavingsPlanOrderAliasModelResource.ResourceType));
-        private ClientDiagnostics SavingsPlansClientDiagnostics => _savingsPlansClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private SavingsPlansRestOperations SavingsPlansRestClient => _savingsPlansRestClient ??= new SavingsPlansRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics SavingsPlanModelSavingsPlanClientDiagnostics => _savingsPlanModelSavingsPlanClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", SavingsPlanModelResource.ResourceType.Namespace, Diagnostics);
+        private SavingsPlanRestOperations SavingsPlanModelSavingsPlanRestClient => _savingsPlanModelSavingsPlanRestClient ??= new SavingsPlanRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SavingsPlanModelResource.ResourceType));
+        private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private BillingBenefitsRPRestOperations DefaultRestClient => _defaultRestClient ??= new BillingBenefitsRPRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -70,55 +70,9 @@ namespace Azure.ResourceManager.BillingBenefits
         }
 
         /// <summary>
-        /// Validate savings plan purchase.
-        /// Request Path: /providers/Microsoft.BillingBenefits/validate
-        /// Operation Id: SavingsPlanOrderAlias_ValidatePurchase
-        /// </summary>
-        /// <param name="content"> Request body for validating the purchase of a savings plan. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SavingsPlanValidateResponse>> ValidatePurchaseSavingsPlanOrderAliaAsync(SavingsPlanPurchaseValidateContent content, CancellationToken cancellationToken = default)
-        {
-            using var scope = SavingsPlanOrderAliasModelSavingsPlanOrderAliasClientDiagnostics.CreateScope("TenantResourceExtensionClient.ValidatePurchaseSavingsPlanOrderAlia");
-            scope.Start();
-            try
-            {
-                var response = await SavingsPlanOrderAliasModelSavingsPlanOrderAliasRestClient.ValidatePurchaseAsync(content, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Validate savings plan purchase.
-        /// Request Path: /providers/Microsoft.BillingBenefits/validate
-        /// Operation Id: SavingsPlanOrderAlias_ValidatePurchase
-        /// </summary>
-        /// <param name="content"> Request body for validating the purchase of a savings plan. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SavingsPlanValidateResponse> ValidatePurchaseSavingsPlanOrderAlia(SavingsPlanPurchaseValidateContent content, CancellationToken cancellationToken = default)
-        {
-            using var scope = SavingsPlanOrderAliasModelSavingsPlanOrderAliasClientDiagnostics.CreateScope("TenantResourceExtensionClient.ValidatePurchaseSavingsPlanOrderAlia");
-            scope.Start();
-            try
-            {
-                var response = SavingsPlanOrderAliasModelSavingsPlanOrderAliasRestClient.ValidatePurchase(content, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// List savings plans.
         /// Request Path: /providers/Microsoft.BillingBenefits/savingsPlans
-        /// Operation Id: SavingsPlans_List
+        /// Operation Id: SavingsPlan_ListAll
         /// </summary>
         /// <param name="filter"> May be used to filter by reservation properties. The filter supports &apos;eq&apos;, &apos;or&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, or &apos;not&apos;. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
         /// <param name="orderby"> May be used to sort order by reservation properties. </param>
@@ -132,11 +86,11 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             async Task<Page<SavingsPlanModelResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = SavingsPlansClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetSavingsPlanModels");
+                using var scope = SavingsPlanModelSavingsPlanClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetSavingsPlanModels");
                 scope.Start();
                 try
                 {
-                    var response = await SavingsPlansRestClient.ListAsync(filter, orderby, refreshSummary, skiptoken, selectedState, take, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await SavingsPlanModelSavingsPlanRestClient.ListAllAsync(filter, orderby, refreshSummary, skiptoken, selectedState, take, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new SavingsPlanModelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -147,11 +101,11 @@ namespace Azure.ResourceManager.BillingBenefits
             }
             async Task<Page<SavingsPlanModelResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = SavingsPlansClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetSavingsPlanModels");
+                using var scope = SavingsPlanModelSavingsPlanClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetSavingsPlanModels");
                 scope.Start();
                 try
                 {
-                    var response = await SavingsPlansRestClient.ListNextPageAsync(nextLink, filter, orderby, refreshSummary, skiptoken, selectedState, take, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await SavingsPlanModelSavingsPlanRestClient.ListAllNextPageAsync(nextLink, filter, orderby, refreshSummary, skiptoken, selectedState, take, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new SavingsPlanModelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -166,7 +120,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <summary>
         /// List savings plans.
         /// Request Path: /providers/Microsoft.BillingBenefits/savingsPlans
-        /// Operation Id: SavingsPlans_List
+        /// Operation Id: SavingsPlan_ListAll
         /// </summary>
         /// <param name="filter"> May be used to filter by reservation properties. The filter supports &apos;eq&apos;, &apos;or&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, or &apos;not&apos;. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
         /// <param name="orderby"> May be used to sort order by reservation properties. </param>
@@ -180,11 +134,11 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             Page<SavingsPlanModelResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = SavingsPlansClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetSavingsPlanModels");
+                using var scope = SavingsPlanModelSavingsPlanClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetSavingsPlanModels");
                 scope.Start();
                 try
                 {
-                    var response = SavingsPlansRestClient.List(filter, orderby, refreshSummary, skiptoken, selectedState, take, cancellationToken: cancellationToken);
+                    var response = SavingsPlanModelSavingsPlanRestClient.ListAll(filter, orderby, refreshSummary, skiptoken, selectedState, take, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new SavingsPlanModelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -195,11 +149,11 @@ namespace Azure.ResourceManager.BillingBenefits
             }
             Page<SavingsPlanModelResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = SavingsPlansClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetSavingsPlanModels");
+                using var scope = SavingsPlanModelSavingsPlanClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetSavingsPlanModels");
                 scope.Start();
                 try
                 {
-                    var response = SavingsPlansRestClient.ListNextPage(nextLink, filter, orderby, refreshSummary, skiptoken, selectedState, take, cancellationToken: cancellationToken);
+                    var response = SavingsPlanModelSavingsPlanRestClient.ListAllNextPage(nextLink, filter, orderby, refreshSummary, skiptoken, selectedState, take, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new SavingsPlanModelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -209,6 +163,52 @@ namespace Azure.ResourceManager.BillingBenefits
                 }
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Validate savings plan purchase.
+        /// Request Path: /providers/Microsoft.BillingBenefits/validate
+        /// Operation Id: ValidatePurchase
+        /// </summary>
+        /// <param name="content"> Request body for validating the purchase of a savings plan. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<SavingsPlanValidateResponse>> ValidatePurchaseAsync(SavingsPlanPurchaseValidateContent content, CancellationToken cancellationToken = default)
+        {
+            using var scope = DefaultClientDiagnostics.CreateScope("TenantResourceExtensionClient.ValidatePurchase");
+            scope.Start();
+            try
+            {
+                var response = await DefaultRestClient.ValidatePurchaseAsync(content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Validate savings plan purchase.
+        /// Request Path: /providers/Microsoft.BillingBenefits/validate
+        /// Operation Id: ValidatePurchase
+        /// </summary>
+        /// <param name="content"> Request body for validating the purchase of a savings plan. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SavingsPlanValidateResponse> ValidatePurchase(SavingsPlanPurchaseValidateContent content, CancellationToken cancellationToken = default)
+        {
+            using var scope = DefaultClientDiagnostics.CreateScope("TenantResourceExtensionClient.ValidatePurchase");
+            scope.Start();
+            try
+            {
+                var response = DefaultRestClient.ValidatePurchase(content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

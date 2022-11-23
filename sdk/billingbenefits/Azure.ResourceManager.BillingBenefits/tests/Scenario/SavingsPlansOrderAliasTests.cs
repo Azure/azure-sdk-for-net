@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Reservations.Tests
             var requestContent = new SavingsPlanPurchaseValidateContent();
             requestContent.Benefits.Add(model);
 
-            var response = await tenantResource.ValidatePurchaseSavingsPlanOrderAliaAsync(requestContent);
+            var response = await tenantResource.ValidatePurchaseAsync(requestContent);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.NotNull(response.Value);

@@ -35,8 +35,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    var value = property.Value;
-                    instanceFlexibility = new InstanceFlexibility(value.GetInt32() == 1? "On": "Off");
+                    instanceFlexibility = new InstanceFlexibility(property.Value.GetString());
                     continue;
                 }
             }
