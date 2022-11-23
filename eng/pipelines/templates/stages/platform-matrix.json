@@ -16,11 +16,13 @@
         "TestTargetFramework": "net6.0"
       },
 
-      "Windows2019_NET6.0": {
+      "Windows2019_NET6.0_Coverage_Record": {
         "OSVmImage": "MMS2019",
         "Pool": "azsdk-pool-mms-win-2019-general",
-        "TestTargetFramework": "net6.0"
-      },
+        "TestTargetFramework": "net6.0",
+        "SupportsRecording": true,
+        "CollectCoverage": true
+},
       "Windows2019_NET461": {
         "OSVmImage": "MMS2019",
         "Pool": "azsdk-pool-mms-win-2019-general",
@@ -46,22 +48,5 @@
         "Debug",
         "Release"
     ]
-  },
-  "include": [
-    {
-      "Agent": {
-          "Windows2019": {
-              "OSVmImage": "MMS2019",
-              "Pool": "azsdk-pool-mms-win-2019-general",
-              "TestTargetFramework": "netcoreapp3.1"
-          }
-      },
-      "TestMode": {
-          "netcoreapp31_Coverage_Record": {
-              "SupportsRecording": true,
-              "CollectCoverage": true
-          }
-      }
-    }
-  ]
+  }
 }
