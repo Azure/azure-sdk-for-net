@@ -40,7 +40,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="refreshTime">time in miliseconds to wait before checking the status of the JMX file (default = 10*1000 ms = 10 sec)</param>
         /// <param name="timeOut">time in miliseconds to wait before time out (default = 600*1000ms = 600 sec)</param>
         /// <returns>TestRunStatus enum with appropirate status flag</returns>
-        public virtual TestRunStatus CheckTestRunCompleted(string testRunId, int refreshTime = 10 * 1000, int timeOut = 60 * 1000)
+        public virtual TestRunStatus BeginTestRunStatus(string testRunId, int refreshTime = 10 * 1000, int timeOut = 60 * 1000)
         {
             DateTime startTime = DateTime.Now;
             string status;
@@ -86,7 +86,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="refreshTime">time in miliseconds to wait before checking the status of the JMX file (default = 10*1000 ms = 10 sec)</param>
         /// <param name="timeOut">time in miliseconds to wait before time out (default = 600*1000ms = 600 sec)</param>
         /// <returns>TestRunStatus enum with appropirate status flag</returns>
-        public virtual async Task<TestRunStatus> CheckTestRunCompletedAsync(string testRunId, int refreshTime = 10 * 1000, int timeOut = 60 * 1000)
+        public virtual async Task<TestRunStatus> BeginTestRunStatusAsync(string testRunId, int refreshTime = 10 * 1000, int timeOut = 60 * 1000)
         {
             DateTime startTime = DateTime.Now;
             string status;

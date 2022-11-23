@@ -56,8 +56,8 @@ namespace Azure.Developer.LoadTesting
     {
         protected LoadTestRunClient() { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Developer.LoadTesting.TestRunStatus CheckTestRunCompleted(string testRunId, int refreshTime = 10000, int timeOut = 60000) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Developer.LoadTesting.TestRunStatus> CheckTestRunCompletedAsync(string testRunId, int refreshTime = 10000, int timeOut = 60000) { throw null; }
+        public virtual Azure.Developer.LoadTesting.TestRunStatus BeginTestRunStatus(string testRunId, int refreshTime = 10000, int timeOut = 60000) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Developer.LoadTesting.TestRunStatus> BeginTestRunStatusAsync(string testRunId, int refreshTime = 10000, int timeOut = 60000) { throw null; }
         public virtual Azure.Response CreateOrUpdateAppComponents(string testRunId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAppComponentsAsync(string testRunId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response CreateOrUpdateServerMetricsConfig(string testRunId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
