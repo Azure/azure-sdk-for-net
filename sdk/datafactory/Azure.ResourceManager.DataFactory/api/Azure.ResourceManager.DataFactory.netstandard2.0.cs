@@ -560,9 +560,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public bool? EnableSecureInput { get { throw null; } set { } }
         public bool? EnableSecureOutput { get { throw null; } set { } }
-        public System.BinaryData Retry { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<int> Retry { get { throw null; } set { } }
         public int? RetryIntervalInSeconds { get { throw null; } set { } }
-        public System.BinaryData Timeout { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<System.TimeSpan> Timeout { get { throw null; } set { } }
     }
     public partial class ActivityRunInfo
     {
@@ -584,8 +584,14 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class ActivityUserProperty
     {
-        public ActivityUserProperty(string name, System.BinaryData value) { }
+        public ActivityUserProperty(string name, Azure.Core.Expressions.DataFactory.DataFactoryExpression<string> value) { }
         public string Name { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<string> Value { get { throw null; } set { } }
+    }
+    public partial class AdditionalColumns
+    {
+        public AdditionalColumns() { }
+        public System.BinaryData Name { get { throw null; } set { } }
         public System.BinaryData Value { get { throw null; } set { } }
     }
     public partial class AmazonMwsLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
@@ -750,16 +756,16 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AmazonS3ReadSettings : Azure.ResourceManager.DataFactory.Models.StoreReadSettings
     {
         public AmazonS3ReadSettings() { }
-        public System.BinaryData DeleteFilesAfterCompletion { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<bool> DeleteFilesAfterCompletion { get { throw null; } set { } }
         public bool? EnablePartitionDiscovery { get { throw null; } set { } }
-        public System.BinaryData FileListPath { get { throw null; } set { } }
-        public System.BinaryData ModifiedDatetimeEnd { get { throw null; } set { } }
-        public System.BinaryData ModifiedDatetimeStart { get { throw null; } set { } }
-        public System.BinaryData PartitionRootPath { get { throw null; } set { } }
-        public System.BinaryData Prefix { get { throw null; } set { } }
-        public System.BinaryData Recursive { get { throw null; } set { } }
-        public System.BinaryData WildcardFileName { get { throw null; } set { } }
-        public System.BinaryData WildcardFolderPath { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<string> FileListPath { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<System.DateTimeOffset> ModifiedDatetimeEnd { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<System.DateTimeOffset> ModifiedDatetimeStart { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<string> PartitionRootPath { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<string> Prefix { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<bool> Recursive { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<string> WildcardFileName { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<string> WildcardFolderPath { get { throw null; } set { } }
     }
     public partial class AppendVariableActivity : Azure.ResourceManager.DataFactory.Models.ControlActivity
     {
@@ -891,15 +897,15 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AzureBlobFSReadSettings : Azure.ResourceManager.DataFactory.Models.StoreReadSettings
     {
         public AzureBlobFSReadSettings() { }
-        public System.BinaryData DeleteFilesAfterCompletion { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<bool> DeleteFilesAfterCompletion { get { throw null; } set { } }
         public bool? EnablePartitionDiscovery { get { throw null; } set { } }
-        public System.BinaryData FileListPath { get { throw null; } set { } }
-        public System.BinaryData ModifiedDatetimeEnd { get { throw null; } set { } }
-        public System.BinaryData ModifiedDatetimeStart { get { throw null; } set { } }
-        public System.BinaryData PartitionRootPath { get { throw null; } set { } }
-        public System.BinaryData Recursive { get { throw null; } set { } }
-        public System.BinaryData WildcardFileName { get { throw null; } set { } }
-        public System.BinaryData WildcardFolderPath { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<string> FileListPath { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<System.DateTimeOffset> ModifiedDatetimeEnd { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<System.DateTimeOffset> ModifiedDatetimeStart { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<string> PartitionRootPath { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<bool> Recursive { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<string> WildcardFileName { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<string> WildcardFolderPath { get { throw null; } set { } }
     }
     public partial class AzureBlobFSSink : Azure.ResourceManager.DataFactory.Models.CopySink
     {
@@ -962,13 +968,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData DeleteFilesAfterCompletion { get { throw null; } set { } }
         public bool? EnablePartitionDiscovery { get { throw null; } set { } }
         public System.BinaryData FileListPath { get { throw null; } set { } }
-        public System.BinaryData ModifiedDatetimeEnd { get { throw null; } set { } }
-        public System.BinaryData ModifiedDatetimeStart { get { throw null; } set { } }
-        public System.BinaryData PartitionRootPath { get { throw null; } set { } }
-        public System.BinaryData Prefix { get { throw null; } set { } }
-        public System.BinaryData Recursive { get { throw null; } set { } }
-        public System.BinaryData WildcardFileName { get { throw null; } set { } }
-        public System.BinaryData WildcardFolderPath { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<System.DateTimeOffset> ModifiedDatetimeEnd { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<System.DateTimeOffset> ModifiedDatetimeStart { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<string> PartitionRootPath { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<string> Prefix { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<bool> Recursive { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<string> WildcardFileName { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<string> WildcardFolderPath { get { throw null; } set { } }
     }
     public partial class AzureBlobStorageWriteSettings : Azure.ResourceManager.DataFactory.Models.StoreWriteSettings
     {
@@ -1122,17 +1128,17 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AzureDataLakeStoreReadSettings : Azure.ResourceManager.DataFactory.Models.StoreReadSettings
     {
         public AzureDataLakeStoreReadSettings() { }
-        public System.BinaryData DeleteFilesAfterCompletion { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<bool> DeleteFilesAfterCompletion { get { throw null; } set { } }
         public bool? EnablePartitionDiscovery { get { throw null; } set { } }
-        public System.BinaryData FileListPath { get { throw null; } set { } }
-        public System.BinaryData ListAfter { get { throw null; } set { } }
-        public System.BinaryData ListBefore { get { throw null; } set { } }
-        public System.BinaryData ModifiedDatetimeEnd { get { throw null; } set { } }
-        public System.BinaryData ModifiedDatetimeStart { get { throw null; } set { } }
-        public System.BinaryData PartitionRootPath { get { throw null; } set { } }
-        public System.BinaryData Recursive { get { throw null; } set { } }
-        public System.BinaryData WildcardFileName { get { throw null; } set { } }
-        public System.BinaryData WildcardFolderPath { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<string> FileListPath { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<string> ListAfter { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<string> ListBefore { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<System.DateTimeOffset> ModifiedDatetimeEnd { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<System.DateTimeOffset> ModifiedDatetimeStart { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<string> PartitionRootPath { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<bool> Recursive { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<string> WildcardFileName { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<string> WildcardFolderPath { get { throw null; } set { } }
     }
     public partial class AzureDataLakeStoreSink : Azure.ResourceManager.DataFactory.Models.CopySink
     {
@@ -4526,8 +4532,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class MicrosoftAccessSource : Azure.ResourceManager.DataFactory.Models.CopyActivitySource
     {
         public MicrosoftAccessSource() { }
-        public System.BinaryData AdditionalColumns { get { throw null; } set { } }
-        public System.BinaryData Query { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.AdditionalColumns>> AdditionalColumns { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<string> Query { get { throw null; } set { } }
     }
     public partial class MicrosoftAccessTableDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
@@ -6719,8 +6725,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         public StoreReadSettings() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
-        public System.BinaryData DisableMetricsCollection { get { throw null; } set { } }
-        public System.BinaryData MaxConcurrentConnections { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<bool> DisableMetricsCollection { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<int> MaxConcurrentConnections { get { throw null; } set { } }
     }
     public partial class StoreWriteSettings
     {
@@ -7124,7 +7130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public XmlReadSettings() { }
         public Azure.ResourceManager.DataFactory.Models.CompressionReadSettings CompressionProperties { get { throw null; } set { } }
         public System.BinaryData DetectDataType { get { throw null; } set { } }
-        public System.BinaryData NamespacePrefixes { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<System.Collections.Generic.IDictionary<string, string>> NamespacePrefixes { get { throw null; } set { } }
         public System.BinaryData Namespaces { get { throw null; } set { } }
         public System.BinaryData ValidationMode { get { throw null; } set { } }
     }

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -20,20 +21,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Query);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Query.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Query);
             }
             if (Optional.IsDefined(AdditionalColumns))
             {
                 writer.WritePropertyName("additionalColumns");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(AdditionalColumns);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(AdditionalColumns.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, AdditionalColumns);
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(CopySourceType);
@@ -87,8 +80,8 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static MicrosoftAccessSource DeserializeMicrosoftAccessSource(JsonElement element)
         {
-            Optional<BinaryData> query = default;
-            Optional<BinaryData> additionalColumns = default;
+            Optional<DataFactoryExpression<string>> query = default;
+            Optional<DataFactoryExpression<IList<AdditionalColumns>>> additionalColumns = default;
             string type = default;
             Optional<BinaryData> sourceRetryCount = default;
             Optional<BinaryData> sourceRetryWait = default;
@@ -105,7 +98,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    query = BinaryData.FromString(property.Value.GetRawText());
+                    query = JsonSerializer.Deserialize<DataFactoryExpression<string>>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("additionalColumns"))
@@ -115,7 +108,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    additionalColumns = BinaryData.FromString(property.Value.GetRawText());
+                    additionalColumns = JsonSerializer.Deserialize<DataFactoryExpression<IList<AdditionalColumns>>>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("type"))

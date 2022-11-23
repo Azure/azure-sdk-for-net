@@ -258,6 +258,56 @@ directive:
     transform: >
       $.PipelineElapsedTimeMetricPolicy.properties.duration['type'] = 'string';
       $.PipelineElapsedTimeMetricPolicy.properties.duration['format'] = 'duration';
+      $.Pipeline.properties.runDimensions['x-ms-format'] = 'dfe-string';
+      $.UserProperty.properties.value['x-ms-format'] = 'dfe-string';
+      $.ActivityPolicy.properties.timeout['x-ms-format'] = 'dfe-duration';
+      $.ActivityPolicy.properties.retry['x-ms-format'] = 'dfe-int';
+      $.AzureBlobStorageReadSettings.properties.recursive['x-ms-format'] = 'dfe-bool';
+      $.AzureBlobStorageReadSettings.properties.wildcardFolderPath['x-ms-format'] = 'dfe-string';
+      $.AzureBlobStorageReadSettings.properties.wildcardFileName['x-ms-format'] = 'dfe-string';
+      $.AzureBlobStorageReadSettings.properties.prefix['x-ms-format'] = 'dfe-string';
+      $.AzureBlobStorageReadSettings.properties.partitionRootPath['x-ms-format'] = 'dfe-string';
+      $.AzureBlobStorageReadSettings.properties.modifiedDatetimeStart['x-ms-format'] = 'dfe-date-time-rfc1123';
+      $.AzureBlobStorageReadSettings.properties.modifiedDatetimeEnd['x-ms-format'] = 'dfe-date-time-rfc1123';
+      $.AmazonS3ReadSettings.properties.recursive['x-ms-format'] = 'dfe-bool';
+      $.AmazonS3ReadSettings.properties.wildcardFolderPath['x-ms-format'] = 'dfe-string';
+      $.AmazonS3ReadSettings.properties.wildcardFileName['x-ms-format'] = 'dfe-string';
+      $.AmazonS3ReadSettings.properties.prefix['x-ms-format'] = 'dfe-string';
+      $.AmazonS3ReadSettings.properties.fileListPath['x-ms-format'] = 'dfe-string';
+      $.AmazonS3ReadSettings.properties.partitionRootPath['x-ms-format'] = 'dfe-string';
+      $.AmazonS3ReadSettings.properties.deleteFilesAfterCompletion['x-ms-format'] = 'dfe-bool';
+      $.AmazonS3ReadSettings.properties.modifiedDatetimeStart['x-ms-format'] = 'dfe-date-time-rfc1123';
+      $.AmazonS3ReadSettings.properties.modifiedDatetimeEnd['x-ms-format'] = 'dfe-date-time-rfc1123';
+      $.AzureBlobFSReadSettings.properties.recursive['x-ms-format'] = 'dfe-bool';
+      $.AzureBlobFSReadSettings.properties.wildcardFolderPath['x-ms-format'] = 'dfe-string';
+      $.AzureBlobFSReadSettings.properties.wildcardFileName['x-ms-format'] = 'dfe-string';
+      $.AzureBlobFSReadSettings.properties.fileListPath['x-ms-format'] = 'dfe-string';
+      $.AzureBlobFSReadSettings.properties.partitionRootPath['x-ms-format'] = 'dfe-string';
+      $.AzureBlobFSReadSettings.properties.deleteFilesAfterCompletion['x-ms-format'] = 'dfe-bool';
+      $.AzureBlobFSReadSettings.properties.modifiedDatetimeStart['x-ms-format'] = 'dfe-date-time-rfc1123';
+      $.AzureBlobFSReadSettings.properties.modifiedDatetimeEnd['x-ms-format'] = 'dfe-date-time-rfc1123';
+      $.AzureDataLakeStoreReadSettings.properties.recursive['x-ms-format'] = 'dfe-bool';
+      $.AzureDataLakeStoreReadSettings.properties.wildcardFolderPath['x-ms-format'] = 'dfe-string';
+      $.AzureDataLakeStoreReadSettings.properties.wildcardFileName['x-ms-format'] = 'dfe-string';
+      $.AzureDataLakeStoreReadSettings.properties.fileListPath['x-ms-format'] = 'dfe-string';
+      $.AzureDataLakeStoreReadSettings.properties.listAfter['x-ms-format'] = 'dfe-string';
+      $.AzureDataLakeStoreReadSettings.properties.listBefore['x-ms-format'] = 'dfe-string';
+      $.AzureDataLakeStoreReadSettings.properties.partitionRootPath['x-ms-format'] = 'dfe-string';
+      $.AzureDataLakeStoreReadSettings.properties.deleteFilesAfterCompletion['x-ms-format'] = 'dfe-bool';
+      $.AzureDataLakeStoreReadSettings.properties.modifiedDatetimeStart['x-ms-format'] = 'dfe-date-time-rfc1123';
+      $.AzureDataLakeStoreReadSettings.properties.modifiedDatetimeEnd['x-ms-format'] = 'dfe-date-time-rfc1123';
+      $.AzureDataLakeStoreReadSettings.properties.recursive['x-ms-format'] = 'dfe-bool';
+      $.AzureDataLakeStoreReadSettings.properties.wildcardFolderPath['x-ms-format'] = 'dfe-string';
+      $.AzureDataLakeStoreReadSettings.properties.wildcardFileName['x-ms-format'] = 'dfe-string';
+      $.AzureDataLakeStoreReadSettings.properties.partitionRootPath['x-ms-format'] = 'dfe-string';
+      $.AzureDataLakeStoreReadSettings.properties.modifiedDatetimeStart['x-ms-format'] = 'dfe-date-time-rfc1123';
+      $.AzureDataLakeStoreReadSettings.properties.modifiedDatetimeEnd['x-ms-format'] = 'dfe-date-time-rfc1123';
+      $.StoreReadSettings.properties.maxConcurrentConnections['x-ms-format'] = 'dfe-int';
+      $.StoreReadSettings.properties.disableMetricsCollection['x-ms-format'] = 'dfe-bool';
+      $.MicrosoftAccessSource.properties.query['x-ms-format'] = 'dfe-string';
+      $.MicrosoftAccessSource.properties.additionalColumns['x-ms-format'] = 'dfe-listOfT';
+      $.MicrosoftAccessSource.properties.additionalColumns['x-ms-format-element-type'] = 'AdditionalColumns';
+      $.XmlReadSettings.properties.namespacePrefixes['x-ms-format'] = 'dfe-keyValuePair';
   - from: IntegrationRuntime.json
     where: $.definitions
     transform: >

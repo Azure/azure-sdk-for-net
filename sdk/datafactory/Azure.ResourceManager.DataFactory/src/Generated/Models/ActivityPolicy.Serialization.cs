@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -20,20 +21,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Timeout);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Timeout.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Timeout);
             }
             if (Optional.IsDefined(Retry))
             {
                 writer.WritePropertyName("retry");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Retry);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Retry.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Retry);
             }
             if (Optional.IsDefined(RetryIntervalInSeconds))
             {
@@ -64,8 +57,8 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static ActivityPolicy DeserializeActivityPolicy(JsonElement element)
         {
-            Optional<BinaryData> timeout = default;
-            Optional<BinaryData> retry = default;
+            Optional<DataFactoryExpression<TimeSpan>> timeout = default;
+            Optional<DataFactoryExpression<int>> retry = default;
             Optional<int> retryIntervalInSeconds = default;
             Optional<bool> secureInput = default;
             Optional<bool> secureOutput = default;
@@ -80,7 +73,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    timeout = BinaryData.FromString(property.Value.GetRawText());
+                    timeout = JsonSerializer.Deserialize<DataFactoryExpression<TimeSpan>>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("retry"))
@@ -90,7 +83,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    retry = BinaryData.FromString(property.Value.GetRawText());
+                    retry = JsonSerializer.Deserialize<DataFactoryExpression<int>>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("retryIntervalInSeconds"))

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="requestTimeout"> Specifies the timeout for a HTTP client to get HTTP response from HTTP server. </param>
         /// <param name="enablePartitionDiscovery"> Indicates whether to enable partition discovery. </param>
         /// <param name="partitionRootPath"> Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string). </param>
-        internal HttpReadSettings(string storeReadSettingsType, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData requestMethod, BinaryData requestBody, BinaryData additionalHeaders, BinaryData requestTimeout, bool? enablePartitionDiscovery, BinaryData partitionRootPath) : base(storeReadSettingsType, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
+        internal HttpReadSettings(string storeReadSettingsType, DataFactoryExpression<int> maxConcurrentConnections, DataFactoryExpression<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData requestMethod, BinaryData requestBody, BinaryData additionalHeaders, BinaryData requestTimeout, bool? enablePartitionDiscovery, BinaryData partitionRootPath) : base(storeReadSettingsType, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             RequestMethod = requestMethod;
             RequestBody = requestBody;
