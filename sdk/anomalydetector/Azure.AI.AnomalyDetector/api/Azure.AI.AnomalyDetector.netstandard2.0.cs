@@ -3,8 +3,8 @@ namespace Azure.AI.AnomalyDetector
     public partial class AnomalyDetectorClient
     {
         protected AnomalyDetectorClient() { }
-        public AnomalyDetectorClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
-        public AnomalyDetectorClient(System.Uri endpoint, Azure.AzureKeyCredential credential, string apiVersion, Azure.AI.AnomalyDetector.AnomalyDetectorClientOptions options) { }
+        public AnomalyDetectorClient(System.Uri endpoint, string apiVersion, Azure.AzureKeyCredential credential) { }
+        public AnomalyDetectorClient(System.Uri endpoint, string apiVersion, Azure.AzureKeyCredential credential, Azure.AI.AnomalyDetector.AnomalyDetectorClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response<Azure.AI.AnomalyDetector.Models.Model> CreateAndTrainMultivariateModel(Azure.AI.AnomalyDetector.Models.ModelInfo body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response CreateAndTrainMultivariateModel(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
@@ -47,10 +47,10 @@ namespace Azure.AI.AnomalyDetector
     }
     public partial class AnomalyDetectorClientOptions : Azure.Core.ClientOptions
     {
-        public AnomalyDetectorClientOptions(Azure.AI.AnomalyDetector.AnomalyDetectorClientOptions.ServiceVersion version = Azure.AI.AnomalyDetector.AnomalyDetectorClientOptions.ServiceVersion.V2015_06_18) { }
+        public AnomalyDetectorClientOptions(Azure.AI.AnomalyDetector.AnomalyDetectorClientOptions.ServiceVersion version = Azure.AI.AnomalyDetector.AnomalyDetectorClientOptions.ServiceVersion.V1_1) { }
         public enum ServiceVersion
         {
-            V2015_06_18 = 1,
+            V1_1 = 1,
         }
     }
 }
