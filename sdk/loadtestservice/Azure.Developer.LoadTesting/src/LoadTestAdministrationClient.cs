@@ -349,7 +349,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="timeOut"> time in miliseconds to wait before time out (default = 600*1000ms = 600 sec)</param>
         /// <returns> TestFileValidationStatus enum with appropirate status flag</returns>
         /// <exception cref="Exception"></exception>
-        public virtual TestFileValidationStatus CheckTestFileValidationStatus(string testId, int refreshTime = 10*1000, int timeOut = 600*1000)
+        public virtual TestFileValidationStatus BeginTestScriptValidationStatus(string testId, int refreshTime = 10*1000, int timeOut = 600*1000)
         {
             DateTime startTime = DateTime.Now;
             string status = TestFileValidationStatus.ValidationInitiated.ToString();
@@ -399,7 +399,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="timeOut"> time in miliseconds to wait before time out (default = 600*1000ms = 600 sec)</param>
         /// <returns> TestFileValidationStatus enum with appropirate status flag</returns>
         /// <exception cref="Exception"></exception>
-        public virtual async Task<TestFileValidationStatus> CheckTestFileValidationStatusAsync(string testId, int refreshTime = 10 * 1000, int timeOut = 600 * 1000)
+        public virtual async Task<TestFileValidationStatus> BeginTestScriptValidationStatusAsync(string testId, int refreshTime = 10 * 1000, int timeOut = 600 * 1000)
         {
             DateTime startTime = DateTime.Now;
             string status = TestFileValidationStatus.ValidationInitiated.ToString();
