@@ -20,8 +20,12 @@ namespace Azure.Communication.CallAutomation
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        private const string RecognizeOperationcanceledValue = "8508";
         private const string RecognizeInitialSilenceTimedOutValue = "8510";
         private const string RecognizeInterDigitTimedOutValue = "8532";
+
+        private const string RecognizeDtmfOptionMatchedValue = "8533";
+
         private const string RecognizePlayPromptFailedValue = "8511";
 
         private const string RecognizeMaxDigitsReceivedValue = "8531";
@@ -30,9 +34,14 @@ namespace Azure.Communication.CallAutomation
         private const string PlayDownloadFailedValue = "8536";
         private const string PlayInvalidFileFormatValue = "8535";
 
+        private const string RecognizeSpeechOptionMatchedValue = "8545";
+        private const string RecognizeSpeechOptionNotMatchedValue = "8547";
+
         private const string CompletedSuccessfullyValue = "0";
         private const string UnspecifiedErrorValue = "9999";
 
+        /// <summary> Action failed, recognize operation cancelled. </summary>
+        private static ReasonCode RecognizeOperationcanceled { get; } = new ReasonCode(RecognizeOperationcanceledValue);
         /// <summary> Action failed, initial silence timeout reached. </summary>
         public static ReasonCode RecognizeInitialSilenceTimedOut { get; } = new ReasonCode(RecognizeInitialSilenceTimedOutValue);
         /// <summary> Action failed, inter-digit silence timeout reached. </summary>
@@ -49,7 +58,12 @@ namespace Azure.Communication.CallAutomation
         public static ReasonCode PlayDownloadFailed { get; } = new ReasonCode(PlayDownloadFailedValue);
         /// <summary> Action failed, file could not be downloaded. </summary>
         public static ReasonCode PlayInvalidFileFormat { get; } = new ReasonCode(PlayInvalidFileFormatValue);
-
+        /// <summary> Action failed, play source not working. </summary>
+        public static ReasonCode RecognizeDtmfOptionMatched {get; } = new ReasonCode(RecognizeDtmfOptionMatchedValue);
+        /// <summary> Speeach option matched. </summary>
+        public static ReasonCode RecognizeSpeechOptionMatched { get; } = new ReasonCode(RecognizeSpeechOptionMatchedValue);
+        /// <summary> Speeach option  not matched. </summary>
+        public static ReasonCode RecognizeSpeechOptionNotMatched  { get; } = new ReasonCode(RecognizeSpeechOptionNotMatchedValue);
         /// <summary> Action completed successfully. </summary>
         public static ReasonCode CompletedSuccessfully { get; } = new ReasonCode (CompletedSuccessfullyValue);
         /// <summary> Unknown internal server error. </summary>
