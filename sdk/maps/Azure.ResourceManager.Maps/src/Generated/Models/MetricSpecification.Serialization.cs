@@ -24,8 +24,6 @@ namespace Azure.ResourceManager.Maps.Models
             Optional<bool> fillGapWithZero = default;
             Optional<string> category = default;
             Optional<string> resourceIdDimensionNameOverride = default;
-            Optional<string> sourceMdmAccount = default;
-            Optional<string> internalMetricName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -88,18 +86,8 @@ namespace Azure.ResourceManager.Maps.Models
                     resourceIdDimensionNameOverride = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceMdmAccount"))
-                {
-                    sourceMdmAccount = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("internalMetricName"))
-                {
-                    internalMetricName = property.Value.GetString();
-                    continue;
-                }
             }
-            return new MetricSpecification(name.Value, displayName.Value, displayDescription.Value, unit.Value, Optional.ToList(dimensions), aggregationType.Value, Optional.ToNullable(fillGapWithZero), category.Value, resourceIdDimensionNameOverride.Value, sourceMdmAccount.Value, internalMetricName.Value);
+            return new MetricSpecification(name.Value, displayName.Value, displayDescription.Value, unit.Value, Optional.ToList(dimensions), aggregationType.Value, Optional.ToNullable(fillGapWithZero), category.Value, resourceIdDimensionNameOverride.Value);
         }
     }
 }

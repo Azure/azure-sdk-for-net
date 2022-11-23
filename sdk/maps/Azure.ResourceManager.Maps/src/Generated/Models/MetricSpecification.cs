@@ -29,9 +29,7 @@ namespace Azure.ResourceManager.Maps.Models
         /// <param name="fillGapWithZero"> The property to decide fill gap with zero or not. </param>
         /// <param name="category"> The category this metric specification belong to, could be Capacity. </param>
         /// <param name="resourceIdDimensionNameOverride"> Account Resource Id. </param>
-        /// <param name="sourceMdmAccount"> Source metrics account. </param>
-        /// <param name="internalMetricName"> Internal metric name. </param>
-        internal MetricSpecification(string name, string displayName, string displayDescription, string unit, IReadOnlyList<Dimension> dimensions, string aggregationType, bool? fillGapWithZero, string category, string resourceIdDimensionNameOverride, string sourceMdmAccount, string internalMetricName)
+        internal MetricSpecification(string name, string displayName, string displayDescription, string unit, IReadOnlyList<Dimension> dimensions, string aggregationType, bool? fillGapWithZero, string category, string resourceIdDimensionNameOverride)
         {
             Name = name;
             DisplayName = displayName;
@@ -42,8 +40,6 @@ namespace Azure.ResourceManager.Maps.Models
             FillGapWithZero = fillGapWithZero;
             Category = category;
             ResourceIdDimensionNameOverride = resourceIdDimensionNameOverride;
-            SourceMdmAccount = sourceMdmAccount;
-            InternalMetricName = internalMetricName;
         }
 
         /// <summary> Name of metric specification. </summary>
@@ -64,9 +60,5 @@ namespace Azure.ResourceManager.Maps.Models
         public string Category { get; }
         /// <summary> Account Resource Id. </summary>
         public string ResourceIdDimensionNameOverride { get; }
-        /// <summary> Source metrics account. </summary>
-        public string SourceMdmAccount { get; }
-        /// <summary> Internal metric name. </summary>
-        public string InternalMetricName { get; }
     }
 }

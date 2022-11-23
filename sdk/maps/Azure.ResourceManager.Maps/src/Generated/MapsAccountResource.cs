@@ -279,66 +279,6 @@ namespace Azure.ResourceManager.Maps
         }
 
         /// <summary>
-        /// Create and list an account shared access signature token. Use this SAS token for authentication to Azure Maps REST APIs through various Azure Maps SDKs. As prerequisite to create a SAS Token. 
-        /// 
-        /// Prerequisites:
-        /// 1. Create or have an existing User Assigned Managed Identity in the same Azure region as the account. 
-        /// 2. Create or update an Azure Map account with the same Azure region as the User Assigned Managed Identity is placed.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}/listSas
-        /// Operation Id: Accounts_ListSas
-        /// </summary>
-        /// <param name="content"> The updated parameters for the Maps Account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<MapsAccountSasToken>> GetSasAsync(AccountSasContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _mapsAccountAccountsClientDiagnostics.CreateScope("MapsAccountResource.GetSas");
-            scope.Start();
-            try
-            {
-                var response = await _mapsAccountAccountsRestClient.ListSasAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Create and list an account shared access signature token. Use this SAS token for authentication to Azure Maps REST APIs through various Azure Maps SDKs. As prerequisite to create a SAS Token. 
-        /// 
-        /// Prerequisites:
-        /// 1. Create or have an existing User Assigned Managed Identity in the same Azure region as the account. 
-        /// 2. Create or update an Azure Map account with the same Azure region as the User Assigned Managed Identity is placed.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}/listSas
-        /// Operation Id: Accounts_ListSas
-        /// </summary>
-        /// <param name="content"> The updated parameters for the Maps Account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<MapsAccountSasToken> GetSas(AccountSasContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _mapsAccountAccountsClientDiagnostics.CreateScope("MapsAccountResource.GetSas");
-            scope.Start();
-            try
-            {
-                var response = _mapsAccountAccountsRestClient.ListSas(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Get the keys to use with the Maps APIs. A key is used to authenticate and authorize access to the Maps REST APIs. Only one key is needed at a time; two are given to provide seamless key regeneration.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}/listKeys
         /// Operation Id: Accounts_ListKeys
