@@ -919,7 +919,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        internal HttpMessage CreateFailoverRequest(string subscriptionId, string resourceGroupName, string accountName, FailoverType? failoverType)
+        internal HttpMessage CreateFailoverRequest(string subscriptionId, string resourceGroupName, string accountName, StorageAccountFailoverType? failoverType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -951,7 +951,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> FailoverAsync(string subscriptionId, string resourceGroupName, string accountName, FailoverType? failoverType = null, CancellationToken cancellationToken = default)
+        public async Task<Response> FailoverAsync(string subscriptionId, string resourceGroupName, string accountName, StorageAccountFailoverType? failoverType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -977,7 +977,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Failover(string subscriptionId, string resourceGroupName, string accountName, FailoverType? failoverType = null, CancellationToken cancellationToken = default)
+        public Response Failover(string subscriptionId, string resourceGroupName, string accountName, StorageAccountFailoverType? failoverType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

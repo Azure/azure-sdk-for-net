@@ -1604,13 +1604,13 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(EncryptionScopeState.Enabled, encryptionScopes[2].Data.State);
             Assert.AreEqual(EncryptionScopeSource.Storage, encryptionScopes[2].Data.Source);
 
-            encryptionScopes = await encryptionScopeCollection.GetAllAsync(maxpagesize: 5, include: ListEncryptionScopesInclude.Enabled, filter: "startswith(name, test)").ToEnumerableAsync();
+            encryptionScopes = await encryptionScopeCollection.GetAllAsync(maxpagesize: 5, include: EncryptionScopesIncludeType.Enabled, filter: "startswith(name, test)").ToEnumerableAsync();
             Assert.AreEqual(1, encryptionScopes.Count);
             Assert.AreEqual("testscope3", encryptionScopes[0].Data.Name);
             Assert.AreEqual(EncryptionScopeState.Enabled, encryptionScopes[0].Data.State);
             Assert.AreEqual(EncryptionScopeSource.Storage, encryptionScopes[0].Data.Source);
 
-            encryptionScopes = await encryptionScopeCollection.GetAllAsync(maxpagesize: 10, include: ListEncryptionScopesInclude.Disabled, filter: "startswith(name, scope)").ToEnumerableAsync();
+            encryptionScopes = await encryptionScopeCollection.GetAllAsync(maxpagesize: 10, include: EncryptionScopesIncludeType.Disabled, filter: "startswith(name, scope)").ToEnumerableAsync();
             Assert.AreEqual(1, encryptionScopes.Count);
             Assert.AreEqual("scope", encryptionScopes[0].Data.Name);
             Assert.AreEqual(EncryptionScopeState.Disabled, encryptionScopes[0].Data.State);

@@ -225,6 +225,8 @@ rename-mapping:
   StorageAccountInternetEndpoints.file: FileUri
   StorageAccountInternetEndpoints.web: WebUri
   StorageAccountInternetEndpoints.dfs: DfsUri
+  FailoverType: StorageAccountFailoverType
+  ListEncryptionScopesInclude: EncryptionScopesIncludeType
 
 directive:
   - from: swagger-document
