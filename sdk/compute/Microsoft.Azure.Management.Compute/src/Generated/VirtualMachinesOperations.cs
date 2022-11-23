@@ -1681,8 +1681,13 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Reimages the virtual machine which has an ephemeral OS disk back to its
-        /// initial state.
+        /// Reimages (upgrade the operating system) a virtual machine which don't have
+        /// a ephemeral OS disk, for virtual machines who have a ephemeral OS disk the
+        /// virtual machine is reset to initial state. NOTE: The retaining of old OS
+        /// disk depends on the value of deleteOption of OS disk. If deleteOption is
+        /// detach, the old OS disk will be preserved after reimage. If deleteOption is
+        /// delete, the old OS disk will be deleted after reimage. The deleteOption of
+        /// the OS disk should be updated accordingly before performing the reimage.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -1690,10 +1695,8 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmName'>
         /// The name of the virtual machine.
         /// </param>
-        /// <param name='tempDisk'>
-        /// Specifies whether to reimage temp disk. Default value: false. Note: This
-        /// temp disk reimage parameter is only supported for VM/VMSS with Ephemeral OS
-        /// disk.
+        /// <param name='parameters'>
+        /// Parameters supplied to the Reimage Virtual Machine operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -1701,10 +1704,10 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> ReimageWithHttpMessagesAsync(string resourceGroupName, string vmName, bool? tempDisk = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> ReimageWithHttpMessagesAsync(string resourceGroupName, string vmName, VirtualMachineReimageParameters parameters = default(VirtualMachineReimageParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse _response = await BeginReimageWithHttpMessagesAsync(resourceGroupName, vmName, tempDisk, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse _response = await BeginReimageWithHttpMessagesAsync(resourceGroupName, vmName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -4248,8 +4251,13 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Reimages the virtual machine which has an ephemeral OS disk back to its
-        /// initial state.
+        /// Reimages (upgrade the operating system) a virtual machine which don't have
+        /// a ephemeral OS disk, for virtual machines who have a ephemeral OS disk the
+        /// virtual machine is reset to initial state. NOTE: The retaining of old OS
+        /// disk depends on the value of deleteOption of OS disk. If deleteOption is
+        /// detach, the old OS disk will be preserved after reimage. If deleteOption is
+        /// delete, the old OS disk will be deleted after reimage. The deleteOption of
+        /// the OS disk should be updated accordingly before performing the reimage.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -4257,10 +4265,8 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmName'>
         /// The name of the virtual machine.
         /// </param>
-        /// <param name='tempDisk'>
-        /// Specifies whether to reimage temp disk. Default value: false. Note: This
-        /// temp disk reimage parameter is only supported for VM/VMSS with Ephemeral OS
-        /// disk.
+        /// <param name='parameters'>
+        /// Parameters supplied to the Reimage Virtual Machine operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -4280,7 +4286,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginReimageWithHttpMessagesAsync(string resourceGroupName, string vmName, bool? tempDisk = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginReimageWithHttpMessagesAsync(string resourceGroupName, string vmName, VirtualMachineReimageParameters parameters = default(VirtualMachineReimageParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -4295,12 +4301,6 @@ namespace Microsoft.Azure.Management.Compute
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             string apiVersion = "2022-11-01";
-            VirtualMachineReimageParameters parameters = default(VirtualMachineReimageParameters);
-            if (tempDisk != null)
-            {
-                parameters = new VirtualMachineReimageParameters();
-                parameters.TempDisk = tempDisk;
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -4310,8 +4310,8 @@ namespace Microsoft.Azure.Management.Compute
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("vmName", vmName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginReimage", tracingParameters);
             }

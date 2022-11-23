@@ -679,7 +679,7 @@ namespace Compute.Tests
                 },
                 StorageProfile = new GalleryImageVersionStorageProfile
                 {
-                    Source = new GalleryArtifactVersionSource
+                    Source = new GalleryArtifactVersionFullSource
                     {
                         Id = sourceImageId
                     }

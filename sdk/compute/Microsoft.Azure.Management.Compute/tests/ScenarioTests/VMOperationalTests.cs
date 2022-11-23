@@ -101,7 +101,11 @@ namespace Compute.Tests
                     string as2Name = as1Name + "_ephemeral";
                     CreateVM(rg1Name, as2Name, storageAccountName, imageRef, out ephemeralVM, hasManagedDisks: true, hasDiffDisks: true, vmSize: VirtualMachineSizeTypes.StandardDS5V2,
                         osDiskStorageAccountType: StorageAccountTypes.StandardLRS, dataDiskStorageAccountType: StorageAccountTypes.StandardLRS);
-                    m_CrpClient.VirtualMachines.Reimage(rg1Name, ephemeralVM.Name, tempDisk: true);
+                    VirtualMachineReimageParameters virtualMachineReimageParameters = new VirtualMachineReimageParameters()
+                    {
+                        TempDisk = true
+                    };
+                    m_CrpClient.VirtualMachines.Reimage(rg1Name, ephemeralVM.Name, virtualMachineReimageParameters);
                     var captureParams = new VirtualMachineCaptureParameters
                     {
                         DestinationContainerName = ComputeManagementTestUtilities.GenerateName(TestPrefix),
