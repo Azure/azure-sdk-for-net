@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             if (Optional.IsDefined(StartIPAddress))
             {
                 writer.WritePropertyName("startIpAddress");
-                writer.WriteStringValue(StartIPAddress);
+                writer.WriteStringValue(StartIPAddress.ToString());
             }
             if (Optional.IsDefined(EndIPAddress))
             {
                 writer.WritePropertyName("endIpAddress");
-                writer.WriteStringValue(EndIPAddress);
+                writer.WriteStringValue(EndIPAddress.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

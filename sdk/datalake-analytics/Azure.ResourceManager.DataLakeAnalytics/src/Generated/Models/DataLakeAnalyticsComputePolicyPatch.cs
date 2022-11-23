@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// The type of AAD object the object identifier refers to.
         /// Serialized Name: UpdateComputePolicyParameters.properties.objectType
         /// </summary>
-        public AADObjectType? ObjectType { get; set; }
+        public AadObjectIdentifierType? ObjectType { get; set; }
         /// <summary>
         /// The maximum degree of parallelism per job this user can use to submit jobs. This property, the min priority per job property, or both must be passed.
         /// Serialized Name: UpdateComputePolicyParameters.properties.maxDegreeOfParallelismPerJob

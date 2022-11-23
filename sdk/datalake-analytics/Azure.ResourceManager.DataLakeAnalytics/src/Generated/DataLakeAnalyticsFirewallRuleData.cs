@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// The end IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol.
         /// Serialized Name: FirewallRule.properties.endIpAddress
         /// </param>
-        internal DataLakeAnalyticsFirewallRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string startIPAddress, string endIPAddress) : base(id, name, resourceType, systemData)
+        internal DataLakeAnalyticsFirewallRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IPAddress startIPAddress, IPAddress endIPAddress) : base(id, name, resourceType, systemData)
         {
             StartIPAddress = startIPAddress;
             EndIPAddress = endIPAddress;
@@ -41,11 +42,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// The start IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol.
         /// Serialized Name: FirewallRule.properties.startIpAddress
         /// </summary>
-        public string StartIPAddress { get; }
+        public IPAddress StartIPAddress { get; }
         /// <summary>
         /// The end IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol.
         /// Serialized Name: FirewallRule.properties.endIpAddress
         /// </summary>
-        public string EndIPAddress { get; }
+        public IPAddress EndIPAddress { get; }
     }
 }

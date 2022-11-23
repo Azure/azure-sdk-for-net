@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             writer.WritePropertyName("startIpAddress");
-            writer.WriteStringValue(StartIPAddress);
+            writer.WriteStringValue(StartIPAddress.ToString());
             writer.WritePropertyName("endIpAddress");
-            writer.WriteStringValue(EndIPAddress);
+            writer.WriteStringValue(EndIPAddress.ToString());
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

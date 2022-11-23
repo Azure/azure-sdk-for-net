@@ -35,13 +35,13 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             Optional<IReadOnlyList<DataLakeStoreAccountInformationData>> publicDataLakeStoreAccounts = default;
             Optional<IReadOnlyList<DataLakeAnalyticsStorageAccountInformationData>> storageAccounts = default;
             Optional<IReadOnlyList<DataLakeAnalyticsComputePolicyData>> computePolicies = default;
-            Optional<IReadOnlyList<HiveMetastore>> hiveMetastores = default;
-            Optional<IReadOnlyList<VirtualNetworkRule>> virtualNetworkRules = default;
+            Optional<IReadOnlyList<DataLakeAnalyticsHiveMetastore>> hiveMetastores = default;
+            Optional<IReadOnlyList<DataLakeAnalyticsVirtualNetworkRule>> virtualNetworkRules = default;
             Optional<IReadOnlyList<DataLakeAnalyticsFirewallRuleData>> firewallRules = default;
-            Optional<FirewallState> firewallState = default;
-            Optional<FirewallAllowAzureIPsState> firewallAllowAzureIPs = default;
-            Optional<TierType> newTier = default;
-            Optional<TierType> currentTier = default;
+            Optional<DataLakeAnalyticsFirewallState> firewallState = default;
+            Optional<DataLakeAnalyticsFirewallAllowAzureIPsState> firewallAllowAzureIPs = default;
+            Optional<CommitmentTierType> newTier = default;
+            Optional<CommitmentTierType> currentTier = default;
             Optional<int> maxJobCount = default;
             Optional<int> maxActiveJobCountPerUser = default;
             Optional<int> maxQueuedJobCountPerUser = default;
@@ -241,10 +241,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<HiveMetastore> array = new List<HiveMetastore>();
+                            List<DataLakeAnalyticsHiveMetastore> array = new List<DataLakeAnalyticsHiveMetastore>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HiveMetastore.DeserializeHiveMetastore(item));
+                                array.Add(DataLakeAnalyticsHiveMetastore.DeserializeDataLakeAnalyticsHiveMetastore(item));
                             }
                             hiveMetastores = array;
                             continue;
@@ -256,10 +256,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<VirtualNetworkRule> array = new List<VirtualNetworkRule>();
+                            List<DataLakeAnalyticsVirtualNetworkRule> array = new List<DataLakeAnalyticsVirtualNetworkRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualNetworkRule.DeserializeVirtualNetworkRule(item));
+                                array.Add(DataLakeAnalyticsVirtualNetworkRule.DeserializeDataLakeAnalyticsVirtualNetworkRule(item));
                             }
                             virtualNetworkRules = array;
                             continue;
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            firewallState = property0.Value.GetString().ToFirewallState();
+                            firewallState = property0.Value.GetString().ToDataLakeAnalyticsFirewallState();
                             continue;
                         }
                         if (property0.NameEquals("firewallAllowAzureIps"))
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            firewallAllowAzureIPs = property0.Value.GetString().ToFirewallAllowAzureIPsState();
+                            firewallAllowAzureIPs = property0.Value.GetString().ToDataLakeAnalyticsFirewallAllowAzureIPsState();
                             continue;
                         }
                         if (property0.NameEquals("newTier"))
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            newTier = property0.Value.GetString().ToTierType();
+                            newTier = property0.Value.GetString().ToCommitmentTierType();
                             continue;
                         }
                         if (property0.NameEquals("currentTier"))
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            currentTier = property0.Value.GetString().ToTierType();
+                            currentTier = property0.Value.GetString().ToCommitmentTierType();
                             continue;
                         }
                         if (property0.NameEquals("maxJobCount"))

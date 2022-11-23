@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.properties.dataLakeStoreAccounts
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="defaultDataLakeStoreAccount"/> or <paramref name="dataLakeStoreAccounts"/> is null. </exception>
-        public DataLakeAnalyticsAccountCreateOrUpdateContent(AzureLocation location, string defaultDataLakeStoreAccount, IEnumerable<AddDataLakeStoreWithAccountParameters> dataLakeStoreAccounts)
+        public DataLakeAnalyticsAccountCreateOrUpdateContent(AzureLocation location, string defaultDataLakeStoreAccount, IEnumerable<DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdate> dataLakeStoreAccounts)
         {
             Argument.AssertNotNull(defaultDataLakeStoreAccount, nameof(defaultDataLakeStoreAccount));
             Argument.AssertNotNull(dataLakeStoreAccounts, nameof(dataLakeStoreAccounts));
@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             Tags = new ChangeTrackingDictionary<string, string>();
             DefaultDataLakeStoreAccount = defaultDataLakeStoreAccount;
             DataLakeStoreAccounts = dataLakeStoreAccounts.ToList();
-            StorageAccounts = new ChangeTrackingList<AddStorageAccountWithAccountParameters>();
-            ComputePolicies = new ChangeTrackingList<CreateComputePolicyWithAccountParameters>();
-            FirewallRules = new ChangeTrackingList<CreateFirewallRuleWithAccountParameters>();
+            StorageAccounts = new ChangeTrackingList<StorageAccountForDataLakeAnalyticsAccountCreateOrUpdate>();
+            ComputePolicies = new ChangeTrackingList<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdate>();
+            FirewallRules = new ChangeTrackingList<FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdate>();
         }
 
         /// <summary>
@@ -65,37 +65,37 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// The list of Data Lake Store accounts associated with this account.
         /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.properties.dataLakeStoreAccounts
         /// </summary>
-        public IList<AddDataLakeStoreWithAccountParameters> DataLakeStoreAccounts { get; }
+        public IList<DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdate> DataLakeStoreAccounts { get; }
         /// <summary>
         /// The list of Azure Blob Storage accounts associated with this account.
         /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.properties.storageAccounts
         /// </summary>
-        public IList<AddStorageAccountWithAccountParameters> StorageAccounts { get; }
+        public IList<StorageAccountForDataLakeAnalyticsAccountCreateOrUpdate> StorageAccounts { get; }
         /// <summary>
         /// The list of compute policies associated with this account.
         /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.properties.computePolicies
         /// </summary>
-        public IList<CreateComputePolicyWithAccountParameters> ComputePolicies { get; }
+        public IList<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdate> ComputePolicies { get; }
         /// <summary>
         /// The list of firewall rules associated with this account.
         /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.properties.firewallRules
         /// </summary>
-        public IList<CreateFirewallRuleWithAccountParameters> FirewallRules { get; }
+        public IList<FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdate> FirewallRules { get; }
         /// <summary>
         /// The current state of the IP address firewall for this account.
         /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.properties.firewallState
         /// </summary>
-        public FirewallState? FirewallState { get; set; }
+        public DataLakeAnalyticsFirewallState? FirewallState { get; set; }
         /// <summary>
         /// The current state of allowing or disallowing IPs originating within Azure through the firewall. If the firewall is disabled, this is not enforced.
         /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.properties.firewallAllowAzureIps
         /// </summary>
-        public FirewallAllowAzureIPsState? FirewallAllowAzureIPs { get; set; }
+        public DataLakeAnalyticsFirewallAllowAzureIPsState? FirewallAllowAzureIPs { get; set; }
         /// <summary>
         /// The commitment tier for the next month.
         /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.properties.newTier
         /// </summary>
-        public TierType? NewTier { get; set; }
+        public CommitmentTierType? NewTier { get; set; }
         /// <summary>
         /// The maximum supported jobs running under the account at the same time.
         /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.properties.maxJobCount

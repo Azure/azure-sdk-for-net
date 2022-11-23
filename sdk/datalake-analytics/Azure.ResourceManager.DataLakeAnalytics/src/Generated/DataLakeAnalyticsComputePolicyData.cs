@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// The minimum priority per job this user can use to submit jobs.
         /// Serialized Name: ComputePolicy.properties.minPriorityPerJob
         /// </param>
-        internal DataLakeAnalyticsComputePolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? objectId, AADObjectType? objectType, int? maxDegreeOfParallelismPerJob, int? minPriorityPerJob) : base(id, name, resourceType, systemData)
+        internal DataLakeAnalyticsComputePolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? objectId, AadObjectIdentifierType? objectType, int? maxDegreeOfParallelismPerJob, int? minPriorityPerJob) : base(id, name, resourceType, systemData)
         {
             ObjectId = objectId;
             ObjectType = objectType;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// The type of AAD object the object identifier refers to.
         /// Serialized Name: ComputePolicy.properties.objectType
         /// </summary>
-        public AADObjectType? ObjectType { get; }
+        public AadObjectIdentifierType? ObjectType { get; }
         /// <summary>
         /// The maximum degree of parallelism per job this user can use to submit jobs.
         /// Serialized Name: ComputePolicy.properties.maxDegreeOfParallelismPerJob

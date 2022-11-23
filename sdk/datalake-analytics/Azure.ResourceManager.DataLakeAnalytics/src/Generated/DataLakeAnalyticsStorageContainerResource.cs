@@ -141,10 +141,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// Operation Id: StorageAccounts_ListSasTokens
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SasTokenInformation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SasTokenInformation> GetSasTokensAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DataLakeAnalyticsSasTokenInformation" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DataLakeAnalyticsSasTokenInformation> GetSasTokensAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SasTokenInformation>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<DataLakeAnalyticsSasTokenInformation>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _dataLakeAnalyticsStorageContainerStorageAccountsClientDiagnostics.CreateScope("DataLakeAnalyticsStorageContainerResource.GetSasTokens");
                 scope.Start();
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                     throw;
                 }
             }
-            async Task<Page<SasTokenInformation>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<DataLakeAnalyticsSasTokenInformation>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _dataLakeAnalyticsStorageContainerStorageAccountsClientDiagnostics.CreateScope("DataLakeAnalyticsStorageContainerResource.GetSasTokens");
                 scope.Start();
@@ -183,10 +183,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// Operation Id: StorageAccounts_ListSasTokens
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SasTokenInformation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SasTokenInformation> GetSasTokens(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DataLakeAnalyticsSasTokenInformation" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DataLakeAnalyticsSasTokenInformation> GetSasTokens(CancellationToken cancellationToken = default)
         {
-            Page<SasTokenInformation> FirstPageFunc(int? pageSizeHint)
+            Page<DataLakeAnalyticsSasTokenInformation> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _dataLakeAnalyticsStorageContainerStorageAccountsClientDiagnostics.CreateScope("DataLakeAnalyticsStorageContainerResource.GetSasTokens");
                 scope.Start();
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                     throw;
                 }
             }
-            Page<SasTokenInformation> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<DataLakeAnalyticsSasTokenInformation> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _dataLakeAnalyticsStorageContainerStorageAccountsClientDiagnostics.CreateScope("DataLakeAnalyticsStorageContainerResource.GetSasTokens");
                 scope.Start();

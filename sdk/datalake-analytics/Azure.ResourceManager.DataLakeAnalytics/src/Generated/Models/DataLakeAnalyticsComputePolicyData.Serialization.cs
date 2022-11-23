@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<Guid> objectId = default;
-            Optional<AADObjectType> objectType = default;
+            Optional<AadObjectIdentifierType> objectType = default;
             Optional<int> maxDegreeOfParallelismPerJob = default;
             Optional<int> minPriorityPerJob = default;
             foreach (var property in element.EnumerateObject())
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            objectType = new AADObjectType(property0.Value.GetString());
+                            objectType = new AadObjectIdentifierType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("maxDegreeOfParallelismPerJob"))

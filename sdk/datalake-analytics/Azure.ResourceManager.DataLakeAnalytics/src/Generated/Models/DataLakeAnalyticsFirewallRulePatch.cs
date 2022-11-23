@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Net;
+
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
     /// <summary>
@@ -22,11 +24,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// The start IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol.
         /// Serialized Name: UpdateFirewallRuleParameters.properties.startIpAddress
         /// </summary>
-        public string StartIPAddress { get; set; }
+        public IPAddress StartIPAddress { get; set; }
         /// <summary>
         /// The end IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol.
         /// Serialized Name: UpdateFirewallRuleParameters.properties.endIpAddress
         /// </summary>
-        public string EndIPAddress { get; set; }
+        public IPAddress EndIPAddress { get; set; }
     }
 }

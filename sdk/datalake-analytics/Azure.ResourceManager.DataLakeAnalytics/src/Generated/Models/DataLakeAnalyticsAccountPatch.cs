@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         public DataLakeAnalyticsAccountPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            DataLakeStoreAccounts = new ChangeTrackingList<UpdateDataLakeStoreWithAccountParameters>();
-            StorageAccounts = new ChangeTrackingList<UpdateStorageAccountWithAccountParameters>();
-            ComputePolicies = new ChangeTrackingList<UpdateComputePolicyWithAccountParameters>();
-            FirewallRules = new ChangeTrackingList<UpdateFirewallRuleWithAccountParameters>();
+            DataLakeStoreAccounts = new ChangeTrackingList<DataLakeStoreForDataLakeAnalyticsAccountUpdate>();
+            StorageAccounts = new ChangeTrackingList<StorageAccountForDataLakeAnalyticsAccountUpdate>();
+            ComputePolicies = new ChangeTrackingList<ComputePolicyForDataLakeAnalyticsAccountUpdate>();
+            FirewallRules = new ChangeTrackingList<FirewallRuleForDataLakeAnalyticsAccountUpdate>();
         }
 
         /// <summary>
@@ -35,37 +35,37 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// The list of Data Lake Store accounts associated with this account.
         /// Serialized Name: UpdateDataLakeAnalyticsAccountParameters.properties.dataLakeStoreAccounts
         /// </summary>
-        public IList<UpdateDataLakeStoreWithAccountParameters> DataLakeStoreAccounts { get; }
+        public IList<DataLakeStoreForDataLakeAnalyticsAccountUpdate> DataLakeStoreAccounts { get; }
         /// <summary>
         /// The list of Azure Blob storage accounts associated with this account.
         /// Serialized Name: UpdateDataLakeAnalyticsAccountParameters.properties.storageAccounts
         /// </summary>
-        public IList<UpdateStorageAccountWithAccountParameters> StorageAccounts { get; }
+        public IList<StorageAccountForDataLakeAnalyticsAccountUpdate> StorageAccounts { get; }
         /// <summary>
         /// The list of compute policies associated with this account.
         /// Serialized Name: UpdateDataLakeAnalyticsAccountParameters.properties.computePolicies
         /// </summary>
-        public IList<UpdateComputePolicyWithAccountParameters> ComputePolicies { get; }
+        public IList<ComputePolicyForDataLakeAnalyticsAccountUpdate> ComputePolicies { get; }
         /// <summary>
         /// The list of firewall rules associated with this account.
         /// Serialized Name: UpdateDataLakeAnalyticsAccountParameters.properties.firewallRules
         /// </summary>
-        public IList<UpdateFirewallRuleWithAccountParameters> FirewallRules { get; }
+        public IList<FirewallRuleForDataLakeAnalyticsAccountUpdate> FirewallRules { get; }
         /// <summary>
         /// The current state of the IP address firewall for this account. Disabling the firewall does not remove existing rules, they will just be ignored until the firewall is re-enabled.
         /// Serialized Name: UpdateDataLakeAnalyticsAccountParameters.properties.firewallState
         /// </summary>
-        public FirewallState? FirewallState { get; set; }
+        public DataLakeAnalyticsFirewallState? FirewallState { get; set; }
         /// <summary>
         /// The current state of allowing or disallowing IPs originating within Azure through the firewall. If the firewall is disabled, this is not enforced.
         /// Serialized Name: UpdateDataLakeAnalyticsAccountParameters.properties.firewallAllowAzureIps
         /// </summary>
-        public FirewallAllowAzureIPsState? FirewallAllowAzureIPs { get; set; }
+        public DataLakeAnalyticsFirewallAllowAzureIPsState? FirewallAllowAzureIPs { get; set; }
         /// <summary>
         /// The commitment tier to use for next month.
         /// Serialized Name: UpdateDataLakeAnalyticsAccountParameters.properties.newTier
         /// </summary>
-        public TierType? NewTier { get; set; }
+        public CommitmentTierType? NewTier { get; set; }
         /// <summary>
         /// The maximum supported jobs running under the account at the same time.
         /// Serialized Name: UpdateDataLakeAnalyticsAccountParameters.properties.maxJobCount

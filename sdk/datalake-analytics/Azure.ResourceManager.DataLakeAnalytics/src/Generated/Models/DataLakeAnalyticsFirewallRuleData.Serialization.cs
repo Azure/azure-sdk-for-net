@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -19,8 +20,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> startIPAddress = default;
-            Optional<string> endIPAddress = default;
+            Optional<IPAddress> startIPAddress = default;
+            Optional<IPAddress> endIPAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -59,12 +60,22 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                     {
                         if (property0.NameEquals("startIpAddress"))
                         {
-                            startIPAddress = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            startIPAddress = IPAddress.Parse(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("endIpAddress"))
                         {
-                            endIPAddress = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            endIPAddress = IPAddress.Parse(property0.Value.GetString());
                             continue;
                         }
                     }

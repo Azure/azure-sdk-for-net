@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             PublicDataLakeStoreAccounts = new ChangeTrackingList<DataLakeStoreAccountInformationData>();
             StorageAccounts = new ChangeTrackingList<DataLakeAnalyticsStorageAccountInformationData>();
             ComputePolicies = new ChangeTrackingList<DataLakeAnalyticsComputePolicyData>();
-            HiveMetastores = new ChangeTrackingList<HiveMetastore>();
-            VirtualNetworkRules = new ChangeTrackingList<VirtualNetworkRule>();
+            HiveMetastores = new ChangeTrackingList<DataLakeAnalyticsHiveMetastore>();
+            VirtualNetworkRules = new ChangeTrackingList<DataLakeAnalyticsVirtualNetworkRule>();
             FirewallRules = new ChangeTrackingList<DataLakeAnalyticsFirewallRuleData>();
             Tags = new ChangeTrackingDictionary<string, string>();
         }
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// The resource tags.
         /// Serialized Name: Resource.tags
         /// </param>
-        internal DataLakeAnalyticsAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? accountId, DataLakeAnalyticsAccountStatus? provisioningState, DataLakeAnalyticsAccountState? state, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string endpoint, string defaultDataLakeStoreAccount, IReadOnlyList<DataLakeStoreAccountInformationData> dataLakeStoreAccounts, IReadOnlyList<DataLakeStoreAccountInformationData> publicDataLakeStoreAccounts, IReadOnlyList<DataLakeAnalyticsStorageAccountInformationData> storageAccounts, IReadOnlyList<DataLakeAnalyticsComputePolicyData> computePolicies, IReadOnlyList<HiveMetastore> hiveMetastores, IReadOnlyList<VirtualNetworkRule> virtualNetworkRules, IReadOnlyList<DataLakeAnalyticsFirewallRuleData> firewallRules, FirewallState? firewallState, FirewallAllowAzureIPsState? firewallAllowAzureIPs, TierType? newTier, TierType? currentTier, int? maxJobCount, int? maxActiveJobCountPerUser, int? maxQueuedJobCountPerUser, int? maxJobRunningTimeInMin, int? systemMaxJobCount, int? maxDegreeOfParallelism, int? systemMaxDegreeOfParallelism, int? maxDegreeOfParallelismPerJob, int? minPriorityPerJob, int? queryStoreRetention, DebugDataAccessLevel? debugDataAccessLevel, AzureLocation? location, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        internal DataLakeAnalyticsAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? accountId, DataLakeAnalyticsAccountStatus? provisioningState, DataLakeAnalyticsAccountState? state, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string endpoint, string defaultDataLakeStoreAccount, IReadOnlyList<DataLakeStoreAccountInformationData> dataLakeStoreAccounts, IReadOnlyList<DataLakeStoreAccountInformationData> publicDataLakeStoreAccounts, IReadOnlyList<DataLakeAnalyticsStorageAccountInformationData> storageAccounts, IReadOnlyList<DataLakeAnalyticsComputePolicyData> computePolicies, IReadOnlyList<DataLakeAnalyticsHiveMetastore> hiveMetastores, IReadOnlyList<DataLakeAnalyticsVirtualNetworkRule> virtualNetworkRules, IReadOnlyList<DataLakeAnalyticsFirewallRuleData> firewallRules, DataLakeAnalyticsFirewallState? firewallState, DataLakeAnalyticsFirewallAllowAzureIPsState? firewallAllowAzureIPs, CommitmentTierType? newTier, CommitmentTierType? currentTier, int? maxJobCount, int? maxActiveJobCountPerUser, int? maxQueuedJobCountPerUser, int? maxJobRunningTimeInMin, int? systemMaxJobCount, int? maxDegreeOfParallelism, int? systemMaxDegreeOfParallelism, int? maxDegreeOfParallelismPerJob, int? minPriorityPerJob, int? queryStoreRetention, DebugDataAccessLevel? debugDataAccessLevel, AzureLocation? location, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             AccountId = accountId;
             ProvisioningState = provisioningState;
@@ -252,12 +252,12 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// The list of hiveMetastores associated with this account.
         /// Serialized Name: DataLakeAnalyticsAccount.properties.hiveMetastores
         /// </summary>
-        public IReadOnlyList<HiveMetastore> HiveMetastores { get; }
+        public IReadOnlyList<DataLakeAnalyticsHiveMetastore> HiveMetastores { get; }
         /// <summary>
         /// The list of virtualNetwork rules associated with this account.
         /// Serialized Name: DataLakeAnalyticsAccount.properties.virtualNetworkRules
         /// </summary>
-        public IReadOnlyList<VirtualNetworkRule> VirtualNetworkRules { get; }
+        public IReadOnlyList<DataLakeAnalyticsVirtualNetworkRule> VirtualNetworkRules { get; }
         /// <summary>
         /// The list of firewall rules associated with this account.
         /// Serialized Name: DataLakeAnalyticsAccount.properties.firewallRules
@@ -267,22 +267,22 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// The current state of the IP address firewall for this account.
         /// Serialized Name: DataLakeAnalyticsAccount.properties.firewallState
         /// </summary>
-        public FirewallState? FirewallState { get; }
+        public DataLakeAnalyticsFirewallState? FirewallState { get; }
         /// <summary>
         /// The current state of allowing or disallowing IPs originating within Azure through the firewall. If the firewall is disabled, this is not enforced.
         /// Serialized Name: DataLakeAnalyticsAccount.properties.firewallAllowAzureIps
         /// </summary>
-        public FirewallAllowAzureIPsState? FirewallAllowAzureIPs { get; }
+        public DataLakeAnalyticsFirewallAllowAzureIPsState? FirewallAllowAzureIPs { get; }
         /// <summary>
         /// The commitment tier for the next month.
         /// Serialized Name: DataLakeAnalyticsAccount.properties.newTier
         /// </summary>
-        public TierType? NewTier { get; }
+        public CommitmentTierType? NewTier { get; }
         /// <summary>
         /// The commitment tier in use for the current month.
         /// Serialized Name: DataLakeAnalyticsAccount.properties.currentTier
         /// </summary>
-        public TierType? CurrentTier { get; }
+        public CommitmentTierType? CurrentTier { get; }
         /// <summary>
         /// The maximum supported jobs running under the account at the same time.
         /// Serialized Name: DataLakeAnalyticsAccount.properties.maxJobCount
