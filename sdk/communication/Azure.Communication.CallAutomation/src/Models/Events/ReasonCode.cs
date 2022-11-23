@@ -20,7 +20,6 @@ namespace Azure.Communication.CallAutomation
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string RecognizeOperationcanceledValue = "8508";
         private const string RecognizeInitialSilenceTimedOutValue = "8510";
         private const string RecognizeInterDigitTimedOutValue = "8532";
 
@@ -40,8 +39,6 @@ namespace Azure.Communication.CallAutomation
         private const string CompletedSuccessfullyValue = "0";
         private const string UnspecifiedErrorValue = "9999";
 
-        /// <summary> Action failed, recognize operation cancelled. </summary>
-        private static ReasonCode RecognizeOperationcanceled { get; } = new ReasonCode(RecognizeOperationcanceledValue);
         /// <summary> Action failed, initial silence timeout reached. </summary>
         public static ReasonCode RecognizeInitialSilenceTimedOut { get; } = new ReasonCode(RecognizeInitialSilenceTimedOutValue);
         /// <summary> Action failed, inter-digit silence timeout reached. </summary>
