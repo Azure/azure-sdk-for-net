@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Argument.AssertNotNull(uri, nameof(uri));
 
             Uri = uri;
-            JobInputType = JobInputType.MLFlowModel;
+            JobInputType = JobInputType.MlflowModel;
         }
 
         /// <summary> Initializes a new instance of MLFlowModelJobInput. </summary>

@@ -88,9 +88,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "MLTable": return MLTableData.DeserializeMLTableData(element);
-                    case "UriFile": return UriFileDataVersion.DeserializeUriFileDataVersion(element);
-                    case "UriFolder": return UriFolderDataVersion.DeserializeUriFolderDataVersion(element);
+                    case "mltable": return MLTableData.DeserializeMLTableData(element);
+                    case "uri_file": return UriFileDataVersion.DeserializeUriFileDataVersion(element);
+                    case "uri_folder": return UriFolderDataVersion.DeserializeUriFolderDataVersion(element);
                 }
             }
             DataType dataType = default;
