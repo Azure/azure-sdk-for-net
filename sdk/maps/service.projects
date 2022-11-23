@@ -18,11 +18,11 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(SDKType)' == 'client'">
-    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Developer.LoadTesting\**\*.csproj" />
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Maps.*\**\*.csproj" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(SDKType)' == 'mgmtclient'">
-    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.ResourceManager.LoadTesting\**\*.csproj" />
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.ResourceManager.Maps\**\*.csproj" />
   </ItemGroup>
 
 </Project>
