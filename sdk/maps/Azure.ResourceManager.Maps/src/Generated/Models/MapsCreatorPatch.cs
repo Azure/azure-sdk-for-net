@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.Maps.Models
 {
     /// <summary> Parameters used to update an existing Creator resource. </summary>
-    public partial class CreatorPatch
+    public partial class MapsCreatorPatch
     {
-        /// <summary> Initializes a new instance of CreatorPatch. </summary>
-        public CreatorPatch()
+        /// <summary> Initializes a new instance of MapsCreatorPatch. </summary>
+        public MapsCreatorPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }

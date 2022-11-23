@@ -8,19 +8,19 @@
 namespace Azure.ResourceManager.Maps.Models
 {
     /// <summary> Creator resource properties. </summary>
-    public partial class CreatorProperties
+    public partial class MapsCreatorProperties
     {
-        /// <summary> Initializes a new instance of CreatorProperties. </summary>
+        /// <summary> Initializes a new instance of MapsCreatorProperties. </summary>
         /// <param name="storageUnits"> The storage units to be allocated. Integer values from 1 to 100, inclusive. </param>
-        public CreatorProperties(int storageUnits)
+        public MapsCreatorProperties(int storageUnits)
         {
             StorageUnits = storageUnits;
         }
 
-        /// <summary> Initializes a new instance of CreatorProperties. </summary>
+        /// <summary> Initializes a new instance of MapsCreatorProperties. </summary>
         /// <param name="provisioningState"> The state of the resource provisioning, terminal states: Succeeded, Failed, Canceled. </param>
         /// <param name="storageUnits"> The storage units to be allocated. Integer values from 1 to 100, inclusive. </param>
-        internal CreatorProperties(string provisioningState, int storageUnits)
+        internal MapsCreatorProperties(string provisioningState, int storageUnits)
         {
             ProvisioningState = provisioningState;
             StorageUnits = storageUnits;

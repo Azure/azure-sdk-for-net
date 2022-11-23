@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Maps
 {
-    public partial class CreatorData : IUtf8JsonSerializable
+    public partial class MapsCreatorData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Maps
             writer.WriteEndObject();
         }
 
-        internal static CreatorData DeserializeCreatorData(JsonElement element)
+        internal static MapsCreatorData DeserializeMapsCreatorData(JsonElement element)
         {
-            CreatorProperties properties = default;
+            MapsCreatorProperties properties = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Maps
             {
                 if (property.NameEquals("properties"))
                 {
-                    properties = CreatorProperties.DeserializeCreatorProperties(property.Value);
+                    properties = MapsCreatorProperties.DeserializeMapsCreatorProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Maps
                     continue;
                 }
             }
-            return new CreatorData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties);
+            return new MapsCreatorData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties);
         }
     }
 }
