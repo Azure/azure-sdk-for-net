@@ -13,13 +13,13 @@ namespace Azure.AI.AnomalyDetector
     /// <summary> Client options for AnomalyDetectorClient. </summary>
     public partial class AnomalyDetectorClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2015_06_18;
+        private const ServiceVersion LatestVersion = ServiceVersion.V1_1;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> Service version "2015-06-18". </summary>
-            V2015_06_18 = 1,
+            /// <summary> Service version "v1.1". </summary>
+            V1_1 = 1,
         }
 
         internal string Version { get; }
@@ -29,7 +29,7 @@ namespace Azure.AI.AnomalyDetector
         {
             Version = version switch
             {
-                ServiceVersion.V2015_06_18 => "2015-06-18",
+                ServiceVersion.V1_1 => "v1.1",
                 _ => throw new NotSupportedException()
             };
         }

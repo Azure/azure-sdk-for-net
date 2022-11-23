@@ -1,9 +1,0 @@
-{
-  "OutputFolder": ".",
-  "Namespace": "Azure.AI.AnomalyDetector",
-  "LibraryName": null,
-  "SharedSourceFolders": [
-    "../../../../../pshao25.csharp/artifacts/bin/AutoRest.CSharp/Debug/netcoreapp3.1/Generator.Shared",
-    "../../../../../pshao25.csharp/artifacts/bin/AutoRest.CSharp/Debug/netcoreapp3.1/Azure.Core.Shared"
-  ]
-}

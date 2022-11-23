@@ -43,9 +43,11 @@ namespace Azure.AI.AnomalyDetector
         /// Supported Cognitive Services endpoints (protocol and hostname, for example:
         /// https://westus2.api.cognitive.microsoft.com).
         /// </param>
+        /// <param name="apiVersion"> Api Version. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public AnomalyDetectorClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, "2015-06-18", new AnomalyDetectorClientOptions())
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="apiVersion"/> or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        public AnomalyDetectorClient(Uri endpoint, string apiVersion, AzureKeyCredential credential) : this(endpoint, apiVersion, credential, new AnomalyDetectorClientOptions())
         {
         }
 
@@ -54,16 +56,16 @@ namespace Azure.AI.AnomalyDetector
         /// Supported Cognitive Services endpoints (protocol and hostname, for example:
         /// https://westus2.api.cognitive.microsoft.com).
         /// </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="credential"/> or <paramref name="apiVersion"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="apiVersion"/> or <paramref name="credential"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="apiVersion"/> is an empty string, and was expected to be non-empty. </exception>
-        public AnomalyDetectorClient(Uri endpoint, AzureKeyCredential credential, string apiVersion, AnomalyDetectorClientOptions options)
+        public AnomalyDetectorClient(Uri endpoint, string apiVersion, AzureKeyCredential credential, AnomalyDetectorClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNullOrEmpty(apiVersion, nameof(apiVersion));
+            Argument.AssertNotNull(credential, nameof(credential));
             options ??= new AnomalyDetectorClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
