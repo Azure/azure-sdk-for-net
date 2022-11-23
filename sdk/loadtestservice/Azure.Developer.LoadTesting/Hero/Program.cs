@@ -15,12 +15,12 @@ namespace Hero
             // creating TokenCredential
             // Environment.GetEnvironmentVariable
             TokenCredentialOptions tokenCredentialOptions = new TokenCredentialOptions();
-            tokenCredentialOptions.AuthorityHost = new Uri("https://loadtest.azure-dev.com/.default");
+            tokenCredentialOptions.AuthorityHost = new Uri("https://login.windows-ppe.net");
             
             TokenCredential credential = new ClientSecretCredential(
-                    tenantId: "69e1ae8e-b48a-4e2d-afad-8afb6da8670d",
-                    clientId: "d3e827a5-d11e-4325-9ed0-30b1936f3991",
-                    clientSecret: "MzI8Q~yNBsctuJbm9bs_3NYroR9ow8Ke7ncRwbSq",
+                    tenantId: Environment.GetEnvironmentVariable("AZURE_TENANT_ID"),
+                    clientId: Environment.GetEnvironmentVariable("AZURE_CLIENT_ID"),
+                    clientSecret: Environment.GetEnvironmentVariable("AZURE_CLIENT_SECRET"),
                     options: tokenCredentialOptions
                 );
 
@@ -41,8 +41,8 @@ namespace Hero
             string testId = "my-dotnet-test-id";
             string testRunId = "my-dotnet-test-run-id";
             string fileName = "my-dotnet-file-name.jmx";
-            //string subscriptionId = Environment.GetEnvironmentVariable("SUBSCRIPTION_ID");
-            //string appComponentConnectionString = "/subscriptions/" + subscriptionId + "/resourceGroups/App-Service-Sample-Demo-rg/providers/Microsoft.Web/sites/App-Service-Sample-Demo";
+            string subscriptionId = Environment.GetEnvironmentVariable("SUBSCRIPTION_ID");
+            string appComponentConnectionString = "/subscriptions/" + subscriptionId + "/resourceGroups/App-Service-Sample-Demo-rg/providers/Microsoft.Web/sites/App-Service-Sample-Demo";
 
             // create loadtest
             try
@@ -109,29 +109,29 @@ namespace Hero
             }
 
 
-            //// connecting app component
-            //try
-            //{
-            //    var data = new
-            //    {
-            //        testid = testId,
-            //        name = "New App Component",
-            //        value = new
-            //        {
-            //            appComponentConnectionString = new
-            //            {
-            //                resourceId = appComponentConnectionString,
-            //                resourceName = "App-Service-Sample-Demo",
-            //                resourceType = "Microsoft.Web/sites",
-            //                subscriptionId = subscriptionId
-            //            }
-            //        }
-            //    };
-            //}
-            //catch(Exception e)
-            //{
-            //    Console.WriteLine(String.Format("Error : ", e.Message));
-            //}
+            // connecting app component
+            try
+            {
+                var data = new
+                {
+                    testid = testId,
+                    name = "New App Component",
+                    value = new
+                    {
+                        appComponentConnectionString = new
+                        {
+                            resourceId = appComponentConnectionString,
+                            resourceName = "App-Service-Sample-Demo",
+                            resourceType = "Microsoft.Web/sites",
+                            subscriptionId = subscriptionId
+                        }
+                    }
+                };
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(String.Format("Error : ", e.Message));
+            }
 
 
             // running test
