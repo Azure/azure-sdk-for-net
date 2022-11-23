@@ -18,46 +18,46 @@ using Azure.ResourceManager.DataLakeAnalytics.Models;
 namespace Azure.ResourceManager.DataLakeAnalytics
 {
     /// <summary>
-    /// A Class representing a StorageAccountInformation along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StorageAccountInformationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetStorageAccountInformationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataLakeAnalyticsAccountResource" /> using the GetStorageAccountInformation method.
+    /// A Class representing a DataLakeAnalyticsStorageAccountInformation along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataLakeAnalyticsStorageAccountInformationResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetDataLakeAnalyticsStorageAccountInformationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataLakeAnalyticsAccountResource" /> using the GetDataLakeAnalyticsStorageAccountInformation method.
     /// </summary>
-    public partial class StorageAccountInformationResource : ArmResource
+    public partial class DataLakeAnalyticsStorageAccountInformationResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="StorageAccountInformationResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="DataLakeAnalyticsStorageAccountInformationResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/storageAccounts/{storageAccountName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _storageAccountInformationStorageAccountsClientDiagnostics;
-        private readonly StorageAccountsRestOperations _storageAccountInformationStorageAccountsRestClient;
-        private readonly StorageAccountInformationData _data;
+        private readonly ClientDiagnostics _dataLakeAnalyticsStorageAccountInformationStorageAccountsClientDiagnostics;
+        private readonly StorageAccountsRestOperations _dataLakeAnalyticsStorageAccountInformationStorageAccountsRestClient;
+        private readonly DataLakeAnalyticsStorageAccountInformationData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="StorageAccountInformationResource"/> class for mocking. </summary>
-        protected StorageAccountInformationResource()
+        /// <summary> Initializes a new instance of the <see cref="DataLakeAnalyticsStorageAccountInformationResource"/> class for mocking. </summary>
+        protected DataLakeAnalyticsStorageAccountInformationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "StorageAccountInformationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "DataLakeAnalyticsStorageAccountInformationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal StorageAccountInformationResource(ArmClient client, StorageAccountInformationData data) : this(client, data.Id)
+        internal DataLakeAnalyticsStorageAccountInformationResource(ArmClient client, DataLakeAnalyticsStorageAccountInformationData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="StorageAccountInformationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataLakeAnalyticsStorageAccountInformationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal StorageAccountInformationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DataLakeAnalyticsStorageAccountInformationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _storageAccountInformationStorageAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataLakeAnalytics", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string storageAccountInformationStorageAccountsApiVersion);
-            _storageAccountInformationStorageAccountsRestClient = new StorageAccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, storageAccountInformationStorageAccountsApiVersion);
+            _dataLakeAnalyticsStorageAccountInformationStorageAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataLakeAnalytics", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string dataLakeAnalyticsStorageAccountInformationStorageAccountsApiVersion);
+            _dataLakeAnalyticsStorageAccountInformationStorageAccountsRestClient = new StorageAccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataLakeAnalyticsStorageAccountInformationStorageAccountsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual StorageAccountInformationData Data
+        public virtual DataLakeAnalyticsStorageAccountInformationData Data
         {
             get
             {
@@ -87,11 +87,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of StorageContainerResources in the StorageAccountInformation. </summary>
-        /// <returns> An object representing collection of StorageContainerResources and their operations over a StorageContainerResource. </returns>
-        public virtual StorageContainerCollection GetStorageContainers()
+        /// <summary> Gets a collection of DataLakeAnalyticsStorageContainerResources in the DataLakeAnalyticsStorageAccountInformation. </summary>
+        /// <returns> An object representing collection of DataLakeAnalyticsStorageContainerResources and their operations over a DataLakeAnalyticsStorageContainerResource. </returns>
+        public virtual DataLakeAnalyticsStorageContainerCollection GetDataLakeAnalyticsStorageContainers()
         {
-            return GetCachedClient(Client => new StorageContainerCollection(Client, Id));
+            return GetCachedClient(Client => new DataLakeAnalyticsStorageContainerCollection(Client, Id));
         }
 
         /// <summary>
@@ -104,9 +104,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<StorageContainerResource>> GetStorageContainerAsync(string containerName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataLakeAnalyticsStorageContainerResource>> GetDataLakeAnalyticsStorageContainerAsync(string containerName, CancellationToken cancellationToken = default)
         {
-            return await GetStorageContainers().GetAsync(containerName, cancellationToken).ConfigureAwait(false);
+            return await GetDataLakeAnalyticsStorageContainers().GetAsync(containerName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -119,9 +119,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<StorageContainerResource> GetStorageContainer(string containerName, CancellationToken cancellationToken = default)
+        public virtual Response<DataLakeAnalyticsStorageContainerResource> GetDataLakeAnalyticsStorageContainer(string containerName, CancellationToken cancellationToken = default)
         {
-            return GetStorageContainers().Get(containerName, cancellationToken);
+            return GetDataLakeAnalyticsStorageContainers().Get(containerName, cancellationToken);
         }
 
         /// <summary>
@@ -130,16 +130,16 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// Operation Id: StorageAccounts_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<StorageAccountInformationResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataLakeAnalyticsStorageAccountInformationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _storageAccountInformationStorageAccountsClientDiagnostics.CreateScope("StorageAccountInformationResource.Get");
+            using var scope = _dataLakeAnalyticsStorageAccountInformationStorageAccountsClientDiagnostics.CreateScope("DataLakeAnalyticsStorageAccountInformationResource.Get");
             scope.Start();
             try
             {
-                var response = await _storageAccountInformationStorageAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _dataLakeAnalyticsStorageAccountInformationStorageAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new StorageAccountInformationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataLakeAnalyticsStorageAccountInformationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -154,16 +154,16 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// Operation Id: StorageAccounts_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<StorageAccountInformationResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<DataLakeAnalyticsStorageAccountInformationResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _storageAccountInformationStorageAccountsClientDiagnostics.CreateScope("StorageAccountInformationResource.Get");
+            using var scope = _dataLakeAnalyticsStorageAccountInformationStorageAccountsClientDiagnostics.CreateScope("DataLakeAnalyticsStorageAccountInformationResource.Get");
             scope.Start();
             try
             {
-                var response = _storageAccountInformationStorageAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _dataLakeAnalyticsStorageAccountInformationStorageAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new StorageAccountInformationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataLakeAnalyticsStorageAccountInformationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -181,11 +181,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _storageAccountInformationStorageAccountsClientDiagnostics.CreateScope("StorageAccountInformationResource.Delete");
+            using var scope = _dataLakeAnalyticsStorageAccountInformationStorageAccountsClientDiagnostics.CreateScope("DataLakeAnalyticsStorageAccountInformationResource.Delete");
             scope.Start();
             try
             {
-                var response = await _storageAccountInformationStorageAccountsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _dataLakeAnalyticsStorageAccountInformationStorageAccountsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new DataLakeAnalyticsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -207,11 +207,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _storageAccountInformationStorageAccountsClientDiagnostics.CreateScope("StorageAccountInformationResource.Delete");
+            using var scope = _dataLakeAnalyticsStorageAccountInformationStorageAccountsClientDiagnostics.CreateScope("DataLakeAnalyticsStorageAccountInformationResource.Delete");
             scope.Start();
             try
             {
-                var response = _storageAccountInformationStorageAccountsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _dataLakeAnalyticsStorageAccountInformationStorageAccountsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new DataLakeAnalyticsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -232,15 +232,15 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="patch"> The parameters containing the access key and suffix to update the storage account with, if any. Passing nothing results in no change. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response> UpdateAsync(StorageAccountInformationPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UpdateAsync(DataLakeAnalyticsStorageAccountInformationPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _storageAccountInformationStorageAccountsClientDiagnostics.CreateScope("StorageAccountInformationResource.Update");
+            using var scope = _dataLakeAnalyticsStorageAccountInformationStorageAccountsClientDiagnostics.CreateScope("DataLakeAnalyticsStorageAccountInformationResource.Update");
             scope.Start();
             try
             {
-                var response = await _storageAccountInformationStorageAccountsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var response = await _dataLakeAnalyticsStorageAccountInformationStorageAccountsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -258,15 +258,15 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="patch"> The parameters containing the access key and suffix to update the storage account with, if any. Passing nothing results in no change. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response Update(StorageAccountInformationPatch patch, CancellationToken cancellationToken = default)
+        public virtual Response Update(DataLakeAnalyticsStorageAccountInformationPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _storageAccountInformationStorageAccountsClientDiagnostics.CreateScope("StorageAccountInformationResource.Update");
+            using var scope = _dataLakeAnalyticsStorageAccountInformationStorageAccountsClientDiagnostics.CreateScope("DataLakeAnalyticsStorageAccountInformationResource.Update");
             scope.Start();
             try
             {
-                var response = _storageAccountInformationStorageAccountsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                var response = _dataLakeAnalyticsStorageAccountInformationStorageAccountsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
                 return response;
             }
             catch (Exception e)

@@ -7,14 +7,26 @@
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
-    /// <summary> The current state of the VirtualNetworkRule for this account. </summary>
+    /// <summary>
+    /// The current state of the VirtualNetworkRule for this account.
+    /// Serialized Name: VirtualNetworkRuleState
+    /// </summary>
     public enum VirtualNetworkRuleState
     {
-        /// <summary> Active. </summary>
+        /// <summary>
+        /// Active
+        /// Serialized Name: VirtualNetworkRuleState.Active
+        /// </summary>
         Active,
-        /// <summary> NetworkSourceDeleted. </summary>
+        /// <summary>
+        /// NetworkSourceDeleted
+        /// Serialized Name: VirtualNetworkRuleState.NetworkSourceDeleted
+        /// </summary>
         NetworkSourceDeleted,
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: VirtualNetworkRuleState.Failed
+        /// </summary>
         Failed
     }
 }

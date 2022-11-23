@@ -10,11 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
-    /// <summary> The parameters used to update a Data Lake Store account while updating a Data Lake Analytics account. </summary>
+    /// <summary>
+    /// The parameters used to update a Data Lake Store account while updating a Data Lake Analytics account.
+    /// Serialized Name: UpdateDataLakeStoreWithAccountParameters
+    /// </summary>
     public partial class UpdateDataLakeStoreWithAccountParameters
     {
         /// <summary> Initializes a new instance of UpdateDataLakeStoreWithAccountParameters. </summary>
-        /// <param name="name"> The unique name of the Data Lake Store account to update. </param>
+        /// <param name="name">
+        /// The unique name of the Data Lake Store account to update.
+        /// Serialized Name: UpdateDataLakeStoreWithAccountParameters.name
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public UpdateDataLakeStoreWithAccountParameters(string name)
         {
@@ -23,9 +29,15 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             Name = name;
         }
 
-        /// <summary> The unique name of the Data Lake Store account to update. </summary>
+        /// <summary>
+        /// The unique name of the Data Lake Store account to update.
+        /// Serialized Name: UpdateDataLakeStoreWithAccountParameters.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The optional suffix for the Data Lake Store account. </summary>
+        /// <summary>
+        /// The optional suffix for the Data Lake Store account.
+        /// Serialized Name: UpdateDataLakeStoreWithAccountParameters.properties.suffix
+        /// </summary>
         public string Suffix { get; set; }
     }
 }

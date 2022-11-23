@@ -10,11 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
-    /// <summary> The parameters used to add a new Data Lake Store account while creating a new Data Lake Analytics account. </summary>
+    /// <summary>
+    /// The parameters used to add a new Data Lake Store account while creating a new Data Lake Analytics account.
+    /// Serialized Name: AddDataLakeStoreWithAccountParameters
+    /// </summary>
     public partial class AddDataLakeStoreWithAccountParameters
     {
         /// <summary> Initializes a new instance of AddDataLakeStoreWithAccountParameters. </summary>
-        /// <param name="name"> The unique name of the Data Lake Store account to add. </param>
+        /// <param name="name">
+        /// The unique name of the Data Lake Store account to add.
+        /// Serialized Name: AddDataLakeStoreWithAccountParameters.name
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public AddDataLakeStoreWithAccountParameters(string name)
         {
@@ -23,9 +29,15 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             Name = name;
         }
 
-        /// <summary> The unique name of the Data Lake Store account to add. </summary>
+        /// <summary>
+        /// The unique name of the Data Lake Store account to add.
+        /// Serialized Name: AddDataLakeStoreWithAccountParameters.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The optional suffix for the Data Lake Store account. </summary>
+        /// <summary>
+        /// The optional suffix for the Data Lake Store account.
+        /// Serialized Name: AddDataLakeStoreWithAccountParameters.properties.suffix
+        /// </summary>
         public string Suffix { get; set; }
     }
 }

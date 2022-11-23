@@ -18,46 +18,46 @@ using Azure.ResourceManager.DataLakeAnalytics.Models;
 namespace Azure.ResourceManager.DataLakeAnalytics
 {
     /// <summary>
-    /// A Class representing a ComputePolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ComputePolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetComputePolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataLakeAnalyticsAccountResource" /> using the GetComputePolicy method.
+    /// A Class representing a DataLakeAnalyticsComputePolicy along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataLakeAnalyticsComputePolicyResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetDataLakeAnalyticsComputePolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataLakeAnalyticsAccountResource" /> using the GetDataLakeAnalyticsComputePolicy method.
     /// </summary>
-    public partial class ComputePolicyResource : ArmResource
+    public partial class DataLakeAnalyticsComputePolicyResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ComputePolicyResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="DataLakeAnalyticsComputePolicyResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string computePolicyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/computePolicies/{computePolicyName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _computePolicyClientDiagnostics;
-        private readonly ComputePoliciesRestOperations _computePolicyRestClient;
-        private readonly ComputePolicyData _data;
+        private readonly ClientDiagnostics _dataLakeAnalyticsComputePolicyComputePoliciesClientDiagnostics;
+        private readonly ComputePoliciesRestOperations _dataLakeAnalyticsComputePolicyComputePoliciesRestClient;
+        private readonly DataLakeAnalyticsComputePolicyData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="ComputePolicyResource"/> class for mocking. </summary>
-        protected ComputePolicyResource()
+        /// <summary> Initializes a new instance of the <see cref="DataLakeAnalyticsComputePolicyResource"/> class for mocking. </summary>
+        protected DataLakeAnalyticsComputePolicyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ComputePolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "DataLakeAnalyticsComputePolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ComputePolicyResource(ArmClient client, ComputePolicyData data) : this(client, data.Id)
+        internal DataLakeAnalyticsComputePolicyResource(ArmClient client, DataLakeAnalyticsComputePolicyData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ComputePolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataLakeAnalyticsComputePolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ComputePolicyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DataLakeAnalyticsComputePolicyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _computePolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataLakeAnalytics", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string computePolicyApiVersion);
-            _computePolicyRestClient = new ComputePoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, computePolicyApiVersion);
+            _dataLakeAnalyticsComputePolicyComputePoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataLakeAnalytics", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string dataLakeAnalyticsComputePolicyComputePoliciesApiVersion);
+            _dataLakeAnalyticsComputePolicyComputePoliciesRestClient = new ComputePoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataLakeAnalyticsComputePolicyComputePoliciesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ComputePolicyData Data
+        public virtual DataLakeAnalyticsComputePolicyData Data
         {
             get
             {
@@ -93,16 +93,16 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// Operation Id: ComputePolicies_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ComputePolicyResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataLakeAnalyticsComputePolicyResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _computePolicyClientDiagnostics.CreateScope("ComputePolicyResource.Get");
+            using var scope = _dataLakeAnalyticsComputePolicyComputePoliciesClientDiagnostics.CreateScope("DataLakeAnalyticsComputePolicyResource.Get");
             scope.Start();
             try
             {
-                var response = await _computePolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _dataLakeAnalyticsComputePolicyComputePoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ComputePolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataLakeAnalyticsComputePolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,16 +117,16 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// Operation Id: ComputePolicies_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ComputePolicyResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<DataLakeAnalyticsComputePolicyResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _computePolicyClientDiagnostics.CreateScope("ComputePolicyResource.Get");
+            using var scope = _dataLakeAnalyticsComputePolicyComputePoliciesClientDiagnostics.CreateScope("DataLakeAnalyticsComputePolicyResource.Get");
             scope.Start();
             try
             {
-                var response = _computePolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _dataLakeAnalyticsComputePolicyComputePoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ComputePolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataLakeAnalyticsComputePolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,11 +144,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _computePolicyClientDiagnostics.CreateScope("ComputePolicyResource.Delete");
+            using var scope = _dataLakeAnalyticsComputePolicyComputePoliciesClientDiagnostics.CreateScope("DataLakeAnalyticsComputePolicyResource.Delete");
             scope.Start();
             try
             {
-                var response = await _computePolicyRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _dataLakeAnalyticsComputePolicyComputePoliciesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new DataLakeAnalyticsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -170,11 +170,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _computePolicyClientDiagnostics.CreateScope("ComputePolicyResource.Delete");
+            using var scope = _dataLakeAnalyticsComputePolicyComputePoliciesClientDiagnostics.CreateScope("DataLakeAnalyticsComputePolicyResource.Delete");
             scope.Start();
             try
             {
-                var response = _computePolicyRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _dataLakeAnalyticsComputePolicyComputePoliciesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new DataLakeAnalyticsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -195,16 +195,16 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="patch"> Parameters supplied to update the compute policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<ComputePolicyResource>> UpdateAsync(ComputePolicyPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataLakeAnalyticsComputePolicyResource>> UpdateAsync(DataLakeAnalyticsComputePolicyPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _computePolicyClientDiagnostics.CreateScope("ComputePolicyResource.Update");
+            using var scope = _dataLakeAnalyticsComputePolicyComputePoliciesClientDiagnostics.CreateScope("DataLakeAnalyticsComputePolicyResource.Update");
             scope.Start();
             try
             {
-                var response = await _computePolicyRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ComputePolicyResource(Client, response.Value), response.GetRawResponse());
+                var response = await _dataLakeAnalyticsComputePolicyComputePoliciesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new DataLakeAnalyticsComputePolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -221,16 +221,16 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="patch"> Parameters supplied to update the compute policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<ComputePolicyResource> Update(ComputePolicyPatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<DataLakeAnalyticsComputePolicyResource> Update(DataLakeAnalyticsComputePolicyPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _computePolicyClientDiagnostics.CreateScope("ComputePolicyResource.Update");
+            using var scope = _dataLakeAnalyticsComputePolicyComputePoliciesClientDiagnostics.CreateScope("DataLakeAnalyticsComputePolicyResource.Update");
             scope.Start();
             try
             {
-                var response = _computePolicyRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new ComputePolicyResource(Client, response.Value), response.GetRawResponse());
+                var response = _dataLakeAnalyticsComputePolicyComputePoliciesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                return Response.FromValue(new DataLakeAnalyticsComputePolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

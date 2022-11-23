@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
-    /// <summary> The HiveMetastore. </summary>
+    /// <summary>
+    /// The HiveMetastore.
+    /// Serialized Name: HiveMetastore
+    /// </summary>
     public partial class HiveMetastore : ResourceData
     {
         /// <summary> Initializes a new instance of HiveMetastore. </summary>
@@ -24,12 +27,30 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="serverUri"> The serverUri for the Hive MetaStore. </param>
-        /// <param name="databaseName"> The databaseName for the Hive MetaStore. </param>
-        /// <param name="runtimeVersion"> The runtimeVersion for the Hive MetaStore. </param>
-        /// <param name="userName"> The userName for the Hive MetaStore. </param>
-        /// <param name="password"> The password for the Hive MetaStore. </param>
-        /// <param name="nestedResourceProvisioningState"> The current state of the NestedResource. </param>
+        /// <param name="serverUri">
+        /// The serverUri for the Hive MetaStore
+        /// Serialized Name: HiveMetastore.properties.serverUri
+        /// </param>
+        /// <param name="databaseName">
+        /// The databaseName for the Hive MetaStore
+        /// Serialized Name: HiveMetastore.properties.databaseName
+        /// </param>
+        /// <param name="runtimeVersion">
+        /// The runtimeVersion for the Hive MetaStore
+        /// Serialized Name: HiveMetastore.properties.runtimeVersion
+        /// </param>
+        /// <param name="userName">
+        /// The userName for the Hive MetaStore
+        /// Serialized Name: HiveMetastore.properties.userName
+        /// </param>
+        /// <param name="password">
+        /// The password for the Hive MetaStore
+        /// Serialized Name: HiveMetastore.properties.password
+        /// </param>
+        /// <param name="nestedResourceProvisioningState">
+        /// The current state of the NestedResource
+        /// Serialized Name: HiveMetastore.properties.nestedResourceProvisioningState
+        /// </param>
         internal HiveMetastore(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri serverUri, string databaseName, string runtimeVersion, string userName, string password, NestedResourceProvisioningState? nestedResourceProvisioningState) : base(id, name, resourceType, systemData)
         {
             ServerUri = serverUri;
@@ -40,17 +61,35 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             NestedResourceProvisioningState = nestedResourceProvisioningState;
         }
 
-        /// <summary> The serverUri for the Hive MetaStore. </summary>
+        /// <summary>
+        /// The serverUri for the Hive MetaStore
+        /// Serialized Name: HiveMetastore.properties.serverUri
+        /// </summary>
         public Uri ServerUri { get; }
-        /// <summary> The databaseName for the Hive MetaStore. </summary>
+        /// <summary>
+        /// The databaseName for the Hive MetaStore
+        /// Serialized Name: HiveMetastore.properties.databaseName
+        /// </summary>
         public string DatabaseName { get; }
-        /// <summary> The runtimeVersion for the Hive MetaStore. </summary>
+        /// <summary>
+        /// The runtimeVersion for the Hive MetaStore
+        /// Serialized Name: HiveMetastore.properties.runtimeVersion
+        /// </summary>
         public string RuntimeVersion { get; }
-        /// <summary> The userName for the Hive MetaStore. </summary>
+        /// <summary>
+        /// The userName for the Hive MetaStore
+        /// Serialized Name: HiveMetastore.properties.userName
+        /// </summary>
         public string UserName { get; }
-        /// <summary> The password for the Hive MetaStore. </summary>
+        /// <summary>
+        /// The password for the Hive MetaStore
+        /// Serialized Name: HiveMetastore.properties.password
+        /// </summary>
         public string Password { get; }
-        /// <summary> The current state of the NestedResource. </summary>
+        /// <summary>
+        /// The current state of the NestedResource
+        /// Serialized Name: HiveMetastore.properties.nestedResourceProvisioningState
+        /// </summary>
         public NestedResourceProvisioningState? NestedResourceProvisioningState { get; }
     }
 }

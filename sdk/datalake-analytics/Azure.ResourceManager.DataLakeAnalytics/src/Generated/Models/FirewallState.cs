@@ -7,12 +7,21 @@
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
-    /// <summary> The current state of the IP address firewall for this account. </summary>
+    /// <summary>
+    /// The current state of the IP address firewall for this account.
+    /// Serialized Name: FirewallState
+    /// </summary>
     public enum FirewallState
     {
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: FirewallState.Enabled
+        /// </summary>
         Enabled,
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: FirewallState.Disabled
+        /// </summary>
         Disabled
     }
 }

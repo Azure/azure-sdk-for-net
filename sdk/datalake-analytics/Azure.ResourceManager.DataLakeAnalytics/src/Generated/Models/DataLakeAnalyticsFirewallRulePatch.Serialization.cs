@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
-    public partial class StorageAccountInformationPatch : IUtf8JsonSerializable
+    public partial class DataLakeAnalyticsFirewallRulePatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(AccessKey))
+            if (Optional.IsDefined(StartIPAddress))
             {
-                writer.WritePropertyName("accessKey");
-                writer.WriteStringValue(AccessKey);
+                writer.WritePropertyName("startIpAddress");
+                writer.WriteStringValue(StartIPAddress);
             }
-            if (Optional.IsDefined(Suffix))
+            if (Optional.IsDefined(EndIPAddress))
             {
-                writer.WritePropertyName("suffix");
-                writer.WriteStringValue(Suffix);
+                writer.WritePropertyName("endIpAddress");
+                writer.WriteStringValue(EndIPAddress);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
-    /// <summary> Data Lake Analytics  VirtualNetwork Rule information. </summary>
+    /// <summary>
+    /// Data Lake Analytics  VirtualNetwork Rule information.
+    /// Serialized Name: VirtualNetworkRule
+    /// </summary>
     public partial class VirtualNetworkRule : ResourceData
     {
         /// <summary> Initializes a new instance of VirtualNetworkRule. </summary>
@@ -23,17 +26,29 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="subnetId"> The resource identifier for the subnet. </param>
-        /// <param name="virtualNetworkRuleState"> The current state of the VirtualNetwork Rule. </param>
+        /// <param name="subnetId">
+        /// The resource identifier for the subnet
+        /// Serialized Name: VirtualNetworkRule.properties.subnetId
+        /// </param>
+        /// <param name="virtualNetworkRuleState">
+        /// The current state of the VirtualNetwork Rule
+        /// Serialized Name: VirtualNetworkRule.properties.virtualNetworkRuleState
+        /// </param>
         internal VirtualNetworkRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string subnetId, VirtualNetworkRuleState? virtualNetworkRuleState) : base(id, name, resourceType, systemData)
         {
             SubnetId = subnetId;
             VirtualNetworkRuleState = virtualNetworkRuleState;
         }
 
-        /// <summary> The resource identifier for the subnet. </summary>
+        /// <summary>
+        /// The resource identifier for the subnet
+        /// Serialized Name: VirtualNetworkRule.properties.subnetId
+        /// </summary>
         public string SubnetId { get; }
-        /// <summary> The current state of the VirtualNetwork Rule. </summary>
+        /// <summary>
+        /// The current state of the VirtualNetwork Rule
+        /// Serialized Name: VirtualNetworkRule.properties.virtualNetworkRuleState
+        /// </summary>
         public VirtualNetworkRuleState? VirtualNetworkRuleState { get; }
     }
 }

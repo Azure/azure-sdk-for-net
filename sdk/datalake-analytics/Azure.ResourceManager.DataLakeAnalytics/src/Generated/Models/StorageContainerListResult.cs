@@ -11,27 +11,42 @@ using Azure.ResourceManager.DataLakeAnalytics;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
-    /// <summary> The list of blob containers associated with the storage account attached to the Data Lake Analytics account. </summary>
+    /// <summary>
+    /// The list of blob containers associated with the storage account attached to the Data Lake Analytics account.
+    /// Serialized Name: StorageContainerListResult
+    /// </summary>
     internal partial class StorageContainerListResult
     {
         /// <summary> Initializes a new instance of StorageContainerListResult. </summary>
         internal StorageContainerListResult()
         {
-            Value = new ChangeTrackingList<StorageContainerData>();
+            Value = new ChangeTrackingList<DataLakeAnalyticsStorageContainerData>();
         }
 
         /// <summary> Initializes a new instance of StorageContainerListResult. </summary>
-        /// <param name="value"> The results of the list operation. </param>
-        /// <param name="nextLink"> The link (url) to the next page of results. </param>
-        internal StorageContainerListResult(IReadOnlyList<StorageContainerData> value, string nextLink)
+        /// <param name="value">
+        /// The results of the list operation.
+        /// Serialized Name: StorageContainerListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link (url) to the next page of results.
+        /// Serialized Name: StorageContainerListResult.nextLink
+        /// </param>
+        internal StorageContainerListResult(IReadOnlyList<DataLakeAnalyticsStorageContainerData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The results of the list operation. </summary>
-        public IReadOnlyList<StorageContainerData> Value { get; }
-        /// <summary> The link (url) to the next page of results. </summary>
+        /// <summary>
+        /// The results of the list operation.
+        /// Serialized Name: StorageContainerListResult.value
+        /// </summary>
+        public IReadOnlyList<DataLakeAnalyticsStorageContainerData> Value { get; }
+        /// <summary>
+        /// The link (url) to the next page of results.
+        /// Serialized Name: StorageContainerListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

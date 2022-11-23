@@ -18,46 +18,46 @@ using Azure.ResourceManager.DataLakeAnalytics.Models;
 namespace Azure.ResourceManager.DataLakeAnalytics
 {
     /// <summary>
-    /// A Class representing a StorageContainer along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StorageContainerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetStorageContainerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="StorageAccountInformationResource" /> using the GetStorageContainer method.
+    /// A Class representing a DataLakeAnalyticsStorageContainer along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataLakeAnalyticsStorageContainerResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetDataLakeAnalyticsStorageContainerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataLakeAnalyticsStorageAccountInformationResource" /> using the GetDataLakeAnalyticsStorageContainer method.
     /// </summary>
-    public partial class StorageContainerResource : ArmResource
+    public partial class DataLakeAnalyticsStorageContainerResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="StorageContainerResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="DataLakeAnalyticsStorageContainerResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, string containerName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/storageAccounts/{storageAccountName}/containers/{containerName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _storageContainerStorageAccountsClientDiagnostics;
-        private readonly StorageAccountsRestOperations _storageContainerStorageAccountsRestClient;
-        private readonly StorageContainerData _data;
+        private readonly ClientDiagnostics _dataLakeAnalyticsStorageContainerStorageAccountsClientDiagnostics;
+        private readonly StorageAccountsRestOperations _dataLakeAnalyticsStorageContainerStorageAccountsRestClient;
+        private readonly DataLakeAnalyticsStorageContainerData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="StorageContainerResource"/> class for mocking. </summary>
-        protected StorageContainerResource()
+        /// <summary> Initializes a new instance of the <see cref="DataLakeAnalyticsStorageContainerResource"/> class for mocking. </summary>
+        protected DataLakeAnalyticsStorageContainerResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "StorageContainerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "DataLakeAnalyticsStorageContainerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal StorageContainerResource(ArmClient client, StorageContainerData data) : this(client, data.Id)
+        internal DataLakeAnalyticsStorageContainerResource(ArmClient client, DataLakeAnalyticsStorageContainerData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="StorageContainerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataLakeAnalyticsStorageContainerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal StorageContainerResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DataLakeAnalyticsStorageContainerResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _storageContainerStorageAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataLakeAnalytics", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string storageContainerStorageAccountsApiVersion);
-            _storageContainerStorageAccountsRestClient = new StorageAccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, storageContainerStorageAccountsApiVersion);
+            _dataLakeAnalyticsStorageContainerStorageAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataLakeAnalytics", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string dataLakeAnalyticsStorageContainerStorageAccountsApiVersion);
+            _dataLakeAnalyticsStorageContainerStorageAccountsRestClient = new StorageAccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataLakeAnalyticsStorageContainerStorageAccountsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual StorageContainerData Data
+        public virtual DataLakeAnalyticsStorageContainerData Data
         {
             get
             {
@@ -93,16 +93,16 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// Operation Id: StorageAccounts_GetStorageContainer
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<StorageContainerResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataLakeAnalyticsStorageContainerResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _storageContainerStorageAccountsClientDiagnostics.CreateScope("StorageContainerResource.Get");
+            using var scope = _dataLakeAnalyticsStorageContainerStorageAccountsClientDiagnostics.CreateScope("DataLakeAnalyticsStorageContainerResource.Get");
             scope.Start();
             try
             {
-                var response = await _storageContainerStorageAccountsRestClient.GetStorageContainerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _dataLakeAnalyticsStorageContainerStorageAccountsRestClient.GetStorageContainerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new StorageContainerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataLakeAnalyticsStorageContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,16 +117,16 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// Operation Id: StorageAccounts_GetStorageContainer
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<StorageContainerResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<DataLakeAnalyticsStorageContainerResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _storageContainerStorageAccountsClientDiagnostics.CreateScope("StorageContainerResource.Get");
+            using var scope = _dataLakeAnalyticsStorageContainerStorageAccountsClientDiagnostics.CreateScope("DataLakeAnalyticsStorageContainerResource.Get");
             scope.Start();
             try
             {
-                var response = _storageContainerStorageAccountsRestClient.GetStorageContainer(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _dataLakeAnalyticsStorageContainerStorageAccountsRestClient.GetStorageContainer(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new StorageContainerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataLakeAnalyticsStorageContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,11 +146,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         {
             async Task<Page<SasTokenInformation>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _storageContainerStorageAccountsClientDiagnostics.CreateScope("StorageContainerResource.GetSasTokens");
+                using var scope = _dataLakeAnalyticsStorageContainerStorageAccountsClientDiagnostics.CreateScope("DataLakeAnalyticsStorageContainerResource.GetSasTokens");
                 scope.Start();
                 try
                 {
-                    var response = await _storageContainerStorageAccountsRestClient.ListSasTokensAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _dataLakeAnalyticsStorageContainerStorageAccountsRestClient.ListSasTokensAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -161,11 +161,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             }
             async Task<Page<SasTokenInformation>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _storageContainerStorageAccountsClientDiagnostics.CreateScope("StorageContainerResource.GetSasTokens");
+                using var scope = _dataLakeAnalyticsStorageContainerStorageAccountsClientDiagnostics.CreateScope("DataLakeAnalyticsStorageContainerResource.GetSasTokens");
                 scope.Start();
                 try
                 {
-                    var response = await _storageContainerStorageAccountsRestClient.ListSasTokensNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _dataLakeAnalyticsStorageContainerStorageAccountsRestClient.ListSasTokensNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -188,11 +188,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         {
             Page<SasTokenInformation> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _storageContainerStorageAccountsClientDiagnostics.CreateScope("StorageContainerResource.GetSasTokens");
+                using var scope = _dataLakeAnalyticsStorageContainerStorageAccountsClientDiagnostics.CreateScope("DataLakeAnalyticsStorageContainerResource.GetSasTokens");
                 scope.Start();
                 try
                 {
-                    var response = _storageContainerStorageAccountsRestClient.ListSasTokens(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _dataLakeAnalyticsStorageContainerStorageAccountsRestClient.ListSasTokens(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -203,11 +203,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             }
             Page<SasTokenInformation> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _storageContainerStorageAccountsClientDiagnostics.CreateScope("StorageContainerResource.GetSasTokens");
+                using var scope = _dataLakeAnalyticsStorageContainerStorageAccountsClientDiagnostics.CreateScope("DataLakeAnalyticsStorageContainerResource.GetSasTokens");
                 scope.Start();
                 try
                 {
-                    var response = _storageContainerStorageAccountsRestClient.ListSasTokensNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _dataLakeAnalyticsStorageContainerStorageAccountsRestClient.ListSasTokensNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

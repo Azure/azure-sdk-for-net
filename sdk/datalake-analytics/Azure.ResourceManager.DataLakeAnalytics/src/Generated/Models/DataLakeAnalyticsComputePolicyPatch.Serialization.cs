@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
-    public partial class ComputePolicyPatch : IUtf8JsonSerializable
+    public partial class DataLakeAnalyticsComputePolicyPatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

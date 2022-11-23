@@ -18,46 +18,46 @@ using Azure.ResourceManager.DataLakeAnalytics.Models;
 namespace Azure.ResourceManager.DataLakeAnalytics
 {
     /// <summary>
-    /// A Class representing a FirewallRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="FirewallRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetFirewallRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataLakeAnalyticsAccountResource" /> using the GetFirewallRule method.
+    /// A Class representing a DataLakeAnalyticsFirewallRule along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataLakeAnalyticsFirewallRuleResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetDataLakeAnalyticsFirewallRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataLakeAnalyticsAccountResource" /> using the GetDataLakeAnalyticsFirewallRule method.
     /// </summary>
-    public partial class FirewallRuleResource : ArmResource
+    public partial class DataLakeAnalyticsFirewallRuleResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="FirewallRuleResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="DataLakeAnalyticsFirewallRuleResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string firewallRuleName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/firewallRules/{firewallRuleName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _firewallRuleClientDiagnostics;
-        private readonly FirewallRulesRestOperations _firewallRuleRestClient;
-        private readonly FirewallRuleData _data;
+        private readonly ClientDiagnostics _dataLakeAnalyticsFirewallRuleFirewallRulesClientDiagnostics;
+        private readonly FirewallRulesRestOperations _dataLakeAnalyticsFirewallRuleFirewallRulesRestClient;
+        private readonly DataLakeAnalyticsFirewallRuleData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="FirewallRuleResource"/> class for mocking. </summary>
-        protected FirewallRuleResource()
+        /// <summary> Initializes a new instance of the <see cref="DataLakeAnalyticsFirewallRuleResource"/> class for mocking. </summary>
+        protected DataLakeAnalyticsFirewallRuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "FirewallRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "DataLakeAnalyticsFirewallRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal FirewallRuleResource(ArmClient client, FirewallRuleData data) : this(client, data.Id)
+        internal DataLakeAnalyticsFirewallRuleResource(ArmClient client, DataLakeAnalyticsFirewallRuleData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="FirewallRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataLakeAnalyticsFirewallRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal FirewallRuleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DataLakeAnalyticsFirewallRuleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _firewallRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataLakeAnalytics", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string firewallRuleApiVersion);
-            _firewallRuleRestClient = new FirewallRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, firewallRuleApiVersion);
+            _dataLakeAnalyticsFirewallRuleFirewallRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataLakeAnalytics", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string dataLakeAnalyticsFirewallRuleFirewallRulesApiVersion);
+            _dataLakeAnalyticsFirewallRuleFirewallRulesRestClient = new FirewallRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataLakeAnalyticsFirewallRuleFirewallRulesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual FirewallRuleData Data
+        public virtual DataLakeAnalyticsFirewallRuleData Data
         {
             get
             {
@@ -93,16 +93,16 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// Operation Id: FirewallRules_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<FirewallRuleResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataLakeAnalyticsFirewallRuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _firewallRuleClientDiagnostics.CreateScope("FirewallRuleResource.Get");
+            using var scope = _dataLakeAnalyticsFirewallRuleFirewallRulesClientDiagnostics.CreateScope("DataLakeAnalyticsFirewallRuleResource.Get");
             scope.Start();
             try
             {
-                var response = await _firewallRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _dataLakeAnalyticsFirewallRuleFirewallRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FirewallRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataLakeAnalyticsFirewallRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,16 +117,16 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// Operation Id: FirewallRules_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<FirewallRuleResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<DataLakeAnalyticsFirewallRuleResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _firewallRuleClientDiagnostics.CreateScope("FirewallRuleResource.Get");
+            using var scope = _dataLakeAnalyticsFirewallRuleFirewallRulesClientDiagnostics.CreateScope("DataLakeAnalyticsFirewallRuleResource.Get");
             scope.Start();
             try
             {
-                var response = _firewallRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _dataLakeAnalyticsFirewallRuleFirewallRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FirewallRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataLakeAnalyticsFirewallRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,11 +144,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _firewallRuleClientDiagnostics.CreateScope("FirewallRuleResource.Delete");
+            using var scope = _dataLakeAnalyticsFirewallRuleFirewallRulesClientDiagnostics.CreateScope("DataLakeAnalyticsFirewallRuleResource.Delete");
             scope.Start();
             try
             {
-                var response = await _firewallRuleRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _dataLakeAnalyticsFirewallRuleFirewallRulesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new DataLakeAnalyticsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -170,11 +170,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _firewallRuleClientDiagnostics.CreateScope("FirewallRuleResource.Delete");
+            using var scope = _dataLakeAnalyticsFirewallRuleFirewallRulesClientDiagnostics.CreateScope("DataLakeAnalyticsFirewallRuleResource.Delete");
             scope.Start();
             try
             {
-                var response = _firewallRuleRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _dataLakeAnalyticsFirewallRuleFirewallRulesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new DataLakeAnalyticsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -195,16 +195,16 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="patch"> Parameters supplied to update the firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<FirewallRuleResource>> UpdateAsync(FirewallRulePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataLakeAnalyticsFirewallRuleResource>> UpdateAsync(DataLakeAnalyticsFirewallRulePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _firewallRuleClientDiagnostics.CreateScope("FirewallRuleResource.Update");
+            using var scope = _dataLakeAnalyticsFirewallRuleFirewallRulesClientDiagnostics.CreateScope("DataLakeAnalyticsFirewallRuleResource.Update");
             scope.Start();
             try
             {
-                var response = await _firewallRuleRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new FirewallRuleResource(Client, response.Value), response.GetRawResponse());
+                var response = await _dataLakeAnalyticsFirewallRuleFirewallRulesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new DataLakeAnalyticsFirewallRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -221,16 +221,16 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="patch"> Parameters supplied to update the firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<FirewallRuleResource> Update(FirewallRulePatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<DataLakeAnalyticsFirewallRuleResource> Update(DataLakeAnalyticsFirewallRulePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _firewallRuleClientDiagnostics.CreateScope("FirewallRuleResource.Update");
+            using var scope = _dataLakeAnalyticsFirewallRuleFirewallRulesClientDiagnostics.CreateScope("DataLakeAnalyticsFirewallRuleResource.Update");
             scope.Start();
             try
             {
-                var response = _firewallRuleRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new FirewallRuleResource(Client, response.Value), response.GetRawResponse());
+                var response = _dataLakeAnalyticsFirewallRuleFirewallRulesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                return Response.FromValue(new DataLakeAnalyticsFirewallRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

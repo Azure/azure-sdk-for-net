@@ -13,9 +13,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataLakeAnalytics
 {
-    public partial class ComputePolicyData
+    public partial class DataLakeAnalyticsComputePolicyData
     {
-        internal static ComputePolicyData DeserializeComputePolicyData(JsonElement element)
+        internal static DataLakeAnalyticsComputePolicyData DeserializeDataLakeAnalyticsComputePolicyData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                     continue;
                 }
             }
-            return new ComputePolicyData(id, name, type, systemData.Value, Optional.ToNullable(objectId), Optional.ToNullable(objectType), Optional.ToNullable(maxDegreeOfParallelismPerJob), Optional.ToNullable(minPriorityPerJob));
+            return new DataLakeAnalyticsComputePolicyData(id, name, type, systemData.Value, Optional.ToNullable(objectId), Optional.ToNullable(objectType), Optional.ToNullable(maxDegreeOfParallelismPerJob), Optional.ToNullable(minPriorityPerJob));
         }
     }
 }

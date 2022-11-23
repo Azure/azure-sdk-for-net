@@ -11,27 +11,42 @@ using Azure.ResourceManager.DataLakeAnalytics;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
-    /// <summary> The list of compute policies in the account. </summary>
+    /// <summary>
+    /// The list of compute policies in the account.
+    /// Serialized Name: ComputePolicyListResult
+    /// </summary>
     internal partial class ComputePolicyListResult
     {
         /// <summary> Initializes a new instance of ComputePolicyListResult. </summary>
         internal ComputePolicyListResult()
         {
-            Value = new ChangeTrackingList<ComputePolicyData>();
+            Value = new ChangeTrackingList<DataLakeAnalyticsComputePolicyData>();
         }
 
         /// <summary> Initializes a new instance of ComputePolicyListResult. </summary>
-        /// <param name="value"> The results of the list operation. </param>
-        /// <param name="nextLink"> The link (url) to the next page of results. </param>
-        internal ComputePolicyListResult(IReadOnlyList<ComputePolicyData> value, string nextLink)
+        /// <param name="value">
+        /// The results of the list operation.
+        /// Serialized Name: ComputePolicyListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link (url) to the next page of results.
+        /// Serialized Name: ComputePolicyListResult.nextLink
+        /// </param>
+        internal ComputePolicyListResult(IReadOnlyList<DataLakeAnalyticsComputePolicyData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The results of the list operation. </summary>
-        public IReadOnlyList<ComputePolicyData> Value { get; }
-        /// <summary> The link (url) to the next page of results. </summary>
+        /// <summary>
+        /// The results of the list operation.
+        /// Serialized Name: ComputePolicyListResult.value
+        /// </summary>
+        public IReadOnlyList<DataLakeAnalyticsComputePolicyData> Value { get; }
+        /// <summary>
+        /// The link (url) to the next page of results.
+        /// Serialized Name: ComputePolicyListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

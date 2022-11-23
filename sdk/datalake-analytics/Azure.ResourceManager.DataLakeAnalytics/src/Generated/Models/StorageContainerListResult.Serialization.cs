@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     {
         internal static StorageContainerListResult DeserializeStorageContainerListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<StorageContainerData>> value = default;
+            Optional<IReadOnlyList<DataLakeAnalyticsStorageContainerData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<StorageContainerData> array = new List<StorageContainerData>();
+                    List<DataLakeAnalyticsStorageContainerData> array = new List<DataLakeAnalyticsStorageContainerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageContainerData.DeserializeStorageContainerData(item));
+                        array.Add(DataLakeAnalyticsStorageContainerData.DeserializeDataLakeAnalyticsStorageContainerData(item));
                     }
                     value = array;
                     continue;

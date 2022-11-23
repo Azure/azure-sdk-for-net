@@ -10,12 +10,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
-    /// <summary> The parameters used to add a new Azure Storage account while creating a new Data Lake Analytics account. </summary>
+    /// <summary>
+    /// The parameters used to add a new Azure Storage account while creating a new Data Lake Analytics account.
+    /// Serialized Name: AddStorageAccountWithAccountParameters
+    /// </summary>
     public partial class AddStorageAccountWithAccountParameters
     {
         /// <summary> Initializes a new instance of AddStorageAccountWithAccountParameters. </summary>
-        /// <param name="name"> The unique name of the Azure Storage account to add. </param>
-        /// <param name="accessKey"> The access key associated with this Azure Storage account that will be used to connect to it. </param>
+        /// <param name="name">
+        /// The unique name of the Azure Storage account to add.
+        /// Serialized Name: AddStorageAccountWithAccountParameters.name
+        /// </param>
+        /// <param name="accessKey">
+        /// The access key associated with this Azure Storage account that will be used to connect to it.
+        /// Serialized Name: AddStorageAccountWithAccountParameters.properties.accessKey
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="accessKey"/> is null. </exception>
         public AddStorageAccountWithAccountParameters(string name, string accessKey)
         {
@@ -26,11 +35,20 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             AccessKey = accessKey;
         }
 
-        /// <summary> The unique name of the Azure Storage account to add. </summary>
+        /// <summary>
+        /// The unique name of the Azure Storage account to add.
+        /// Serialized Name: AddStorageAccountWithAccountParameters.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The access key associated with this Azure Storage account that will be used to connect to it. </summary>
+        /// <summary>
+        /// The access key associated with this Azure Storage account that will be used to connect to it.
+        /// Serialized Name: AddStorageAccountWithAccountParameters.properties.accessKey
+        /// </summary>
         public string AccessKey { get; }
-        /// <summary> The optional suffix for the storage account. </summary>
+        /// <summary>
+        /// The optional suffix for the storage account.
+        /// Serialized Name: AddStorageAccountWithAccountParameters.properties.suffix
+        /// </summary>
         public string Suffix { get; set; }
     }
 }

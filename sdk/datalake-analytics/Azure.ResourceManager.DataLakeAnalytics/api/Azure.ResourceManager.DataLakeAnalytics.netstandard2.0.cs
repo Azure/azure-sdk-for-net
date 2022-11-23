@@ -62,7 +62,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataLakeAnalytics.DataLakeStoreAccountInformationData> DataLakeStoreAccounts { get { throw null; } }
         public Azure.ResourceManager.DataLakeAnalytics.Models.DebugDataAccessLevel? DebugDataAccessLevel { get { throw null; } }
         public string DefaultDataLakeStoreAccount { get { throw null; } }
-        public string DefaultDataLakeStoreAccountType { get { throw null; } }
         public string Endpoint { get { throw null; } }
         public Azure.ResourceManager.DataLakeAnalytics.Models.FirewallAllowAzureIPsState? FirewallAllowAzureIPs { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataLakeAnalytics.FirewallRuleData> FirewallRules { get { throw null; } }

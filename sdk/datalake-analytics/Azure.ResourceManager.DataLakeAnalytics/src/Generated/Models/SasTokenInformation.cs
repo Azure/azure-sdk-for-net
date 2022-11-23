@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
-    /// <summary> SAS token information. </summary>
+    /// <summary>
+    /// SAS token information.
+    /// Serialized Name: SasTokenInformation
+    /// </summary>
     public partial class SasTokenInformation
     {
         /// <summary> Initializes a new instance of SasTokenInformation. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of SasTokenInformation. </summary>
-        /// <param name="accessToken"> The access token for the associated Azure Storage Container. </param>
+        /// <param name="accessToken">
+        /// The access token for the associated Azure Storage Container.
+        /// Serialized Name: SasTokenInformation.accessToken
+        /// </param>
         internal SasTokenInformation(string accessToken)
         {
             AccessToken = accessToken;
         }
 
-        /// <summary> The access token for the associated Azure Storage Container. </summary>
+        /// <summary>
+        /// The access token for the associated Azure Storage Container.
+        /// Serialized Name: SasTokenInformation.accessToken
+        /// </summary>
         public string AccessToken { get; }
     }
 }

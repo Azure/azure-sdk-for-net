@@ -5,22 +5,22 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataLakeAnalytics
 {
-    public partial class FirewallRuleData
+    public partial class DataLakeAnalyticsStorageContainerData
     {
-        internal static FirewallRuleData DeserializeFirewallRuleData(JsonElement element)
+        internal static DataLakeAnalyticsStorageContainerData DeserializeDataLakeAnalyticsStorageContainerData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> startIPAddress = default;
-            Optional<string> endIPAddress = default;
+            Optional<DateTimeOffset> lastModifiedTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -57,21 +57,21 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("startIpAddress"))
+                        if (property0.NameEquals("lastModifiedTime"))
                         {
-                            startIPAddress = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("endIpAddress"))
-                        {
-                            endIPAddress = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            lastModifiedTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new FirewallRuleData(id, name, type, systemData.Value, startIPAddress.Value, endIPAddress.Value);
+            return new DataLakeAnalyticsStorageContainerData(id, name, type, systemData.Value, Optional.ToNullable(lastModifiedTime));
         }
     }
 }

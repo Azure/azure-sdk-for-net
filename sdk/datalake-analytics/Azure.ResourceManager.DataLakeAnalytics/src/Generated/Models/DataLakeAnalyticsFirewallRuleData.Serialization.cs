@@ -11,15 +11,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataLakeAnalytics
 {
-    public partial class StorageAccountInformationData
+    public partial class DataLakeAnalyticsFirewallRuleData
     {
-        internal static StorageAccountInformationData DeserializeStorageAccountInformationData(JsonElement element)
+        internal static DataLakeAnalyticsFirewallRuleData DeserializeDataLakeAnalyticsFirewallRuleData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> suffix = default;
+            Optional<string> startIPAddress = default;
+            Optional<string> endIPAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -56,16 +57,21 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("suffix"))
+                        if (property0.NameEquals("startIpAddress"))
                         {
-                            suffix = property0.Value.GetString();
+                            startIPAddress = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("endIpAddress"))
+                        {
+                            endIPAddress = property0.Value.GetString();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new StorageAccountInformationData(id, name, type, systemData.Value, suffix.Value);
+            return new DataLakeAnalyticsFirewallRuleData(id, name, type, systemData.Value, startIPAddress.Value, endIPAddress.Value);
         }
     }
 }

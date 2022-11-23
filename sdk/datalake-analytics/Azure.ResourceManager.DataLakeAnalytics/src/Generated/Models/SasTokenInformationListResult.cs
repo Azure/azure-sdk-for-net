@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
-    /// <summary> The SAS response that contains the storage account, container and associated SAS token for connection use. </summary>
+    /// <summary>
+    /// The SAS response that contains the storage account, container and associated SAS token for connection use.
+    /// Serialized Name: SasTokenInformationListResult
+    /// </summary>
     internal partial class SasTokenInformationListResult
     {
         /// <summary> Initializes a new instance of SasTokenInformationListResult. </summary>
@@ -20,17 +23,29 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of SasTokenInformationListResult. </summary>
-        /// <param name="value"> The results of the list operation. </param>
-        /// <param name="nextLink"> The link (url) to the next page of results. </param>
+        /// <param name="value">
+        /// The results of the list operation.
+        /// Serialized Name: SasTokenInformationListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link (url) to the next page of results.
+        /// Serialized Name: SasTokenInformationListResult.nextLink
+        /// </param>
         internal SasTokenInformationListResult(IReadOnlyList<SasTokenInformation> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The results of the list operation. </summary>
+        /// <summary>
+        /// The results of the list operation.
+        /// Serialized Name: SasTokenInformationListResult.value
+        /// </summary>
         public IReadOnlyList<SasTokenInformation> Value { get; }
-        /// <summary> The link (url) to the next page of results. </summary>
+        /// <summary>
+        /// The link (url) to the next page of results.
+        /// Serialized Name: SasTokenInformationListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

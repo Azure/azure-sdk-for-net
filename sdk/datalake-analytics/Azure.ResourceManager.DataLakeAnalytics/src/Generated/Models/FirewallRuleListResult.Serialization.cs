@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     {
         internal static FirewallRuleListResult DeserializeFirewallRuleListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<FirewallRuleData>> value = default;
+            Optional<IReadOnlyList<DataLakeAnalyticsFirewallRuleData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<FirewallRuleData> array = new List<FirewallRuleData>();
+                    List<DataLakeAnalyticsFirewallRuleData> array = new List<DataLakeAnalyticsFirewallRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FirewallRuleData.DeserializeFirewallRuleData(item));
+                        array.Add(DataLakeAnalyticsFirewallRuleData.DeserializeDataLakeAnalyticsFirewallRuleData(item));
                     }
                     value = array;
                     continue;

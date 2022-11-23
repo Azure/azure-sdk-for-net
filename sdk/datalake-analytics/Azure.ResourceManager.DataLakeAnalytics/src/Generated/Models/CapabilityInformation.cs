@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
-    /// <summary> Subscription-level properties and limits for Data Lake Analytics. </summary>
+    /// <summary>
+    /// Subscription-level properties and limits for Data Lake Analytics.
+    /// Serialized Name: CapabilityInformation
+    /// </summary>
     public partial class CapabilityInformation
     {
         /// <summary> Initializes a new instance of CapabilityInformation. </summary>
@@ -18,11 +21,26 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of CapabilityInformation. </summary>
-        /// <param name="subscriptionId"> The subscription credentials that uniquely identifies the subscription. </param>
-        /// <param name="state"> The subscription state. </param>
-        /// <param name="maxAccountCount"> The maximum supported number of accounts under this subscription. </param>
-        /// <param name="accountCount"> The current number of accounts under this subscription. </param>
-        /// <param name="migrationState"> The Boolean value of true or false to indicate the maintenance state. </param>
+        /// <param name="subscriptionId">
+        /// The subscription credentials that uniquely identifies the subscription.
+        /// Serialized Name: CapabilityInformation.subscriptionId
+        /// </param>
+        /// <param name="state">
+        /// The subscription state.
+        /// Serialized Name: CapabilityInformation.state
+        /// </param>
+        /// <param name="maxAccountCount">
+        /// The maximum supported number of accounts under this subscription.
+        /// Serialized Name: CapabilityInformation.maxAccountCount
+        /// </param>
+        /// <param name="accountCount">
+        /// The current number of accounts under this subscription.
+        /// Serialized Name: CapabilityInformation.accountCount
+        /// </param>
+        /// <param name="migrationState">
+        /// The Boolean value of true or false to indicate the maintenance state.
+        /// Serialized Name: CapabilityInformation.migrationState
+        /// </param>
         internal CapabilityInformation(Guid? subscriptionId, SubscriptionState? state, int? maxAccountCount, int? accountCount, bool? migrationState)
         {
             SubscriptionId = subscriptionId;
@@ -32,15 +50,30 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             MigrationState = migrationState;
         }
 
-        /// <summary> The subscription credentials that uniquely identifies the subscription. </summary>
+        /// <summary>
+        /// The subscription credentials that uniquely identifies the subscription.
+        /// Serialized Name: CapabilityInformation.subscriptionId
+        /// </summary>
         public Guid? SubscriptionId { get; }
-        /// <summary> The subscription state. </summary>
+        /// <summary>
+        /// The subscription state.
+        /// Serialized Name: CapabilityInformation.state
+        /// </summary>
         public SubscriptionState? State { get; }
-        /// <summary> The maximum supported number of accounts under this subscription. </summary>
+        /// <summary>
+        /// The maximum supported number of accounts under this subscription.
+        /// Serialized Name: CapabilityInformation.maxAccountCount
+        /// </summary>
         public int? MaxAccountCount { get; }
-        /// <summary> The current number of accounts under this subscription. </summary>
+        /// <summary>
+        /// The current number of accounts under this subscription.
+        /// Serialized Name: CapabilityInformation.accountCount
+        /// </summary>
         public int? AccountCount { get; }
-        /// <summary> The Boolean value of true or false to indicate the maintenance state. </summary>
+        /// <summary>
+        /// The Boolean value of true or false to indicate the maintenance state.
+        /// Serialized Name: CapabilityInformation.migrationState
+        /// </summary>
         public bool? MigrationState { get; }
     }
 }

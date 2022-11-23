@@ -30,15 +30,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             Optional<DateTimeOffset> creationTime = default;
             Optional<DateTimeOffset> lastModifiedTime = default;
             Optional<string> endpoint = default;
-            Optional<string> defaultDataLakeStoreAccountType = default;
             Optional<string> defaultDataLakeStoreAccount = default;
             Optional<IReadOnlyList<DataLakeStoreAccountInformationData>> dataLakeStoreAccounts = default;
             Optional<IReadOnlyList<DataLakeStoreAccountInformationData>> publicDataLakeStoreAccounts = default;
-            Optional<IReadOnlyList<StorageAccountInformationData>> storageAccounts = default;
-            Optional<IReadOnlyList<ComputePolicyData>> computePolicies = default;
+            Optional<IReadOnlyList<DataLakeAnalyticsStorageAccountInformationData>> storageAccounts = default;
+            Optional<IReadOnlyList<DataLakeAnalyticsComputePolicyData>> computePolicies = default;
             Optional<IReadOnlyList<HiveMetastore>> hiveMetastores = default;
             Optional<IReadOnlyList<VirtualNetworkRule>> virtualNetworkRules = default;
-            Optional<IReadOnlyList<FirewallRuleData>> firewallRules = default;
+            Optional<IReadOnlyList<DataLakeAnalyticsFirewallRuleData>> firewallRules = default;
             Optional<FirewallState> firewallState = default;
             Optional<FirewallAllowAzureIPsState> firewallAllowAzureIPs = default;
             Optional<TierType> newTier = default;
@@ -170,11 +169,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                             endpoint = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("defaultDataLakeStoreAccountType"))
-                        {
-                            defaultDataLakeStoreAccountType = property0.Value.GetString();
-                            continue;
-                        }
                         if (property0.NameEquals("defaultDataLakeStoreAccount"))
                         {
                             defaultDataLakeStoreAccount = property0.Value.GetString();
@@ -217,10 +211,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<StorageAccountInformationData> array = new List<StorageAccountInformationData>();
+                            List<DataLakeAnalyticsStorageAccountInformationData> array = new List<DataLakeAnalyticsStorageAccountInformationData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StorageAccountInformationData.DeserializeStorageAccountInformationData(item));
+                                array.Add(DataLakeAnalyticsStorageAccountInformationData.DeserializeDataLakeAnalyticsStorageAccountInformationData(item));
                             }
                             storageAccounts = array;
                             continue;
@@ -232,10 +226,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ComputePolicyData> array = new List<ComputePolicyData>();
+                            List<DataLakeAnalyticsComputePolicyData> array = new List<DataLakeAnalyticsComputePolicyData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ComputePolicyData.DeserializeComputePolicyData(item));
+                                array.Add(DataLakeAnalyticsComputePolicyData.DeserializeDataLakeAnalyticsComputePolicyData(item));
                             }
                             computePolicies = array;
                             continue;
@@ -277,10 +271,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<FirewallRuleData> array = new List<FirewallRuleData>();
+                            List<DataLakeAnalyticsFirewallRuleData> array = new List<DataLakeAnalyticsFirewallRuleData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FirewallRuleData.DeserializeFirewallRuleData(item));
+                                array.Add(DataLakeAnalyticsFirewallRuleData.DeserializeDataLakeAnalyticsFirewallRuleData(item));
                             }
                             firewallRules = array;
                             continue;
@@ -439,7 +433,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                     continue;
                 }
             }
-            return new DataLakeAnalyticsAccountData(id, name, type, systemData.Value, Optional.ToNullable(accountId), Optional.ToNullable(provisioningState), Optional.ToNullable(state), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), endpoint.Value, defaultDataLakeStoreAccountType.Value, defaultDataLakeStoreAccount.Value, Optional.ToList(dataLakeStoreAccounts), Optional.ToList(publicDataLakeStoreAccounts), Optional.ToList(storageAccounts), Optional.ToList(computePolicies), Optional.ToList(hiveMetastores), Optional.ToList(virtualNetworkRules), Optional.ToList(firewallRules), Optional.ToNullable(firewallState), Optional.ToNullable(firewallAllowAzureIPs), Optional.ToNullable(newTier), Optional.ToNullable(currentTier), Optional.ToNullable(maxJobCount), Optional.ToNullable(maxActiveJobCountPerUser), Optional.ToNullable(maxQueuedJobCountPerUser), Optional.ToNullable(maxJobRunningTimeInMin), Optional.ToNullable(systemMaxJobCount), Optional.ToNullable(maxDegreeOfParallelism), Optional.ToNullable(systemMaxDegreeOfParallelism), Optional.ToNullable(maxDegreeOfParallelismPerJob), Optional.ToNullable(minPriorityPerJob), Optional.ToNullable(queryStoreRetention), Optional.ToNullable(debugDataAccessLevel), Optional.ToNullable(location), Optional.ToDictionary(tags));
+            return new DataLakeAnalyticsAccountData(id, name, type, systemData.Value, Optional.ToNullable(accountId), Optional.ToNullable(provisioningState), Optional.ToNullable(state), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), endpoint.Value, defaultDataLakeStoreAccount.Value, Optional.ToList(dataLakeStoreAccounts), Optional.ToList(publicDataLakeStoreAccounts), Optional.ToList(storageAccounts), Optional.ToList(computePolicies), Optional.ToList(hiveMetastores), Optional.ToList(virtualNetworkRules), Optional.ToList(firewallRules), Optional.ToNullable(firewallState), Optional.ToNullable(firewallAllowAzureIPs), Optional.ToNullable(newTier), Optional.ToNullable(currentTier), Optional.ToNullable(maxJobCount), Optional.ToNullable(maxActiveJobCountPerUser), Optional.ToNullable(maxQueuedJobCountPerUser), Optional.ToNullable(maxJobRunningTimeInMin), Optional.ToNullable(systemMaxJobCount), Optional.ToNullable(maxDegreeOfParallelism), Optional.ToNullable(systemMaxDegreeOfParallelism), Optional.ToNullable(maxDegreeOfParallelismPerJob), Optional.ToNullable(minPriorityPerJob), Optional.ToNullable(queryStoreRetention), Optional.ToNullable(debugDataAccessLevel), Optional.ToNullable(location), Optional.ToDictionary(tags));
         }
     }
 }

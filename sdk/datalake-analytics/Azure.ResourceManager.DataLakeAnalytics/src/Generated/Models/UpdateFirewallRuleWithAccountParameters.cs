@@ -10,11 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
-    /// <summary> The parameters used to update a firewall rule while updating a Data Lake Analytics account. </summary>
+    /// <summary>
+    /// The parameters used to update a firewall rule while updating a Data Lake Analytics account.
+    /// Serialized Name: UpdateFirewallRuleWithAccountParameters
+    /// </summary>
     public partial class UpdateFirewallRuleWithAccountParameters
     {
         /// <summary> Initializes a new instance of UpdateFirewallRuleWithAccountParameters. </summary>
-        /// <param name="name"> The unique name of the firewall rule to update. </param>
+        /// <param name="name">
+        /// The unique name of the firewall rule to update.
+        /// Serialized Name: UpdateFirewallRuleWithAccountParameters.name
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public UpdateFirewallRuleWithAccountParameters(string name)
         {
@@ -23,11 +29,20 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             Name = name;
         }
 
-        /// <summary> The unique name of the firewall rule to update. </summary>
+        /// <summary>
+        /// The unique name of the firewall rule to update.
+        /// Serialized Name: UpdateFirewallRuleWithAccountParameters.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The start IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol. </summary>
+        /// <summary>
+        /// The start IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol.
+        /// Serialized Name: UpdateFirewallRuleWithAccountParameters.properties.startIpAddress
+        /// </summary>
         public string StartIPAddress { get; set; }
-        /// <summary> The end IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol. </summary>
+        /// <summary>
+        /// The end IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol.
+        /// Serialized Name: UpdateFirewallRuleWithAccountParameters.properties.endIpAddress
+        /// </summary>
         public string EndIPAddress { get; set; }
     }
 }

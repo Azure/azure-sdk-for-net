@@ -5,22 +5,21 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataLakeAnalytics
 {
-    public partial class StorageContainerData
+    public partial class DataLakeAnalyticsStorageAccountInformationData
     {
-        internal static StorageContainerData DeserializeStorageContainerData(JsonElement element)
+        internal static DataLakeAnalyticsStorageAccountInformationData DeserializeDataLakeAnalyticsStorageAccountInformationData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
+            Optional<string> suffix = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -57,21 +56,16 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("lastModifiedTime"))
+                        if (property0.NameEquals("suffix"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            lastModifiedTime = property0.Value.GetDateTimeOffset("O");
+                            suffix = property0.Value.GetString();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new StorageContainerData(id, name, type, systemData.Value, Optional.ToNullable(lastModifiedTime));
+            return new DataLakeAnalyticsStorageAccountInformationData(id, name, type, systemData.Value, suffix.Value);
         }
     }
 }

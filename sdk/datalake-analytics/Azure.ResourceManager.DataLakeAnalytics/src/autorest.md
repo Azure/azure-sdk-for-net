@@ -10,11 +10,15 @@ library-name: DataLakeAnalytics
 namespace: Azure.ResourceManager.DataLakeAnalytics
 # default tag is a preview version
 require: https://github.com/Azure/azure-rest-api-specs/blob/066eb8c81e14e0f3b22b6700c67693eef5f79ea9/specification/datalake-analytics/resource-manager/readme.md
+tag: package-2016-11
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+
+mgmt-debug: 
+  show-serialized-names: true
 
 request-path-to-parent:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}
@@ -24,6 +28,12 @@ operation-positions:
 
 override-operation-name:
   Accounts_ListByResourceGroup: GetAll
+
+prepend-rp-prefix:
+  - ComputePolicy
+  - FirewallRule
+  - StorageContainer
+  - StorageAccountInformation
 
 format-by-name-rules:
   'tenantId': 'uuid'

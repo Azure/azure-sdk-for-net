@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     {
         internal static ComputePolicyListResult DeserializeComputePolicyListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ComputePolicyData>> value = default;
+            Optional<IReadOnlyList<DataLakeAnalyticsComputePolicyData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ComputePolicyData> array = new List<ComputePolicyData>();
+                    List<DataLakeAnalyticsComputePolicyData> array = new List<DataLakeAnalyticsComputePolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComputePolicyData.DeserializeComputePolicyData(item));
+                        array.Add(DataLakeAnalyticsComputePolicyData.DeserializeDataLakeAnalyticsComputePolicyData(item));
                     }
                     value = array;
                     continue;

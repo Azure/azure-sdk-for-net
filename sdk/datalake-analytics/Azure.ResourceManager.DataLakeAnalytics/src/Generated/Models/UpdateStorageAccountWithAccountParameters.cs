@@ -10,11 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
-    /// <summary> The parameters used to update an Azure Storage account while updating a Data Lake Analytics account. </summary>
+    /// <summary>
+    /// The parameters used to update an Azure Storage account while updating a Data Lake Analytics account.
+    /// Serialized Name: UpdateStorageAccountWithAccountParameters
+    /// </summary>
     public partial class UpdateStorageAccountWithAccountParameters
     {
         /// <summary> Initializes a new instance of UpdateStorageAccountWithAccountParameters. </summary>
-        /// <param name="name"> The unique name of the Azure Storage account to update. </param>
+        /// <param name="name">
+        /// The unique name of the Azure Storage account to update.
+        /// Serialized Name: UpdateStorageAccountWithAccountParameters.name
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public UpdateStorageAccountWithAccountParameters(string name)
         {
@@ -23,11 +29,20 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             Name = name;
         }
 
-        /// <summary> The unique name of the Azure Storage account to update. </summary>
+        /// <summary>
+        /// The unique name of the Azure Storage account to update.
+        /// Serialized Name: UpdateStorageAccountWithAccountParameters.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The updated access key associated with this Azure Storage account that will be used to connect to it. </summary>
+        /// <summary>
+        /// The updated access key associated with this Azure Storage account that will be used to connect to it.
+        /// Serialized Name: UpdateStorageAccountWithAccountParameters.properties.accessKey
+        /// </summary>
         public string AccessKey { get; set; }
-        /// <summary> The optional suffix for the storage account. </summary>
+        /// <summary>
+        /// The optional suffix for the storage account.
+        /// Serialized Name: UpdateStorageAccountWithAccountParameters.properties.suffix
+        /// </summary>
         public string Suffix { get; set; }
     }
 }

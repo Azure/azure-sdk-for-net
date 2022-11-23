@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
-    /// <summary> The type of AAD object the object identifier refers to. </summary>
+    /// <summary>
+    /// The type of AAD object the object identifier refers to.
+    /// Serialized Name: AADObjectType
+    /// </summary>
     public readonly partial struct AADObjectType : IEquatable<AADObjectType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         private const string GroupValue = "Group";
         private const string ServicePrincipalValue = "ServicePrincipal";
 
-        /// <summary> User. </summary>
+        /// <summary>
+        /// User
+        /// Serialized Name: AADObjectType.User
+        /// </summary>
         public static AADObjectType User { get; } = new AADObjectType(UserValue);
-        /// <summary> Group. </summary>
+        /// <summary>
+        /// Group
+        /// Serialized Name: AADObjectType.Group
+        /// </summary>
         public static AADObjectType Group { get; } = new AADObjectType(GroupValue);
-        /// <summary> ServicePrincipal. </summary>
+        /// <summary>
+        /// ServicePrincipal
+        /// Serialized Name: AADObjectType.ServicePrincipal
+        /// </summary>
         public static AADObjectType ServicePrincipal { get; } = new AADObjectType(ServicePrincipalValue);
         /// <summary> Determines if two <see cref="AADObjectType"/> values are the same. </summary>
         public static bool operator ==(AADObjectType left, AADObjectType right) => left.Equals(right);
