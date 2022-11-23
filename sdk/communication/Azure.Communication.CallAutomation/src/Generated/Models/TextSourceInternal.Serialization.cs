@@ -22,11 +22,6 @@ namespace Azure.Communication.CallAutomation.Models
                 writer.WritePropertyName("sourceLocale");
                 writer.WriteStringValue(SourceLocale);
             }
-            if (Optional.IsDefined(TargetLocale))
-            {
-                writer.WritePropertyName("targetLocale");
-                writer.WriteStringValue(TargetLocale);
-            }
             if (Optional.IsDefined(VoiceGender))
             {
                 writer.WritePropertyName("voiceGender");

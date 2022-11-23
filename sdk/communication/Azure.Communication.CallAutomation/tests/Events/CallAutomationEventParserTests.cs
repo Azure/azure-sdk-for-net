@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text.Json;
 using Azure.Messaging;
 using Newtonsoft.Json.Linq;
@@ -506,6 +507,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 operationContext: "operationContext",
                 recognitionType: CallMediaRecognitionType.Dtmf,
                 collectTonesResult: new CollectTonesResult(new DtmfTone[] { DtmfTone.Five }),
+                choiceResult: new ChoiceResult("testLabel", "testRecognizePhrase"),
                 resultInformation: new ResultInformation(
                     code: 200,
                     subCode: 8531,
