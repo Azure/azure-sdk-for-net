@@ -3138,11 +3138,11 @@ namespace Azure.Messaging.EventHubs.Diagnostics
                 eventPayload[1].Size = (eventHubName.Length + 1) * sizeof(char);
                 eventPayload[1].DataPointer = (IntPtr)eventHubNamePtr;
 
-                eventPayload[3].Size = (operationId.Length + 1) * sizeof(char);
-                eventPayload[3].DataPointer = (IntPtr)operationIdPtr;
+                eventPayload[2].Size = (operationId.Length + 1) * sizeof(char);
+                eventPayload[2].DataPointer = (IntPtr)operationIdPtr;
 
-                eventPayload[4].Size = Unsafe.SizeOf<double>();
-                eventPayload[4].DataPointer = (IntPtr)Unsafe.AsPointer(ref durationSeconds);
+                eventPayload[3].Size = Unsafe.SizeOf<double>();
+                eventPayload[3].DataPointer = (IntPtr)Unsafe.AsPointer(ref durationSeconds);
 
                 WriteEventCore(eventId, 4, eventPayload);
             }

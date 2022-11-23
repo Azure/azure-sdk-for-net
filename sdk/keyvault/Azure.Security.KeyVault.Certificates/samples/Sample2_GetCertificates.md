@@ -108,11 +108,4 @@ foreach (DeletedCertificate deletedCert in client.GetDeletedCertificates())
 }
 ```
 
-## Source
-
-To see the full example source, see:
-
-* [Synchronous Sample2_GetCertificates.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/samples/Sample2_GetCertificates.cs)
-* [Asynchronous Sample2_GetCertificatesAsync.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/samples/Sample2_GetCertificatesAsync.cs)
-
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
