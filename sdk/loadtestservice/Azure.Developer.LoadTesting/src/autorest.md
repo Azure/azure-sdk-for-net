@@ -25,9 +25,6 @@ directive:
       where: $["paths"]["/tests"].get
       transform: $["operationId"] = "Test_ListTests";
     - from: swagger-document 
-      where: $["paths"]["/tests/{testId}/app-components"].patch
-      transform: $["operationId"] = "Test_CreateOrUpdateAppComponents";
-    - from: swagger-document 
       where: $["paths"]["/test-runs/{testRunId}/metric-dimension/{name}/values"].get
       transform: $["operationId"] = "TestRun_ListMetricDimensionValues";
     - from: swagger-document 
