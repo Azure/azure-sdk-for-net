@@ -16,16 +16,26 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 using Moq;
+using SignalRServiceExtension.Tests.Utils.Loggings;
 using Xunit;
+using Xunit.Abstractions;
 using Constants = Microsoft.Azure.WebJobs.Extensions.SignalRService.Constants;
 
 namespace SignalRServiceExtension.Tests
 {
     public class ServiceManagerStoreTests
     {
+        private readonly ITestOutputHelper _output;
+
+        public ServiceManagerStoreTests(ITestOutputHelper output)
+        {
+            _output = output;
+        }
+
         [Fact]
         public void GetServiceManager_WithSingleEndpoint()
         {
@@ -105,14 +115,16 @@ namespace SignalRServiceExtension.Tests
             configuration[Constants.AzureSignalRConnectionStringName] = connectionStrings[0];
             // Only persistent mode supports hot reload.
             configuration[Constants.ServiceTransportTypeName] = "Persistent";
-            var managerStore = new ServiceManagerStore(configuration, NullLoggerFactory.Instance, SingletonAzureComponentFactory.Instance, Options.Create(new SignalROptions()), mock.Object);
+            var loggerFactory = new LoggerFactory();
+            loggerFactory.AddProvider(new XunitLoggerProvider(_output));
+            var managerStore = new ServiceManagerStore(configuration, loggerFactory, SingletonAzureComponentFactory.Instance, Options.Create(new SignalROptions()), mock.Object);
             var hubContextStore = managerStore.GetOrAddByConnectionStringKey(Constants.AzureSignalRConnectionStringName);
             var hubContext = await hubContextStore.GetAsync("hub") as ServiceHubContext;
             await hubContext.ClientManager.UserExistsAsync("a");
 
             configuration[Constants.AzureSignalRConnectionStringName] = connectionStrings[1];
             configuration.Reload();
-            await Task.Delay(3000);
+            await Task.Delay(6000);
             await hubContext.ClientManager.UserExistsAsync("a");
 
             Assert.Equal(2, mock.Invocations.Count);
