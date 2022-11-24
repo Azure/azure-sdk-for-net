@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.Automanage.Tests
         /// <summary>
         /// Creates a custom configuration profile
         /// </summary>
-        /// <param name="collection">Configruation Profile Collection to perform actions against</param>
-        /// <param name="profileName">Desired name of the Configuration Profile</param>
+        /// <param name="collection">Configruation profile collection to perform actions against</param>
+        /// <param name="profileName">Desired configuration profile name</param>
         /// <returns>ConfigurationProfileResource</returns>
         protected async Task<ConfigurationProfileResource> CreateConfigurationProfile(ConfigurationProfileCollection collection, string profileName)
         {
