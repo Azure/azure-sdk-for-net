@@ -14,9 +14,17 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary> Model factory for read-only models. </summary>
     public static partial class PhoneNumbersModelFactory
     {
+        /// <summary> Initializes a new instance of PhoneNumberAreaCode. </summary>
+        /// <param name="areaCode"> An area code. </param>
+        /// <returns> A new <see cref="PhoneNumbers.PhoneNumberAreaCode"/> instance for mocking. </returns>
+        public static PhoneNumberAreaCode PhoneNumberAreaCode(string areaCode = null)
+        {
+            return new PhoneNumberAreaCode(areaCode);
+        }
+
         /// <summary> Initializes a new instance of PhoneNumberCountry. </summary>
-        /// <param name="localizedName"> Represents the name of the country/region. </param>
-        /// <param name="countryCode"> Represents the abbreviated name of the country/region. </param>
+        /// <param name="localizedName"> Represents the name of the country. </param>
+        /// <param name="countryCode"> Represents the abbreviated name of the country. </param>
         /// <returns> A new <see cref="PhoneNumbers.PhoneNumberCountry"/> instance for mocking. </returns>
         public static PhoneNumberCountry PhoneNumberCountry(string localizedName = null, string countryCode = null)
         {
@@ -25,7 +33,7 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <summary> Initializes a new instance of PhoneNumberLocality. </summary>
         /// <param name="localizedName"> Represents the localized name of the locality. </param>
-        /// <param name="administrativeDivision"> Represents the name of the administrative division of the locality. e.g. state or province. </param>
+        /// <param name="administrativeDivision"> Represents an administrative division. e.g. state or province. </param>
         /// <returns> A new <see cref="PhoneNumbers.PhoneNumberLocality"/> instance for mocking. </returns>
         public static PhoneNumberLocality PhoneNumberLocality(string localizedName = null, PhoneNumberAdministrativeDivision administrativeDivision = null)
         {
@@ -39,14 +47,6 @@ namespace Azure.Communication.PhoneNumbers
         public static PhoneNumberAdministrativeDivision PhoneNumberAdministrativeDivision(string localizedName = null, string abbreviatedName = null)
         {
             return new PhoneNumberAdministrativeDivision(localizedName, abbreviatedName);
-        }
-
-        /// <summary> Initializes a new instance of AreaCodeItem. </summary>
-        /// <param name="areaCode"> An area code as a string. </param>
-        /// <returns> A new <see cref="PhoneNumbers.AreaCodeItem"/> instance for mocking. </returns>
-        public static AreaCodeItem AreaCodeItem(string areaCode = null)
-        {
-            return new AreaCodeItem(areaCode);
         }
 
         /// <summary> Initializes a new instance of PhoneNumberOffering. </summary>

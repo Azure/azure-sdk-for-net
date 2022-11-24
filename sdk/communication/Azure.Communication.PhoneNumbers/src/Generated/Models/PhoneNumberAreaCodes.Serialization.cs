@@ -11,20 +11,20 @@ using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
-    internal partial class AreaCodes
+    internal partial class PhoneNumberAreaCodes
     {
-        internal static AreaCodes DeserializeAreaCodes(JsonElement element)
+        internal static PhoneNumberAreaCodes DeserializePhoneNumberAreaCodes(JsonElement element)
         {
-            IReadOnlyList<AreaCodeItem> areaCodes = default;
+            IReadOnlyList<PhoneNumberAreaCode> areaCodes = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("areaCodes"))
                 {
-                    List<AreaCodeItem> array = new List<AreaCodeItem>();
+                    List<PhoneNumberAreaCode> array = new List<PhoneNumberAreaCode>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AreaCodeItem.DeserializeAreaCodeItem(item));
+                        array.Add(PhoneNumberAreaCode.DeserializePhoneNumberAreaCode(item));
                     }
                     areaCodes = array;
                     continue;
@@ -35,7 +35,7 @@ namespace Azure.Communication.PhoneNumbers
                     continue;
                 }
             }
-            return new AreaCodes(areaCodes, nextLink.Value);
+            return new PhoneNumberAreaCodes(areaCodes, nextLink.Value);
         }
     }
 }

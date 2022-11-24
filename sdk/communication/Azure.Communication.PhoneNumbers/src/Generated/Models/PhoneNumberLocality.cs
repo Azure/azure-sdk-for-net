@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Communication.PhoneNumbers
 {
-    /// <summary> Represents a locality or town. </summary>
+    /// <summary> Represents a locality. </summary>
     public partial class PhoneNumberLocality
     {
         /// <summary> Initializes a new instance of PhoneNumberLocality. </summary>
@@ -27,7 +27,7 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <summary> Initializes a new instance of PhoneNumberLocality. </summary>
         /// <param name="localizedName"> Represents the localized name of the locality. </param>
-        /// <param name="administrativeDivision"> Represents the name of the administrative division of the locality. e.g. state or province. </param>
+        /// <param name="administrativeDivision"> Represents an administrative division. e.g. state or province. </param>
         internal PhoneNumberLocality(string localizedName, PhoneNumberAdministrativeDivision administrativeDivision)
         {
             LocalizedName = localizedName;
@@ -36,7 +36,7 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <summary> Represents the localized name of the locality. </summary>
         public string LocalizedName { get; }
-        /// <summary> Represents the name of the administrative division of the locality. e.g. state or province. </summary>
+        /// <summary> Represents an administrative division. e.g. state or province. </summary>
         public PhoneNumberAdministrativeDivision AdministrativeDivision { get; }
     }
 }

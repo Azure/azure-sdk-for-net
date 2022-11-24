@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
-    internal partial class PhoneNumberOfferings
+    internal partial class OfferingsResponse
     {
-        internal static PhoneNumberOfferings DeserializePhoneNumberOfferings(JsonElement element)
+        internal static OfferingsResponse DeserializeOfferingsResponse(JsonElement element)
         {
             Optional<IReadOnlyList<PhoneNumberOffering>> phoneNumberOfferings = default;
             Optional<string> nextLink = default;
@@ -40,7 +40,7 @@ namespace Azure.Communication.PhoneNumbers
                     continue;
                 }
             }
-            return new PhoneNumberOfferings(Optional.ToList(phoneNumberOfferings), nextLink.Value);
+            return new OfferingsResponse(Optional.ToList(phoneNumberOfferings), nextLink.Value);
         }
     }
 }

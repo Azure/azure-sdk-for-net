@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Communication.Tests;
 using Azure.Core.TestFramework;
@@ -313,7 +314,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var client = CreateClient();
 
             var areaCodes = client.GetAvailableAreaCodesTollFreeAsync("US");
-            await foreach (AreaCodeItem areaCode in areaCodes)
+            await foreach (PhoneNumberAreaCode areaCode in areaCodes)
             {
                 Assert.Contains(areaCode.AreaCode, expectedAreaCodes);
             }
@@ -327,13 +328,17 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 Assert.Ignore("Skip phone number live tests flag is on.");
 
             var client = CreateClient();
-
-            var areaCodes = client.GetAvailableAreaCodesGeographicAsync("US", "person", "Seattle");
-            await foreach (AreaCodeItem areaCode in areaCodes)
+            var availableLocalities = client.GetAvailableLocalitiesAsync("US");
+            await foreach (PhoneNumberLocality firstLocality in availableLocalities)
             {
-                Console.WriteLine("Area Code " + areaCode.AreaCode);
+                var areaCodes = client.GetAvailableAreaCodesGeographicAsync("US", "person", firstLocality.LocalizedName);
+                await foreach (PhoneNumberAreaCode areaCode in areaCodes)
+                {
+                    Console.WriteLine("Area Code " + areaCode.AreaCode);
+                }
+                Assert.IsNotNull(areaCodes);
+                break;
             }
-            Assert.IsNotNull(areaCodes);
         }
 
         [Test]
@@ -382,14 +387,18 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 Assert.Ignore("Skip phone number live tests flag is on.");
 
             var client = CreateClient();
-
-            var localities = client.GetAvailableLocalitiesAsync("US", "WA");
-            await foreach (PhoneNumberLocality locality in localities)
+            var availableLocalities = client.GetAvailableLocalitiesAsync("US");
+            await foreach (PhoneNumberLocality firstLocality in availableLocalities)
             {
-                Console.WriteLine("Locality " + locality.LocalizedName);
-                Assert.Equals(locality.AdministrativeDivision.AbbreviatedName, "WA");
+                var localities = client.GetAvailableLocalitiesAsync("US", firstLocality.AdministrativeDivision.AbbreviatedName);
+                await foreach (PhoneNumberLocality locality in localities)
+                {
+                    Console.WriteLine("Locality " + locality.LocalizedName);
+                    Assert.AreEqual(locality.AdministrativeDivision.AbbreviatedName, firstLocality.AdministrativeDivision.AbbreviatedName);
+                }
+                Assert.IsNotNull(localities);
+                break;
             }
-            Assert.IsNotNull(localities);
         }
 
         [Test]

@@ -9,12 +9,12 @@ using System;
 
 namespace Azure.Communication.PhoneNumbers
 {
-    /// <summary> Represents a country/region. </summary>
+    /// <summary> Represents a country. </summary>
     public partial class PhoneNumberCountry
     {
         /// <summary> Initializes a new instance of PhoneNumberCountry. </summary>
-        /// <param name="localizedName"> Represents the name of the country/region. </param>
-        /// <param name="countryCode"> Represents the abbreviated name of the country/region. </param>
+        /// <param name="localizedName"> Represents the name of the country. </param>
+        /// <param name="countryCode"> Represents the abbreviated name of the country. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="localizedName"/> or <paramref name="countryCode"/> is null. </exception>
         internal PhoneNumberCountry(string localizedName, string countryCode)
         {
@@ -31,9 +31,9 @@ namespace Azure.Communication.PhoneNumbers
             CountryCode = countryCode;
         }
 
-        /// <summary> Represents the name of the country/region. </summary>
+        /// <summary> Represents the name of the country. </summary>
         public string LocalizedName { get; }
-        /// <summary> Represents the abbreviated name of the country/region. </summary>
+        /// <summary> Represents the abbreviated name of the country. </summary>
         public string CountryCode { get; }
     }
 }
