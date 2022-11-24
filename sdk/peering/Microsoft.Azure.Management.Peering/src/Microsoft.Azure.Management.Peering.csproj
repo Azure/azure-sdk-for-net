@@ -7,14 +7,11 @@
 		<PackageId>Microsoft.Azure.Management.Peering</PackageId>
 		<Description>Microsoft Azure Management Peering library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Peering</AssemblyName>
-		<Version>2.1.2</Version>
+		<Version>2.1.1</Version>
 		<PackageTags></PackageTags>
-    <PackageReleaseNotes>
-	<![CDATA[
-- Add connectionMonitorTest functionality for peerings
-- Add directPeeringType to LegacyPeeringOperations
-- Add lookingGlass functionality for peerings
-- Add rpUnbilledPrefixes functionality for peerings
+    <PackageReleaseNotes><![CDATA[
+- Add cdnPeeringPrefixes functionality for peerings
+- Add microsoftTrackingId for peering direct connection
 ]]>
 </PackageReleaseNotes>
   </PropertyGroup>
