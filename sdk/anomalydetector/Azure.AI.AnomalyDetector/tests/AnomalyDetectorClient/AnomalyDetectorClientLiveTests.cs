@@ -33,7 +33,7 @@ namespace Azure.AI.AnomalyDetector.Tests
             var request = TestData.TestPointSeries;
             request.MaxAnomalyRatio = 0.25F;
             request.Sensitivity = 95;
-            var result = await client.DetectEntireSeriesAsync(request);
+            var result = await client.DetectUnivariateEntireSeriesAsync(request);
 
             Assert.AreEqual(TestData.ExpectedEntireDetectResult.ExpectedValues, result.Value.ExpectedValues);
             Assert.AreEqual(TestData.ExpectedEntireDetectResult.UpperMargins, result.Value.UpperMargins);
@@ -45,14 +45,14 @@ namespace Azure.AI.AnomalyDetector.Tests
         }
 
         [Test]
-        public async Task GetResultForLastDetect()
+        public void GetResultForLastDetect()
         {
             var client = CreateAnomalyDetectorClient();
 
             var request = TestData.TestPointSeries;
             request.MaxAnomalyRatio = 0.25F;
             request.Sensitivity = 95;
-            var result = await client.DetectLastPointAsync(request);
+            var result = client.DetectUnivariateLastPoint(request);
 
             Assert.AreEqual(809.5658016931228F, result.Value.ExpectedValue);
             Assert.AreEqual(false, result.Value.IsAnomaly);
@@ -75,7 +75,7 @@ namespace Azure.AI.AnomalyDetector.Tests
             request.StableTrendWindow = 10;
             request.Threshold = 0.5F;
             request.Period = 0;
-            var result = await client.DetectChangePointAsync(request);
+            var result = await client.DetectUnivariateChangePointAsync(request);
 
             Assert.AreEqual(TestData.ExpectedChangePointResult.Period, result.Value.Period);
             Assert.AreEqual(TestData.ExpectedChangePointResult.IsChangePoint, result.Value.IsChangePoint);
