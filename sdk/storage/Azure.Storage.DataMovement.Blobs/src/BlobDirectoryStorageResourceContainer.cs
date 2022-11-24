@@ -148,7 +148,7 @@ namespace Azure.Storage.DataMovement.Blobs
                         },
                         DownloadOptions = new BlobStorageResourceDownloadOptions()
                         {
-                            Conditions = (BlobRequestConditions)_options?.UploadOptions?.Conditions,
+                            Conditions = _options?.UploadOptions?.Conditions,
                         }
                     });
             }
@@ -170,7 +170,7 @@ namespace Azure.Storage.DataMovement.Blobs
                         },
                         DownloadOptions = new BlobStorageResourceDownloadOptions()
                         {
-                            Conditions = (BlobRequestConditions)_options?.UploadOptions?.Conditions,
+                            Conditions = _options?.UploadOptions?.Conditions,
                         }
                     });
             }

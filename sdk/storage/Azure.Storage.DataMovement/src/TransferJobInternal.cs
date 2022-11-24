@@ -226,7 +226,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Pauses all job parts within the job.
         /// </summary>
-        public virtual async Task PauseTransferJobAsync()
+        public async Task PauseTransferJobAsync()
         {
             TriggerJobCancellation();
             await OnJobStatusChangedAsync(StorageTransferStatus.Paused).ConfigureAwait(false);

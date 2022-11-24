@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -20,6 +21,13 @@ using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 
 #pragma warning disable SA1402  // File may only contain a single type
+
+[assembly: InternalsVisibleTo("Azure.Storage.DataMovement.Blobs, PublicKey=" +
+    "0024000004800000940000000602000000240000525341310004000001000100d15ddcb2968829" +
+    "5338af4b7686603fe614abd555e09efba8fb88ee09e1f7b1ccaeed2e8f823fa9eef3fdd60217fc" +
+    "012ea67d2479751a0b8c087a4185541b851bd8b16f8d91b840e51b1cb0ba6fe647997e57429265" +
+    "e85ef62d565db50a69ae1647d54d7bd855e4db3d8a91510e5bcbd0edfbbecaa20a7bd9ae74593d" +
+    "aa7b11b4")]
 
 namespace Azure.Storage.Blobs.Specialized
 {
@@ -642,7 +650,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="client">The BlobServiceClient.</param>
         /// <returns>The BlobServiceClient's HttpPipeline.</returns>
-        protected static TokenCredential GetTokenCredential(BlobBaseClient client) =>
+        internal static TokenCredential GetTokenCredential(BlobBaseClient client) =>
             client.ClientConfiguration.OAuthTokenCredential;
 
         /// <summary>
@@ -651,7 +659,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="client">The BlobServiceClient.</param>
         /// <returns>The BlobServiceClient's BlobClientOptions.</returns>
-        protected static BlobClientOptions GetClientOptions(BlobBaseClient client) =>
+        internal static BlobClientOptions GetClientOptions(BlobBaseClient client) =>
             new BlobClientOptions(client.ClientConfiguration.Version)
             {
                 // We only use this for communicating diagnostics, at the moment
@@ -667,7 +675,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="client">The BlobServiceClient.</param>
         /// <returns>The BlobServiceClient's BlobClientOptions.</returns>
-        protected static bool GetUsingClientSideEncryption(BlobBaseClient client) => client.UsingClientSideEncryption;
+        internal static bool GetUsingClientSideEncryption(BlobBaseClient client) => client.UsingClientSideEncryption;
         #endregion protected static accessors for Azure.Storage.DataMovement.Blobs
 
         ///// <summary>

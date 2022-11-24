@@ -49,6 +49,25 @@ namespace Azure.Storage.DataMovement
         public abstract ProduceUriType CanProduceUri { get; }
 
         /// <summary>
+        /// Defines the transfer type of the storage resource.
+        /// </summary>
+        public abstract TransferType TransferType { get; }
+
+        /// <summary>
+        /// Defines the maximum chunk size for the storage resource.
+        /// </summary>
+        public abstract long MaxChunkSize { get; }
+
+        /// <summary>
+        /// Creates the Storage Resource if possible. Will throw not supported if not necessary.
+        /// </summary>
+        /// <param name="overwrite"></param>
+        /// <param name="size"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public abstract Task CreateAsync(bool overwrite, long size = 0, CancellationToken cancellationToken = default);
+
+        /// <summary>
         /// Consumes the readable stream to upload
         /// </summary>
         /// <param name="position">
@@ -70,6 +89,9 @@ namespace Azure.Storage.DataMovement
         /// <param name="position">
         /// The offset which the stream will be copied to.
         /// </param>
+        /// <param name="overwrite">
+        /// If set to true, will overwrite the blob if exists.
+        /// </param>
         /// <param name="length">
         /// The length of the stream.
         /// </param>
@@ -79,6 +101,7 @@ namespace Azure.Storage.DataMovement
         /// <returns></returns>
         public abstract Task WriteFromStreamAsync(
             Stream stream,
+            bool overwrite,
             long position = 0,
             long? length = default,
             StorageResourceWriteToOffsetOptions options = default,
@@ -88,11 +111,15 @@ namespace Azure.Storage.DataMovement
         /// Uploads/copy the blob from a url
         /// </summary>
         /// <param name="sourceResource"></param>
+        /// <param name="overwrite">
+        /// If set to true, will overwrite the blob if exists.
+        /// </param>
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public abstract Task CopyFromUriAsync(
             StorageResource sourceResource,
+            bool overwrite,
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default);
 
@@ -101,12 +128,16 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <param name="sourceResource"></param>
         /// <param name="range"></param>
+        /// <param name="overwrite">
+        /// If set to true, will overwrite the blob if exists.
+        /// </param>
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public abstract Task CopyBlockFromUriAsync(
             StorageResource sourceResource,
             HttpRange range,
+            bool overwrite,
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default);
 

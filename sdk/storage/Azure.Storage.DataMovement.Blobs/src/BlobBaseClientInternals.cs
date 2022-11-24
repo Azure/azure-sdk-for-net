@@ -21,6 +21,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Prevent instantiation.
         /// </summary>
         private BlobBaseClientInternals() { }
+        /* TODO Remove after confirming if we can have internal link before blobs and datamovement
 
         /// <summary>
         /// Get a <see cref="BlobBaseClient"/>'s <see cref="TokenCredential"/>
@@ -48,5 +49,6 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <returns></returns>
         public static new bool GetUsingClientSideEncryption(BlobBaseClient client) =>
             BlobBaseClient.GetUsingClientSideEncryption(client);
+        */
     }
 }

@@ -78,43 +78,15 @@ namespace Azure.Storage.DataMovement
         /// <returns>The task that's queueing up the chunks</returns>
         public override async Task ProcessPartToChunkAsync()
         {
-            if (await CreateDownloadFilePath().ConfigureAwait(false))
+            // we can default the length to 0 because we know the destination is local and
+            // does not require a length to be created.
+            if (await CreateDestinationResource(0).ConfigureAwait(false))
             {
                 await InitiateDownload().ConfigureAwait(false);
             }
         }
 
         #region PartitionedDownloader
-        /// <summary>
-        /// Initializes the temporary file path for the blob to be downloaded to.
-        /// </summary>
-        private async Task<bool> CreateDownloadFilePath()
-        {
-            try
-            {
-                string destinationPath = _destinationResource.Path;
-                if (!File.Exists(destinationPath))
-                {
-                    File.Create(destinationPath).Close();
-                    FileAttributes attributes = File.GetAttributes(destinationPath);
-                    File.SetAttributes(destinationPath, attributes | FileAttributes.Temporary);
-                    return true;
-                }
-                else
-                {
-                    // TODO: if there's an error handling enum to overwrite the file we have to check
-                    // for that instead of throwing an error
-                    await InvokeFailedArg(
-                        new IOException($"File path `{destinationPath}` already exists. Cannot overwite file")).ConfigureAwait(false);
-                }
-            }
-            catch (Exception ex)
-            {
-                await InvokeFailedArg(ex).ConfigureAwait(false);
-            }
-            return false;
-        }
-
         /// <summary>
         /// Just start downloading using an initial range.  If it's a
         /// small blob, we'll get the whole thing in one shot.  If it's
@@ -248,7 +220,7 @@ namespace Azure.Storage.DataMovement
             catch (OperationCanceledException)
             {
                 // Job was cancelled
-                await OnTransferStatusChanged(StorageTransferStatus.Completed).ConfigureAwait(false);
+                await OnTransferStatusChanged(StorageTransferStatus.None).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -266,6 +238,7 @@ namespace Azure.Storage.DataMovement
                 // TODO: change to custom offset based on chunk offset
                 await _destinationResource.WriteFromStreamAsync(
                     source,
+                    false,
                     offset,
                     sourceLength,
                     default,

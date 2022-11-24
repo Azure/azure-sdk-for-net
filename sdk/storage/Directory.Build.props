@@ -63,6 +63,7 @@
     <NoWarn>
       $(NoWarn);
       AZC0010;
+	  AZC0011;
     </NoWarn>
   </PropertyGroup>
 

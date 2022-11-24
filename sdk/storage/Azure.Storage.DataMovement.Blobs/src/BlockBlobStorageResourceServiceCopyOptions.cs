@@ -11,7 +11,7 @@ namespace Azure.Storage.DataMovement.Blobs
 {
     /// <summary>
     /// Options for <see cref="BlockBlobStorageResource"/> when calling
-    /// <see cref="BlockBlobStorageResource.CopyBlockFromUriAsync(StorageResource, HttpRange, StorageResourceCopyFromUriOptions, System.Threading.CancellationToken)"/>.
+    /// <see cref="BlockBlobStorageResource.CopyBlockFromUriAsync(StorageResource, HttpRange, bool, StorageResourceCopyFromUriOptions, System.Threading.CancellationToken)"/>.
     /// </summary>
     public class BlockBlobStorageResourceServiceCopyOptions
     {

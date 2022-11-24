@@ -11,6 +11,7 @@ using System.Threading;
 using Azure.Storage.DataMovement.Blobs.Models;
 using System.Buffers;
 using Azure.Storage.Shared;
+using static Azure.Storage.Constants.Blob;
 
 namespace Azure.Storage.DataMovement
 {
@@ -44,7 +45,8 @@ namespace Azure.Storage.DataMovement
                   job.TransferStatusEventHandler,
                   job.TransferFailedEventHandler,
                   job._cancellationTokenSource)
-        { }
+        {
+        }
 
         /// <summary>
         /// Creating transfer job based on a storage resource created from listing.
@@ -71,7 +73,8 @@ namespace Azure.Storage.DataMovement
                   job.TransferStatusEventHandler,
                   job.TransferFailedEventHandler,
                   job._cancellationTokenSource)
-        { }
+        {
+        }
 
         /// <summary>
         /// Processes the job to job parts
@@ -81,78 +84,84 @@ namespace Azure.Storage.DataMovement
         {
             // Attempt to get the length, it's possible the file could
             // not be accesible (or does not exist).
+            string operationName = $"{nameof(TransferManager.StartTransferAsync)}";
+            await OnTransferStatusChanged(StorageTransferStatus.InProgress).ConfigureAwait(false);
             long? fileLength = default;
             try
             {
                 StorageResourceProperties properties = await _sourceResource.GetPropertiesAsync(_cancellationTokenSource.Token).ConfigureAwait(false);
                 fileLength = properties.ContentLength;
             }
-            catch
+            catch (Exception ex)
             {
                 // TODO: logging when given the event handler
-                await TriggerCancellation().ConfigureAwait(false);
+                await InvokeFailedArg(ex).ConfigureAwait(false);
                 return;
             }
 
-            string operationName = $"{nameof(TransferManager.StartTransferAsync)}";
-            await OnTransferStatusChanged(StorageTransferStatus.InProgress).ConfigureAwait(false);
             if (fileLength.HasValue)
             {
-                // Determine whether the upload will be a single put blob or not
-                if (_initialTransferSize < fileLength.Value)
+                long length = fileLength.Value;
+                // Determine how and if we want to create the destination resource and if
+                // we need to fail or skip the rest of the job.
+                if (await CreateDestinationResource(length).ConfigureAwait(false))
                 {
-                    // If the caller provided an explicit block size, we'll use it.
-                    // Otherwise we'll adjust dynamically based on the size of the
-                    // content.
-                    long blockSize;
-                    if (_maximumTransferChunkSize.HasValue
-                    && _maximumTransferChunkSize > 0)
+                    // Determine whether the upload will be a single put blob or not
+                    long blockSize = CalculateBlockSize(length);
+                    if (_initialTransferSize < length)
                     {
-                        blockSize = Math.Min(
-                        Constants.Blob.Block.MaxStageBytes,
-                            _maximumTransferChunkSize.Value);
+                        // If we cannot upload in one shot, initiate the parallel block uploader
+                        if (_destinationResource.TransferType == TransferType.Concurrent)
+                        {
+                            List<(long Offset, long Length)> commitBlockList = GetCommitBlockList(blockSize, length);
+                            await QueueStageBlockRequests(commitBlockList).ConfigureAwait(false);
+                        }
+                        else // Sequential
+                        {
+                            // Queue paritioned block task
+                            await QueueChunk(async () =>
+                            await StageBlockInternal(
+                                0,
+                                blockSize).ConfigureAwait(false)).ConfigureAwait(false);
+                        }
+                        _commitBlockHandler = GetCommitController(
+                            expectedLength: length,
+                            blockSize: blockSize,
+                            this,
+                            _destinationResource.TransferType);
                     }
                     else
                     {
-                        blockSize = fileLength < Constants.LargeUploadThreshold ?
-                                Constants.DefaultBufferSize :
-                                Constants.LargeBufferSize;
+                        // Single Put Blob Request
+                        await QueueChunk(async () => await SingleUploadCall(length).ConfigureAwait(false)).ConfigureAwait(false);
                     }
-
-                    // If we cannot upload in one shot, initiate the parallel block uploader
-                    List<(long Offset, long Length)> commitBlockList = GetCommitBlockList(blockSize, fileLength.Value);
-
-                    await QueueStageBlockRequests(commitBlockList).ConfigureAwait(false);
-
-                    _commitBlockHandler = GetCommitController(expectedLength: fileLength.Value, this);
-                }
-                else
-                {
-                    // Single Put Blob Request
-                    await QueueChunk( async () => await SingleUploadCall(fileLength.Value).ConfigureAwait(false)).ConfigureAwait(false);
                 }
             }
             else
             {
                 // TODO: logging when given the event handler
-                await TriggerCancellation().ConfigureAwait(false);
+                await InvokeFailedArg(Errors.UnableToGetLength()).ConfigureAwait(false);
             }
         }
 
         #region CommitChunkController
         internal static CommitChunkHandler GetCommitController(
             long expectedLength,
-            StreamToUriJobPart jobPart)
+            long blockSize,
+            StreamToUriJobPart jobPart,
+            TransferType transferType)
         => new CommitChunkHandler(
             expectedLength,
-            GetBlockListCommitHandlerBehaviors(jobPart));
+            blockSize,
+            GetBlockListCommitHandlerBehaviors(jobPart),
+            transferType);
 
         internal static CommitChunkHandler.Behaviors GetBlockListCommitHandlerBehaviors(
             StreamToUriJobPart jobPart)
         {
             return new CommitChunkHandler.Behaviors
             {
-                // TODO #27253
+                QueuePutBlockTask = async (long offset, long blockSize) => await jobPart.StageBlockInternal(offset, blockSize).ConfigureAwait(false),
                 QueueCommitBlockTask = async () => await jobPart.CompleteTransferAsync().ConfigureAwait(false),
                 ReportProgressInBytes = (long bytesWritten) =>
                     jobPart.ReportBytesWritten(bytesWritten),
@@ -172,12 +181,34 @@ namespace Azure.Storage.DataMovement
                 using Stream stream = result.Content;
                 await _destinationResource.WriteFromStreamAsync(
                         stream: stream,
-                        position: default,
-                        length: default,
+                        overwrite: _createMode == StorageResourceCreateMode.Overwrite,
+                        position: 0,
+                        length: length,
                         options: default,
                         cancellationToken: _cancellationTokenSource.Token).ConfigureAwait(false);
 
                 // Set completion status to completed
+                ReportBytesWritten(length);
+                await OnTransferStatusChanged(StorageTransferStatus.Completed).ConfigureAwait(false);
+            }
+            catch (RequestFailedException ex)
+            when (ex.ErrorCode == "BlobAlreadyExists")
+            {
+                // For Block Blobs this is a one off case because we don't create the blob
+                // before uploading to it.
+                if (_createMode == StorageResourceCreateMode.Fail)
+                {
+                    await InvokeFailedArg(ex).ConfigureAwait(false);
+                }
+                else // (_createMode == StorageResourceCreateMode.Skip)
+                {
+                    await InvokeSkippedArg().ConfigureAwait(false);
+                }
+            }
+            catch (ArgumentException ex)
+            when (length == 0 && ex.Message.Contains("Cannot upload stream of 0 length"))
+            {
+                // Acceptable exception which means it's an empty page.
                 ReportBytesWritten(length);
                 await OnTransferStatusChanged(StorageTransferStatus.Completed).ConfigureAwait(false);
             }
@@ -209,6 +240,7 @@ namespace Azure.Storage.DataMovement
                         _cancellationTokenSource.Token).ConfigureAwait(false);
                     await _destinationResource.WriteFromStreamAsync(
                         slicedStream,
+                        overwrite: _createMode == StorageResourceCreateMode.Overwrite,
                         offset,
                         blockLength,
                         default,
@@ -230,7 +262,7 @@ namespace Azure.Storage.DataMovement
             catch (OperationCanceledException)
             {
                 // Job was cancelled
-                await TriggerCancellation().ConfigureAwait(false);
+                await TriggerCancellation(StorageTransferStatus.None).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

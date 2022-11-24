@@ -75,6 +75,70 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         }
 
         [RecordedTest]
+        public async Task CreateAsync()
+        {
+            // Arrange
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            AppendBlobClient blobClient = testContainer.Container.GetAppendBlobClient(GetNewBlobName());
+
+            AppendBlobStorageResource storageResource = new AppendBlobStorageResource(blobClient);
+
+            // Act
+            await storageResource.CreateAsync(false);
+
+            // Assert
+            Assert.IsTrue(await blobClient.ExistsAsync());
+        }
+
+        [RecordedTest]
+        public async Task CreateAsync_Overwrite()
+        {
+            // Arrange
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            AppendBlobClient blobClient = testContainer.Container.GetAppendBlobClient(GetNewBlobName());
+            var length = Constants.KB;
+            await blobClient.CreateAsync();
+            var data = GetRandomBuffer(length);
+            using (var stream = new MemoryStream(data))
+            {
+                await blobClient.AppendBlockAsync(stream);
+            }
+
+            AppendBlobStorageResource storageResource = new AppendBlobStorageResource(blobClient);
+
+            // Act
+            await storageResource.CreateAsync(true);
+
+            // Assert
+            Assert.IsTrue(await blobClient.ExistsAsync());
+        }
+
+        [RecordedTest]
+        public async Task CreateAsync_Error()
+        {
+            // Arrange
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            AppendBlobClient blobClient = testContainer.Container.GetAppendBlobClient(GetNewBlobName());
+            var length = Constants.KB;
+            await blobClient.CreateAsync();
+            var data = GetRandomBuffer(length);
+            using (var stream = new MemoryStream(data))
+            {
+                await blobClient.AppendBlockAsync(stream);
+            }
+
+            AppendBlobStorageResource storageResource = new AppendBlobStorageResource(blobClient);
+
+            // Assert
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                storageResource.CreateAsync(false),
+                e =>
+                {
+                    Assert.AreEqual("BlobAlreadyExists", e.ErrorCode);
+                });
+        }
+
+        [RecordedTest]
         public async Task ReadStreamAsync()
         {
             // Arrange
@@ -183,7 +247,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             using (var stream = new MemoryStream(data))
             {
                 // Act
-                await storageResource.WriteFromStreamAsync(stream);
+                await storageResource.WriteFromStreamAsync(stream, false);
             }
 
             BlobDownloadStreamingResult result = await blobClient.DownloadStreamingAsync();
@@ -212,7 +276,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             using (var stream = new MemoryStream(data))
             {
                 // Act
-                await storageResource.WriteFromStreamAsync(stream, position: readPosition - 1);
+                await storageResource.WriteFromStreamAsync(stream, false, position: readPosition - 1);
             }
 
             BlobDownloadStreamingResult result = await blobClient.DownloadStreamingAsync(
@@ -244,7 +308,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             {
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                storageResource.WriteFromStreamAsync(stream, position: position, length: length),
+                storageResource.WriteFromStreamAsync(stream, false, position: position, length: length),
                 e =>
                 {
                     Assert.IsTrue(e.Message.Contains("The specified blob does not exist."));
@@ -278,7 +342,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 new AppendBlobStorageResourceOptions() { CopyOptions = options });
 
             // Act;
-            await destinationResource.CopyFromUriAsync(sourceResource);
+            await destinationResource.CopyFromUriAsync(sourceResource, false);
 
             // Assert
             await destinationClient.ExistsAsync();
@@ -320,6 +384,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             // Act
             await destinationResource.CopyFromUriAsync(
                 sourceResource: sourceResource,
+                overwrite: false,
                 options: options);
 
             // Assert
@@ -342,7 +407,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                destinationResource.CopyFromUriAsync(sourceResource: sourceResource),
+                destinationResource.CopyFromUriAsync(sourceResource: sourceResource, false),
                 e =>
                 {
                     Assert.IsTrue(e.Message.StartsWith("The specified blob does not exist."));
@@ -373,6 +438,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             // Act
             await destinationResource.CopyBlockFromUriAsync(
                 sourceResource: sourceResource,
+                overwrite: false,
                 range: new HttpRange(0, blockLength));
 
             // Commit the block
@@ -417,6 +483,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             // Act
             await destinationResource.CopyBlockFromUriAsync(
                 sourceResource: sourceResource,
+                overwrite: false,
                 range: new HttpRange(0, blockLength),
                 options: options);
             await destinationResource.CompleteTransferAsync();
@@ -443,7 +510,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                destinationResource.CopyBlockFromUriAsync(sourceResource, new HttpRange(0, Constants.KB)),
+                destinationResource.CopyBlockFromUriAsync(sourceResource, new HttpRange(0, Constants.KB), false),
                 e =>
                 {
                     Assert.IsTrue(e.Message.Contains("The specified blob does not exist."));
@@ -507,7 +574,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             var data = GetRandomBuffer(length);
             using (var stream = new MemoryStream(data))
             {
-                await storageResource.WriteFromStreamAsync(stream, position: 0, length: Constants.KB);
+                await storageResource.WriteFromStreamAsync(stream, false, position: 0, length: Constants.KB);
             }
 
             // Act

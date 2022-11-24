@@ -29,6 +29,16 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
+        /// constructor for mocking
+        /// </summary>
+        public DataTransferState(StorageTransferStatus status)
+        {
+            _id = Guid.NewGuid().ToString();
+            _status = status;
+            _currentTransferredBytes = 0;
+        }
+
+        /// <summary>
         /// Constructor to resume current jobs
         /// </summary>
         public DataTransferState(string id, long bytesTransferred)

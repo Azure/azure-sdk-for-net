@@ -218,7 +218,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="id"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public Task<bool> TryPauseTransferAsync(string id)
+        public virtual Task<bool> TryPauseTransferAsync(string id)
         {
             throw new NotImplementedException();
         }
@@ -228,7 +228,7 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public Task<bool> TryPauseAllTransfersAsync()
+        public virtual Task<bool> TryPauseAllTransfersAsync()
         {
             throw new NotImplementedException();
         }
@@ -239,7 +239,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="id"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public Task<bool> TryRemoveTransferAsync(string id)
+        public virtual Task<bool> TryRemoveTransferAsync(string id)
         {
             throw new NotImplementedException();
         }
@@ -254,7 +254,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="destinationResource"></param>
         /// <param name="transferOptions"></param>
         /// <returns></returns>
-        public async Task<DataTransfer> StartTransferAsync(
+        public virtual async Task<DataTransfer> StartTransferAsync(
             StorageResource sourceResource,
             StorageResource destinationResource,
             SingleTransferOptions transferOptions = default)
@@ -357,7 +357,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="destinationResource"></param>
         /// <param name="transferOptions"></param>
         /// <returns></returns>
-        public async Task<DataTransfer> StartTransferAsync(
+        public virtual async Task<DataTransfer> StartTransferAsync(
             StorageResourceContainer sourceResource,
             StorageResourceContainer destinationResource,
             ContainerTransferOptions transferOptions = default)

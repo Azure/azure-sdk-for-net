@@ -12,13 +12,12 @@ using Azure.Storage.Blobs;
 using Azure.Storage.DataMovement.Models;
 using NUnit.Framework;
 using Azure.Storage.DataMovement.Blobs;
-using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.DataMovement.Tests
 {
-    public class StartTransferSyncCopyTests : DataMovementBlobTestBase
+    public class StartTransferAsyncCopyTests : DataMovementBlobTestBase
     {
-        public StartTransferSyncCopyTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+        public StartTransferAsyncCopyTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         { }
 
@@ -153,7 +152,14 @@ namespace Azure.Storage.DataMovement.Tests
                     StorageResource sourceResource = new BlockBlobStorageResource(originalBlob);
                     // Set up destination client
                     BlockBlobClient destClient = InstrumentClient(container.GetBlockBlobClient(string.Concat("dest-", sourceBlobNames[i])));
-                    StorageResource destinationResource = new BlockBlobStorageResource(destClient);
+                    StorageResource destinationResource = new BlockBlobStorageResource(destClient,
+                        new BlockBlobStorageResourceOptions()
+                        {
+                            CopyOptions = new BlockBlobStorageResourceServiceCopyOptions()
+                            {
+                                CopyMethod = TransferCopyMethod.AsyncCopy
+                            }
+                        });
                     copyBlobInfo.Add(new VerifyCopyFromUriInfo(
                         localSourceFile,
                         sourceResource,
@@ -217,19 +223,19 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
-        public async Task BlockBlobToBlockBlob_SmallChunk()
+        [TestCase(0, 10)]
+        [TestCase(Constants.KB, 10)]
+        [TestCase(4 * Constants.MB, 20)]
+        [TestCase(257 * Constants.MB, 400)]
+        [TestCase(Constants.GB, 800)]
+        public async Task BlockBlobToBlockBlob_Progress(long size, int waitTimeInSec)
         {
-            long size = Constants.KB;
-            int waitTimeInSec = 10;
-
-            SingleTransferOptions options = new SingleTransferOptions()
-            {
-                InitialTransferSize = 100,
-                MaximumTransferChunkSize = 200,
-            };
+            AutoResetEvent CompletedProgressBytesWait = new AutoResetEvent(false);
+            SingleTransferOptions options = new SingleTransferOptions();
+            ;
 
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
 
             List<SingleTransferOptions> optionsList = new List<SingleTransferOptions>() { options };
             await CopyBlobsAndVerify(
@@ -237,13 +243,16 @@ namespace Azure.Storage.DataMovement.Tests
                 waitTimeInSec: waitTimeInSec,
                 size: size,
                 options: optionsList).ConfigureAwait(false);
+
+            // Assert
+            Assert.IsTrue(CompletedProgressBytesWait.WaitOne(TimeSpan.FromSeconds(waitTimeInSec)));
         }
 
         [RecordedTest]
         public async Task BlockBlobToBlockBlob_EventHandler()
         {
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
 
             int waitTimeInSec = 10;
             AutoResetEvent InProgressWait = new AutoResetEvent(false);

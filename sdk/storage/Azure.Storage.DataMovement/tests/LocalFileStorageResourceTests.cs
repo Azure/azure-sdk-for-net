@@ -122,7 +122,7 @@ namespace Azure.Storage.DataMovement.Tests
             using (var stream = new MemoryStream(data))
             {
                 // Act
-                await storageResource.WriteFromStreamAsync(stream);
+                await storageResource.WriteFromStreamAsync(stream, false);
             }
 
             // Assert
@@ -145,7 +145,7 @@ namespace Azure.Storage.DataMovement.Tests
             using (var stream = new MemoryStream(data))
             {
                 // Act
-                await storageResource.WriteFromStreamAsync(stream, position: readPosition);
+                await storageResource.WriteFromStreamAsync(stream, false, position: readPosition);
             }
 
             // Assert
@@ -162,14 +162,18 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             string path = "C:/FakeFileName";
             LocalFileStorageResource storageResource = new LocalFileStorageResource(path);
-
-            // Act without creating the blob
-            await TestHelper.AssertExpectedExceptionAsync<Exception>(
-                storageResource.ReadStreamAsync(),
-                e =>
-                {
-                    Assert.IsTrue(e.Message.Contains("Could not find file"));
-                });
+            var length = Constants.KB;
+            var data = GetRandomBuffer(length);
+            using (var stream = new MemoryStream(data))
+            {
+                // Act without creating the blob
+                await TestHelper.AssertExpectedExceptionAsync<Exception>(
+                    storageResource.WriteFromStreamAsync(stream, false),
+                    e =>
+                    {
+                        Assert.IsTrue(e.Message.Contains("Could not find file"));
+                    });
+            }
         }
 
         [Test]

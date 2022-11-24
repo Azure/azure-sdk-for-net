@@ -39,5 +39,8 @@ namespace Azure.Storage
         public static ArgumentException InvalidConnectionString()
             => new ArgumentException($"Cannot resume transfer job due to mismatch of storage account endpoint contained in the connection string passed and " +
                 $"the original endpoint which was passed when the transfer job was first scheduled.");
+
+        public static ArgumentException UnableToGetLength()
+            => new ArgumentException("Unable to get the length of the source storage resource");
     }
 }

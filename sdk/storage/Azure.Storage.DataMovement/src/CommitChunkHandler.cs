@@ -15,12 +15,14 @@ namespace Azure.Storage.DataMovement
     internal class CommitChunkHandler
     {
         #region Delegate Definitions
+        public delegate Task QueuePutBlockTaskInternal(long offset, long blockSize);
         public delegate Task QueueCommitBlockTaskInternal();
         public delegate Task UpdateTransferStatusInternal(StorageTransferStatus status);
         public delegate void ReportProgressInBytes(long bytesWritten);
         public delegate Task InvokeFailedEventHandlerInternal(Exception ex);
         #endregion Delegate Definitions
 
+        private readonly QueuePutBlockTaskInternal _queuePutBlockTask;
         private readonly QueueCommitBlockTaskInternal _queueCommitBlockTask;
         private readonly ReportProgressInBytes _reportProgressInBytes;
         private readonly UpdateTransferStatusInternal _updateTransferStatus;
@@ -28,6 +30,7 @@ namespace Azure.Storage.DataMovement
 
         public struct Behaviors
         {
+            public QueuePutBlockTaskInternal QueuePutBlockTask { get; set; }
             public QueueCommitBlockTaskInternal QueueCommitBlockTask { get; set; }
             public ReportProgressInBytes ReportProgressInBytes { get; set; }
             public UpdateTransferStatusInternal UpdateTransferStatus { get; set; }
@@ -39,10 +42,13 @@ namespace Azure.Storage.DataMovement
 
         private long _bytesTransferred;
         private long _expectedLength;
+        private long _blockSize;
 
         public CommitChunkHandler(
             long expectedLength,
-            Behaviors behaviors)
+            long blockSize,
+            Behaviors behaviors,
+            TransferType transferType)
         {
             if (expectedLength <= 0)
             {
@@ -50,6 +56,8 @@ namespace Azure.Storage.DataMovement
             }
             Argument.AssertNotNull(behaviors, nameof(behaviors));
 
+            _queuePutBlockTask = behaviors.QueuePutBlockTask
+                ?? throw Errors.ArgumentNull(nameof(behaviors.QueuePutBlockTask));
             _queueCommitBlockTask = behaviors.QueueCommitBlockTask
                 ?? throw Errors.ArgumentNull(nameof(behaviors.QueueCommitBlockTask));
             _reportProgressInBytes = behaviors.ReportProgressInBytes
@@ -65,6 +73,12 @@ namespace Azure.Storage.DataMovement
             // Set bytes transferred to 0
             _bytesTransferred = 0;
 
+            _blockSize = blockSize;
+
+            if (transferType == TransferType.Sequential)
+            {
+                AddQueueBlockEvent();
+            }
             AddCommitBlockEvent();
         }
 
@@ -92,10 +106,33 @@ namespace Azure.Storage.DataMovement
                 else
                 {
                     // Set status to completed
-                    await _updateTransferStatus(StorageTransferStatus.Completed).ConfigureAwait(false);
                     await _invokeFailedEventHandler(new Exception("Failure on Stage Block")).ConfigureAwait(false);
                 }
             };
+        }
+
+        public void AddQueueBlockEvent()
+        {
+            _commitBlockHandler += async (StageChunkEventArgs args) =>
+                {
+                    if (args.Success)
+                    {
+                        long oldOffset = args.Offset;
+                        long newOffset = oldOffset + _blockSize;
+                        if (newOffset < _expectedLength)
+                        {
+                            long blockLength = (newOffset + _blockSize < _expectedLength) ?
+                                            _blockSize :
+                                            _expectedLength - newOffset;
+                            await _queuePutBlockTask(newOffset, blockLength).ConfigureAwait(false);
+                        }
+                    }
+                    else
+                    {
+                        // Set status to completed with failed
+                        await _invokeFailedEventHandler(new Exception("Failure on Stage Block")).ConfigureAwait(false);
+                    }
+                };
         }
 
         public void AddEvent(SyncAsyncEventHandler<StageChunkEventArgs> stageBlockEvent)

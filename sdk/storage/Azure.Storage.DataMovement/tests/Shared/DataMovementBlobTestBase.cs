@@ -16,14 +16,17 @@ using System.IO;
 using NUnit.Framework;
 using Azure.Core;
 using System.Threading;
+using Azure.Storage.Blobs.Tests;
 
 namespace Azure.Storage.DataMovement.Tests
 {
     /// <summary>
     /// Base class for Common tests
     /// </summary>
+    [BlobsClientTestFixture]
     public abstract class DataMovementBlobTestBase : DataMovementTestBase
     {
+        protected readonly BlobClientOptions.ServiceVersion _serviceVersion;
         /// <summary>
         /// Source of clients.
         /// </summary>
@@ -35,8 +38,9 @@ namespace Azure.Storage.DataMovement.Tests
         public string GetNewBlockName() => BlobsClientBuilder.GetNewBlockName();
 
         public DataMovementBlobTestBase(bool async, BlobClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode = null)
-            : base(async, serviceVersion, RecordedTestMode.Live /* RecordedTestMode.Record /* to re-record */)
+            : base(async, RecordedTestMode.Live /* RecordedTestMode.Record /* to re-record */)
         {
+            _serviceVersion = serviceVersion;
             BlobsClientBuilder = ClientBuilderExtensions.GetNewBlobsClientBuilder(Tenants, _serviceVersion);
         }
 

@@ -13,14 +13,19 @@ namespace Azure.Storage.DataMovement
     public enum StorageTransferStatus
     {
         /// <summary>
+        /// Default
+        /// </summary>
+        None = 0,
+
+        /// <summary>
         /// The Job has been queued up but has not yet begun any transfers.
         /// </summary>
-        Queued = 0,
+        Queued = 1,
 
         /// <summary>
         /// The Job has started, but has not yet completed.
         /// </summary>
-        InProgress = 1,
+        InProgress = 2,
 
         /// <summary>
         /// Paused jobs. When transfer is paused (e.g. see <see cref="TransferManager.TryPauseTransferAsync(string)"/>) during the transfer
@@ -30,21 +35,21 @@ namespace Azure.Storage.DataMovement
         /// transfers that failed will be retried when <see cref="TransferManager.StartTransferAsync(StorageResource, StorageResource, Models.SingleTransferOptions)"/>
         /// with the respective transfer id to resume.
         /// </summary>
-        Paused = 2,
+        Paused = 3,
 
         /// <summary>
         /// The Job has completed.
         /// </summary>
-        Completed = 3,
+        Completed = 4,
 
         /// <summary>
         /// The Job completed with at least one skipped transfer.
         /// </summary>
-        CompletedWithSkippedTransfers = 4,
+        CompletedWithSkippedTransfers = 5,
 
         /// <summary>
         /// The Job completed with at least one failed transfer.
         /// </summary>
-        CompletedWithFailedTransfers = 5,
+        CompletedWithFailedTransfers = 6,
     };
 }

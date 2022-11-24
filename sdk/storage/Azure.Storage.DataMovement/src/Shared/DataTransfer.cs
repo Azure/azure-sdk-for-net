@@ -40,6 +40,15 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
+        /// For mocking
+        /// </summary>
+        /// <param name="status"></param>
+        internal DataTransfer(StorageTransferStatus status)
+        {
+            _state = new DataTransferState(status);
+        }
+
+        /// <summary>
         /// Only to be created internally by the transfer manager when someone
         /// provides a valid job plan file to resume from.
         /// </summary>

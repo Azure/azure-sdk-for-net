@@ -3,6 +3,7 @@
 using System;
 using System.Buffers;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -91,6 +92,11 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// If the transfer has any failed events that occur the event will get added to this handler.
         /// </summary>
+        public SyncAsyncEventHandler<TransferSkippedEventArgs> TransferSkippedEventHandler { get; internal set; }
+
+        /// <summary>
+        /// If the transfer has any failed events that occur the event will get added to this handler.
+        /// </summary>
         public SyncAsyncEventHandler<TransferFailedEventArgs> TransferFailedEventHandler { get; internal set; }
 
         /// <summary>
@@ -143,13 +149,13 @@ namespace Azure.Storage.DataMovement
         /// <returns>An IEnumerable that contains the job chunks</returns>
         public abstract Task ProcessPartToChunkAsync();
 
-        internal async Task TriggerCancellation()
+        internal async Task TriggerCancellation(StorageTransferStatus status)
         {
             if (!_cancellationTokenSource.IsCancellationRequested)
             {
                 _cancellationTokenSource.Cancel();
             }
-            await OnTransferStatusChanged(StorageTransferStatus.Completed).ConfigureAwait(false);
+            await OnTransferStatusChanged(status).ConfigureAwait(false);
             _dataTransfer._state.ResetTransferredBytes();
         }
 
@@ -159,7 +165,8 @@ namespace Azure.Storage.DataMovement
         /// <param name="transferStatus"></param>
         internal async Task OnTransferStatusChanged(StorageTransferStatus transferStatus)
         {
-            if (JobPartStatus != transferStatus)
+            if (transferStatus != StorageTransferStatus.None
+                && JobPartStatus != transferStatus)
             {
                 JobPartStatus = transferStatus;
                 // TODO: change to RaiseAsync
@@ -186,6 +193,23 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Invokes Failed Argument
         /// </summary>
+        internal async Task InvokeSkippedArg()
+        {
+            if (TransferSkippedEventHandler != null)
+            {
+                // TODO: change to RaiseAsync
+                await TransferSkippedEventHandler.Invoke(new TransferSkippedEventArgs(
+                    _dataTransfer.Id,
+                    _sourceResource,
+                    _destinationResource,
+                    false,
+                    _cancellationTokenSource.Token)).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary>
+        /// Invokes Failed Argument
+        /// </summary>
         internal async Task InvokeFailedArg(Exception ex)
         {
             if (TransferFailedEventHandler != null)
@@ -200,10 +224,98 @@ namespace Azure.Storage.DataMovement
                     _cancellationTokenSource.Token)).ConfigureAwait(false);
             }
             // Trigger job cancellation if the failed handler is enabled
-            if (_errorHandling == ErrorHandlingOptions.StopOnAllFailures)
+            if (_errorHandling == ErrorHandlingOptions.StopOnAllFailures ||
+                _createMode == StorageResourceCreateMode.Fail)
             {
-                await TriggerCancellation().ConfigureAwait(false);
+                await TriggerCancellation(StorageTransferStatus.CompletedWithFailedTransfers).ConfigureAwait(false);
             }
+        }
+
+        internal async Task<bool> CreateDestinationResource(long length)
+        {
+            if (_createMode == StorageResourceCreateMode.Overwrite)
+            {
+                try
+                {
+                    await _destinationResource.CreateAsync(
+                        overwrite: true,
+                        size: length,
+                        cancellationToken: _cancellationTokenSource.Token).ConfigureAwait(false);
+                    return true;
+                }
+                catch (NotSupportedException)
+                {
+                    // The following storage resource type does not require a Create call
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    await InvokeFailedArg(ex).ConfigureAwait(false);
+                }
+                return false;
+            }
+            else if (_createMode == StorageResourceCreateMode.Skip)
+            {
+                try
+                {
+                    await _destinationResource.CreateAsync(
+                        overwrite: false,
+                        size: length,
+                        cancellationToken: _cancellationTokenSource.Token).ConfigureAwait(false);
+                    return true;
+                }
+                catch (RequestFailedException exception)
+                when (exception.ErrorCode == "BlobAlreadyExists")
+                {
+                    await InvokeSkippedArg().ConfigureAwait(false);
+                }
+                catch (IOException exception)
+                when (exception.Message.Contains("Cannot overwite file"))
+                {
+                    // Skip this file
+                    await InvokeSkippedArg().ConfigureAwait(false);
+                }
+                catch (Exception exception)
+                {
+                    // Any other exception found should be documented as failed
+                    await InvokeFailedArg(exception).ConfigureAwait(false);
+                }
+                return false;
+            }
+            else // StorageResourceCreateMode.Fail
+            {
+                try
+                {
+                    await _destinationResource.CreateAsync(
+                        overwrite: false,
+                        size: length,
+                        cancellationToken: _cancellationTokenSource.Token).ConfigureAwait(false);
+                    return true;
+                }
+                catch (Exception exception)
+                {
+                    // Any other exception found should be documented as failed
+                    await InvokeFailedArg(exception).ConfigureAwait(false);
+                }
+                return false;
+            }
+        }
+
+        internal long CalculateBlockSize(long length)
+        {
+            // If the caller provided an explicit block size, we'll use it.
+            // Otherwise we'll adjust dynamically based on the size of the
+            // content.
+            if (_maximumTransferChunkSize.HasValue
+            && _maximumTransferChunkSize > 0)
+            {
+                return Math.Min(
+                _destinationResource.MaxChunkSize,
+                    _maximumTransferChunkSize.Value);
+            }
+            return length < Constants.LargeUploadThreshold ?
+                        Math.Min(Constants.DefaultBufferSize, _destinationResource.MaxChunkSize) :
+                        Math.Min(Constants.LargeBufferSize, _destinationResource.MaxChunkSize);
         }
     }
 }

@@ -32,7 +32,7 @@ namespace Azure.Storage.DataMovement
         /// The file will simply be skipped over and other parallel downloads in progress
         /// will finish and the rest of the files in the directory to download will continue.
         ///
-        /// If ErrorHandlingOptions.None is set, the download will still be skipped.
+        /// If ErrorHandlingOptions.StopOnAllFailures is set, the download will still be skipped.
         /// </summary>
         Skip = 2,
     }

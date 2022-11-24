@@ -43,12 +43,46 @@ namespace Azure.Storage.DataMovement
         public override TransferCopyMethod ServiceCopyMethod => TransferCopyMethod.None;
 
         /// <summary>
+        /// Defines the recommended Transfer Type of the resource
+        /// </summary>
+        public override TransferType TransferType => TransferType.Sequential;
+
+        /// <summary>
+        /// Defines the maximum chunk size for the storage resource.
+        /// </summary>
+        /// TODO: consider changing this.
+        public override long MaxChunkSize => Constants.Blob.Block.MaxStageBytes;
+
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="path"></param>
         public LocalFileStorageResource(string path)
         {
             _path = path;
+        }
+
+        /// <summary>
+        /// Creates the local file.
+        /// </summary>
+        /// <param name="overwrite"></param>
+        /// <param name="size"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public override Task CreateAsync(
+            bool overwrite,
+            long size = 0,
+            CancellationToken cancellationToken = default)
+        {
+            if (overwrite || !File.Exists(_path))
+            {
+                File.Create(_path).Close();
+                FileAttributes attributes = File.GetAttributes(_path);
+                File.SetAttributes(_path, attributes | FileAttributes.Temporary);
+                return Task.CompletedTask;
+            }
+            // TODO: maybe better exception type?
+            throw new IOException($"File path `{_path}` already exists. Cannot overwite file");
         }
 
         /// <summary>
@@ -76,6 +110,9 @@ namespace Azure.Storage.DataMovement
         /// Consumes the readable stream to upload
         /// </summary>
         /// <param name="position"></param>
+        /// <param name="overwrite">
+        /// If set to true, will overwrite the blob if exists.
+        /// </param>
         /// <param name="length"></param>
         /// <param name="stream"></param>
         /// <param name="options"></param>
@@ -83,6 +120,7 @@ namespace Azure.Storage.DataMovement
         /// <returns></returns>
         public override async Task WriteFromStreamAsync(
             Stream stream,
+            bool overwrite,
             long position = 0,
             long? length = default,
             StorageResourceWriteToOffsetOptions options = default,
@@ -112,11 +150,15 @@ namespace Azure.Storage.DataMovement
         /// Uploads/copy the blob from a url
         /// </summary>
         /// <param name="sourceResource"></param>
+        /// <param name="overwrite">
+        /// If set to true, will overwrite the blob if exists.
+        /// </param>
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public override Task CopyFromUriAsync(
             StorageResource sourceResource,
+            bool overwrite,
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
         {
@@ -128,12 +170,16 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <param name="sourceResource"></param>
         /// <param name="range"></param>
+        /// <param name="overwrite">
+        /// If set to true, will overwrite the blob if exists.
+        /// </param>
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public override Task CopyBlockFromUriAsync(
             StorageResource sourceResource,
             HttpRange range,
+            bool overwrite,
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
         {

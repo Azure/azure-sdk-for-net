@@ -13,21 +13,13 @@ using Azure.Storage.Test.Shared;
 namespace Azure.Storage.DataMovement.Tests
 {
     /// <summary>
-    /// Base class for Common tests
+    /// Base class for Blob DataMovement Tests tests
     /// </summary>
-    [ClientTestFixture(
-    BlobClientOptions.ServiceVersion.V2020_06_12,
-    BlobClientOptions.ServiceVersion.V2020_08_04,
-    RecordingServiceVersion = BlobClientOptions.ServiceVersion.V2020_08_04,
-    LiveServiceVersions = new object[] { BlobClientOptions.ServiceVersion.V2020_06_12 })]
     public abstract class DataMovementTestBase : StorageTestBase<StorageTestEnvironment>
     {
-        protected readonly BlobClientOptions.ServiceVersion _serviceVersion;
-
-        public DataMovementTestBase(bool async, BlobClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode = null)
+        public DataMovementTestBase(bool async, RecordedTestMode? mode = null)
             : base(async, mode /* RecordedTestMode.Record /* to re-record */)
         {
-            _serviceVersion = serviceVersion;
         }
 
         [SetUp]
