@@ -132,7 +132,7 @@ namespace Azure.Monitor.Ingestion
                     yield return new BatchedLogs<T>(currentLogList, BinaryData.FromBytes(arrayBuffer.WrittenMemory));
 
                     // Reset arrayBuffer and writer for next batch
-                    arrayBuffer.Clear();
+                    arrayBuffer = new Azure.Core.ArrayBufferWriter<byte>(SingleUploadThreshold);
                     writer.Reset(arrayBuffer);
                     writer.WriteStartArray();
                     // reset log list
