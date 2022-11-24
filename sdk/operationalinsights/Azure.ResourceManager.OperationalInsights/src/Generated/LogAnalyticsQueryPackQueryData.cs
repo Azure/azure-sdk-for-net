@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="idPropertiesId"> The unique ID of your application. This field cannot be changed. </param>
+        /// <param name="applicationId"> The unique ID of your application. This field cannot be changed. </param>
         /// <param name="displayName"> Unique display name for your query within the Query Pack. </param>
-        /// <param name="timeCreated"> Creation Date for the Log Analytics Query, in ISO 8601 format. </param>
-        /// <param name="timeModified"> Last modified date of the Log Analytics Query, in ISO 8601 format. </param>
+        /// <param name="createdOn"> Creation Date for the Log Analytics Query, in ISO 8601 format. </param>
+        /// <param name="modifiedOn"> Last modified date of the Log Analytics Query, in ISO 8601 format. </param>
         /// <param name="author"> Object Id of user creating the query. </param>
         /// <param name="description"> Description of the query. </param>
         /// <param name="body"> Body of the query. </param>
         /// <param name="related"> The related metadata items for the function. </param>
         /// <param name="tags"> Tags associated with the query. </param>
         /// <param name="properties"> Additional properties that can be set for the query. </param>
-        internal LogAnalyticsQueryPackQueryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string idPropertiesId, string displayName, DateTimeOffset? timeCreated, DateTimeOffset? timeModified, string author, string description, string body, LogAnalyticsQueryPackQueryPropertiesRelated related, IDictionary<string, IList<string>> tags, BinaryData properties) : base(id, name, resourceType, systemData)
+        internal LogAnalyticsQueryPackQueryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? applicationId, string displayName, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, string author, string description, string body, LogAnalyticsQueryPackQueryRelatedMetadata related, IDictionary<string, IList<string>> tags, BinaryData properties) : base(id, name, resourceType, systemData)
         {
-            IdPropertiesId = idPropertiesId;
+            ApplicationId = applicationId;
             DisplayName = displayName;
-            TimeCreated = timeCreated;
-            TimeModified = timeModified;
+            CreatedOn = createdOn;
+            ModifiedOn = modifiedOn;
             Author = author;
             Description = description;
             Body = body;
@@ -52,13 +52,13 @@ namespace Azure.ResourceManager.OperationalInsights
         }
 
         /// <summary> The unique ID of your application. This field cannot be changed. </summary>
-        public string IdPropertiesId { get; }
+        public Guid? ApplicationId { get; }
         /// <summary> Unique display name for your query within the Query Pack. </summary>
         public string DisplayName { get; set; }
         /// <summary> Creation Date for the Log Analytics Query, in ISO 8601 format. </summary>
-        public DateTimeOffset? TimeCreated { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> Last modified date of the Log Analytics Query, in ISO 8601 format. </summary>
-        public DateTimeOffset? TimeModified { get; }
+        public DateTimeOffset? ModifiedOn { get; }
         /// <summary> Object Id of user creating the query. </summary>
         public string Author { get; }
         /// <summary> Description of the query. </summary>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <summary> Body of the query. </summary>
         public string Body { get; set; }
         /// <summary> The related metadata items for the function. </summary>
-        public LogAnalyticsQueryPackQueryPropertiesRelated Related { get; set; }
+        public LogAnalyticsQueryPackQueryRelatedMetadata Related { get; set; }
         /// <summary> Tags associated with the query. </summary>
         public IDictionary<string, IList<string>> Tags { get; }
         /// <summary>

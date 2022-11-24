@@ -76,14 +76,14 @@ namespace Azure.ResourceManager.OperationalInsights
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> id0 = default;
+            Optional<Guid> id0 = default;
             Optional<string> displayName = default;
             Optional<DateTimeOffset> timeCreated = default;
             Optional<DateTimeOffset> timeModified = default;
             Optional<string> author = default;
             Optional<string> description = default;
             Optional<string> body = default;
-            Optional<LogAnalyticsQueryPackQueryPropertiesRelated> related = default;
+            Optional<LogAnalyticsQueryPackQueryRelatedMetadata> related = default;
             Optional<IDictionary<string, IList<string>>> tags = default;
             Optional<BinaryData> properties = default;
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,12 @@ namespace Azure.ResourceManager.OperationalInsights
                     {
                         if (property0.NameEquals("id"))
                         {
-                            id0 = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            id0 = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("displayName"))
@@ -174,7 +179,7 @@ namespace Azure.ResourceManager.OperationalInsights
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            related = LogAnalyticsQueryPackQueryPropertiesRelated.DeserializeLogAnalyticsQueryPackQueryPropertiesRelated(property0.Value);
+                            related = LogAnalyticsQueryPackQueryRelatedMetadata.DeserializeLogAnalyticsQueryPackQueryRelatedMetadata(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("tags"))
@@ -211,7 +216,7 @@ namespace Azure.ResourceManager.OperationalInsights
                     continue;
                 }
             }
-            return new LogAnalyticsQueryPackQueryData(id, name, type, systemData.Value, id0.Value, displayName.Value, Optional.ToNullable(timeCreated), Optional.ToNullable(timeModified), author.Value, description.Value, body.Value, related.Value, Optional.ToDictionary(tags), properties.Value);
+            return new LogAnalyticsQueryPackQueryData(id, name, type, systemData.Value, Optional.ToNullable(id0), displayName.Value, Optional.ToNullable(timeCreated), Optional.ToNullable(timeModified), author.Value, description.Value, body.Value, related.Value, Optional.ToDictionary(tags), properties.Value);
         }
     }
 }

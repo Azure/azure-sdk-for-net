@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.OperationalInsights
 {
     /// <summary>
     /// A class representing a collection of <see cref="StorageInsightResource" /> and their operations.
-    /// Each <see cref="StorageInsightResource" /> in the collection will belong to the same instance of <see cref="WorkspaceResource" />.
-    /// To get a <see cref="StorageInsightCollection" /> instance call the GetStorageInsights method from an instance of <see cref="WorkspaceResource" />.
+    /// Each <see cref="StorageInsightResource" /> in the collection will belong to the same instance of <see cref="OperationalInsightsWorkspaceResource" />.
+    /// To get a <see cref="StorageInsightCollection" /> instance call the GetStorageInsights method from an instance of <see cref="OperationalInsightsWorkspaceResource" />.
     /// </summary>
     public partial class StorageInsightCollection : ArmCollection, IEnumerable<StorageInsightResource>, IAsyncEnumerable<StorageInsightResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.OperationalInsights
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != WorkspaceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WorkspaceResource.ResourceType), nameof(id));
+            if (id.ResourceType != OperationalInsightsWorkspaceResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, OperationalInsightsWorkspaceResource.ResourceType), nameof(id));
         }
 
         /// <summary>

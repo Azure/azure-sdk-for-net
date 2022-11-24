@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> The related metadata items for the function. </summary>
-        public LogAnalyticsQueryPackQuerySearchPropertiesRelated Related { get; set; }
+        public LogAnalyticsQueryPackQuerySearchRelatedMetadata Related { get; set; }
         /// <summary> Tags associated with the query. </summary>
         public IDictionary<string, IList<string>> Tags { get; }
     }

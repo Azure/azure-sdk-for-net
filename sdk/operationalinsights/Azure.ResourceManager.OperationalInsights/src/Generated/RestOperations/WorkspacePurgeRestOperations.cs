@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.OperationalInsights
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreatePurgeRequest(string subscriptionId, string resourceGroupName, string workspaceName, WorkspacePurgeBody body)
+        internal HttpMessage CreatePurgeRequest(string subscriptionId, string resourceGroupName, string workspaceName, OperationalInsightsWorkspacePurgeBody body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkspacePurgeResponse>> PurgeAsync(string subscriptionId, string resourceGroupName, string workspaceName, WorkspacePurgeBody body, CancellationToken cancellationToken = default)
+        public async Task<Response<OperationalInsightsWorkspacePurgeResult>> PurgeAsync(string subscriptionId, string resourceGroupName, string workspaceName, OperationalInsightsWorkspacePurgeBody body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -88,9 +88,9 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 case 202:
                     {
-                        WorkspacePurgeResponse value = default;
+                        OperationalInsightsWorkspacePurgeResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkspacePurgeResponse.DeserializeWorkspacePurgeResponse(document.RootElement);
+                        value = OperationalInsightsWorkspacePurgeResult.DeserializeOperationalInsightsWorkspacePurgeResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkspacePurgeResponse> Purge(string subscriptionId, string resourceGroupName, string workspaceName, WorkspacePurgeBody body, CancellationToken cancellationToken = default)
+        public Response<OperationalInsightsWorkspacePurgeResult> Purge(string subscriptionId, string resourceGroupName, string workspaceName, OperationalInsightsWorkspacePurgeBody body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -124,9 +124,9 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 case 202:
                     {
-                        WorkspacePurgeResponse value = default;
+                        OperationalInsightsWorkspacePurgeResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkspacePurgeResponse.DeserializeWorkspacePurgeResponse(document.RootElement);
+                        value = OperationalInsightsWorkspacePurgeResult.DeserializeOperationalInsightsWorkspacePurgeResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="purgeId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="purgeId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkspacePurgeStatusResponse>> GetPurgeStatusAsync(string subscriptionId, string resourceGroupName, string workspaceName, string purgeId, CancellationToken cancellationToken = default)
+        public async Task<Response<OperationalInsightsWorkspacePurgeStatusResult>> GetPurgeStatusAsync(string subscriptionId, string resourceGroupName, string workspaceName, string purgeId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -177,9 +177,9 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 case 200:
                     {
-                        WorkspacePurgeStatusResponse value = default;
+                        OperationalInsightsWorkspacePurgeStatusResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkspacePurgeStatusResponse.DeserializeWorkspacePurgeStatusResponse(document.RootElement);
+                        value = OperationalInsightsWorkspacePurgeStatusResult.DeserializeOperationalInsightsWorkspacePurgeStatusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="purgeId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="purgeId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkspacePurgeStatusResponse> GetPurgeStatus(string subscriptionId, string resourceGroupName, string workspaceName, string purgeId, CancellationToken cancellationToken = default)
+        public Response<OperationalInsightsWorkspacePurgeStatusResult> GetPurgeStatus(string subscriptionId, string resourceGroupName, string workspaceName, string purgeId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -208,9 +208,9 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 case 200:
                     {
-                        WorkspacePurgeStatusResponse value = default;
+                        OperationalInsightsWorkspacePurgeStatusResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkspacePurgeStatusResponse.DeserializeWorkspacePurgeStatusResponse(document.RootElement);
+                        value = OperationalInsightsWorkspacePurgeStatusResult.DeserializeOperationalInsightsWorkspacePurgeStatusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
