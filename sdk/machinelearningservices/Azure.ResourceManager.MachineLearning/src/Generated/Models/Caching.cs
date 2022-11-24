@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Caching type of Data Disk. </summary>
+    /// <summary>
+    /// Caching type of Data Disk.
+    /// Serialized Name: Caching
+    /// </summary>
     public readonly partial struct Caching : IEquatable<Caching>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string ReadOnlyValue = "ReadOnly";
         private const string ReadWriteValue = "ReadWrite";
 
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: Caching.None
+        /// </summary>
         public static Caching None { get; } = new Caching(NoneValue);
-        /// <summary> ReadOnly. </summary>
+        /// <summary>
+        /// ReadOnly
+        /// Serialized Name: Caching.ReadOnly
+        /// </summary>
         public static Caching ReadOnly { get; } = new Caching(ReadOnlyValue);
-        /// <summary> ReadWrite. </summary>
+        /// <summary>
+        /// ReadWrite
+        /// Serialized Name: Caching.ReadWrite
+        /// </summary>
         public static Caching ReadWrite { get; } = new Caching(ReadWriteValue);
         /// <summary> Determines if two <see cref="Caching"/> values are the same. </summary>
         public static bool operator ==(Caching left, Caching right) => left.Equals(right);

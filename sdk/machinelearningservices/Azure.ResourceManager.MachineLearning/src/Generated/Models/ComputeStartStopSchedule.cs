@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Compute start stop schedule properties. </summary>
+    /// <summary>
+    /// Compute start stop schedule properties
+    /// Serialized Name: ComputeStartStopSchedule
+    /// </summary>
     public partial class ComputeStartStopSchedule
     {
         /// <summary> Initializes a new instance of ComputeStartStopSchedule. </summary>
@@ -16,14 +19,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of ComputeStartStopSchedule. </summary>
-        /// <param name="id"> A system assigned id for the schedule. </param>
-        /// <param name="provisioningStatus"> The current deployment state of schedule. </param>
-        /// <param name="status"> Is the schedule enabled or disabled?. </param>
-        /// <param name="action"> [Required] The compute power action. </param>
-        /// <param name="triggerType"> [Required] The schedule trigger type. </param>
-        /// <param name="recurrence"> Required if triggerType is Recurrence. </param>
-        /// <param name="cron"> Required if triggerType is Cron. </param>
-        /// <param name="schedule"> [Deprecated] Not used any more. </param>
+        /// <param name="id">
+        /// A system assigned id for the schedule.
+        /// Serialized Name: ComputeStartStopSchedule.id
+        /// </param>
+        /// <param name="provisioningStatus">
+        /// The current deployment state of schedule.
+        /// Serialized Name: ComputeStartStopSchedule.provisioningStatus
+        /// </param>
+        /// <param name="status">
+        /// Is the schedule enabled or disabled?
+        /// Serialized Name: ComputeStartStopSchedule.status
+        /// </param>
+        /// <param name="action">
+        /// [Required] The compute power action.
+        /// Serialized Name: ComputeStartStopSchedule.action
+        /// </param>
+        /// <param name="triggerType">
+        /// [Required] The schedule trigger type.
+        /// Serialized Name: ComputeStartStopSchedule.triggerType
+        /// </param>
+        /// <param name="recurrence">
+        /// Required if triggerType is Recurrence.
+        /// Serialized Name: ComputeStartStopSchedule.recurrence
+        /// </param>
+        /// <param name="cron">
+        /// Required if triggerType is Cron.
+        /// Serialized Name: ComputeStartStopSchedule.cron
+        /// </param>
+        /// <param name="schedule">
+        /// [Deprecated] Not used any more.
+        /// Serialized Name: ComputeStartStopSchedule.schedule
+        /// </param>
         internal ComputeStartStopSchedule(string id, ProvisioningStatus? provisioningStatus, ScheduleStatus? status, ComputePowerAction? action, TriggerType? triggerType, RecurrenceTrigger recurrence, CronTrigger cron, ScheduleBase schedule)
         {
             Id = id;
@@ -36,21 +63,45 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Schedule = schedule;
         }
 
-        /// <summary> A system assigned id for the schedule. </summary>
+        /// <summary>
+        /// A system assigned id for the schedule.
+        /// Serialized Name: ComputeStartStopSchedule.id
+        /// </summary>
         public string Id { get; }
-        /// <summary> The current deployment state of schedule. </summary>
+        /// <summary>
+        /// The current deployment state of schedule.
+        /// Serialized Name: ComputeStartStopSchedule.provisioningStatus
+        /// </summary>
         public ProvisioningStatus? ProvisioningStatus { get; }
-        /// <summary> Is the schedule enabled or disabled?. </summary>
+        /// <summary>
+        /// Is the schedule enabled or disabled?
+        /// Serialized Name: ComputeStartStopSchedule.status
+        /// </summary>
         public ScheduleStatus? Status { get; }
-        /// <summary> [Required] The compute power action. </summary>
+        /// <summary>
+        /// [Required] The compute power action.
+        /// Serialized Name: ComputeStartStopSchedule.action
+        /// </summary>
         public ComputePowerAction? Action { get; }
-        /// <summary> [Required] The schedule trigger type. </summary>
+        /// <summary>
+        /// [Required] The schedule trigger type.
+        /// Serialized Name: ComputeStartStopSchedule.triggerType
+        /// </summary>
         public TriggerType? TriggerType { get; }
-        /// <summary> Required if triggerType is Recurrence. </summary>
+        /// <summary>
+        /// Required if triggerType is Recurrence.
+        /// Serialized Name: ComputeStartStopSchedule.recurrence
+        /// </summary>
         public RecurrenceTrigger Recurrence { get; }
-        /// <summary> Required if triggerType is Cron. </summary>
+        /// <summary>
+        /// Required if triggerType is Cron.
+        /// Serialized Name: ComputeStartStopSchedule.cron
+        /// </summary>
         public CronTrigger Cron { get; }
-        /// <summary> [Deprecated] Not used any more. </summary>
+        /// <summary>
+        /// [Deprecated] Not used any more.
+        /// Serialized Name: ComputeStartStopSchedule.schedule
+        /// </summary>
         public ScheduleBase Schedule { get; }
     }
 }

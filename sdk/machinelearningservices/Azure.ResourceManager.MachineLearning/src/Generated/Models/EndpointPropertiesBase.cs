@@ -11,11 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Inference Endpoint base definition. </summary>
+    /// <summary>
+    /// Inference Endpoint base definition
+    /// Serialized Name: EndpointPropertiesBase
+    /// </summary>
     public partial class EndpointPropertiesBase
     {
         /// <summary> Initializes a new instance of EndpointPropertiesBase. </summary>
-        /// <param name="authMode"> [Required] Use &apos;Key&apos; for key based authentication and &apos;AMLToken&apos; for Azure Machine Learning token-based authentication. &apos;Key&apos; doesn&apos;t expire but &apos;AMLToken&apos; does. </param>
+        /// <param name="authMode">
+        /// [Required] Use &apos;Key&apos; for key based authentication and &apos;AMLToken&apos; for Azure Machine Learning token-based authentication. &apos;Key&apos; doesn&apos;t expire but &apos;AMLToken&apos; does.
+        /// Serialized Name: EndpointPropertiesBase.authMode
+        /// </param>
         public EndpointPropertiesBase(EndpointAuthMode authMode)
         {
             AuthMode = authMode;
@@ -23,15 +29,31 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of EndpointPropertiesBase. </summary>
-        /// <param name="authMode"> [Required] Use &apos;Key&apos; for key based authentication and &apos;AMLToken&apos; for Azure Machine Learning token-based authentication. &apos;Key&apos; doesn&apos;t expire but &apos;AMLToken&apos; does. </param>
-        /// <param name="description"> Description of the inference endpoint. </param>
+        /// <param name="authMode">
+        /// [Required] Use &apos;Key&apos; for key based authentication and &apos;AMLToken&apos; for Azure Machine Learning token-based authentication. &apos;Key&apos; doesn&apos;t expire but &apos;AMLToken&apos; does.
+        /// Serialized Name: EndpointPropertiesBase.authMode
+        /// </param>
+        /// <param name="description">
+        /// Description of the inference endpoint.
+        /// Serialized Name: EndpointPropertiesBase.description
+        /// </param>
         /// <param name="keys">
         /// EndpointAuthKeys to set initially on an Endpoint.
         /// This property will always be returned as null. AuthKey values must be retrieved using the ListKeys API.
+        /// Serialized Name: EndpointPropertiesBase.keys
         /// </param>
-        /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
-        /// <param name="scoringUri"> Endpoint URI. </param>
-        /// <param name="swaggerUri"> Endpoint Swagger URI. </param>
+        /// <param name="properties">
+        /// Property dictionary. Properties can be added, but not removed or altered.
+        /// Serialized Name: EndpointPropertiesBase.properties
+        /// </param>
+        /// <param name="scoringUri">
+        /// Endpoint URI.
+        /// Serialized Name: EndpointPropertiesBase.scoringUri
+        /// </param>
+        /// <param name="swaggerUri">
+        /// Endpoint Swagger URI.
+        /// Serialized Name: EndpointPropertiesBase.swaggerUri
+        /// </param>
         internal EndpointPropertiesBase(EndpointAuthMode authMode, string description, EndpointAuthKeys keys, IDictionary<string, string> properties, Uri scoringUri, Uri swaggerUri)
         {
             AuthMode = authMode;
@@ -42,20 +64,36 @@ namespace Azure.ResourceManager.MachineLearning.Models
             SwaggerUri = swaggerUri;
         }
 
-        /// <summary> [Required] Use &apos;Key&apos; for key based authentication and &apos;AMLToken&apos; for Azure Machine Learning token-based authentication. &apos;Key&apos; doesn&apos;t expire but &apos;AMLToken&apos; does. </summary>
+        /// <summary>
+        /// [Required] Use &apos;Key&apos; for key based authentication and &apos;AMLToken&apos; for Azure Machine Learning token-based authentication. &apos;Key&apos; doesn&apos;t expire but &apos;AMLToken&apos; does.
+        /// Serialized Name: EndpointPropertiesBase.authMode
+        /// </summary>
         public EndpointAuthMode AuthMode { get; set; }
-        /// <summary> Description of the inference endpoint. </summary>
+        /// <summary>
+        /// Description of the inference endpoint.
+        /// Serialized Name: EndpointPropertiesBase.description
+        /// </summary>
         public string Description { get; set; }
         /// <summary>
         /// EndpointAuthKeys to set initially on an Endpoint.
         /// This property will always be returned as null. AuthKey values must be retrieved using the ListKeys API.
+        /// Serialized Name: EndpointPropertiesBase.keys
         /// </summary>
         public EndpointAuthKeys Keys { get; set; }
-        /// <summary> Property dictionary. Properties can be added, but not removed or altered. </summary>
+        /// <summary>
+        /// Property dictionary. Properties can be added, but not removed or altered.
+        /// Serialized Name: EndpointPropertiesBase.properties
+        /// </summary>
         public IDictionary<string, string> Properties { get; set; }
-        /// <summary> Endpoint URI. </summary>
+        /// <summary>
+        /// Endpoint URI.
+        /// Serialized Name: EndpointPropertiesBase.scoringUri
+        /// </summary>
         public Uri ScoringUri { get; }
-        /// <summary> Endpoint Swagger URI. </summary>
+        /// <summary>
+        /// Endpoint Swagger URI.
+        /// Serialized Name: EndpointPropertiesBase.swaggerUri
+        /// </summary>
         public Uri SwaggerUri { get; }
     }
 }

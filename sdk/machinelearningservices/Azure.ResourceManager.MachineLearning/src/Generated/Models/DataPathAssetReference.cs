@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Reference to an asset via its path in a datastore. </summary>
+    /// <summary>
+    /// Reference to an asset via its path in a datastore.
+    /// Serialized Name: DataPathAssetReference
+    /// </summary>
     public partial class DataPathAssetReference : AssetReferenceBase
     {
         /// <summary> Initializes a new instance of DataPathAssetReference. </summary>
@@ -17,9 +20,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of DataPathAssetReference. </summary>
-        /// <param name="referenceType"> [Required] Specifies the type of asset reference. </param>
-        /// <param name="datastoreId"> ARM resource ID of the datastore where the asset is located. </param>
-        /// <param name="path"> The path of the file/directory in the datastore. </param>
+        /// <param name="referenceType">
+        /// [Required] Specifies the type of asset reference.
+        /// Serialized Name: AssetReferenceBase.referenceType
+        /// </param>
+        /// <param name="datastoreId">
+        /// ARM resource ID of the datastore where the asset is located.
+        /// Serialized Name: DataPathAssetReference.datastoreId
+        /// </param>
+        /// <param name="path">
+        /// The path of the file/directory in the datastore.
+        /// Serialized Name: DataPathAssetReference.path
+        /// </param>
         internal DataPathAssetReference(ReferenceType referenceType, string datastoreId, string path) : base(referenceType)
         {
             DatastoreId = datastoreId;
@@ -27,9 +39,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ReferenceType = referenceType;
         }
 
-        /// <summary> ARM resource ID of the datastore where the asset is located. </summary>
+        /// <summary>
+        /// ARM resource ID of the datastore where the asset is located.
+        /// Serialized Name: DataPathAssetReference.datastoreId
+        /// </summary>
         public string DatastoreId { get; set; }
-        /// <summary> The path of the file/directory in the datastore. </summary>
+        /// <summary>
+        /// The path of the file/directory in the datastore.
+        /// Serialized Name: DataPathAssetReference.path
+        /// </summary>
         public string Path { get; set; }
     }
 }

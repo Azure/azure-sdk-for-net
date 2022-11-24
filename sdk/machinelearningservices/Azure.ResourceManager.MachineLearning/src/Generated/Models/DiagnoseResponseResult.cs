@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The DiagnoseResponseResult. </summary>
+    /// <summary>
+    /// The DiagnoseResponseResult.
+    /// Serialized Name: DiagnoseResponseResult
+    /// </summary>
     public partial class DiagnoseResponseResult
     {
         /// <summary> Initializes a new instance of DiagnoseResponseResult. </summary>
@@ -16,13 +19,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of DiagnoseResponseResult. </summary>
-        /// <param name="value"></param>
+        /// <param name="value"> Serialized Name: DiagnoseResponseResult.value. </param>
         internal DiagnoseResponseResult(DiagnoseResponseResultValue value)
         {
             Value = value;
         }
 
-        /// <summary> Gets the value. </summary>
+        /// <summary> Serialized Name: DiagnoseResponseResult.value. </summary>
         public DiagnoseResponseResultValue Value { get; }
     }
 }

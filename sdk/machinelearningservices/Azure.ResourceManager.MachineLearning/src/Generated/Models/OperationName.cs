@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Name of the last operation. </summary>
+    /// <summary>
+    /// Name of the last operation.
+    /// Serialized Name: OperationName
+    /// </summary>
     public readonly partial struct OperationName : IEquatable<OperationName>
     {
         private readonly string _value;
@@ -29,17 +32,35 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string ReimageValue = "Reimage";
         private const string DeleteValue = "Delete";
 
-        /// <summary> Create. </summary>
+        /// <summary>
+        /// Create
+        /// Serialized Name: OperationName.Create
+        /// </summary>
         public static OperationName Create { get; } = new OperationName(CreateValue);
-        /// <summary> Start. </summary>
+        /// <summary>
+        /// Start
+        /// Serialized Name: OperationName.Start
+        /// </summary>
         public static OperationName Start { get; } = new OperationName(StartValue);
-        /// <summary> Stop. </summary>
+        /// <summary>
+        /// Stop
+        /// Serialized Name: OperationName.Stop
+        /// </summary>
         public static OperationName Stop { get; } = new OperationName(StopValue);
-        /// <summary> Restart. </summary>
+        /// <summary>
+        /// Restart
+        /// Serialized Name: OperationName.Restart
+        /// </summary>
         public static OperationName Restart { get; } = new OperationName(RestartValue);
-        /// <summary> Reimage. </summary>
+        /// <summary>
+        /// Reimage
+        /// Serialized Name: OperationName.Reimage
+        /// </summary>
         public static OperationName Reimage { get; } = new OperationName(ReimageValue);
-        /// <summary> Delete. </summary>
+        /// <summary>
+        /// Delete
+        /// Serialized Name: OperationName.Delete
+        /// </summary>
         public static OperationName Delete { get; } = new OperationName(DeleteValue);
         /// <summary> Determines if two <see cref="OperationName"/> values are the same. </summary>
         public static bool operator ==(OperationName left, OperationName right) => left.Equals(right);

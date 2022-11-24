@@ -10,13 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The EndpointScheduleAction. </summary>
+    /// <summary>
+    /// The EndpointScheduleAction.
+    /// Serialized Name: EndpointScheduleAction
+    /// </summary>
     public partial class EndpointScheduleAction : ScheduleActionBase
     {
         /// <summary> Initializes a new instance of EndpointScheduleAction. </summary>
         /// <param name="endpointInvocationDefinition">
         /// [Required] Defines Schedule action definition details.
         /// &lt;see href=&quot;TBD&quot; /&gt;
+        /// Serialized Name: EndpointScheduleAction.endpointInvocationDefinition
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointInvocationDefinition"/> is null. </exception>
         public EndpointScheduleAction(BinaryData endpointInvocationDefinition)
@@ -28,10 +32,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of EndpointScheduleAction. </summary>
-        /// <param name="actionType"> [Required] Specifies the action type of the schedule. </param>
+        /// <param name="actionType">
+        /// [Required] Specifies the action type of the schedule
+        /// Serialized Name: ScheduleActionBase.actionType
+        /// </param>
         /// <param name="endpointInvocationDefinition">
         /// [Required] Defines Schedule action definition details.
         /// &lt;see href=&quot;TBD&quot; /&gt;
+        /// Serialized Name: EndpointScheduleAction.endpointInvocationDefinition
         /// </param>
         internal EndpointScheduleAction(ScheduleActionType actionType, BinaryData endpointInvocationDefinition) : base(actionType)
         {
@@ -42,6 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary>
         /// [Required] Defines Schedule action definition details.
         /// &lt;see href=&quot;TBD&quot; /&gt;
+        /// Serialized Name: EndpointScheduleAction.endpointInvocationDefinition
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

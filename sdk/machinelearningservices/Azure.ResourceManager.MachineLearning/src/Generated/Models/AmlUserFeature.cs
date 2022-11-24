@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Features enabled for a workspace. </summary>
+    /// <summary>
+    /// Features enabled for a workspace
+    /// Serialized Name: AmlUserFeature
+    /// </summary>
     public partial class AmlUserFeature
     {
         /// <summary> Initializes a new instance of AmlUserFeature. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of AmlUserFeature. </summary>
-        /// <param name="id"> Specifies the feature ID. </param>
-        /// <param name="displayName"> Specifies the feature name. </param>
-        /// <param name="description"> Describes the feature for user experience. </param>
+        /// <param name="id">
+        /// Specifies the feature ID
+        /// Serialized Name: AmlUserFeature.id
+        /// </param>
+        /// <param name="displayName">
+        /// Specifies the feature name 
+        /// Serialized Name: AmlUserFeature.displayName
+        /// </param>
+        /// <param name="description">
+        /// Describes the feature for user experience
+        /// Serialized Name: AmlUserFeature.description
+        /// </param>
         internal AmlUserFeature(string id, string displayName, string description)
         {
             Id = id;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Description = description;
         }
 
-        /// <summary> Specifies the feature ID. </summary>
+        /// <summary>
+        /// Specifies the feature ID
+        /// Serialized Name: AmlUserFeature.id
+        /// </summary>
         public string Id { get; }
-        /// <summary> Specifies the feature name. </summary>
+        /// <summary>
+        /// Specifies the feature name 
+        /// Serialized Name: AmlUserFeature.displayName
+        /// </summary>
         public string DisplayName { get; }
-        /// <summary> Describes the feature for user experience. </summary>
+        /// <summary>
+        /// Describes the feature for user experience
+        /// Serialized Name: AmlUserFeature.description
+        /// </summary>
         public string Description { get; }
     }
 }

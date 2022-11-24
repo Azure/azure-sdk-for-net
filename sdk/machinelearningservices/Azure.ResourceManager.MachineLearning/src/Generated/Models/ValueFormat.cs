@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> format for the workspace connection value. </summary>
+    /// <summary>
+    /// format for the workspace connection value
+    /// Serialized Name: ValueFormat
+    /// </summary>
     public readonly partial struct ValueFormat : IEquatable<ValueFormat>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         private const string JsonValue = "JSON";
 
-        /// <summary> JSON. </summary>
+        /// <summary>
+        /// JSON
+        /// Serialized Name: ValueFormat.JSON
+        /// </summary>
         public static ValueFormat Json { get; } = new ValueFormat(JsonValue);
         /// <summary> Determines if two <see cref="ValueFormat"/> values are the same. </summary>
         public static bool operator ==(ValueFormat left, ValueFormat right) => left.Equals(right);

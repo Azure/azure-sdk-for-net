@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Identity that will be used to access key vault for encryption at rest. </summary>
+    /// <summary>
+    /// Identity that will be used to access key vault for encryption at rest
+    /// Serialized Name: IdentityForCmk
+    /// </summary>
     internal partial class IdentityForCmk
     {
         /// <summary> Initializes a new instance of IdentityForCmk. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of IdentityForCmk. </summary>
-        /// <param name="userAssignedIdentity"> The ArmId of the user assigned identity that will be used to access the customer managed key vault. </param>
+        /// <param name="userAssignedIdentity">
+        /// The ArmId of the user assigned identity that will be used to access the customer managed key vault
+        /// Serialized Name: IdentityForCmk.userAssignedIdentity
+        /// </param>
         internal IdentityForCmk(string userAssignedIdentity)
         {
             UserAssignedIdentity = userAssignedIdentity;
         }
 
-        /// <summary> The ArmId of the user assigned identity that will be used to access the customer managed key vault. </summary>
+        /// <summary>
+        /// The ArmId of the user assigned identity that will be used to access the customer managed key vault
+        /// Serialized Name: IdentityForCmk.userAssignedIdentity
+        /// </summary>
         public string UserAssignedIdentity { get; set; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Operating system type used by the VM. </summary>
+    /// <summary>
+    /// Operating system type used by the VM.
+    /// Serialized Name: VMPriceOSType
+    /// </summary>
     public readonly partial struct VmPriceOSType : IEquatable<VmPriceOSType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string LinuxValue = "Linux";
         private const string WindowsValue = "Windows";
 
-        /// <summary> Linux. </summary>
+        /// <summary>
+        /// Linux
+        /// Serialized Name: VMPriceOSType.Linux
+        /// </summary>
         public static VmPriceOSType Linux { get; } = new VmPriceOSType(LinuxValue);
-        /// <summary> Windows. </summary>
+        /// <summary>
+        /// Windows
+        /// Serialized Name: VMPriceOSType.Windows
+        /// </summary>
         public static VmPriceOSType Windows { get; } = new VmPriceOSType(WindowsValue);
         /// <summary> Determines if two <see cref="VmPriceOSType"/> values are the same. </summary>
         public static bool operator ==(VmPriceOSType left, VmPriceOSType right) => left.Equals(right);

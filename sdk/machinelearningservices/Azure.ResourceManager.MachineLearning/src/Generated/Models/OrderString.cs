@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The OrderString. </summary>
+    /// <summary>
+    /// The OrderString.
+    /// Serialized Name: OrderString
+    /// </summary>
     public readonly partial struct OrderString : IEquatable<OrderString>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string UpdatedAtDescValue = "UpdatedAtDesc";
         private const string UpdatedAtAscValue = "UpdatedAtAsc";
 
-        /// <summary> CreatedAtDesc. </summary>
+        /// <summary>
+        /// CreatedAtDesc
+        /// Serialized Name: OrderString.CreatedAtDesc
+        /// </summary>
         public static OrderString CreatedAtDesc { get; } = new OrderString(CreatedAtDescValue);
-        /// <summary> CreatedAtAsc. </summary>
+        /// <summary>
+        /// CreatedAtAsc
+        /// Serialized Name: OrderString.CreatedAtAsc
+        /// </summary>
         public static OrderString CreatedAtAsc { get; } = new OrderString(CreatedAtAscValue);
-        /// <summary> UpdatedAtDesc. </summary>
+        /// <summary>
+        /// UpdatedAtDesc
+        /// Serialized Name: OrderString.UpdatedAtDesc
+        /// </summary>
         public static OrderString UpdatedAtDesc { get; } = new OrderString(UpdatedAtDescValue);
-        /// <summary> UpdatedAtAsc. </summary>
+        /// <summary>
+        /// UpdatedAtAsc
+        /// Serialized Name: OrderString.UpdatedAtAsc
+        /// </summary>
         public static OrderString UpdatedAtAsc { get; } = new OrderString(UpdatedAtAscValue);
         /// <summary> Determines if two <see cref="OrderString"/> values are the same. </summary>
         public static bool operator ==(OrderString left, OrderString right) => left.Equals(right);

@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The List WorkspaceQuotasByVMFamily operation response. </summary>
+    /// <summary>
+    /// The List WorkspaceQuotasByVMFamily operation response.
+    /// Serialized Name: ListWorkspaceQuotas
+    /// </summary>
     internal partial class ListWorkspaceQuotas
     {
         /// <summary> Initializes a new instance of ListWorkspaceQuotas. </summary>
@@ -20,17 +23,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of ListWorkspaceQuotas. </summary>
-        /// <param name="value"> The list of Workspace Quotas by VM Family. </param>
-        /// <param name="nextLink"> The URI to fetch the next page of workspace quota information by VM Family. Call ListNext() with this to fetch the next page of Workspace Quota information. </param>
+        /// <param name="value">
+        /// The list of Workspace Quotas by VM Family
+        /// Serialized Name: ListWorkspaceQuotas.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URI to fetch the next page of workspace quota information by VM Family. Call ListNext() with this to fetch the next page of Workspace Quota information.
+        /// Serialized Name: ListWorkspaceQuotas.nextLink
+        /// </param>
         internal ListWorkspaceQuotas(IReadOnlyList<ResourceQuota> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The list of Workspace Quotas by VM Family. </summary>
+        /// <summary>
+        /// The list of Workspace Quotas by VM Family
+        /// Serialized Name: ListWorkspaceQuotas.value
+        /// </summary>
         public IReadOnlyList<ResourceQuota> Value { get; }
-        /// <summary> The URI to fetch the next page of workspace quota information by VM Family. Call ListNext() with this to fetch the next page of Workspace Quota information. </summary>
+        /// <summary>
+        /// The URI to fetch the next page of workspace quota information by VM Family. Call ListNext() with this to fetch the next page of Workspace Quota information.
+        /// Serialized Name: ListWorkspaceQuotas.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

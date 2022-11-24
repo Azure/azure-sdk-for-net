@@ -7,13 +7,25 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The estimated price info for using a VM of a particular OS type, tier, etc. </summary>
+    /// <summary>
+    /// The estimated price info for using a VM of a particular OS type, tier, etc.
+    /// Serialized Name: EstimatedVMPrice
+    /// </summary>
     public partial class EstimatedVmPrice
     {
         /// <summary> Initializes a new instance of EstimatedVmPrice. </summary>
-        /// <param name="retailPrice"> The price charged for using the VM. </param>
-        /// <param name="osType"> Operating system type used by the VM. </param>
-        /// <param name="vmTier"> The type of the VM. </param>
+        /// <param name="retailPrice">
+        /// The price charged for using the VM.
+        /// Serialized Name: EstimatedVMPrice.retailPrice
+        /// </param>
+        /// <param name="osType">
+        /// Operating system type used by the VM.
+        /// Serialized Name: EstimatedVMPrice.osType
+        /// </param>
+        /// <param name="vmTier">
+        /// The type of the VM.
+        /// Serialized Name: EstimatedVMPrice.vmTier
+        /// </param>
         internal EstimatedVmPrice(double retailPrice, VmPriceOSType osType, VmTier vmTier)
         {
             RetailPrice = retailPrice;
@@ -21,11 +33,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             VmTier = vmTier;
         }
 
-        /// <summary> The price charged for using the VM. </summary>
+        /// <summary>
+        /// The price charged for using the VM.
+        /// Serialized Name: EstimatedVMPrice.retailPrice
+        /// </summary>
         public double RetailPrice { get; }
-        /// <summary> Operating system type used by the VM. </summary>
+        /// <summary>
+        /// Operating system type used by the VM.
+        /// Serialized Name: EstimatedVMPrice.osType
+        /// </summary>
         public VmPriceOSType OSType { get; }
-        /// <summary> The type of the VM. </summary>
+        /// <summary>
+        /// The type of the VM.
+        /// Serialized Name: EstimatedVMPrice.vmTier
+        /// </summary>
         public VmTier VmTier { get; }
     }
 }

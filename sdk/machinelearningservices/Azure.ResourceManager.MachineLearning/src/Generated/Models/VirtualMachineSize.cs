@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Describes the properties of a VM size. </summary>
+    /// <summary>
+    /// Describes the properties of a VM size.
+    /// Serialized Name: VirtualMachineSize
+    /// </summary>
     public partial class VirtualMachineSize
     {
         /// <summary> Initializes a new instance of VirtualMachineSize. </summary>
@@ -20,17 +23,50 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of VirtualMachineSize. </summary>
-        /// <param name="name"> The name of the virtual machine size. </param>
-        /// <param name="family"> The family name of the virtual machine size. </param>
-        /// <param name="vcpUs"> The number of vCPUs supported by the virtual machine size. </param>
-        /// <param name="gpus"> The number of gPUs supported by the virtual machine size. </param>
-        /// <param name="osVhdSizeMB"> The OS VHD disk size, in MB, allowed by the virtual machine size. </param>
-        /// <param name="maxResourceVolumeMB"> The resource volume size, in MB, allowed by the virtual machine size. </param>
-        /// <param name="memoryGB"> The amount of memory, in GB, supported by the virtual machine size. </param>
-        /// <param name="lowPriorityCapable"> Specifies if the virtual machine size supports low priority VMs. </param>
-        /// <param name="premiumIO"> Specifies if the virtual machine size supports premium IO. </param>
-        /// <param name="estimatedVmPrices"> The estimated price information for using a VM. </param>
-        /// <param name="supportedComputeTypes"> Specifies the compute types supported by the virtual machine size. </param>
+        /// <param name="name">
+        /// The name of the virtual machine size.
+        /// Serialized Name: VirtualMachineSize.name
+        /// </param>
+        /// <param name="family">
+        /// The family name of the virtual machine size.
+        /// Serialized Name: VirtualMachineSize.family
+        /// </param>
+        /// <param name="vcpUs">
+        /// The number of vCPUs supported by the virtual machine size.
+        /// Serialized Name: VirtualMachineSize.vCPUs
+        /// </param>
+        /// <param name="gpus">
+        /// The number of gPUs supported by the virtual machine size.
+        /// Serialized Name: VirtualMachineSize.gpus
+        /// </param>
+        /// <param name="osVhdSizeMB">
+        /// The OS VHD disk size, in MB, allowed by the virtual machine size.
+        /// Serialized Name: VirtualMachineSize.osVhdSizeMB
+        /// </param>
+        /// <param name="maxResourceVolumeMB">
+        /// The resource volume size, in MB, allowed by the virtual machine size.
+        /// Serialized Name: VirtualMachineSize.maxResourceVolumeMB
+        /// </param>
+        /// <param name="memoryGB">
+        /// The amount of memory, in GB, supported by the virtual machine size.
+        /// Serialized Name: VirtualMachineSize.memoryGB
+        /// </param>
+        /// <param name="lowPriorityCapable">
+        /// Specifies if the virtual machine size supports low priority VMs.
+        /// Serialized Name: VirtualMachineSize.lowPriorityCapable
+        /// </param>
+        /// <param name="premiumIO">
+        /// Specifies if the virtual machine size supports premium IO.
+        /// Serialized Name: VirtualMachineSize.premiumIO
+        /// </param>
+        /// <param name="estimatedVmPrices">
+        /// The estimated price information for using a VM.
+        /// Serialized Name: VirtualMachineSize.estimatedVMPrices
+        /// </param>
+        /// <param name="supportedComputeTypes">
+        /// Specifies the compute types supported by the virtual machine size.
+        /// Serialized Name: VirtualMachineSize.supportedComputeTypes
+        /// </param>
         internal VirtualMachineSize(string name, string family, int? vcpUs, int? gpus, int? osVhdSizeMB, int? maxResourceVolumeMB, double? memoryGB, bool? lowPriorityCapable, bool? premiumIO, EstimatedVmPrices estimatedVmPrices, IReadOnlyList<string> supportedComputeTypes)
         {
             Name = name;
@@ -46,27 +82,60 @@ namespace Azure.ResourceManager.MachineLearning.Models
             SupportedComputeTypes = supportedComputeTypes;
         }
 
-        /// <summary> The name of the virtual machine size. </summary>
+        /// <summary>
+        /// The name of the virtual machine size.
+        /// Serialized Name: VirtualMachineSize.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The family name of the virtual machine size. </summary>
+        /// <summary>
+        /// The family name of the virtual machine size.
+        /// Serialized Name: VirtualMachineSize.family
+        /// </summary>
         public string Family { get; }
-        /// <summary> The number of vCPUs supported by the virtual machine size. </summary>
+        /// <summary>
+        /// The number of vCPUs supported by the virtual machine size.
+        /// Serialized Name: VirtualMachineSize.vCPUs
+        /// </summary>
         public int? VCPUs { get; }
-        /// <summary> The number of gPUs supported by the virtual machine size. </summary>
+        /// <summary>
+        /// The number of gPUs supported by the virtual machine size.
+        /// Serialized Name: VirtualMachineSize.gpus
+        /// </summary>
         public int? Gpus { get; }
-        /// <summary> The OS VHD disk size, in MB, allowed by the virtual machine size. </summary>
+        /// <summary>
+        /// The OS VHD disk size, in MB, allowed by the virtual machine size.
+        /// Serialized Name: VirtualMachineSize.osVhdSizeMB
+        /// </summary>
         public int? OSVhdSizeMB { get; }
-        /// <summary> The resource volume size, in MB, allowed by the virtual machine size. </summary>
+        /// <summary>
+        /// The resource volume size, in MB, allowed by the virtual machine size.
+        /// Serialized Name: VirtualMachineSize.maxResourceVolumeMB
+        /// </summary>
         public int? MaxResourceVolumeMB { get; }
-        /// <summary> The amount of memory, in GB, supported by the virtual machine size. </summary>
+        /// <summary>
+        /// The amount of memory, in GB, supported by the virtual machine size.
+        /// Serialized Name: VirtualMachineSize.memoryGB
+        /// </summary>
         public double? MemoryGB { get; }
-        /// <summary> Specifies if the virtual machine size supports low priority VMs. </summary>
+        /// <summary>
+        /// Specifies if the virtual machine size supports low priority VMs.
+        /// Serialized Name: VirtualMachineSize.lowPriorityCapable
+        /// </summary>
         public bool? LowPriorityCapable { get; }
-        /// <summary> Specifies if the virtual machine size supports premium IO. </summary>
+        /// <summary>
+        /// Specifies if the virtual machine size supports premium IO.
+        /// Serialized Name: VirtualMachineSize.premiumIO
+        /// </summary>
         public bool? PremiumIO { get; }
-        /// <summary> The estimated price information for using a VM. </summary>
+        /// <summary>
+        /// The estimated price information for using a VM.
+        /// Serialized Name: VirtualMachineSize.estimatedVMPrices
+        /// </summary>
         public EstimatedVmPrices EstimatedVmPrices { get; }
-        /// <summary> Specifies the compute types supported by the virtual machine size. </summary>
+        /// <summary>
+        /// Specifies the compute types supported by the virtual machine size.
+        /// Serialized Name: VirtualMachineSize.supportedComputeTypes
+        /// </summary>
         public IReadOnlyList<string> SupportedComputeTypes { get; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Enum to describe the frequency of a recurrence schedule. </summary>
+    /// <summary>
+    /// Enum to describe the frequency of a recurrence schedule
+    /// Serialized Name: RecurrenceFrequency
+    /// </summary>
     public readonly partial struct RecurrenceFrequency : IEquatable<RecurrenceFrequency>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string WeekValue = "Week";
         private const string MonthValue = "Month";
 
-        /// <summary> Minute frequency. </summary>
+        /// <summary>
+        /// Minute frequency
+        /// Serialized Name: RecurrenceFrequency.Minute
+        /// </summary>
         public static RecurrenceFrequency Minute { get; } = new RecurrenceFrequency(MinuteValue);
-        /// <summary> Hour frequency. </summary>
+        /// <summary>
+        /// Hour frequency
+        /// Serialized Name: RecurrenceFrequency.Hour
+        /// </summary>
         public static RecurrenceFrequency Hour { get; } = new RecurrenceFrequency(HourValue);
-        /// <summary> Day frequency. </summary>
+        /// <summary>
+        /// Day frequency
+        /// Serialized Name: RecurrenceFrequency.Day
+        /// </summary>
         public static RecurrenceFrequency Day { get; } = new RecurrenceFrequency(DayValue);
-        /// <summary> Week frequency. </summary>
+        /// <summary>
+        /// Week frequency
+        /// Serialized Name: RecurrenceFrequency.Week
+        /// </summary>
         public static RecurrenceFrequency Week { get; } = new RecurrenceFrequency(WeekValue);
-        /// <summary> Month frequency. </summary>
+        /// <summary>
+        /// Month frequency
+        /// Serialized Name: RecurrenceFrequency.Month
+        /// </summary>
         public static RecurrenceFrequency Month { get; } = new RecurrenceFrequency(MonthValue);
         /// <summary> Determines if two <see cref="RecurrenceFrequency"/> values are the same. </summary>
         public static bool operator ==(RecurrenceFrequency left, RecurrenceFrequency right) => left.Equals(right);

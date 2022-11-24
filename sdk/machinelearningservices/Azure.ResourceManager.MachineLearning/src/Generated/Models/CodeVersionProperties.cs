@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Code asset version details. </summary>
+    /// <summary>
+    /// Code asset version details.
+    /// Serialized Name: CodeVersionProperties
+    /// </summary>
     public partial class CodeVersionProperties : AssetBase
     {
         /// <summary> Initializes a new instance of CodeVersionProperties. </summary>
@@ -19,18 +22,39 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of CodeVersionProperties. </summary>
-        /// <param name="description"> The asset description text. </param>
-        /// <param name="properties"> The asset property dictionary. </param>
-        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
-        /// <param name="isArchived"> Is the asset archived?. </param>
-        /// <param name="codeUri"> Uri where code is located. </param>
+        /// <param name="description">
+        /// The asset description text.
+        /// Serialized Name: ResourceBase.description
+        /// </param>
+        /// <param name="properties">
+        /// The asset property dictionary.
+        /// Serialized Name: ResourceBase.properties
+        /// </param>
+        /// <param name="tags">
+        /// Tag dictionary. Tags can be added, removed, and updated.
+        /// Serialized Name: ResourceBase.tags
+        /// </param>
+        /// <param name="isAnonymous">
+        /// If the name version are system generated (anonymous registration).
+        /// Serialized Name: AssetBase.isAnonymous
+        /// </param>
+        /// <param name="isArchived">
+        /// Is the asset archived?
+        /// Serialized Name: AssetBase.isArchived
+        /// </param>
+        /// <param name="codeUri">
+        /// Uri where code is located
+        /// Serialized Name: CodeVersionProperties.codeUri
+        /// </param>
         internal CodeVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived, Uri codeUri) : base(description, properties, tags, isAnonymous, isArchived)
         {
             CodeUri = codeUri;
         }
 
-        /// <summary> Uri where code is located. </summary>
+        /// <summary>
+        /// Uri where code is located
+        /// Serialized Name: CodeVersionProperties.codeUri
+        /// </summary>
         public Uri CodeUri { get; set; }
     }
 }

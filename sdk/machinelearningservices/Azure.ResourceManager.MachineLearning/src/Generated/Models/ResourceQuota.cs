@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The quota assigned to a resource. </summary>
+    /// <summary>
+    /// The quota assigned to a resource.
+    /// Serialized Name: ResourceQuota
+    /// </summary>
     public partial class ResourceQuota
     {
         /// <summary> Initializes a new instance of ResourceQuota. </summary>
@@ -16,12 +19,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of ResourceQuota. </summary>
-        /// <param name="id"> Specifies the resource ID. </param>
-        /// <param name="amlWorkspaceLocation"> Region of the AML workspace in the id. </param>
-        /// <param name="resourceQuotaType"> Specifies the resource type. </param>
-        /// <param name="name"> Name of the resource. </param>
-        /// <param name="limit"> The maximum permitted quota of the resource. </param>
-        /// <param name="unit"> An enum describing the unit of quota measurement. </param>
+        /// <param name="id">
+        /// Specifies the resource ID.
+        /// Serialized Name: ResourceQuota.id
+        /// </param>
+        /// <param name="amlWorkspaceLocation">
+        /// Region of the AML workspace in the id.
+        /// Serialized Name: ResourceQuota.amlWorkspaceLocation
+        /// </param>
+        /// <param name="resourceQuotaType">
+        /// Specifies the resource type.
+        /// Serialized Name: ResourceQuota.type
+        /// </param>
+        /// <param name="name">
+        /// Name of the resource.
+        /// Serialized Name: ResourceQuota.name
+        /// </param>
+        /// <param name="limit">
+        /// The maximum permitted quota of the resource.
+        /// Serialized Name: ResourceQuota.limit
+        /// </param>
+        /// <param name="unit">
+        /// An enum describing the unit of quota measurement.
+        /// Serialized Name: ResourceQuota.unit
+        /// </param>
         internal ResourceQuota(string id, string amlWorkspaceLocation, string resourceQuotaType, ResourceName name, long? limit, QuotaUnit? unit)
         {
             Id = id;
@@ -32,17 +53,35 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Unit = unit;
         }
 
-        /// <summary> Specifies the resource ID. </summary>
+        /// <summary>
+        /// Specifies the resource ID.
+        /// Serialized Name: ResourceQuota.id
+        /// </summary>
         public string Id { get; }
-        /// <summary> Region of the AML workspace in the id. </summary>
+        /// <summary>
+        /// Region of the AML workspace in the id.
+        /// Serialized Name: ResourceQuota.amlWorkspaceLocation
+        /// </summary>
         public string AmlWorkspaceLocation { get; }
-        /// <summary> Specifies the resource type. </summary>
+        /// <summary>
+        /// Specifies the resource type.
+        /// Serialized Name: ResourceQuota.type
+        /// </summary>
         public string ResourceQuotaType { get; }
-        /// <summary> Name of the resource. </summary>
+        /// <summary>
+        /// Name of the resource.
+        /// Serialized Name: ResourceQuota.name
+        /// </summary>
         public ResourceName Name { get; }
-        /// <summary> The maximum permitted quota of the resource. </summary>
+        /// <summary>
+        /// The maximum permitted quota of the resource.
+        /// Serialized Name: ResourceQuota.limit
+        /// </summary>
         public long? Limit { get; }
-        /// <summary> An enum describing the unit of quota measurement. </summary>
+        /// <summary>
+        /// An enum describing the unit of quota measurement.
+        /// Serialized Name: ResourceQuota.unit
+        /// </summary>
         public QuotaUnit? Unit { get; }
     }
 }

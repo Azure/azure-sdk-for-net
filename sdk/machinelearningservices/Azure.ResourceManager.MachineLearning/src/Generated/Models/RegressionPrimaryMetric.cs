@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Primary metrics for Regression task. </summary>
+    /// <summary>
+    /// Primary metrics for Regression task.
+    /// Serialized Name: RegressionPrimaryMetrics
+    /// </summary>
     public readonly partial struct RegressionPrimaryMetric : IEquatable<RegressionPrimaryMetric>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string R2ScoreValue = "R2Score";
         private const string NormalizedMeanAbsoluteErrorValue = "NormalizedMeanAbsoluteError";
 
-        /// <summary> The Spearman&apos;s rank coefficient of correlation is a nonparametric measure of rank correlation. </summary>
+        /// <summary>
+        /// The Spearman&apos;s rank coefficient of correlation is a nonparametric measure of rank correlation.
+        /// Serialized Name: RegressionPrimaryMetrics.SpearmanCorrelation
+        /// </summary>
         public static RegressionPrimaryMetric SpearmanCorrelation { get; } = new RegressionPrimaryMetric(SpearmanCorrelationValue);
-        /// <summary> The Normalized Root Mean Squared Error (NRMSE) the RMSE facilitates the comparison between models with different scales. </summary>
+        /// <summary>
+        /// The Normalized Root Mean Squared Error (NRMSE) the RMSE facilitates the comparison between models with different scales.
+        /// Serialized Name: RegressionPrimaryMetrics.NormalizedRootMeanSquaredError
+        /// </summary>
         public static RegressionPrimaryMetric NormalizedRootMeanSquaredError { get; } = new RegressionPrimaryMetric(NormalizedRootMeanSquaredErrorValue);
-        /// <summary> The R2 score is one of the performance evaluation measures for forecasting-based machine learning models. </summary>
+        /// <summary>
+        /// The R2 score is one of the performance evaluation measures for forecasting-based machine learning models.
+        /// Serialized Name: RegressionPrimaryMetrics.R2Score
+        /// </summary>
         public static RegressionPrimaryMetric R2Score { get; } = new RegressionPrimaryMetric(R2ScoreValue);
-        /// <summary> The Normalized Mean Absolute Error (NMAE) is a validation metric to compare the Mean Absolute Error (MAE) of (time) series with different scales. </summary>
+        /// <summary>
+        /// The Normalized Mean Absolute Error (NMAE) is a validation metric to compare the Mean Absolute Error (MAE) of (time) series with different scales.
+        /// Serialized Name: RegressionPrimaryMetrics.NormalizedMeanAbsoluteError
+        /// </summary>
         public static RegressionPrimaryMetric NormalizedMeanAbsoluteError { get; } = new RegressionPrimaryMetric(NormalizedMeanAbsoluteErrorValue);
         /// <summary> Determines if two <see cref="RegressionPrimaryMetric"/> values are the same. </summary>
         public static bool operator ==(RegressionPrimaryMetric left, RegressionPrimaryMetric right) => left.Equals(right);

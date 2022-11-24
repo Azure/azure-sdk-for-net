@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Forecasting Training related configuration. </summary>
+    /// <summary>
+    /// Forecasting Training related configuration.
+    /// Serialized Name: ForecastingTrainingSettings
+    /// </summary>
     public partial class ForecastingTrainingSettings : TrainingSettings
     {
         /// <summary> Initializes a new instance of ForecastingTrainingSettings. </summary>
@@ -22,27 +25,58 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of ForecastingTrainingSettings. </summary>
-        /// <param name="enableDnnTraining"> Enable recommendation of DNN models. </param>
-        /// <param name="enableModelExplainability"> Flag to turn on explainability on best model. </param>
-        /// <param name="enableOnnxCompatibleModels"> Flag for enabling onnx compatible models. </param>
-        /// <param name="enableStackEnsemble"> Enable stack ensemble run. </param>
-        /// <param name="enableVoteEnsemble"> Enable voting ensemble run. </param>
+        /// <param name="enableDnnTraining">
+        /// Enable recommendation of DNN models.
+        /// Serialized Name: TrainingSettings.enableDnnTraining
+        /// </param>
+        /// <param name="enableModelExplainability">
+        /// Flag to turn on explainability on best model.
+        /// Serialized Name: TrainingSettings.enableModelExplainability
+        /// </param>
+        /// <param name="enableOnnxCompatibleModels">
+        /// Flag for enabling onnx compatible models.
+        /// Serialized Name: TrainingSettings.enableOnnxCompatibleModels
+        /// </param>
+        /// <param name="enableStackEnsemble">
+        /// Enable stack ensemble run.
+        /// Serialized Name: TrainingSettings.enableStackEnsemble
+        /// </param>
+        /// <param name="enableVoteEnsemble">
+        /// Enable voting ensemble run.
+        /// Serialized Name: TrainingSettings.enableVoteEnsemble
+        /// </param>
         /// <param name="ensembleModelDownloadTimeout">
         /// During VotingEnsemble and StackEnsemble model generation, multiple fitted models from the previous child runs are downloaded.
         /// Configure this parameter with a higher value than 300 secs, if more time is needed.
+        /// Serialized Name: TrainingSettings.ensembleModelDownloadTimeout
         /// </param>
-        /// <param name="stackEnsembleSettings"> Stack ensemble settings for stack ensemble run. </param>
-        /// <param name="allowedTrainingAlgorithms"> Allowed models for forecasting task. </param>
-        /// <param name="blockedTrainingAlgorithms"> Blocked models for forecasting task. </param>
+        /// <param name="stackEnsembleSettings">
+        /// Stack ensemble settings for stack ensemble run.
+        /// Serialized Name: TrainingSettings.stackEnsembleSettings
+        /// </param>
+        /// <param name="allowedTrainingAlgorithms">
+        /// Allowed models for forecasting task.
+        /// Serialized Name: ForecastingTrainingSettings.allowedTrainingAlgorithms
+        /// </param>
+        /// <param name="blockedTrainingAlgorithms">
+        /// Blocked models for forecasting task.
+        /// Serialized Name: ForecastingTrainingSettings.blockedTrainingAlgorithms
+        /// </param>
         internal ForecastingTrainingSettings(bool? enableDnnTraining, bool? enableModelExplainability, bool? enableOnnxCompatibleModels, bool? enableStackEnsemble, bool? enableVoteEnsemble, TimeSpan? ensembleModelDownloadTimeout, StackEnsembleSettings stackEnsembleSettings, IList<ForecastingModel> allowedTrainingAlgorithms, IList<ForecastingModel> blockedTrainingAlgorithms) : base(enableDnnTraining, enableModelExplainability, enableOnnxCompatibleModels, enableStackEnsemble, enableVoteEnsemble, ensembleModelDownloadTimeout, stackEnsembleSettings)
         {
             AllowedTrainingAlgorithms = allowedTrainingAlgorithms;
             BlockedTrainingAlgorithms = blockedTrainingAlgorithms;
         }
 
-        /// <summary> Allowed models for forecasting task. </summary>
+        /// <summary>
+        /// Allowed models for forecasting task.
+        /// Serialized Name: ForecastingTrainingSettings.allowedTrainingAlgorithms
+        /// </summary>
         public IList<ForecastingModel> AllowedTrainingAlgorithms { get; set; }
-        /// <summary> Blocked models for forecasting task. </summary>
+        /// <summary>
+        /// Blocked models for forecasting task.
+        /// Serialized Name: ForecastingTrainingSettings.blockedTrainingAlgorithms
+        /// </summary>
         public IList<ForecastingModel> BlockedTrainingAlgorithms { get; set; }
     }
 }

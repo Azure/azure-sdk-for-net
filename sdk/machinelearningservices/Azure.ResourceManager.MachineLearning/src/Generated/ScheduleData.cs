@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.MachineLearning
     public partial class ScheduleData : ResourceData
     {
         /// <summary> Initializes a new instance of ScheduleData. </summary>
-        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
+        /// <param name="properties">
+        /// [Required] Additional attributes of the entity.
+        /// Serialized Name: Schedule.properties
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public ScheduleData(ScheduleProperties properties)
         {
@@ -30,13 +33,19 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
+        /// <param name="properties">
+        /// [Required] Additional attributes of the entity.
+        /// Serialized Name: Schedule.properties
+        /// </param>
         internal ScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ScheduleProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
-        /// <summary> [Required] Additional attributes of the entity. </summary>
+        /// <summary>
+        /// [Required] Additional attributes of the entity.
+        /// Serialized Name: Schedule.properties
+        /// </summary>
         public ScheduleProperties Properties { get; set; }
     }
 }

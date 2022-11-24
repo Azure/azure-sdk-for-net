@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Defines an Aml Instance container. </summary>
+    /// <summary>
+    /// Defines an Aml Instance container.
+    /// Serialized Name: ComputeInstanceContainer
+    /// </summary>
     public partial class ComputeInstanceContainer
     {
         /// <summary> Initializes a new instance of ComputeInstanceContainer. </summary>
@@ -21,12 +24,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of ComputeInstanceContainer. </summary>
-        /// <param name="name"> Name of the ComputeInstance container. </param>
-        /// <param name="autosave"> Auto save settings. </param>
-        /// <param name="gpu"> Information of GPU. </param>
-        /// <param name="network"> network of this container. </param>
-        /// <param name="environment"> Environment information of this container. </param>
-        /// <param name="services"> services of this containers. </param>
+        /// <param name="name">
+        /// Name of the ComputeInstance container.
+        /// Serialized Name: ComputeInstanceContainer.name
+        /// </param>
+        /// <param name="autosave">
+        /// Auto save settings.
+        /// Serialized Name: ComputeInstanceContainer.autosave
+        /// </param>
+        /// <param name="gpu">
+        /// Information of GPU.
+        /// Serialized Name: ComputeInstanceContainer.gpu
+        /// </param>
+        /// <param name="network">
+        /// network of this container.
+        /// Serialized Name: ComputeInstanceContainer.network
+        /// </param>
+        /// <param name="environment">
+        /// Environment information of this container.
+        /// Serialized Name: ComputeInstanceContainer.environment
+        /// </param>
+        /// <param name="services">
+        /// services of this containers.
+        /// Serialized Name: ComputeInstanceContainer.services
+        /// </param>
         internal ComputeInstanceContainer(string name, Autosave? autosave, string gpu, Network? network, ComputeInstanceEnvironmentInfo environment, IReadOnlyList<BinaryData> services)
         {
             Name = name;
@@ -37,18 +58,34 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Services = services;
         }
 
-        /// <summary> Name of the ComputeInstance container. </summary>
+        /// <summary>
+        /// Name of the ComputeInstance container.
+        /// Serialized Name: ComputeInstanceContainer.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> Auto save settings. </summary>
+        /// <summary>
+        /// Auto save settings.
+        /// Serialized Name: ComputeInstanceContainer.autosave
+        /// </summary>
         public Autosave? Autosave { get; }
-        /// <summary> Information of GPU. </summary>
+        /// <summary>
+        /// Information of GPU.
+        /// Serialized Name: ComputeInstanceContainer.gpu
+        /// </summary>
         public string Gpu { get; }
-        /// <summary> network of this container. </summary>
+        /// <summary>
+        /// network of this container.
+        /// Serialized Name: ComputeInstanceContainer.network
+        /// </summary>
         public Network? Network { get; }
-        /// <summary> Environment information of this container. </summary>
+        /// <summary>
+        /// Environment information of this container.
+        /// Serialized Name: ComputeInstanceContainer.environment
+        /// </summary>
         public ComputeInstanceEnvironmentInfo Environment { get; }
         /// <summary>
         /// services of this containers.
+        /// Serialized Name: ComputeInstanceContainer.services
         /// <para>
         /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

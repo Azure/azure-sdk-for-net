@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Secrets related to a Machine Learning compute based on AKS. </summary>
+    /// <summary>
+    /// Secrets related to a Machine Learning compute based on AKS.
+    /// Serialized Name: AksComputeSecrets
+    /// </summary>
     public partial class AksComputeSecrets : ComputeSecrets
     {
         /// <summary> Initializes a new instance of AksComputeSecrets. </summary>
@@ -17,10 +20,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of AksComputeSecrets. </summary>
-        /// <param name="computeType"> The type of compute. </param>
-        /// <param name="userKubeConfig"> Content of kubeconfig file that can be used to connect to the Kubernetes cluster. </param>
-        /// <param name="adminKubeConfig"> Content of kubeconfig file that can be used to connect to the Kubernetes cluster. </param>
-        /// <param name="imagePullSecretName"> Image registry pull secret. </param>
+        /// <param name="computeType">
+        /// The type of compute
+        /// Serialized Name: ComputeSecrets.computeType
+        /// </param>
+        /// <param name="userKubeConfig">
+        /// Content of kubeconfig file that can be used to connect to the Kubernetes cluster.
+        /// Serialized Name: AksComputeSecretsProperties.userKubeConfig
+        /// </param>
+        /// <param name="adminKubeConfig">
+        /// Content of kubeconfig file that can be used to connect to the Kubernetes cluster.
+        /// Serialized Name: AksComputeSecretsProperties.adminKubeConfig
+        /// </param>
+        /// <param name="imagePullSecretName">
+        /// Image registry pull secret.
+        /// Serialized Name: AksComputeSecretsProperties.imagePullSecretName
+        /// </param>
         internal AksComputeSecrets(ComputeType computeType, string userKubeConfig, string adminKubeConfig, string imagePullSecretName) : base(computeType)
         {
             UserKubeConfig = userKubeConfig;
@@ -29,11 +44,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ComputeType = computeType;
         }
 
-        /// <summary> Content of kubeconfig file that can be used to connect to the Kubernetes cluster. </summary>
+        /// <summary>
+        /// Content of kubeconfig file that can be used to connect to the Kubernetes cluster.
+        /// Serialized Name: AksComputeSecretsProperties.userKubeConfig
+        /// </summary>
         public string UserKubeConfig { get; }
-        /// <summary> Content of kubeconfig file that can be used to connect to the Kubernetes cluster. </summary>
+        /// <summary>
+        /// Content of kubeconfig file that can be used to connect to the Kubernetes cluster.
+        /// Serialized Name: AksComputeSecretsProperties.adminKubeConfig
+        /// </summary>
         public string AdminKubeConfig { get; }
-        /// <summary> Image registry pull secret. </summary>
+        /// <summary>
+        /// Image registry pull secret.
+        /// Serialized Name: AksComputeSecretsProperties.imagePullSecretName
+        /// </summary>
         public string ImagePullSecretName { get; }
     }
 }

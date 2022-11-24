@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Flag for generating lags for the numeric features. </summary>
+    /// <summary>
+    /// Flag for generating lags for the numeric features.
+    /// Serialized Name: FeatureLags
+    /// </summary>
     public readonly partial struct FeatureLag : IEquatable<FeatureLag>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string NoneValue = "None";
         private const string AutoValue = "Auto";
 
-        /// <summary> No feature lags generated. </summary>
+        /// <summary>
+        /// No feature lags generated.
+        /// Serialized Name: FeatureLags.None
+        /// </summary>
         public static FeatureLag None { get; } = new FeatureLag(NoneValue);
-        /// <summary> System auto-generates feature lags. </summary>
+        /// <summary>
+        /// System auto-generates feature lags.
+        /// Serialized Name: FeatureLags.Auto
+        /// </summary>
         public static FeatureLag Auto { get; } = new FeatureLag(AutoValue);
         /// <summary> Determines if two <see cref="FeatureLag"/> values are the same. </summary>
         public static bool operator ==(FeatureLag left, FeatureLag right) => left.Equals(right);

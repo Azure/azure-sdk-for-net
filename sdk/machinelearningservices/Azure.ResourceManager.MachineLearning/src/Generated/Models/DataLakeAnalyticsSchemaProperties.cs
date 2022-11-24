@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The DataLakeAnalyticsSchemaProperties. </summary>
+    /// <summary>
+    /// The DataLakeAnalyticsSchemaProperties.
+    /// Serialized Name: DataLakeAnalyticsSchemaProperties
+    /// </summary>
     internal partial class DataLakeAnalyticsSchemaProperties
     {
         /// <summary> Initializes a new instance of DataLakeAnalyticsSchemaProperties. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of DataLakeAnalyticsSchemaProperties. </summary>
-        /// <param name="dataLakeStoreAccountName"> DataLake Store Account Name. </param>
+        /// <param name="dataLakeStoreAccountName">
+        /// DataLake Store Account Name
+        /// Serialized Name: DataLakeAnalyticsSchemaProperties.dataLakeStoreAccountName
+        /// </param>
         internal DataLakeAnalyticsSchemaProperties(string dataLakeStoreAccountName)
         {
             DataLakeStoreAccountName = dataLakeStoreAccountName;
         }
 
-        /// <summary> DataLake Store Account Name. </summary>
+        /// <summary>
+        /// DataLake Store Account Name
+        /// Serialized Name: DataLakeAnalyticsSchemaProperties.dataLakeStoreAccountName
+        /// </summary>
         public string DataLakeStoreAccountName { get; set; }
     }
 }

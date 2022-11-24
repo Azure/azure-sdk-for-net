@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The FqdnEndpointDetail. </summary>
+    /// <summary>
+    /// The FqdnEndpointDetail.
+    /// Serialized Name: FqdnEndpointDetail
+    /// </summary>
     public partial class FqdnEndpointDetail
     {
         /// <summary> Initializes a new instance of FqdnEndpointDetail. </summary>
@@ -16,13 +19,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of FqdnEndpointDetail. </summary>
-        /// <param name="port"></param>
+        /// <param name="port"> Serialized Name: FqdnEndpointDetail.port. </param>
         internal FqdnEndpointDetail(int? port)
         {
             Port = port;
         }
 
-        /// <summary> Gets the port. </summary>
+        /// <summary> Serialized Name: FqdnEndpointDetail.port. </summary>
         public int? Port { get; }
     }
 }

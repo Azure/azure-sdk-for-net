@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Mount state. </summary>
+    /// <summary>
+    /// Mount state.
+    /// Serialized Name: MountState
+    /// </summary>
     public readonly partial struct MountState : IEquatable<MountState>
     {
         private readonly string _value;
@@ -29,17 +32,35 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string UnmountFailedValue = "UnmountFailed";
         private const string UnmountedValue = "Unmounted";
 
-        /// <summary> MountRequested. </summary>
+        /// <summary>
+        /// MountRequested
+        /// Serialized Name: MountState.MountRequested
+        /// </summary>
         public static MountState MountRequested { get; } = new MountState(MountRequestedValue);
-        /// <summary> Mounted. </summary>
+        /// <summary>
+        /// Mounted
+        /// Serialized Name: MountState.Mounted
+        /// </summary>
         public static MountState Mounted { get; } = new MountState(MountedValue);
-        /// <summary> MountFailed. </summary>
+        /// <summary>
+        /// MountFailed
+        /// Serialized Name: MountState.MountFailed
+        /// </summary>
         public static MountState MountFailed { get; } = new MountState(MountFailedValue);
-        /// <summary> UnmountRequested. </summary>
+        /// <summary>
+        /// UnmountRequested
+        /// Serialized Name: MountState.UnmountRequested
+        /// </summary>
         public static MountState UnmountRequested { get; } = new MountState(UnmountRequestedValue);
-        /// <summary> UnmountFailed. </summary>
+        /// <summary>
+        /// UnmountFailed
+        /// Serialized Name: MountState.UnmountFailed
+        /// </summary>
         public static MountState UnmountFailed { get; } = new MountState(UnmountFailedValue);
-        /// <summary> Unmounted. </summary>
+        /// <summary>
+        /// Unmounted
+        /// Serialized Name: MountState.Unmounted
+        /// </summary>
         public static MountState Unmounted { get; } = new MountState(UnmountedValue);
         /// <summary> Determines if two <see cref="MountState"/> values are the same. </summary>
         public static bool operator ==(MountState left, MountState right) => left.Equals(right);

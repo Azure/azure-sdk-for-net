@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Datastore account key secrets. </summary>
+    /// <summary>
+    /// Datastore account key secrets.
+    /// Serialized Name: AccountKeyDatastoreSecrets
+    /// </summary>
     public partial class AccountKeyDatastoreSecrets : DatastoreSecrets
     {
         /// <summary> Initializes a new instance of AccountKeyDatastoreSecrets. </summary>
@@ -17,15 +20,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of AccountKeyDatastoreSecrets. </summary>
-        /// <param name="secretsType"> [Required] Credential type used to authentication with storage. </param>
-        /// <param name="key"> Storage account key. </param>
+        /// <param name="secretsType">
+        /// [Required] Credential type used to authentication with storage.
+        /// Serialized Name: DatastoreSecrets.secretsType
+        /// </param>
+        /// <param name="key">
+        /// Storage account key.
+        /// Serialized Name: AccountKeyDatastoreSecrets.key
+        /// </param>
         internal AccountKeyDatastoreSecrets(SecretsType secretsType, string key) : base(secretsType)
         {
             Key = key;
             SecretsType = secretsType;
         }
 
-        /// <summary> Storage account key. </summary>
+        /// <summary>
+        /// Storage account key.
+        /// Serialized Name: AccountKeyDatastoreSecrets.key
+        /// </summary>
         public string Key { get; set; }
     }
 }

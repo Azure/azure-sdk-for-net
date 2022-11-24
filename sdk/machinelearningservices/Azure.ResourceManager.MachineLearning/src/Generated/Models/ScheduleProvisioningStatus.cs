@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The ScheduleProvisioningStatus. </summary>
+    /// <summary>
+    /// The ScheduleProvisioningStatus.
+    /// Serialized Name: ScheduleProvisioningStatus
+    /// </summary>
     public readonly partial struct ScheduleProvisioningStatus : IEquatable<ScheduleProvisioningStatus>
     {
         private readonly string _value;
@@ -29,17 +32,35 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string FailedValue = "Failed";
         private const string CanceledValue = "Canceled";
 
-        /// <summary> Creating. </summary>
+        /// <summary>
+        /// Creating
+        /// Serialized Name: ScheduleProvisioningStatus.Creating
+        /// </summary>
         public static ScheduleProvisioningStatus Creating { get; } = new ScheduleProvisioningStatus(CreatingValue);
-        /// <summary> Updating. </summary>
+        /// <summary>
+        /// Updating
+        /// Serialized Name: ScheduleProvisioningStatus.Updating
+        /// </summary>
         public static ScheduleProvisioningStatus Updating { get; } = new ScheduleProvisioningStatus(UpdatingValue);
-        /// <summary> Deleting. </summary>
+        /// <summary>
+        /// Deleting
+        /// Serialized Name: ScheduleProvisioningStatus.Deleting
+        /// </summary>
         public static ScheduleProvisioningStatus Deleting { get; } = new ScheduleProvisioningStatus(DeletingValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: ScheduleProvisioningStatus.Succeeded
+        /// </summary>
         public static ScheduleProvisioningStatus Succeeded { get; } = new ScheduleProvisioningStatus(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: ScheduleProvisioningStatus.Failed
+        /// </summary>
         public static ScheduleProvisioningStatus Failed { get; } = new ScheduleProvisioningStatus(FailedValue);
-        /// <summary> Canceled. </summary>
+        /// <summary>
+        /// Canceled
+        /// Serialized Name: ScheduleProvisioningStatus.Canceled
+        /// </summary>
         public static ScheduleProvisioningStatus Canceled { get; } = new ScheduleProvisioningStatus(CanceledValue);
         /// <summary> Determines if two <see cref="ScheduleProvisioningStatus"/> values are the same. </summary>
         public static bool operator ==(ScheduleProvisioningStatus left, ScheduleProvisioningStatus right) => left.Equals(right);

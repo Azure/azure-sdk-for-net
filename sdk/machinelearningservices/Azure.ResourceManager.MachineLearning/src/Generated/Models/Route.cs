@@ -10,12 +10,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The Route. </summary>
+    /// <summary>
+    /// The Route.
+    /// Serialized Name: Route
+    /// </summary>
     public partial class Route
     {
         /// <summary> Initializes a new instance of Route. </summary>
-        /// <param name="path"> [Required] The path for the route. </param>
-        /// <param name="port"> [Required] The port for the route. </param>
+        /// <param name="path">
+        /// [Required] The path for the route.
+        /// Serialized Name: Route.path
+        /// </param>
+        /// <param name="port">
+        /// [Required] The port for the route.
+        /// Serialized Name: Route.port
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="path"/> is null. </exception>
         public Route(string path, int port)
         {
@@ -25,9 +34,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Port = port;
         }
 
-        /// <summary> [Required] The path for the route. </summary>
+        /// <summary>
+        /// [Required] The path for the route.
+        /// Serialized Name: Route.path
+        /// </summary>
         public string Path { get; set; }
-        /// <summary> [Required] The port for the route. </summary>
+        /// <summary>
+        /// [Required] The port for the route.
+        /// Serialized Name: Route.port
+        /// </summary>
         public int Port { get; set; }
     }
 }

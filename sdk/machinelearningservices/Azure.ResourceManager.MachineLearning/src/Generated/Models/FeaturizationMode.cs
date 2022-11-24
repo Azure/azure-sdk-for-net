@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Featurization mode - determines data featurization mode. </summary>
+    /// <summary>
+    /// Featurization mode - determines data featurization mode.
+    /// Serialized Name: FeaturizationMode
+    /// </summary>
     public readonly partial struct FeaturizationMode : IEquatable<FeaturizationMode>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string CustomValue = "Custom";
         private const string OffValue = "Off";
 
-        /// <summary> Auto mode, system performs featurization without any custom featurization inputs. </summary>
+        /// <summary>
+        /// Auto mode, system performs featurization without any custom featurization inputs.
+        /// Serialized Name: FeaturizationMode.Auto
+        /// </summary>
         public static FeaturizationMode Auto { get; } = new FeaturizationMode(AutoValue);
-        /// <summary> Custom featurization. </summary>
+        /// <summary>
+        /// Custom featurization.
+        /// Serialized Name: FeaturizationMode.Custom
+        /// </summary>
         public static FeaturizationMode Custom { get; } = new FeaturizationMode(CustomValue);
-        /// <summary> Featurization off. &apos;Forecasting&apos; task cannot use this value. </summary>
+        /// <summary>
+        /// Featurization off. &apos;Forecasting&apos; task cannot use this value.
+        /// Serialized Name: FeaturizationMode.Off
+        /// </summary>
         public static FeaturizationMode Off { get; } = new FeaturizationMode(OffValue);
         /// <summary> Determines if two <see cref="FeaturizationMode"/> values are the same. </summary>
         public static bool operator ==(FeaturizationMode left, FeaturizationMode right) => left.Equals(right);

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> State of the public SSH port. Possible values are: Disabled - Indicates that the public ssh port is closed on this instance. Enabled - Indicates that the public ssh port is open and accessible according to the VNet/subnet policy if applicable. </summary>
+    /// <summary>
+    /// State of the public SSH port. Possible values are: Disabled - Indicates that the public ssh port is closed on this instance. Enabled - Indicates that the public ssh port is open and accessible according to the VNet/subnet policy if applicable.
+    /// Serialized Name: SshPublicAccess
+    /// </summary>
     public readonly partial struct SshPublicAccess : IEquatable<SshPublicAccess>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: SshPublicAccess.Enabled
+        /// </summary>
         public static SshPublicAccess Enabled { get; } = new SshPublicAccess(EnabledValue);
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: SshPublicAccess.Disabled
+        /// </summary>
         public static SshPublicAccess Disabled { get; } = new SshPublicAccess(DisabledValue);
         /// <summary> Determines if two <see cref="SshPublicAccess"/> values are the same. </summary>
         public static bool operator ==(SshPublicAccess left, SshPublicAccess right) => left.Equals(right);

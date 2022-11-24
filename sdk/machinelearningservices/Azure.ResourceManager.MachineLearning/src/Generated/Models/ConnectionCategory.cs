@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Category of the connection. </summary>
+    /// <summary>
+    /// Category of the connection
+    /// Serialized Name: ConnectionCategory
+    /// </summary>
     public readonly partial struct ConnectionCategory : IEquatable<ConnectionCategory>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string ContainerRegistryValue = "ContainerRegistry";
         private const string GitValue = "Git";
 
-        /// <summary> PythonFeed. </summary>
+        /// <summary>
+        /// PythonFeed
+        /// Serialized Name: ConnectionCategory.PythonFeed
+        /// </summary>
         public static ConnectionCategory PythonFeed { get; } = new ConnectionCategory(PythonFeedValue);
-        /// <summary> ContainerRegistry. </summary>
+        /// <summary>
+        /// ContainerRegistry
+        /// Serialized Name: ConnectionCategory.ContainerRegistry
+        /// </summary>
         public static ConnectionCategory ContainerRegistry { get; } = new ConnectionCategory(ContainerRegistryValue);
-        /// <summary> Git. </summary>
+        /// <summary>
+        /// Git
+        /// Serialized Name: ConnectionCategory.Git
+        /// </summary>
         public static ConnectionCategory Git { get; } = new ConnectionCategory(GitValue);
         /// <summary> Determines if two <see cref="ConnectionCategory"/> values are the same. </summary>
         public static bool operator ==(ConnectionCategory left, ConnectionCategory right) => left.Equals(right);

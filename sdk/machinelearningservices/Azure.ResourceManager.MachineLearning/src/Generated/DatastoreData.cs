@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Initializes a new instance of DatastoreData. </summary>
         /// <param name="properties">
         /// [Required] Additional attributes of the entity.
+        /// Serialized Name: Datastore.properties
         /// Please note <see cref="DatastoreProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureBlobDatastore"/>, <see cref="AzureDataLakeGen1Datastore"/>, <see cref="AzureDataLakeGen2Datastore"/> and <see cref="AzureFileDatastore"/>.
         /// </param>
@@ -36,6 +37,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// [Required] Additional attributes of the entity.
+        /// Serialized Name: Datastore.properties
         /// Please note <see cref="DatastoreProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureBlobDatastore"/>, <see cref="AzureDataLakeGen1Datastore"/>, <see cref="AzureDataLakeGen2Datastore"/> and <see cref="AzureFileDatastore"/>.
         /// </param>
@@ -46,6 +48,7 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary>
         /// [Required] Additional attributes of the entity.
+        /// Serialized Name: Datastore.properties
         /// Please note <see cref="DatastoreProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureBlobDatastore"/>, <see cref="AzureDataLakeGen1Datastore"/>, <see cref="AzureDataLakeGen2Datastore"/> and <see cref="AzureFileDatastore"/>.
         /// </summary>

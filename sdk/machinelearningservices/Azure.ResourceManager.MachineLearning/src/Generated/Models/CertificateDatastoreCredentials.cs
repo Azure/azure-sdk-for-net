@@ -10,14 +10,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Certificate datastore credentials configuration. </summary>
+    /// <summary>
+    /// Certificate datastore credentials configuration.
+    /// Serialized Name: CertificateDatastoreCredentials
+    /// </summary>
     public partial class CertificateDatastoreCredentials : DatastoreCredentials
     {
         /// <summary> Initializes a new instance of CertificateDatastoreCredentials. </summary>
-        /// <param name="clientId"> [Required] Service principal client ID. </param>
-        /// <param name="secrets"> [Required] Service principal secrets. </param>
-        /// <param name="tenantId"> [Required] ID of the tenant to which the service principal belongs. </param>
-        /// <param name="thumbprint"> [Required] Thumbprint of the certificate used for authentication. </param>
+        /// <param name="clientId">
+        /// [Required] Service principal client ID.
+        /// Serialized Name: CertificateDatastoreCredentials.clientId
+        /// </param>
+        /// <param name="secrets">
+        /// [Required] Service principal secrets.
+        /// Serialized Name: CertificateDatastoreCredentials.secrets
+        /// </param>
+        /// <param name="tenantId">
+        /// [Required] ID of the tenant to which the service principal belongs.
+        /// Serialized Name: CertificateDatastoreCredentials.tenantId
+        /// </param>
+        /// <param name="thumbprint">
+        /// [Required] Thumbprint of the certificate used for authentication.
+        /// Serialized Name: CertificateDatastoreCredentials.thumbprint
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="secrets"/> or <paramref name="thumbprint"/> is null. </exception>
         public CertificateDatastoreCredentials(Guid clientId, CertificateDatastoreSecrets secrets, Guid tenantId, string thumbprint)
         {
@@ -32,13 +47,34 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of CertificateDatastoreCredentials. </summary>
-        /// <param name="credentialsType"> [Required] Credential type used to authentication with storage. </param>
-        /// <param name="authorityUri"> Authority URL used for authentication. </param>
-        /// <param name="clientId"> [Required] Service principal client ID. </param>
-        /// <param name="resourceUri"> Resource the service principal has access to. </param>
-        /// <param name="secrets"> [Required] Service principal secrets. </param>
-        /// <param name="tenantId"> [Required] ID of the tenant to which the service principal belongs. </param>
-        /// <param name="thumbprint"> [Required] Thumbprint of the certificate used for authentication. </param>
+        /// <param name="credentialsType">
+        /// [Required] Credential type used to authentication with storage.
+        /// Serialized Name: DatastoreCredentials.credentialsType
+        /// </param>
+        /// <param name="authorityUri">
+        /// Authority URL used for authentication.
+        /// Serialized Name: CertificateDatastoreCredentials.authorityUrl
+        /// </param>
+        /// <param name="clientId">
+        /// [Required] Service principal client ID.
+        /// Serialized Name: CertificateDatastoreCredentials.clientId
+        /// </param>
+        /// <param name="resourceUri">
+        /// Resource the service principal has access to.
+        /// Serialized Name: CertificateDatastoreCredentials.resourceUrl
+        /// </param>
+        /// <param name="secrets">
+        /// [Required] Service principal secrets.
+        /// Serialized Name: CertificateDatastoreCredentials.secrets
+        /// </param>
+        /// <param name="tenantId">
+        /// [Required] ID of the tenant to which the service principal belongs.
+        /// Serialized Name: CertificateDatastoreCredentials.tenantId
+        /// </param>
+        /// <param name="thumbprint">
+        /// [Required] Thumbprint of the certificate used for authentication.
+        /// Serialized Name: CertificateDatastoreCredentials.thumbprint
+        /// </param>
         internal CertificateDatastoreCredentials(CredentialsType credentialsType, Uri authorityUri, Guid clientId, Uri resourceUri, CertificateDatastoreSecrets secrets, Guid tenantId, string thumbprint) : base(credentialsType)
         {
             AuthorityUri = authorityUri;
@@ -50,17 +86,35 @@ namespace Azure.ResourceManager.MachineLearning.Models
             CredentialsType = credentialsType;
         }
 
-        /// <summary> Authority URL used for authentication. </summary>
+        /// <summary>
+        /// Authority URL used for authentication.
+        /// Serialized Name: CertificateDatastoreCredentials.authorityUrl
+        /// </summary>
         public Uri AuthorityUri { get; set; }
-        /// <summary> [Required] Service principal client ID. </summary>
+        /// <summary>
+        /// [Required] Service principal client ID.
+        /// Serialized Name: CertificateDatastoreCredentials.clientId
+        /// </summary>
         public Guid ClientId { get; set; }
-        /// <summary> Resource the service principal has access to. </summary>
+        /// <summary>
+        /// Resource the service principal has access to.
+        /// Serialized Name: CertificateDatastoreCredentials.resourceUrl
+        /// </summary>
         public Uri ResourceUri { get; set; }
-        /// <summary> [Required] Service principal secrets. </summary>
+        /// <summary>
+        /// [Required] Service principal secrets.
+        /// Serialized Name: CertificateDatastoreCredentials.secrets
+        /// </summary>
         public CertificateDatastoreSecrets Secrets { get; set; }
-        /// <summary> [Required] ID of the tenant to which the service principal belongs. </summary>
+        /// <summary>
+        /// [Required] ID of the tenant to which the service principal belongs.
+        /// Serialized Name: CertificateDatastoreCredentials.tenantId
+        /// </summary>
         public Guid TenantId { get; set; }
-        /// <summary> [Required] Thumbprint of the certificate used for authentication. </summary>
+        /// <summary>
+        /// [Required] Thumbprint of the certificate used for authentication.
+        /// Serialized Name: CertificateDatastoreCredentials.thumbprint
+        /// </summary>
         public string Thumbprint { get; set; }
     }
 }

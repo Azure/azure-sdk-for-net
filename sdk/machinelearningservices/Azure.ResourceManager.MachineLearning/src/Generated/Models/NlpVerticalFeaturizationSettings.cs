@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The NlpVerticalFeaturizationSettings. </summary>
+    /// <summary>
+    /// The NlpVerticalFeaturizationSettings.
+    /// Serialized Name: NlpVerticalFeaturizationSettings
+    /// </summary>
     internal partial class NlpVerticalFeaturizationSettings : FeaturizationSettings
     {
         /// <summary> Initializes a new instance of NlpVerticalFeaturizationSettings. </summary>
@@ -16,7 +19,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of NlpVerticalFeaturizationSettings. </summary>
-        /// <param name="datasetLanguage"> Dataset language, useful for the text data. </param>
+        /// <param name="datasetLanguage">
+        /// Dataset language, useful for the text data.
+        /// Serialized Name: FeaturizationSettings.datasetLanguage
+        /// </param>
         internal NlpVerticalFeaturizationSettings(string datasetLanguage) : base(datasetLanguage)
         {
         }

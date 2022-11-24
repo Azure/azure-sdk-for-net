@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Fulfills ARM Contract requirement to list all available SKUS for a resource. </summary>
+    /// <summary>
+    /// Fulfills ARM Contract requirement to list all available SKUS for a resource.
+    /// Serialized Name: SkuResource
+    /// </summary>
     public partial class SkuResource
     {
         /// <summary> Initializes a new instance of SkuResource. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of SkuResource. </summary>
-        /// <param name="capacity"> Gets or sets the Sku Capacity. </param>
-        /// <param name="resourceType"> The resource type name. </param>
-        /// <param name="sku"> Gets or sets the Sku. </param>
+        /// <param name="capacity">
+        /// Gets or sets the Sku Capacity.
+        /// Serialized Name: SkuResource.capacity
+        /// </param>
+        /// <param name="resourceType">
+        /// The resource type name.
+        /// Serialized Name: SkuResource.resourceType
+        /// </param>
+        /// <param name="sku">
+        /// Gets or sets the Sku.
+        /// Serialized Name: SkuResource.sku
+        /// </param>
         internal SkuResource(SkuCapacity capacity, string resourceType, SkuSetting sku)
         {
             Capacity = capacity;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Sku = sku;
         }
 
-        /// <summary> Gets or sets the Sku Capacity. </summary>
+        /// <summary>
+        /// Gets or sets the Sku Capacity.
+        /// Serialized Name: SkuResource.capacity
+        /// </summary>
         public SkuCapacity Capacity { get; }
-        /// <summary> The resource type name. </summary>
+        /// <summary>
+        /// The resource type name.
+        /// Serialized Name: SkuResource.resourceType
+        /// </summary>
         public string ResourceType { get; }
-        /// <summary> Gets or sets the Sku. </summary>
+        /// <summary>
+        /// Gets or sets the Sku.
+        /// Serialized Name: SkuResource.sku
+        /// </summary>
         public SkuSetting Sku { get; }
     }
 }

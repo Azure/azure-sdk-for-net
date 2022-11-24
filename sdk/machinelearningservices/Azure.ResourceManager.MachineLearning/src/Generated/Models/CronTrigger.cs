@@ -10,13 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The CronTrigger. </summary>
+    /// <summary>
+    /// The CronTrigger.
+    /// Serialized Name: CronTrigger
+    /// </summary>
     public partial class CronTrigger : TriggerBase
     {
         /// <summary> Initializes a new instance of CronTrigger. </summary>
         /// <param name="expression">
         /// [Required] Specifies cron expression of schedule.
         /// The expression should follow NCronTab format.
+        /// Serialized Name: CronTrigger.expression
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="expression"/> is null. </exception>
         public CronTrigger(string expression)
@@ -32,16 +36,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Specifies end time of schedule in ISO 8601, but without a UTC offset. Refer https://en.wikipedia.org/wiki/ISO_8601.
         /// Recommented format would be &quot;2022-06-01T00:00:01&quot;
         /// If not present, the schedule will run indefinitely
+        /// Serialized Name: TriggerBase.endTime
         /// </param>
-        /// <param name="startTime"> Specifies start time of schedule in ISO 8601 format, but without a UTC offset. </param>
+        /// <param name="startTime">
+        /// Specifies start time of schedule in ISO 8601 format, but without a UTC offset.
+        /// Serialized Name: TriggerBase.startTime
+        /// </param>
         /// <param name="timeZone">
         /// Specifies time zone in which the schedule runs.
         /// TimeZone should follow Windows time zone format. Refer: https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/default-time-zones?view=windows-11
+        /// Serialized Name: TriggerBase.timeZone
         /// </param>
-        /// <param name="triggerType"> [Required]. </param>
+        /// <param name="triggerType">
+        /// [Required] 
+        /// Serialized Name: TriggerBase.triggerType
+        /// </param>
         /// <param name="expression">
         /// [Required] Specifies cron expression of schedule.
         /// The expression should follow NCronTab format.
+        /// Serialized Name: CronTrigger.expression
         /// </param>
         internal CronTrigger(string endTime, string startTime, string timeZone, TriggerType triggerType, string expression) : base(endTime, startTime, timeZone, triggerType)
         {
@@ -52,6 +65,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary>
         /// [Required] Specifies cron expression of schedule.
         /// The expression should follow NCronTab format.
+        /// Serialized Name: CronTrigger.expression
         /// </summary>
         public string Expression { get; set; }
     }

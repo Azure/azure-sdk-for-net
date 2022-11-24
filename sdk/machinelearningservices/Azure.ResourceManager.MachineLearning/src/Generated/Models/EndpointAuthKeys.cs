@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Keys for endpoint authentication. </summary>
+    /// <summary>
+    /// Keys for endpoint authentication.
+    /// Serialized Name: EndpointAuthKeys
+    /// </summary>
     public partial class EndpointAuthKeys
     {
         /// <summary> Initializes a new instance of EndpointAuthKeys. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of EndpointAuthKeys. </summary>
-        /// <param name="primaryKey"> The primary key. </param>
-        /// <param name="secondaryKey"> The secondary key. </param>
+        /// <param name="primaryKey">
+        /// The primary key.
+        /// Serialized Name: EndpointAuthKeys.primaryKey
+        /// </param>
+        /// <param name="secondaryKey">
+        /// The secondary key.
+        /// Serialized Name: EndpointAuthKeys.secondaryKey
+        /// </param>
         internal EndpointAuthKeys(string primaryKey, string secondaryKey)
         {
             PrimaryKey = primaryKey;
             SecondaryKey = secondaryKey;
         }
 
-        /// <summary> The primary key. </summary>
+        /// <summary>
+        /// The primary key.
+        /// Serialized Name: EndpointAuthKeys.primaryKey
+        /// </summary>
         public string PrimaryKey { get; set; }
-        /// <summary> The secondary key. </summary>
+        /// <summary>
+        /// The secondary key.
+        /// Serialized Name: EndpointAuthKeys.secondaryKey
+        /// </summary>
         public string SecondaryKey { get; set; }
     }
 }

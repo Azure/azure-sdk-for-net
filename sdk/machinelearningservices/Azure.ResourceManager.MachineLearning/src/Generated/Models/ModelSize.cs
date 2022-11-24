@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Image model size. </summary>
+    /// <summary>
+    /// Image model size.
+    /// Serialized Name: ModelSize
+    /// </summary>
     public readonly partial struct ModelSize : IEquatable<ModelSize>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string LargeValue = "Large";
         private const string ExtraLargeValue = "ExtraLarge";
 
-        /// <summary> No value selected. </summary>
+        /// <summary>
+        /// No value selected.
+        /// Serialized Name: ModelSize.None
+        /// </summary>
         public static ModelSize None { get; } = new ModelSize(NoneValue);
-        /// <summary> Small size. </summary>
+        /// <summary>
+        /// Small size.
+        /// Serialized Name: ModelSize.Small
+        /// </summary>
         public static ModelSize Small { get; } = new ModelSize(SmallValue);
-        /// <summary> Medium size. </summary>
+        /// <summary>
+        /// Medium size.
+        /// Serialized Name: ModelSize.Medium
+        /// </summary>
         public static ModelSize Medium { get; } = new ModelSize(MediumValue);
-        /// <summary> Large size. </summary>
+        /// <summary>
+        /// Large size.
+        /// Serialized Name: ModelSize.Large
+        /// </summary>
         public static ModelSize Large { get; } = new ModelSize(LargeValue);
-        /// <summary> Extra large size. </summary>
+        /// <summary>
+        /// Extra large size.
+        /// Serialized Name: ModelSize.ExtraLarge
+        /// </summary>
         public static ModelSize ExtraLarge { get; } = new ModelSize(ExtraLargeValue);
         /// <summary> Determines if two <see cref="ModelSize"/> values are the same. </summary>
         public static bool operator ==(ModelSize left, ModelSize right) => left.Equals(right);

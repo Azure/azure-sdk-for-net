@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Datastore SAS secrets. </summary>
+    /// <summary>
+    /// Datastore SAS secrets.
+    /// Serialized Name: SasDatastoreSecrets
+    /// </summary>
     public partial class SasDatastoreSecrets : DatastoreSecrets
     {
         /// <summary> Initializes a new instance of SasDatastoreSecrets. </summary>
@@ -17,15 +20,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of SasDatastoreSecrets. </summary>
-        /// <param name="secretsType"> [Required] Credential type used to authentication with storage. </param>
-        /// <param name="sasToken"> Storage container SAS token. </param>
+        /// <param name="secretsType">
+        /// [Required] Credential type used to authentication with storage.
+        /// Serialized Name: DatastoreSecrets.secretsType
+        /// </param>
+        /// <param name="sasToken">
+        /// Storage container SAS token.
+        /// Serialized Name: SasDatastoreSecrets.sasToken
+        /// </param>
         internal SasDatastoreSecrets(SecretsType secretsType, string sasToken) : base(secretsType)
         {
             SasToken = sasToken;
             SecretsType = secretsType;
         }
 
-        /// <summary> Storage container SAS token. </summary>
+        /// <summary>
+        /// Storage container SAS token.
+        /// Serialized Name: SasDatastoreSecrets.sasToken
+        /// </summary>
         public string SasToken { get; set; }
     }
 }

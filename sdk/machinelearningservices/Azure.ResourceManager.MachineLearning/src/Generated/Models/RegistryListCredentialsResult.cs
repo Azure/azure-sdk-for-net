@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The RegistryListCredentialsResult. </summary>
+    /// <summary>
+    /// The RegistryListCredentialsResult.
+    /// Serialized Name: RegistryListCredentialsResult
+    /// </summary>
     public partial class RegistryListCredentialsResult
     {
         /// <summary> Initializes a new instance of RegistryListCredentialsResult. </summary>
@@ -20,9 +23,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of RegistryListCredentialsResult. </summary>
-        /// <param name="location"></param>
-        /// <param name="username"></param>
-        /// <param name="passwords"></param>
+        /// <param name="location"> Serialized Name: RegistryListCredentialsResult.location. </param>
+        /// <param name="username"> Serialized Name: RegistryListCredentialsResult.username. </param>
+        /// <param name="passwords"> Serialized Name: RegistryListCredentialsResult.passwords. </param>
         internal RegistryListCredentialsResult(AzureLocation? location, string username, IReadOnlyList<PasswordDetail> passwords)
         {
             Location = location;
@@ -30,11 +33,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Passwords = passwords;
         }
 
-        /// <summary> Gets the location. </summary>
+        /// <summary> Serialized Name: RegistryListCredentialsResult.location. </summary>
         public AzureLocation? Location { get; }
-        /// <summary> Gets the username. </summary>
+        /// <summary> Serialized Name: RegistryListCredentialsResult.username. </summary>
         public string Username { get; }
-        /// <summary> Gets the passwords. </summary>
+        /// <summary> Serialized Name: RegistryListCredentialsResult.passwords. </summary>
         public IReadOnlyList<PasswordDetail> Passwords { get; }
     }
 }

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The DefaultScaleSettings. </summary>
+    /// <summary>
+    /// The DefaultScaleSettings.
+    /// Serialized Name: DefaultScaleSettings
+    /// </summary>
     public partial class DefaultScaleSettings : OnlineScaleSettings
     {
         /// <summary> Initializes a new instance of DefaultScaleSettings. </summary>
@@ -17,7 +20,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of DefaultScaleSettings. </summary>
-        /// <param name="scaleType"> [Required] Type of deployment scaling algorithm. </param>
+        /// <param name="scaleType">
+        /// [Required] Type of deployment scaling algorithm
+        /// Serialized Name: OnlineScaleSettings.scaleType
+        /// </param>
         internal DefaultScaleSettings(ScaleType scaleType) : base(scaleType)
         {
             ScaleType = scaleType;

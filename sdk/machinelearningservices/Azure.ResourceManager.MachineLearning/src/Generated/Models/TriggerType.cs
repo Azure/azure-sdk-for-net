@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The TriggerType. </summary>
+    /// <summary>
+    /// The TriggerType.
+    /// Serialized Name: TriggerType
+    /// </summary>
     public readonly partial struct TriggerType : IEquatable<TriggerType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string RecurrenceValue = "Recurrence";
         private const string CronValue = "Cron";
 
-        /// <summary> Recurrence. </summary>
+        /// <summary>
+        /// Recurrence
+        /// Serialized Name: TriggerType.Recurrence
+        /// </summary>
         public static TriggerType Recurrence { get; } = new TriggerType(RecurrenceValue);
-        /// <summary> Cron. </summary>
+        /// <summary>
+        /// Cron
+        /// Serialized Name: TriggerType.Cron
+        /// </summary>
         public static TriggerType Cron { get; } = new TriggerType(CronValue);
         /// <summary> Determines if two <see cref="TriggerType"/> values are the same. </summary>
         public static bool operator ==(TriggerType left, TriggerType right) => left.Equals(right);

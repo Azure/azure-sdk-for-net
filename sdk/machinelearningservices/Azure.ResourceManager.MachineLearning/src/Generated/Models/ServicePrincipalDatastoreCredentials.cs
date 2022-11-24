@@ -10,13 +10,25 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Service Principal datastore credentials configuration. </summary>
+    /// <summary>
+    /// Service Principal datastore credentials configuration.
+    /// Serialized Name: ServicePrincipalDatastoreCredentials
+    /// </summary>
     public partial class ServicePrincipalDatastoreCredentials : DatastoreCredentials
     {
         /// <summary> Initializes a new instance of ServicePrincipalDatastoreCredentials. </summary>
-        /// <param name="clientId"> [Required] Service principal client ID. </param>
-        /// <param name="secrets"> [Required] Service principal secrets. </param>
-        /// <param name="tenantId"> [Required] ID of the tenant to which the service principal belongs. </param>
+        /// <param name="clientId">
+        /// [Required] Service principal client ID.
+        /// Serialized Name: ServicePrincipalDatastoreCredentials.clientId
+        /// </param>
+        /// <param name="secrets">
+        /// [Required] Service principal secrets.
+        /// Serialized Name: ServicePrincipalDatastoreCredentials.secrets
+        /// </param>
+        /// <param name="tenantId">
+        /// [Required] ID of the tenant to which the service principal belongs.
+        /// Serialized Name: ServicePrincipalDatastoreCredentials.tenantId
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="secrets"/> is null. </exception>
         public ServicePrincipalDatastoreCredentials(Guid clientId, ServicePrincipalDatastoreSecrets secrets, Guid tenantId)
         {
@@ -29,12 +41,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of ServicePrincipalDatastoreCredentials. </summary>
-        /// <param name="credentialsType"> [Required] Credential type used to authentication with storage. </param>
-        /// <param name="authorityUri"> Authority URL used for authentication. </param>
-        /// <param name="clientId"> [Required] Service principal client ID. </param>
-        /// <param name="resourceUri"> Resource the service principal has access to. </param>
-        /// <param name="secrets"> [Required] Service principal secrets. </param>
-        /// <param name="tenantId"> [Required] ID of the tenant to which the service principal belongs. </param>
+        /// <param name="credentialsType">
+        /// [Required] Credential type used to authentication with storage.
+        /// Serialized Name: DatastoreCredentials.credentialsType
+        /// </param>
+        /// <param name="authorityUri">
+        /// Authority URL used for authentication.
+        /// Serialized Name: ServicePrincipalDatastoreCredentials.authorityUrl
+        /// </param>
+        /// <param name="clientId">
+        /// [Required] Service principal client ID.
+        /// Serialized Name: ServicePrincipalDatastoreCredentials.clientId
+        /// </param>
+        /// <param name="resourceUri">
+        /// Resource the service principal has access to.
+        /// Serialized Name: ServicePrincipalDatastoreCredentials.resourceUrl
+        /// </param>
+        /// <param name="secrets">
+        /// [Required] Service principal secrets.
+        /// Serialized Name: ServicePrincipalDatastoreCredentials.secrets
+        /// </param>
+        /// <param name="tenantId">
+        /// [Required] ID of the tenant to which the service principal belongs.
+        /// Serialized Name: ServicePrincipalDatastoreCredentials.tenantId
+        /// </param>
         internal ServicePrincipalDatastoreCredentials(CredentialsType credentialsType, Uri authorityUri, Guid clientId, Uri resourceUri, ServicePrincipalDatastoreSecrets secrets, Guid tenantId) : base(credentialsType)
         {
             AuthorityUri = authorityUri;
@@ -45,15 +75,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
             CredentialsType = credentialsType;
         }
 
-        /// <summary> Authority URL used for authentication. </summary>
+        /// <summary>
+        /// Authority URL used for authentication.
+        /// Serialized Name: ServicePrincipalDatastoreCredentials.authorityUrl
+        /// </summary>
         public Uri AuthorityUri { get; set; }
-        /// <summary> [Required] Service principal client ID. </summary>
+        /// <summary>
+        /// [Required] Service principal client ID.
+        /// Serialized Name: ServicePrincipalDatastoreCredentials.clientId
+        /// </summary>
         public Guid ClientId { get; set; }
-        /// <summary> Resource the service principal has access to. </summary>
+        /// <summary>
+        /// Resource the service principal has access to.
+        /// Serialized Name: ServicePrincipalDatastoreCredentials.resourceUrl
+        /// </summary>
         public Uri ResourceUri { get; set; }
-        /// <summary> [Required] Service principal secrets. </summary>
+        /// <summary>
+        /// [Required] Service principal secrets.
+        /// Serialized Name: ServicePrincipalDatastoreCredentials.secrets
+        /// </summary>
         public ServicePrincipalDatastoreSecrets Secrets { get; set; }
-        /// <summary> [Required] ID of the tenant to which the service principal belongs. </summary>
+        /// <summary>
+        /// [Required] ID of the tenant to which the service principal belongs.
+        /// Serialized Name: ServicePrincipalDatastoreCredentials.tenantId
+        /// </summary>
         public Guid TenantId { get; set; }
     }
 }

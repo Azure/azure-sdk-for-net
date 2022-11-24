@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The Private Endpoint resource. </summary>
+    /// <summary>
+    /// The Private Endpoint resource.
+    /// Serialized Name: PrivateEndpoint
+    /// </summary>
     public partial class PrivateEndpoint
     {
         /// <summary> Initializes a new instance of PrivateEndpoint. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of PrivateEndpoint. </summary>
-        /// <param name="id"> The ARM identifier for Private Endpoint. </param>
-        /// <param name="subnetArmId"> The ARM identifier for Subnet resource that private endpoint links to. </param>
+        /// <param name="id">
+        /// The ARM identifier for Private Endpoint
+        /// Serialized Name: PrivateEndpoint.id
+        /// </param>
+        /// <param name="subnetArmId">
+        /// The ARM identifier for Subnet resource that private endpoint links to
+        /// Serialized Name: PrivateEndpoint.subnetArmId
+        /// </param>
         internal PrivateEndpoint(string id, string subnetArmId)
         {
             Id = id;
             SubnetArmId = subnetArmId;
         }
 
-        /// <summary> The ARM identifier for Private Endpoint. </summary>
+        /// <summary>
+        /// The ARM identifier for Private Endpoint
+        /// Serialized Name: PrivateEndpoint.id
+        /// </summary>
         public string Id { get; }
-        /// <summary> The ARM identifier for Subnet resource that private endpoint links to. </summary>
+        /// <summary>
+        /// The ARM identifier for Subnet resource that private endpoint links to
+        /// Serialized Name: PrivateEndpoint.subnetArmId
+        /// </summary>
         public string SubnetArmId { get; }
     }
 }

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The ListStorageAccountKeysResult. </summary>
+    /// <summary>
+    /// The ListStorageAccountKeysResult.
+    /// Serialized Name: ListStorageAccountKeysResult
+    /// </summary>
     public partial class ListStorageAccountKeysResult
     {
         /// <summary> Initializes a new instance of ListStorageAccountKeysResult. </summary>
@@ -16,13 +19,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of ListStorageAccountKeysResult. </summary>
-        /// <param name="userStorageKey"></param>
+        /// <param name="userStorageKey"> Serialized Name: ListStorageAccountKeysResult.userStorageKey. </param>
         internal ListStorageAccountKeysResult(string userStorageKey)
         {
             UserStorageKey = userStorageKey;
         }
 
-        /// <summary> Gets the user storage key. </summary>
+        /// <summary> Serialized Name: ListStorageAccountKeysResult.userStorageKey. </summary>
         public string UserStorageKey { get; }
     }
 }

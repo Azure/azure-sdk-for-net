@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// Log verbosity for batch inferencing.
     /// Increasing verbosity order for logging is : Warning, Info and Debug.
     /// The default value is Info.
+    /// Serialized Name: BatchLoggingLevel
     /// </summary>
     public readonly partial struct BatchLoggingLevel : IEquatable<BatchLoggingLevel>
     {
@@ -30,11 +31,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string WarningValue = "Warning";
         private const string DebugValue = "Debug";
 
-        /// <summary> Info. </summary>
+        /// <summary>
+        /// Info
+        /// Serialized Name: BatchLoggingLevel.Info
+        /// </summary>
         public static BatchLoggingLevel Info { get; } = new BatchLoggingLevel(InfoValue);
-        /// <summary> Warning. </summary>
+        /// <summary>
+        /// Warning
+        /// Serialized Name: BatchLoggingLevel.Warning
+        /// </summary>
         public static BatchLoggingLevel Warning { get; } = new BatchLoggingLevel(WarningValue);
-        /// <summary> Debug. </summary>
+        /// <summary>
+        /// Debug
+        /// Serialized Name: BatchLoggingLevel.Debug
+        /// </summary>
         public static BatchLoggingLevel Debug { get; } = new BatchLoggingLevel(DebugValue);
         /// <summary> Determines if two <see cref="BatchLoggingLevel"/> values are the same. </summary>
         public static bool operator ==(BatchLoggingLevel left, BatchLoggingLevel right) => left.Equals(right);

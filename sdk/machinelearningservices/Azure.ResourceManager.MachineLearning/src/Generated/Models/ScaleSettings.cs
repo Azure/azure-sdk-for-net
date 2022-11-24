@@ -9,20 +9,35 @@ using System;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> scale settings for AML Compute. </summary>
+    /// <summary>
+    /// scale settings for AML Compute
+    /// Serialized Name: ScaleSettings
+    /// </summary>
     public partial class ScaleSettings
     {
         /// <summary> Initializes a new instance of ScaleSettings. </summary>
-        /// <param name="maxNodeCount"> Max number of nodes to use. </param>
+        /// <param name="maxNodeCount">
+        /// Max number of nodes to use
+        /// Serialized Name: ScaleSettings.maxNodeCount
+        /// </param>
         public ScaleSettings(int maxNodeCount)
         {
             MaxNodeCount = maxNodeCount;
         }
 
         /// <summary> Initializes a new instance of ScaleSettings. </summary>
-        /// <param name="maxNodeCount"> Max number of nodes to use. </param>
-        /// <param name="minNodeCount"> Min number of nodes to use. </param>
-        /// <param name="nodeIdleTimeBeforeScaleDown"> Node Idle Time before scaling down amlCompute. This string needs to be in the RFC Format. </param>
+        /// <param name="maxNodeCount">
+        /// Max number of nodes to use
+        /// Serialized Name: ScaleSettings.maxNodeCount
+        /// </param>
+        /// <param name="minNodeCount">
+        /// Min number of nodes to use
+        /// Serialized Name: ScaleSettings.minNodeCount
+        /// </param>
+        /// <param name="nodeIdleTimeBeforeScaleDown">
+        /// Node Idle Time before scaling down amlCompute. This string needs to be in the RFC Format.
+        /// Serialized Name: ScaleSettings.nodeIdleTimeBeforeScaleDown
+        /// </param>
         internal ScaleSettings(int maxNodeCount, int? minNodeCount, TimeSpan? nodeIdleTimeBeforeScaleDown)
         {
             MaxNodeCount = maxNodeCount;
@@ -30,11 +45,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             NodeIdleTimeBeforeScaleDown = nodeIdleTimeBeforeScaleDown;
         }
 
-        /// <summary> Max number of nodes to use. </summary>
+        /// <summary>
+        /// Max number of nodes to use
+        /// Serialized Name: ScaleSettings.maxNodeCount
+        /// </summary>
         public int MaxNodeCount { get; set; }
-        /// <summary> Min number of nodes to use. </summary>
+        /// <summary>
+        /// Min number of nodes to use
+        /// Serialized Name: ScaleSettings.minNodeCount
+        /// </summary>
         public int? MinNodeCount { get; set; }
-        /// <summary> Node Idle Time before scaling down amlCompute. This string needs to be in the RFC Format. </summary>
+        /// <summary>
+        /// Node Idle Time before scaling down amlCompute. This string needs to be in the RFC Format.
+        /// Serialized Name: ScaleSettings.nodeIdleTimeBeforeScaleDown
+        /// </summary>
         public TimeSpan? NodeIdleTimeBeforeScaleDown { get; set; }
     }
 }

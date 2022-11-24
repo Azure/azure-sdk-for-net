@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Enum to determine endpoint compute type. </summary>
+    /// <summary>
+    /// Enum to determine endpoint compute type.
+    /// Serialized Name: EndpointComputeType
+    /// </summary>
     public readonly partial struct EndpointComputeType : IEquatable<EndpointComputeType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string KubernetesValue = "Kubernetes";
         private const string AzureMLComputeValue = "AzureMLCompute";
 
-        /// <summary> Managed. </summary>
+        /// <summary>
+        /// Managed
+        /// Serialized Name: EndpointComputeType.Managed
+        /// </summary>
         public static EndpointComputeType Managed { get; } = new EndpointComputeType(ManagedValue);
-        /// <summary> Kubernetes. </summary>
+        /// <summary>
+        /// Kubernetes
+        /// Serialized Name: EndpointComputeType.Kubernetes
+        /// </summary>
         public static EndpointComputeType Kubernetes { get; } = new EndpointComputeType(KubernetesValue);
-        /// <summary> AzureMLCompute. </summary>
+        /// <summary>
+        /// AzureMLCompute
+        /// Serialized Name: EndpointComputeType.AzureMLCompute
+        /// </summary>
         public static EndpointComputeType AzureMLCompute { get; } = new EndpointComputeType(AzureMLComputeValue);
         /// <summary> Determines if two <see cref="EndpointComputeType"/> values are the same. </summary>
         public static bool operator ==(EndpointComputeType left, EndpointComputeType right) => left.Equals(right);

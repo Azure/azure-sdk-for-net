@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Is the schedule enabled or disabled?. </summary>
+    /// <summary>
+    /// Is the schedule enabled or disabled?
+    /// Serialized Name: ScheduleStatus
+    /// </summary>
     public readonly partial struct ScheduleStatus : IEquatable<ScheduleStatus>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: ScheduleStatus.Enabled
+        /// </summary>
         public static ScheduleStatus Enabled { get; } = new ScheduleStatus(EnabledValue);
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: ScheduleStatus.Disabled
+        /// </summary>
         public static ScheduleStatus Disabled { get; } = new ScheduleStatus(DisabledValue);
         /// <summary> Determines if two <see cref="ScheduleStatus"/> values are the same. </summary>
         public static bool operator ==(ScheduleStatus left, ScheduleStatus right) => left.Equals(right);

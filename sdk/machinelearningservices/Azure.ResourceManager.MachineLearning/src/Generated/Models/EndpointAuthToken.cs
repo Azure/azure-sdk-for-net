@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Service Token. </summary>
+    /// <summary>
+    /// Service Token
+    /// Serialized Name: EndpointAuthToken
+    /// </summary>
     public partial class EndpointAuthToken
     {
         /// <summary> Initializes a new instance of EndpointAuthToken. </summary>
@@ -16,10 +19,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of EndpointAuthToken. </summary>
-        /// <param name="accessToken"> Access token for endpoint authentication. </param>
-        /// <param name="expiryTimeUtc"> Access token expiry time (UTC). </param>
-        /// <param name="refreshAfterTimeUtc"> Refresh access token after time (UTC). </param>
-        /// <param name="tokenType"> Access token type. </param>
+        /// <param name="accessToken">
+        /// Access token for endpoint authentication.
+        /// Serialized Name: EndpointAuthToken.accessToken
+        /// </param>
+        /// <param name="expiryTimeUtc">
+        /// Access token expiry time (UTC).
+        /// Serialized Name: EndpointAuthToken.expiryTimeUtc
+        /// </param>
+        /// <param name="refreshAfterTimeUtc">
+        /// Refresh access token after time (UTC).
+        /// Serialized Name: EndpointAuthToken.refreshAfterTimeUtc
+        /// </param>
+        /// <param name="tokenType">
+        /// Access token type.
+        /// Serialized Name: EndpointAuthToken.tokenType
+        /// </param>
         internal EndpointAuthToken(string accessToken, long? expiryTimeUtc, long? refreshAfterTimeUtc, string tokenType)
         {
             AccessToken = accessToken;
@@ -28,13 +43,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
             TokenType = tokenType;
         }
 
-        /// <summary> Access token for endpoint authentication. </summary>
+        /// <summary>
+        /// Access token for endpoint authentication.
+        /// Serialized Name: EndpointAuthToken.accessToken
+        /// </summary>
         public string AccessToken { get; }
-        /// <summary> Access token expiry time (UTC). </summary>
+        /// <summary>
+        /// Access token expiry time (UTC).
+        /// Serialized Name: EndpointAuthToken.expiryTimeUtc
+        /// </summary>
         public long? ExpiryTimeUtc { get; }
-        /// <summary> Refresh access token after time (UTC). </summary>
+        /// <summary>
+        /// Refresh access token after time (UTC).
+        /// Serialized Name: EndpointAuthToken.refreshAfterTimeUtc
+        /// </summary>
         public long? RefreshAfterTimeUtc { get; }
-        /// <summary> Access token type. </summary>
+        /// <summary>
+        /// Access token type.
+        /// Serialized Name: EndpointAuthToken.tokenType
+        /// </summary>
         public string TokenType { get; }
     }
 }

@@ -10,11 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Literal input type. </summary>
+    /// <summary>
+    /// Literal input type.
+    /// Serialized Name: LiteralJobInput
+    /// </summary>
     public partial class LiteralJobInput : JobInput
     {
         /// <summary> Initializes a new instance of LiteralJobInput. </summary>
-        /// <param name="value"> [Required] Literal value for the input. </param>
+        /// <param name="value">
+        /// [Required] Literal value for the input.
+        /// Serialized Name: LiteralJobInput.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LiteralJobInput(string value)
         {
@@ -25,16 +31,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of LiteralJobInput. </summary>
-        /// <param name="description"> Description for the input. </param>
-        /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
-        /// <param name="value"> [Required] Literal value for the input. </param>
+        /// <param name="description">
+        /// Description for the input.
+        /// Serialized Name: JobInput.description
+        /// </param>
+        /// <param name="jobInputType">
+        /// [Required] Specifies the type of job.
+        /// Serialized Name: JobInput.jobInputType
+        /// </param>
+        /// <param name="value">
+        /// [Required] Literal value for the input.
+        /// Serialized Name: LiteralJobInput.value
+        /// </param>
         internal LiteralJobInput(string description, JobInputType jobInputType, string value) : base(description, jobInputType)
         {
             Value = value;
             JobInputType = jobInputType;
         }
 
-        /// <summary> [Required] Literal value for the input. </summary>
+        /// <summary>
+        /// [Required] Literal value for the input.
+        /// Serialized Name: LiteralJobInput.value
+        /// </summary>
         public string Value { get; set; }
     }
 }

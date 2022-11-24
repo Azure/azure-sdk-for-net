@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Retry settings for a batch inference operation. </summary>
+    /// <summary>
+    /// Retry settings for a batch inference operation.
+    /// Serialized Name: BatchRetrySettings
+    /// </summary>
     public partial class BatchRetrySettings
     {
         /// <summary> Initializes a new instance of BatchRetrySettings. </summary>
@@ -18,17 +21,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of BatchRetrySettings. </summary>
-        /// <param name="maxRetries"> Maximum retry count for a mini-batch. </param>
-        /// <param name="timeout"> Invocation timeout for a mini-batch, in ISO 8601 format. </param>
+        /// <param name="maxRetries">
+        /// Maximum retry count for a mini-batch
+        /// Serialized Name: BatchRetrySettings.maxRetries
+        /// </param>
+        /// <param name="timeout">
+        /// Invocation timeout for a mini-batch, in ISO 8601 format.
+        /// Serialized Name: BatchRetrySettings.timeout
+        /// </param>
         internal BatchRetrySettings(int? maxRetries, TimeSpan? timeout)
         {
             MaxRetries = maxRetries;
             Timeout = timeout;
         }
 
-        /// <summary> Maximum retry count for a mini-batch. </summary>
+        /// <summary>
+        /// Maximum retry count for a mini-batch
+        /// Serialized Name: BatchRetrySettings.maxRetries
+        /// </summary>
         public int? MaxRetries { get; set; }
-        /// <summary> Invocation timeout for a mini-batch, in ISO 8601 format. </summary>
+        /// <summary>
+        /// Invocation timeout for a mini-batch, in ISO 8601 format.
+        /// Serialized Name: BatchRetrySettings.timeout
+        /// </summary>
         public TimeSpan? Timeout { get; set; }
     }
 }

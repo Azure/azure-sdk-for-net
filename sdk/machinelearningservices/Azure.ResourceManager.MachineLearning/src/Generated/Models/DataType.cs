@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Enum to determine the type of data. </summary>
+    /// <summary>
+    /// Enum to determine the type of data.
+    /// Serialized Name: DataType
+    /// </summary>
     public readonly partial struct DataType : IEquatable<DataType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string UriFolderValue = "uri_folder";
         private const string MltableValue = "mltable";
 
-        /// <summary> uri_file. </summary>
+        /// <summary>
+        /// uri_file
+        /// Serialized Name: DataType.uri_file
+        /// </summary>
         public static DataType UriFile { get; } = new DataType(UriFileValue);
-        /// <summary> uri_folder. </summary>
+        /// <summary>
+        /// uri_folder
+        /// Serialized Name: DataType.uri_folder
+        /// </summary>
         public static DataType UriFolder { get; } = new DataType(UriFolderValue);
-        /// <summary> mltable. </summary>
+        /// <summary>
+        /// mltable
+        /// Serialized Name: DataType.mltable
+        /// </summary>
         public static DataType Mltable { get; } = new DataType(MltableValue);
         /// <summary> Determines if two <see cref="DataType"/> values are the same. </summary>
         public static bool operator ==(DataType left, DataType right) => left.Equals(right);

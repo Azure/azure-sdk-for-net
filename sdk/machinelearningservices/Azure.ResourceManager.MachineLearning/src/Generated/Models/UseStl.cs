@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Configure STL Decomposition of the time-series target column. </summary>
+    /// <summary>
+    /// Configure STL Decomposition of the time-series target column.
+    /// Serialized Name: UseStl
+    /// </summary>
     public readonly partial struct UseStl : IEquatable<UseStl>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string SeasonValue = "Season";
         private const string SeasonTrendValue = "SeasonTrend";
 
-        /// <summary> No stl decomposition. </summary>
+        /// <summary>
+        /// No stl decomposition.
+        /// Serialized Name: UseStl.None
+        /// </summary>
         public static UseStl None { get; } = new UseStl(NoneValue);
-        /// <summary> Season. </summary>
+        /// <summary>
+        /// Season
+        /// Serialized Name: UseStl.Season
+        /// </summary>
         public static UseStl Season { get; } = new UseStl(SeasonValue);
-        /// <summary> SeasonTrend. </summary>
+        /// <summary>
+        /// SeasonTrend
+        /// Serialized Name: UseStl.SeasonTrend
+        /// </summary>
         public static UseStl SeasonTrend { get; } = new UseStl(SeasonTrendValue);
         /// <summary> Determines if two <see cref="UseStl"/> values are the same. </summary>
         public static bool operator ==(UseStl left, UseStl right) => left.Equals(right);

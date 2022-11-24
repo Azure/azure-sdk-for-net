@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Secrets related to a Machine Learning compute based on Databricks. </summary>
+    /// <summary>
+    /// Secrets related to a Machine Learning compute based on Databricks.
+    /// Serialized Name: DatabricksComputeSecrets
+    /// </summary>
     public partial class DatabricksComputeSecrets : ComputeSecrets
     {
         /// <summary> Initializes a new instance of DatabricksComputeSecrets. </summary>
@@ -17,15 +20,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of DatabricksComputeSecrets. </summary>
-        /// <param name="computeType"> The type of compute. </param>
-        /// <param name="databricksAccessToken"> access token for databricks account. </param>
+        /// <param name="computeType">
+        /// The type of compute
+        /// Serialized Name: ComputeSecrets.computeType
+        /// </param>
+        /// <param name="databricksAccessToken">
+        /// access token for databricks account.
+        /// Serialized Name: DatabricksComputeSecretsProperties.databricksAccessToken
+        /// </param>
         internal DatabricksComputeSecrets(ComputeType computeType, string databricksAccessToken) : base(computeType)
         {
             DatabricksAccessToken = databricksAccessToken;
             ComputeType = computeType;
         }
 
-        /// <summary> access token for databricks account. </summary>
+        /// <summary>
+        /// access token for databricks account.
+        /// Serialized Name: DatabricksComputeSecretsProperties.databricksAccessToken
+        /// </summary>
         public string DatabricksAccessToken { get; }
     }
 }

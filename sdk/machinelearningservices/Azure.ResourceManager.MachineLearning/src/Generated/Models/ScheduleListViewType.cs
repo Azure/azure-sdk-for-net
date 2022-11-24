@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The ScheduleListViewType. </summary>
+    /// <summary>
+    /// The ScheduleListViewType.
+    /// Serialized Name: ScheduleListViewType
+    /// </summary>
     public readonly partial struct ScheduleListViewType : IEquatable<ScheduleListViewType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string DisabledOnlyValue = "DisabledOnly";
         private const string AllValue = "All";
 
-        /// <summary> EnabledOnly. </summary>
+        /// <summary>
+        /// EnabledOnly
+        /// Serialized Name: ScheduleListViewType.EnabledOnly
+        /// </summary>
         public static ScheduleListViewType EnabledOnly { get; } = new ScheduleListViewType(EnabledOnlyValue);
-        /// <summary> DisabledOnly. </summary>
+        /// <summary>
+        /// DisabledOnly
+        /// Serialized Name: ScheduleListViewType.DisabledOnly
+        /// </summary>
         public static ScheduleListViewType DisabledOnly { get; } = new ScheduleListViewType(DisabledOnlyValue);
-        /// <summary> All. </summary>
+        /// <summary>
+        /// All
+        /// Serialized Name: ScheduleListViewType.All
+        /// </summary>
         public static ScheduleListViewType All { get; } = new ScheduleListViewType(AllValue);
         /// <summary> Determines if two <see cref="ScheduleListViewType"/> values are the same. </summary>
         public static bool operator ==(ScheduleListViewType left, ScheduleListViewType right) => left.Equals(right);

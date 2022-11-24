@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> PyTorch distribution configuration. </summary>
+    /// <summary>
+    /// PyTorch distribution configuration.
+    /// Serialized Name: PyTorch
+    /// </summary>
     public partial class PyTorch : DistributionConfiguration
     {
         /// <summary> Initializes a new instance of PyTorch. </summary>
@@ -17,15 +20,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of PyTorch. </summary>
-        /// <param name="distributionType"> [Required] Specifies the type of distribution framework. </param>
-        /// <param name="processCountPerInstance"> Number of processes per node. </param>
+        /// <param name="distributionType">
+        /// [Required] Specifies the type of distribution framework.
+        /// Serialized Name: DistributionConfiguration.distributionType
+        /// </param>
+        /// <param name="processCountPerInstance">
+        /// Number of processes per node.
+        /// Serialized Name: PyTorch.processCountPerInstance
+        /// </param>
         internal PyTorch(DistributionType distributionType, int? processCountPerInstance) : base(distributionType)
         {
             ProcessCountPerInstance = processCountPerInstance;
             DistributionType = distributionType;
         }
 
-        /// <summary> Number of processes per node. </summary>
+        /// <summary>
+        /// Number of processes per node.
+        /// Serialized Name: PyTorch.processCountPerInstance
+        /// </summary>
         public int? ProcessCountPerInstance { get; set; }
     }
 }

@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The ResourceBase. </summary>
+    /// <summary>
+    /// The ResourceBase.
+    /// Serialized Name: ResourceBase
+    /// </summary>
     public partial class ResourceBase
     {
         /// <summary> Initializes a new instance of ResourceBase. </summary>
@@ -21,9 +24,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of ResourceBase. </summary>
-        /// <param name="description"> The asset description text. </param>
-        /// <param name="properties"> The asset property dictionary. </param>
-        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="description">
+        /// The asset description text.
+        /// Serialized Name: ResourceBase.description
+        /// </param>
+        /// <param name="properties">
+        /// The asset property dictionary.
+        /// Serialized Name: ResourceBase.properties
+        /// </param>
+        /// <param name="tags">
+        /// Tag dictionary. Tags can be added, removed, and updated.
+        /// Serialized Name: ResourceBase.tags
+        /// </param>
         internal ResourceBase(string description, IDictionary<string, string> properties, IDictionary<string, string> tags)
         {
             Description = description;
@@ -31,11 +43,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Tags = tags;
         }
 
-        /// <summary> The asset description text. </summary>
+        /// <summary>
+        /// The asset description text.
+        /// Serialized Name: ResourceBase.description
+        /// </summary>
         public string Description { get; set; }
-        /// <summary> The asset property dictionary. </summary>
+        /// <summary>
+        /// The asset property dictionary.
+        /// Serialized Name: ResourceBase.properties
+        /// </summary>
         public IDictionary<string, string> Properties { get; set; }
-        /// <summary> Tag dictionary. Tags can be added, removed, and updated. </summary>
+        /// <summary>
+        /// Tag dictionary. Tags can be added, removed, and updated.
+        /// Serialized Name: ResourceBase.tags
+        /// </summary>
         public IDictionary<string, string> Tags { get; set; }
     }
 }

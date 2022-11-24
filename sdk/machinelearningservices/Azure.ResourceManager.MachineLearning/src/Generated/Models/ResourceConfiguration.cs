@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The ResourceConfiguration. </summary>
+    /// <summary>
+    /// The ResourceConfiguration.
+    /// Serialized Name: ResourceConfiguration
+    /// </summary>
     public partial class ResourceConfiguration
     {
         /// <summary> Initializes a new instance of ResourceConfiguration. </summary>
@@ -21,9 +24,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of ResourceConfiguration. </summary>
-        /// <param name="instanceCount"> Optional number of instances or nodes used by the compute target. </param>
-        /// <param name="instanceType"> Optional type of VM used as supported by the compute target. </param>
-        /// <param name="properties"> Additional properties bag. </param>
+        /// <param name="instanceCount">
+        /// Optional number of instances or nodes used by the compute target.
+        /// Serialized Name: ResourceConfiguration.instanceCount
+        /// </param>
+        /// <param name="instanceType">
+        /// Optional type of VM used as supported by the compute target.
+        /// Serialized Name: ResourceConfiguration.instanceType
+        /// </param>
+        /// <param name="properties">
+        /// Additional properties bag.
+        /// Serialized Name: ResourceConfiguration.properties
+        /// </param>
         internal ResourceConfiguration(int? instanceCount, string instanceType, IDictionary<string, BinaryData> properties)
         {
             InstanceCount = instanceCount;
@@ -31,12 +43,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Properties = properties;
         }
 
-        /// <summary> Optional number of instances or nodes used by the compute target. </summary>
+        /// <summary>
+        /// Optional number of instances or nodes used by the compute target.
+        /// Serialized Name: ResourceConfiguration.instanceCount
+        /// </summary>
         public int? InstanceCount { get; set; }
-        /// <summary> Optional type of VM used as supported by the compute target. </summary>
+        /// <summary>
+        /// Optional type of VM used as supported by the compute target.
+        /// Serialized Name: ResourceConfiguration.instanceType
+        /// </summary>
         public string InstanceType { get; set; }
         /// <summary>
         /// Additional properties bag.
+        /// Serialized Name: ResourceConfiguration.properties
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

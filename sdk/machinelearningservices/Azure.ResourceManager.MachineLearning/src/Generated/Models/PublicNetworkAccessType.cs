@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Enum to determine whether PublicNetworkAccess is Enabled or Disabled. </summary>
+    /// <summary>
+    /// Enum to determine whether PublicNetworkAccess is Enabled or Disabled.
+    /// Serialized Name: PublicNetworkAccessType
+    /// </summary>
     public readonly partial struct PublicNetworkAccessType : IEquatable<PublicNetworkAccessType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: PublicNetworkAccessType.Enabled
+        /// </summary>
         public static PublicNetworkAccessType Enabled { get; } = new PublicNetworkAccessType(EnabledValue);
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: PublicNetworkAccessType.Disabled
+        /// </summary>
         public static PublicNetworkAccessType Disabled { get; } = new PublicNetworkAccessType(DisabledValue);
         /// <summary> Determines if two <see cref="PublicNetworkAccessType"/> values are the same. </summary>
         public static bool operator ==(PublicNetworkAccessType left, PublicNetworkAccessType right) => left.Equals(right);

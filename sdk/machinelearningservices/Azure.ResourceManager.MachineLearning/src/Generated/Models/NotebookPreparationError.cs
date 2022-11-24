@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The NotebookPreparationError. </summary>
+    /// <summary>
+    /// The NotebookPreparationError.
+    /// Serialized Name: NotebookPreparationError
+    /// </summary>
     public partial class NotebookPreparationError
     {
         /// <summary> Initializes a new instance of NotebookPreparationError. </summary>
@@ -16,17 +19,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of NotebookPreparationError. </summary>
-        /// <param name="errorMessage"></param>
-        /// <param name="statusCode"></param>
+        /// <param name="errorMessage"> Serialized Name: NotebookPreparationError.errorMessage. </param>
+        /// <param name="statusCode"> Serialized Name: NotebookPreparationError.statusCode. </param>
         internal NotebookPreparationError(string errorMessage, int? statusCode)
         {
             ErrorMessage = errorMessage;
             StatusCode = statusCode;
         }
 
-        /// <summary> Gets the error message. </summary>
+        /// <summary> Serialized Name: NotebookPreparationError.errorMessage. </summary>
         public string ErrorMessage { get; }
-        /// <summary> Gets the status code. </summary>
+        /// <summary> Serialized Name: NotebookPreparationError.statusCode. </summary>
         public int? StatusCode { get; }
     }
 }

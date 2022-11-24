@@ -9,7 +9,10 @@ using Azure;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Common error response for all Azure Resource Manager APIs to return error details for failed operations. (This also follows the OData error response format.). </summary>
+    /// <summary>
+    /// Common error response for all Azure Resource Manager APIs to return error details for failed operations. (This also follows the OData error response format.).
+    /// Serialized Name: ErrorResponse
+    /// </summary>
     public partial class ErrorResponse
     {
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
@@ -18,13 +21,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
-        /// <param name="error"> The error object. </param>
+        /// <param name="error">
+        /// The error object.
+        /// Serialized Name: ErrorResponse.error
+        /// </param>
         internal ErrorResponse(ResponseError error)
         {
             Error = error;
         }
 
-        /// <summary> The error object. </summary>
+        /// <summary>
+        /// The error object.
+        /// Serialized Name: ErrorResponse.error
+        /// </summary>
         public ResponseError Error { get; }
     }
 }

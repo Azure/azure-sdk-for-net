@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Parameters to diagnose a workspace. </summary>
+    /// <summary>
+    /// Parameters to diagnose a workspace
+    /// Serialized Name: DiagnoseWorkspaceParameters
+    /// </summary>
     public partial class DiagnoseWorkspaceContent
     {
         /// <summary> Initializes a new instance of DiagnoseWorkspaceContent. </summary>
@@ -15,7 +18,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
         }
 
-        /// <summary> Value of Parameters. </summary>
+        /// <summary>
+        /// Value of Parameters
+        /// Serialized Name: DiagnoseWorkspaceParameters.value
+        /// </summary>
         public DiagnoseRequestProperties Value { get; set; }
     }
 }

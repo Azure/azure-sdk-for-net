@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Command Job limit class. </summary>
+    /// <summary>
+    /// Command Job limit class.
+    /// Serialized Name: CommandJobLimits
+    /// </summary>
     public partial class CommandJobLimits : JobLimits
     {
         /// <summary> Initializes a new instance of CommandJobLimits. </summary>
@@ -19,8 +22,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of CommandJobLimits. </summary>
-        /// <param name="jobLimitsType"> [Required] JobLimit type. </param>
-        /// <param name="timeout"> The max run duration in ISO 8601 format, after which the job will be cancelled. Only supports duration with precision as low as Seconds. </param>
+        /// <param name="jobLimitsType">
+        /// [Required] JobLimit type.
+        /// Serialized Name: JobLimits.jobLimitsType
+        /// </param>
+        /// <param name="timeout">
+        /// The max run duration in ISO 8601 format, after which the job will be cancelled. Only supports duration with precision as low as Seconds.
+        /// Serialized Name: JobLimits.timeout
+        /// </param>
         internal CommandJobLimits(JobLimitsType jobLimitsType, TimeSpan? timeout) : base(jobLimitsType, timeout)
         {
             JobLimitsType = jobLimitsType;

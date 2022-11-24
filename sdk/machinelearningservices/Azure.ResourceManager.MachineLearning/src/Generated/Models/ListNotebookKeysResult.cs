@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The ListNotebookKeysResult. </summary>
+    /// <summary>
+    /// The ListNotebookKeysResult.
+    /// Serialized Name: ListNotebookKeysResult
+    /// </summary>
     public partial class ListNotebookKeysResult
     {
         /// <summary> Initializes a new instance of ListNotebookKeysResult. </summary>
@@ -16,17 +19,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of ListNotebookKeysResult. </summary>
-        /// <param name="primaryAccessKey"></param>
-        /// <param name="secondaryAccessKey"></param>
+        /// <param name="primaryAccessKey"> Serialized Name: ListNotebookKeysResult.primaryAccessKey. </param>
+        /// <param name="secondaryAccessKey"> Serialized Name: ListNotebookKeysResult.secondaryAccessKey. </param>
         internal ListNotebookKeysResult(string primaryAccessKey, string secondaryAccessKey)
         {
             PrimaryAccessKey = primaryAccessKey;
             SecondaryAccessKey = secondaryAccessKey;
         }
 
-        /// <summary> Gets the primary access key. </summary>
+        /// <summary> Serialized Name: ListNotebookKeysResult.primaryAccessKey. </summary>
         public string PrimaryAccessKey { get; }
-        /// <summary> Gets the secondary access key. </summary>
+        /// <summary> Serialized Name: ListNotebookKeysResult.secondaryAccessKey. </summary>
         public string SecondaryAccessKey { get; }
     }
 }

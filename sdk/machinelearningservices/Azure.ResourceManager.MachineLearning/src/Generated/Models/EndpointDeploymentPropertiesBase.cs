@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Base definition for endpoint deployment. </summary>
+    /// <summary>
+    /// Base definition for endpoint deployment.
+    /// Serialized Name: EndpointDeploymentPropertiesBase
+    /// </summary>
     public partial class EndpointDeploymentPropertiesBase
     {
         /// <summary> Initializes a new instance of EndpointDeploymentPropertiesBase. </summary>
@@ -21,11 +24,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of EndpointDeploymentPropertiesBase. </summary>
-        /// <param name="codeConfiguration"> Code configuration for the endpoint deployment. </param>
-        /// <param name="description"> Description of the endpoint deployment. </param>
-        /// <param name="environmentId"> ARM resource ID or AssetId of the environment specification for the endpoint deployment. </param>
-        /// <param name="environmentVariables"> Environment variables configuration for the deployment. </param>
-        /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
+        /// <param name="codeConfiguration">
+        /// Code configuration for the endpoint deployment.
+        /// Serialized Name: EndpointDeploymentPropertiesBase.codeConfiguration
+        /// </param>
+        /// <param name="description">
+        /// Description of the endpoint deployment.
+        /// Serialized Name: EndpointDeploymentPropertiesBase.description
+        /// </param>
+        /// <param name="environmentId">
+        /// ARM resource ID or AssetId of the environment specification for the endpoint deployment.
+        /// Serialized Name: EndpointDeploymentPropertiesBase.environmentId
+        /// </param>
+        /// <param name="environmentVariables">
+        /// Environment variables configuration for the deployment.
+        /// Serialized Name: EndpointDeploymentPropertiesBase.environmentVariables
+        /// </param>
+        /// <param name="properties">
+        /// Property dictionary. Properties can be added, but not removed or altered.
+        /// Serialized Name: EndpointDeploymentPropertiesBase.properties
+        /// </param>
         internal EndpointDeploymentPropertiesBase(CodeConfiguration codeConfiguration, string description, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, string> properties)
         {
             CodeConfiguration = codeConfiguration;
@@ -35,15 +53,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Properties = properties;
         }
 
-        /// <summary> Code configuration for the endpoint deployment. </summary>
+        /// <summary>
+        /// Code configuration for the endpoint deployment.
+        /// Serialized Name: EndpointDeploymentPropertiesBase.codeConfiguration
+        /// </summary>
         public CodeConfiguration CodeConfiguration { get; set; }
-        /// <summary> Description of the endpoint deployment. </summary>
+        /// <summary>
+        /// Description of the endpoint deployment.
+        /// Serialized Name: EndpointDeploymentPropertiesBase.description
+        /// </summary>
         public string Description { get; set; }
-        /// <summary> ARM resource ID or AssetId of the environment specification for the endpoint deployment. </summary>
+        /// <summary>
+        /// ARM resource ID or AssetId of the environment specification for the endpoint deployment.
+        /// Serialized Name: EndpointDeploymentPropertiesBase.environmentId
+        /// </summary>
         public string EnvironmentId { get; set; }
-        /// <summary> Environment variables configuration for the deployment. </summary>
+        /// <summary>
+        /// Environment variables configuration for the deployment.
+        /// Serialized Name: EndpointDeploymentPropertiesBase.environmentVariables
+        /// </summary>
         public IDictionary<string, string> EnvironmentVariables { get; set; }
-        /// <summary> Property dictionary. Properties can be added, but not removed or altered. </summary>
+        /// <summary>
+        /// Property dictionary. Properties can be added, but not removed or altered.
+        /// Serialized Name: EndpointDeploymentPropertiesBase.properties
+        /// </summary>
         public IDictionary<string, string> Properties { get; set; }
     }
 }

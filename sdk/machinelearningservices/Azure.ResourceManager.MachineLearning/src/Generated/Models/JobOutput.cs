@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Job output definition container information on where to find job output/logs.
+    /// Serialized Name: JobOutput
     /// Please note <see cref="JobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="CustomModelJobOutput"/>, <see cref="MLFlowModelJobOutput"/>, <see cref="MLTableJobOutput"/>, <see cref="TritonModelJobOutput"/>, <see cref="UriFileJobOutput"/> and <see cref="UriFolderJobOutput"/>.
     /// </summary>
@@ -20,17 +21,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of JobOutput. </summary>
-        /// <param name="description"> Description for the output. </param>
-        /// <param name="jobOutputType"> [Required] Specifies the type of job. </param>
+        /// <param name="description">
+        /// Description for the output.
+        /// Serialized Name: JobOutput.description
+        /// </param>
+        /// <param name="jobOutputType">
+        /// [Required] Specifies the type of job.
+        /// Serialized Name: JobOutput.jobOutputType
+        /// </param>
         internal JobOutput(string description, JobOutputType jobOutputType)
         {
             Description = description;
             JobOutputType = jobOutputType;
         }
 
-        /// <summary> Description for the output. </summary>
+        /// <summary>
+        /// Description for the output.
+        /// Serialized Name: JobOutput.description
+        /// </summary>
         public string Description { get; set; }
-        /// <summary> [Required] Specifies the type of job. </summary>
+        /// <summary>
+        /// [Required] Specifies the type of job.
+        /// Serialized Name: JobOutput.jobOutputType
+        /// </summary>
         internal JobOutputType JobOutputType { get; set; }
     }
 }

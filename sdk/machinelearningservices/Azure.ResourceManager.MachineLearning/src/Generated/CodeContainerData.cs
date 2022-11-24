@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.MachineLearning
     public partial class CodeContainerData : ResourceData
     {
         /// <summary> Initializes a new instance of CodeContainerData. </summary>
-        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
+        /// <param name="properties">
+        /// [Required] Additional attributes of the entity.
+        /// Serialized Name: CodeContainer.properties
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public CodeContainerData(CodeContainerProperties properties)
         {
@@ -30,13 +33,19 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
+        /// <param name="properties">
+        /// [Required] Additional attributes of the entity.
+        /// Serialized Name: CodeContainer.properties
+        /// </param>
         internal CodeContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CodeContainerProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
-        /// <summary> [Required] Additional attributes of the entity. </summary>
+        /// <summary>
+        /// [Required] Additional attributes of the entity.
+        /// Serialized Name: CodeContainer.properties
+        /// </summary>
         public CodeContainerProperties Properties { get; set; }
     }
 }

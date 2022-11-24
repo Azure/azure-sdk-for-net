@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Defines an Aml Instance DataDisk. </summary>
+    /// <summary>
+    /// Defines an Aml Instance DataDisk.
+    /// Serialized Name: ComputeInstanceDataDisk
+    /// </summary>
     public partial class ComputeInstanceDataDisk
     {
         /// <summary> Initializes a new instance of ComputeInstanceDataDisk. </summary>
@@ -16,10 +19,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of ComputeInstanceDataDisk. </summary>
-        /// <param name="caching"> Caching type of Data Disk. </param>
-        /// <param name="diskSizeGB"> The initial disk size in gigabytes. </param>
-        /// <param name="lun"> The lun is used to uniquely identify each data disk. If attaching multiple disks, each should have a distinct lun. </param>
-        /// <param name="storageAccountType"> type of this storage account. </param>
+        /// <param name="caching">
+        /// Caching type of Data Disk.
+        /// Serialized Name: ComputeInstanceDataDisk.caching
+        /// </param>
+        /// <param name="diskSizeGB">
+        /// The initial disk size in gigabytes.
+        /// Serialized Name: ComputeInstanceDataDisk.diskSizeGB
+        /// </param>
+        /// <param name="lun">
+        /// The lun is used to uniquely identify each data disk. If attaching multiple disks, each should have a distinct lun.
+        /// Serialized Name: ComputeInstanceDataDisk.lun
+        /// </param>
+        /// <param name="storageAccountType">
+        /// type of this storage account.
+        /// Serialized Name: ComputeInstanceDataDisk.storageAccountType
+        /// </param>
         internal ComputeInstanceDataDisk(Caching? caching, int? diskSizeGB, int? lun, StorageAccountType? storageAccountType)
         {
             Caching = caching;
@@ -28,13 +43,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
             StorageAccountType = storageAccountType;
         }
 
-        /// <summary> Caching type of Data Disk. </summary>
+        /// <summary>
+        /// Caching type of Data Disk.
+        /// Serialized Name: ComputeInstanceDataDisk.caching
+        /// </summary>
         public Caching? Caching { get; }
-        /// <summary> The initial disk size in gigabytes. </summary>
+        /// <summary>
+        /// The initial disk size in gigabytes.
+        /// Serialized Name: ComputeInstanceDataDisk.diskSizeGB
+        /// </summary>
         public int? DiskSizeGB { get; }
-        /// <summary> The lun is used to uniquely identify each data disk. If attaching multiple disks, each should have a distinct lun. </summary>
+        /// <summary>
+        /// The lun is used to uniquely identify each data disk. If attaching multiple disks, each should have a distinct lun.
+        /// Serialized Name: ComputeInstanceDataDisk.lun
+        /// </summary>
         public int? Lun { get; }
-        /// <summary> type of this storage account. </summary>
+        /// <summary>
+        /// type of this storage account.
+        /// Serialized Name: ComputeInstanceDataDisk.storageAccountType
+        /// </summary>
         public StorageAccountType? StorageAccountType { get; }
     }
 }

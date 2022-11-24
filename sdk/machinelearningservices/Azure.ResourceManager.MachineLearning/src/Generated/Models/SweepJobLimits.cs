@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Sweep Job limit class. </summary>
+    /// <summary>
+    /// Sweep Job limit class.
+    /// Serialized Name: SweepJobLimits
+    /// </summary>
     public partial class SweepJobLimits : JobLimits
     {
         /// <summary> Initializes a new instance of SweepJobLimits. </summary>
@@ -19,11 +22,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of SweepJobLimits. </summary>
-        /// <param name="jobLimitsType"> [Required] JobLimit type. </param>
-        /// <param name="timeout"> The max run duration in ISO 8601 format, after which the job will be cancelled. Only supports duration with precision as low as Seconds. </param>
-        /// <param name="maxConcurrentTrials"> Sweep Job max concurrent trials. </param>
-        /// <param name="maxTotalTrials"> Sweep Job max total trials. </param>
-        /// <param name="trialTimeout"> Sweep Job Trial timeout value. </param>
+        /// <param name="jobLimitsType">
+        /// [Required] JobLimit type.
+        /// Serialized Name: JobLimits.jobLimitsType
+        /// </param>
+        /// <param name="timeout">
+        /// The max run duration in ISO 8601 format, after which the job will be cancelled. Only supports duration with precision as low as Seconds.
+        /// Serialized Name: JobLimits.timeout
+        /// </param>
+        /// <param name="maxConcurrentTrials">
+        /// Sweep Job max concurrent trials.
+        /// Serialized Name: SweepJobLimits.maxConcurrentTrials
+        /// </param>
+        /// <param name="maxTotalTrials">
+        /// Sweep Job max total trials.
+        /// Serialized Name: SweepJobLimits.maxTotalTrials
+        /// </param>
+        /// <param name="trialTimeout">
+        /// Sweep Job Trial timeout value.
+        /// Serialized Name: SweepJobLimits.trialTimeout
+        /// </param>
         internal SweepJobLimits(JobLimitsType jobLimitsType, TimeSpan? timeout, int? maxConcurrentTrials, int? maxTotalTrials, TimeSpan? trialTimeout) : base(jobLimitsType, timeout)
         {
             MaxConcurrentTrials = maxConcurrentTrials;
@@ -32,11 +50,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             JobLimitsType = jobLimitsType;
         }
 
-        /// <summary> Sweep Job max concurrent trials. </summary>
+        /// <summary>
+        /// Sweep Job max concurrent trials.
+        /// Serialized Name: SweepJobLimits.maxConcurrentTrials
+        /// </summary>
         public int? MaxConcurrentTrials { get; set; }
-        /// <summary> Sweep Job max total trials. </summary>
+        /// <summary>
+        /// Sweep Job max total trials.
+        /// Serialized Name: SweepJobLimits.maxTotalTrials
+        /// </summary>
         public int? MaxTotalTrials { get; set; }
-        /// <summary> Sweep Job Trial timeout value. </summary>
+        /// <summary>
+        /// Sweep Job Trial timeout value.
+        /// Serialized Name: SweepJobLimits.trialTimeout
+        /// </summary>
         public TimeSpan? TrialTimeout { get; set; }
     }
 }

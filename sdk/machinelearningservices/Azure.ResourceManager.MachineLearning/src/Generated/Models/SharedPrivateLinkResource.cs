@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The SharedPrivateLinkResource. </summary>
+    /// <summary>
+    /// The SharedPrivateLinkResource.
+    /// Serialized Name: SharedPrivateLinkResource
+    /// </summary>
     public partial class SharedPrivateLinkResource
     {
         /// <summary> Initializes a new instance of SharedPrivateLinkResource. </summary>
@@ -16,11 +19,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of SharedPrivateLinkResource. </summary>
-        /// <param name="name"> Unique name of the private link. </param>
-        /// <param name="privateLinkResourceId"> The resource id that private link links to. </param>
-        /// <param name="groupId"> The private link resource group id. </param>
-        /// <param name="requestMessage"> Request message. </param>
-        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
+        /// <param name="name">
+        /// Unique name of the private link.
+        /// Serialized Name: SharedPrivateLinkResource.name
+        /// </param>
+        /// <param name="privateLinkResourceId">
+        /// The resource id that private link links to.
+        /// Serialized Name: SharedPrivateLinkResource.properties.privateLinkResourceId
+        /// </param>
+        /// <param name="groupId">
+        /// The private link resource group id.
+        /// Serialized Name: SharedPrivateLinkResource.properties.groupId
+        /// </param>
+        /// <param name="requestMessage">
+        /// Request message.
+        /// Serialized Name: SharedPrivateLinkResource.properties.requestMessage
+        /// </param>
+        /// <param name="status">
+        /// Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service.
+        /// Serialized Name: SharedPrivateLinkResource.properties.status
+        /// </param>
         internal SharedPrivateLinkResource(string name, string privateLinkResourceId, string groupId, string requestMessage, MachineLearningPrivateEndpointServiceConnectionStatus? status)
         {
             Name = name;
@@ -30,15 +48,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Status = status;
         }
 
-        /// <summary> Unique name of the private link. </summary>
+        /// <summary>
+        /// Unique name of the private link.
+        /// Serialized Name: SharedPrivateLinkResource.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> The resource id that private link links to. </summary>
+        /// <summary>
+        /// The resource id that private link links to.
+        /// Serialized Name: SharedPrivateLinkResource.properties.privateLinkResourceId
+        /// </summary>
         public string PrivateLinkResourceId { get; set; }
-        /// <summary> The private link resource group id. </summary>
+        /// <summary>
+        /// The private link resource group id.
+        /// Serialized Name: SharedPrivateLinkResource.properties.groupId
+        /// </summary>
         public string GroupId { get; set; }
-        /// <summary> Request message. </summary>
+        /// <summary>
+        /// Request message.
+        /// Serialized Name: SharedPrivateLinkResource.properties.requestMessage
+        /// </summary>
         public string RequestMessage { get; set; }
-        /// <summary> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </summary>
+        /// <summary>
+        /// Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service.
+        /// Serialized Name: SharedPrivateLinkResource.properties.status
+        /// </summary>
         public MachineLearningPrivateEndpointServiceConnectionStatus? Status { get; set; }
     }
 }

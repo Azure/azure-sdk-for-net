@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> State of the compute node. Values are idle, running, preparing, unusable, leaving and preempted. </summary>
+    /// <summary>
+    /// State of the compute node. Values are idle, running, preparing, unusable, leaving and preempted.
+    /// Serialized Name: NodeState
+    /// </summary>
     public readonly partial struct NodeState : IEquatable<NodeState>
     {
         private readonly string _value;
@@ -29,17 +32,35 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string LeavingValue = "leaving";
         private const string PreemptedValue = "preempted";
 
-        /// <summary> idle. </summary>
+        /// <summary>
+        /// idle
+        /// Serialized Name: NodeState.idle
+        /// </summary>
         public static NodeState Idle { get; } = new NodeState(IdleValue);
-        /// <summary> running. </summary>
+        /// <summary>
+        /// running
+        /// Serialized Name: NodeState.running
+        /// </summary>
         public static NodeState Running { get; } = new NodeState(RunningValue);
-        /// <summary> preparing. </summary>
+        /// <summary>
+        /// preparing
+        /// Serialized Name: NodeState.preparing
+        /// </summary>
         public static NodeState Preparing { get; } = new NodeState(PreparingValue);
-        /// <summary> unusable. </summary>
+        /// <summary>
+        /// unusable
+        /// Serialized Name: NodeState.unusable
+        /// </summary>
         public static NodeState Unusable { get; } = new NodeState(UnusableValue);
-        /// <summary> leaving. </summary>
+        /// <summary>
+        /// leaving
+        /// Serialized Name: NodeState.leaving
+        /// </summary>
         public static NodeState Leaving { get; } = new NodeState(LeavingValue);
-        /// <summary> preempted. </summary>
+        /// <summary>
+        /// preempted
+        /// Serialized Name: NodeState.preempted
+        /// </summary>
         public static NodeState Preempted { get; } = new NodeState(PreemptedValue);
         /// <summary> Determines if two <see cref="NodeState"/> values are the same. </summary>
         public static bool operator ==(NodeState left, NodeState right) => left.Equals(right);

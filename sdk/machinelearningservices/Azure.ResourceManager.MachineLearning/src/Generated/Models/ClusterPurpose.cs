@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Intended usage of the cluster. </summary>
+    /// <summary>
+    /// Intended usage of the cluster
+    /// Serialized Name: ClusterPurpose
+    /// </summary>
     public readonly partial struct ClusterPurpose : IEquatable<ClusterPurpose>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string DenseProdValue = "DenseProd";
         private const string DevTestValue = "DevTest";
 
-        /// <summary> FastProd. </summary>
+        /// <summary>
+        /// FastProd
+        /// Serialized Name: ClusterPurpose.FastProd
+        /// </summary>
         public static ClusterPurpose FastProd { get; } = new ClusterPurpose(FastProdValue);
-        /// <summary> DenseProd. </summary>
+        /// <summary>
+        /// DenseProd
+        /// Serialized Name: ClusterPurpose.DenseProd
+        /// </summary>
         public static ClusterPurpose DenseProd { get; } = new ClusterPurpose(DenseProdValue);
-        /// <summary> DevTest. </summary>
+        /// <summary>
+        /// DevTest
+        /// Serialized Name: ClusterPurpose.DevTest
+        /// </summary>
         public static ClusterPurpose DevTest { get; } = new ClusterPurpose(DevTestValue);
         /// <summary> Determines if two <see cref="ClusterPurpose"/> values are the same. </summary>
         public static bool operator ==(ClusterPurpose left, ClusterPurpose right) => left.Equals(right);

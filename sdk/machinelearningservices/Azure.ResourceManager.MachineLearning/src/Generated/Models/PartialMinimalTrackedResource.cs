@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Strictly used in update requests. </summary>
+    /// <summary>
+    /// Strictly used in update requests.
+    /// Serialized Name: PartialMinimalTrackedResource
+    /// </summary>
     public partial class PartialMinimalTrackedResource
     {
         /// <summary> Initializes a new instance of PartialMinimalTrackedResource. </summary>
@@ -19,7 +22,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Resource tags. </summary>
+        /// <summary>
+        /// Resource tags.
+        /// Serialized Name: PartialMinimalTrackedResource.tags
+        /// </summary>
         public IDictionary<string, string> Tags { get; }
     }
 }

@@ -15,6 +15,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+mgmt-debug:
+  show-serialized-names: true
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'etag': 'etag'

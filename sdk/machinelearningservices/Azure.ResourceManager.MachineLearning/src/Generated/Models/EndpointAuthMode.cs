@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Enum to determine endpoint authentication mode. </summary>
+    /// <summary>
+    /// Enum to determine endpoint authentication mode.
+    /// Serialized Name: EndpointAuthMode
+    /// </summary>
     public readonly partial struct EndpointAuthMode : IEquatable<EndpointAuthMode>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string KeyValue = "Key";
         private const string AADTokenValue = "AADToken";
 
-        /// <summary> AMLToken. </summary>
+        /// <summary>
+        /// AMLToken
+        /// Serialized Name: EndpointAuthMode.AMLToken
+        /// </summary>
         public static EndpointAuthMode AMLToken { get; } = new EndpointAuthMode(AMLTokenValue);
-        /// <summary> Key. </summary>
+        /// <summary>
+        /// Key
+        /// Serialized Name: EndpointAuthMode.Key
+        /// </summary>
         public static EndpointAuthMode Key { get; } = new EndpointAuthMode(KeyValue);
-        /// <summary> AADToken. </summary>
+        /// <summary>
+        /// AADToken
+        /// Serialized Name: EndpointAuthMode.AADToken
+        /// </summary>
         public static EndpointAuthMode AADToken { get; } = new EndpointAuthMode(AADTokenValue);
         /// <summary> Determines if two <see cref="EndpointAuthMode"/> values are the same. </summary>
         public static bool operator ==(EndpointAuthMode left, EndpointAuthMode right) => left.Equals(right);

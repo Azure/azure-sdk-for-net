@@ -10,11 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> SAS datastore credentials configuration. </summary>
+    /// <summary>
+    /// SAS datastore credentials configuration.
+    /// Serialized Name: SasDatastoreCredentials
+    /// </summary>
     public partial class SasDatastoreCredentials : DatastoreCredentials
     {
         /// <summary> Initializes a new instance of SasDatastoreCredentials. </summary>
-        /// <param name="secrets"> [Required] Storage container secrets. </param>
+        /// <param name="secrets">
+        /// [Required] Storage container secrets.
+        /// Serialized Name: SasDatastoreCredentials.secrets
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="secrets"/> is null. </exception>
         public SasDatastoreCredentials(SasDatastoreSecrets secrets)
         {
@@ -25,15 +31,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of SasDatastoreCredentials. </summary>
-        /// <param name="credentialsType"> [Required] Credential type used to authentication with storage. </param>
-        /// <param name="secrets"> [Required] Storage container secrets. </param>
+        /// <param name="credentialsType">
+        /// [Required] Credential type used to authentication with storage.
+        /// Serialized Name: DatastoreCredentials.credentialsType
+        /// </param>
+        /// <param name="secrets">
+        /// [Required] Storage container secrets.
+        /// Serialized Name: SasDatastoreCredentials.secrets
+        /// </param>
         internal SasDatastoreCredentials(CredentialsType credentialsType, SasDatastoreSecrets secrets) : base(credentialsType)
         {
             Secrets = secrets;
             CredentialsType = credentialsType;
         }
 
-        /// <summary> [Required] Storage container secrets. </summary>
+        /// <summary>
+        /// [Required] Storage container secrets.
+        /// Serialized Name: SasDatastoreCredentials.secrets
+        /// </summary>
         public SasDatastoreSecrets Secrets { get; set; }
     }
 }

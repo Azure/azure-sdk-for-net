@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> TensorFlow distribution configuration. </summary>
+    /// <summary>
+    /// TensorFlow distribution configuration.
+    /// Serialized Name: TensorFlow
+    /// </summary>
     public partial class TensorFlow : DistributionConfiguration
     {
         /// <summary> Initializes a new instance of TensorFlow. </summary>
@@ -17,9 +20,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of TensorFlow. </summary>
-        /// <param name="distributionType"> [Required] Specifies the type of distribution framework. </param>
-        /// <param name="parameterServerCount"> Number of parameter server tasks. </param>
-        /// <param name="workerCount"> Number of workers. If not specified, will default to the instance count. </param>
+        /// <param name="distributionType">
+        /// [Required] Specifies the type of distribution framework.
+        /// Serialized Name: DistributionConfiguration.distributionType
+        /// </param>
+        /// <param name="parameterServerCount">
+        /// Number of parameter server tasks.
+        /// Serialized Name: TensorFlow.parameterServerCount
+        /// </param>
+        /// <param name="workerCount">
+        /// Number of workers. If not specified, will default to the instance count.
+        /// Serialized Name: TensorFlow.workerCount
+        /// </param>
         internal TensorFlow(DistributionType distributionType, int? parameterServerCount, int? workerCount) : base(distributionType)
         {
             ParameterServerCount = parameterServerCount;
@@ -27,9 +39,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             DistributionType = distributionType;
         }
 
-        /// <summary> Number of parameter server tasks. </summary>
+        /// <summary>
+        /// Number of parameter server tasks.
+        /// Serialized Name: TensorFlow.parameterServerCount
+        /// </summary>
         public int? ParameterServerCount { get; set; }
-        /// <summary> Number of workers. If not specified, will default to the instance count. </summary>
+        /// <summary>
+        /// Number of workers. If not specified, will default to the instance count.
+        /// Serialized Name: TensorFlow.workerCount
+        /// </summary>
         public int? WorkerCount { get; set; }
     }
 }

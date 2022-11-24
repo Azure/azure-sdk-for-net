@@ -9,7 +9,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The AssetBase. </summary>
+    /// <summary>
+    /// The AssetBase.
+    /// Serialized Name: AssetBase
+    /// </summary>
     public partial class AssetBase : ResourceBase
     {
         /// <summary> Initializes a new instance of AssetBase. </summary>
@@ -18,20 +21,41 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of AssetBase. </summary>
-        /// <param name="description"> The asset description text. </param>
-        /// <param name="properties"> The asset property dictionary. </param>
-        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
-        /// <param name="isArchived"> Is the asset archived?. </param>
+        /// <param name="description">
+        /// The asset description text.
+        /// Serialized Name: ResourceBase.description
+        /// </param>
+        /// <param name="properties">
+        /// The asset property dictionary.
+        /// Serialized Name: ResourceBase.properties
+        /// </param>
+        /// <param name="tags">
+        /// Tag dictionary. Tags can be added, removed, and updated.
+        /// Serialized Name: ResourceBase.tags
+        /// </param>
+        /// <param name="isAnonymous">
+        /// If the name version are system generated (anonymous registration).
+        /// Serialized Name: AssetBase.isAnonymous
+        /// </param>
+        /// <param name="isArchived">
+        /// Is the asset archived?
+        /// Serialized Name: AssetBase.isArchived
+        /// </param>
         internal AssetBase(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived) : base(description, properties, tags)
         {
             IsAnonymous = isAnonymous;
             IsArchived = isArchived;
         }
 
-        /// <summary> If the name version are system generated (anonymous registration). </summary>
+        /// <summary>
+        /// If the name version are system generated (anonymous registration).
+        /// Serialized Name: AssetBase.isAnonymous
+        /// </summary>
         public bool? IsAnonymous { get; set; }
-        /// <summary> Is the asset archived?. </summary>
+        /// <summary>
+        /// Is the asset archived?
+        /// Serialized Name: AssetBase.isArchived
+        /// </summary>
         public bool? IsArchived { get; set; }
     }
 }

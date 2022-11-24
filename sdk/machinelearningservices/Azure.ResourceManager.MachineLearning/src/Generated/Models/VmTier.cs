@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The type of the VM. </summary>
+    /// <summary>
+    /// The type of the VM.
+    /// Serialized Name: VMTier
+    /// </summary>
     public readonly partial struct VmTier : IEquatable<VmTier>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string LowPriorityValue = "LowPriority";
         private const string SpotValue = "Spot";
 
-        /// <summary> Standard. </summary>
+        /// <summary>
+        /// Standard
+        /// Serialized Name: VMTier.Standard
+        /// </summary>
         public static VmTier Standard { get; } = new VmTier(StandardValue);
-        /// <summary> LowPriority. </summary>
+        /// <summary>
+        /// LowPriority
+        /// Serialized Name: VMTier.LowPriority
+        /// </summary>
         public static VmTier LowPriority { get; } = new VmTier(LowPriorityValue);
-        /// <summary> Spot. </summary>
+        /// <summary>
+        /// Spot
+        /// Serialized Name: VMTier.Spot
+        /// </summary>
         public static VmTier Spot { get; } = new VmTier(SpotValue);
         /// <summary> Determines if two <see cref="VmTier"/> values are the same. </summary>
         public static bool operator ==(VmTier left, VmTier right) => left.Equals(right);

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> network of this container. </summary>
+    /// <summary>
+    /// network of this container.
+    /// Serialized Name: Network
+    /// </summary>
     public readonly partial struct Network : IEquatable<Network>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string BridgeValue = "Bridge";
         private const string HostValue = "Host";
 
-        /// <summary> Bridge. </summary>
+        /// <summary>
+        /// Bridge
+        /// Serialized Name: Network.Bridge
+        /// </summary>
         public static Network Bridge { get; } = new Network(BridgeValue);
-        /// <summary> Host. </summary>
+        /// <summary>
+        /// Host
+        /// Serialized Name: Network.Host
+        /// </summary>
         public static Network Host { get; } = new Network(HostValue);
         /// <summary> Determines if two <see cref="Network"/> values are the same. </summary>
         public static bool operator ==(Network left, Network right) => left.Equals(right);

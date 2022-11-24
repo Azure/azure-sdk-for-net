@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Mount Action. </summary>
+    /// <summary>
+    /// Mount Action.
+    /// Serialized Name: MountAction
+    /// </summary>
     public readonly partial struct MountAction : IEquatable<MountAction>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string MountValue = "Mount";
         private const string UnmountValue = "Unmount";
 
-        /// <summary> Mount. </summary>
+        /// <summary>
+        /// Mount
+        /// Serialized Name: MountAction.Mount
+        /// </summary>
         public static MountAction Mount { get; } = new MountAction(MountValue);
-        /// <summary> Unmount. </summary>
+        /// <summary>
+        /// Unmount
+        /// Serialized Name: MountAction.Unmount
+        /// </summary>
         public static MountAction Unmount { get; } = new MountAction(UnmountValue);
         /// <summary> Determines if two <see cref="MountAction"/> values are the same. </summary>
         public static bool operator ==(MountAction left, MountAction right) => left.Equals(right);

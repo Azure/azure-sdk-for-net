@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Environment information. </summary>
+    /// <summary>
+    /// Environment information
+    /// Serialized Name: ComputeInstanceEnvironmentInfo
+    /// </summary>
     public partial class ComputeInstanceEnvironmentInfo
     {
         /// <summary> Initializes a new instance of ComputeInstanceEnvironmentInfo. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of ComputeInstanceEnvironmentInfo. </summary>
-        /// <param name="name"> name of environment. </param>
-        /// <param name="version"> version of environment. </param>
+        /// <param name="name">
+        /// name of environment.
+        /// Serialized Name: ComputeInstanceEnvironmentInfo.name
+        /// </param>
+        /// <param name="version">
+        /// version of environment.
+        /// Serialized Name: ComputeInstanceEnvironmentInfo.version
+        /// </param>
         internal ComputeInstanceEnvironmentInfo(string name, string version)
         {
             Name = name;
             Version = version;
         }
 
-        /// <summary> name of environment. </summary>
+        /// <summary>
+        /// name of environment.
+        /// Serialized Name: ComputeInstanceEnvironmentInfo.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> version of environment. </summary>
+        /// <summary>
+        /// version of environment.
+        /// Serialized Name: ComputeInstanceEnvironmentInfo.version
+        /// </summary>
         public string Version { get; }
     }
 }

@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Online deployment scaling configuration.
+    /// Serialized Name: OnlineScaleSettings
     /// Please note <see cref="OnlineScaleSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="DefaultScaleSettings"/> and <see cref="TargetUtilizationScaleSettings"/>.
     /// </summary>
@@ -20,13 +21,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of OnlineScaleSettings. </summary>
-        /// <param name="scaleType"> [Required] Type of deployment scaling algorithm. </param>
+        /// <param name="scaleType">
+        /// [Required] Type of deployment scaling algorithm
+        /// Serialized Name: OnlineScaleSettings.scaleType
+        /// </param>
         internal OnlineScaleSettings(ScaleType scaleType)
         {
             ScaleType = scaleType;
         }
 
-        /// <summary> [Required] Type of deployment scaling algorithm. </summary>
+        /// <summary>
+        /// [Required] Type of deployment scaling algorithm
+        /// Serialized Name: OnlineScaleSettings.scaleType
+        /// </summary>
         internal ScaleType ScaleType { get; set; }
     }
 }

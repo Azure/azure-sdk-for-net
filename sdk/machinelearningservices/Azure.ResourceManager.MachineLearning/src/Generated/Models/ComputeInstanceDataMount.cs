@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Defines an Aml Instance DataMount. </summary>
+    /// <summary>
+    /// Defines an Aml Instance DataMount.
+    /// Serialized Name: ComputeInstanceDataMount
+    /// </summary>
     public partial class ComputeInstanceDataMount
     {
         /// <summary> Initializes a new instance of ComputeInstanceDataMount. </summary>
@@ -18,15 +21,42 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of ComputeInstanceDataMount. </summary>
-        /// <param name="source"> Source of the ComputeInstance data mount. </param>
-        /// <param name="sourceType"> Data source type. </param>
-        /// <param name="mountName"> name of the ComputeInstance data mount. </param>
-        /// <param name="mountAction"> Mount Action. </param>
-        /// <param name="createdBy"> who this data mount created by. </param>
-        /// <param name="mountPath"> Path of this data mount. </param>
-        /// <param name="mountState"> Mount state. </param>
-        /// <param name="mountedOn"> The time when the disk mounted. </param>
-        /// <param name="error"> Error of this data mount. </param>
+        /// <param name="source">
+        /// Source of the ComputeInstance data mount.
+        /// Serialized Name: ComputeInstanceDataMount.source
+        /// </param>
+        /// <param name="sourceType">
+        /// Data source type.
+        /// Serialized Name: ComputeInstanceDataMount.sourceType
+        /// </param>
+        /// <param name="mountName">
+        /// name of the ComputeInstance data mount.
+        /// Serialized Name: ComputeInstanceDataMount.mountName
+        /// </param>
+        /// <param name="mountAction">
+        /// Mount Action.
+        /// Serialized Name: ComputeInstanceDataMount.mountAction
+        /// </param>
+        /// <param name="createdBy">
+        /// who this data mount created by.
+        /// Serialized Name: ComputeInstanceDataMount.createdBy
+        /// </param>
+        /// <param name="mountPath">
+        /// Path of this data mount.
+        /// Serialized Name: ComputeInstanceDataMount.mountPath
+        /// </param>
+        /// <param name="mountState">
+        /// Mount state.
+        /// Serialized Name: ComputeInstanceDataMount.mountState
+        /// </param>
+        /// <param name="mountedOn">
+        /// The time when the disk mounted.
+        /// Serialized Name: ComputeInstanceDataMount.mountedOn
+        /// </param>
+        /// <param name="error">
+        /// Error of this data mount.
+        /// Serialized Name: ComputeInstanceDataMount.error
+        /// </param>
         internal ComputeInstanceDataMount(string source, SourceType? sourceType, string mountName, MountAction? mountAction, string createdBy, string mountPath, MountState? mountState, DateTimeOffset? mountedOn, string error)
         {
             Source = source;
@@ -40,23 +70,50 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Error = error;
         }
 
-        /// <summary> Source of the ComputeInstance data mount. </summary>
+        /// <summary>
+        /// Source of the ComputeInstance data mount.
+        /// Serialized Name: ComputeInstanceDataMount.source
+        /// </summary>
         public string Source { get; }
-        /// <summary> Data source type. </summary>
+        /// <summary>
+        /// Data source type.
+        /// Serialized Name: ComputeInstanceDataMount.sourceType
+        /// </summary>
         public SourceType? SourceType { get; }
-        /// <summary> name of the ComputeInstance data mount. </summary>
+        /// <summary>
+        /// name of the ComputeInstance data mount.
+        /// Serialized Name: ComputeInstanceDataMount.mountName
+        /// </summary>
         public string MountName { get; }
-        /// <summary> Mount Action. </summary>
+        /// <summary>
+        /// Mount Action.
+        /// Serialized Name: ComputeInstanceDataMount.mountAction
+        /// </summary>
         public MountAction? MountAction { get; }
-        /// <summary> who this data mount created by. </summary>
+        /// <summary>
+        /// who this data mount created by.
+        /// Serialized Name: ComputeInstanceDataMount.createdBy
+        /// </summary>
         public string CreatedBy { get; }
-        /// <summary> Path of this data mount. </summary>
+        /// <summary>
+        /// Path of this data mount.
+        /// Serialized Name: ComputeInstanceDataMount.mountPath
+        /// </summary>
         public string MountPath { get; }
-        /// <summary> Mount state. </summary>
+        /// <summary>
+        /// Mount state.
+        /// Serialized Name: ComputeInstanceDataMount.mountState
+        /// </summary>
         public MountState? MountState { get; }
-        /// <summary> The time when the disk mounted. </summary>
+        /// <summary>
+        /// The time when the disk mounted.
+        /// Serialized Name: ComputeInstanceDataMount.mountedOn
+        /// </summary>
         public DateTimeOffset? MountedOn { get; }
-        /// <summary> Error of this data mount. </summary>
+        /// <summary>
+        /// Error of this data mount.
+        /// Serialized Name: ComputeInstanceDataMount.error
+        /// </summary>
         public string Error { get; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Authentication type of the connection target. </summary>
+    /// <summary>
+    /// Authentication type of the connection target
+    /// Serialized Name: ConnectionAuthType
+    /// </summary>
     internal readonly partial struct ConnectionAuthType : IEquatable<ConnectionAuthType>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string NoneValue = "None";
         private const string SASValue = "SAS";
 
-        /// <summary> PAT. </summary>
+        /// <summary>
+        /// PAT
+        /// Serialized Name: ConnectionAuthType.PAT
+        /// </summary>
         public static ConnectionAuthType PAT { get; } = new ConnectionAuthType(PATValue);
-        /// <summary> ManagedIdentity. </summary>
+        /// <summary>
+        /// ManagedIdentity
+        /// Serialized Name: ConnectionAuthType.ManagedIdentity
+        /// </summary>
         public static ConnectionAuthType ManagedIdentity { get; } = new ConnectionAuthType(ManagedIdentityValue);
-        /// <summary> UsernamePassword. </summary>
+        /// <summary>
+        /// UsernamePassword
+        /// Serialized Name: ConnectionAuthType.UsernamePassword
+        /// </summary>
         public static ConnectionAuthType UsernamePassword { get; } = new ConnectionAuthType(UsernamePasswordValue);
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: ConnectionAuthType.None
+        /// </summary>
         public static ConnectionAuthType None { get; } = new ConnectionAuthType(NoneValue);
-        /// <summary> SAS. </summary>
+        /// <summary>
+        /// SAS
+        /// Serialized Name: ConnectionAuthType.SAS
+        /// </summary>
         public static ConnectionAuthType SAS { get; } = new ConnectionAuthType(SASValue);
         /// <summary> Determines if two <see cref="ConnectionAuthType"/> values are the same. </summary>
         public static bool operator ==(ConnectionAuthType left, ConnectionAuthType right) => left.Equals(right);

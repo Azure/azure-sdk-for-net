@@ -11,33 +11,65 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Online endpoint configuration. </summary>
+    /// <summary>
+    /// Online endpoint configuration
+    /// Serialized Name: OnlineEndpointProperties
+    /// </summary>
     public partial class OnlineEndpointProperties : EndpointPropertiesBase
     {
         /// <summary> Initializes a new instance of OnlineEndpointProperties. </summary>
-        /// <param name="authMode"> [Required] Use &apos;Key&apos; for key based authentication and &apos;AMLToken&apos; for Azure Machine Learning token-based authentication. &apos;Key&apos; doesn&apos;t expire but &apos;AMLToken&apos; does. </param>
+        /// <param name="authMode">
+        /// [Required] Use &apos;Key&apos; for key based authentication and &apos;AMLToken&apos; for Azure Machine Learning token-based authentication. &apos;Key&apos; doesn&apos;t expire but &apos;AMLToken&apos; does.
+        /// Serialized Name: EndpointPropertiesBase.authMode
+        /// </param>
         public OnlineEndpointProperties(EndpointAuthMode authMode) : base(authMode)
         {
             Traffic = new ChangeTrackingDictionary<string, int>();
         }
 
         /// <summary> Initializes a new instance of OnlineEndpointProperties. </summary>
-        /// <param name="authMode"> [Required] Use &apos;Key&apos; for key based authentication and &apos;AMLToken&apos; for Azure Machine Learning token-based authentication. &apos;Key&apos; doesn&apos;t expire but &apos;AMLToken&apos; does. </param>
-        /// <param name="description"> Description of the inference endpoint. </param>
+        /// <param name="authMode">
+        /// [Required] Use &apos;Key&apos; for key based authentication and &apos;AMLToken&apos; for Azure Machine Learning token-based authentication. &apos;Key&apos; doesn&apos;t expire but &apos;AMLToken&apos; does.
+        /// Serialized Name: EndpointPropertiesBase.authMode
+        /// </param>
+        /// <param name="description">
+        /// Description of the inference endpoint.
+        /// Serialized Name: EndpointPropertiesBase.description
+        /// </param>
         /// <param name="keys">
         /// EndpointAuthKeys to set initially on an Endpoint.
         /// This property will always be returned as null. AuthKey values must be retrieved using the ListKeys API.
+        /// Serialized Name: EndpointPropertiesBase.keys
         /// </param>
-        /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
-        /// <param name="scoringUri"> Endpoint URI. </param>
-        /// <param name="swaggerUri"> Endpoint Swagger URI. </param>
+        /// <param name="properties">
+        /// Property dictionary. Properties can be added, but not removed or altered.
+        /// Serialized Name: EndpointPropertiesBase.properties
+        /// </param>
+        /// <param name="scoringUri">
+        /// Endpoint URI.
+        /// Serialized Name: EndpointPropertiesBase.scoringUri
+        /// </param>
+        /// <param name="swaggerUri">
+        /// Endpoint Swagger URI.
+        /// Serialized Name: EndpointPropertiesBase.swaggerUri
+        /// </param>
         /// <param name="compute">
         /// ARM resource ID of the compute if it exists.
         /// optional
+        /// Serialized Name: OnlineEndpointProperties.compute
         /// </param>
-        /// <param name="provisioningState"> Provisioning state for the endpoint. </param>
-        /// <param name="publicNetworkAccess"> Set to &quot;Enabled&quot; for endpoints that should allow public access when Private Link is enabled. </param>
-        /// <param name="traffic"> Percentage of traffic from endpoint to divert to each deployment. Traffic values need to sum to 100. </param>
+        /// <param name="provisioningState">
+        /// Provisioning state for the endpoint.
+        /// Serialized Name: OnlineEndpointProperties.provisioningState
+        /// </param>
+        /// <param name="publicNetworkAccess">
+        /// Set to &quot;Enabled&quot; for endpoints that should allow public access when Private Link is enabled.
+        /// Serialized Name: OnlineEndpointProperties.publicNetworkAccess
+        /// </param>
+        /// <param name="traffic">
+        /// Percentage of traffic from endpoint to divert to each deployment. Traffic values need to sum to 100.
+        /// Serialized Name: OnlineEndpointProperties.traffic
+        /// </param>
         internal OnlineEndpointProperties(EndpointAuthMode authMode, string description, EndpointAuthKeys keys, IDictionary<string, string> properties, Uri scoringUri, Uri swaggerUri, string compute, EndpointProvisioningState? provisioningState, PublicNetworkAccessType? publicNetworkAccess, IDictionary<string, int> traffic) : base(authMode, description, keys, properties, scoringUri, swaggerUri)
         {
             Compute = compute;
@@ -49,13 +81,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary>
         /// ARM resource ID of the compute if it exists.
         /// optional
+        /// Serialized Name: OnlineEndpointProperties.compute
         /// </summary>
         public string Compute { get; set; }
-        /// <summary> Provisioning state for the endpoint. </summary>
+        /// <summary>
+        /// Provisioning state for the endpoint.
+        /// Serialized Name: OnlineEndpointProperties.provisioningState
+        /// </summary>
         public EndpointProvisioningState? ProvisioningState { get; }
-        /// <summary> Set to &quot;Enabled&quot; for endpoints that should allow public access when Private Link is enabled. </summary>
+        /// <summary>
+        /// Set to &quot;Enabled&quot; for endpoints that should allow public access when Private Link is enabled.
+        /// Serialized Name: OnlineEndpointProperties.publicNetworkAccess
+        /// </summary>
         public PublicNetworkAccessType? PublicNetworkAccess { get; set; }
-        /// <summary> Percentage of traffic from endpoint to divert to each deployment. Traffic values need to sum to 100. </summary>
+        /// <summary>
+        /// Percentage of traffic from endpoint to divert to each deployment. Traffic values need to sum to 100.
+        /// Serialized Name: OnlineEndpointProperties.traffic
+        /// </summary>
         public IDictionary<string, int> Traffic { get; set; }
     }
 }

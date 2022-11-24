@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Defines all connectivity endpoints and properties for an ComputeInstance. </summary>
+    /// <summary>
+    /// Defines all connectivity endpoints and properties for an ComputeInstance.
+    /// Serialized Name: ComputeInstanceConnectivityEndpoints
+    /// </summary>
     public partial class ComputeInstanceConnectivityEndpoints
     {
         /// <summary> Initializes a new instance of ComputeInstanceConnectivityEndpoints. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of ComputeInstanceConnectivityEndpoints. </summary>
-        /// <param name="publicIPAddress"> Public IP Address of this ComputeInstance. </param>
-        /// <param name="privateIPAddress"> Private IP Address of this ComputeInstance (local to the VNET in which the compute instance is deployed). </param>
+        /// <param name="publicIPAddress">
+        /// Public IP Address of this ComputeInstance.
+        /// Serialized Name: ComputeInstanceConnectivityEndpoints.publicIpAddress
+        /// </param>
+        /// <param name="privateIPAddress">
+        /// Private IP Address of this ComputeInstance (local to the VNET in which the compute instance is deployed).
+        /// Serialized Name: ComputeInstanceConnectivityEndpoints.privateIpAddress
+        /// </param>
         internal ComputeInstanceConnectivityEndpoints(string publicIPAddress, string privateIPAddress)
         {
             PublicIPAddress = publicIPAddress;
             PrivateIPAddress = privateIPAddress;
         }
 
-        /// <summary> Public IP Address of this ComputeInstance. </summary>
+        /// <summary>
+        /// Public IP Address of this ComputeInstance.
+        /// Serialized Name: ComputeInstanceConnectivityEndpoints.publicIpAddress
+        /// </summary>
         public string PublicIPAddress { get; }
-        /// <summary> Private IP Address of this ComputeInstance (local to the VNET in which the compute instance is deployed). </summary>
+        /// <summary>
+        /// Private IP Address of this ComputeInstance (local to the VNET in which the compute instance is deployed).
+        /// Serialized Name: ComputeInstanceConnectivityEndpoints.privateIpAddress
+        /// </summary>
         public string PrivateIPAddress { get; }
     }
 }

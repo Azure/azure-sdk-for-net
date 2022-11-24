@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Admin credentials for virtual machine. </summary>
+    /// <summary>
+    /// Admin credentials for virtual machine
+    /// Serialized Name: VirtualMachineSshCredentials
+    /// </summary>
     public partial class VirtualMachineSshCredentials
     {
         /// <summary> Initializes a new instance of VirtualMachineSshCredentials. </summary>
@@ -16,10 +19,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of VirtualMachineSshCredentials. </summary>
-        /// <param name="username"> Username of admin account. </param>
-        /// <param name="password"> Password of admin account. </param>
-        /// <param name="publicKeyData"> Public key data. </param>
-        /// <param name="privateKeyData"> Private key data. </param>
+        /// <param name="username">
+        /// Username of admin account
+        /// Serialized Name: VirtualMachineSshCredentials.username
+        /// </param>
+        /// <param name="password">
+        /// Password of admin account
+        /// Serialized Name: VirtualMachineSshCredentials.password
+        /// </param>
+        /// <param name="publicKeyData">
+        /// Public key data
+        /// Serialized Name: VirtualMachineSshCredentials.publicKeyData
+        /// </param>
+        /// <param name="privateKeyData">
+        /// Private key data
+        /// Serialized Name: VirtualMachineSshCredentials.privateKeyData
+        /// </param>
         internal VirtualMachineSshCredentials(string username, string password, string publicKeyData, string privateKeyData)
         {
             Username = username;
@@ -28,13 +43,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
             PrivateKeyData = privateKeyData;
         }
 
-        /// <summary> Username of admin account. </summary>
+        /// <summary>
+        /// Username of admin account
+        /// Serialized Name: VirtualMachineSshCredentials.username
+        /// </summary>
         public string Username { get; set; }
-        /// <summary> Password of admin account. </summary>
+        /// <summary>
+        /// Password of admin account
+        /// Serialized Name: VirtualMachineSshCredentials.password
+        /// </summary>
         public string Password { get; set; }
-        /// <summary> Public key data. </summary>
+        /// <summary>
+        /// Public key data
+        /// Serialized Name: VirtualMachineSshCredentials.publicKeyData
+        /// </summary>
         public string PublicKeyData { get; set; }
-        /// <summary> Private key data. </summary>
+        /// <summary>
+        /// Private key data
+        /// Serialized Name: VirtualMachineSshCredentials.privateKeyData
+        /// </summary>
         public string PrivateKeyData { get; set; }
     }
 }

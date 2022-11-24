@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Enum for setting log verbosity. </summary>
+    /// <summary>
+    /// Enum for setting log verbosity.
+    /// Serialized Name: LogVerbosity
+    /// </summary>
     public readonly partial struct LogVerbosity : IEquatable<LogVerbosity>
     {
         private readonly string _value;
@@ -29,17 +32,35 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string ErrorValue = "Error";
         private const string CriticalValue = "Critical";
 
-        /// <summary> No logs emitted. </summary>
+        /// <summary>
+        /// No logs emitted.
+        /// Serialized Name: LogVerbosity.NotSet
+        /// </summary>
         public static LogVerbosity NotSet { get; } = new LogVerbosity(NotSetValue);
-        /// <summary> Debug and above log statements logged. </summary>
+        /// <summary>
+        /// Debug and above log statements logged.
+        /// Serialized Name: LogVerbosity.Debug
+        /// </summary>
         public static LogVerbosity Debug { get; } = new LogVerbosity(DebugValue);
-        /// <summary> Info and above log statements logged. </summary>
+        /// <summary>
+        /// Info and above log statements logged.
+        /// Serialized Name: LogVerbosity.Info
+        /// </summary>
         public static LogVerbosity Info { get; } = new LogVerbosity(InfoValue);
-        /// <summary> Warning and above log statements logged. </summary>
+        /// <summary>
+        /// Warning and above log statements logged.
+        /// Serialized Name: LogVerbosity.Warning
+        /// </summary>
         public static LogVerbosity Warning { get; } = new LogVerbosity(WarningValue);
-        /// <summary> Error and above log statements logged. </summary>
+        /// <summary>
+        /// Error and above log statements logged.
+        /// Serialized Name: LogVerbosity.Error
+        /// </summary>
         public static LogVerbosity Error { get; } = new LogVerbosity(ErrorValue);
-        /// <summary> Only critical statements logged. </summary>
+        /// <summary>
+        /// Only critical statements logged.
+        /// Serialized Name: LogVerbosity.Critical
+        /// </summary>
         public static LogVerbosity Critical { get; } = new LogVerbosity(CriticalValue);
         /// <summary> Determines if two <see cref="LogVerbosity"/> values are the same. </summary>
         public static bool operator ==(LogVerbosity left, LogVerbosity right) => left.Equals(right);

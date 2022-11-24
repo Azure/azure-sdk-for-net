@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The SASAuthTypeWorkspaceConnectionProperties. </summary>
+    /// <summary>
+    /// The SASAuthTypeWorkspaceConnectionProperties.
+    /// Serialized Name: SASAuthTypeWorkspaceConnectionProperties
+    /// </summary>
     public partial class SASAuthTypeWorkspaceConnectionProperties : WorkspaceConnectionPropertiesV2
     {
         /// <summary> Initializes a new instance of SASAuthTypeWorkspaceConnectionProperties. </summary>
@@ -17,21 +20,33 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of SASAuthTypeWorkspaceConnectionProperties. </summary>
-        /// <param name="authType"> Authentication type of the connection target. </param>
-        /// <param name="category"> Category of the connection. </param>
-        /// <param name="target"></param>
-        /// <param name="value"> Value details of the workspace connection. </param>
-        /// <param name="valueFormat"> format for the workspace connection value. </param>
-        /// <param name="credentials"></param>
+        /// <param name="authType">
+        /// Authentication type of the connection target
+        /// Serialized Name: WorkspaceConnectionPropertiesV2.authType
+        /// </param>
+        /// <param name="category">
+        /// Category of the connection
+        /// Serialized Name: WorkspaceConnectionPropertiesV2.category
+        /// </param>
+        /// <param name="target"> Serialized Name: WorkspaceConnectionPropertiesV2.target. </param>
+        /// <param name="value">
+        /// Value details of the workspace connection.
+        /// Serialized Name: WorkspaceConnectionPropertiesV2.value
+        /// </param>
+        /// <param name="valueFormat">
+        /// format for the workspace connection value
+        /// Serialized Name: WorkspaceConnectionPropertiesV2.valueFormat
+        /// </param>
+        /// <param name="credentials"> Serialized Name: SASAuthTypeWorkspaceConnectionProperties.credentials. </param>
         internal SASAuthTypeWorkspaceConnectionProperties(ConnectionAuthType authType, ConnectionCategory? category, string target, string value, ValueFormat? valueFormat, WorkspaceConnectionSharedAccessSignature credentials) : base(authType, category, target, value, valueFormat)
         {
             Credentials = credentials;
             AuthType = authType;
         }
 
-        /// <summary> Gets or sets the credentials. </summary>
+        /// <summary> Serialized Name: SASAuthTypeWorkspaceConnectionProperties.credentials. </summary>
         internal WorkspaceConnectionSharedAccessSignature Credentials { get; set; }
-        /// <summary> Gets or sets the sas. </summary>
+        /// <summary> Serialized Name: WorkspaceConnectionSharedAccessSignature.sas. </summary>
         public string CredentialsSas
         {
             get => Credentials is null ? default : Credentials.Sas;

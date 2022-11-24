@@ -11,17 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Azure File datastore configuration. </summary>
+    /// <summary>
+    /// Azure File datastore configuration.
+    /// Serialized Name: AzureFileDatastore
+    /// </summary>
     public partial class AzureFileDatastore : DatastoreProperties
     {
         /// <summary> Initializes a new instance of AzureFileDatastore. </summary>
         /// <param name="credentials">
         /// [Required] Account credentials.
+        /// Serialized Name: DatastoreProperties.credentials
         /// Please note <see cref="DatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AccountKeyDatastoreCredentials"/>, <see cref="CertificateDatastoreCredentials"/>, <see cref="NoneDatastoreCredentials"/>, <see cref="SasDatastoreCredentials"/> and <see cref="ServicePrincipalDatastoreCredentials"/>.
         /// </param>
-        /// <param name="accountName"> [Required] Storage account name. </param>
-        /// <param name="fileShareName"> [Required] The name of the Azure file share that the datastore points to. </param>
+        /// <param name="accountName">
+        /// [Required] Storage account name.
+        /// Serialized Name: AzureFileDatastore.accountName
+        /// </param>
+        /// <param name="fileShareName">
+        /// [Required] The name of the Azure file share that the datastore points to.
+        /// Serialized Name: AzureFileDatastore.fileShareName
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="credentials"/>, <paramref name="accountName"/> or <paramref name="fileShareName"/> is null. </exception>
         public AzureFileDatastore(DatastoreCredentials credentials, string accountName, string fileShareName) : base(credentials)
         {
@@ -35,21 +45,52 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of AzureFileDatastore. </summary>
-        /// <param name="description"> The asset description text. </param>
-        /// <param name="properties"> The asset property dictionary. </param>
-        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="description">
+        /// The asset description text.
+        /// Serialized Name: ResourceBase.description
+        /// </param>
+        /// <param name="properties">
+        /// The asset property dictionary.
+        /// Serialized Name: ResourceBase.properties
+        /// </param>
+        /// <param name="tags">
+        /// Tag dictionary. Tags can be added, removed, and updated.
+        /// Serialized Name: ResourceBase.tags
+        /// </param>
         /// <param name="credentials">
         /// [Required] Account credentials.
+        /// Serialized Name: DatastoreProperties.credentials
         /// Please note <see cref="DatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AccountKeyDatastoreCredentials"/>, <see cref="CertificateDatastoreCredentials"/>, <see cref="NoneDatastoreCredentials"/>, <see cref="SasDatastoreCredentials"/> and <see cref="ServicePrincipalDatastoreCredentials"/>.
         /// </param>
-        /// <param name="datastoreType"> [Required] Storage type backing the datastore. </param>
-        /// <param name="isDefault"> Readonly property to indicate if datastore is the workspace default datastore. </param>
-        /// <param name="accountName"> [Required] Storage account name. </param>
-        /// <param name="endpoint"> Azure cloud endpoint for the storage account. </param>
-        /// <param name="fileShareName"> [Required] The name of the Azure file share that the datastore points to. </param>
-        /// <param name="protocol"> Protocol used to communicate with the storage account. </param>
-        /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer&apos;s storage. </param>
+        /// <param name="datastoreType">
+        /// [Required] Storage type backing the datastore.
+        /// Serialized Name: DatastoreProperties.datastoreType
+        /// </param>
+        /// <param name="isDefault">
+        /// Readonly property to indicate if datastore is the workspace default datastore
+        /// Serialized Name: DatastoreProperties.isDefault
+        /// </param>
+        /// <param name="accountName">
+        /// [Required] Storage account name.
+        /// Serialized Name: AzureFileDatastore.accountName
+        /// </param>
+        /// <param name="endpoint">
+        /// Azure cloud endpoint for the storage account.
+        /// Serialized Name: AzureFileDatastore.endpoint
+        /// </param>
+        /// <param name="fileShareName">
+        /// [Required] The name of the Azure file share that the datastore points to.
+        /// Serialized Name: AzureFileDatastore.fileShareName
+        /// </param>
+        /// <param name="protocol">
+        /// Protocol used to communicate with the storage account.
+        /// Serialized Name: AzureFileDatastore.protocol
+        /// </param>
+        /// <param name="serviceDataAccessAuthIdentity">
+        /// Indicates which identity to use to authenticate service data access to customer&apos;s storage.
+        /// Serialized Name: AzureFileDatastore.serviceDataAccessAuthIdentity
+        /// </param>
         internal AzureFileDatastore(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, DatastoreCredentials credentials, DatastoreType datastoreType, bool? isDefault, string accountName, string endpoint, string fileShareName, string protocol, ServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity) : base(description, properties, tags, credentials, datastoreType, isDefault)
         {
             AccountName = accountName;
@@ -60,15 +101,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
             DatastoreType = datastoreType;
         }
 
-        /// <summary> [Required] Storage account name. </summary>
+        /// <summary>
+        /// [Required] Storage account name.
+        /// Serialized Name: AzureFileDatastore.accountName
+        /// </summary>
         public string AccountName { get; set; }
-        /// <summary> Azure cloud endpoint for the storage account. </summary>
+        /// <summary>
+        /// Azure cloud endpoint for the storage account.
+        /// Serialized Name: AzureFileDatastore.endpoint
+        /// </summary>
         public string Endpoint { get; set; }
-        /// <summary> [Required] The name of the Azure file share that the datastore points to. </summary>
+        /// <summary>
+        /// [Required] The name of the Azure file share that the datastore points to.
+        /// Serialized Name: AzureFileDatastore.fileShareName
+        /// </summary>
         public string FileShareName { get; set; }
-        /// <summary> Protocol used to communicate with the storage account. </summary>
+        /// <summary>
+        /// Protocol used to communicate with the storage account.
+        /// Serialized Name: AzureFileDatastore.protocol
+        /// </summary>
         public string Protocol { get; set; }
-        /// <summary> Indicates which identity to use to authenticate service data access to customer&apos;s storage. </summary>
+        /// <summary>
+        /// Indicates which identity to use to authenticate service data access to customer&apos;s storage.
+        /// Serialized Name: AzureFileDatastore.serviceDataAccessAuthIdentity
+        /// </summary>
         public ServiceDataAccessAuthIdentity? ServiceDataAccessAuthIdentity { get; set; }
     }
 }

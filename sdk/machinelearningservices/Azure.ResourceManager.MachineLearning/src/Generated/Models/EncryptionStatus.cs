@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Indicates whether or not the encryption is enabled for the workspace. </summary>
+    /// <summary>
+    /// Indicates whether or not the encryption is enabled for the workspace.
+    /// Serialized Name: EncryptionStatus
+    /// </summary>
     public readonly partial struct EncryptionStatus : IEquatable<EncryptionStatus>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: EncryptionStatus.Enabled
+        /// </summary>
         public static EncryptionStatus Enabled { get; } = new EncryptionStatus(EnabledValue);
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: EncryptionStatus.Disabled
+        /// </summary>
         public static EncryptionStatus Disabled { get; } = new EncryptionStatus(DisabledValue);
         /// <summary> Determines if two <see cref="EncryptionStatus"/> values are the same. </summary>
         public static bool operator ==(EncryptionStatus left, EncryptionStatus right) => left.Equals(right);

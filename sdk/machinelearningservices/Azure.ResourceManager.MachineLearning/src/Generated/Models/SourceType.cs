@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Data source type. </summary>
+    /// <summary>
+    /// Data source type.
+    /// Serialized Name: SourceType
+    /// </summary>
     public readonly partial struct SourceType : IEquatable<SourceType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string DatastoreValue = "Datastore";
         private const string UriValue = "URI";
 
-        /// <summary> Dataset. </summary>
+        /// <summary>
+        /// Dataset
+        /// Serialized Name: SourceType.Dataset
+        /// </summary>
         public static SourceType Dataset { get; } = new SourceType(DatasetValue);
-        /// <summary> Datastore. </summary>
+        /// <summary>
+        /// Datastore
+        /// Serialized Name: SourceType.Datastore
+        /// </summary>
         public static SourceType Datastore { get; } = new SourceType(DatastoreValue);
-        /// <summary> URI. </summary>
+        /// <summary>
+        /// URI
+        /// Serialized Name: SourceType.URI
+        /// </summary>
         public static SourceType Uri { get; } = new SourceType(UriValue);
         /// <summary> Determines if two <see cref="SourceType"/> values are the same. </summary>
         public static bool operator ==(SourceType left, SourceType right) => left.Equals(right);

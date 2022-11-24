@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Trigger of operation. </summary>
+    /// <summary>
+    /// Trigger of operation.
+    /// Serialized Name: OperationTrigger
+    /// </summary>
     public readonly partial struct OperationTrigger : IEquatable<OperationTrigger>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string ScheduleValue = "Schedule";
         private const string IdleShutdownValue = "IdleShutdown";
 
-        /// <summary> User. </summary>
+        /// <summary>
+        /// User
+        /// Serialized Name: OperationTrigger.User
+        /// </summary>
         public static OperationTrigger User { get; } = new OperationTrigger(UserValue);
-        /// <summary> Schedule. </summary>
+        /// <summary>
+        /// Schedule
+        /// Serialized Name: OperationTrigger.Schedule
+        /// </summary>
         public static OperationTrigger Schedule { get; } = new OperationTrigger(ScheduleValue);
-        /// <summary> IdleShutdown. </summary>
+        /// <summary>
+        /// IdleShutdown
+        /// Serialized Name: OperationTrigger.IdleShutdown
+        /// </summary>
         public static OperationTrigger IdleShutdown { get; } = new OperationTrigger(IdleShutdownValue);
         /// <summary> Determines if two <see cref="OperationTrigger"/> values are the same. </summary>
         public static bool operator ==(OperationTrigger left, OperationTrigger right) => left.Equals(right);

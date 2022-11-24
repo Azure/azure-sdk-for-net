@@ -9,7 +9,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Batch inference settings per deployment. </summary>
+    /// <summary>
+    /// Batch inference settings per deployment.
+    /// Serialized Name: BatchDeploymentProperties
+    /// </summary>
     public partial class BatchDeploymentProperties : EndpointDeploymentPropertiesBase
     {
         /// <summary> Initializes a new instance of BatchDeploymentProperties. </summary>
@@ -18,41 +21,79 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of BatchDeploymentProperties. </summary>
-        /// <param name="codeConfiguration"> Code configuration for the endpoint deployment. </param>
-        /// <param name="description"> Description of the endpoint deployment. </param>
-        /// <param name="environmentId"> ARM resource ID or AssetId of the environment specification for the endpoint deployment. </param>
-        /// <param name="environmentVariables"> Environment variables configuration for the deployment. </param>
-        /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
-        /// <param name="compute"> Compute target for batch inference operation. </param>
+        /// <param name="codeConfiguration">
+        /// Code configuration for the endpoint deployment.
+        /// Serialized Name: EndpointDeploymentPropertiesBase.codeConfiguration
+        /// </param>
+        /// <param name="description">
+        /// Description of the endpoint deployment.
+        /// Serialized Name: EndpointDeploymentPropertiesBase.description
+        /// </param>
+        /// <param name="environmentId">
+        /// ARM resource ID or AssetId of the environment specification for the endpoint deployment.
+        /// Serialized Name: EndpointDeploymentPropertiesBase.environmentId
+        /// </param>
+        /// <param name="environmentVariables">
+        /// Environment variables configuration for the deployment.
+        /// Serialized Name: EndpointDeploymentPropertiesBase.environmentVariables
+        /// </param>
+        /// <param name="properties">
+        /// Property dictionary. Properties can be added, but not removed or altered.
+        /// Serialized Name: EndpointDeploymentPropertiesBase.properties
+        /// </param>
+        /// <param name="compute">
+        /// Compute target for batch inference operation.
+        /// Serialized Name: BatchDeploymentProperties.compute
+        /// </param>
         /// <param name="errorThreshold">
         /// Error threshold, if the error count for the entire input goes above this value,
         /// the batch inference will be aborted. Range is [-1, int.MaxValue].
         /// For FileDataset, this value is the count of file failures.
         /// For TabularDataset, this value is the count of record failures.
         /// If set to -1 (the lower bound), all failures during batch inference will be ignored.
+        /// Serialized Name: BatchDeploymentProperties.errorThreshold
         /// </param>
-        /// <param name="loggingLevel"> Logging level for batch inference operation. </param>
-        /// <param name="maxConcurrencyPerInstance"> Indicates maximum number of parallelism per instance. </param>
+        /// <param name="loggingLevel">
+        /// Logging level for batch inference operation.
+        /// Serialized Name: BatchDeploymentProperties.loggingLevel
+        /// </param>
+        /// <param name="maxConcurrencyPerInstance">
+        /// Indicates maximum number of parallelism per instance.
+        /// Serialized Name: BatchDeploymentProperties.maxConcurrencyPerInstance
+        /// </param>
         /// <param name="miniBatchSize">
         /// Size of the mini-batch passed to each batch invocation.
         /// For FileDataset, this is the number of files per mini-batch.
         /// For TabularDataset, this is the size of the records in bytes, per mini-batch.
+        /// Serialized Name: BatchDeploymentProperties.miniBatchSize
         /// </param>
         /// <param name="model">
         /// Reference to the model asset for the endpoint deployment.
+        /// Serialized Name: BatchDeploymentProperties.model
         /// Please note <see cref="AssetReferenceBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DataPathAssetReference"/>, <see cref="IdAssetReference"/> and <see cref="OutputPathAssetReference"/>.
         /// </param>
-        /// <param name="outputAction"> Indicates how the output will be organized. </param>
-        /// <param name="outputFileName"> Customized output file name for append_row output action. </param>
-        /// <param name="provisioningState"> Provisioning state for the endpoint deployment. </param>
+        /// <param name="outputAction">
+        /// Indicates how the output will be organized.
+        /// Serialized Name: BatchDeploymentProperties.outputAction
+        /// </param>
+        /// <param name="outputFileName">
+        /// Customized output file name for append_row output action.
+        /// Serialized Name: BatchDeploymentProperties.outputFileName
+        /// </param>
+        /// <param name="provisioningState">
+        /// Provisioning state for the endpoint deployment.
+        /// Serialized Name: BatchDeploymentProperties.provisioningState
+        /// </param>
         /// <param name="resources">
         /// Indicates compute configuration for the job.
         /// If not provided, will default to the defaults defined in ResourceConfiguration.
+        /// Serialized Name: BatchDeploymentProperties.resources
         /// </param>
         /// <param name="retrySettings">
         /// Retry Settings for the batch inference operation.
         /// If not provided, will default to the defaults defined in BatchRetrySettings.
+        /// Serialized Name: BatchDeploymentProperties.retrySettings
         /// </param>
         internal BatchDeploymentProperties(CodeConfiguration codeConfiguration, string description, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, string> properties, string compute, int? errorThreshold, BatchLoggingLevel? loggingLevel, int? maxConcurrencyPerInstance, long? miniBatchSize, AssetReferenceBase model, BatchOutputAction? outputAction, string outputFileName, DeploymentProvisioningState? provisioningState, DeploymentResourceConfiguration resources, BatchRetrySettings retrySettings) : base(codeConfiguration, description, environmentId, environmentVariables, properties)
         {
@@ -69,7 +110,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             RetrySettings = retrySettings;
         }
 
-        /// <summary> Compute target for batch inference operation. </summary>
+        /// <summary>
+        /// Compute target for batch inference operation.
+        /// Serialized Name: BatchDeploymentProperties.compute
+        /// </summary>
         public string Compute { get; set; }
         /// <summary>
         /// Error threshold, if the error count for the entire input goes above this value,
@@ -77,38 +121,58 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// For FileDataset, this value is the count of file failures.
         /// For TabularDataset, this value is the count of record failures.
         /// If set to -1 (the lower bound), all failures during batch inference will be ignored.
+        /// Serialized Name: BatchDeploymentProperties.errorThreshold
         /// </summary>
         public int? ErrorThreshold { get; set; }
-        /// <summary> Logging level for batch inference operation. </summary>
+        /// <summary>
+        /// Logging level for batch inference operation.
+        /// Serialized Name: BatchDeploymentProperties.loggingLevel
+        /// </summary>
         public BatchLoggingLevel? LoggingLevel { get; set; }
-        /// <summary> Indicates maximum number of parallelism per instance. </summary>
+        /// <summary>
+        /// Indicates maximum number of parallelism per instance.
+        /// Serialized Name: BatchDeploymentProperties.maxConcurrencyPerInstance
+        /// </summary>
         public int? MaxConcurrencyPerInstance { get; set; }
         /// <summary>
         /// Size of the mini-batch passed to each batch invocation.
         /// For FileDataset, this is the number of files per mini-batch.
         /// For TabularDataset, this is the size of the records in bytes, per mini-batch.
+        /// Serialized Name: BatchDeploymentProperties.miniBatchSize
         /// </summary>
         public long? MiniBatchSize { get; set; }
         /// <summary>
         /// Reference to the model asset for the endpoint deployment.
+        /// Serialized Name: BatchDeploymentProperties.model
         /// Please note <see cref="AssetReferenceBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DataPathAssetReference"/>, <see cref="IdAssetReference"/> and <see cref="OutputPathAssetReference"/>.
         /// </summary>
         public AssetReferenceBase Model { get; set; }
-        /// <summary> Indicates how the output will be organized. </summary>
+        /// <summary>
+        /// Indicates how the output will be organized.
+        /// Serialized Name: BatchDeploymentProperties.outputAction
+        /// </summary>
         public BatchOutputAction? OutputAction { get; set; }
-        /// <summary> Customized output file name for append_row output action. </summary>
+        /// <summary>
+        /// Customized output file name for append_row output action.
+        /// Serialized Name: BatchDeploymentProperties.outputFileName
+        /// </summary>
         public string OutputFileName { get; set; }
-        /// <summary> Provisioning state for the endpoint deployment. </summary>
+        /// <summary>
+        /// Provisioning state for the endpoint deployment.
+        /// Serialized Name: BatchDeploymentProperties.provisioningState
+        /// </summary>
         public DeploymentProvisioningState? ProvisioningState { get; }
         /// <summary>
         /// Indicates compute configuration for the job.
         /// If not provided, will default to the defaults defined in ResourceConfiguration.
+        /// Serialized Name: BatchDeploymentProperties.resources
         /// </summary>
         public DeploymentResourceConfiguration Resources { get; set; }
         /// <summary>
         /// Retry Settings for the batch inference operation.
         /// If not provided, will default to the defaults defined in BatchRetrySettings.
+        /// Serialized Name: BatchDeploymentProperties.retrySettings
         /// </summary>
         public BatchRetrySettings RetrySettings { get; set; }
     }

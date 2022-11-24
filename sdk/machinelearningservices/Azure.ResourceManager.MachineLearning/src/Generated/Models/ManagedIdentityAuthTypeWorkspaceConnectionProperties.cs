@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The ManagedIdentityAuthTypeWorkspaceConnectionProperties. </summary>
+    /// <summary>
+    /// The ManagedIdentityAuthTypeWorkspaceConnectionProperties.
+    /// Serialized Name: ManagedIdentityAuthTypeWorkspaceConnectionProperties
+    /// </summary>
     public partial class ManagedIdentityAuthTypeWorkspaceConnectionProperties : WorkspaceConnectionPropertiesV2
     {
         /// <summary> Initializes a new instance of ManagedIdentityAuthTypeWorkspaceConnectionProperties. </summary>
@@ -17,19 +20,31 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of ManagedIdentityAuthTypeWorkspaceConnectionProperties. </summary>
-        /// <param name="authType"> Authentication type of the connection target. </param>
-        /// <param name="category"> Category of the connection. </param>
-        /// <param name="target"></param>
-        /// <param name="value"> Value details of the workspace connection. </param>
-        /// <param name="valueFormat"> format for the workspace connection value. </param>
-        /// <param name="credentials"></param>
+        /// <param name="authType">
+        /// Authentication type of the connection target
+        /// Serialized Name: WorkspaceConnectionPropertiesV2.authType
+        /// </param>
+        /// <param name="category">
+        /// Category of the connection
+        /// Serialized Name: WorkspaceConnectionPropertiesV2.category
+        /// </param>
+        /// <param name="target"> Serialized Name: WorkspaceConnectionPropertiesV2.target. </param>
+        /// <param name="value">
+        /// Value details of the workspace connection.
+        /// Serialized Name: WorkspaceConnectionPropertiesV2.value
+        /// </param>
+        /// <param name="valueFormat">
+        /// format for the workspace connection value
+        /// Serialized Name: WorkspaceConnectionPropertiesV2.valueFormat
+        /// </param>
+        /// <param name="credentials"> Serialized Name: ManagedIdentityAuthTypeWorkspaceConnectionProperties.credentials. </param>
         internal ManagedIdentityAuthTypeWorkspaceConnectionProperties(ConnectionAuthType authType, ConnectionCategory? category, string target, string value, ValueFormat? valueFormat, WorkspaceConnectionManagedIdentity credentials) : base(authType, category, target, value, valueFormat)
         {
             Credentials = credentials;
             AuthType = authType;
         }
 
-        /// <summary> Gets or sets the credentials. </summary>
+        /// <summary> Serialized Name: ManagedIdentityAuthTypeWorkspaceConnectionProperties.credentials. </summary>
         public WorkspaceConnectionManagedIdentity Credentials { get; set; }
     }
 }

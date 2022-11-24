@@ -18,7 +18,10 @@ namespace Azure.ResourceManager.MachineLearning
     {
         /// <summary> Initializes a new instance of OnlineEndpointData. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
+        /// <param name="properties">
+        /// [Required] Additional attributes of the entity.
+        /// Serialized Name: OnlineEndpoint.properties
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public OnlineEndpointData(AzureLocation location, OnlineEndpointProperties properties) : base(location)
         {
@@ -34,10 +37,22 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
-        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. </param>
-        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
-        /// <param name="sku"> Sku details required for ARM contract for Autoscaling. </param>
+        /// <param name="identity">
+        /// Managed service identity (system assigned and/or user assigned identities)
+        /// Serialized Name: OnlineEndpoint.identity
+        /// </param>
+        /// <param name="kind">
+        /// Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type.
+        /// Serialized Name: OnlineEndpoint.kind
+        /// </param>
+        /// <param name="properties">
+        /// [Required] Additional attributes of the entity.
+        /// Serialized Name: OnlineEndpoint.properties
+        /// </param>
+        /// <param name="sku">
+        /// Sku details required for ARM contract for Autoscaling.
+        /// Serialized Name: OnlineEndpoint.sku
+        /// </param>
         internal OnlineEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string kind, OnlineEndpointProperties properties, MachineLearningSku sku) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
@@ -46,13 +61,25 @@ namespace Azure.ResourceManager.MachineLearning
             Sku = sku;
         }
 
-        /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
+        /// <summary>
+        /// Managed service identity (system assigned and/or user assigned identities)
+        /// Serialized Name: OnlineEndpoint.identity
+        /// </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. </summary>
+        /// <summary>
+        /// Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type.
+        /// Serialized Name: OnlineEndpoint.kind
+        /// </summary>
         public string Kind { get; set; }
-        /// <summary> [Required] Additional attributes of the entity. </summary>
+        /// <summary>
+        /// [Required] Additional attributes of the entity.
+        /// Serialized Name: OnlineEndpoint.properties
+        /// </summary>
         public OnlineEndpointProperties Properties { get; set; }
-        /// <summary> Sku details required for ARM contract for Autoscaling. </summary>
+        /// <summary>
+        /// Sku details required for ARM contract for Autoscaling.
+        /// Serialized Name: OnlineEndpoint.sku
+        /// </summary>
         public MachineLearningSku Sku { get; set; }
     }
 }

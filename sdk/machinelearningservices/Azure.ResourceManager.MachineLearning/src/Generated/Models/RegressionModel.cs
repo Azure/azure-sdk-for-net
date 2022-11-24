@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Enum for all Regression models supported by AutoML. </summary>
+    /// <summary>
+    /// Enum for all Regression models supported by AutoML.
+    /// Serialized Name: RegressionModels
+    /// </summary>
     public readonly partial struct RegressionModel : IEquatable<RegressionModel>
     {
         private readonly string _value;
@@ -33,39 +36,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string LightGBMValue = "LightGBM";
         private const string XGBoostRegressorValue = "XGBoostRegressor";
 
-        /// <summary> Elastic net is a popular type of regularized linear regression that combines two popular penalties, specifically the L1 and L2 penalty functions. </summary>
+        /// <summary>
+        /// Elastic net is a popular type of regularized linear regression that combines two popular penalties, specifically the L1 and L2 penalty functions.
+        /// Serialized Name: RegressionModels.ElasticNet
+        /// </summary>
         public static RegressionModel ElasticNet { get; } = new RegressionModel(ElasticNetValue);
-        /// <summary> The technique of transiting week learners into a strong learner is called Boosting. The gradient boosting algorithm process works on this theory of execution. </summary>
+        /// <summary>
+        /// The technique of transiting week learners into a strong learner is called Boosting. The gradient boosting algorithm process works on this theory of execution.
+        /// Serialized Name: RegressionModels.GradientBoosting
+        /// </summary>
         public static RegressionModel GradientBoosting { get; } = new RegressionModel(GradientBoostingValue);
         /// <summary>
         /// Decision Trees are a non-parametric supervised learning method used for both classification and regression tasks.
         /// The goal is to create a model that predicts the value of a target variable by learning simple decision rules inferred from the data features.
+        /// Serialized Name: RegressionModels.DecisionTree
         /// </summary>
         public static RegressionModel DecisionTree { get; } = new RegressionModel(DecisionTreeValue);
         /// <summary>
         /// K-nearest neighbors (KNN) algorithm uses &apos;feature similarity&apos; to predict the values of new datapoints
         /// which further means that the new data point will be assigned a value based on how closely it matches the points in the training set.
+        /// Serialized Name: RegressionModels.KNN
         /// </summary>
         public static RegressionModel KNN { get; } = new RegressionModel(KNNValue);
-        /// <summary> Lasso model fit with Least Angle Regression a.k.a. Lars. It is a Linear Model trained with an L1 prior as regularizer. </summary>
+        /// <summary>
+        /// Lasso model fit with Least Angle Regression a.k.a. Lars. It is a Linear Model trained with an L1 prior as regularizer.
+        /// Serialized Name: RegressionModels.LassoLars
+        /// </summary>
         public static RegressionModel LassoLars { get; } = new RegressionModel(LassoLarsValue);
         /// <summary>
         /// SGD: Stochastic gradient descent is an optimization algorithm often used in machine learning applications
         /// to find the model parameters that correspond to the best fit between predicted and actual outputs.
         /// It&apos;s an inexact but powerful technique.
+        /// Serialized Name: RegressionModels.SGD
         /// </summary>
         public static RegressionModel SGD { get; } = new RegressionModel(SGDValue);
         /// <summary>
         /// Random forest is a supervised learning algorithm.
         /// The &quot;forest&quot; it builds, is an ensemble of decision trees, usually trained with the “bagging” method.
         /// The general idea of the bagging method is that a combination of learning models increases the overall result.
+        /// Serialized Name: RegressionModels.RandomForest
         /// </summary>
         public static RegressionModel RandomForest { get; } = new RegressionModel(RandomForestValue);
-        /// <summary> Extreme Trees is an ensemble machine learning algorithm that combines the predictions from many decision trees. It is related to the widely used random forest algorithm. </summary>
+        /// <summary>
+        /// Extreme Trees is an ensemble machine learning algorithm that combines the predictions from many decision trees. It is related to the widely used random forest algorithm.
+        /// Serialized Name: RegressionModels.ExtremeRandomTrees
+        /// </summary>
         public static RegressionModel ExtremeRandomTrees { get; } = new RegressionModel(ExtremeRandomTreesValue);
-        /// <summary> LightGBM is a gradient boosting framework that uses tree based learning algorithms. </summary>
+        /// <summary>
+        /// LightGBM is a gradient boosting framework that uses tree based learning algorithms.
+        /// Serialized Name: RegressionModels.LightGBM
+        /// </summary>
         public static RegressionModel LightGBM { get; } = new RegressionModel(LightGBMValue);
-        /// <summary> XGBoostRegressor: Extreme Gradient Boosting Regressor is a supervised machine learning model using ensemble of base learners. </summary>
+        /// <summary>
+        /// XGBoostRegressor: Extreme Gradient Boosting Regressor is a supervised machine learning model using ensemble of base learners.
+        /// Serialized Name: RegressionModels.XGBoostRegressor
+        /// </summary>
         public static RegressionModel XGBoostRegressor { get; } = new RegressionModel(XGBoostRegressorValue);
         /// <summary> Determines if two <see cref="RegressionModel"/> values are the same. </summary>
         public static bool operator ==(RegressionModel left, RegressionModel right) => left.Equals(right);

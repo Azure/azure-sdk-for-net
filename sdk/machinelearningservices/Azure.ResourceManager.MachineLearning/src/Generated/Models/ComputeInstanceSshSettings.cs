@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Specifies policy and settings for SSH access. </summary>
+    /// <summary>
+    /// Specifies policy and settings for SSH access.
+    /// Serialized Name: ComputeInstanceSshSettings
+    /// </summary>
     public partial class ComputeInstanceSshSettings
     {
         /// <summary> Initializes a new instance of ComputeInstanceSshSettings. </summary>
@@ -16,10 +19,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of ComputeInstanceSshSettings. </summary>
-        /// <param name="sshPublicAccess"> State of the public SSH port. Possible values are: Disabled - Indicates that the public ssh port is closed on this instance. Enabled - Indicates that the public ssh port is open and accessible according to the VNet/subnet policy if applicable. </param>
-        /// <param name="adminUserName"> Describes the admin user name. </param>
-        /// <param name="sshPort"> Describes the port for connecting through SSH. </param>
-        /// <param name="adminPublicKey"> Specifies the SSH rsa public key file as a string. Use &quot;ssh-keygen -t rsa -b 2048&quot; to generate your SSH key pairs. </param>
+        /// <param name="sshPublicAccess">
+        /// State of the public SSH port. Possible values are: Disabled - Indicates that the public ssh port is closed on this instance. Enabled - Indicates that the public ssh port is open and accessible according to the VNet/subnet policy if applicable.
+        /// Serialized Name: ComputeInstanceSshSettings.sshPublicAccess
+        /// </param>
+        /// <param name="adminUserName">
+        /// Describes the admin user name.
+        /// Serialized Name: ComputeInstanceSshSettings.adminUserName
+        /// </param>
+        /// <param name="sshPort">
+        /// Describes the port for connecting through SSH.
+        /// Serialized Name: ComputeInstanceSshSettings.sshPort
+        /// </param>
+        /// <param name="adminPublicKey">
+        /// Specifies the SSH rsa public key file as a string. Use &quot;ssh-keygen -t rsa -b 2048&quot; to generate your SSH key pairs.
+        /// Serialized Name: ComputeInstanceSshSettings.adminPublicKey
+        /// </param>
         internal ComputeInstanceSshSettings(SshPublicAccess? sshPublicAccess, string adminUserName, int? sshPort, string adminPublicKey)
         {
             SshPublicAccess = sshPublicAccess;
@@ -28,13 +43,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
             AdminPublicKey = adminPublicKey;
         }
 
-        /// <summary> State of the public SSH port. Possible values are: Disabled - Indicates that the public ssh port is closed on this instance. Enabled - Indicates that the public ssh port is open and accessible according to the VNet/subnet policy if applicable. </summary>
+        /// <summary>
+        /// State of the public SSH port. Possible values are: Disabled - Indicates that the public ssh port is closed on this instance. Enabled - Indicates that the public ssh port is open and accessible according to the VNet/subnet policy if applicable.
+        /// Serialized Name: ComputeInstanceSshSettings.sshPublicAccess
+        /// </summary>
         public SshPublicAccess? SshPublicAccess { get; set; }
-        /// <summary> Describes the admin user name. </summary>
+        /// <summary>
+        /// Describes the admin user name.
+        /// Serialized Name: ComputeInstanceSshSettings.adminUserName
+        /// </summary>
         public string AdminUserName { get; }
-        /// <summary> Describes the port for connecting through SSH. </summary>
+        /// <summary>
+        /// Describes the port for connecting through SSH.
+        /// Serialized Name: ComputeInstanceSshSettings.sshPort
+        /// </summary>
         public int? SshPort { get; }
-        /// <summary> Specifies the SSH rsa public key file as a string. Use &quot;ssh-keygen -t rsa -b 2048&quot; to generate your SSH key pairs. </summary>
+        /// <summary>
+        /// Specifies the SSH rsa public key file as a string. Use &quot;ssh-keygen -t rsa -b 2048&quot; to generate your SSH key pairs.
+        /// Serialized Name: ComputeInstanceSshSettings.adminPublicKey
+        /// </summary>
         public string AdminPublicKey { get; set; }
     }
 }

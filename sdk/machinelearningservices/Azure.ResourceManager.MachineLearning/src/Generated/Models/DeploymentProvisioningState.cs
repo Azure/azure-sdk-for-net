@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Possible values for DeploymentProvisioningState. </summary>
+    /// <summary>
+    /// Possible values for DeploymentProvisioningState.
+    /// Serialized Name: DeploymentProvisioningState
+    /// </summary>
     public readonly partial struct DeploymentProvisioningState : IEquatable<DeploymentProvisioningState>
     {
         private readonly string _value;
@@ -30,19 +33,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string FailedValue = "Failed";
         private const string CanceledValue = "Canceled";
 
-        /// <summary> Creating. </summary>
+        /// <summary>
+        /// Creating
+        /// Serialized Name: DeploymentProvisioningState.Creating
+        /// </summary>
         public static DeploymentProvisioningState Creating { get; } = new DeploymentProvisioningState(CreatingValue);
-        /// <summary> Deleting. </summary>
+        /// <summary>
+        /// Deleting
+        /// Serialized Name: DeploymentProvisioningState.Deleting
+        /// </summary>
         public static DeploymentProvisioningState Deleting { get; } = new DeploymentProvisioningState(DeletingValue);
-        /// <summary> Scaling. </summary>
+        /// <summary>
+        /// Scaling
+        /// Serialized Name: DeploymentProvisioningState.Scaling
+        /// </summary>
         public static DeploymentProvisioningState Scaling { get; } = new DeploymentProvisioningState(ScalingValue);
-        /// <summary> Updating. </summary>
+        /// <summary>
+        /// Updating
+        /// Serialized Name: DeploymentProvisioningState.Updating
+        /// </summary>
         public static DeploymentProvisioningState Updating { get; } = new DeploymentProvisioningState(UpdatingValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: DeploymentProvisioningState.Succeeded
+        /// </summary>
         public static DeploymentProvisioningState Succeeded { get; } = new DeploymentProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: DeploymentProvisioningState.Failed
+        /// </summary>
         public static DeploymentProvisioningState Failed { get; } = new DeploymentProvisioningState(FailedValue);
-        /// <summary> Canceled. </summary>
+        /// <summary>
+        /// Canceled
+        /// Serialized Name: DeploymentProvisioningState.Canceled
+        /// </summary>
         public static DeploymentProvisioningState Canceled { get; } = new DeploymentProvisioningState(CanceledValue);
         /// <summary> Determines if two <see cref="DeploymentProvisioningState"/> values are the same. </summary>
         public static bool operator ==(DeploymentProvisioningState left, DeploymentProvisioningState right) => left.Equals(right);

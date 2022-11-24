@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Status of update workspace quota. </summary>
+    /// <summary>
+    /// Status of update workspace quota.
+    /// Serialized Name: Status
+    /// </summary>
     public readonly partial struct Status : IEquatable<Status>
     {
         private readonly string _value;
@@ -31,21 +34,45 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string OperationNotSupportedForSkuValue = "OperationNotSupportedForSku";
         private const string OperationNotEnabledForRegionValue = "OperationNotEnabledForRegion";
 
-        /// <summary> Undefined. </summary>
+        /// <summary>
+        /// Undefined
+        /// Serialized Name: Status.Undefined
+        /// </summary>
         public static Status Undefined { get; } = new Status(UndefinedValue);
-        /// <summary> Success. </summary>
+        /// <summary>
+        /// Success
+        /// Serialized Name: Status.Success
+        /// </summary>
         public static Status Success { get; } = new Status(SuccessValue);
-        /// <summary> Failure. </summary>
+        /// <summary>
+        /// Failure
+        /// Serialized Name: Status.Failure
+        /// </summary>
         public static Status Failure { get; } = new Status(FailureValue);
-        /// <summary> InvalidQuotaBelowClusterMinimum. </summary>
+        /// <summary>
+        /// InvalidQuotaBelowClusterMinimum
+        /// Serialized Name: Status.InvalidQuotaBelowClusterMinimum
+        /// </summary>
         public static Status InvalidQuotaBelowClusterMinimum { get; } = new Status(InvalidQuotaBelowClusterMinimumValue);
-        /// <summary> InvalidQuotaExceedsSubscriptionLimit. </summary>
+        /// <summary>
+        /// InvalidQuotaExceedsSubscriptionLimit
+        /// Serialized Name: Status.InvalidQuotaExceedsSubscriptionLimit
+        /// </summary>
         public static Status InvalidQuotaExceedsSubscriptionLimit { get; } = new Status(InvalidQuotaExceedsSubscriptionLimitValue);
-        /// <summary> InvalidVMFamilyName. </summary>
+        /// <summary>
+        /// InvalidVMFamilyName
+        /// Serialized Name: Status.InvalidVMFamilyName
+        /// </summary>
         public static Status InvalidVmFamilyName { get; } = new Status(InvalidVmFamilyNameValue);
-        /// <summary> OperationNotSupportedForSku. </summary>
+        /// <summary>
+        /// OperationNotSupportedForSku
+        /// Serialized Name: Status.OperationNotSupportedForSku
+        /// </summary>
         public static Status OperationNotSupportedForSku { get; } = new Status(OperationNotSupportedForSkuValue);
-        /// <summary> OperationNotEnabledForRegion. </summary>
+        /// <summary>
+        /// OperationNotEnabledForRegion
+        /// Serialized Name: Status.OperationNotEnabledForRegion
+        /// </summary>
         public static Status OperationNotEnabledForRegion { get; } = new Status(OperationNotEnabledForRegionValue);
         /// <summary> Determines if two <see cref="Status"/> values are the same. </summary>
         public static bool operator ==(Status left, Status right) => left.Equals(right);

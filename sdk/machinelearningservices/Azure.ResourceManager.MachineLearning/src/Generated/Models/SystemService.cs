@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> A system service running on a compute. </summary>
+    /// <summary>
+    /// A system service running on a compute.
+    /// Serialized Name: SystemService
+    /// </summary>
     public partial class SystemService
     {
         /// <summary> Initializes a new instance of SystemService. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of SystemService. </summary>
-        /// <param name="systemServiceType"> The type of this system service. </param>
-        /// <param name="publicIPAddress"> Public IP address. </param>
-        /// <param name="version"> The version for this type. </param>
+        /// <param name="systemServiceType">
+        /// The type of this system service.
+        /// Serialized Name: SystemService.systemServiceType
+        /// </param>
+        /// <param name="publicIPAddress">
+        /// Public IP address
+        /// Serialized Name: SystemService.publicIpAddress
+        /// </param>
+        /// <param name="version">
+        /// The version for this type.
+        /// Serialized Name: SystemService.version
+        /// </param>
         internal SystemService(string systemServiceType, string publicIPAddress, string version)
         {
             SystemServiceType = systemServiceType;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Version = version;
         }
 
-        /// <summary> The type of this system service. </summary>
+        /// <summary>
+        /// The type of this system service.
+        /// Serialized Name: SystemService.systemServiceType
+        /// </summary>
         public string SystemServiceType { get; }
-        /// <summary> Public IP address. </summary>
+        /// <summary>
+        /// Public IP address
+        /// Serialized Name: SystemService.publicIpAddress
+        /// </summary>
         public string PublicIPAddress { get; }
-        /// <summary> The version for this type. </summary>
+        /// <summary>
+        /// The version for this type.
+        /// Serialized Name: SystemService.version
+        /// </summary>
         public string Version { get; }
     }
 }

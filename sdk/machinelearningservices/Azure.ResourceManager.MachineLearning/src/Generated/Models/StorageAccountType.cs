@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> type of this storage account. </summary>
+    /// <summary>
+    /// type of this storage account.
+    /// Serialized Name: StorageAccountType
+    /// </summary>
     public readonly partial struct StorageAccountType : IEquatable<StorageAccountType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string StandardLRSValue = "Standard_LRS";
         private const string PremiumLRSValue = "Premium_LRS";
 
-        /// <summary> Standard_LRS. </summary>
+        /// <summary>
+        /// Standard_LRS
+        /// Serialized Name: StorageAccountType.Standard_LRS
+        /// </summary>
         public static StorageAccountType StandardLRS { get; } = new StorageAccountType(StandardLRSValue);
-        /// <summary> Premium_LRS. </summary>
+        /// <summary>
+        /// Premium_LRS
+        /// Serialized Name: StorageAccountType.Premium_LRS
+        /// </summary>
         public static StorageAccountType PremiumLRS { get; } = new StorageAccountType(PremiumLRSValue);
         /// <summary> Determines if two <see cref="StorageAccountType"/> values are the same. </summary>
         public static bool operator ==(StorageAccountType left, StorageAccountType right) => left.Equals(right);

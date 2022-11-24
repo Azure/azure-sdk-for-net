@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Enable or disable ssl for scoring. </summary>
+    /// <summary>
+    /// Enable or disable ssl for scoring
+    /// Serialized Name: SslConfigStatus
+    /// </summary>
     public readonly partial struct SslConfigStatus : IEquatable<SslConfigStatus>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string EnabledValue = "Enabled";
         private const string AutoValue = "Auto";
 
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: SslConfigStatus.Disabled
+        /// </summary>
         public static SslConfigStatus Disabled { get; } = new SslConfigStatus(DisabledValue);
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: SslConfigStatus.Enabled
+        /// </summary>
         public static SslConfigStatus Enabled { get; } = new SslConfigStatus(EnabledValue);
-        /// <summary> Auto. </summary>
+        /// <summary>
+        /// Auto
+        /// Serialized Name: SslConfigStatus.Auto
+        /// </summary>
         public static SslConfigStatus Auto { get; } = new SslConfigStatus(AutoValue);
         /// <summary> Determines if two <see cref="SslConfigStatus"/> values are the same. </summary>
         public static bool operator ==(SslConfigStatus left, SslConfigStatus right) => left.Equals(right);

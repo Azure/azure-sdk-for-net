@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The DiagnoseRequestProperties. </summary>
+    /// <summary>
+    /// The DiagnoseRequestProperties.
+    /// Serialized Name: DiagnoseRequestProperties
+    /// </summary>
     public partial class DiagnoseRequestProperties
     {
         /// <summary> Initializes a new instance of DiagnoseRequestProperties. </summary>
@@ -30,6 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary>
         /// Setting for diagnosing user defined routing
+        /// Serialized Name: DiagnoseRequestProperties.udr
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -61,6 +65,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public IDictionary<string, BinaryData> Udr { get; }
         /// <summary>
         /// Setting for diagnosing network security group
+        /// Serialized Name: DiagnoseRequestProperties.nsg
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -92,6 +97,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public IDictionary<string, BinaryData> Nsg { get; }
         /// <summary>
         /// Setting for diagnosing resource lock
+        /// Serialized Name: DiagnoseRequestProperties.resourceLock
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -123,6 +129,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public IDictionary<string, BinaryData> ResourceLock { get; }
         /// <summary>
         /// Setting for diagnosing dns resolution
+        /// Serialized Name: DiagnoseRequestProperties.dnsResolution
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -154,6 +161,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public IDictionary<string, BinaryData> DnsResolution { get; }
         /// <summary>
         /// Setting for diagnosing dependent storage account
+        /// Serialized Name: DiagnoseRequestProperties.storageAccount
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -185,6 +193,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public IDictionary<string, BinaryData> StorageAccount { get; }
         /// <summary>
         /// Setting for diagnosing dependent key vault
+        /// Serialized Name: DiagnoseRequestProperties.keyVault
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -216,6 +225,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public IDictionary<string, BinaryData> KeyVault { get; }
         /// <summary>
         /// Setting for diagnosing dependent container registry
+        /// Serialized Name: DiagnoseRequestProperties.containerRegistry
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -247,6 +257,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public IDictionary<string, BinaryData> ContainerRegistry { get; }
         /// <summary>
         /// Setting for diagnosing dependent application insights
+        /// Serialized Name: DiagnoseRequestProperties.applicationInsights
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -278,6 +289,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public IDictionary<string, BinaryData> ApplicationInsights { get; }
         /// <summary>
         /// Setting for diagnosing unclassified category of problems
+        /// Serialized Name: DiagnoseRequestProperties.others
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

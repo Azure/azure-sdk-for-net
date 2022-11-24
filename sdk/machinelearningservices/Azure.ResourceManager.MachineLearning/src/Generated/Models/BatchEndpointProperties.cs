@@ -10,38 +10,70 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Batch endpoint configuration. </summary>
+    /// <summary>
+    /// Batch endpoint configuration.
+    /// Serialized Name: BatchEndpointProperties
+    /// </summary>
     public partial class BatchEndpointProperties : EndpointPropertiesBase
     {
         /// <summary> Initializes a new instance of BatchEndpointProperties. </summary>
-        /// <param name="authMode"> [Required] Use &apos;Key&apos; for key based authentication and &apos;AMLToken&apos; for Azure Machine Learning token-based authentication. &apos;Key&apos; doesn&apos;t expire but &apos;AMLToken&apos; does. </param>
+        /// <param name="authMode">
+        /// [Required] Use &apos;Key&apos; for key based authentication and &apos;AMLToken&apos; for Azure Machine Learning token-based authentication. &apos;Key&apos; doesn&apos;t expire but &apos;AMLToken&apos; does.
+        /// Serialized Name: EndpointPropertiesBase.authMode
+        /// </param>
         public BatchEndpointProperties(EndpointAuthMode authMode) : base(authMode)
         {
         }
 
         /// <summary> Initializes a new instance of BatchEndpointProperties. </summary>
-        /// <param name="authMode"> [Required] Use &apos;Key&apos; for key based authentication and &apos;AMLToken&apos; for Azure Machine Learning token-based authentication. &apos;Key&apos; doesn&apos;t expire but &apos;AMLToken&apos; does. </param>
-        /// <param name="description"> Description of the inference endpoint. </param>
+        /// <param name="authMode">
+        /// [Required] Use &apos;Key&apos; for key based authentication and &apos;AMLToken&apos; for Azure Machine Learning token-based authentication. &apos;Key&apos; doesn&apos;t expire but &apos;AMLToken&apos; does.
+        /// Serialized Name: EndpointPropertiesBase.authMode
+        /// </param>
+        /// <param name="description">
+        /// Description of the inference endpoint.
+        /// Serialized Name: EndpointPropertiesBase.description
+        /// </param>
         /// <param name="keys">
         /// EndpointAuthKeys to set initially on an Endpoint.
         /// This property will always be returned as null. AuthKey values must be retrieved using the ListKeys API.
+        /// Serialized Name: EndpointPropertiesBase.keys
         /// </param>
-        /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
-        /// <param name="scoringUri"> Endpoint URI. </param>
-        /// <param name="swaggerUri"> Endpoint Swagger URI. </param>
-        /// <param name="defaults"> Default values for Batch Endpoint. </param>
-        /// <param name="provisioningState"> Provisioning state for the endpoint. </param>
+        /// <param name="properties">
+        /// Property dictionary. Properties can be added, but not removed or altered.
+        /// Serialized Name: EndpointPropertiesBase.properties
+        /// </param>
+        /// <param name="scoringUri">
+        /// Endpoint URI.
+        /// Serialized Name: EndpointPropertiesBase.scoringUri
+        /// </param>
+        /// <param name="swaggerUri">
+        /// Endpoint Swagger URI.
+        /// Serialized Name: EndpointPropertiesBase.swaggerUri
+        /// </param>
+        /// <param name="defaults">
+        /// Default values for Batch Endpoint
+        /// Serialized Name: BatchEndpointProperties.defaults
+        /// </param>
+        /// <param name="provisioningState">
+        /// Provisioning state for the endpoint.
+        /// Serialized Name: BatchEndpointProperties.provisioningState
+        /// </param>
         internal BatchEndpointProperties(EndpointAuthMode authMode, string description, EndpointAuthKeys keys, IDictionary<string, string> properties, Uri scoringUri, Uri swaggerUri, BatchEndpointDefaults defaults, EndpointProvisioningState? provisioningState) : base(authMode, description, keys, properties, scoringUri, swaggerUri)
         {
             Defaults = defaults;
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> Default values for Batch Endpoint. </summary>
+        /// <summary>
+        /// Default values for Batch Endpoint
+        /// Serialized Name: BatchEndpointProperties.defaults
+        /// </summary>
         internal BatchEndpointDefaults Defaults { get; set; }
         /// <summary>
         /// Name of the deployment that will be default for the endpoint.
         /// This deployment will end up getting 100% traffic when the endpoint scoring URL is invoked.
+        /// Serialized Name: BatchEndpointDefaults.deploymentName
         /// </summary>
         public string DefaultsDeploymentName
         {
@@ -54,7 +86,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
         }
 
-        /// <summary> Provisioning state for the endpoint. </summary>
+        /// <summary>
+        /// Provisioning state for the endpoint.
+        /// Serialized Name: BatchEndpointProperties.provisioningState
+        /// </summary>
         public EndpointProvisioningState? ProvisioningState { get; }
     }
 }

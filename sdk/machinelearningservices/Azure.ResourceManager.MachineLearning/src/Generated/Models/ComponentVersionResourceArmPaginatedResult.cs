@@ -11,7 +11,10 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> A paginated list of ComponentVersion entities. </summary>
+    /// <summary>
+    /// A paginated list of ComponentVersion entities.
+    /// Serialized Name: ComponentVersionResourceArmPaginatedResult
+    /// </summary>
     internal partial class ComponentVersionResourceArmPaginatedResult
     {
         /// <summary> Initializes a new instance of ComponentVersionResourceArmPaginatedResult. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of ComponentVersionResourceArmPaginatedResult. </summary>
-        /// <param name="nextLink"> The link to the next page of ComponentVersion objects. If null, there are no additional pages. </param>
-        /// <param name="value"> An array of objects of type ComponentVersion. </param>
+        /// <param name="nextLink">
+        /// The link to the next page of ComponentVersion objects. If null, there are no additional pages.
+        /// Serialized Name: ComponentVersionResourceArmPaginatedResult.nextLink
+        /// </param>
+        /// <param name="value">
+        /// An array of objects of type ComponentVersion.
+        /// Serialized Name: ComponentVersionResourceArmPaginatedResult.value
+        /// </param>
         internal ComponentVersionResourceArmPaginatedResult(string nextLink, IReadOnlyList<ComponentVersionData> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
-        /// <summary> The link to the next page of ComponentVersion objects. If null, there are no additional pages. </summary>
+        /// <summary>
+        /// The link to the next page of ComponentVersion objects. If null, there are no additional pages.
+        /// Serialized Name: ComponentVersionResourceArmPaginatedResult.nextLink
+        /// </summary>
         public string NextLink { get; }
-        /// <summary> An array of objects of type ComponentVersion. </summary>
+        /// <summary>
+        /// An array of objects of type ComponentVersion.
+        /// Serialized Name: ComponentVersionResourceArmPaginatedResult.value
+        /// </summary>
         public IReadOnlyList<ComponentVersionData> Value { get; }
     }
 }

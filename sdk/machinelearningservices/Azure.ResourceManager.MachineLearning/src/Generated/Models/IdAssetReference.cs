@@ -10,11 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Reference to an asset via its ARM resource ID. </summary>
+    /// <summary>
+    /// Reference to an asset via its ARM resource ID.
+    /// Serialized Name: IdAssetReference
+    /// </summary>
     public partial class IdAssetReference : AssetReferenceBase
     {
         /// <summary> Initializes a new instance of IdAssetReference. </summary>
-        /// <param name="assetId"> [Required] ARM resource ID of the asset. </param>
+        /// <param name="assetId">
+        /// [Required] ARM resource ID of the asset.
+        /// Serialized Name: IdAssetReference.assetId
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assetId"/> is null. </exception>
         public IdAssetReference(string assetId)
         {
@@ -25,15 +31,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of IdAssetReference. </summary>
-        /// <param name="referenceType"> [Required] Specifies the type of asset reference. </param>
-        /// <param name="assetId"> [Required] ARM resource ID of the asset. </param>
+        /// <param name="referenceType">
+        /// [Required] Specifies the type of asset reference.
+        /// Serialized Name: AssetReferenceBase.referenceType
+        /// </param>
+        /// <param name="assetId">
+        /// [Required] ARM resource ID of the asset.
+        /// Serialized Name: IdAssetReference.assetId
+        /// </param>
         internal IdAssetReference(ReferenceType referenceType, string assetId) : base(referenceType)
         {
             AssetId = assetId;
             ReferenceType = referenceType;
         }
 
-        /// <summary> [Required] ARM resource ID of the asset. </summary>
+        /// <summary>
+        /// [Required] ARM resource ID of the asset.
+        /// Serialized Name: IdAssetReference.assetId
+        /// </summary>
         public string AssetId { get; set; }
     }
 }

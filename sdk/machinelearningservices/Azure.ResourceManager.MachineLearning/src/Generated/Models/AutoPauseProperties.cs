@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Auto pause properties. </summary>
+    /// <summary>
+    /// Auto pause properties
+    /// Serialized Name: AutoPauseProperties
+    /// </summary>
     public partial class AutoPauseProperties
     {
         /// <summary> Initializes a new instance of AutoPauseProperties. </summary>
@@ -16,17 +19,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of AutoPauseProperties. </summary>
-        /// <param name="delayInMinutes"></param>
-        /// <param name="enabled"></param>
+        /// <param name="delayInMinutes"> Serialized Name: AutoPauseProperties.delayInMinutes. </param>
+        /// <param name="enabled"> Serialized Name: AutoPauseProperties.enabled. </param>
         internal AutoPauseProperties(int? delayInMinutes, bool? enabled)
         {
             DelayInMinutes = delayInMinutes;
             Enabled = enabled;
         }
 
-        /// <summary> Gets or sets the delay in minutes. </summary>
+        /// <summary> Serialized Name: AutoPauseProperties.delayInMinutes. </summary>
         public int? DelayInMinutes { get; set; }
-        /// <summary> Gets or sets the enabled. </summary>
+        /// <summary> Serialized Name: AutoPauseProperties.enabled. </summary>
         public bool? Enabled { get; set; }
     }
 }

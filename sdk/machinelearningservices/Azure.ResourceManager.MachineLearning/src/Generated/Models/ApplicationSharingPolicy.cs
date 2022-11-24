@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Policy for sharing applications on this compute instance among users of parent workspace. If Personal, only the creator can access applications on this compute instance. When Shared, any workspace user can access applications on this instance depending on his/her assigned role. </summary>
+    /// <summary>
+    /// Policy for sharing applications on this compute instance among users of parent workspace. If Personal, only the creator can access applications on this compute instance. When Shared, any workspace user can access applications on this instance depending on his/her assigned role.
+    /// Serialized Name: ApplicationSharingPolicy
+    /// </summary>
     public readonly partial struct ApplicationSharingPolicy : IEquatable<ApplicationSharingPolicy>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string PersonalValue = "Personal";
         private const string SharedValue = "Shared";
 
-        /// <summary> Personal. </summary>
+        /// <summary>
+        /// Personal
+        /// Serialized Name: ApplicationSharingPolicy.Personal
+        /// </summary>
         public static ApplicationSharingPolicy Personal { get; } = new ApplicationSharingPolicy(PersonalValue);
-        /// <summary> Shared. </summary>
+        /// <summary>
+        /// Shared
+        /// Serialized Name: ApplicationSharingPolicy.Shared
+        /// </summary>
         public static ApplicationSharingPolicy Shared { get; } = new ApplicationSharingPolicy(SharedValue);
         /// <summary> Determines if two <see cref="ApplicationSharingPolicy"/> values are the same. </summary>
         public static bool operator ==(ApplicationSharingPolicy left, ApplicationSharingPolicy right) => left.Equals(right);

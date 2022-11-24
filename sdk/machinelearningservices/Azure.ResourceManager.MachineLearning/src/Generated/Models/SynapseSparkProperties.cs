@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The SynapseSparkProperties. </summary>
+    /// <summary>
+    /// The SynapseSparkProperties.
+    /// Serialized Name: SynapseSparkProperties
+    /// </summary>
     public partial class SynapseSparkProperties
     {
         /// <summary> Initializes a new instance of SynapseSparkProperties. </summary>
@@ -16,16 +19,46 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of SynapseSparkProperties. </summary>
-        /// <param name="autoScaleProperties"> Auto scale properties. </param>
-        /// <param name="autoPauseProperties"> Auto pause properties. </param>
-        /// <param name="sparkVersion"> Spark version. </param>
-        /// <param name="nodeCount"> The number of compute nodes currently assigned to the compute. </param>
-        /// <param name="nodeSize"> Node size. </param>
-        /// <param name="nodeSizeFamily"> Node size family. </param>
-        /// <param name="subscriptionId"> Azure subscription identifier. </param>
-        /// <param name="resourceGroup"> Name of the resource group in which workspace is located. </param>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
-        /// <param name="poolName"> Pool name. </param>
+        /// <param name="autoScaleProperties">
+        /// Auto scale properties.
+        /// Serialized Name: SynapseSparkProperties.autoScaleProperties
+        /// </param>
+        /// <param name="autoPauseProperties">
+        /// Auto pause properties.
+        /// Serialized Name: SynapseSparkProperties.autoPauseProperties
+        /// </param>
+        /// <param name="sparkVersion">
+        /// Spark version.
+        /// Serialized Name: SynapseSparkProperties.sparkVersion
+        /// </param>
+        /// <param name="nodeCount">
+        /// The number of compute nodes currently assigned to the compute.
+        /// Serialized Name: SynapseSparkProperties.nodeCount
+        /// </param>
+        /// <param name="nodeSize">
+        /// Node size.
+        /// Serialized Name: SynapseSparkProperties.nodeSize
+        /// </param>
+        /// <param name="nodeSizeFamily">
+        /// Node size family.
+        /// Serialized Name: SynapseSparkProperties.nodeSizeFamily
+        /// </param>
+        /// <param name="subscriptionId">
+        /// Azure subscription identifier.
+        /// Serialized Name: SynapseSparkProperties.subscriptionId
+        /// </param>
+        /// <param name="resourceGroup">
+        /// Name of the resource group in which workspace is located.
+        /// Serialized Name: SynapseSparkProperties.resourceGroup
+        /// </param>
+        /// <param name="workspaceName">
+        /// Name of Azure Machine Learning workspace.
+        /// Serialized Name: SynapseSparkProperties.workspaceName
+        /// </param>
+        /// <param name="poolName">
+        /// Pool name.
+        /// Serialized Name: SynapseSparkProperties.poolName
+        /// </param>
         internal SynapseSparkProperties(AutoScaleProperties autoScaleProperties, AutoPauseProperties autoPauseProperties, string sparkVersion, int? nodeCount, string nodeSize, string nodeSizeFamily, string subscriptionId, string resourceGroup, string workspaceName, string poolName)
         {
             AutoScaleProperties = autoScaleProperties;
@@ -40,25 +73,55 @@ namespace Azure.ResourceManager.MachineLearning.Models
             PoolName = poolName;
         }
 
-        /// <summary> Auto scale properties. </summary>
+        /// <summary>
+        /// Auto scale properties.
+        /// Serialized Name: SynapseSparkProperties.autoScaleProperties
+        /// </summary>
         public AutoScaleProperties AutoScaleProperties { get; set; }
-        /// <summary> Auto pause properties. </summary>
+        /// <summary>
+        /// Auto pause properties.
+        /// Serialized Name: SynapseSparkProperties.autoPauseProperties
+        /// </summary>
         public AutoPauseProperties AutoPauseProperties { get; set; }
-        /// <summary> Spark version. </summary>
+        /// <summary>
+        /// Spark version.
+        /// Serialized Name: SynapseSparkProperties.sparkVersion
+        /// </summary>
         public string SparkVersion { get; set; }
-        /// <summary> The number of compute nodes currently assigned to the compute. </summary>
+        /// <summary>
+        /// The number of compute nodes currently assigned to the compute.
+        /// Serialized Name: SynapseSparkProperties.nodeCount
+        /// </summary>
         public int? NodeCount { get; set; }
-        /// <summary> Node size. </summary>
+        /// <summary>
+        /// Node size.
+        /// Serialized Name: SynapseSparkProperties.nodeSize
+        /// </summary>
         public string NodeSize { get; set; }
-        /// <summary> Node size family. </summary>
+        /// <summary>
+        /// Node size family.
+        /// Serialized Name: SynapseSparkProperties.nodeSizeFamily
+        /// </summary>
         public string NodeSizeFamily { get; set; }
-        /// <summary> Azure subscription identifier. </summary>
+        /// <summary>
+        /// Azure subscription identifier.
+        /// Serialized Name: SynapseSparkProperties.subscriptionId
+        /// </summary>
         public string SubscriptionId { get; set; }
-        /// <summary> Name of the resource group in which workspace is located. </summary>
+        /// <summary>
+        /// Name of the resource group in which workspace is located.
+        /// Serialized Name: SynapseSparkProperties.resourceGroup
+        /// </summary>
         public string ResourceGroup { get; set; }
-        /// <summary> Name of Azure Machine Learning workspace. </summary>
+        /// <summary>
+        /// Name of Azure Machine Learning workspace.
+        /// Serialized Name: SynapseSparkProperties.workspaceName
+        /// </summary>
         public string WorkspaceName { get; set; }
-        /// <summary> Pool name. </summary>
+        /// <summary>
+        /// Pool name.
+        /// Serialized Name: SynapseSparkProperties.poolName
+        /// </summary>
         public string PoolName { get; set; }
     }
 }

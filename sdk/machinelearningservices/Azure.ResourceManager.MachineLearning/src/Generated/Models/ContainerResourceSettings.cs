@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The ContainerResourceSettings. </summary>
+    /// <summary>
+    /// The ContainerResourceSettings.
+    /// Serialized Name: ContainerResourceSettings
+    /// </summary>
     public partial class ContainerResourceSettings
     {
         /// <summary> Initializes a new instance of ContainerResourceSettings. </summary>
@@ -19,14 +22,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="cpu">
         /// Number of vCPUs request/limit for container. More info:
         /// https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        /// Serialized Name: ContainerResourceSettings.cpu
         /// </param>
         /// <param name="gpu">
         /// Number of Nvidia GPU cards request/limit for container. More info:
         /// https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        /// Serialized Name: ContainerResourceSettings.gpu
         /// </param>
         /// <param name="memory">
         /// Memory size request/limit for container. More info:
         /// https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        /// Serialized Name: ContainerResourceSettings.memory
         /// </param>
         internal ContainerResourceSettings(string cpu, string gpu, string memory)
         {
@@ -38,16 +44,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary>
         /// Number of vCPUs request/limit for container. More info:
         /// https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        /// Serialized Name: ContainerResourceSettings.cpu
         /// </summary>
         public string Cpu { get; set; }
         /// <summary>
         /// Number of Nvidia GPU cards request/limit for container. More info:
         /// https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        /// Serialized Name: ContainerResourceSettings.gpu
         /// </summary>
         public string Gpu { get; set; }
         /// <summary>
         /// Memory size request/limit for container. More info:
         /// https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        /// Serialized Name: ContainerResourceSettings.memory
         /// </summary>
         public string Memory { get; set; }
     }

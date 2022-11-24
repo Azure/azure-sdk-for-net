@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The MLFlowModelJobOutput. </summary>
+    /// <summary>
+    /// The MLFlowModelJobOutput.
+    /// Serialized Name: MLFlowModelJobOutput
+    /// </summary>
     public partial class MLFlowModelJobOutput : JobOutput
     {
         /// <summary> Initializes a new instance of MLFlowModelJobOutput. </summary>
@@ -19,10 +22,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MLFlowModelJobOutput. </summary>
-        /// <param name="description"> Description for the output. </param>
-        /// <param name="jobOutputType"> [Required] Specifies the type of job. </param>
-        /// <param name="mode"> Output Asset Delivery Mode. </param>
-        /// <param name="uri"> Output Asset URI. </param>
+        /// <param name="description">
+        /// Description for the output.
+        /// Serialized Name: JobOutput.description
+        /// </param>
+        /// <param name="jobOutputType">
+        /// [Required] Specifies the type of job.
+        /// Serialized Name: JobOutput.jobOutputType
+        /// </param>
+        /// <param name="mode">
+        /// Output Asset Delivery Mode.
+        /// Serialized Name: AssetJobOutput.mode
+        /// </param>
+        /// <param name="uri">
+        /// Output Asset URI.
+        /// Serialized Name: AssetJobOutput.uri
+        /// </param>
         internal MLFlowModelJobOutput(string description, JobOutputType jobOutputType, OutputDeliveryMode? mode, Uri uri) : base(description, jobOutputType)
         {
             Mode = mode;
@@ -30,9 +45,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             JobOutputType = jobOutputType;
         }
 
-        /// <summary> Output Asset Delivery Mode. </summary>
+        /// <summary>
+        /// Output Asset Delivery Mode.
+        /// Serialized Name: AssetJobOutput.mode
+        /// </summary>
         public OutputDeliveryMode? Mode { get; set; }
-        /// <summary> Output Asset URI. </summary>
+        /// <summary>
+        /// Output Asset URI.
+        /// Serialized Name: AssetJobOutput.uri
+        /// </summary>
         public Uri Uri { get; set; }
     }
 }

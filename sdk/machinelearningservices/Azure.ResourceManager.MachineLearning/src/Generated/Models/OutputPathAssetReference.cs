@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Reference to an asset via its path in a job output. </summary>
+    /// <summary>
+    /// Reference to an asset via its path in a job output.
+    /// Serialized Name: OutputPathAssetReference
+    /// </summary>
     public partial class OutputPathAssetReference : AssetReferenceBase
     {
         /// <summary> Initializes a new instance of OutputPathAssetReference. </summary>
@@ -17,9 +20,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of OutputPathAssetReference. </summary>
-        /// <param name="referenceType"> [Required] Specifies the type of asset reference. </param>
-        /// <param name="jobId"> ARM resource ID of the job. </param>
-        /// <param name="path"> The path of the file/directory in the job output. </param>
+        /// <param name="referenceType">
+        /// [Required] Specifies the type of asset reference.
+        /// Serialized Name: AssetReferenceBase.referenceType
+        /// </param>
+        /// <param name="jobId">
+        /// ARM resource ID of the job.
+        /// Serialized Name: OutputPathAssetReference.jobId
+        /// </param>
+        /// <param name="path">
+        /// The path of the file/directory in the job output.
+        /// Serialized Name: OutputPathAssetReference.path
+        /// </param>
         internal OutputPathAssetReference(ReferenceType referenceType, string jobId, string path) : base(referenceType)
         {
             JobId = jobId;
@@ -27,9 +39,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ReferenceType = referenceType;
         }
 
-        /// <summary> ARM resource ID of the job. </summary>
+        /// <summary>
+        /// ARM resource ID of the job.
+        /// Serialized Name: OutputPathAssetReference.jobId
+        /// </summary>
         public string JobId { get; set; }
-        /// <summary> The path of the file/directory in the job output. </summary>
+        /// <summary>
+        /// The path of the file/directory in the job output.
+        /// Serialized Name: OutputPathAssetReference.path
+        /// </summary>
         public string Path { get; set; }
     }
 }

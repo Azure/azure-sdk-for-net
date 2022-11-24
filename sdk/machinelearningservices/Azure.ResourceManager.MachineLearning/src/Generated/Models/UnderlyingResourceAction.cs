@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnderlyingResourceAction. </summary>
+    /// <summary>
+    /// The UnderlyingResourceAction.
+    /// Serialized Name: UnderlyingResourceAction
+    /// </summary>
     public readonly partial struct UnderlyingResourceAction : IEquatable<UnderlyingResourceAction>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string DeleteValue = "Delete";
         private const string DetachValue = "Detach";
 
-        /// <summary> Delete. </summary>
+        /// <summary>
+        /// Delete
+        /// Serialized Name: UnderlyingResourceAction.Delete
+        /// </summary>
         public static UnderlyingResourceAction Delete { get; } = new UnderlyingResourceAction(DeleteValue);
-        /// <summary> Detach. </summary>
+        /// <summary>
+        /// Detach
+        /// Serialized Name: UnderlyingResourceAction.Detach
+        /// </summary>
         public static UnderlyingResourceAction Detach { get; } = new UnderlyingResourceAction(DetachValue);
         /// <summary> Determines if two <see cref="UnderlyingResourceAction"/> values are the same. </summary>
         public static bool operator ==(UnderlyingResourceAction left, UnderlyingResourceAction right) => left.Equals(right);

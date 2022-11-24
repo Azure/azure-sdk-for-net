@@ -11,18 +11,31 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Sweep job definition. </summary>
+    /// <summary>
+    /// Sweep job definition.
+    /// Serialized Name: SweepJob
+    /// </summary>
     public partial class SweepJob : MachineLearningJobProperties
     {
         /// <summary> Initializes a new instance of SweepJob. </summary>
-        /// <param name="objective"> [Required] Optimization objective. </param>
+        /// <param name="objective">
+        /// [Required] Optimization objective.
+        /// Serialized Name: SweepJob.objective
+        /// </param>
         /// <param name="samplingAlgorithm">
         /// [Required] The hyperparameter sampling algorithm
+        /// Serialized Name: SweepJob.samplingAlgorithm
         /// Please note <see cref="SamplingAlgorithm"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BayesianSamplingAlgorithm"/>, <see cref="GridSamplingAlgorithm"/> and <see cref="RandomSamplingAlgorithm"/>.
         /// </param>
-        /// <param name="searchSpace"> [Required] A dictionary containing each parameter and its distribution. The dictionary key is the name of the parameter. </param>
-        /// <param name="trial"> [Required] Trial component definition. </param>
+        /// <param name="searchSpace">
+        /// [Required] A dictionary containing each parameter and its distribution. The dictionary key is the name of the parameter
+        /// Serialized Name: SweepJob.searchSpace
+        /// </param>
+        /// <param name="trial">
+        /// [Required] Trial component definition.
+        /// Serialized Name: SweepJob.trial
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="objective"/>, <paramref name="samplingAlgorithm"/>, <paramref name="searchSpace"/> or <paramref name="trial"/> is null. </exception>
         public SweepJob(Objective objective, SamplingAlgorithm samplingAlgorithm, BinaryData searchSpace, TrialComponent trial)
         {
@@ -41,50 +54,98 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of SweepJob. </summary>
-        /// <param name="description"> The asset description text. </param>
-        /// <param name="properties"> The asset property dictionary. </param>
-        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <param name="componentId"> ARM resource ID of the component resource. </param>
-        /// <param name="computeId"> ARM resource ID of the compute resource. </param>
-        /// <param name="displayName"> Display name of job. </param>
-        /// <param name="experimentName"> The name of the experiment the job belongs to. If not set, the job is placed in the &quot;Default&quot; experiment. </param>
+        /// <param name="description">
+        /// The asset description text.
+        /// Serialized Name: ResourceBase.description
+        /// </param>
+        /// <param name="properties">
+        /// The asset property dictionary.
+        /// Serialized Name: ResourceBase.properties
+        /// </param>
+        /// <param name="tags">
+        /// Tag dictionary. Tags can be added, removed, and updated.
+        /// Serialized Name: ResourceBase.tags
+        /// </param>
+        /// <param name="componentId">
+        /// ARM resource ID of the component resource.
+        /// Serialized Name: MachineLearningJobProperties.componentId
+        /// </param>
+        /// <param name="computeId">
+        /// ARM resource ID of the compute resource.
+        /// Serialized Name: MachineLearningJobProperties.computeId
+        /// </param>
+        /// <param name="displayName">
+        /// Display name of job.
+        /// Serialized Name: MachineLearningJobProperties.displayName
+        /// </param>
+        /// <param name="experimentName">
+        /// The name of the experiment the job belongs to. If not set, the job is placed in the &quot;Default&quot; experiment.
+        /// Serialized Name: MachineLearningJobProperties.experimentName
+        /// </param>
         /// <param name="identity">
         /// Identity configuration. If set, this should be one of AmlToken, ManagedIdentity, UserIdentity or null.
         /// Defaults to AmlToken if null.
+        /// Serialized Name: MachineLearningJobProperties.identity
         /// Please note <see cref="IdentityConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AmlToken"/>, <see cref="ManagedIdentity"/> and <see cref="UserIdentity"/>.
         /// </param>
-        /// <param name="isArchived"> Is the asset archived?. </param>
-        /// <param name="jobType"> [Required] Specifies the type of job. </param>
+        /// <param name="isArchived">
+        /// Is the asset archived?
+        /// Serialized Name: MachineLearningJobProperties.isArchived
+        /// </param>
+        /// <param name="jobType">
+        /// [Required] Specifies the type of job.
+        /// Serialized Name: MachineLearningJobProperties.jobType
+        /// </param>
         /// <param name="services">
         /// List of JobEndpoints.
         /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
+        /// Serialized Name: MachineLearningJobProperties.services
         /// </param>
-        /// <param name="status"> Status of the job. </param>
+        /// <param name="status">
+        /// Status of the job.
+        /// Serialized Name: MachineLearningJobProperties.status
+        /// </param>
         /// <param name="earlyTermination">
         /// Early termination policies enable canceling poor-performing runs before they complete
+        /// Serialized Name: SweepJob.earlyTermination
         /// Please note <see cref="EarlyTerminationPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BanditPolicy"/>, <see cref="MedianStoppingPolicy"/> and <see cref="TruncationSelectionPolicy"/>.
         /// </param>
         /// <param name="inputs">
         /// Mapping of input data bindings used in the job.
+        /// Serialized Name: SweepJob.inputs
         /// Please note <see cref="JobInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="CustomModelJobInput"/>, <see cref="LiteralJobInput"/>, <see cref="MLFlowModelJobInput"/>, <see cref="MLTableJobInput"/>, <see cref="TritonModelJobInput"/>, <see cref="UriFileJobInput"/> and <see cref="UriFolderJobInput"/>.
         /// </param>
-        /// <param name="limits"> Sweep Job limit. </param>
-        /// <param name="objective"> [Required] Optimization objective. </param>
+        /// <param name="limits">
+        /// Sweep Job limit.
+        /// Serialized Name: SweepJob.limits
+        /// </param>
+        /// <param name="objective">
+        /// [Required] Optimization objective.
+        /// Serialized Name: SweepJob.objective
+        /// </param>
         /// <param name="outputs">
         /// Mapping of output data bindings used in the job.
+        /// Serialized Name: SweepJob.outputs
         /// Please note <see cref="JobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="CustomModelJobOutput"/>, <see cref="MLFlowModelJobOutput"/>, <see cref="MLTableJobOutput"/>, <see cref="TritonModelJobOutput"/>, <see cref="UriFileJobOutput"/> and <see cref="UriFolderJobOutput"/>.
         /// </param>
         /// <param name="samplingAlgorithm">
         /// [Required] The hyperparameter sampling algorithm
+        /// Serialized Name: SweepJob.samplingAlgorithm
         /// Please note <see cref="SamplingAlgorithm"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BayesianSamplingAlgorithm"/>, <see cref="GridSamplingAlgorithm"/> and <see cref="RandomSamplingAlgorithm"/>.
         /// </param>
-        /// <param name="searchSpace"> [Required] A dictionary containing each parameter and its distribution. The dictionary key is the name of the parameter. </param>
-        /// <param name="trial"> [Required] Trial component definition. </param>
+        /// <param name="searchSpace">
+        /// [Required] A dictionary containing each parameter and its distribution. The dictionary key is the name of the parameter
+        /// Serialized Name: SweepJob.searchSpace
+        /// </param>
+        /// <param name="trial">
+        /// [Required] Trial component definition.
+        /// Serialized Name: SweepJob.trial
+        /// </param>
         internal SweepJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, string componentId, string computeId, string displayName, string experimentName, IdentityConfiguration identity, bool? isArchived, JobType jobType, IDictionary<string, JobService> services, JobStatus? status, EarlyTerminationPolicy earlyTermination, IDictionary<string, JobInput> inputs, SweepJobLimits limits, Objective objective, IDictionary<string, JobOutput> outputs, SamplingAlgorithm samplingAlgorithm, BinaryData searchSpace, TrialComponent trial) : base(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, services, status)
         {
             EarlyTermination = earlyTermination;
@@ -100,34 +161,45 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary>
         /// Early termination policies enable canceling poor-performing runs before they complete
+        /// Serialized Name: SweepJob.earlyTermination
         /// Please note <see cref="EarlyTerminationPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BanditPolicy"/>, <see cref="MedianStoppingPolicy"/> and <see cref="TruncationSelectionPolicy"/>.
         /// </summary>
         public EarlyTerminationPolicy EarlyTermination { get; set; }
         /// <summary>
         /// Mapping of input data bindings used in the job.
+        /// Serialized Name: SweepJob.inputs
         /// Please note <see cref="JobInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="CustomModelJobInput"/>, <see cref="LiteralJobInput"/>, <see cref="MLFlowModelJobInput"/>, <see cref="MLTableJobInput"/>, <see cref="TritonModelJobInput"/>, <see cref="UriFileJobInput"/> and <see cref="UriFolderJobInput"/>.
         /// </summary>
         public IDictionary<string, JobInput> Inputs { get; set; }
-        /// <summary> Sweep Job limit. </summary>
+        /// <summary>
+        /// Sweep Job limit.
+        /// Serialized Name: SweepJob.limits
+        /// </summary>
         public SweepJobLimits Limits { get; set; }
-        /// <summary> [Required] Optimization objective. </summary>
+        /// <summary>
+        /// [Required] Optimization objective.
+        /// Serialized Name: SweepJob.objective
+        /// </summary>
         public Objective Objective { get; set; }
         /// <summary>
         /// Mapping of output data bindings used in the job.
+        /// Serialized Name: SweepJob.outputs
         /// Please note <see cref="JobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="CustomModelJobOutput"/>, <see cref="MLFlowModelJobOutput"/>, <see cref="MLTableJobOutput"/>, <see cref="TritonModelJobOutput"/>, <see cref="UriFileJobOutput"/> and <see cref="UriFolderJobOutput"/>.
         /// </summary>
         public IDictionary<string, JobOutput> Outputs { get; set; }
         /// <summary>
         /// [Required] The hyperparameter sampling algorithm
+        /// Serialized Name: SweepJob.samplingAlgorithm
         /// Please note <see cref="SamplingAlgorithm"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BayesianSamplingAlgorithm"/>, <see cref="GridSamplingAlgorithm"/> and <see cref="RandomSamplingAlgorithm"/>.
         /// </summary>
         public SamplingAlgorithm SamplingAlgorithm { get; set; }
         /// <summary>
         /// [Required] A dictionary containing each parameter and its distribution. The dictionary key is the name of the parameter
+        /// Serialized Name: SweepJob.searchSpace
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -157,7 +229,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </para>
         /// </summary>
         public BinaryData SearchSpace { get; set; }
-        /// <summary> [Required] Trial component definition. </summary>
+        /// <summary>
+        /// [Required] Trial component definition.
+        /// Serialized Name: SweepJob.trial
+        /// </summary>
         public TrialComponent Trial { get; set; }
     }
 }

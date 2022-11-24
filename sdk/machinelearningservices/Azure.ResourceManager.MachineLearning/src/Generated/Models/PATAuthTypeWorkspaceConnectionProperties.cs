@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The PATAuthTypeWorkspaceConnectionProperties. </summary>
+    /// <summary>
+    /// The PATAuthTypeWorkspaceConnectionProperties.
+    /// Serialized Name: PATAuthTypeWorkspaceConnectionProperties
+    /// </summary>
     public partial class PATAuthTypeWorkspaceConnectionProperties : WorkspaceConnectionPropertiesV2
     {
         /// <summary> Initializes a new instance of PATAuthTypeWorkspaceConnectionProperties. </summary>
@@ -17,21 +20,33 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of PATAuthTypeWorkspaceConnectionProperties. </summary>
-        /// <param name="authType"> Authentication type of the connection target. </param>
-        /// <param name="category"> Category of the connection. </param>
-        /// <param name="target"></param>
-        /// <param name="value"> Value details of the workspace connection. </param>
-        /// <param name="valueFormat"> format for the workspace connection value. </param>
-        /// <param name="credentials"></param>
+        /// <param name="authType">
+        /// Authentication type of the connection target
+        /// Serialized Name: WorkspaceConnectionPropertiesV2.authType
+        /// </param>
+        /// <param name="category">
+        /// Category of the connection
+        /// Serialized Name: WorkspaceConnectionPropertiesV2.category
+        /// </param>
+        /// <param name="target"> Serialized Name: WorkspaceConnectionPropertiesV2.target. </param>
+        /// <param name="value">
+        /// Value details of the workspace connection.
+        /// Serialized Name: WorkspaceConnectionPropertiesV2.value
+        /// </param>
+        /// <param name="valueFormat">
+        /// format for the workspace connection value
+        /// Serialized Name: WorkspaceConnectionPropertiesV2.valueFormat
+        /// </param>
+        /// <param name="credentials"> Serialized Name: PATAuthTypeWorkspaceConnectionProperties.credentials. </param>
         internal PATAuthTypeWorkspaceConnectionProperties(ConnectionAuthType authType, ConnectionCategory? category, string target, string value, ValueFormat? valueFormat, WorkspaceConnectionPersonalAccessToken credentials) : base(authType, category, target, value, valueFormat)
         {
             Credentials = credentials;
             AuthType = authType;
         }
 
-        /// <summary> Gets or sets the credentials. </summary>
+        /// <summary> Serialized Name: PATAuthTypeWorkspaceConnectionProperties.credentials. </summary>
         internal WorkspaceConnectionPersonalAccessToken Credentials { get; set; }
-        /// <summary> Gets or sets the pat. </summary>
+        /// <summary> Serialized Name: WorkspaceConnectionPersonalAccessToken.pat. </summary>
         public string CredentialsPat
         {
             get => Credentials is null ? default : Credentials.Pat;

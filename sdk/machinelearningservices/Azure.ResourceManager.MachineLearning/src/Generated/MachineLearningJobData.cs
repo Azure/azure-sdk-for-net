@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Initializes a new instance of MachineLearningJobData. </summary>
         /// <param name="properties">
         /// [Required] Additional attributes of the entity.
+        /// Serialized Name: MachineLearningJob.properties
         /// Please note <see cref="MachineLearningJobProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AutoMLJob"/>, <see cref="CommandJob"/>, <see cref="PipelineJob"/> and <see cref="SweepJob"/>.
         /// </param>
@@ -36,6 +37,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// [Required] Additional attributes of the entity.
+        /// Serialized Name: MachineLearningJob.properties
         /// Please note <see cref="MachineLearningJobProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AutoMLJob"/>, <see cref="CommandJob"/>, <see cref="PipelineJob"/> and <see cref="SweepJob"/>.
         /// </param>
@@ -46,6 +48,7 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary>
         /// [Required] Additional attributes of the entity.
+        /// Serialized Name: MachineLearningJob.properties
         /// Please note <see cref="MachineLearningJobProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AutoMLJob"/>, <see cref="CommandJob"/>, <see cref="PipelineJob"/> and <see cref="SweepJob"/>.
         /// </summary>

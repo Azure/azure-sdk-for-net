@@ -10,12 +10,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The EncryptionProperty. </summary>
+    /// <summary>
+    /// The EncryptionProperty.
+    /// Serialized Name: EncryptionProperty
+    /// </summary>
     public partial class EncryptionProperty
     {
         /// <summary> Initializes a new instance of EncryptionProperty. </summary>
-        /// <param name="status"> Indicates whether or not the encryption is enabled for the workspace. </param>
-        /// <param name="keyVaultProperties"> Customer Key vault properties. </param>
+        /// <param name="status">
+        /// Indicates whether or not the encryption is enabled for the workspace.
+        /// Serialized Name: EncryptionProperty.status
+        /// </param>
+        /// <param name="keyVaultProperties">
+        /// Customer Key vault properties.
+        /// Serialized Name: EncryptionProperty.keyVaultProperties
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultProperties"/> is null. </exception>
         public EncryptionProperty(EncryptionStatus status, EncryptionKeyVaultProperties keyVaultProperties)
         {
@@ -26,9 +35,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of EncryptionProperty. </summary>
-        /// <param name="status"> Indicates whether or not the encryption is enabled for the workspace. </param>
-        /// <param name="identity"> The identity that will be used to access the key vault for encryption at rest. </param>
-        /// <param name="keyVaultProperties"> Customer Key vault properties. </param>
+        /// <param name="status">
+        /// Indicates whether or not the encryption is enabled for the workspace.
+        /// Serialized Name: EncryptionProperty.status
+        /// </param>
+        /// <param name="identity">
+        /// The identity that will be used to access the key vault for encryption at rest.
+        /// Serialized Name: EncryptionProperty.identity
+        /// </param>
+        /// <param name="keyVaultProperties">
+        /// Customer Key vault properties.
+        /// Serialized Name: EncryptionProperty.keyVaultProperties
+        /// </param>
         internal EncryptionProperty(EncryptionStatus status, IdentityForCmk identity, EncryptionKeyVaultProperties keyVaultProperties)
         {
             Status = status;
@@ -36,11 +54,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             KeyVaultProperties = keyVaultProperties;
         }
 
-        /// <summary> Indicates whether or not the encryption is enabled for the workspace. </summary>
+        /// <summary>
+        /// Indicates whether or not the encryption is enabled for the workspace.
+        /// Serialized Name: EncryptionProperty.status
+        /// </summary>
         public EncryptionStatus Status { get; set; }
-        /// <summary> The identity that will be used to access the key vault for encryption at rest. </summary>
+        /// <summary>
+        /// The identity that will be used to access the key vault for encryption at rest.
+        /// Serialized Name: EncryptionProperty.identity
+        /// </summary>
         internal IdentityForCmk Identity { get; set; }
-        /// <summary> The ArmId of the user assigned identity that will be used to access the customer managed key vault. </summary>
+        /// <summary>
+        /// The ArmId of the user assigned identity that will be used to access the customer managed key vault
+        /// Serialized Name: IdentityForCmk.userAssignedIdentity
+        /// </summary>
         public string UserAssignedIdentity
         {
             get => Identity is null ? default : Identity.UserAssignedIdentity;
@@ -52,7 +79,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
         }
 
-        /// <summary> Customer Key vault properties. </summary>
+        /// <summary>
+        /// Customer Key vault properties.
+        /// Serialized Name: EncryptionProperty.keyVaultProperties
+        /// </summary>
         public EncryptionKeyVaultProperties KeyVaultProperties { get; set; }
     }
 }

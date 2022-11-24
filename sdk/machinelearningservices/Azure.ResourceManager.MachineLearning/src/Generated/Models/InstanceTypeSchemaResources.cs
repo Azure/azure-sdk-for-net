@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Resource requests/limits for this instance type. </summary>
+    /// <summary>
+    /// Resource requests/limits for this instance type
+    /// Serialized Name: InstanceTypeSchemaResources
+    /// </summary>
     public partial class InstanceTypeSchemaResources
     {
         /// <summary> Initializes a new instance of InstanceTypeSchemaResources. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of InstanceTypeSchemaResources. </summary>
-        /// <param name="requests"> Resource requests for this instance type. </param>
-        /// <param name="limits"> Resource limits for this instance type. </param>
+        /// <param name="requests">
+        /// Resource requests for this instance type
+        /// Serialized Name: InstanceTypeSchemaResources.requests
+        /// </param>
+        /// <param name="limits">
+        /// Resource limits for this instance type
+        /// Serialized Name: InstanceTypeSchemaResources.limits
+        /// </param>
         internal InstanceTypeSchemaResources(IDictionary<string, string> requests, IDictionary<string, string> limits)
         {
             Requests = requests;
             Limits = limits;
         }
 
-        /// <summary> Resource requests for this instance type. </summary>
+        /// <summary>
+        /// Resource requests for this instance type
+        /// Serialized Name: InstanceTypeSchemaResources.requests
+        /// </summary>
         public IDictionary<string, string> Requests { get; }
-        /// <summary> Resource limits for this instance type. </summary>
+        /// <summary>
+        /// Resource limits for this instance type
+        /// Serialized Name: InstanceTypeSchemaResources.limits
+        /// </summary>
         public IDictionary<string, string> Limits { get; }
     }
 }

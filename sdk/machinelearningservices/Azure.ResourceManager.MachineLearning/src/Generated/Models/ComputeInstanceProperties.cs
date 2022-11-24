@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Compute Instance properties. </summary>
+    /// <summary>
+    /// Compute Instance properties
+    /// Serialized Name: ComputeInstanceProperties
+    /// </summary>
     public partial class ComputeInstanceProperties
     {
         /// <summary> Initializes a new instance of ComputeInstanceProperties. </summary>
@@ -24,25 +27,82 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of ComputeInstanceProperties. </summary>
-        /// <param name="vmSize"> Virtual Machine Size. </param>
-        /// <param name="subnet"> Virtual network subnet resource ID the compute nodes belong to. </param>
-        /// <param name="applicationSharingPolicy"> Policy for sharing applications on this compute instance among users of parent workspace. If Personal, only the creator can access applications on this compute instance. When Shared, any workspace user can access applications on this instance depending on his/her assigned role. </param>
-        /// <param name="sshSettings"> Specifies policy and settings for SSH access. </param>
-        /// <param name="connectivityEndpoints"> Describes all connectivity endpoints available for this ComputeInstance. </param>
-        /// <param name="applications"> Describes available applications and their endpoints on this ComputeInstance. </param>
-        /// <param name="createdBy"> Describes information on user who created this ComputeInstance. </param>
-        /// <param name="errors"> Collection of errors encountered on this ComputeInstance. </param>
-        /// <param name="state"> The current state of this ComputeInstance. </param>
-        /// <param name="computeInstanceAuthorizationType"> The Compute Instance Authorization type. Available values are personal (default). </param>
-        /// <param name="personalComputeInstanceSettings"> Settings for a personal compute instance. </param>
-        /// <param name="setupScriptsSettings"> Details of customized scripts to execute for setting up the cluster. </param>
-        /// <param name="lastOperation"> The last operation on ComputeInstance. </param>
-        /// <param name="schedules"> The list of schedules to be applied on the computes. </param>
-        /// <param name="enableNodePublicIP"> Enable or disable node public IP address provisioning. Possible values are: Possible values are: true - Indicates that the compute nodes will have public IPs provisioned. false - Indicates that the compute nodes will have a private endpoint and no public IPs. </param>
-        /// <param name="containers"> Describes informations of containers on this ComputeInstance. </param>
-        /// <param name="dataDisks"> Describes informations of dataDisks on this ComputeInstance. </param>
-        /// <param name="dataMounts"> Describes informations of dataMounts on this ComputeInstance. </param>
-        /// <param name="versions"> ComputeInstance version. </param>
+        /// <param name="vmSize">
+        /// Virtual Machine Size
+        /// Serialized Name: ComputeInstanceProperties.vmSize
+        /// </param>
+        /// <param name="subnet">
+        /// Virtual network subnet resource ID the compute nodes belong to.
+        /// Serialized Name: ComputeInstanceProperties.subnet
+        /// </param>
+        /// <param name="applicationSharingPolicy">
+        /// Policy for sharing applications on this compute instance among users of parent workspace. If Personal, only the creator can access applications on this compute instance. When Shared, any workspace user can access applications on this instance depending on his/her assigned role.
+        /// Serialized Name: ComputeInstanceProperties.applicationSharingPolicy
+        /// </param>
+        /// <param name="sshSettings">
+        /// Specifies policy and settings for SSH access.
+        /// Serialized Name: ComputeInstanceProperties.sshSettings
+        /// </param>
+        /// <param name="connectivityEndpoints">
+        /// Describes all connectivity endpoints available for this ComputeInstance.
+        /// Serialized Name: ComputeInstanceProperties.connectivityEndpoints
+        /// </param>
+        /// <param name="applications">
+        /// Describes available applications and their endpoints on this ComputeInstance.
+        /// Serialized Name: ComputeInstanceProperties.applications
+        /// </param>
+        /// <param name="createdBy">
+        /// Describes information on user who created this ComputeInstance.
+        /// Serialized Name: ComputeInstanceProperties.createdBy
+        /// </param>
+        /// <param name="errors">
+        /// Collection of errors encountered on this ComputeInstance.
+        /// Serialized Name: ComputeInstanceProperties.errors
+        /// </param>
+        /// <param name="state">
+        /// The current state of this ComputeInstance.
+        /// Serialized Name: ComputeInstanceProperties.state
+        /// </param>
+        /// <param name="computeInstanceAuthorizationType">
+        /// The Compute Instance Authorization type. Available values are personal (default).
+        /// Serialized Name: ComputeInstanceProperties.computeInstanceAuthorizationType
+        /// </param>
+        /// <param name="personalComputeInstanceSettings">
+        /// Settings for a personal compute instance.
+        /// Serialized Name: ComputeInstanceProperties.personalComputeInstanceSettings
+        /// </param>
+        /// <param name="setupScriptsSettings">
+        /// Details of customized scripts to execute for setting up the cluster.
+        /// Serialized Name: ComputeInstanceProperties.setupScripts
+        /// </param>
+        /// <param name="lastOperation">
+        /// The last operation on ComputeInstance.
+        /// Serialized Name: ComputeInstanceProperties.lastOperation
+        /// </param>
+        /// <param name="schedules">
+        /// The list of schedules to be applied on the computes.
+        /// Serialized Name: ComputeInstanceProperties.schedules
+        /// </param>
+        /// <param name="enableNodePublicIP">
+        /// Enable or disable node public IP address provisioning. Possible values are: Possible values are: true - Indicates that the compute nodes will have public IPs provisioned. false - Indicates that the compute nodes will have a private endpoint and no public IPs.
+        /// Serialized Name: ComputeInstanceProperties.enableNodePublicIp
+        /// </param>
+        /// <param name="containers">
+        /// Describes informations of containers on this ComputeInstance.
+        /// Serialized Name: ComputeInstanceProperties.containers
+        /// </param>
+        /// <param name="dataDisks">
+        /// Describes informations of dataDisks on this ComputeInstance.
+        /// Serialized Name: ComputeInstanceProperties.dataDisks
+        /// </param>
+        /// <param name="dataMounts">
+        /// Describes informations of dataMounts on this ComputeInstance.
+        /// Serialized Name: ComputeInstanceProperties.dataMounts
+        /// </param>
+        /// <param name="versions">
+        /// ComputeInstance version.
+        /// Serialized Name: ComputeInstanceProperties.versions
+        /// </param>
         internal ComputeInstanceProperties(string vmSize, ResourceId subnet, ApplicationSharingPolicy? applicationSharingPolicy, ComputeInstanceSshSettings sshSettings, ComputeInstanceConnectivityEndpoints connectivityEndpoints, IReadOnlyList<ComputeInstanceApplication> applications, ComputeInstanceCreatedBy createdBy, IReadOnlyList<ErrorResponse> errors, ComputeInstanceState? state, ComputeInstanceAuthorizationType? computeInstanceAuthorizationType, PersonalComputeInstanceSettings personalComputeInstanceSettings, SetupScripts setupScriptsSettings, ComputeInstanceLastOperation lastOperation, ComputeSchedules schedules, bool? enableNodePublicIP, IReadOnlyList<ComputeInstanceContainer> containers, IReadOnlyList<ComputeInstanceDataDisk> dataDisks, IReadOnlyList<ComputeInstanceDataMount> dataMounts, ComputeInstanceVersion versions)
         {
             VmSize = vmSize;
@@ -66,36 +126,75 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Versions = versions;
         }
 
-        /// <summary> Virtual Machine Size. </summary>
+        /// <summary>
+        /// Virtual Machine Size
+        /// Serialized Name: ComputeInstanceProperties.vmSize
+        /// </summary>
         public string VmSize { get; set; }
-        /// <summary> Virtual network subnet resource ID the compute nodes belong to. </summary>
+        /// <summary>
+        /// Virtual network subnet resource ID the compute nodes belong to.
+        /// Serialized Name: ComputeInstanceProperties.subnet
+        /// </summary>
         internal ResourceId Subnet { get; set; }
-        /// <summary> The ID of the resource. </summary>
+        /// <summary>
+        /// The ID of the resource
+        /// Serialized Name: ResourceId.id
+        /// </summary>
         public string SubnetId
         {
             get => Subnet is null ? default : Subnet.Id;
             set => Subnet = new ResourceId(value);
         }
 
-        /// <summary> Policy for sharing applications on this compute instance among users of parent workspace. If Personal, only the creator can access applications on this compute instance. When Shared, any workspace user can access applications on this instance depending on his/her assigned role. </summary>
+        /// <summary>
+        /// Policy for sharing applications on this compute instance among users of parent workspace. If Personal, only the creator can access applications on this compute instance. When Shared, any workspace user can access applications on this instance depending on his/her assigned role.
+        /// Serialized Name: ComputeInstanceProperties.applicationSharingPolicy
+        /// </summary>
         public ApplicationSharingPolicy? ApplicationSharingPolicy { get; set; }
-        /// <summary> Specifies policy and settings for SSH access. </summary>
+        /// <summary>
+        /// Specifies policy and settings for SSH access.
+        /// Serialized Name: ComputeInstanceProperties.sshSettings
+        /// </summary>
         public ComputeInstanceSshSettings SshSettings { get; set; }
-        /// <summary> Describes all connectivity endpoints available for this ComputeInstance. </summary>
+        /// <summary>
+        /// Describes all connectivity endpoints available for this ComputeInstance.
+        /// Serialized Name: ComputeInstanceProperties.connectivityEndpoints
+        /// </summary>
         public ComputeInstanceConnectivityEndpoints ConnectivityEndpoints { get; }
-        /// <summary> Describes available applications and their endpoints on this ComputeInstance. </summary>
+        /// <summary>
+        /// Describes available applications and their endpoints on this ComputeInstance.
+        /// Serialized Name: ComputeInstanceProperties.applications
+        /// </summary>
         public IReadOnlyList<ComputeInstanceApplication> Applications { get; }
-        /// <summary> Describes information on user who created this ComputeInstance. </summary>
+        /// <summary>
+        /// Describes information on user who created this ComputeInstance.
+        /// Serialized Name: ComputeInstanceProperties.createdBy
+        /// </summary>
         public ComputeInstanceCreatedBy CreatedBy { get; }
-        /// <summary> Collection of errors encountered on this ComputeInstance. </summary>
+        /// <summary>
+        /// Collection of errors encountered on this ComputeInstance.
+        /// Serialized Name: ComputeInstanceProperties.errors
+        /// </summary>
         public IReadOnlyList<ErrorResponse> Errors { get; }
-        /// <summary> The current state of this ComputeInstance. </summary>
+        /// <summary>
+        /// The current state of this ComputeInstance.
+        /// Serialized Name: ComputeInstanceProperties.state
+        /// </summary>
         public ComputeInstanceState? State { get; }
-        /// <summary> The Compute Instance Authorization type. Available values are personal (default). </summary>
+        /// <summary>
+        /// The Compute Instance Authorization type. Available values are personal (default).
+        /// Serialized Name: ComputeInstanceProperties.computeInstanceAuthorizationType
+        /// </summary>
         public ComputeInstanceAuthorizationType? ComputeInstanceAuthorizationType { get; set; }
-        /// <summary> Settings for a personal compute instance. </summary>
+        /// <summary>
+        /// Settings for a personal compute instance.
+        /// Serialized Name: ComputeInstanceProperties.personalComputeInstanceSettings
+        /// </summary>
         internal PersonalComputeInstanceSettings PersonalComputeInstanceSettings { get; set; }
-        /// <summary> A user explicitly assigned to a personal compute instance. </summary>
+        /// <summary>
+        /// A user explicitly assigned to a personal compute instance.
+        /// Serialized Name: PersonalComputeInstanceSettings.assignedUser
+        /// </summary>
         public AssignedUser PersonalComputeInstanceAssignedUser
         {
             get => PersonalComputeInstanceSettings is null ? default : PersonalComputeInstanceSettings.AssignedUser;
@@ -107,9 +206,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
         }
 
-        /// <summary> Details of customized scripts to execute for setting up the cluster. </summary>
+        /// <summary>
+        /// Details of customized scripts to execute for setting up the cluster.
+        /// Serialized Name: ComputeInstanceProperties.setupScripts
+        /// </summary>
         internal SetupScripts SetupScriptsSettings { get; set; }
-        /// <summary> Customized setup scripts. </summary>
+        /// <summary>
+        /// Customized setup scripts
+        /// Serialized Name: SetupScripts.scripts
+        /// </summary>
         public ScriptsToExecute Scripts
         {
             get => SetupScriptsSettings is null ? default : SetupScriptsSettings.Scripts;
@@ -121,27 +226,54 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
         }
 
-        /// <summary> The last operation on ComputeInstance. </summary>
+        /// <summary>
+        /// The last operation on ComputeInstance.
+        /// Serialized Name: ComputeInstanceProperties.lastOperation
+        /// </summary>
         public ComputeInstanceLastOperation LastOperation { get; }
-        /// <summary> The list of schedules to be applied on the computes. </summary>
+        /// <summary>
+        /// The list of schedules to be applied on the computes.
+        /// Serialized Name: ComputeInstanceProperties.schedules
+        /// </summary>
         internal ComputeSchedules Schedules { get; }
-        /// <summary> The list of compute start stop schedules to be applied. </summary>
+        /// <summary>
+        /// The list of compute start stop schedules to be applied.
+        /// Serialized Name: ComputeSchedules.computeStartStop
+        /// </summary>
         public IReadOnlyList<ComputeStartStopSchedule> SchedulesComputeStartStop
         {
             get => Schedules?.ComputeStartStop;
         }
 
-        /// <summary> Enable or disable node public IP address provisioning. Possible values are: Possible values are: true - Indicates that the compute nodes will have public IPs provisioned. false - Indicates that the compute nodes will have a private endpoint and no public IPs. </summary>
+        /// <summary>
+        /// Enable or disable node public IP address provisioning. Possible values are: Possible values are: true - Indicates that the compute nodes will have public IPs provisioned. false - Indicates that the compute nodes will have a private endpoint and no public IPs.
+        /// Serialized Name: ComputeInstanceProperties.enableNodePublicIp
+        /// </summary>
         public bool? EnableNodePublicIP { get; set; }
-        /// <summary> Describes informations of containers on this ComputeInstance. </summary>
+        /// <summary>
+        /// Describes informations of containers on this ComputeInstance.
+        /// Serialized Name: ComputeInstanceProperties.containers
+        /// </summary>
         public IReadOnlyList<ComputeInstanceContainer> Containers { get; }
-        /// <summary> Describes informations of dataDisks on this ComputeInstance. </summary>
+        /// <summary>
+        /// Describes informations of dataDisks on this ComputeInstance.
+        /// Serialized Name: ComputeInstanceProperties.dataDisks
+        /// </summary>
         public IReadOnlyList<ComputeInstanceDataDisk> DataDisks { get; }
-        /// <summary> Describes informations of dataMounts on this ComputeInstance. </summary>
+        /// <summary>
+        /// Describes informations of dataMounts on this ComputeInstance.
+        /// Serialized Name: ComputeInstanceProperties.dataMounts
+        /// </summary>
         public IReadOnlyList<ComputeInstanceDataMount> DataMounts { get; }
-        /// <summary> ComputeInstance version. </summary>
+        /// <summary>
+        /// ComputeInstance version.
+        /// Serialized Name: ComputeInstanceProperties.versions
+        /// </summary>
         internal ComputeInstanceVersion Versions { get; }
-        /// <summary> Runtime of compute instance. </summary>
+        /// <summary>
+        /// Runtime of compute instance.
+        /// Serialized Name: ComputeInstanceVersion.runtime
+        /// </summary>
         public string VersionsRuntime
         {
             get => Versions?.Runtime;

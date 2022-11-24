@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Defines supported metric goals for hyperparameter tuning. </summary>
+    /// <summary>
+    /// Defines supported metric goals for hyperparameter tuning
+    /// Serialized Name: Goal
+    /// </summary>
     public readonly partial struct Goal : IEquatable<Goal>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string MinimizeValue = "Minimize";
         private const string MaximizeValue = "Maximize";
 
-        /// <summary> Minimize. </summary>
+        /// <summary>
+        /// Minimize
+        /// Serialized Name: Goal.Minimize
+        /// </summary>
         public static Goal Minimize { get; } = new Goal(MinimizeValue);
-        /// <summary> Maximize. </summary>
+        /// <summary>
+        /// Maximize
+        /// Serialized Name: Goal.Maximize
+        /// </summary>
         public static Goal Maximize { get; } = new Goal(MaximizeValue);
         /// <summary> Determines if two <see cref="Goal"/> values are the same. </summary>
         public static bool operator ==(Goal left, Goal right) => left.Equals(right);

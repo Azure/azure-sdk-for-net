@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Enum of weekday. </summary>
+    /// <summary>
+    /// Enum of weekday
+    /// Serialized Name: WeekDay
+    /// </summary>
     public readonly partial struct WeekDay : IEquatable<WeekDay>
     {
         private readonly string _value;
@@ -30,19 +33,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string SaturdayValue = "Saturday";
         private const string SundayValue = "Sunday";
 
-        /// <summary> Monday weekday. </summary>
+        /// <summary>
+        /// Monday weekday
+        /// Serialized Name: WeekDay.Monday
+        /// </summary>
         public static WeekDay Monday { get; } = new WeekDay(MondayValue);
-        /// <summary> Tuesday weekday. </summary>
+        /// <summary>
+        /// Tuesday weekday
+        /// Serialized Name: WeekDay.Tuesday
+        /// </summary>
         public static WeekDay Tuesday { get; } = new WeekDay(TuesdayValue);
-        /// <summary> Wednesday weekday. </summary>
+        /// <summary>
+        /// Wednesday weekday
+        /// Serialized Name: WeekDay.Wednesday
+        /// </summary>
         public static WeekDay Wednesday { get; } = new WeekDay(WednesdayValue);
-        /// <summary> Thursday weekday. </summary>
+        /// <summary>
+        /// Thursday weekday
+        /// Serialized Name: WeekDay.Thursday
+        /// </summary>
         public static WeekDay Thursday { get; } = new WeekDay(ThursdayValue);
-        /// <summary> Friday weekday. </summary>
+        /// <summary>
+        /// Friday weekday
+        /// Serialized Name: WeekDay.Friday
+        /// </summary>
         public static WeekDay Friday { get; } = new WeekDay(FridayValue);
-        /// <summary> Saturday weekday. </summary>
+        /// <summary>
+        /// Saturday weekday
+        /// Serialized Name: WeekDay.Saturday
+        /// </summary>
         public static WeekDay Saturday { get; } = new WeekDay(SaturdayValue);
-        /// <summary> Sunday weekday. </summary>
+        /// <summary>
+        /// Sunday weekday
+        /// Serialized Name: WeekDay.Sunday
+        /// </summary>
         public static WeekDay Sunday { get; } = new WeekDay(SundayValue);
         /// <summary> Determines if two <see cref="WeekDay"/> values are the same. </summary>
         public static bool operator ==(WeekDay left, WeekDay right) => left.Equals(right);

@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Secrets related to a Machine Learning compute. Might differ for every type of compute.
+    /// Serialized Name: ComputeSecrets
     /// Please note <see cref="ComputeSecrets"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AksComputeSecrets"/>, <see cref="DatabricksComputeSecrets"/> and <see cref="VirtualMachineSecrets"/>.
     /// </summary>
@@ -20,13 +21,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of ComputeSecrets. </summary>
-        /// <param name="computeType"> The type of compute. </param>
+        /// <param name="computeType">
+        /// The type of compute
+        /// Serialized Name: ComputeSecrets.computeType
+        /// </param>
         internal ComputeSecrets(ComputeType computeType)
         {
             ComputeType = computeType;
         }
 
-        /// <summary> The type of compute. </summary>
+        /// <summary>
+        /// The type of compute
+        /// Serialized Name: ComputeSecrets.computeType
+        /// </summary>
         internal ComputeType ComputeType { get; set; }
     }
 }

@@ -9,7 +9,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Properties specific to a ManagedOnlineDeployment. </summary>
+    /// <summary>
+    /// Properties specific to a ManagedOnlineDeployment.
+    /// Serialized Name: ManagedOnlineDeployment
+    /// </summary>
     public partial class ManagedOnlineDeployment : OnlineDeploymentProperties
     {
         /// <summary> Initializes a new instance of ManagedOnlineDeployment. </summary>
@@ -19,26 +22,72 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of ManagedOnlineDeployment. </summary>
-        /// <param name="codeConfiguration"> Code configuration for the endpoint deployment. </param>
-        /// <param name="description"> Description of the endpoint deployment. </param>
-        /// <param name="environmentId"> ARM resource ID or AssetId of the environment specification for the endpoint deployment. </param>
-        /// <param name="environmentVariables"> Environment variables configuration for the deployment. </param>
-        /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
-        /// <param name="appInsightsEnabled"> If true, enables Application Insights logging. </param>
-        /// <param name="egressPublicNetworkAccess"> If Enabled, allow egress public network access. If Disabled, this will create secure egress. Default: Enabled. </param>
-        /// <param name="endpointComputeType"> [Required] The compute type of the endpoint. </param>
-        /// <param name="instanceType"> Compute instance type. </param>
-        /// <param name="livenessProbe"> Liveness probe monitors the health of the container regularly. </param>
-        /// <param name="model"> The URI path to the model. </param>
-        /// <param name="modelMountPath"> The path to mount the model in custom container. </param>
-        /// <param name="provisioningState"> Provisioning state for the endpoint deployment. </param>
-        /// <param name="readinessProbe"> Readiness probe validates if the container is ready to serve traffic. The properties and defaults are the same as liveness probe. </param>
-        /// <param name="requestSettings"> Request settings for the deployment. </param>
+        /// <param name="codeConfiguration">
+        /// Code configuration for the endpoint deployment.
+        /// Serialized Name: EndpointDeploymentPropertiesBase.codeConfiguration
+        /// </param>
+        /// <param name="description">
+        /// Description of the endpoint deployment.
+        /// Serialized Name: EndpointDeploymentPropertiesBase.description
+        /// </param>
+        /// <param name="environmentId">
+        /// ARM resource ID or AssetId of the environment specification for the endpoint deployment.
+        /// Serialized Name: EndpointDeploymentPropertiesBase.environmentId
+        /// </param>
+        /// <param name="environmentVariables">
+        /// Environment variables configuration for the deployment.
+        /// Serialized Name: EndpointDeploymentPropertiesBase.environmentVariables
+        /// </param>
+        /// <param name="properties">
+        /// Property dictionary. Properties can be added, but not removed or altered.
+        /// Serialized Name: EndpointDeploymentPropertiesBase.properties
+        /// </param>
+        /// <param name="appInsightsEnabled">
+        /// If true, enables Application Insights logging.
+        /// Serialized Name: OnlineDeploymentProperties.appInsightsEnabled
+        /// </param>
+        /// <param name="egressPublicNetworkAccess">
+        /// If Enabled, allow egress public network access. If Disabled, this will create secure egress. Default: Enabled.
+        /// Serialized Name: OnlineDeploymentProperties.egressPublicNetworkAccess
+        /// </param>
+        /// <param name="endpointComputeType">
+        /// [Required] The compute type of the endpoint.
+        /// Serialized Name: OnlineDeploymentProperties.endpointComputeType
+        /// </param>
+        /// <param name="instanceType">
+        /// Compute instance type.
+        /// Serialized Name: OnlineDeploymentProperties.instanceType
+        /// </param>
+        /// <param name="livenessProbe">
+        /// Liveness probe monitors the health of the container regularly.
+        /// Serialized Name: OnlineDeploymentProperties.livenessProbe
+        /// </param>
+        /// <param name="model">
+        /// The URI path to the model.
+        /// Serialized Name: OnlineDeploymentProperties.model
+        /// </param>
+        /// <param name="modelMountPath">
+        /// The path to mount the model in custom container.
+        /// Serialized Name: OnlineDeploymentProperties.modelMountPath
+        /// </param>
+        /// <param name="provisioningState">
+        /// Provisioning state for the endpoint deployment.
+        /// Serialized Name: OnlineDeploymentProperties.provisioningState
+        /// </param>
+        /// <param name="readinessProbe">
+        /// Readiness probe validates if the container is ready to serve traffic. The properties and defaults are the same as liveness probe.
+        /// Serialized Name: OnlineDeploymentProperties.readinessProbe
+        /// </param>
+        /// <param name="requestSettings">
+        /// Request settings for the deployment.
+        /// Serialized Name: OnlineDeploymentProperties.requestSettings
+        /// </param>
         /// <param name="scaleSettings">
         /// Scale settings for the deployment.
         /// If it is null or not provided,
         /// it defaults to TargetUtilizationScaleSettings for KubernetesOnlineDeployment
         /// and to DefaultScaleSettings for ManagedOnlineDeployment.
+        /// Serialized Name: OnlineDeploymentProperties.scaleSettings
         /// Please note <see cref="OnlineScaleSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DefaultScaleSettings"/> and <see cref="TargetUtilizationScaleSettings"/>.
         /// </param>

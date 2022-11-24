@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// The TriggerBase.
+    /// Serialized Name: TriggerBase
     /// Please note <see cref="TriggerBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="CronTrigger"/> and <see cref="RecurrenceTrigger"/>.
     /// </summary>
@@ -24,13 +25,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Specifies end time of schedule in ISO 8601, but without a UTC offset. Refer https://en.wikipedia.org/wiki/ISO_8601.
         /// Recommented format would be &quot;2022-06-01T00:00:01&quot;
         /// If not present, the schedule will run indefinitely
+        /// Serialized Name: TriggerBase.endTime
         /// </param>
-        /// <param name="startTime"> Specifies start time of schedule in ISO 8601 format, but without a UTC offset. </param>
+        /// <param name="startTime">
+        /// Specifies start time of schedule in ISO 8601 format, but without a UTC offset.
+        /// Serialized Name: TriggerBase.startTime
+        /// </param>
         /// <param name="timeZone">
         /// Specifies time zone in which the schedule runs.
         /// TimeZone should follow Windows time zone format. Refer: https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/default-time-zones?view=windows-11
+        /// Serialized Name: TriggerBase.timeZone
         /// </param>
-        /// <param name="triggerType"> [Required]. </param>
+        /// <param name="triggerType">
+        /// [Required] 
+        /// Serialized Name: TriggerBase.triggerType
+        /// </param>
         internal TriggerBase(string endTime, string startTime, string timeZone, TriggerType triggerType)
         {
             EndTime = endTime;
@@ -43,16 +52,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Specifies end time of schedule in ISO 8601, but without a UTC offset. Refer https://en.wikipedia.org/wiki/ISO_8601.
         /// Recommented format would be &quot;2022-06-01T00:00:01&quot;
         /// If not present, the schedule will run indefinitely
+        /// Serialized Name: TriggerBase.endTime
         /// </summary>
         public string EndTime { get; set; }
-        /// <summary> Specifies start time of schedule in ISO 8601 format, but without a UTC offset. </summary>
+        /// <summary>
+        /// Specifies start time of schedule in ISO 8601 format, but without a UTC offset.
+        /// Serialized Name: TriggerBase.startTime
+        /// </summary>
         public string StartTime { get; set; }
         /// <summary>
         /// Specifies time zone in which the schedule runs.
         /// TimeZone should follow Windows time zone format. Refer: https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/default-time-zones?view=windows-11
+        /// Serialized Name: TriggerBase.timeZone
         /// </summary>
         public string TimeZone { get; set; }
-        /// <summary> [Required]. </summary>
+        /// <summary>
+        /// [Required] 
+        /// Serialized Name: TriggerBase.triggerType
+        /// </summary>
         internal TriggerType TriggerType { get; set; }
     }
 }

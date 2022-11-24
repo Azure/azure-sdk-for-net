@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The ContainerType. </summary>
+    /// <summary>
+    /// The ContainerType.
+    /// Serialized Name: ContainerType
+    /// </summary>
     public readonly partial struct ContainerType : IEquatable<ContainerType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string StorageInitializerValue = "StorageInitializer";
         private const string InferenceServerValue = "InferenceServer";
 
-        /// <summary> StorageInitializer. </summary>
+        /// <summary>
+        /// StorageInitializer
+        /// Serialized Name: ContainerType.StorageInitializer
+        /// </summary>
         public static ContainerType StorageInitializer { get; } = new ContainerType(StorageInitializerValue);
-        /// <summary> InferenceServer. </summary>
+        /// <summary>
+        /// InferenceServer
+        /// Serialized Name: ContainerType.InferenceServer
+        /// </summary>
         public static ContainerType InferenceServer { get; } = new ContainerType(InferenceServerValue);
         /// <summary> Determines if two <see cref="ContainerType"/> values are the same. </summary>
         public static bool operator ==(ContainerType left, ContainerType right) => left.Equals(right);

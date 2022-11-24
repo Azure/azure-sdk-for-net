@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Allocation state of the compute. Possible values are: steady - Indicates that the compute is not resizing. There are no changes to the number of compute nodes in the compute in progress. A compute enters this state when it is created and when no operations are being performed on the compute to change the number of compute nodes. resizing - Indicates that the compute is resizing; that is, compute nodes are being added to or removed from the compute. </summary>
+    /// <summary>
+    /// Allocation state of the compute. Possible values are: steady - Indicates that the compute is not resizing. There are no changes to the number of compute nodes in the compute in progress. A compute enters this state when it is created and when no operations are being performed on the compute to change the number of compute nodes. resizing - Indicates that the compute is resizing; that is, compute nodes are being added to or removed from the compute.
+    /// Serialized Name: AllocationState
+    /// </summary>
     public readonly partial struct AllocationState : IEquatable<AllocationState>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string SteadyValue = "Steady";
         private const string ResizingValue = "Resizing";
 
-        /// <summary> Steady. </summary>
+        /// <summary>
+        /// Steady
+        /// Serialized Name: AllocationState.Steady
+        /// </summary>
         public static AllocationState Steady { get; } = new AllocationState(SteadyValue);
-        /// <summary> Resizing. </summary>
+        /// <summary>
+        /// Resizing
+        /// Serialized Name: AllocationState.Resizing
+        /// </summary>
         public static AllocationState Resizing { get; } = new AllocationState(ResizingValue);
         /// <summary> Determines if two <see cref="AllocationState"/> values are the same. </summary>
         public static bool operator ==(AllocationState left, AllocationState right) => left.Equals(right);

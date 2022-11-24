@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The ListWorkspaceKeysResult. </summary>
+    /// <summary>
+    /// The ListWorkspaceKeysResult.
+    /// Serialized Name: ListWorkspaceKeysResult
+    /// </summary>
     public partial class ListWorkspaceKeysResult
     {
         /// <summary> Initializes a new instance of ListWorkspaceKeysResult. </summary>
@@ -16,11 +19,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of ListWorkspaceKeysResult. </summary>
-        /// <param name="userStorageKey"></param>
-        /// <param name="userStorageResourceId"></param>
-        /// <param name="appInsightsInstrumentationKey"></param>
-        /// <param name="containerRegistryCredentials"></param>
-        /// <param name="notebookAccessKeys"></param>
+        /// <param name="userStorageKey"> Serialized Name: ListWorkspaceKeysResult.userStorageKey. </param>
+        /// <param name="userStorageResourceId"> Serialized Name: ListWorkspaceKeysResult.userStorageResourceId. </param>
+        /// <param name="appInsightsInstrumentationKey"> Serialized Name: ListWorkspaceKeysResult.appInsightsInstrumentationKey. </param>
+        /// <param name="containerRegistryCredentials"> Serialized Name: ListWorkspaceKeysResult.containerRegistryCredentials. </param>
+        /// <param name="notebookAccessKeys"> Serialized Name: ListWorkspaceKeysResult.notebookAccessKeys. </param>
         internal ListWorkspaceKeysResult(string userStorageKey, string userStorageResourceId, string appInsightsInstrumentationKey, RegistryListCredentialsResult containerRegistryCredentials, ListNotebookKeysResult notebookAccessKeys)
         {
             UserStorageKey = userStorageKey;
@@ -30,15 +33,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             NotebookAccessKeys = notebookAccessKeys;
         }
 
-        /// <summary> Gets the user storage key. </summary>
+        /// <summary> Serialized Name: ListWorkspaceKeysResult.userStorageKey. </summary>
         public string UserStorageKey { get; }
-        /// <summary> Gets the user storage resource id. </summary>
+        /// <summary> Serialized Name: ListWorkspaceKeysResult.userStorageResourceId. </summary>
         public string UserStorageResourceId { get; }
-        /// <summary> Gets the app insights instrumentation key. </summary>
+        /// <summary> Serialized Name: ListWorkspaceKeysResult.appInsightsInstrumentationKey. </summary>
         public string AppInsightsInstrumentationKey { get; }
-        /// <summary> Gets the container registry credentials. </summary>
+        /// <summary> Serialized Name: ListWorkspaceKeysResult.containerRegistryCredentials. </summary>
         public RegistryListCredentialsResult ContainerRegistryCredentials { get; }
-        /// <summary> Gets the notebook access keys. </summary>
+        /// <summary> Serialized Name: ListWorkspaceKeysResult.notebookAccessKeys. </summary>
         public ListNotebookKeysResult NotebookAccessKeys { get; }
     }
 }

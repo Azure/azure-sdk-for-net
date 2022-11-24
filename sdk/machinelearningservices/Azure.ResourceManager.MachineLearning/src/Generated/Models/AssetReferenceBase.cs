@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Base definition for asset references.
+    /// Serialized Name: AssetReferenceBase
     /// Please note <see cref="AssetReferenceBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="DataPathAssetReference"/>, <see cref="IdAssetReference"/> and <see cref="OutputPathAssetReference"/>.
     /// </summary>
@@ -20,13 +21,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of AssetReferenceBase. </summary>
-        /// <param name="referenceType"> [Required] Specifies the type of asset reference. </param>
+        /// <param name="referenceType">
+        /// [Required] Specifies the type of asset reference.
+        /// Serialized Name: AssetReferenceBase.referenceType
+        /// </param>
         internal AssetReferenceBase(ReferenceType referenceType)
         {
             ReferenceType = referenceType;
         }
 
-        /// <summary> [Required] Specifies the type of asset reference. </summary>
+        /// <summary>
+        /// [Required] Specifies the type of asset reference.
+        /// Serialized Name: AssetReferenceBase.referenceType
+        /// </summary>
         internal ReferenceType ReferenceType { get; set; }
     }
 }

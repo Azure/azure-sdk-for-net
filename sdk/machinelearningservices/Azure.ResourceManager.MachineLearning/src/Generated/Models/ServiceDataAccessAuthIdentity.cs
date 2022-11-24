@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The ServiceDataAccessAuthIdentity. </summary>
+    /// <summary>
+    /// The ServiceDataAccessAuthIdentity.
+    /// Serialized Name: ServiceDataAccessAuthIdentity
+    /// </summary>
     public readonly partial struct ServiceDataAccessAuthIdentity : IEquatable<ServiceDataAccessAuthIdentity>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string WorkspaceSystemAssignedIdentityValue = "WorkspaceSystemAssignedIdentity";
         private const string WorkspaceUserAssignedIdentityValue = "WorkspaceUserAssignedIdentity";
 
-        /// <summary> Do not use any identity for service data access. </summary>
+        /// <summary>
+        /// Do not use any identity for service data access.
+        /// Serialized Name: ServiceDataAccessAuthIdentity.None
+        /// </summary>
         public static ServiceDataAccessAuthIdentity None { get; } = new ServiceDataAccessAuthIdentity(NoneValue);
-        /// <summary> Use the system assigned managed identity of the Workspace to authenticate service data access. </summary>
+        /// <summary>
+        /// Use the system assigned managed identity of the Workspace to authenticate service data access.
+        /// Serialized Name: ServiceDataAccessAuthIdentity.WorkspaceSystemAssignedIdentity
+        /// </summary>
         public static ServiceDataAccessAuthIdentity WorkspaceSystemAssignedIdentity { get; } = new ServiceDataAccessAuthIdentity(WorkspaceSystemAssignedIdentityValue);
-        /// <summary> Use the user assigned managed identity of the Workspace to authenticate service data access. </summary>
+        /// <summary>
+        /// Use the user assigned managed identity of the Workspace to authenticate service data access.
+        /// Serialized Name: ServiceDataAccessAuthIdentity.WorkspaceUserAssignedIdentity
+        /// </summary>
         public static ServiceDataAccessAuthIdentity WorkspaceUserAssignedIdentity { get; } = new ServiceDataAccessAuthIdentity(WorkspaceUserAssignedIdentityValue);
         /// <summary> Determines if two <see cref="ServiceDataAccessAuthIdentity"/> values are the same. </summary>
         public static bool operator ==(ServiceDataAccessAuthIdentity left, ServiceDataAccessAuthIdentity right) => left.Equals(right);

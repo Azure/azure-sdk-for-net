@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The current deployment state of schedule. </summary>
+    /// <summary>
+    /// The current deployment state of schedule.
+    /// Serialized Name: ProvisioningStatus
+    /// </summary>
     public readonly partial struct ProvisioningStatus : IEquatable<ProvisioningStatus>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string ProvisioningValue = "Provisioning";
         private const string FailedValue = "Failed";
 
-        /// <summary> Completed. </summary>
+        /// <summary>
+        /// Completed
+        /// Serialized Name: ProvisioningStatus.Completed
+        /// </summary>
         public static ProvisioningStatus Completed { get; } = new ProvisioningStatus(CompletedValue);
-        /// <summary> Provisioning. </summary>
+        /// <summary>
+        /// Provisioning
+        /// Serialized Name: ProvisioningStatus.Provisioning
+        /// </summary>
         public static ProvisioningStatus Provisioning { get; } = new ProvisioningStatus(ProvisioningValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: ProvisioningStatus.Failed
+        /// </summary>
         public static ProvisioningStatus Failed { get; } = new ProvisioningStatus(FailedValue);
         /// <summary> Determines if two <see cref="ProvisioningStatus"/> values are the same. </summary>
         public static bool operator ==(ProvisioningStatus left, ProvisioningStatus right) => left.Equals(right);

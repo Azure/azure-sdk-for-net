@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
+    /// <summary>
+    /// Managed service identity (system assigned and/or user assigned identities)
+    /// Serialized Name: PartialManagedServiceIdentity
+    /// </summary>
     public partial class PartialManagedServiceIdentity
     {
         /// <summary> Initializes a new instance of PartialManagedServiceIdentity. </summary>
@@ -20,10 +23,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             UserAssignedIdentities = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
+        /// <summary>
+        /// Managed service identity (system assigned and/or user assigned identities)
+        /// Serialized Name: PartialManagedServiceIdentity.type
+        /// </summary>
         public ManagedServiceIdentityType? ManagedServiceIdentityType { get; set; }
         /// <summary>
         /// The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests.
+        /// Serialized Name: PartialManagedServiceIdentity.userAssignedIdentities
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

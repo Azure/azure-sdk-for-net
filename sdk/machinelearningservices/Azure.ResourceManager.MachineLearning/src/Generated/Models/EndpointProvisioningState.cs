@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> State of endpoint provisioning. </summary>
+    /// <summary>
+    /// State of endpoint provisioning.
+    /// Serialized Name: EndpointProvisioningState
+    /// </summary>
     public readonly partial struct EndpointProvisioningState : IEquatable<EndpointProvisioningState>
     {
         private readonly string _value;
@@ -29,17 +32,35 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string UpdatingValue = "Updating";
         private const string CanceledValue = "Canceled";
 
-        /// <summary> Creating. </summary>
+        /// <summary>
+        /// Creating
+        /// Serialized Name: EndpointProvisioningState.Creating
+        /// </summary>
         public static EndpointProvisioningState Creating { get; } = new EndpointProvisioningState(CreatingValue);
-        /// <summary> Deleting. </summary>
+        /// <summary>
+        /// Deleting
+        /// Serialized Name: EndpointProvisioningState.Deleting
+        /// </summary>
         public static EndpointProvisioningState Deleting { get; } = new EndpointProvisioningState(DeletingValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: EndpointProvisioningState.Succeeded
+        /// </summary>
         public static EndpointProvisioningState Succeeded { get; } = new EndpointProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: EndpointProvisioningState.Failed
+        /// </summary>
         public static EndpointProvisioningState Failed { get; } = new EndpointProvisioningState(FailedValue);
-        /// <summary> Updating. </summary>
+        /// <summary>
+        /// Updating
+        /// Serialized Name: EndpointProvisioningState.Updating
+        /// </summary>
         public static EndpointProvisioningState Updating { get; } = new EndpointProvisioningState(UpdatingValue);
-        /// <summary> Canceled. </summary>
+        /// <summary>
+        /// Canceled
+        /// Serialized Name: EndpointProvisioningState.Canceled
+        /// </summary>
         public static EndpointProvisioningState Canceled { get; } = new EndpointProvisioningState(CanceledValue);
         /// <summary> Determines if two <see cref="EndpointProvisioningState"/> values are the same. </summary>
         public static bool operator ==(EndpointProvisioningState left, EndpointProvisioningState right) => left.Equals(right);

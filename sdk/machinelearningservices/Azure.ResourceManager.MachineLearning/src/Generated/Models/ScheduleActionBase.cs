@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// The ScheduleActionBase.
+    /// Serialized Name: ScheduleActionBase
     /// Please note <see cref="ScheduleActionBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="JobScheduleAction"/> and <see cref="EndpointScheduleAction"/>.
     /// </summary>
@@ -20,13 +21,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of ScheduleActionBase. </summary>
-        /// <param name="actionType"> [Required] Specifies the action type of the schedule. </param>
+        /// <param name="actionType">
+        /// [Required] Specifies the action type of the schedule
+        /// Serialized Name: ScheduleActionBase.actionType
+        /// </param>
         internal ScheduleActionBase(ScheduleActionType actionType)
         {
             ActionType = actionType;
         }
 
-        /// <summary> [Required] Specifies the action type of the schedule. </summary>
+        /// <summary>
+        /// [Required] Specifies the action type of the schedule
+        /// Serialized Name: ScheduleActionBase.actionType
+        /// </summary>
         internal ScheduleActionType ActionType { get; set; }
     }
 }

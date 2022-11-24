@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Enum to determine the input data delivery mode. </summary>
+    /// <summary>
+    /// Enum to determine the input data delivery mode.
+    /// Serialized Name: InputDeliveryMode
+    /// </summary>
     public readonly partial struct InputDeliveryMode : IEquatable<InputDeliveryMode>
     {
         private readonly string _value;
@@ -29,17 +32,35 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string EvalMountValue = "EvalMount";
         private const string EvalDownloadValue = "EvalDownload";
 
-        /// <summary> ReadOnlyMount. </summary>
+        /// <summary>
+        /// ReadOnlyMount
+        /// Serialized Name: InputDeliveryMode.ReadOnlyMount
+        /// </summary>
         public static InputDeliveryMode ReadOnlyMount { get; } = new InputDeliveryMode(ReadOnlyMountValue);
-        /// <summary> ReadWriteMount. </summary>
+        /// <summary>
+        /// ReadWriteMount
+        /// Serialized Name: InputDeliveryMode.ReadWriteMount
+        /// </summary>
         public static InputDeliveryMode ReadWriteMount { get; } = new InputDeliveryMode(ReadWriteMountValue);
-        /// <summary> Download. </summary>
+        /// <summary>
+        /// Download
+        /// Serialized Name: InputDeliveryMode.Download
+        /// </summary>
         public static InputDeliveryMode Download { get; } = new InputDeliveryMode(DownloadValue);
-        /// <summary> Direct. </summary>
+        /// <summary>
+        /// Direct
+        /// Serialized Name: InputDeliveryMode.Direct
+        /// </summary>
         public static InputDeliveryMode Direct { get; } = new InputDeliveryMode(DirectValue);
-        /// <summary> EvalMount. </summary>
+        /// <summary>
+        /// EvalMount
+        /// Serialized Name: InputDeliveryMode.EvalMount
+        /// </summary>
         public static InputDeliveryMode EvalMount { get; } = new InputDeliveryMode(EvalMountValue);
-        /// <summary> EvalDownload. </summary>
+        /// <summary>
+        /// EvalDownload
+        /// Serialized Name: InputDeliveryMode.EvalDownload
+        /// </summary>
         public static InputDeliveryMode EvalDownload { get; } = new InputDeliveryMode(EvalDownloadValue);
         /// <summary> Determines if two <see cref="InputDeliveryMode"/> values are the same. </summary>
         public static bool operator ==(InputDeliveryMode left, InputDeliveryMode right) => left.Equals(right);

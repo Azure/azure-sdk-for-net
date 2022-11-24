@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Current state of an ComputeInstance. </summary>
+    /// <summary>
+    /// Current state of an ComputeInstance.
+    /// Serialized Name: ComputeInstanceState
+    /// </summary>
     public readonly partial struct ComputeInstanceState : IEquatable<ComputeInstanceState>
     {
         private readonly string _value;
@@ -38,35 +41,80 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string UnknownValue = "Unknown";
         private const string UnusableValue = "Unusable";
 
-        /// <summary> Creating. </summary>
+        /// <summary>
+        /// Creating
+        /// Serialized Name: ComputeInstanceState.Creating
+        /// </summary>
         public static ComputeInstanceState Creating { get; } = new ComputeInstanceState(CreatingValue);
-        /// <summary> CreateFailed. </summary>
+        /// <summary>
+        /// CreateFailed
+        /// Serialized Name: ComputeInstanceState.CreateFailed
+        /// </summary>
         public static ComputeInstanceState CreateFailed { get; } = new ComputeInstanceState(CreateFailedValue);
-        /// <summary> Deleting. </summary>
+        /// <summary>
+        /// Deleting
+        /// Serialized Name: ComputeInstanceState.Deleting
+        /// </summary>
         public static ComputeInstanceState Deleting { get; } = new ComputeInstanceState(DeletingValue);
-        /// <summary> Running. </summary>
+        /// <summary>
+        /// Running
+        /// Serialized Name: ComputeInstanceState.Running
+        /// </summary>
         public static ComputeInstanceState Running { get; } = new ComputeInstanceState(RunningValue);
-        /// <summary> Restarting. </summary>
+        /// <summary>
+        /// Restarting
+        /// Serialized Name: ComputeInstanceState.Restarting
+        /// </summary>
         public static ComputeInstanceState Restarting { get; } = new ComputeInstanceState(RestartingValue);
-        /// <summary> JobRunning. </summary>
+        /// <summary>
+        /// JobRunning
+        /// Serialized Name: ComputeInstanceState.JobRunning
+        /// </summary>
         public static ComputeInstanceState JobRunning { get; } = new ComputeInstanceState(JobRunningValue);
-        /// <summary> SettingUp. </summary>
+        /// <summary>
+        /// SettingUp
+        /// Serialized Name: ComputeInstanceState.SettingUp
+        /// </summary>
         public static ComputeInstanceState SettingUp { get; } = new ComputeInstanceState(SettingUpValue);
-        /// <summary> SetupFailed. </summary>
+        /// <summary>
+        /// SetupFailed
+        /// Serialized Name: ComputeInstanceState.SetupFailed
+        /// </summary>
         public static ComputeInstanceState SetupFailed { get; } = new ComputeInstanceState(SetupFailedValue);
-        /// <summary> Starting. </summary>
+        /// <summary>
+        /// Starting
+        /// Serialized Name: ComputeInstanceState.Starting
+        /// </summary>
         public static ComputeInstanceState Starting { get; } = new ComputeInstanceState(StartingValue);
-        /// <summary> Stopped. </summary>
+        /// <summary>
+        /// Stopped
+        /// Serialized Name: ComputeInstanceState.Stopped
+        /// </summary>
         public static ComputeInstanceState Stopped { get; } = new ComputeInstanceState(StoppedValue);
-        /// <summary> Stopping. </summary>
+        /// <summary>
+        /// Stopping
+        /// Serialized Name: ComputeInstanceState.Stopping
+        /// </summary>
         public static ComputeInstanceState Stopping { get; } = new ComputeInstanceState(StoppingValue);
-        /// <summary> UserSettingUp. </summary>
+        /// <summary>
+        /// UserSettingUp
+        /// Serialized Name: ComputeInstanceState.UserSettingUp
+        /// </summary>
         public static ComputeInstanceState UserSettingUp { get; } = new ComputeInstanceState(UserSettingUpValue);
-        /// <summary> UserSetupFailed. </summary>
+        /// <summary>
+        /// UserSetupFailed
+        /// Serialized Name: ComputeInstanceState.UserSetupFailed
+        /// </summary>
         public static ComputeInstanceState UserSetupFailed { get; } = new ComputeInstanceState(UserSetupFailedValue);
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: ComputeInstanceState.Unknown
+        /// </summary>
         public static ComputeInstanceState Unknown { get; } = new ComputeInstanceState(UnknownValue);
-        /// <summary> Unusable. </summary>
+        /// <summary>
+        /// Unusable
+        /// Serialized Name: ComputeInstanceState.Unusable
+        /// </summary>
         public static ComputeInstanceState Unusable { get; } = new ComputeInstanceState(UnusableValue);
         /// <summary> Determines if two <see cref="ComputeInstanceState"/> values are the same. </summary>
         public static bool operator ==(ComputeInstanceState left, ComputeInstanceState right) => left.Equals(right);

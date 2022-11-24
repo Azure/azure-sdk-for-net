@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Describes information on user who created this ComputeInstance. </summary>
+    /// <summary>
+    /// Describes information on user who created this ComputeInstance.
+    /// Serialized Name: ComputeInstanceCreatedBy
+    /// </summary>
     public partial class ComputeInstanceCreatedBy
     {
         /// <summary> Initializes a new instance of ComputeInstanceCreatedBy. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of ComputeInstanceCreatedBy. </summary>
-        /// <param name="userName"> Name of the user. </param>
-        /// <param name="userOrgId"> Uniquely identifies user&apos; Azure Active Directory organization. </param>
-        /// <param name="userId"> Uniquely identifies the user within his/her organization. </param>
+        /// <param name="userName">
+        /// Name of the user.
+        /// Serialized Name: ComputeInstanceCreatedBy.userName
+        /// </param>
+        /// <param name="userOrgId">
+        /// Uniquely identifies user&apos; Azure Active Directory organization.
+        /// Serialized Name: ComputeInstanceCreatedBy.userOrgId
+        /// </param>
+        /// <param name="userId">
+        /// Uniquely identifies the user within his/her organization.
+        /// Serialized Name: ComputeInstanceCreatedBy.userId
+        /// </param>
         internal ComputeInstanceCreatedBy(string userName, string userOrgId, string userId)
         {
             UserName = userName;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             UserId = userId;
         }
 
-        /// <summary> Name of the user. </summary>
+        /// <summary>
+        /// Name of the user.
+        /// Serialized Name: ComputeInstanceCreatedBy.userName
+        /// </summary>
         public string UserName { get; }
-        /// <summary> Uniquely identifies user&apos; Azure Active Directory organization. </summary>
+        /// <summary>
+        /// Uniquely identifies user&apos; Azure Active Directory organization.
+        /// Serialized Name: ComputeInstanceCreatedBy.userOrgId
+        /// </summary>
         public string UserOrgId { get; }
-        /// <summary> Uniquely identifies the user within his/her organization. </summary>
+        /// <summary>
+        /// Uniquely identifies the user within his/her organization.
+        /// Serialized Name: ComputeInstanceCreatedBy.userId
+        /// </summary>
         public string UserId { get; }
     }
 }

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Counts of various compute node states on the amlCompute. </summary>
+    /// <summary>
+    /// Counts of various compute node states on the amlCompute.
+    /// Serialized Name: NodeStateCounts
+    /// </summary>
     public partial class NodeStateCounts
     {
         /// <summary> Initializes a new instance of NodeStateCounts. </summary>
@@ -16,12 +19,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of NodeStateCounts. </summary>
-        /// <param name="idleNodeCount"> Number of compute nodes in idle state. </param>
-        /// <param name="runningNodeCount"> Number of compute nodes which are running jobs. </param>
-        /// <param name="preparingNodeCount"> Number of compute nodes which are being prepared. </param>
-        /// <param name="unusableNodeCount"> Number of compute nodes which are in unusable state. </param>
-        /// <param name="leavingNodeCount"> Number of compute nodes which are leaving the amlCompute. </param>
-        /// <param name="preemptedNodeCount"> Number of compute nodes which are in preempted state. </param>
+        /// <param name="idleNodeCount">
+        /// Number of compute nodes in idle state.
+        /// Serialized Name: NodeStateCounts.idleNodeCount
+        /// </param>
+        /// <param name="runningNodeCount">
+        /// Number of compute nodes which are running jobs.
+        /// Serialized Name: NodeStateCounts.runningNodeCount
+        /// </param>
+        /// <param name="preparingNodeCount">
+        /// Number of compute nodes which are being prepared.
+        /// Serialized Name: NodeStateCounts.preparingNodeCount
+        /// </param>
+        /// <param name="unusableNodeCount">
+        /// Number of compute nodes which are in unusable state.
+        /// Serialized Name: NodeStateCounts.unusableNodeCount
+        /// </param>
+        /// <param name="leavingNodeCount">
+        /// Number of compute nodes which are leaving the amlCompute.
+        /// Serialized Name: NodeStateCounts.leavingNodeCount
+        /// </param>
+        /// <param name="preemptedNodeCount">
+        /// Number of compute nodes which are in preempted state.
+        /// Serialized Name: NodeStateCounts.preemptedNodeCount
+        /// </param>
         internal NodeStateCounts(int? idleNodeCount, int? runningNodeCount, int? preparingNodeCount, int? unusableNodeCount, int? leavingNodeCount, int? preemptedNodeCount)
         {
             IdleNodeCount = idleNodeCount;
@@ -32,17 +53,35 @@ namespace Azure.ResourceManager.MachineLearning.Models
             PreemptedNodeCount = preemptedNodeCount;
         }
 
-        /// <summary> Number of compute nodes in idle state. </summary>
+        /// <summary>
+        /// Number of compute nodes in idle state.
+        /// Serialized Name: NodeStateCounts.idleNodeCount
+        /// </summary>
         public int? IdleNodeCount { get; }
-        /// <summary> Number of compute nodes which are running jobs. </summary>
+        /// <summary>
+        /// Number of compute nodes which are running jobs.
+        /// Serialized Name: NodeStateCounts.runningNodeCount
+        /// </summary>
         public int? RunningNodeCount { get; }
-        /// <summary> Number of compute nodes which are being prepared. </summary>
+        /// <summary>
+        /// Number of compute nodes which are being prepared.
+        /// Serialized Name: NodeStateCounts.preparingNodeCount
+        /// </summary>
         public int? PreparingNodeCount { get; }
-        /// <summary> Number of compute nodes which are in unusable state. </summary>
+        /// <summary>
+        /// Number of compute nodes which are in unusable state.
+        /// Serialized Name: NodeStateCounts.unusableNodeCount
+        /// </summary>
         public int? UnusableNodeCount { get; }
-        /// <summary> Number of compute nodes which are leaving the amlCompute. </summary>
+        /// <summary>
+        /// Number of compute nodes which are leaving the amlCompute.
+        /// Serialized Name: NodeStateCounts.leavingNodeCount
+        /// </summary>
         public int? LeavingNodeCount { get; }
-        /// <summary> Number of compute nodes which are in preempted state. </summary>
+        /// <summary>
+        /// Number of compute nodes which are in preempted state.
+        /// Serialized Name: NodeStateCounts.preemptedNodeCount
+        /// </summary>
         public int? PreemptedNodeCount { get; }
     }
 }

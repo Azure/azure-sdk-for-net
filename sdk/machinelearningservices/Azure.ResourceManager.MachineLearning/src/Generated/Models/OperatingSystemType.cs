@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The type of operating system. </summary>
+    /// <summary>
+    /// The type of operating system.
+    /// Serialized Name: OperatingSystemType
+    /// </summary>
     public readonly partial struct OperatingSystemType : IEquatable<OperatingSystemType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string LinuxValue = "Linux";
         private const string WindowsValue = "Windows";
 
-        /// <summary> Linux. </summary>
+        /// <summary>
+        /// Linux
+        /// Serialized Name: OperatingSystemType.Linux
+        /// </summary>
         public static OperatingSystemType Linux { get; } = new OperatingSystemType(LinuxValue);
-        /// <summary> Windows. </summary>
+        /// <summary>
+        /// Windows
+        /// Serialized Name: OperatingSystemType.Windows
+        /// </summary>
         public static OperatingSystemType Windows { get; } = new OperatingSystemType(WindowsValue);
         /// <summary> Determines if two <see cref="OperatingSystemType"/> values are the same. </summary>
         public static bool operator ==(OperatingSystemType left, OperatingSystemType right) => left.Equals(right);

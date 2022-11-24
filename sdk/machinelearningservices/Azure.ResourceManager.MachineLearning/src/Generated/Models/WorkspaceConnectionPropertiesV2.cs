@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// The WorkspaceConnectionPropertiesV2.
+    /// Serialized Name: WorkspaceConnectionPropertiesV2
     /// Please note <see cref="WorkspaceConnectionPropertiesV2"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ManagedIdentityAuthTypeWorkspaceConnectionProperties"/>, <see cref="NoneAuthTypeWorkspaceConnectionProperties"/>, <see cref="PATAuthTypeWorkspaceConnectionProperties"/>, <see cref="SASAuthTypeWorkspaceConnectionProperties"/> and <see cref="UsernamePasswordAuthTypeWorkspaceConnectionProperties"/>.
     /// </summary>
@@ -20,11 +21,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of WorkspaceConnectionPropertiesV2. </summary>
-        /// <param name="authType"> Authentication type of the connection target. </param>
-        /// <param name="category"> Category of the connection. </param>
-        /// <param name="target"></param>
-        /// <param name="value"> Value details of the workspace connection. </param>
-        /// <param name="valueFormat"> format for the workspace connection value. </param>
+        /// <param name="authType">
+        /// Authentication type of the connection target
+        /// Serialized Name: WorkspaceConnectionPropertiesV2.authType
+        /// </param>
+        /// <param name="category">
+        /// Category of the connection
+        /// Serialized Name: WorkspaceConnectionPropertiesV2.category
+        /// </param>
+        /// <param name="target"> Serialized Name: WorkspaceConnectionPropertiesV2.target. </param>
+        /// <param name="value">
+        /// Value details of the workspace connection.
+        /// Serialized Name: WorkspaceConnectionPropertiesV2.value
+        /// </param>
+        /// <param name="valueFormat">
+        /// format for the workspace connection value
+        /// Serialized Name: WorkspaceConnectionPropertiesV2.valueFormat
+        /// </param>
         internal WorkspaceConnectionPropertiesV2(ConnectionAuthType authType, ConnectionCategory? category, string target, string value, ValueFormat? valueFormat)
         {
             AuthType = authType;
@@ -34,15 +47,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ValueFormat = valueFormat;
         }
 
-        /// <summary> Authentication type of the connection target. </summary>
+        /// <summary>
+        /// Authentication type of the connection target
+        /// Serialized Name: WorkspaceConnectionPropertiesV2.authType
+        /// </summary>
         internal ConnectionAuthType AuthType { get; set; }
-        /// <summary> Category of the connection. </summary>
+        /// <summary>
+        /// Category of the connection
+        /// Serialized Name: WorkspaceConnectionPropertiesV2.category
+        /// </summary>
         public ConnectionCategory? Category { get; set; }
-        /// <summary> Gets or sets the target. </summary>
+        /// <summary> Serialized Name: WorkspaceConnectionPropertiesV2.target. </summary>
         public string Target { get; set; }
-        /// <summary> Value details of the workspace connection. </summary>
+        /// <summary>
+        /// Value details of the workspace connection.
+        /// Serialized Name: WorkspaceConnectionPropertiesV2.value
+        /// </summary>
         public string Value { get; set; }
-        /// <summary> format for the workspace connection value. </summary>
+        /// <summary>
+        /// format for the workspace connection value
+        /// Serialized Name: WorkspaceConnectionPropertiesV2.valueFormat
+        /// </summary>
         public ValueFormat? ValueFormat { get; set; }
     }
 }

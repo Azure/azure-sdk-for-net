@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Customized setup scripts. </summary>
+    /// <summary>
+    /// Customized setup scripts
+    /// Serialized Name: ScriptsToExecute
+    /// </summary>
     public partial class ScriptsToExecute
     {
         /// <summary> Initializes a new instance of ScriptsToExecute. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of ScriptsToExecute. </summary>
-        /// <param name="startupScript"> Script that&apos;s run every time the machine starts. </param>
-        /// <param name="creationScript"> Script that&apos;s run only once during provision of the compute. </param>
+        /// <param name="startupScript">
+        /// Script that&apos;s run every time the machine starts.
+        /// Serialized Name: ScriptsToExecute.startupScript
+        /// </param>
+        /// <param name="creationScript">
+        /// Script that&apos;s run only once during provision of the compute.
+        /// Serialized Name: ScriptsToExecute.creationScript
+        /// </param>
         internal ScriptsToExecute(ScriptReference startupScript, ScriptReference creationScript)
         {
             StartupScript = startupScript;
             CreationScript = creationScript;
         }
 
-        /// <summary> Script that&apos;s run every time the machine starts. </summary>
+        /// <summary>
+        /// Script that&apos;s run every time the machine starts.
+        /// Serialized Name: ScriptsToExecute.startupScript
+        /// </summary>
         public ScriptReference StartupScript { get; set; }
-        /// <summary> Script that&apos;s run only once during provision of the compute. </summary>
+        /// <summary>
+        /// Script that&apos;s run only once during provision of the compute.
+        /// Serialized Name: ScriptsToExecute.creationScript
+        /// </summary>
         public ScriptReference CreationScript { get; set; }
     }
 }

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The ScheduleBase. </summary>
+    /// <summary>
+    /// The ScheduleBase.
+    /// Serialized Name: ScheduleBase
+    /// </summary>
     public partial class ScheduleBase
     {
         /// <summary> Initializes a new instance of ScheduleBase. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of ScheduleBase. </summary>
-        /// <param name="id"> A system assigned id for the schedule. </param>
-        /// <param name="provisioningStatus"> The current deployment state of schedule. </param>
-        /// <param name="status"> Is the schedule enabled or disabled?. </param>
+        /// <param name="id">
+        /// A system assigned id for the schedule.
+        /// Serialized Name: ScheduleBase.id
+        /// </param>
+        /// <param name="provisioningStatus">
+        /// The current deployment state of schedule.
+        /// Serialized Name: ScheduleBase.provisioningStatus
+        /// </param>
+        /// <param name="status">
+        /// Is the schedule enabled or disabled?
+        /// Serialized Name: ScheduleBase.status
+        /// </param>
         internal ScheduleBase(string id, ScheduleProvisioningState? provisioningStatus, ScheduleStatus? status)
         {
             Id = id;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Status = status;
         }
 
-        /// <summary> A system assigned id for the schedule. </summary>
+        /// <summary>
+        /// A system assigned id for the schedule.
+        /// Serialized Name: ScheduleBase.id
+        /// </summary>
         public string Id { get; }
-        /// <summary> The current deployment state of schedule. </summary>
+        /// <summary>
+        /// The current deployment state of schedule.
+        /// Serialized Name: ScheduleBase.provisioningStatus
+        /// </summary>
         public ScheduleProvisioningState? ProvisioningStatus { get; }
-        /// <summary> Is the schedule enabled or disabled?. </summary>
+        /// <summary>
+        /// Is the schedule enabled or disabled?
+        /// Serialized Name: ScheduleBase.status
+        /// </summary>
         public ScheduleStatus? Status { get; }
     }
 }

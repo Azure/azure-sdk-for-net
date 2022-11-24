@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Deployment container liveness/readiness probe configuration. </summary>
+    /// <summary>
+    /// Deployment container liveness/readiness probe configuration.
+    /// Serialized Name: ProbeSettings
+    /// </summary>
     public partial class ProbeSettings
     {
         /// <summary> Initializes a new instance of ProbeSettings. </summary>
@@ -18,11 +21,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of ProbeSettings. </summary>
-        /// <param name="failureThreshold"> The number of failures to allow before returning an unhealthy status. </param>
-        /// <param name="initialDelay"> The delay before the first probe in ISO 8601 format. </param>
-        /// <param name="period"> The length of time between probes in ISO 8601 format. </param>
-        /// <param name="successThreshold"> The number of successful probes before returning a healthy status. </param>
-        /// <param name="timeout"> The probe timeout in ISO 8601 format. </param>
+        /// <param name="failureThreshold">
+        /// The number of failures to allow before returning an unhealthy status.
+        /// Serialized Name: ProbeSettings.failureThreshold
+        /// </param>
+        /// <param name="initialDelay">
+        /// The delay before the first probe in ISO 8601 format.
+        /// Serialized Name: ProbeSettings.initialDelay
+        /// </param>
+        /// <param name="period">
+        /// The length of time between probes in ISO 8601 format.
+        /// Serialized Name: ProbeSettings.period
+        /// </param>
+        /// <param name="successThreshold">
+        /// The number of successful probes before returning a healthy status.
+        /// Serialized Name: ProbeSettings.successThreshold
+        /// </param>
+        /// <param name="timeout">
+        /// The probe timeout in ISO 8601 format.
+        /// Serialized Name: ProbeSettings.timeout
+        /// </param>
         internal ProbeSettings(int? failureThreshold, TimeSpan? initialDelay, TimeSpan? period, int? successThreshold, TimeSpan? timeout)
         {
             FailureThreshold = failureThreshold;
@@ -32,15 +50,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Timeout = timeout;
         }
 
-        /// <summary> The number of failures to allow before returning an unhealthy status. </summary>
+        /// <summary>
+        /// The number of failures to allow before returning an unhealthy status.
+        /// Serialized Name: ProbeSettings.failureThreshold
+        /// </summary>
         public int? FailureThreshold { get; set; }
-        /// <summary> The delay before the first probe in ISO 8601 format. </summary>
+        /// <summary>
+        /// The delay before the first probe in ISO 8601 format.
+        /// Serialized Name: ProbeSettings.initialDelay
+        /// </summary>
         public TimeSpan? InitialDelay { get; set; }
-        /// <summary> The length of time between probes in ISO 8601 format. </summary>
+        /// <summary>
+        /// The length of time between probes in ISO 8601 format.
+        /// Serialized Name: ProbeSettings.period
+        /// </summary>
         public TimeSpan? Period { get; set; }
-        /// <summary> The number of successful probes before returning a healthy status. </summary>
+        /// <summary>
+        /// The number of successful probes before returning a healthy status.
+        /// Serialized Name: ProbeSettings.successThreshold
+        /// </summary>
         public int? SuccessThreshold { get; set; }
-        /// <summary> The probe timeout in ISO 8601 format. </summary>
+        /// <summary>
+        /// The probe timeout in ISO 8601 format.
+        /// Serialized Name: ProbeSettings.timeout
+        /// </summary>
         public TimeSpan? Timeout { get; set; }
     }
 }

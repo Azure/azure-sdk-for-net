@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The properties for Quota update or retrieval. </summary>
+    /// <summary>
+    /// The properties for Quota update or retrieval.
+    /// Serialized Name: QuotaBaseProperties
+    /// </summary>
     public partial class QuotaBaseProperties
     {
         /// <summary> Initializes a new instance of QuotaBaseProperties. </summary>
@@ -15,13 +18,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
         }
 
-        /// <summary> Specifies the resource ID. </summary>
+        /// <summary>
+        /// Specifies the resource ID.
+        /// Serialized Name: QuotaBaseProperties.id
+        /// </summary>
         public string Id { get; set; }
-        /// <summary> Specifies the resource type. </summary>
+        /// <summary>
+        /// Specifies the resource type.
+        /// Serialized Name: QuotaBaseProperties.type
+        /// </summary>
         public string QuotaBasePropertiesType { get; set; }
-        /// <summary> The maximum permitted quota of the resource. </summary>
+        /// <summary>
+        /// The maximum permitted quota of the resource.
+        /// Serialized Name: QuotaBaseProperties.limit
+        /// </summary>
         public long? Limit { get; set; }
-        /// <summary> An enum describing the unit of quota measurement. </summary>
+        /// <summary>
+        /// An enum describing the unit of quota measurement.
+        /// Serialized Name: QuotaBaseProperties.unit
+        /// </summary>
         public QuotaUnit? Unit { get; set; }
     }
 }

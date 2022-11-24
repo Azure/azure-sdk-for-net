@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> A DataFactory compute. </summary>
+    /// <summary>
+    /// A DataFactory compute.
+    /// Serialized Name: DatabricksCompute
+    /// </summary>
     public partial class DatabricksCompute : Compute
     {
         /// <summary> Initializes a new instance of DatabricksCompute. </summary>
@@ -21,24 +24,60 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of DatabricksCompute. </summary>
-        /// <param name="computeType"> The type of compute. </param>
-        /// <param name="computeLocation"> Location for the underlying compute. </param>
-        /// <param name="provisioningState"> The provision state of the cluster. Valid values are Unknown, Updating, Provisioning, Succeeded, and Failed. </param>
-        /// <param name="description"> The description of the Machine Learning compute. </param>
-        /// <param name="createdOn"> The time at which the compute was created. </param>
-        /// <param name="modifiedOn"> The time at which the compute was last modified. </param>
-        /// <param name="resourceId"> ARM resource id of the underlying compute. </param>
-        /// <param name="provisioningErrors"> Errors during provisioning. </param>
-        /// <param name="isAttachedCompute"> Indicating whether the compute was provisioned by user and brought from outside if true, or machine learning service provisioned it if false. </param>
-        /// <param name="disableLocalAuth"> Opt-out of local authentication and ensure customers can use only MSI and AAD exclusively for authentication. </param>
-        /// <param name="properties"> Properties of Databricks. </param>
+        /// <param name="computeType">
+        /// The type of compute
+        /// Serialized Name: Compute.computeType
+        /// </param>
+        /// <param name="computeLocation">
+        /// Location for the underlying compute
+        /// Serialized Name: Compute.computeLocation
+        /// </param>
+        /// <param name="provisioningState">
+        /// The provision state of the cluster. Valid values are Unknown, Updating, Provisioning, Succeeded, and Failed.
+        /// Serialized Name: Compute.provisioningState
+        /// </param>
+        /// <param name="description">
+        /// The description of the Machine Learning compute.
+        /// Serialized Name: Compute.description
+        /// </param>
+        /// <param name="createdOn">
+        /// The time at which the compute was created.
+        /// Serialized Name: Compute.createdOn
+        /// </param>
+        /// <param name="modifiedOn">
+        /// The time at which the compute was last modified.
+        /// Serialized Name: Compute.modifiedOn
+        /// </param>
+        /// <param name="resourceId">
+        /// ARM resource id of the underlying compute
+        /// Serialized Name: Compute.resourceId
+        /// </param>
+        /// <param name="provisioningErrors">
+        /// Errors during provisioning
+        /// Serialized Name: Compute.provisioningErrors
+        /// </param>
+        /// <param name="isAttachedCompute">
+        /// Indicating whether the compute was provisioned by user and brought from outside if true, or machine learning service provisioned it if false.
+        /// Serialized Name: Compute.isAttachedCompute
+        /// </param>
+        /// <param name="disableLocalAuth">
+        /// Opt-out of local authentication and ensure customers can use only MSI and AAD exclusively for authentication.
+        /// Serialized Name: Compute.disableLocalAuth
+        /// </param>
+        /// <param name="properties">
+        /// Properties of Databricks
+        /// Serialized Name: DatabricksSchema.properties
+        /// </param>
         internal DatabricksCompute(ComputeType computeType, string computeLocation, ProvisioningState? provisioningState, string description, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, ResourceIdentifier resourceId, IReadOnlyList<ErrorResponse> provisioningErrors, bool? isAttachedCompute, bool? disableLocalAuth, DatabricksProperties properties) : base(computeType, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors, isAttachedCompute, disableLocalAuth)
         {
             Properties = properties;
             ComputeType = computeType;
         }
 
-        /// <summary> Properties of Databricks. </summary>
+        /// <summary>
+        /// Properties of Databricks
+        /// Serialized Name: DatabricksSchema.properties
+        /// </summary>
         public DatabricksProperties Properties { get; set; }
     }
 }

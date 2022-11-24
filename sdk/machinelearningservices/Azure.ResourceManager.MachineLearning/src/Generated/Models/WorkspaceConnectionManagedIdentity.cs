@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The WorkspaceConnectionManagedIdentity. </summary>
+    /// <summary>
+    /// The WorkspaceConnectionManagedIdentity.
+    /// Serialized Name: WorkspaceConnectionManagedIdentity
+    /// </summary>
     public partial class WorkspaceConnectionManagedIdentity
     {
         /// <summary> Initializes a new instance of WorkspaceConnectionManagedIdentity. </summary>
@@ -16,17 +19,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of WorkspaceConnectionManagedIdentity. </summary>
-        /// <param name="resourceId"></param>
-        /// <param name="clientId"></param>
+        /// <param name="resourceId"> Serialized Name: WorkspaceConnectionManagedIdentity.resourceId. </param>
+        /// <param name="clientId"> Serialized Name: WorkspaceConnectionManagedIdentity.clientId. </param>
         internal WorkspaceConnectionManagedIdentity(string resourceId, string clientId)
         {
             ResourceId = resourceId;
             ClientId = clientId;
         }
 
-        /// <summary> Gets or sets the resource id. </summary>
+        /// <summary> Serialized Name: WorkspaceConnectionManagedIdentity.resourceId. </summary>
         public string ResourceId { get; set; }
-        /// <summary> Gets or sets the client id. </summary>
+        /// <summary> Serialized Name: WorkspaceConnectionManagedIdentity.clientId. </summary>
         public string ClientId { get; set; }
     }
 }

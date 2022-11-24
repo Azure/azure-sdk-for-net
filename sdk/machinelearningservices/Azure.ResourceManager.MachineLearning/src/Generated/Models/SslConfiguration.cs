@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The ssl configuration for scoring. </summary>
+    /// <summary>
+    /// The ssl configuration for scoring
+    /// Serialized Name: SslConfiguration
+    /// </summary>
     public partial class SslConfiguration
     {
         /// <summary> Initializes a new instance of SslConfiguration. </summary>
@@ -16,12 +19,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of SslConfiguration. </summary>
-        /// <param name="status"> Enable or disable ssl for scoring. </param>
-        /// <param name="cert"> Cert data. </param>
-        /// <param name="key"> Key data. </param>
-        /// <param name="cname"> CNAME of the cert. </param>
-        /// <param name="leafDomainLabel"> Leaf domain label of public endpoint. </param>
-        /// <param name="overwriteExistingDomain"> Indicates whether to overwrite existing domain label. </param>
+        /// <param name="status">
+        /// Enable or disable ssl for scoring
+        /// Serialized Name: SslConfiguration.status
+        /// </param>
+        /// <param name="cert">
+        /// Cert data
+        /// Serialized Name: SslConfiguration.cert
+        /// </param>
+        /// <param name="key">
+        /// Key data
+        /// Serialized Name: SslConfiguration.key
+        /// </param>
+        /// <param name="cname">
+        /// CNAME of the cert
+        /// Serialized Name: SslConfiguration.cname
+        /// </param>
+        /// <param name="leafDomainLabel">
+        /// Leaf domain label of public endpoint
+        /// Serialized Name: SslConfiguration.leafDomainLabel
+        /// </param>
+        /// <param name="overwriteExistingDomain">
+        /// Indicates whether to overwrite existing domain label.
+        /// Serialized Name: SslConfiguration.overwriteExistingDomain
+        /// </param>
         internal SslConfiguration(SslConfigStatus? status, string cert, string key, string cname, string leafDomainLabel, bool? overwriteExistingDomain)
         {
             Status = status;
@@ -32,17 +53,35 @@ namespace Azure.ResourceManager.MachineLearning.Models
             OverwriteExistingDomain = overwriteExistingDomain;
         }
 
-        /// <summary> Enable or disable ssl for scoring. </summary>
+        /// <summary>
+        /// Enable or disable ssl for scoring
+        /// Serialized Name: SslConfiguration.status
+        /// </summary>
         public SslConfigStatus? Status { get; set; }
-        /// <summary> Cert data. </summary>
+        /// <summary>
+        /// Cert data
+        /// Serialized Name: SslConfiguration.cert
+        /// </summary>
         public string Cert { get; set; }
-        /// <summary> Key data. </summary>
+        /// <summary>
+        /// Key data
+        /// Serialized Name: SslConfiguration.key
+        /// </summary>
         public string Key { get; set; }
-        /// <summary> CNAME of the cert. </summary>
+        /// <summary>
+        /// CNAME of the cert
+        /// Serialized Name: SslConfiguration.cname
+        /// </summary>
         public string Cname { get; set; }
-        /// <summary> Leaf domain label of public endpoint. </summary>
+        /// <summary>
+        /// Leaf domain label of public endpoint
+        /// Serialized Name: SslConfiguration.leafDomainLabel
+        /// </summary>
         public string LeafDomainLabel { get; set; }
-        /// <summary> Indicates whether to overwrite existing domain label. </summary>
+        /// <summary>
+        /// Indicates whether to overwrite existing domain label.
+        /// Serialized Name: SslConfiguration.overwriteExistingDomain
+        /// </summary>
         public bool? OverwriteExistingDomain { get; set; }
     }
 }

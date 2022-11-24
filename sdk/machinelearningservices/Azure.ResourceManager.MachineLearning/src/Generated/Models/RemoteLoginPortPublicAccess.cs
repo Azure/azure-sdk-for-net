@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> State of the public SSH port. Possible values are: Disabled - Indicates that the public ssh port is closed on all nodes of the cluster. Enabled - Indicates that the public ssh port is open on all nodes of the cluster. NotSpecified - Indicates that the public ssh port is closed on all nodes of the cluster if VNet is defined, else is open all public nodes. It can be default only during cluster creation time, after creation it will be either enabled or disabled. </summary>
+    /// <summary>
+    /// State of the public SSH port. Possible values are: Disabled - Indicates that the public ssh port is closed on all nodes of the cluster. Enabled - Indicates that the public ssh port is open on all nodes of the cluster. NotSpecified - Indicates that the public ssh port is closed on all nodes of the cluster if VNet is defined, else is open all public nodes. It can be default only during cluster creation time, after creation it will be either enabled or disabled.
+    /// Serialized Name: RemoteLoginPortPublicAccess
+    /// </summary>
     public readonly partial struct RemoteLoginPortPublicAccess : IEquatable<RemoteLoginPortPublicAccess>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string DisabledValue = "Disabled";
         private const string NotSpecifiedValue = "NotSpecified";
 
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: RemoteLoginPortPublicAccess.Enabled
+        /// </summary>
         public static RemoteLoginPortPublicAccess Enabled { get; } = new RemoteLoginPortPublicAccess(EnabledValue);
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: RemoteLoginPortPublicAccess.Disabled
+        /// </summary>
         public static RemoteLoginPortPublicAccess Disabled { get; } = new RemoteLoginPortPublicAccess(DisabledValue);
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: RemoteLoginPortPublicAccess.NotSpecified
+        /// </summary>
         public static RemoteLoginPortPublicAccess NotSpecified { get; } = new RemoteLoginPortPublicAccess(NotSpecifiedValue);
         /// <summary> Determines if two <see cref="RemoteLoginPortPublicAccess"/> values are the same. </summary>
         public static bool operator ==(RemoteLoginPortPublicAccess left, RemoteLoginPortPublicAccess right) => left.Equals(right);

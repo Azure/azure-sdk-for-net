@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Instance type schema. </summary>
+    /// <summary>
+    /// Instance type schema.
+    /// Serialized Name: InstanceTypeSchema
+    /// </summary>
     public partial class InstanceTypeSchema
     {
         /// <summary> Initializes a new instance of InstanceTypeSchema. </summary>
@@ -20,17 +23,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of InstanceTypeSchema. </summary>
-        /// <param name="nodeSelector"> Node Selector. </param>
-        /// <param name="resources"> Resource requests/limits for this instance type. </param>
+        /// <param name="nodeSelector">
+        /// Node Selector
+        /// Serialized Name: InstanceTypeSchema.nodeSelector
+        /// </param>
+        /// <param name="resources">
+        /// Resource requests/limits for this instance type
+        /// Serialized Name: InstanceTypeSchema.resources
+        /// </param>
         internal InstanceTypeSchema(IDictionary<string, string> nodeSelector, InstanceTypeSchemaResources resources)
         {
             NodeSelector = nodeSelector;
             Resources = resources;
         }
 
-        /// <summary> Node Selector. </summary>
+        /// <summary>
+        /// Node Selector
+        /// Serialized Name: InstanceTypeSchema.nodeSelector
+        /// </summary>
         public IDictionary<string, string> NodeSelector { get; set; }
-        /// <summary> Resource requests/limits for this instance type. </summary>
+        /// <summary>
+        /// Resource requests/limits for this instance type
+        /// Serialized Name: InstanceTypeSchema.resources
+        /// </summary>
         public InstanceTypeSchemaResources Resources { get; set; }
     }
 }

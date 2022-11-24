@@ -11,7 +11,10 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> A paginated list of Datastore entities. </summary>
+    /// <summary>
+    /// A paginated list of Datastore entities.
+    /// Serialized Name: DatastoreResourceArmPaginatedResult
+    /// </summary>
     internal partial class DatastoreResourceArmPaginatedResult
     {
         /// <summary> Initializes a new instance of DatastoreResourceArmPaginatedResult. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of DatastoreResourceArmPaginatedResult. </summary>
-        /// <param name="nextLink"> The link to the next page of Datastore objects. If null, there are no additional pages. </param>
-        /// <param name="value"> An array of objects of type Datastore. </param>
+        /// <param name="nextLink">
+        /// The link to the next page of Datastore objects. If null, there are no additional pages.
+        /// Serialized Name: DatastoreResourceArmPaginatedResult.nextLink
+        /// </param>
+        /// <param name="value">
+        /// An array of objects of type Datastore.
+        /// Serialized Name: DatastoreResourceArmPaginatedResult.value
+        /// </param>
         internal DatastoreResourceArmPaginatedResult(string nextLink, IReadOnlyList<DatastoreData> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
-        /// <summary> The link to the next page of Datastore objects. If null, there are no additional pages. </summary>
+        /// <summary>
+        /// The link to the next page of Datastore objects. If null, there are no additional pages.
+        /// Serialized Name: DatastoreResourceArmPaginatedResult.nextLink
+        /// </summary>
         public string NextLink { get; }
-        /// <summary> An array of objects of type Datastore. </summary>
+        /// <summary>
+        /// An array of objects of type Datastore.
+        /// Serialized Name: DatastoreResourceArmPaginatedResult.value
+        /// </summary>
         public IReadOnlyList<DatastoreData> Value { get; }
     }
 }

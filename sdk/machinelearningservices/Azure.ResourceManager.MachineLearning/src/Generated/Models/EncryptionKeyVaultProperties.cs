@@ -10,12 +10,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The EncryptionKeyVaultProperties. </summary>
+    /// <summary>
+    /// The EncryptionKeyVaultProperties.
+    /// Serialized Name: EncryptionKeyVaultProperties
+    /// </summary>
     public partial class EncryptionKeyVaultProperties
     {
         /// <summary> Initializes a new instance of EncryptionKeyVaultProperties. </summary>
-        /// <param name="keyVaultArmId"> The ArmId of the keyVault where the customer owned encryption key is present. </param>
-        /// <param name="keyIdentifier"> Key vault uri to access the encryption key. </param>
+        /// <param name="keyVaultArmId">
+        /// The ArmId of the keyVault where the customer owned encryption key is present.
+        /// Serialized Name: EncryptionKeyVaultProperties.keyVaultArmId
+        /// </param>
+        /// <param name="keyIdentifier">
+        /// Key vault uri to access the encryption key.
+        /// Serialized Name: EncryptionKeyVaultProperties.keyIdentifier
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultArmId"/> or <paramref name="keyIdentifier"/> is null. </exception>
         public EncryptionKeyVaultProperties(string keyVaultArmId, string keyIdentifier)
         {
@@ -27,9 +36,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of EncryptionKeyVaultProperties. </summary>
-        /// <param name="keyVaultArmId"> The ArmId of the keyVault where the customer owned encryption key is present. </param>
-        /// <param name="keyIdentifier"> Key vault uri to access the encryption key. </param>
-        /// <param name="identityClientId"> For future use - The client id of the identity which will be used to access key vault. </param>
+        /// <param name="keyVaultArmId">
+        /// The ArmId of the keyVault where the customer owned encryption key is present.
+        /// Serialized Name: EncryptionKeyVaultProperties.keyVaultArmId
+        /// </param>
+        /// <param name="keyIdentifier">
+        /// Key vault uri to access the encryption key.
+        /// Serialized Name: EncryptionKeyVaultProperties.keyIdentifier
+        /// </param>
+        /// <param name="identityClientId">
+        /// For future use - The client id of the identity which will be used to access key vault.
+        /// Serialized Name: EncryptionKeyVaultProperties.identityClientId
+        /// </param>
         internal EncryptionKeyVaultProperties(string keyVaultArmId, string keyIdentifier, string identityClientId)
         {
             KeyVaultArmId = keyVaultArmId;
@@ -37,11 +55,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IdentityClientId = identityClientId;
         }
 
-        /// <summary> The ArmId of the keyVault where the customer owned encryption key is present. </summary>
+        /// <summary>
+        /// The ArmId of the keyVault where the customer owned encryption key is present.
+        /// Serialized Name: EncryptionKeyVaultProperties.keyVaultArmId
+        /// </summary>
         public string KeyVaultArmId { get; set; }
-        /// <summary> Key vault uri to access the encryption key. </summary>
+        /// <summary>
+        /// Key vault uri to access the encryption key.
+        /// Serialized Name: EncryptionKeyVaultProperties.keyIdentifier
+        /// </summary>
         public string KeyIdentifier { get; set; }
-        /// <summary> For future use - The client id of the identity which will be used to access key vault. </summary>
+        /// <summary>
+        /// For future use - The client id of the identity which will be used to access key vault.
+        /// Serialized Name: EncryptionKeyVaultProperties.identityClientId
+        /// </summary>
         public string IdentityClientId { get; set; }
     }
 }

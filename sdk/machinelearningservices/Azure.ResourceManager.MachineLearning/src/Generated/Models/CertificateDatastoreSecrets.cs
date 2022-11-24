@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Datastore certificate secrets. </summary>
+    /// <summary>
+    /// Datastore certificate secrets.
+    /// Serialized Name: CertificateDatastoreSecrets
+    /// </summary>
     public partial class CertificateDatastoreSecrets : DatastoreSecrets
     {
         /// <summary> Initializes a new instance of CertificateDatastoreSecrets. </summary>
@@ -17,15 +20,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of CertificateDatastoreSecrets. </summary>
-        /// <param name="secretsType"> [Required] Credential type used to authentication with storage. </param>
-        /// <param name="certificate"> Service principal certificate. </param>
+        /// <param name="secretsType">
+        /// [Required] Credential type used to authentication with storage.
+        /// Serialized Name: DatastoreSecrets.secretsType
+        /// </param>
+        /// <param name="certificate">
+        /// Service principal certificate.
+        /// Serialized Name: CertificateDatastoreSecrets.certificate
+        /// </param>
         internal CertificateDatastoreSecrets(SecretsType secretsType, string certificate) : base(secretsType)
         {
             Certificate = certificate;
             SecretsType = secretsType;
         }
 
-        /// <summary> Service principal certificate. </summary>
+        /// <summary>
+        /// Service principal certificate.
+        /// Serialized Name: CertificateDatastoreSecrets.certificate
+        /// </summary>
         public string Certificate { get; set; }
     }
 }

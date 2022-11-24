@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The status of a job. </summary>
+    /// <summary>
+    /// The status of a job.
+    /// Serialized Name: JobStatus
+    /// </summary>
     public readonly partial struct JobStatus : IEquatable<JobStatus>
     {
         private readonly string _value;
@@ -37,36 +40,76 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string PausedValue = "Paused";
         private const string UnknownValue = "Unknown";
 
-        /// <summary> Run hasn&apos;t started yet. </summary>
+        /// <summary>
+        /// Run hasn&apos;t started yet.
+        /// Serialized Name: JobStatus.NotStarted
+        /// </summary>
         public static JobStatus NotStarted { get; } = new JobStatus(NotStartedValue);
-        /// <summary> Run has started. The user has a run ID. </summary>
+        /// <summary>
+        /// Run has started. The user has a run ID.
+        /// Serialized Name: JobStatus.Starting
+        /// </summary>
         public static JobStatus Starting { get; } = new JobStatus(StartingValue);
-        /// <summary> (Not used currently) It will be used if ES is creating the compute target. </summary>
+        /// <summary>
+        /// (Not used currently) It will be used if ES is creating the compute target.
+        /// Serialized Name: JobStatus.Provisioning
+        /// </summary>
         public static JobStatus Provisioning { get; } = new JobStatus(ProvisioningValue);
-        /// <summary> The run environment is being prepared. </summary>
+        /// <summary>
+        /// The run environment is being prepared.
+        /// Serialized Name: JobStatus.Preparing
+        /// </summary>
         public static JobStatus Preparing { get; } = new JobStatus(PreparingValue);
-        /// <summary> The job is queued in the compute target. For example, in BatchAI the job is in queued state, while waiting for all required nodes to be ready. </summary>
+        /// <summary>
+        /// The job is queued in the compute target. For example, in BatchAI the job is in queued state, while waiting for all required nodes to be ready.
+        /// Serialized Name: JobStatus.Queued
+        /// </summary>
         public static JobStatus Queued { get; } = new JobStatus(QueuedValue);
-        /// <summary> The job started to run in the compute target. </summary>
+        /// <summary>
+        /// The job started to run in the compute target.
+        /// Serialized Name: JobStatus.Running
+        /// </summary>
         public static JobStatus Running { get; } = new JobStatus(RunningValue);
-        /// <summary> Job is completed in the target. It is in output collection state now. </summary>
+        /// <summary>
+        /// Job is completed in the target. It is in output collection state now.
+        /// Serialized Name: JobStatus.Finalizing
+        /// </summary>
         public static JobStatus Finalizing { get; } = new JobStatus(FinalizingValue);
-        /// <summary> Cancellation has been requested for the job. </summary>
+        /// <summary>
+        /// Cancellation has been requested for the job.
+        /// Serialized Name: JobStatus.CancelRequested
+        /// </summary>
         public static JobStatus CancelRequested { get; } = new JobStatus(CancelRequestedValue);
-        /// <summary> Job completed successfully. This reflects that both the job itself and output collection states completed successfully. </summary>
+        /// <summary>
+        /// Job completed successfully. This reflects that both the job itself and output collection states completed successfully
+        /// Serialized Name: JobStatus.Completed
+        /// </summary>
         public static JobStatus Completed { get; } = new JobStatus(CompletedValue);
-        /// <summary> Job failed. </summary>
+        /// <summary>
+        /// Job failed.
+        /// Serialized Name: JobStatus.Failed
+        /// </summary>
         public static JobStatus Failed { get; } = new JobStatus(FailedValue);
-        /// <summary> Following cancellation request, the job is now successfully canceled. </summary>
+        /// <summary>
+        /// Following cancellation request, the job is now successfully canceled.
+        /// Serialized Name: JobStatus.Canceled
+        /// </summary>
         public static JobStatus Canceled { get; } = new JobStatus(CanceledValue);
         /// <summary>
         /// When heartbeat is enabled, if the run isn&apos;t updating any information to RunHistory then the run goes to NotResponding state.
         /// NotResponding is the only state that is exempt from strict transition orders. A run can go from NotResponding to any of the previous states.
+        /// Serialized Name: JobStatus.NotResponding
         /// </summary>
         public static JobStatus NotResponding { get; } = new JobStatus(NotRespondingValue);
-        /// <summary> The job is paused by users. Some adjustment to labeling jobs can be made only in paused state. </summary>
+        /// <summary>
+        /// The job is paused by users. Some adjustment to labeling jobs can be made only in paused state.
+        /// Serialized Name: JobStatus.Paused
+        /// </summary>
         public static JobStatus Paused { get; } = new JobStatus(PausedValue);
-        /// <summary> Default job status if not mapped to all other statuses. </summary>
+        /// <summary>
+        /// Default job status if not mapped to all other statuses
+        /// Serialized Name: JobStatus.Unknown
+        /// </summary>
         public static JobStatus Unknown { get; } = new JobStatus(UnknownValue);
         /// <summary> Determines if two <see cref="JobStatus"/> values are the same. </summary>
         public static bool operator ==(JobStatus left, JobStatus right) => left.Equals(right);

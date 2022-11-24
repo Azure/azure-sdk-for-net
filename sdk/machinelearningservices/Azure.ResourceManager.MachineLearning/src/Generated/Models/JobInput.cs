@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Command job definition.
+    /// Serialized Name: JobInput
     /// Please note <see cref="JobInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="CustomModelJobInput"/>, <see cref="LiteralJobInput"/>, <see cref="MLFlowModelJobInput"/>, <see cref="MLTableJobInput"/>, <see cref="TritonModelJobInput"/>, <see cref="UriFileJobInput"/> and <see cref="UriFolderJobInput"/>.
     /// </summary>
@@ -20,17 +21,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of JobInput. </summary>
-        /// <param name="description"> Description for the input. </param>
-        /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
+        /// <param name="description">
+        /// Description for the input.
+        /// Serialized Name: JobInput.description
+        /// </param>
+        /// <param name="jobInputType">
+        /// [Required] Specifies the type of job.
+        /// Serialized Name: JobInput.jobInputType
+        /// </param>
         internal JobInput(string description, JobInputType jobInputType)
         {
             Description = description;
             JobInputType = jobInputType;
         }
 
-        /// <summary> Description for the input. </summary>
+        /// <summary>
+        /// Description for the input.
+        /// Serialized Name: JobInput.description
+        /// </summary>
         public string Description { get; set; }
-        /// <summary> [Required] Specifies the type of job. </summary>
+        /// <summary>
+        /// [Required] Specifies the type of job.
+        /// Serialized Name: JobInput.jobInputType
+        /// </summary>
         internal JobInputType JobInputType { get; set; }
     }
 }

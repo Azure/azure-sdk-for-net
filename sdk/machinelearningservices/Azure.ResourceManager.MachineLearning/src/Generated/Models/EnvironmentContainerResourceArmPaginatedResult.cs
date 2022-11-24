@@ -11,7 +11,10 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> A paginated list of EnvironmentContainer entities. </summary>
+    /// <summary>
+    /// A paginated list of EnvironmentContainer entities.
+    /// Serialized Name: EnvironmentContainerResourceArmPaginatedResult
+    /// </summary>
     internal partial class EnvironmentContainerResourceArmPaginatedResult
     {
         /// <summary> Initializes a new instance of EnvironmentContainerResourceArmPaginatedResult. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of EnvironmentContainerResourceArmPaginatedResult. </summary>
-        /// <param name="nextLink"> The link to the next page of EnvironmentContainer objects. If null, there are no additional pages. </param>
-        /// <param name="value"> An array of objects of type EnvironmentContainer. </param>
+        /// <param name="nextLink">
+        /// The link to the next page of EnvironmentContainer objects. If null, there are no additional pages.
+        /// Serialized Name: EnvironmentContainerResourceArmPaginatedResult.nextLink
+        /// </param>
+        /// <param name="value">
+        /// An array of objects of type EnvironmentContainer.
+        /// Serialized Name: EnvironmentContainerResourceArmPaginatedResult.value
+        /// </param>
         internal EnvironmentContainerResourceArmPaginatedResult(string nextLink, IReadOnlyList<EnvironmentContainerData> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
-        /// <summary> The link to the next page of EnvironmentContainer objects. If null, there are no additional pages. </summary>
+        /// <summary>
+        /// The link to the next page of EnvironmentContainer objects. If null, there are no additional pages.
+        /// Serialized Name: EnvironmentContainerResourceArmPaginatedResult.nextLink
+        /// </summary>
         public string NextLink { get; }
-        /// <summary> An array of objects of type EnvironmentContainer. </summary>
+        /// <summary>
+        /// An array of objects of type EnvironmentContainer.
+        /// Serialized Name: EnvironmentContainerResourceArmPaginatedResult.value
+        /// </summary>
         public IReadOnlyList<EnvironmentContainerData> Value { get; }
     }
 }

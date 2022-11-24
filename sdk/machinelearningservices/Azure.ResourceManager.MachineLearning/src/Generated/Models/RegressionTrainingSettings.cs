@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Regression Training related configuration. </summary>
+    /// <summary>
+    /// Regression Training related configuration.
+    /// Serialized Name: RegressionTrainingSettings
+    /// </summary>
     public partial class RegressionTrainingSettings : TrainingSettings
     {
         /// <summary> Initializes a new instance of RegressionTrainingSettings. </summary>
@@ -22,27 +25,58 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of RegressionTrainingSettings. </summary>
-        /// <param name="enableDnnTraining"> Enable recommendation of DNN models. </param>
-        /// <param name="enableModelExplainability"> Flag to turn on explainability on best model. </param>
-        /// <param name="enableOnnxCompatibleModels"> Flag for enabling onnx compatible models. </param>
-        /// <param name="enableStackEnsemble"> Enable stack ensemble run. </param>
-        /// <param name="enableVoteEnsemble"> Enable voting ensemble run. </param>
+        /// <param name="enableDnnTraining">
+        /// Enable recommendation of DNN models.
+        /// Serialized Name: TrainingSettings.enableDnnTraining
+        /// </param>
+        /// <param name="enableModelExplainability">
+        /// Flag to turn on explainability on best model.
+        /// Serialized Name: TrainingSettings.enableModelExplainability
+        /// </param>
+        /// <param name="enableOnnxCompatibleModels">
+        /// Flag for enabling onnx compatible models.
+        /// Serialized Name: TrainingSettings.enableOnnxCompatibleModels
+        /// </param>
+        /// <param name="enableStackEnsemble">
+        /// Enable stack ensemble run.
+        /// Serialized Name: TrainingSettings.enableStackEnsemble
+        /// </param>
+        /// <param name="enableVoteEnsemble">
+        /// Enable voting ensemble run.
+        /// Serialized Name: TrainingSettings.enableVoteEnsemble
+        /// </param>
         /// <param name="ensembleModelDownloadTimeout">
         /// During VotingEnsemble and StackEnsemble model generation, multiple fitted models from the previous child runs are downloaded.
         /// Configure this parameter with a higher value than 300 secs, if more time is needed.
+        /// Serialized Name: TrainingSettings.ensembleModelDownloadTimeout
         /// </param>
-        /// <param name="stackEnsembleSettings"> Stack ensemble settings for stack ensemble run. </param>
-        /// <param name="allowedTrainingAlgorithms"> Allowed models for regression task. </param>
-        /// <param name="blockedTrainingAlgorithms"> Blocked models for regression task. </param>
+        /// <param name="stackEnsembleSettings">
+        /// Stack ensemble settings for stack ensemble run.
+        /// Serialized Name: TrainingSettings.stackEnsembleSettings
+        /// </param>
+        /// <param name="allowedTrainingAlgorithms">
+        /// Allowed models for regression task.
+        /// Serialized Name: RegressionTrainingSettings.allowedTrainingAlgorithms
+        /// </param>
+        /// <param name="blockedTrainingAlgorithms">
+        /// Blocked models for regression task.
+        /// Serialized Name: RegressionTrainingSettings.blockedTrainingAlgorithms
+        /// </param>
         internal RegressionTrainingSettings(bool? enableDnnTraining, bool? enableModelExplainability, bool? enableOnnxCompatibleModels, bool? enableStackEnsemble, bool? enableVoteEnsemble, TimeSpan? ensembleModelDownloadTimeout, StackEnsembleSettings stackEnsembleSettings, IList<RegressionModel> allowedTrainingAlgorithms, IList<RegressionModel> blockedTrainingAlgorithms) : base(enableDnnTraining, enableModelExplainability, enableOnnxCompatibleModels, enableStackEnsemble, enableVoteEnsemble, ensembleModelDownloadTimeout, stackEnsembleSettings)
         {
             AllowedTrainingAlgorithms = allowedTrainingAlgorithms;
             BlockedTrainingAlgorithms = blockedTrainingAlgorithms;
         }
 
-        /// <summary> Allowed models for regression task. </summary>
+        /// <summary>
+        /// Allowed models for regression task.
+        /// Serialized Name: RegressionTrainingSettings.allowedTrainingAlgorithms
+        /// </summary>
         public IList<RegressionModel> AllowedTrainingAlgorithms { get; set; }
-        /// <summary> Blocked models for regression task. </summary>
+        /// <summary>
+        /// Blocked models for regression task.
+        /// Serialized Name: RegressionTrainingSettings.blockedTrainingAlgorithms
+        /// </summary>
         public IList<RegressionModel> BlockedTrainingAlgorithms { get; set; }
     }
 }

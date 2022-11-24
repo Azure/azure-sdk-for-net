@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Definition of a component version: defines resources that span component types. </summary>
+    /// <summary>
+    /// Definition of a component version: defines resources that span component types.
+    /// Serialized Name: ComponentVersionProperties
+    /// </summary>
     public partial class ComponentVersionProperties : AssetBase
     {
         /// <summary> Initializes a new instance of ComponentVersionProperties. </summary>
@@ -19,14 +22,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of ComponentVersionProperties. </summary>
-        /// <param name="description"> The asset description text. </param>
-        /// <param name="properties"> The asset property dictionary. </param>
-        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
-        /// <param name="isArchived"> Is the asset archived?. </param>
+        /// <param name="description">
+        /// The asset description text.
+        /// Serialized Name: ResourceBase.description
+        /// </param>
+        /// <param name="properties">
+        /// The asset property dictionary.
+        /// Serialized Name: ResourceBase.properties
+        /// </param>
+        /// <param name="tags">
+        /// Tag dictionary. Tags can be added, removed, and updated.
+        /// Serialized Name: ResourceBase.tags
+        /// </param>
+        /// <param name="isAnonymous">
+        /// If the name version are system generated (anonymous registration).
+        /// Serialized Name: AssetBase.isAnonymous
+        /// </param>
+        /// <param name="isArchived">
+        /// Is the asset archived?
+        /// Serialized Name: AssetBase.isArchived
+        /// </param>
         /// <param name="componentSpec">
         /// Defines Component definition details.
         /// &lt;see href=&quot;https://docs.microsoft.com/en-us/azure/machine-learning/reference-yaml-component-command&quot; /&gt;
+        /// Serialized Name: ComponentVersionProperties.componentSpec
         /// </param>
         internal ComponentVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived, BinaryData componentSpec) : base(description, properties, tags, isAnonymous, isArchived)
         {
@@ -36,6 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary>
         /// Defines Component definition details.
         /// &lt;see href=&quot;https://docs.microsoft.com/en-us/azure/machine-learning/reference-yaml-component-command&quot; /&gt;
+        /// Serialized Name: ComponentVersionProperties.componentSpec
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
