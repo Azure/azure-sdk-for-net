@@ -39,14 +39,14 @@ $innerFolder = Split-Path $specSubDirectory -Leaf
 
 $tempFolder = "$ProjectDirectory/TempCadlFiles"
 $npmWorkingDir = Resolve-Path $tempFolder/$innerFolder
-$mainCadlFile = Resolve-Path "$npmWorkingDir/client.cadl"
+$mainCadlFile = If (Test-Path "$npmWorkingDir/client.cadl") { Resolve-Path "$npmWorkingDir/client.cadl" } Else { Resolve-Path "$npmWorkingDir/main.cadl"}
 $resolvedProjectDirectory = Resolve-Path "$ProjectDirectory/src"
 
 try {
     Push-Location $npmWorkingDir
     NpmInstallForProject $npmWorkingDir
-    Write-Host("npx cadl compile $mainCadlFile --output-path `"$resolvedProjectDirectory`"")
-    npx cadl compile $mainCadlFile --output-path "$resolvedProjectDirectory"
+    Write-Host("npx cadl compile $mainCadlFile --emit `"`@azure-tools/cadl-csharp`" --output-path `"$resolvedProjectDirectory`"")
+    npx cadl compile $mainCadlFile --emit "@azure-tools/cadl-csharp" --output-path "$resolvedProjectDirectory"
 }
 finally {
     Pop-Location
