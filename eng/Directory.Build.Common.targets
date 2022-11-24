@@ -145,8 +145,12 @@
 
   <Import Project="ApiListing.targets" />
 
-  <!-- Only generate code coverage reports on latest test target framework. -->
-  <Import Project="CodeCoverage.targets" Condition="'$(CodeCoverageTargetFramework)' != '' and '$(TargetFramework)' == '$(CodeCoverageTargetFramework)'" />
+  <!-- Code Coverage -->
+  <PropertyGroup Condition="'$(CollectCoverage)' == 'true'">
+    <!-- Run Code Coverage only on the latest target if we're in a cross-compiling inner build. -->
+    <CodeCoverageTargetFramework Condition="'$(IsCrossTargetingBuild)' != 'true' and '$(TargetFrameworks)' != ''">$(TargetFrameworks.Split(";")[0])</CodeCoverageTargetFramework>
+  </PropertyGroup>
+  <Import Project="CodeCoverage.targets" Condition="'$(CollectCoverage)' == 'true' and '$(CodeCoverageTargetFramework)' != '' and '$(CodeCoverageTargetFramework)' == '$(TargetFramework)'" />
 
   <Import Project="CodeGeneration.targets" Condition="'$(TemporaryUsePreviousGeneratorVersion)' == 'true'" />
 

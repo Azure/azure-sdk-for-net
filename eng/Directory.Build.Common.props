@@ -93,6 +93,8 @@
 
   <PropertyGroup Condition="'$(IsShippingClientLibrary)' == 'true' and '$(TF_BUILD)' == 'true'">
     <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    <!-- See https://github.com/dotnet/sourcelink/tree/main/docs#deterministicsourcepaths for details. -->
+    <DeterministicSourcePaths>true</DeterministicSourcePaths>
   </PropertyGroup>
 
   <!-- TODO. REVIEW -->
@@ -126,9 +128,6 @@
     <RequiredTargetFrameworks>net6.0;netcoreapp3.1</RequiredTargetFrameworks>
     <!-- Also test net461 on Windows. -->
     <RequiredTargetFrameworks Condition="'$(OS)' == 'Windows_NT'">$(RequiredTargetFrameworks);net461</RequiredTargetFrameworks>
-
-    <!-- Run Code Coverage only on the latest target. -->
-    <CodeCoverageTargetFramework>$(RequiredTargetFrameworks.Split(";")[0])</CodeCoverageTargetFramework>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(IsMgmtSubLibrary)' == 'true' and !$(MSBuildProjectName.Equals('Azure.ResourceManager.Tests'))">
