@@ -22,9 +22,15 @@ namespace Azure.AI.AnomalyDetector.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("detectingPoints");
-            writer.WriteNumberValue(DetectingPoints);
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

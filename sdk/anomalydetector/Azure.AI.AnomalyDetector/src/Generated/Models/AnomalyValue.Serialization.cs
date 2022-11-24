@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector.Models
@@ -53,6 +54,14 @@ namespace Azure.AI.AnomalyDetector.Models
                 }
             }
             return new AnomalyValue(isAnomaly, severity, score, Optional.ToList(interpretation));
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AnomalyValue FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAnomalyValue(document.RootElement);
         }
     }
 }
