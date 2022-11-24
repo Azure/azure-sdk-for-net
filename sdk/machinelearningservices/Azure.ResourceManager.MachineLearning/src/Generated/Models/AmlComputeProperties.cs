@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// A property bag containing additional properties.
         /// Serialized Name: AmlComputeProperties.propertyBag
         /// </param>
-        internal AmlComputeProperties(OSType? osType, string vmSize, VmPriority? vmPriority, VirtualMachineImage virtualMachineImage, bool? isolatedNetwork, ScaleSettings scaleSettings, UserAccountCredentials userAccountCredentials, ResourceId subnet, RemoteLoginPortPublicAccess? remoteLoginPortPublicAccess, AllocationState? allocationState, DateTimeOffset? allocationStateTransitionOn, IReadOnlyList<ErrorResponse> errors, int? currentNodeCount, int? targetNodeCount, NodeStateCounts nodeStateCounts, bool? enableNodePublicIP, BinaryData propertyBag)
+        internal AmlComputeProperties(OSType? osType, string vmSize, VmPriority? vmPriority, VirtualMachineImage virtualMachineImage, bool? isolatedNetwork, ScaleSettings scaleSettings, UserAccountCredentials userAccountCredentials, ResourceId subnet, RemoteLoginPortPublicAccess? remoteLoginPortPublicAccess, AmlAllocationState? allocationState, DateTimeOffset? allocationStateTransitionOn, IReadOnlyList<ErrorResponse> errors, int? currentNodeCount, int? targetNodeCount, NodeStateCounts nodeStateCounts, bool? enableNodePublicIP, BinaryData propertyBag)
         {
             OSType = osType;
             VmSize = vmSize;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Allocation state of the compute. Possible values are: steady - Indicates that the compute is not resizing. There are no changes to the number of compute nodes in the compute in progress. A compute enters this state when it is created and when no operations are being performed on the compute to change the number of compute nodes. resizing - Indicates that the compute is resizing; that is, compute nodes are being added to or removed from the compute.
         /// Serialized Name: AmlComputeProperties.allocationState
         /// </summary>
-        public AllocationState? AllocationState { get; }
+        public AmlAllocationState? AllocationState { get; }
         /// <summary>
         /// The time at which the compute entered its current allocation state.
         /// Serialized Name: AmlComputeProperties.allocationStateTransitionTime

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of ModelVersionResourceArmPaginatedResult. </summary>
         internal ModelVersionResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<ModelVersionData>();
+            Value = new ChangeTrackingList<MachineLearningModelVersionData>();
         }
 
         /// <summary> Initializes a new instance of ModelVersionResourceArmPaginatedResult. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// An array of objects of type ModelVersion.
         /// Serialized Name: ModelVersionResourceArmPaginatedResult.value
         /// </param>
-        internal ModelVersionResourceArmPaginatedResult(string nextLink, IReadOnlyList<ModelVersionData> value)
+        internal ModelVersionResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningModelVersionData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// An array of objects of type ModelVersion.
         /// Serialized Name: ModelVersionResourceArmPaginatedResult.value
         /// </summary>
-        public IReadOnlyList<ModelVersionData> Value { get; }
+        public IReadOnlyList<MachineLearningModelVersionData> Value { get; }
     }
 }

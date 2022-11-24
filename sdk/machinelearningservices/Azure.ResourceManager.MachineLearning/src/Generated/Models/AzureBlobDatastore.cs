@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// Azure Blob datastore configuration.
     /// Serialized Name: AzureBlobDatastore
     /// </summary>
-    public partial class AzureBlobDatastore : DatastoreProperties
+    public partial class AzureBlobDatastore : MachineLearningDatastoreProperties
     {
         /// <summary> Initializes a new instance of AzureBlobDatastore. </summary>
         /// <param name="credentials">
         /// [Required] Account credentials.
-        /// Serialized Name: DatastoreProperties.credentials
-        /// Please note <see cref="DatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AccountKeyDatastoreCredentials"/>, <see cref="CertificateDatastoreCredentials"/>, <see cref="NoneDatastoreCredentials"/>, <see cref="SasDatastoreCredentials"/> and <see cref="ServicePrincipalDatastoreCredentials"/>.
+        /// Serialized Name: Datastore.credentials
+        /// Please note <see cref="MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="credentials"/> is null. </exception>
-        public AzureBlobDatastore(DatastoreCredentials credentials) : base(credentials)
+        public AzureBlobDatastore(MachineLearningDatastoreCredentials credentials) : base(credentials)
         {
             Argument.AssertNotNull(credentials, nameof(credentials));
 
@@ -47,17 +47,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="credentials">
         /// [Required] Account credentials.
-        /// Serialized Name: DatastoreProperties.credentials
-        /// Please note <see cref="DatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AccountKeyDatastoreCredentials"/>, <see cref="CertificateDatastoreCredentials"/>, <see cref="NoneDatastoreCredentials"/>, <see cref="SasDatastoreCredentials"/> and <see cref="ServicePrincipalDatastoreCredentials"/>.
+        /// Serialized Name: Datastore.credentials
+        /// Please note <see cref="MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
         /// </param>
         /// <param name="datastoreType">
         /// [Required] Storage type backing the datastore.
-        /// Serialized Name: DatastoreProperties.datastoreType
+        /// Serialized Name: Datastore.datastoreType
         /// </param>
         /// <param name="isDefault">
         /// Readonly property to indicate if datastore is the workspace default datastore
-        /// Serialized Name: DatastoreProperties.isDefault
+        /// Serialized Name: Datastore.isDefault
         /// </param>
         /// <param name="accountName">
         /// Storage account name.
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Indicates which identity to use to authenticate service data access to customer&apos;s storage.
         /// Serialized Name: AzureBlobDatastore.serviceDataAccessAuthIdentity
         /// </param>
-        internal AzureBlobDatastore(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, DatastoreCredentials credentials, DatastoreType datastoreType, bool? isDefault, string accountName, string containerName, string endpoint, string protocol, ServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity) : base(description, properties, tags, credentials, datastoreType, isDefault)
+        internal AzureBlobDatastore(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, MachineLearningDatastoreCredentials credentials, DatastoreType datastoreType, bool? isDefault, string accountName, string containerName, string endpoint, string protocol, ServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity) : base(description, properties, tags, credentials, datastoreType, isDefault)
         {
             AccountName = accountName;
             ContainerName = containerName;

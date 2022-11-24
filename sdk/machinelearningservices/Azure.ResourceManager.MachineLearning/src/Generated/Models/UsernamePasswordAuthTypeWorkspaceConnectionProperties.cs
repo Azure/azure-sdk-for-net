@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// The UsernamePasswordAuthTypeWorkspaceConnectionProperties.
     /// Serialized Name: UsernamePasswordAuthTypeWorkspaceConnectionProperties
     /// </summary>
-    public partial class UsernamePasswordAuthTypeWorkspaceConnectionProperties : WorkspaceConnectionPropertiesV2
+    public partial class UsernamePasswordAuthTypeWorkspaceConnectionProperties : MachineLearningWorkspaceConnectionProperties
     {
         /// <summary> Initializes a new instance of UsernamePasswordAuthTypeWorkspaceConnectionProperties. </summary>
         public UsernamePasswordAuthTypeWorkspaceConnectionProperties()
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Serialized Name: WorkspaceConnectionPropertiesV2.valueFormat
         /// </param>
         /// <param name="credentials"> Serialized Name: UsernamePasswordAuthTypeWorkspaceConnectionProperties.credentials. </param>
-        internal UsernamePasswordAuthTypeWorkspaceConnectionProperties(ConnectionAuthType authType, ConnectionCategory? category, string target, string value, ValueFormat? valueFormat, WorkspaceConnectionUsernamePassword credentials) : base(authType, category, target, value, valueFormat)
+        internal UsernamePasswordAuthTypeWorkspaceConnectionProperties(ConnectionAuthType authType, MachineLearningConnectionCategory? category, string target, string value, ValueFormat? valueFormat, WorkspaceConnectionUsernamePassword credentials) : base(authType, category, target, value, valueFormat)
         {
             Credentials = credentials;
             AuthType = authType;

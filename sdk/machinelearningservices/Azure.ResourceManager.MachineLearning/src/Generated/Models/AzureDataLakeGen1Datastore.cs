@@ -15,21 +15,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// Azure Data Lake Gen1 datastore configuration.
     /// Serialized Name: AzureDataLakeGen1Datastore
     /// </summary>
-    public partial class AzureDataLakeGen1Datastore : DatastoreProperties
+    public partial class AzureDataLakeGen1Datastore : MachineLearningDatastoreProperties
     {
         /// <summary> Initializes a new instance of AzureDataLakeGen1Datastore. </summary>
         /// <param name="credentials">
         /// [Required] Account credentials.
-        /// Serialized Name: DatastoreProperties.credentials
-        /// Please note <see cref="DatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AccountKeyDatastoreCredentials"/>, <see cref="CertificateDatastoreCredentials"/>, <see cref="NoneDatastoreCredentials"/>, <see cref="SasDatastoreCredentials"/> and <see cref="ServicePrincipalDatastoreCredentials"/>.
+        /// Serialized Name: Datastore.credentials
+        /// Please note <see cref="MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
         /// </param>
         /// <param name="storeName">
         /// [Required] Azure Data Lake store name.
         /// Serialized Name: AzureDataLakeGen1Datastore.storeName
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="credentials"/> or <paramref name="storeName"/> is null. </exception>
-        public AzureDataLakeGen1Datastore(DatastoreCredentials credentials, string storeName) : base(credentials)
+        public AzureDataLakeGen1Datastore(MachineLearningDatastoreCredentials credentials, string storeName) : base(credentials)
         {
             Argument.AssertNotNull(credentials, nameof(credentials));
             Argument.AssertNotNull(storeName, nameof(storeName));
@@ -53,17 +53,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="credentials">
         /// [Required] Account credentials.
-        /// Serialized Name: DatastoreProperties.credentials
-        /// Please note <see cref="DatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AccountKeyDatastoreCredentials"/>, <see cref="CertificateDatastoreCredentials"/>, <see cref="NoneDatastoreCredentials"/>, <see cref="SasDatastoreCredentials"/> and <see cref="ServicePrincipalDatastoreCredentials"/>.
+        /// Serialized Name: Datastore.credentials
+        /// Please note <see cref="MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
         /// </param>
         /// <param name="datastoreType">
         /// [Required] Storage type backing the datastore.
-        /// Serialized Name: DatastoreProperties.datastoreType
+        /// Serialized Name: Datastore.datastoreType
         /// </param>
         /// <param name="isDefault">
         /// Readonly property to indicate if datastore is the workspace default datastore
-        /// Serialized Name: DatastoreProperties.isDefault
+        /// Serialized Name: Datastore.isDefault
         /// </param>
         /// <param name="serviceDataAccessAuthIdentity">
         /// Indicates which identity to use to authenticate service data access to customer&apos;s storage.
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// [Required] Azure Data Lake store name.
         /// Serialized Name: AzureDataLakeGen1Datastore.storeName
         /// </param>
-        internal AzureDataLakeGen1Datastore(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, DatastoreCredentials credentials, DatastoreType datastoreType, bool? isDefault, ServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity, string storeName) : base(description, properties, tags, credentials, datastoreType, isDefault)
+        internal AzureDataLakeGen1Datastore(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, MachineLearningDatastoreCredentials credentials, DatastoreType datastoreType, bool? isDefault, ServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity, string storeName) : base(description, properties, tags, credentials, datastoreType, isDefault)
         {
             ServiceDataAccessAuthIdentity = serviceDataAccessAuthIdentity;
             StoreName = storeName;

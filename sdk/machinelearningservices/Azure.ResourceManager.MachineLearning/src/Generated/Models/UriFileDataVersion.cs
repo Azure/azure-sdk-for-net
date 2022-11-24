@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// uri-file data version entity
     /// Serialized Name: UriFileDataVersion
     /// </summary>
-    public partial class UriFileDataVersion : DataVersionProperties
+    public partial class UriFileDataVersion : MachineLearningDataVersionProperties
     {
         /// <summary> Initializes a new instance of UriFileDataVersion. </summary>
         /// <param name="dataUri">
         /// [Required] Uri of the data. Usage/meaning depends on Microsoft.MachineLearning.ManagementFrontEnd.Contracts.V20221001.Assets.DataVersionBase.DataType
-        /// Serialized Name: DataVersionProperties.dataUri
+        /// Serialized Name: DataVersionBase.dataUri
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataUri"/> is null. </exception>
         public UriFileDataVersion(Uri dataUri) : base(dataUri)
@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="dataType">
         /// [Required] Specifies the type of data.
-        /// Serialized Name: DataVersionProperties.dataType
+        /// Serialized Name: DataVersionBase.dataType
         /// </param>
         /// <param name="dataUri">
         /// [Required] Uri of the data. Usage/meaning depends on Microsoft.MachineLearning.ManagementFrontEnd.Contracts.V20221001.Assets.DataVersionBase.DataType
-        /// Serialized Name: DataVersionProperties.dataUri
+        /// Serialized Name: DataVersionBase.dataUri
         /// </param>
         internal UriFileDataVersion(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived, DataType dataType, Uri dataUri) : base(description, properties, tags, isAnonymous, isArchived, dataType, dataUri)
         {

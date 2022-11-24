@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal static NoneAuthTypeWorkspaceConnectionProperties DeserializeNoneAuthTypeWorkspaceConnectionProperties(JsonElement element)
         {
             ConnectionAuthType authType = default;
-            Optional<ConnectionCategory> category = default;
+            Optional<MachineLearningConnectionCategory> category = default;
             Optional<string> target = default;
             Optional<string> value = default;
             Optional<ValueFormat> valueFormat = default;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    category = new ConnectionCategory(property.Value.GetString());
+                    category = new MachineLearningConnectionCategory(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("target"))

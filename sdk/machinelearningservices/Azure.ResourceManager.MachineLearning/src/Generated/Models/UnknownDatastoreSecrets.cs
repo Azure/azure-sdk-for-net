@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// The UnknownDatastoreSecrets.
     /// Serialized Name: UnknownDatastoreSecrets
     /// </summary>
-    internal partial class UnknownDatastoreSecrets : DatastoreSecrets
+    internal partial class UnknownDatastoreSecrets : MachineLearningDatastoreSecrets
     {
         /// <summary> Initializes a new instance of UnknownDatastoreSecrets. </summary>
         /// <param name="secretsType">

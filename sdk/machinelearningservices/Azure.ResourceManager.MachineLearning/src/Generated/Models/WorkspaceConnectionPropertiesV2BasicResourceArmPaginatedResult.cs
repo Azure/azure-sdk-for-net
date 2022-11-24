@@ -20,20 +20,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult. </summary>
         internal WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<WorkspaceConnectionPropertiesV2BasicResourceData>();
+            Value = new ChangeTrackingList<MachineLearningWorkspaceConnectionData>();
         }
 
         /// <summary> Initializes a new instance of WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult. </summary>
         /// <param name="value"> Serialized Name: WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult.value. </param>
         /// <param name="nextLink"> Serialized Name: WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult.nextLink. </param>
-        internal WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult(IReadOnlyList<WorkspaceConnectionPropertiesV2BasicResourceData> value, string nextLink)
+        internal WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult(IReadOnlyList<MachineLearningWorkspaceConnectionData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Serialized Name: WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult.value. </summary>
-        public IReadOnlyList<WorkspaceConnectionPropertiesV2BasicResourceData> Value { get; }
+        public IReadOnlyList<MachineLearningWorkspaceConnectionData> Value { get; }
         /// <summary> Serialized Name: WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult.nextLink. </summary>
         public string NextLink { get; }
     }

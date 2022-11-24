@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// The SASAuthTypeWorkspaceConnectionProperties.
     /// Serialized Name: SASAuthTypeWorkspaceConnectionProperties
     /// </summary>
-    public partial class SASAuthTypeWorkspaceConnectionProperties : WorkspaceConnectionPropertiesV2
+    public partial class SASAuthTypeWorkspaceConnectionProperties : MachineLearningWorkspaceConnectionProperties
     {
         /// <summary> Initializes a new instance of SASAuthTypeWorkspaceConnectionProperties. </summary>
         public SASAuthTypeWorkspaceConnectionProperties()
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Serialized Name: WorkspaceConnectionPropertiesV2.valueFormat
         /// </param>
         /// <param name="credentials"> Serialized Name: SASAuthTypeWorkspaceConnectionProperties.credentials. </param>
-        internal SASAuthTypeWorkspaceConnectionProperties(ConnectionAuthType authType, ConnectionCategory? category, string target, string value, ValueFormat? valueFormat, WorkspaceConnectionSharedAccessSignature credentials) : base(authType, category, target, value, valueFormat)
+        internal SASAuthTypeWorkspaceConnectionProperties(ConnectionAuthType authType, MachineLearningConnectionCategory? category, string target, string value, ValueFormat? valueFormat, WorkspaceConnectionSharedAccessSignature credentials) : base(authType, category, target, value, valueFormat)
         {
             Credentials = credentials;
             AuthType = authType;

@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> endpoint = default;
             Optional<string> protocol = default;
             Optional<ServiceDataAccessAuthIdentity> serviceDataAccessAuthIdentity = default;
-            DatastoreCredentials credentials = default;
+            MachineLearningDatastoreCredentials credentials = default;
             DatastoreType datastoreType = default;
             Optional<bool> isDefault = default;
             Optional<string> description = default;
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("credentials"))
                 {
-                    credentials = DatastoreCredentials.DeserializeDatastoreCredentials(property.Value);
+                    credentials = MachineLearningDatastoreCredentials.DeserializeMachineLearningDatastoreCredentials(property.Value);
                     continue;
                 }
                 if (property.NameEquals("datastoreType"))

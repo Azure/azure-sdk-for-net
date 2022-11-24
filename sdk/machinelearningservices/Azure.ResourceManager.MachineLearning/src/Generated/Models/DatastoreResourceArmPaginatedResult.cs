@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of DatastoreResourceArmPaginatedResult. </summary>
         internal DatastoreResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<DatastoreData>();
+            Value = new ChangeTrackingList<MachineLearningDatastoreData>();
         }
 
         /// <summary> Initializes a new instance of DatastoreResourceArmPaginatedResult. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// An array of objects of type Datastore.
         /// Serialized Name: DatastoreResourceArmPaginatedResult.value
         /// </param>
-        internal DatastoreResourceArmPaginatedResult(string nextLink, IReadOnlyList<DatastoreData> value)
+        internal DatastoreResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningDatastoreData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// An array of objects of type Datastore.
         /// Serialized Name: DatastoreResourceArmPaginatedResult.value
         /// </summary>
-        public IReadOnlyList<DatastoreData> Value { get; }
+        public IReadOnlyList<MachineLearningDatastoreData> Value { get; }
     }
 }

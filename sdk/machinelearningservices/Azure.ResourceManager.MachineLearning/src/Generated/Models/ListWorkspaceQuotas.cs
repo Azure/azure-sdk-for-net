@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of ListWorkspaceQuotas. </summary>
         internal ListWorkspaceQuotas()
         {
-            Value = new ChangeTrackingList<ResourceQuota>();
+            Value = new ChangeTrackingList<MachineLearningResourceQuota>();
         }
 
         /// <summary> Initializes a new instance of ListWorkspaceQuotas. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The URI to fetch the next page of workspace quota information by VM Family. Call ListNext() with this to fetch the next page of Workspace Quota information.
         /// Serialized Name: ListWorkspaceQuotas.nextLink
         /// </param>
-        internal ListWorkspaceQuotas(IReadOnlyList<ResourceQuota> value, string nextLink)
+        internal ListWorkspaceQuotas(IReadOnlyList<MachineLearningResourceQuota> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The list of Workspace Quotas by VM Family
         /// Serialized Name: ListWorkspaceQuotas.value
         /// </summary>
-        public IReadOnlyList<ResourceQuota> Value { get; }
+        public IReadOnlyList<MachineLearningResourceQuota> Value { get; }
         /// <summary>
         /// The URI to fetch the next page of workspace quota information by VM Family. Call ListNext() with this to fetch the next page of Workspace Quota information.
         /// Serialized Name: ListWorkspaceQuotas.nextLink

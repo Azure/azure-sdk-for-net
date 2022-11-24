@@ -52,43 +52,43 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="componentId">
         /// ARM resource ID of the component resource.
-        /// Serialized Name: MachineLearningJobProperties.componentId
+        /// Serialized Name: JobBase.componentId
         /// </param>
         /// <param name="computeId">
         /// ARM resource ID of the compute resource.
-        /// Serialized Name: MachineLearningJobProperties.computeId
+        /// Serialized Name: JobBase.computeId
         /// </param>
         /// <param name="displayName">
         /// Display name of job.
-        /// Serialized Name: MachineLearningJobProperties.displayName
+        /// Serialized Name: JobBase.displayName
         /// </param>
         /// <param name="experimentName">
         /// The name of the experiment the job belongs to. If not set, the job is placed in the &quot;Default&quot; experiment.
-        /// Serialized Name: MachineLearningJobProperties.experimentName
+        /// Serialized Name: JobBase.experimentName
         /// </param>
         /// <param name="identity">
         /// Identity configuration. If set, this should be one of AmlToken, ManagedIdentity, UserIdentity or null.
         /// Defaults to AmlToken if null.
-        /// Serialized Name: MachineLearningJobProperties.identity
-        /// Please note <see cref="IdentityConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AmlToken"/>, <see cref="ManagedIdentity"/> and <see cref="UserIdentity"/>.
+        /// Serialized Name: JobBase.identity
+        /// Please note <see cref="MachineLearningIdentityConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AmlToken"/>, <see cref="MachineLearningManagedIdentity"/> and <see cref="MachineLearningUserIdentity"/>.
         /// </param>
         /// <param name="isArchived">
         /// Is the asset archived?
-        /// Serialized Name: MachineLearningJobProperties.isArchived
+        /// Serialized Name: JobBase.isArchived
         /// </param>
         /// <param name="jobType">
         /// [Required] Specifies the type of job.
-        /// Serialized Name: MachineLearningJobProperties.jobType
+        /// Serialized Name: JobBase.jobType
         /// </param>
         /// <param name="services">
         /// List of JobEndpoints.
         /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
-        /// Serialized Name: MachineLearningJobProperties.services
+        /// Serialized Name: JobBase.services
         /// </param>
         /// <param name="status">
         /// Status of the job.
-        /// Serialized Name: MachineLearningJobProperties.status
+        /// Serialized Name: JobBase.status
         /// </param>
         /// <param name="environmentId">
         /// The ARM resource ID of the Environment specification for the job.
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Please note <see cref="AutoMLVertical"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Classification"/>, <see cref="Forecasting"/>, <see cref="ImageClassification"/>, <see cref="ImageClassificationMultilabel"/>, <see cref="ImageInstanceSegmentation"/>, <see cref="ImageObjectDetection"/>, <see cref="Regression"/>, <see cref="TextClassification"/>, <see cref="TextClassificationMultilabel"/> and <see cref="TextNer"/>.
         /// </param>
-        internal AutoMLJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, string componentId, string computeId, string displayName, string experimentName, IdentityConfiguration identity, bool? isArchived, JobType jobType, IDictionary<string, JobService> services, JobStatus? status, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, JobOutput> outputs, JobResourceConfiguration resources, AutoMLVertical taskDetails) : base(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, services, status)
+        internal AutoMLJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, string componentId, string computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, IDictionary<string, JobService> services, JobStatus? status, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, JobOutput> outputs, JobResourceConfiguration resources, AutoMLVertical taskDetails) : base(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, services, status)
         {
             EnvironmentId = environmentId;
             EnvironmentVariables = environmentVariables;

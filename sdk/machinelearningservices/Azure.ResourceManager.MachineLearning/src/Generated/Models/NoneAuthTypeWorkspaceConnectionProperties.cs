@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// The NoneAuthTypeWorkspaceConnectionProperties.
     /// Serialized Name: NoneAuthTypeWorkspaceConnectionProperties
     /// </summary>
-    public partial class NoneAuthTypeWorkspaceConnectionProperties : WorkspaceConnectionPropertiesV2
+    public partial class NoneAuthTypeWorkspaceConnectionProperties : MachineLearningWorkspaceConnectionProperties
     {
         /// <summary> Initializes a new instance of NoneAuthTypeWorkspaceConnectionProperties. </summary>
         public NoneAuthTypeWorkspaceConnectionProperties()
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// format for the workspace connection value
         /// Serialized Name: WorkspaceConnectionPropertiesV2.valueFormat
         /// </param>
-        internal NoneAuthTypeWorkspaceConnectionProperties(ConnectionAuthType authType, ConnectionCategory? category, string target, string value, ValueFormat? valueFormat) : base(authType, category, target, value, valueFormat)
+        internal NoneAuthTypeWorkspaceConnectionProperties(ConnectionAuthType authType, MachineLearningConnectionCategory? category, string target, string value, ValueFormat? valueFormat) : base(authType, category, target, value, valueFormat)
         {
             AuthType = authType;
         }

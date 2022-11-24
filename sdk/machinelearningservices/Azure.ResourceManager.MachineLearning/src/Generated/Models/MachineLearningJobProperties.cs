@@ -12,11 +12,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Base definition for a job.
-    /// Serialized Name: MachineLearningJobProperties
+    /// Serialized Name: JobBase
     /// Please note <see cref="MachineLearningJobProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AutoMLJob"/>, <see cref="CommandJob"/>, <see cref="PipelineJob"/> and <see cref="SweepJob"/>.
+    /// The available derived classes include <see cref="AutoMLJob"/>, <see cref="MachineLearningCommandJob"/>, <see cref="PipelineJob"/> and <see cref="SweepJob"/>.
     /// </summary>
-    public partial class MachineLearningJobProperties : ResourceBase
+    public partial class MachineLearningJobProperties : MachineLearningResourceBase
     {
         /// <summary> Initializes a new instance of MachineLearningJobProperties. </summary>
         public MachineLearningJobProperties()
@@ -39,45 +39,45 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="componentId">
         /// ARM resource ID of the component resource.
-        /// Serialized Name: MachineLearningJobProperties.componentId
+        /// Serialized Name: JobBase.componentId
         /// </param>
         /// <param name="computeId">
         /// ARM resource ID of the compute resource.
-        /// Serialized Name: MachineLearningJobProperties.computeId
+        /// Serialized Name: JobBase.computeId
         /// </param>
         /// <param name="displayName">
         /// Display name of job.
-        /// Serialized Name: MachineLearningJobProperties.displayName
+        /// Serialized Name: JobBase.displayName
         /// </param>
         /// <param name="experimentName">
         /// The name of the experiment the job belongs to. If not set, the job is placed in the &quot;Default&quot; experiment.
-        /// Serialized Name: MachineLearningJobProperties.experimentName
+        /// Serialized Name: JobBase.experimentName
         /// </param>
         /// <param name="identity">
         /// Identity configuration. If set, this should be one of AmlToken, ManagedIdentity, UserIdentity or null.
         /// Defaults to AmlToken if null.
-        /// Serialized Name: MachineLearningJobProperties.identity
-        /// Please note <see cref="IdentityConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AmlToken"/>, <see cref="ManagedIdentity"/> and <see cref="UserIdentity"/>.
+        /// Serialized Name: JobBase.identity
+        /// Please note <see cref="MachineLearningIdentityConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AmlToken"/>, <see cref="MachineLearningManagedIdentity"/> and <see cref="MachineLearningUserIdentity"/>.
         /// </param>
         /// <param name="isArchived">
         /// Is the asset archived?
-        /// Serialized Name: MachineLearningJobProperties.isArchived
+        /// Serialized Name: JobBase.isArchived
         /// </param>
         /// <param name="jobType">
         /// [Required] Specifies the type of job.
-        /// Serialized Name: MachineLearningJobProperties.jobType
+        /// Serialized Name: JobBase.jobType
         /// </param>
         /// <param name="services">
         /// List of JobEndpoints.
         /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
-        /// Serialized Name: MachineLearningJobProperties.services
+        /// Serialized Name: JobBase.services
         /// </param>
         /// <param name="status">
         /// Status of the job.
-        /// Serialized Name: MachineLearningJobProperties.status
+        /// Serialized Name: JobBase.status
         /// </param>
-        internal MachineLearningJobProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, string componentId, string computeId, string displayName, string experimentName, IdentityConfiguration identity, bool? isArchived, JobType jobType, IDictionary<string, JobService> services, JobStatus? status) : base(description, properties, tags)
+        internal MachineLearningJobProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, string componentId, string computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, IDictionary<string, JobService> services, JobStatus? status) : base(description, properties, tags)
         {
             ComponentId = componentId;
             ComputeId = computeId;
@@ -92,51 +92,51 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary>
         /// ARM resource ID of the component resource.
-        /// Serialized Name: MachineLearningJobProperties.componentId
+        /// Serialized Name: JobBase.componentId
         /// </summary>
         public string ComponentId { get; set; }
         /// <summary>
         /// ARM resource ID of the compute resource.
-        /// Serialized Name: MachineLearningJobProperties.computeId
+        /// Serialized Name: JobBase.computeId
         /// </summary>
         public string ComputeId { get; set; }
         /// <summary>
         /// Display name of job.
-        /// Serialized Name: MachineLearningJobProperties.displayName
+        /// Serialized Name: JobBase.displayName
         /// </summary>
         public string DisplayName { get; set; }
         /// <summary>
         /// The name of the experiment the job belongs to. If not set, the job is placed in the &quot;Default&quot; experiment.
-        /// Serialized Name: MachineLearningJobProperties.experimentName
+        /// Serialized Name: JobBase.experimentName
         /// </summary>
         public string ExperimentName { get; set; }
         /// <summary>
         /// Identity configuration. If set, this should be one of AmlToken, ManagedIdentity, UserIdentity or null.
         /// Defaults to AmlToken if null.
-        /// Serialized Name: MachineLearningJobProperties.identity
-        /// Please note <see cref="IdentityConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AmlToken"/>, <see cref="ManagedIdentity"/> and <see cref="UserIdentity"/>.
+        /// Serialized Name: JobBase.identity
+        /// Please note <see cref="MachineLearningIdentityConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AmlToken"/>, <see cref="MachineLearningManagedIdentity"/> and <see cref="MachineLearningUserIdentity"/>.
         /// </summary>
-        public IdentityConfiguration Identity { get; set; }
+        public MachineLearningIdentityConfiguration Identity { get; set; }
         /// <summary>
         /// Is the asset archived?
-        /// Serialized Name: MachineLearningJobProperties.isArchived
+        /// Serialized Name: JobBase.isArchived
         /// </summary>
         public bool? IsArchived { get; set; }
         /// <summary>
         /// [Required] Specifies the type of job.
-        /// Serialized Name: MachineLearningJobProperties.jobType
+        /// Serialized Name: JobBase.jobType
         /// </summary>
         internal JobType JobType { get; set; }
         /// <summary>
         /// List of JobEndpoints.
         /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
-        /// Serialized Name: MachineLearningJobProperties.services
+        /// Serialized Name: JobBase.services
         /// </summary>
         public IDictionary<string, JobService> Services { get; set; }
         /// <summary>
         /// Status of the job.
-        /// Serialized Name: MachineLearningJobProperties.status
+        /// Serialized Name: JobBase.status
         /// </summary>
         public JobStatus? Status { get; }
     }

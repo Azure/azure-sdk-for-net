@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of ComponentVersionResourceArmPaginatedResult. </summary>
         internal ComponentVersionResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<ComponentVersionData>();
+            Value = new ChangeTrackingList<MachineLearningComponentVersionData>();
         }
 
         /// <summary> Initializes a new instance of ComponentVersionResourceArmPaginatedResult. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// An array of objects of type ComponentVersion.
         /// Serialized Name: ComponentVersionResourceArmPaginatedResult.value
         /// </param>
-        internal ComponentVersionResourceArmPaginatedResult(string nextLink, IReadOnlyList<ComponentVersionData> value)
+        internal ComponentVersionResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningComponentVersionData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// An array of objects of type ComponentVersion.
         /// Serialized Name: ComponentVersionResourceArmPaginatedResult.value
         /// </summary>
-        public IReadOnlyList<ComponentVersionData> Value { get; }
+        public IReadOnlyList<MachineLearningComponentVersionData> Value { get; }
     }
 }

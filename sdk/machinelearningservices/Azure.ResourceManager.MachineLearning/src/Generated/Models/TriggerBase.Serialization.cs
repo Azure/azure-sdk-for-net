@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 switch (discriminator.GetString())
                 {
                     case "Cron": return CronTrigger.DeserializeCronTrigger(element);
-                    case "Recurrence": return RecurrenceTrigger.DeserializeRecurrenceTrigger(element);
+                    case "Recurrence": return MachineLearningRecurrenceTrigger.DeserializeMachineLearningRecurrenceTrigger(element);
                 }
             }
             return UnknownTriggerBase.DeserializeUnknownTriggerBase(element);

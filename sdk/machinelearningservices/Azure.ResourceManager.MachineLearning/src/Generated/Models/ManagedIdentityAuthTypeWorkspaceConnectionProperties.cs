@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// The ManagedIdentityAuthTypeWorkspaceConnectionProperties.
     /// Serialized Name: ManagedIdentityAuthTypeWorkspaceConnectionProperties
     /// </summary>
-    public partial class ManagedIdentityAuthTypeWorkspaceConnectionProperties : WorkspaceConnectionPropertiesV2
+    public partial class ManagedIdentityAuthTypeWorkspaceConnectionProperties : MachineLearningWorkspaceConnectionProperties
     {
         /// <summary> Initializes a new instance of ManagedIdentityAuthTypeWorkspaceConnectionProperties. </summary>
         public ManagedIdentityAuthTypeWorkspaceConnectionProperties()
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Serialized Name: WorkspaceConnectionPropertiesV2.valueFormat
         /// </param>
         /// <param name="credentials"> Serialized Name: ManagedIdentityAuthTypeWorkspaceConnectionProperties.credentials. </param>
-        internal ManagedIdentityAuthTypeWorkspaceConnectionProperties(ConnectionAuthType authType, ConnectionCategory? category, string target, string value, ValueFormat? valueFormat, WorkspaceConnectionManagedIdentity credentials) : base(authType, category, target, value, valueFormat)
+        internal ManagedIdentityAuthTypeWorkspaceConnectionProperties(ConnectionAuthType authType, MachineLearningConnectionCategory? category, string target, string value, ValueFormat? valueFormat, WorkspaceConnectionManagedIdentity credentials) : base(authType, category, target, value, valueFormat)
         {
             Credentials = credentials;
             AuthType = authType;

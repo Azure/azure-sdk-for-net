@@ -50,9 +50,182 @@ rename-rules:
   AKS: Aks
   USD: Usd
 
+override-operation-name:
+  Quotas_List: GetMachineLearningQuotas
+  Quotas_Update: UpdateMachineLearningQuotas
+  Usages_List: GetMachineLearningUsages
+  VirtualMachineSizes_List: GetMachineLearningVmSizes
+
 no-property-type-replacement:
 - ResourceId
 - VirtualMachineImage
+
+rename-mapping:
+  ComputeInstanceProperties.setupScripts: SetupScriptsSettings
+  Workspace: MachineLearningWorkspace
+  ComputeResource: MachineLearningCompute
+  Compute: MachineLearningComputeProperties
+  Compute.resourceId: -|arm-id
+  ComputeInstance: MachineLearningComputeInstance
+  ComputeInstanceProperties: MachineLearningComputeInstanceProperties
+  AKS: MachineLearningAksCompute
+  AKSSchemaProperties: MachineLearningAksComputeProperties
+  Kubernetes: MachineLearningKubernetesCompute
+  KubernetesProperties: MachineLearningKubernetesProperties
+  VirtualMachine: MachineLearningVirtualMachineCompute
+  VirtualMachineSchemaProperties: MachineLearningVirtualMachineProperties
+  HDInsight: MachineLearningHDInsightCompute
+  HDInsightProperties: MachineLearningHDInsightProperties
+  DataFactory: MachineLearningDataFactoryCompute
+  Databricks: MachineLearningDatabricksCompute
+  DatabricksProperties: MachineLearningDatabricksProperties
+  DataLakeAnalytics: MachineLearningDataLakeAnalytics
+  DataLakeAnalyticsSchemaProperties: MachineLearningDataLakeAnalyticsProperties
+  SynapseSpark: MachineLearningSynapseSpark
+  SynapseSparkProperties: MachineLearningSynapseSparkProperties
+  ProvisioningState: MachineLearningProvisioningState
+  ListWorkspaceKeysResult: MachineLearningWorkspaceGetKeysResult
+  RegistryListCredentialsResult: MachineLearningContainerRegistryCredentials
+  Password: MachineLearningPasswordDetail
+  BatchDeploymentTrackedResource: MachineLearningBatchDeployment
+  BatchDeployment: MachineLearningBatchDeploymentProperties
+  BatchEndpointTrackedResource: MachineLearningBatchEndpoint
+  BatchEndpoint: MachineLearningBatchEndpointProperties
+  AssetContainer: MachineLearningAssetContainer
+  ResourceBase: MachineLearningResourceBase
+  AssetBase: MachineLearningAssetBase
+  JobBaseResource: MachineLearningJob
+  JobBase: MachineLearningJobProperties
+  CommandJob: MachineLearningCommandJob
+  CodeContainerResource: MachineLearningCodeContainer
+  CodeContainer: MachineLearningCodeContainerProperties
+  CodeVersionResource: MachineLearningCodeVersion
+  CodeVersion: MachineLearningCodeVersionProperties
+  ComponentContainerResource: MachineLearningComponentContainer
+  ComponentContainer: MachineLearningComponentContainerProperties
+  DataVersionBaseResource: MachineLearningDataVersion
+  DataVersionBase: MachineLearningDataVersionProperties
+  EnvironmentContainerResource: MachineLearningEnvironmentContainer
+  EnvironmentContainer: MachineLearningEnvironmentContainerProperties
+  EnvironmentVersionResource: MachineLearningEnvironmentVersion
+  EnvironmentVersion: MachineLearningEnvironmentVersionProperties
+  ComponentVersionResource: MachineLearningComponentVersion
+  ComponentVersion: MachineLearningComponentVersionProperties
+  DataContainerResource: MachineLearningDataContainer
+  DataContainer: MachineLearningDataContainerProperties
+  DatastoreResource: MachineLearningDatastore
+  Datastore: MachineLearningDatastoreProperties
+  MLTableData: MachineLearningTable
+  ResourceQuota: MachineLearningResourceQuota
+  ModelContainerResource: MachineLearningModelContainer
+  ModelContainer: MachineLearningModelContainerProperties
+  ModelVersionResource: MachineLearningModelVersion
+  ModelVersion: MachineLearningModelVersionProperties
+  OnlineDeploymentTrackedResource: MachineLearningOnlineDeployment
+  OnlineDeployment: MachineLearningOnlineDeploymentProperties
+  OnlineEndpointTrackedResource: MachineLearningOnlineEndpoint
+  OnlineEndpoint: MachineLearningOnlineEndpointProperties
+  Schedule: MachineLearningSchedule
+  ScheduleProperties: MachineLearningScheduleProperties
+  VirtualMachineSize: MachineLearningVmSize
+  WorkspaceConnectionPropertiesV2BasicResource: MachineLearningWorkspaceConnection
+  WorkspaceConnectionPropertiesV2: MachineLearningWorkspaceConnectionProperties
+  UpdateWorkspaceQuotas: MachineLearningWorkspaceQuotaUpdate
+  QuotaUpdateParameters: MachineLearningQuotaUpdateContent
+  EncryptionProperty: MachineLearningEncryptionSetting
+  EncryptionStatus: MachineLearningEncryptionStatus
+  EncryptionKeyVaultProperties: MachineLearningEncryptionKeyVaultProperties
+  EncryptionKeyVaultProperties.keyVaultArmId: -|arm-id
+  IdentityForCmk: MachineLearningCmkIdentity
+  IdentityForCmk.userAssignedIdentity: -|arm-id
+  NotebookResourceInfo: MachineLearningNotebookResourceInfo
+  PublicNetworkAccess: MachineLearningPublicNetworkAccess
+  SharedPrivateLinkResource: MachineLearningSharedPrivateLinkResource
+  SharedPrivateLinkResource.properties.privateLinkResourceId: -|arm-id
+  Workspace.properties.storageHnsEnabled: IsStorageHnsEnabled
+  Workspace.properties.v1LegacyMode: IsV1LegacyMode
+  DiagnoseResponseResult: MachineLearningWorkspaceDiagnoseResult
+  DiagnoseWorkspaceParameters: MachineLearningWorkspaceDiagnoseContent
+  DiagnoseRequestProperties: MachineLearningWorkspaceDiagnoseProperties
+  NotebookAccessTokenResult: MachineLearningWorkspaceNotebookAccessTokenResult
+  ListNotebookKeysResult: MachineLearningWorkspaceGetNotebookKeysResult
+  FqdnEndpoints: MachineLearningFqdnEndpoints
+  FqdnEndpointsProperties: MachineLearningFqdnEndpointsProperties
+  ListStorageAccountKeysResult: MachineLearningWorkspaceGetStorageAccountKeysResult
+  AmlUserFeature: MachineLearningUserFeature
+  DatastoreCredentials: MachineLearningDatastoreCredentials
+  AccountKeyDatastoreCredentials: MachineLearningAccountKeyDatastoreCredentials
+  CertificateDatastoreCredentials: MachineLearningCertificateDatastoreCredentials
+  NoneDatastoreCredentials: MachineLearningNoneDatastoreCredentials
+  SasDatastoreCredentials: MachineLearningSasDatastoreCredentials
+  ServicePrincipalDatastoreCredentials: MachineLearningServicePrincipalDatastoreCredentials
+  DatastoreSecrets: MachineLearningDatastoreSecrets
+  CertificateDatastoreSecrets: MachineLearningCertificateDatastoreSecrets
+  SasDatastoreSecrets: MachineLearningSasDatastoreSecrets
+  ServicePrincipalDatastoreSecrets: MachineLearningServicePrincipalDatastoreSecrets
+  AccountKeyDatastoreSecrets: MachineLearningAccountKeyDatastoreSecrets
+  ComputeSecrets: MachineLearningComputeSecrets
+  AksComputeSecrets: MachineLearningAksComputeSecrets
+  DatabricksComputeSecrets: MachineLearningDatabricksComputeSecrets
+  VirtualMachineSecrets: MachineLearningVirtualMachineSecrets
+  AksNetworkingConfiguration: MachineLearningAksNetworkingConfiguration
+  AksNetworkingConfiguration.subnetId: -|arm-id
+  ClusterPurpose: MachineLearningClusterPurpose
+  LoadBalancerType: MachineLearningLoadBalancerType
+  SslConfiguration: MachineLearningSslConfiguration
+  SystemService: MachineLearningComputeSystemService
+  AllocationState: AmlAllocationState
+  IdentityConfiguration: MachineLearningIdentityConfiguration
+  ManagedIdentity: MachineLearningManagedIdentity
+  ManagedIdentity.resourceId: -|arm-id
+  UserIdentity: MachineLearningUserIdentity
+  PartialMinimalTrackedResource: MachineLearningResourcePatch
+  PartialMinimalTrackedResourceWithIdentity: MachineLearningResourcePatchWithIdentity
+  PartialSku: MachineLearningSkuPatch
+  ApplicationSharingPolicy: MachineLearningApplicationSharingPolicy
+  AssetReferenceBase: MachineLearningAssetReferenceBase
+  DataPathAssetReference: MachineLearningDataPathAssetReference
+  IdAssetReference: MachineLearningIdAssetReference
+  IdAssetReference.assetId: -|arm-id
+  OutputPathAssetReference: MachineLearningOutputPathAssetReference
+  AssignedUser: MachineLearningComputeInstanceAssignedUser
+  AutoPauseProperties: MachineLearningAutoPauseProperties
+  AutoPauseProperties.enabled: IsEnabled
+  Autosave: MachineLearningComputeInstanceAutosave
+  ComputeInstanceConnectivityEndpoints: MachineLearningComputeInstanceConnectivityEndpoints
+  ComputeInstanceContainer: MachineLearningComputeInstanceContainer
+  ComputeInstanceEnvironmentInfo: MachineLearningComputeInstanceEnvironmentInfo
+  Network: MachineLearningNetwork
+  ComputeInstanceCreatedBy: MachineLearningComputeInstanceCreatedBy
+  ComputeInstanceAuthorizationType: MachineLearningComputeInstanceAuthorizationType
+  ComputeInstanceApplication: MachineLearningComputeInstanceApplication
+  ComputeInstanceDataDisk: MachineLearningComputeInstanceDataDisk
+  ComputeInstanceDataMount: MachineLearningComputeInstanceDataMount
+  MountAction: MachineLearningMountAction
+  MountState: MachineLearningMountState
+  SourceType: MachineLearningSourceType
+  ComputeInstanceLastOperation: MachineLearningComputeInstanceLastOperation
+  OperationName: MachineLearningOperationName
+  OperationStatus: MachineLearningOperationStatus
+  OperationTrigger: MachineLearningOperationTrigger
+  ComputeInstanceSshSettings: MachineLearningComputeInstanceSshSettings
+  SshPublicAccess: MachineLearningSshPublicAccess
+  ComputeInstanceState: MachineLearningComputeInstanceState
+  ComputePowerAction: MachineLearningComputePowerAction
+  ComputeStartStopSchedule: MachineLearningComputeStartStopSchedule
+  ProvisioningStatus: MachineLearningComputeProvisioningStatus
+  ScheduleBase: MachineLearningScheduleBase
+  ScheduleStatus: MachineLearningScheduleStatus
+  TriggerType: MachineLearningTriggerType
+  RecurrenceTrigger: MachineLearningRecurrenceTrigger
+  ConnectionCategory: MachineLearningConnectionCategory
+  ContainerType: MachineLearningContainerType
+  DeploymentLogs: MachineLearningDeploymentLogs
+  DeploymentLogsRequest: MachineLearningDeploymentLogsContent
+  DiagnoseResponseResultValue: MachineLearningDiagnoseResultValue
+  DiagnoseResult: MachineLearningDiagnoseResult
+  DiagnoseResultLevel: MachineLearningDiagnoseResultLevel
+  PartialManagedServiceIdentity: MachineLearningPartialManagedServiceIdentity
 
 directive:
   - from: swagger-document
@@ -100,12 +273,6 @@ directive:
     where: $.definitions.ComputeInstance.allOf[?(@.type=="object")].properties.properties.properties.setupScripts
     transform: $["x-nullable"] = true;
   - from: swagger-document
-    where: $.definitions.DataSettings.properties.trainingData
-    transform: $["x-ms-client-name"] = "trainingDataSettings";
-  - from: swagger-document
-    where: $.definitions.ComputeInstanceProperties.properties.setupScripts
-    transform: $["x-ms-client-name"] = "setupScriptsSettings";
-  - from: swagger-document
     where: $.definitions.AmlComputeProperties.properties.errors
     transform: $["x-nullable"] = true;
   - from: swagger-document
@@ -114,54 +281,40 @@ directive:
   - from: swagger-document
     where: $.definitions.TableVerticalValidationDataSettings.properties.cvSplitColumnNames
     transform: $["x-nullable"] = true;
-  - from: machineLearningServices.json
-    where: $.definitions
-    transform: >
-      $.Workspace["x-ms-client-name"] = "MachineLearningWorkspace";
-      $.ComputeResource["x-ms-client-name"] = "MachineLearningCompute";
-      $.Compute.properties.resourceId["x-ms-format"] = "arm-id";
-      $.AKS["x-ms-client-name"] = "AksCompute";
-      $.Kubernetes["x-ms-client-name"] = "KubernetesCompute";
-      $.VirtualMachine["x-ms-client-name"] = "VirtualMachineCompute";
-      $.HDInsight["x-ms-client-name"] = "HDInsightCompute";
-      $.DataFactory["x-ms-client-name"] = "DataFactoryCompute";
-      $.Databricks["x-ms-client-name"] = "DatabricksCompute";
-      $.DataLakeAnalytics["x-ms-client-name"] = "DataLakeAnalyticsCompute";
-      $.SynapseSpark["x-ms-client-name"] = "SynapseSparkCompute";
-      $.Password["x-ms-client-name"] = "PasswordDetail";
+  # quite a few x-ms-client-name extensions are defined in the swagger, we here erase them all to prevent some funny interaction between our own renaming configuration
   - from: mfe.json
     where: $.definitions
     transform: >
-      $.CodeContainerResource["x-ms-client-name"] = "CodeContainer";
-      $.CodeContainer["x-ms-client-name"] = "CodeContainerProperties";
-      $.BatchDeploymentTrackedResource["x-ms-client-name"] = "BatchDeployment";
-      $.BatchDeployment["x-ms-client-name"] = "BatchDeploymentProperties";
-      $.BatchEndpointTrackedResource["x-ms-client-name"] = "BatchEndpoint";
-      $.BatchEndpoint["x-ms-client-name"] = "BatchEndpointProperties";
-      $.CodeVersionResource["x-ms-client-name"] = "CodeVersion";
-      $.CodeVersion["x-ms-client-name"] = "CodeVersionProperties";
-      $.ComponentContainerResource["x-ms-client-name"] = "ComponentContainer";
-      $.ComponentContainer["x-ms-client-name"] = "ComponentContainerProperties";
-      $.ComponentVersionResource["x-ms-client-name"] = "ComponentVersion";
-      $.ComponentVersion["x-ms-client-name"] = "ComponentVersionProperties";
-      $.DataContainerResource["x-ms-client-name"] = "DataContainer";
-      $.DataContainer["x-ms-client-name"] = "DataContainerProperties";
-      $.DatastoreResource["x-ms-client-name"] = "Datastore";
-      $.Datastore["x-ms-client-name"] = "DatastoreProperties";
-      $.DataVersionBaseResource["x-ms-client-name"] = "DataVersion";
-      $.DataVersionBase["x-ms-client-name"] = "DataVersionProperties";
-      $.EnvironmentContainerResource["x-ms-client-name"] = "EnvironmentContainer";
-      $.EnvironmentContainer["x-ms-client-name"] = "EnvironmentContainerProperties";
-      $.EnvironmentVersionResource["x-ms-client-name"] = "EnvironmentVersion";
-      $.EnvironmentVersion["x-ms-client-name"] = "EnvironmentVersionProperties";
-      $.JobBaseResource["x-ms-client-name"] = "MachineLearningJob";
-      $.JobBase["x-ms-client-name"] = "MachineLearningJobProperties";
-      $.ModelContainerResource["x-ms-client-name"] = "ModelContainer";
-      $.ModelContainer["x-ms-client-name"] = "ModelContainerProperties";
-      $.ModelVersionResource["x-ms-client-name"] = "ModelVersion";
-      $.ModelVersion["x-ms-client-name"] = "ModelVersionProperties";
-      $.OnlineDeploymentTrackedResource["x-ms-client-name"] = "OnlineDeployment";
-      $.OnlineDeployment["x-ms-client-name"] = "OnlineDeploymentProperties";
-      $.OnlineEndpointTrackedResource["x-ms-client-name"] = "OnlineEndpoint";
-      $.OnlineEndpoint["x-ms-client-name"] = "OnlineEndpointProperties";
+      $.CodeContainerResource["x-ms-client-name"] = undefined;
+      $.CodeContainer["x-ms-client-name"] = undefined;
+      $.BatchDeploymentTrackedResource["x-ms-client-name"] = undefined;
+      $.BatchDeployment["x-ms-client-name"] = undefined;
+      $.BatchEndpointTrackedResource["x-ms-client-name"] = undefined;
+      $.BatchEndpoint["x-ms-client-name"] = undefined;
+      $.CodeVersionResource["x-ms-client-name"] = undefined;
+      $.CodeVersion["x-ms-client-name"] = undefined;
+      $.ComponentContainerResource["x-ms-client-name"] = undefined;
+      $.ComponentContainer["x-ms-client-name"] = undefined;
+      $.ComponentVersionResource["x-ms-client-name"] = undefined;
+      $.ComponentVersion["x-ms-client-name"] = undefined;
+      $.DataContainerResource["x-ms-client-name"] = undefined;
+      $.DataContainer["x-ms-client-name"] = undefined;
+      $.DatastoreResource["x-ms-client-name"] = undefined;
+      $.Datastore["x-ms-client-name"] = undefined;
+      $.DataVersionBaseResource["x-ms-client-name"] = undefined;
+      $.DataVersionBase["x-ms-client-name"] = undefined;
+      $.EnvironmentContainerResource["x-ms-client-name"] = undefined;
+      $.EnvironmentContainer["x-ms-client-name"] = undefined;
+      $.EnvironmentVersionResource["x-ms-client-name"] = undefined;
+      $.EnvironmentVersion["x-ms-client-name"] = undefined;
+      $.JobBaseResource["x-ms-client-name"] = undefined;
+      $.JobBase["x-ms-client-name"] = undefined;
+      $.ModelContainerResource["x-ms-client-name"] = undefined;
+      $.ModelContainer["x-ms-client-name"] = undefined;
+      $.ModelVersionResource["x-ms-client-name"] = undefined;
+      $.ModelVersion["x-ms-client-name"] = undefined;
+      $.OnlineDeploymentTrackedResource["x-ms-client-name"] = undefined;
+      $.OnlineDeployment["x-ms-client-name"] = undefined;
+      $.OnlineEndpointTrackedResource["x-ms-client-name"] = undefined;
+      $.OnlineEndpoint["x-ms-client-name"] = undefined;
 ```

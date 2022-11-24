@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// Operation Id: Compute_ListKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ComputeSecrets>> GetKeysAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MachineLearningComputeSecrets>> GetKeysAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _machineLearningComputeComputeClientDiagnostics.CreateScope("MachineLearningComputeResource.GetKeys");
             scope.Start();
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// Operation Id: Compute_ListKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ComputeSecrets> GetKeys(CancellationToken cancellationToken = default)
+        public virtual Response<MachineLearningComputeSecrets> GetKeys(CancellationToken cancellationToken = default)
         {
             using var scope = _machineLearningComputeComputeClientDiagnostics.CreateScope("MachineLearningComputeResource.GetKeys");
             scope.Start();

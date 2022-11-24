@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// Properties specific to a KubernetesOnlineDeployment.
     /// Serialized Name: KubernetesOnlineDeployment
     /// </summary>
-    public partial class KubernetesOnlineDeployment : OnlineDeploymentProperties
+    public partial class KubernetesOnlineDeployment : MachineLearningOnlineDeploymentProperties
     {
         /// <summary> Initializes a new instance of KubernetesOnlineDeployment. </summary>
         public KubernetesOnlineDeployment()
@@ -44,50 +44,50 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="appInsightsEnabled">
         /// If true, enables Application Insights logging.
-        /// Serialized Name: OnlineDeploymentProperties.appInsightsEnabled
+        /// Serialized Name: OnlineDeployment.appInsightsEnabled
         /// </param>
         /// <param name="egressPublicNetworkAccess">
         /// If Enabled, allow egress public network access. If Disabled, this will create secure egress. Default: Enabled.
-        /// Serialized Name: OnlineDeploymentProperties.egressPublicNetworkAccess
+        /// Serialized Name: OnlineDeployment.egressPublicNetworkAccess
         /// </param>
         /// <param name="endpointComputeType">
         /// [Required] The compute type of the endpoint.
-        /// Serialized Name: OnlineDeploymentProperties.endpointComputeType
+        /// Serialized Name: OnlineDeployment.endpointComputeType
         /// </param>
         /// <param name="instanceType">
         /// Compute instance type.
-        /// Serialized Name: OnlineDeploymentProperties.instanceType
+        /// Serialized Name: OnlineDeployment.instanceType
         /// </param>
         /// <param name="livenessProbe">
         /// Liveness probe monitors the health of the container regularly.
-        /// Serialized Name: OnlineDeploymentProperties.livenessProbe
+        /// Serialized Name: OnlineDeployment.livenessProbe
         /// </param>
         /// <param name="model">
         /// The URI path to the model.
-        /// Serialized Name: OnlineDeploymentProperties.model
+        /// Serialized Name: OnlineDeployment.model
         /// </param>
         /// <param name="modelMountPath">
         /// The path to mount the model in custom container.
-        /// Serialized Name: OnlineDeploymentProperties.modelMountPath
+        /// Serialized Name: OnlineDeployment.modelMountPath
         /// </param>
         /// <param name="provisioningState">
         /// Provisioning state for the endpoint deployment.
-        /// Serialized Name: OnlineDeploymentProperties.provisioningState
+        /// Serialized Name: OnlineDeployment.provisioningState
         /// </param>
         /// <param name="readinessProbe">
         /// Readiness probe validates if the container is ready to serve traffic. The properties and defaults are the same as liveness probe.
-        /// Serialized Name: OnlineDeploymentProperties.readinessProbe
+        /// Serialized Name: OnlineDeployment.readinessProbe
         /// </param>
         /// <param name="requestSettings">
         /// Request settings for the deployment.
-        /// Serialized Name: OnlineDeploymentProperties.requestSettings
+        /// Serialized Name: OnlineDeployment.requestSettings
         /// </param>
         /// <param name="scaleSettings">
         /// Scale settings for the deployment.
         /// If it is null or not provided,
         /// it defaults to TargetUtilizationScaleSettings for KubernetesOnlineDeployment
         /// and to DefaultScaleSettings for ManagedOnlineDeployment.
-        /// Serialized Name: OnlineDeploymentProperties.scaleSettings
+        /// Serialized Name: OnlineDeployment.scaleSettings
         /// Please note <see cref="OnlineScaleSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DefaultScaleSettings"/> and <see cref="TargetUtilizationScaleSettings"/>.
         /// </param>

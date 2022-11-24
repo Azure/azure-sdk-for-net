@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// The UnknownCompute.
     /// Serialized Name: UnknownCompute
     /// </summary>
-    internal partial class UnknownCompute : Compute
+    internal partial class UnknownCompute : MachineLearningComputeProperties
     {
         /// <summary> Initializes a new instance of UnknownCompute. </summary>
         /// <param name="computeType">
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Opt-out of local authentication and ensure customers can use only MSI and AAD exclusively for authentication.
         /// Serialized Name: Compute.disableLocalAuth
         /// </param>
-        internal UnknownCompute(ComputeType computeType, string computeLocation, ProvisioningState? provisioningState, string description, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, ResourceIdentifier resourceId, IReadOnlyList<ErrorResponse> provisioningErrors, bool? isAttachedCompute, bool? disableLocalAuth) : base(computeType, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors, isAttachedCompute, disableLocalAuth)
+        internal UnknownCompute(ComputeType computeType, string computeLocation, MachineLearningProvisioningState? provisioningState, string description, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, ResourceIdentifier resourceId, IReadOnlyList<ErrorResponse> provisioningErrors, bool? isAttachedCompute, bool? disableLocalAuth) : base(computeType, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors, isAttachedCompute, disableLocalAuth)
         {
             ComputeType = computeType;
         }

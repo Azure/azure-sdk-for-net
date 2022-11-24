@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// The TriggerBase.
     /// Serialized Name: TriggerBase
     /// Please note <see cref="TriggerBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="CronTrigger"/> and <see cref="RecurrenceTrigger"/>.
+    /// The available derived classes include <see cref="CronTrigger"/> and <see cref="MachineLearningRecurrenceTrigger"/>.
     /// </summary>
     public abstract partial class TriggerBase
     {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// [Required] 
         /// Serialized Name: TriggerBase.triggerType
         /// </param>
-        internal TriggerBase(string endTime, string startTime, string timeZone, TriggerType triggerType)
+        internal TriggerBase(string endTime, string startTime, string timeZone, MachineLearningTriggerType triggerType)
         {
             EndTime = endTime;
             StartTime = startTime;
@@ -70,6 +70,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// [Required] 
         /// Serialized Name: TriggerBase.triggerType
         /// </summary>
-        internal TriggerType TriggerType { get; set; }
+        internal MachineLearningTriggerType TriggerType { get; set; }
     }
 }

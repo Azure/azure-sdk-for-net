@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// The PATAuthTypeWorkspaceConnectionProperties.
     /// Serialized Name: PATAuthTypeWorkspaceConnectionProperties
     /// </summary>
-    public partial class PATAuthTypeWorkspaceConnectionProperties : WorkspaceConnectionPropertiesV2
+    public partial class PATAuthTypeWorkspaceConnectionProperties : MachineLearningWorkspaceConnectionProperties
     {
         /// <summary> Initializes a new instance of PATAuthTypeWorkspaceConnectionProperties. </summary>
         public PATAuthTypeWorkspaceConnectionProperties()
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Serialized Name: WorkspaceConnectionPropertiesV2.valueFormat
         /// </param>
         /// <param name="credentials"> Serialized Name: PATAuthTypeWorkspaceConnectionProperties.credentials. </param>
-        internal PATAuthTypeWorkspaceConnectionProperties(ConnectionAuthType authType, ConnectionCategory? category, string target, string value, ValueFormat? valueFormat, WorkspaceConnectionPersonalAccessToken credentials) : base(authType, category, target, value, valueFormat)
+        internal PATAuthTypeWorkspaceConnectionProperties(ConnectionAuthType authType, MachineLearningConnectionCategory? category, string target, string value, ValueFormat? valueFormat, WorkspaceConnectionPersonalAccessToken credentials) : base(authType, category, target, value, valueFormat)
         {
             Credentials = credentials;
             AuthType = authType;

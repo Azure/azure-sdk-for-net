@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// uri-folder data version entity
     /// Serialized Name: UriFolderDataVersion
     /// </summary>
-    public partial class UriFolderDataVersion : DataVersionProperties
+    public partial class UriFolderDataVersion : MachineLearningDataVersionProperties
     {
         /// <summary> Initializes a new instance of UriFolderDataVersion. </summary>
         /// <param name="dataUri">
         /// [Required] Uri of the data. Usage/meaning depends on Microsoft.MachineLearning.ManagementFrontEnd.Contracts.V20221001.Assets.DataVersionBase.DataType
-        /// Serialized Name: DataVersionProperties.dataUri
+        /// Serialized Name: DataVersionBase.dataUri
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataUri"/> is null. </exception>
         public UriFolderDataVersion(Uri dataUri) : base(dataUri)
@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="dataType">
         /// [Required] Specifies the type of data.
-        /// Serialized Name: DataVersionProperties.dataType
+        /// Serialized Name: DataVersionBase.dataType
         /// </param>
         /// <param name="dataUri">
         /// [Required] Uri of the data. Usage/meaning depends on Microsoft.MachineLearning.ManagementFrontEnd.Contracts.V20221001.Assets.DataVersionBase.DataType
-        /// Serialized Name: DataVersionProperties.dataUri
+        /// Serialized Name: DataVersionBase.dataUri
         /// </param>
         internal UriFolderDataVersion(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived, DataType dataType, Uri dataUri) : base(description, properties, tags, isAnonymous, isArchived, dataType, dataUri)
         {

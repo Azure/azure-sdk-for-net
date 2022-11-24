@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of OnlineEndpointTrackedResourceArmPaginatedResult. </summary>
         internal OnlineEndpointTrackedResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<OnlineEndpointData>();
+            Value = new ChangeTrackingList<MachineLearningOnlineEndpointData>();
         }
 
         /// <summary> Initializes a new instance of OnlineEndpointTrackedResourceArmPaginatedResult. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// An array of objects of type OnlineEndpoint.
         /// Serialized Name: OnlineEndpointTrackedResourceArmPaginatedResult.value
         /// </param>
-        internal OnlineEndpointTrackedResourceArmPaginatedResult(string nextLink, IReadOnlyList<OnlineEndpointData> value)
+        internal OnlineEndpointTrackedResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningOnlineEndpointData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// An array of objects of type OnlineEndpoint.
         /// Serialized Name: OnlineEndpointTrackedResourceArmPaginatedResult.value
         /// </summary>
-        public IReadOnlyList<OnlineEndpointData> Value { get; }
+        public IReadOnlyList<MachineLearningOnlineEndpointData> Value { get; }
     }
 }

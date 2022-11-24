@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of VirtualMachineSizeListResult. </summary>
         internal VirtualMachineSizeListResult()
         {
-            Value = new ChangeTrackingList<VirtualMachineSize>();
+            Value = new ChangeTrackingList<MachineLearningVmSize>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineSizeListResult. </summary>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The list of virtual machine sizes supported by AmlCompute.
         /// Serialized Name: VirtualMachineSizeListResult.value
         /// </param>
-        internal VirtualMachineSizeListResult(IReadOnlyList<VirtualMachineSize> value)
+        internal VirtualMachineSizeListResult(IReadOnlyList<MachineLearningVmSize> value)
         {
             Value = value;
         }
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The list of virtual machine sizes supported by AmlCompute.
         /// Serialized Name: VirtualMachineSizeListResult.value
         /// </summary>
-        public IReadOnlyList<VirtualMachineSize> Value { get; }
+        public IReadOnlyList<MachineLearningVmSize> Value { get; }
     }
 }

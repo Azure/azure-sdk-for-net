@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Whether requests from Public Network are allowed.
         /// Serialized Name: WorkspaceUpdateParameters.properties.publicNetworkAccess
         /// </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public MachineLearningPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary>
         /// ARM id of the application insights associated with this workspace.
         /// Serialized Name: WorkspaceUpdateParameters.properties.applicationInsights

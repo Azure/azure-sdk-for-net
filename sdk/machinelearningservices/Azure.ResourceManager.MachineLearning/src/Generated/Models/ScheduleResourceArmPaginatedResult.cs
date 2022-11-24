@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of ScheduleResourceArmPaginatedResult. </summary>
         internal ScheduleResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<ScheduleData>();
+            Value = new ChangeTrackingList<MachineLearningScheduleData>();
         }
 
         /// <summary> Initializes a new instance of ScheduleResourceArmPaginatedResult. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// An array of objects of type Schedule.
         /// Serialized Name: ScheduleResourceArmPaginatedResult.value
         /// </param>
-        internal ScheduleResourceArmPaginatedResult(string nextLink, IReadOnlyList<ScheduleData> value)
+        internal ScheduleResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningScheduleData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// An array of objects of type Schedule.
         /// Serialized Name: ScheduleResourceArmPaginatedResult.value
         /// </summary>
-        public IReadOnlyList<ScheduleData> Value { get; }
+        public IReadOnlyList<MachineLearningScheduleData> Value { get; }
     }
 }

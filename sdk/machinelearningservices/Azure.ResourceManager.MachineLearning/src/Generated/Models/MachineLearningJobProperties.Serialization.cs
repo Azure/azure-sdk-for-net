@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 switch (discriminator.GetString())
                 {
                     case "AutoML": return AutoMLJob.DeserializeAutoMLJob(element);
-                    case "Command": return CommandJob.DeserializeCommandJob(element);
+                    case "Command": return MachineLearningCommandJob.DeserializeMachineLearningCommandJob(element);
                     case "Pipeline": return PipelineJob.DeserializePipelineJob(element);
                     case "Sweep": return SweepJob.DeserializeSweepJob(element);
                 }
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> computeId = default;
             Optional<string> displayName = default;
             Optional<string> experimentName = default;
-            Optional<IdentityConfiguration> identity = default;
+            Optional<MachineLearningIdentityConfiguration> identity = default;
             Optional<bool> isArchived = default;
             JobType jobType = default;
             Optional<IDictionary<string, JobService>> services = default;
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         identity = null;
                         continue;
                     }
-                    identity = IdentityConfiguration.DeserializeIdentityConfiguration(property.Value);
+                    identity = MachineLearningIdentityConfiguration.DeserializeMachineLearningIdentityConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("isArchived"))

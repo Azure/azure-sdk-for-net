@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// A user explicitly assigned to a personal compute instance.
         /// Serialized Name: PersonalComputeInstanceSettings.assignedUser
         /// </param>
-        internal PersonalComputeInstanceSettings(AssignedUser assignedUser)
+        internal PersonalComputeInstanceSettings(MachineLearningComputeInstanceAssignedUser assignedUser)
         {
             AssignedUser = assignedUser;
         }
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// A user explicitly assigned to a personal compute instance.
         /// Serialized Name: PersonalComputeInstanceSettings.assignedUser
         /// </summary>
-        public AssignedUser AssignedUser { get; set; }
+        public MachineLearningComputeInstanceAssignedUser AssignedUser { get; set; }
     }
 }

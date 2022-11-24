@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// Azure File datastore configuration.
     /// Serialized Name: AzureFileDatastore
     /// </summary>
-    public partial class AzureFileDatastore : DatastoreProperties
+    public partial class AzureFileDatastore : MachineLearningDatastoreProperties
     {
         /// <summary> Initializes a new instance of AzureFileDatastore. </summary>
         /// <param name="credentials">
         /// [Required] Account credentials.
-        /// Serialized Name: DatastoreProperties.credentials
-        /// Please note <see cref="DatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AccountKeyDatastoreCredentials"/>, <see cref="CertificateDatastoreCredentials"/>, <see cref="NoneDatastoreCredentials"/>, <see cref="SasDatastoreCredentials"/> and <see cref="ServicePrincipalDatastoreCredentials"/>.
+        /// Serialized Name: Datastore.credentials
+        /// Please note <see cref="MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
         /// </param>
         /// <param name="accountName">
         /// [Required] Storage account name.
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Serialized Name: AzureFileDatastore.fileShareName
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="credentials"/>, <paramref name="accountName"/> or <paramref name="fileShareName"/> is null. </exception>
-        public AzureFileDatastore(DatastoreCredentials credentials, string accountName, string fileShareName) : base(credentials)
+        public AzureFileDatastore(MachineLearningDatastoreCredentials credentials, string accountName, string fileShareName) : base(credentials)
         {
             Argument.AssertNotNull(credentials, nameof(credentials));
             Argument.AssertNotNull(accountName, nameof(accountName));
@@ -59,17 +59,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="credentials">
         /// [Required] Account credentials.
-        /// Serialized Name: DatastoreProperties.credentials
-        /// Please note <see cref="DatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AccountKeyDatastoreCredentials"/>, <see cref="CertificateDatastoreCredentials"/>, <see cref="NoneDatastoreCredentials"/>, <see cref="SasDatastoreCredentials"/> and <see cref="ServicePrincipalDatastoreCredentials"/>.
+        /// Serialized Name: Datastore.credentials
+        /// Please note <see cref="MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
         /// </param>
         /// <param name="datastoreType">
         /// [Required] Storage type backing the datastore.
-        /// Serialized Name: DatastoreProperties.datastoreType
+        /// Serialized Name: Datastore.datastoreType
         /// </param>
         /// <param name="isDefault">
         /// Readonly property to indicate if datastore is the workspace default datastore
-        /// Serialized Name: DatastoreProperties.isDefault
+        /// Serialized Name: Datastore.isDefault
         /// </param>
         /// <param name="accountName">
         /// [Required] Storage account name.
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Indicates which identity to use to authenticate service data access to customer&apos;s storage.
         /// Serialized Name: AzureFileDatastore.serviceDataAccessAuthIdentity
         /// </param>
-        internal AzureFileDatastore(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, DatastoreCredentials credentials, DatastoreType datastoreType, bool? isDefault, string accountName, string endpoint, string fileShareName, string protocol, ServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity) : base(description, properties, tags, credentials, datastoreType, isDefault)
+        internal AzureFileDatastore(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, MachineLearningDatastoreCredentials credentials, DatastoreType datastoreType, bool? isDefault, string accountName, string endpoint, string fileShareName, string protocol, ServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity) : base(description, properties, tags, credentials, datastoreType, isDefault)
         {
             AccountName = accountName;
             Endpoint = endpoint;

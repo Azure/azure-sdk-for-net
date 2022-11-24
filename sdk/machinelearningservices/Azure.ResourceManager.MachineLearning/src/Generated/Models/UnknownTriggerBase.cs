@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// [Required] 
         /// Serialized Name: TriggerBase.triggerType
         /// </param>
-        internal UnknownTriggerBase(string endTime, string startTime, string timeZone, TriggerType triggerType) : base(endTime, startTime, timeZone, triggerType)
+        internal UnknownTriggerBase(string endTime, string startTime, string timeZone, MachineLearningTriggerType triggerType) : base(endTime, startTime, timeZone, triggerType)
         {
             TriggerType = triggerType;
         }

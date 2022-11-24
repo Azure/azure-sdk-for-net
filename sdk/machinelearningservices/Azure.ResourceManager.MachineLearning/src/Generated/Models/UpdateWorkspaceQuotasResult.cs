@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of UpdateWorkspaceQuotasResult. </summary>
         internal UpdateWorkspaceQuotasResult()
         {
-            Value = new ChangeTrackingList<UpdateWorkspaceQuotas>();
+            Value = new ChangeTrackingList<MachineLearningWorkspaceQuotaUpdate>();
         }
 
         /// <summary> Initializes a new instance of UpdateWorkspaceQuotasResult. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The URI to fetch the next page of workspace quota update result. Call ListNext() with this to fetch the next page of Workspace Quota update result.
         /// Serialized Name: UpdateWorkspaceQuotasResult.nextLink
         /// </param>
-        internal UpdateWorkspaceQuotasResult(IReadOnlyList<UpdateWorkspaceQuotas> value, string nextLink)
+        internal UpdateWorkspaceQuotasResult(IReadOnlyList<MachineLearningWorkspaceQuotaUpdate> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The list of workspace quota update result.
         /// Serialized Name: UpdateWorkspaceQuotasResult.value
         /// </summary>
-        public IReadOnlyList<UpdateWorkspaceQuotas> Value { get; }
+        public IReadOnlyList<MachineLearningWorkspaceQuotaUpdate> Value { get; }
         /// <summary>
         /// The URI to fetch the next page of workspace quota update result. Call ListNext() with this to fetch the next page of Workspace Quota update result.
         /// Serialized Name: UpdateWorkspaceQuotasResult.nextLink

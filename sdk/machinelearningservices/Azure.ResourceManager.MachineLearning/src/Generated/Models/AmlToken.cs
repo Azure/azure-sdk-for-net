@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// AML Token identity configuration.
     /// Serialized Name: AmlToken
     /// </summary>
-    public partial class AmlToken : IdentityConfiguration
+    public partial class AmlToken : MachineLearningIdentityConfiguration
     {
         /// <summary> Initializes a new instance of AmlToken. </summary>
         public AmlToken()

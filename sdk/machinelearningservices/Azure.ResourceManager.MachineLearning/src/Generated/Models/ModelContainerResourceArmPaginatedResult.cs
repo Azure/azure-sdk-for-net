@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of ModelContainerResourceArmPaginatedResult. </summary>
         internal ModelContainerResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<ModelContainerData>();
+            Value = new ChangeTrackingList<MachineLearningModelContainerData>();
         }
 
         /// <summary> Initializes a new instance of ModelContainerResourceArmPaginatedResult. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// An array of objects of type ModelContainer.
         /// Serialized Name: ModelContainerResourceArmPaginatedResult.value
         /// </param>
-        internal ModelContainerResourceArmPaginatedResult(string nextLink, IReadOnlyList<ModelContainerData> value)
+        internal ModelContainerResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningModelContainerData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// An array of objects of type ModelContainer.
         /// Serialized Name: ModelContainerResourceArmPaginatedResult.value
         /// </summary>
-        public IReadOnlyList<ModelContainerData> Value { get; }
+        public IReadOnlyList<MachineLearningModelContainerData> Value { get; }
     }
 }

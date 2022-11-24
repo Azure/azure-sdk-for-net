@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<AmlComputeProperties> properties = default;
             ComputeType computeType = default;
             Optional<string> computeLocation = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<MachineLearningProvisioningState> provisioningState = default;
             Optional<string> description = default;
             Optional<DateTimeOffset> createdOn = default;
             Optional<DateTimeOffset> modifiedOn = default;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new MachineLearningProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("description"))

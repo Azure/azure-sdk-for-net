@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of BatchDeploymentTrackedResourceArmPaginatedResult. </summary>
         internal BatchDeploymentTrackedResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<BatchDeploymentData>();
+            Value = new ChangeTrackingList<MachineLearningBatchDeploymentData>();
         }
 
         /// <summary> Initializes a new instance of BatchDeploymentTrackedResourceArmPaginatedResult. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// An array of objects of type BatchDeployment.
         /// Serialized Name: BatchDeploymentTrackedResourceArmPaginatedResult.value
         /// </param>
-        internal BatchDeploymentTrackedResourceArmPaginatedResult(string nextLink, IReadOnlyList<BatchDeploymentData> value)
+        internal BatchDeploymentTrackedResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningBatchDeploymentData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// An array of objects of type BatchDeployment.
         /// Serialized Name: BatchDeploymentTrackedResourceArmPaginatedResult.value
         /// </summary>
-        public IReadOnlyList<BatchDeploymentData> Value { get; }
+        public IReadOnlyList<MachineLearningBatchDeploymentData> Value { get; }
     }
 }
