@@ -14,15 +14,15 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// The parameters used to update an Azure Storage account while updating a Data Lake Analytics account.
     /// Serialized Name: UpdateStorageAccountWithAccountParameters
     /// </summary>
-    public partial class StorageAccountForDataLakeAnalyticsAccountUpdate
+    public partial class StorageAccountForDataLakeAnalyticsAccountUpdateContent
     {
-        /// <summary> Initializes a new instance of StorageAccountForDataLakeAnalyticsAccountUpdate. </summary>
+        /// <summary> Initializes a new instance of StorageAccountForDataLakeAnalyticsAccountUpdateContent. </summary>
         /// <param name="name">
         /// The unique name of the Azure Storage account to update.
         /// Serialized Name: UpdateStorageAccountWithAccountParameters.name
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public StorageAccountForDataLakeAnalyticsAccountUpdate(string name)
+        public StorageAccountForDataLakeAnalyticsAccountUpdateContent(string name)
         {
             Argument.AssertNotNull(name, nameof(name));
 

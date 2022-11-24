@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
-    public partial class DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdate : IUtf8JsonSerializable
+    public partial class StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -19,6 +19,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
+            writer.WritePropertyName("accessKey");
+            writer.WriteStringValue(AccessKey);
             if (Optional.IsDefined(Suffix))
             {
                 writer.WritePropertyName("suffix");

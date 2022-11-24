@@ -14,9 +14,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// The parameters used to add a new Azure Storage account while creating a new Data Lake Analytics account.
     /// Serialized Name: AddStorageAccountWithAccountParameters
     /// </summary>
-    public partial class StorageAccountForDataLakeAnalyticsAccountCreateOrUpdate
+    public partial class StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of StorageAccountForDataLakeAnalyticsAccountCreateOrUpdate. </summary>
+        /// <summary> Initializes a new instance of StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent. </summary>
         /// <param name="name">
         /// The unique name of the Azure Storage account to add.
         /// Serialized Name: AddStorageAccountWithAccountParameters.name
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// Serialized Name: AddStorageAccountWithAccountParameters.properties.accessKey
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="accessKey"/> is null. </exception>
-        public StorageAccountForDataLakeAnalyticsAccountCreateOrUpdate(string name, string accessKey)
+        public StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent(string name, string accessKey)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(accessKey, nameof(accessKey));

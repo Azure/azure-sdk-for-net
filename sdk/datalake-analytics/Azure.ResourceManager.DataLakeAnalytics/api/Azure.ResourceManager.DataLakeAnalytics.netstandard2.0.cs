@@ -301,18 +301,18 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         Commitment100000AUHours = 7,
         Commitment500000AUHours = 8,
     }
-    public partial class ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdate
+    public partial class ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent
     {
-        public ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdate(string name, System.Guid objectId, Azure.ResourceManager.DataLakeAnalytics.Models.AadObjectIdentifierType objectType) { }
+        public ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent(string name, System.Guid objectId, Azure.ResourceManager.DataLakeAnalytics.Models.AadObjectIdentifierType objectType) { }
         public int? MaxDegreeOfParallelismPerJob { get { throw null; } set { } }
         public int? MinPriorityPerJob { get { throw null; } set { } }
         public string Name { get { throw null; } }
         public System.Guid ObjectId { get { throw null; } }
         public Azure.ResourceManager.DataLakeAnalytics.Models.AadObjectIdentifierType ObjectType { get { throw null; } }
     }
-    public partial class ComputePolicyForDataLakeAnalyticsAccountUpdate
+    public partial class ComputePolicyForDataLakeAnalyticsAccountUpdateContent
     {
-        public ComputePolicyForDataLakeAnalyticsAccountUpdate(string name) { }
+        public ComputePolicyForDataLakeAnalyticsAccountUpdateContent(string name) { }
         public int? MaxDegreeOfParallelismPerJob { get { throw null; } set { } }
         public int? MinPriorityPerJob { get { throw null; } set { } }
         public string Name { get { throw null; } }
@@ -333,12 +333,12 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     }
     public partial class DataLakeAnalyticsAccountCreateOrUpdateContent
     {
-        public DataLakeAnalyticsAccountCreateOrUpdateContent(Azure.Core.AzureLocation location, string defaultDataLakeStoreAccount, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdate> dataLakeStoreAccounts) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataLakeAnalytics.Models.ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdate> ComputePolicies { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdate> DataLakeStoreAccounts { get { throw null; } }
+        public DataLakeAnalyticsAccountCreateOrUpdateContent(Azure.Core.AzureLocation location, string defaultDataLakeStoreAccount, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent> dataLakeStoreAccounts) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataLakeAnalytics.Models.ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent> ComputePolicies { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent> DataLakeStoreAccounts { get { throw null; } }
         public string DefaultDataLakeStoreAccount { get { throw null; } }
         public Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsFirewallAllowAzureIPsState? FirewallAllowAzureIPs { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataLakeAnalytics.Models.FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdate> FirewallRules { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataLakeAnalytics.Models.FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent> FirewallRules { get { throw null; } }
         public Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsFirewallState? FirewallState { get { throw null; } set { } }
         public Azure.Core.AzureLocation Location { get { throw null; } }
         public int? MaxDegreeOfParallelism { get { throw null; } set { } }
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         public int? MinPriorityPerJob { get { throw null; } set { } }
         public Azure.ResourceManager.DataLakeAnalytics.Models.CommitmentTierType? NewTier { get { throw null; } set { } }
         public int? QueryStoreRetention { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataLakeAnalytics.Models.StorageAccountForDataLakeAnalyticsAccountCreateOrUpdate> StorageAccounts { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataLakeAnalytics.Models.StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent> StorageAccounts { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class DataLakeAnalyticsAccountNameAvailabilityContent
@@ -359,10 +359,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     public partial class DataLakeAnalyticsAccountPatch
     {
         public DataLakeAnalyticsAccountPatch() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataLakeAnalytics.Models.ComputePolicyForDataLakeAnalyticsAccountUpdate> ComputePolicies { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeStoreForDataLakeAnalyticsAccountUpdate> DataLakeStoreAccounts { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataLakeAnalytics.Models.ComputePolicyForDataLakeAnalyticsAccountUpdateContent> ComputePolicies { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeStoreForDataLakeAnalyticsAccountUpdateContent> DataLakeStoreAccounts { get { throw null; } }
         public Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsFirewallAllowAzureIPsState? FirewallAllowAzureIPs { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataLakeAnalytics.Models.FirewallRuleForDataLakeAnalyticsAccountUpdate> FirewallRules { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataLakeAnalytics.Models.FirewallRuleForDataLakeAnalyticsAccountUpdateContent> FirewallRules { get { throw null; } }
         public Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsFirewallState? FirewallState { get { throw null; } set { } }
         public int? MaxDegreeOfParallelism { get { throw null; } set { } }
         public int? MaxDegreeOfParallelismPerJob { get { throw null; } set { } }
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         public int? MinPriorityPerJob { get { throw null; } set { } }
         public Azure.ResourceManager.DataLakeAnalytics.Models.CommitmentTierType? NewTier { get { throw null; } set { } }
         public int? QueryStoreRetention { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataLakeAnalytics.Models.StorageAccountForDataLakeAnalyticsAccountUpdate> StorageAccounts { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataLakeAnalytics.Models.StorageAccountForDataLakeAnalyticsAccountUpdateContent> StorageAccounts { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public enum DataLakeAnalyticsAccountState
@@ -528,15 +528,15 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         public DataLakeStoreAccountInformationCreateOrUpdateContent() { }
         public string Suffix { get { throw null; } set { } }
     }
-    public partial class DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdate
+    public partial class DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent
     {
-        public DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdate(string name) { }
+        public DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent(string name) { }
         public string Name { get { throw null; } }
         public string Suffix { get { throw null; } set { } }
     }
-    public partial class DataLakeStoreForDataLakeAnalyticsAccountUpdate
+    public partial class DataLakeStoreForDataLakeAnalyticsAccountUpdateContent
     {
-        public DataLakeStoreForDataLakeAnalyticsAccountUpdate(string name) { }
+        public DataLakeStoreForDataLakeAnalyticsAccountUpdateContent(string name) { }
         public string Name { get { throw null; } }
         public string Suffix { get { throw null; } set { } }
     }
@@ -546,16 +546,16 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         All = 1,
         Customer = 2,
     }
-    public partial class FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdate
+    public partial class FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent
     {
-        public FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdate(string name, System.Net.IPAddress startIPAddress, System.Net.IPAddress endIPAddress) { }
+        public FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent(string name, System.Net.IPAddress startIPAddress, System.Net.IPAddress endIPAddress) { }
         public System.Net.IPAddress EndIPAddress { get { throw null; } }
         public string Name { get { throw null; } }
         public System.Net.IPAddress StartIPAddress { get { throw null; } }
     }
-    public partial class FirewallRuleForDataLakeAnalyticsAccountUpdate
+    public partial class FirewallRuleForDataLakeAnalyticsAccountUpdateContent
     {
-        public FirewallRuleForDataLakeAnalyticsAccountUpdate(string name) { }
+        public FirewallRuleForDataLakeAnalyticsAccountUpdateContent(string name) { }
         public System.Net.IPAddress EndIPAddress { get { throw null; } set { } }
         public string Name { get { throw null; } }
         public System.Net.IPAddress StartIPAddress { get { throw null; } set { } }
@@ -566,16 +566,16 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         Canceled = 1,
         Failed = 2,
     }
-    public partial class StorageAccountForDataLakeAnalyticsAccountCreateOrUpdate
+    public partial class StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent
     {
-        public StorageAccountForDataLakeAnalyticsAccountCreateOrUpdate(string name, string accessKey) { }
+        public StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent(string name, string accessKey) { }
         public string AccessKey { get { throw null; } }
         public string Name { get { throw null; } }
         public string Suffix { get { throw null; } set { } }
     }
-    public partial class StorageAccountForDataLakeAnalyticsAccountUpdate
+    public partial class StorageAccountForDataLakeAnalyticsAccountUpdateContent
     {
-        public StorageAccountForDataLakeAnalyticsAccountUpdate(string name) { }
+        public StorageAccountForDataLakeAnalyticsAccountUpdateContent(string name) { }
         public string AccessKey { get { throw null; } set { } }
         public string Name { get { throw null; } }
         public string Suffix { get { throw null; } set { } }

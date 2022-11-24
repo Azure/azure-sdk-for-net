@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         public DataLakeAnalyticsAccountPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            DataLakeStoreAccounts = new ChangeTrackingList<DataLakeStoreForDataLakeAnalyticsAccountUpdate>();
-            StorageAccounts = new ChangeTrackingList<StorageAccountForDataLakeAnalyticsAccountUpdate>();
-            ComputePolicies = new ChangeTrackingList<ComputePolicyForDataLakeAnalyticsAccountUpdate>();
-            FirewallRules = new ChangeTrackingList<FirewallRuleForDataLakeAnalyticsAccountUpdate>();
+            DataLakeStoreAccounts = new ChangeTrackingList<DataLakeStoreForDataLakeAnalyticsAccountUpdateContent>();
+            StorageAccounts = new ChangeTrackingList<StorageAccountForDataLakeAnalyticsAccountUpdateContent>();
+            ComputePolicies = new ChangeTrackingList<ComputePolicyForDataLakeAnalyticsAccountUpdateContent>();
+            FirewallRules = new ChangeTrackingList<FirewallRuleForDataLakeAnalyticsAccountUpdateContent>();
         }
 
         /// <summary>
@@ -35,22 +35,22 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// The list of Data Lake Store accounts associated with this account.
         /// Serialized Name: UpdateDataLakeAnalyticsAccountParameters.properties.dataLakeStoreAccounts
         /// </summary>
-        public IList<DataLakeStoreForDataLakeAnalyticsAccountUpdate> DataLakeStoreAccounts { get; }
+        public IList<DataLakeStoreForDataLakeAnalyticsAccountUpdateContent> DataLakeStoreAccounts { get; }
         /// <summary>
         /// The list of Azure Blob storage accounts associated with this account.
         /// Serialized Name: UpdateDataLakeAnalyticsAccountParameters.properties.storageAccounts
         /// </summary>
-        public IList<StorageAccountForDataLakeAnalyticsAccountUpdate> StorageAccounts { get; }
+        public IList<StorageAccountForDataLakeAnalyticsAccountUpdateContent> StorageAccounts { get; }
         /// <summary>
         /// The list of compute policies associated with this account.
         /// Serialized Name: UpdateDataLakeAnalyticsAccountParameters.properties.computePolicies
         /// </summary>
-        public IList<ComputePolicyForDataLakeAnalyticsAccountUpdate> ComputePolicies { get; }
+        public IList<ComputePolicyForDataLakeAnalyticsAccountUpdateContent> ComputePolicies { get; }
         /// <summary>
         /// The list of firewall rules associated with this account.
         /// Serialized Name: UpdateDataLakeAnalyticsAccountParameters.properties.firewallRules
         /// </summary>
-        public IList<FirewallRuleForDataLakeAnalyticsAccountUpdate> FirewallRules { get; }
+        public IList<FirewallRuleForDataLakeAnalyticsAccountUpdateContent> FirewallRules { get; }
         /// <summary>
         /// The current state of the IP address firewall for this account. Disabling the firewall does not remove existing rules, they will just be ignored until the firewall is re-enabled.
         /// Serialized Name: UpdateDataLakeAnalyticsAccountParameters.properties.firewallState

@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// The parameters used to update a firewall rule while updating a Data Lake Analytics account.
     /// Serialized Name: UpdateFirewallRuleWithAccountParameters
     /// </summary>
-    public partial class FirewallRuleForDataLakeAnalyticsAccountUpdate
+    public partial class FirewallRuleForDataLakeAnalyticsAccountUpdateContent
     {
-        /// <summary> Initializes a new instance of FirewallRuleForDataLakeAnalyticsAccountUpdate. </summary>
+        /// <summary> Initializes a new instance of FirewallRuleForDataLakeAnalyticsAccountUpdateContent. </summary>
         /// <param name="name">
         /// The unique name of the firewall rule to update.
         /// Serialized Name: UpdateFirewallRuleWithAccountParameters.name
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public FirewallRuleForDataLakeAnalyticsAccountUpdate(string name)
+        public FirewallRuleForDataLakeAnalyticsAccountUpdateContent(string name)
         {
             Argument.AssertNotNull(name, nameof(name));
 

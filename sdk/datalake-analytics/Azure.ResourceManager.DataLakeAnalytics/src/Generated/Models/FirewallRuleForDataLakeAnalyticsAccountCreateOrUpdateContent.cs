@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// The parameters used to create a new firewall rule while creating a new Data Lake Analytics account.
     /// Serialized Name: CreateFirewallRuleWithAccountParameters
     /// </summary>
-    public partial class FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdate
+    public partial class FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdate. </summary>
+        /// <summary> Initializes a new instance of FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent. </summary>
         /// <param name="name">
         /// The unique name of the firewall rule to create.
         /// Serialized Name: CreateFirewallRuleWithAccountParameters.name
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// Serialized Name: CreateFirewallRuleWithAccountParameters.properties.endIpAddress
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="startIPAddress"/> or <paramref name="endIPAddress"/> is null. </exception>
-        public FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdate(string name, IPAddress startIPAddress, IPAddress endIPAddress)
+        public FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent(string name, IPAddress startIPAddress, IPAddress endIPAddress)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(startIPAddress, nameof(startIPAddress));

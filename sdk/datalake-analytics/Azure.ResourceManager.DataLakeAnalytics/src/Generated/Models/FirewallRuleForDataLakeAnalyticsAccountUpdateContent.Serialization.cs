@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
-    public partial class StorageAccountForDataLakeAnalyticsAccountCreateOrUpdate : IUtf8JsonSerializable
+    public partial class FirewallRuleForDataLakeAnalyticsAccountUpdateContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -19,12 +19,15 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            writer.WritePropertyName("accessKey");
-            writer.WriteStringValue(AccessKey);
-            if (Optional.IsDefined(Suffix))
+            if (Optional.IsDefined(StartIPAddress))
             {
-                writer.WritePropertyName("suffix");
-                writer.WriteStringValue(Suffix);
+                writer.WritePropertyName("startIpAddress");
+                writer.WriteStringValue(StartIPAddress.ToString());
+            }
+            if (Optional.IsDefined(EndIPAddress))
+            {
+                writer.WritePropertyName("endIpAddress");
+                writer.WriteStringValue(EndIPAddress.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

@@ -14,9 +14,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// The parameters used to create a new compute policy while creating a new Data Lake Analytics account.
     /// Serialized Name: CreateComputePolicyWithAccountParameters
     /// </summary>
-    public partial class ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdate
+    public partial class ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdate. </summary>
+        /// <summary> Initializes a new instance of ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent. </summary>
         /// <param name="name">
         /// The unique name of the compute policy to create.
         /// Serialized Name: CreateComputePolicyWithAccountParameters.name
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// Serialized Name: CreateComputePolicyWithAccountParameters.properties.objectType
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdate(string name, Guid objectId, AadObjectIdentifierType objectType)
+        public ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent(string name, Guid objectId, AadObjectIdentifierType objectType)
         {
             Argument.AssertNotNull(name, nameof(name));
 

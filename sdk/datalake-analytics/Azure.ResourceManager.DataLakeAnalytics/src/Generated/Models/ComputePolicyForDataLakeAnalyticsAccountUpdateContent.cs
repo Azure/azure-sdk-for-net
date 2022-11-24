@@ -14,15 +14,15 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// The parameters used to update a compute policy while updating a Data Lake Analytics account.
     /// Serialized Name: UpdateComputePolicyWithAccountParameters
     /// </summary>
-    public partial class ComputePolicyForDataLakeAnalyticsAccountUpdate
+    public partial class ComputePolicyForDataLakeAnalyticsAccountUpdateContent
     {
-        /// <summary> Initializes a new instance of ComputePolicyForDataLakeAnalyticsAccountUpdate. </summary>
+        /// <summary> Initializes a new instance of ComputePolicyForDataLakeAnalyticsAccountUpdateContent. </summary>
         /// <param name="name">
         /// The unique name of the compute policy to update.
         /// Serialized Name: UpdateComputePolicyWithAccountParameters.name
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public ComputePolicyForDataLakeAnalyticsAccountUpdate(string name)
+        public ComputePolicyForDataLakeAnalyticsAccountUpdateContent(string name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
