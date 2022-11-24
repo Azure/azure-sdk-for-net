@@ -56,7 +56,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             OperationContext = "operationContext",
             Prompt = new FileSource(new Uri("https://localhost"))
         };
-        private static CallMediaRecognizeOptions _ivrChoiceRecognizeOptions = new CallMediaRecognizeChoiceOptions(new CommunicationUserIdentifier("targetUserId"), s_recognizeChoices)
+        private static CallMediaRecognizeOptions _choiceRecognizeOptions = new CallMediaRecognizeChoiceOptions(new CommunicationUserIdentifier("targetUserId"), s_recognizeChoices)
         {
             InterruptCallMediaOperation = true,
             InitialSilenceTimeout = TimeSpan.FromSeconds(5),
@@ -160,7 +160,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 },
                 new Func<CallMedia, Task<Response>>?[]
                 {
-                   callMedia => callMedia.StartRecognizingAsync(_ivrChoiceRecognizeOptions)
+                   callMedia => callMedia.StartRecognizingAsync(_choiceRecognizeOptions)
                 },
                 new Func<CallMedia, Task<Response>>?[]
                 {
@@ -199,7 +199,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 },
                 new Func<CallMedia, Response>?[]
                 {
-                   callMedia => callMedia.StartRecognizing(_ivrChoiceRecognizeOptions)
+                   callMedia => callMedia.StartRecognizing(_choiceRecognizeOptions)
                 },
                 new Func<CallMedia, Response>?[]
                 {

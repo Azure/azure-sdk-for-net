@@ -498,7 +498,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
         }
 
         [Test]
-        public void RecognizeCompletedEventParsed_Test()
+        public void RecognizeCompletedWithDtmfEventParsed_Test()
         {
             RecognizeCompleted @event = CallAutomationModelFactory.RecognizeCompleted(
                 callConnectionId: "callConnectionId",
@@ -513,7 +513,6 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                     subCode: 8531,
                     message: "Action completed, max digits received"));
             JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
-
             string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
 
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.RecognizeCompleted");
@@ -525,6 +524,41 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.NotZero(recognizeCompleted.CollectTonesResult.Tones.Count());
                 Assert.AreEqual(DtmfTone.Five, recognizeCompleted.CollectTonesResult.Tones.First());
                 Assert.AreEqual(ReasonCode.RecognizeMaxDigitsReceived, recognizeCompleted.ReasonCode);
+            }
+            else
+            {
+                Assert.Fail("Event parsed wrongfully");
+            }
+        }
+
+        [Test]
+        public void RecognizeCompletedWithChoiceEventParsed_Test()
+        {
+            RecognizeCompleted @event = CallAutomationModelFactory.RecognizeCompleted(
+                callConnectionId: "callConnectionId",
+                serverCallId: "serverCallId",
+                correlationId: "correlationId",
+                operationContext: "operationContext",
+                recognitionType: CallMediaRecognitionType.Choices,
+                collectTonesResult: new CollectTonesResult(new DtmfTone[] { DtmfTone.Five }),
+                choiceResult: new ChoiceResult("testLabel", "testRecognizePhrase"),
+                resultInformation: new ResultInformation(
+                    code: 200,
+                    subCode: 8545,
+                    message: "Action completed, Recognized phrase matches a valid option."));
+            JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+
+            string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
+
+            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.RecognizeCompleted");
+            if (parsedEvent is RecognizeCompleted recognizeCompleted)
+            {
+                Assert.AreEqual("correlationId", recognizeCompleted.CorrelationId);
+                Assert.AreEqual("serverCallId", recognizeCompleted.ServerCallId);
+                Assert.AreEqual(200, recognizeCompleted.ResultInformation?.Code);
+                Assert.NotZero(recognizeCompleted.CollectTonesResult.Tones.Count());
+                Assert.AreEqual("testLabel", recognizeCompleted.ChoiceResult.Label);
+                Assert.AreEqual(ReasonCode.RecognizeSpeechOptionMatched, recognizeCompleted.ReasonCode);
             }
             else
             {
