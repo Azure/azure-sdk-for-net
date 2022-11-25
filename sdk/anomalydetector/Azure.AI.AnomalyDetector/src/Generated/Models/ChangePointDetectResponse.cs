@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector.Models
@@ -21,21 +22,21 @@ namespace Azure.AI.AnomalyDetector.Models
         }
 
         /// <summary> Initializes a new instance of ChangePointDetectResponse. </summary>
-        /// <param name="period"> Frequency extracted from the series, zero means no recurrent pattern has been found. </param>
-        /// <param name="isChangePoint"> isChangePoint contains change point properties for each input point. True means an anomaly either negative or positive has been detected. The index of the array is consistent with the input series. </param>
-        /// <param name="confidenceScores"> the change point confidence of each point. </param>
+        /// <param name="period"></param>
+        /// <param name="isChangePoint"></param>
+        /// <param name="confidenceScores"></param>
         internal ChangePointDetectResponse(int? period, IReadOnlyList<bool> isChangePoint, IReadOnlyList<float> confidenceScores)
         {
             Period = period;
-            IsChangePoint = isChangePoint;
-            ConfidenceScores = confidenceScores;
+            IsChangePoint = isChangePoint.ToList();
+            ConfidenceScores = confidenceScores.ToList();
         }
 
-        /// <summary> Frequency extracted from the series, zero means no recurrent pattern has been found. </summary>
+        /// <summary> Gets the period. </summary>
         public int? Period { get; }
-        /// <summary> isChangePoint contains change point properties for each input point. True means an anomaly either negative or positive has been detected. The index of the array is consistent with the input series. </summary>
+        /// <summary> Gets the is change point. </summary>
         public IReadOnlyList<bool> IsChangePoint { get; }
-        /// <summary> the change point confidence of each point. </summary>
+        /// <summary> Gets the confidence scores. </summary>
         public IReadOnlyList<float> ConfidenceScores { get; }
     }
 }

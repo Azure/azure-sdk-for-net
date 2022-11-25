@@ -7,15 +7,16 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector.Models
 {
-    internal partial class ModelList
+    public partial class ModelList
     {
         internal static ModelList DeserializeModelList(JsonElement element)
         {
-            IReadOnlyList<ModelSnapshot> models = default;
+            IReadOnlyList<Model> models = default;
             int currentCount = default;
             int maxCount = default;
             Optional<string> nextLink = default;
@@ -23,10 +24,10 @@ namespace Azure.AI.AnomalyDetector.Models
             {
                 if (property.NameEquals("models"))
                 {
-                    List<ModelSnapshot> array = new List<ModelSnapshot>();
+                    List<Model> array = new List<Model>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ModelSnapshot.DeserializeModelSnapshot(item));
+                        array.Add(Model.DeserializeModel(item));
                     }
                     models = array;
                     continue;
@@ -47,7 +48,15 @@ namespace Azure.AI.AnomalyDetector.Models
                     continue;
                 }
             }
-            return new ModelList(models, currentCount, maxCount, nextLink.Value);
+            return new ModelList(models, currentCount, maxCount, nextLink);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ModelList FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeModelList(document.RootElement);
         }
     }
 }

@@ -16,26 +16,26 @@ namespace Azure.AI.AnomalyDetector.Models
     public partial class VariableValues
     {
         /// <summary> Initializes a new instance of VariableValues. </summary>
-        /// <param name="name"> variable name. </param>
-        /// <param name="timestamps"> timestamps. </param>
-        /// <param name="values"> values. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="timestamps"/> or <paramref name="values"/> is null. </exception>
-        public VariableValues(string name, IEnumerable<string> timestamps, IEnumerable<float> values)
+        /// <param name="variable"></param>
+        /// <param name="timestamps"></param>
+        /// <param name="values"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="variable"/>, <paramref name="timestamps"/> or <paramref name="values"/> is null. </exception>
+        public VariableValues(string variable, IEnumerable<string> timestamps, IEnumerable<float> values)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(variable, nameof(variable));
             Argument.AssertNotNull(timestamps, nameof(timestamps));
             Argument.AssertNotNull(values, nameof(values));
 
-            Name = name;
+            Variable = variable;
             Timestamps = timestamps.ToList();
             Values = values.ToList();
         }
 
-        /// <summary> variable name. </summary>
-        public string Name { get; }
-        /// <summary> timestamps. </summary>
+        /// <summary> Gets the variable. </summary>
+        public string Variable { get; }
+        /// <summary> Gets the timestamps. </summary>
         public IList<string> Timestamps { get; }
-        /// <summary> values. </summary>
+        /// <summary> Gets the values. </summary>
         public IList<float> Values { get; }
     }
 }

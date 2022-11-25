@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector.Models
@@ -17,18 +18,20 @@ namespace Azure.AI.AnomalyDetector.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SlidingWindow))
+            writer.WritePropertyName("dataSource");
+            writer.WriteStringValue(DataSource);
+            if (Optional.IsDefined(DataSchema))
             {
-                writer.WritePropertyName("slidingWindow");
-                writer.WriteNumberValue(SlidingWindow.Value);
+                if (DataSchema != null)
+                {
+                    writer.WritePropertyName("dataSchema");
+                    writer.WriteStringValue(DataSchema.Value.ToSerialString());
+                }
+                else
+                {
+                    writer.WriteNull("dataSchema");
+                }
             }
-            if (Optional.IsDefined(AlignPolicy))
-            {
-                writer.WritePropertyName("alignPolicy");
-                writer.WriteObjectValue(AlignPolicy);
-            }
-            writer.WritePropertyName("source");
-            writer.WriteStringValue(Source);
             writer.WritePropertyName("startTime");
             writer.WriteStringValue(StartTime, "O");
             writer.WritePropertyName("endTime");
@@ -38,45 +41,80 @@ namespace Azure.AI.AnomalyDetector.Models
                 writer.WritePropertyName("displayName");
                 writer.WriteStringValue(DisplayName);
             }
+            if (Optional.IsDefined(SlidingWindow))
+            {
+                if (SlidingWindow != null)
+                {
+                    writer.WritePropertyName("slidingWindow");
+                    writer.WriteNumberValue(SlidingWindow.Value);
+                }
+                else
+                {
+                    writer.WriteNull("slidingWindow");
+                }
+            }
+            if (Optional.IsDefined(AlignPolicy))
+            {
+                writer.WritePropertyName("alignPolicy");
+                writer.WriteObjectValue(AlignPolicy);
+            }
+            if (Optional.IsDefined(Status))
+            {
+                if (Status != null)
+                {
+                    writer.WritePropertyName("status");
+                    writer.WriteStringValue(Status.Value.ToSerialString());
+                }
+                else
+                {
+                    writer.WriteNull("status");
+                }
+            }
+            if (Optional.IsCollectionDefined(Errors))
+            {
+                writer.WritePropertyName("errors");
+                writer.WriteStartArray();
+                foreach (var item in Errors)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(DiagnosticsInfo))
+            {
+                writer.WritePropertyName("diagnosticsInfo");
+                writer.WriteObjectValue(DiagnosticsInfo);
+            }
             writer.WriteEndObject();
         }
 
         internal static ModelInfo DeserializeModelInfo(JsonElement element)
         {
-            Optional<int> slidingWindow = default;
-            Optional<AlignPolicy> alignPolicy = default;
-            string source = default;
+            string dataSource = default;
+            Optional<DataSchema?> dataSchema = default;
             DateTimeOffset startTime = default;
             DateTimeOffset endTime = default;
             Optional<string> displayName = default;
-            Optional<ModelStatus> status = default;
-            Optional<IReadOnlyList<ErrorResponse>> errors = default;
+            Optional<int?> slidingWindow = default;
+            Optional<AlignPolicy> alignPolicy = default;
+            Optional<ModelStatus?> status = default;
+            Optional<IList<ErrorResponse>> errors = default;
             Optional<DiagnosticsInfo> diagnosticsInfo = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("slidingWindow"))
+                if (property.NameEquals("dataSource"))
+                {
+                    dataSource = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("dataSchema"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        dataSchema = null;
                         continue;
                     }
-                    slidingWindow = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("alignPolicy"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    alignPolicy = AlignPolicy.DeserializeAlignPolicy(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("source"))
-                {
-                    source = property.Value.GetString();
+                    dataSchema = property.Value.GetString().ToDataSchema();
                     continue;
                 }
                 if (property.NameEquals("startTime"))
@@ -94,11 +132,31 @@ namespace Azure.AI.AnomalyDetector.Models
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("slidingWindow"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        slidingWindow = null;
+                        continue;
+                    }
+                    slidingWindow = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("alignPolicy"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    alignPolicy = AlignPolicy.DeserializeAlignPolicy(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("status"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        status = null;
                         continue;
                     }
                     status = property.Value.GetString().ToModelStatus();
@@ -130,7 +188,23 @@ namespace Azure.AI.AnomalyDetector.Models
                     continue;
                 }
             }
-            return new ModelInfo(Optional.ToNullable(slidingWindow), alignPolicy.Value, source, startTime, endTime, displayName.Value, Optional.ToNullable(status), Optional.ToList(errors), diagnosticsInfo.Value);
+            return new ModelInfo(dataSource, Optional.ToNullable(dataSchema), startTime, endTime, displayName, Optional.ToNullable(slidingWindow), alignPolicy, Optional.ToNullable(status), Optional.ToList(errors), diagnosticsInfo);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ModelInfo FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeModelInfo(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }
