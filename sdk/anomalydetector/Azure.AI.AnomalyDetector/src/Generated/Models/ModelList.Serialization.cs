@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector.Models
 {
-    public partial class ModelList
+    internal partial class ModelList
     {
         internal static ModelList DeserializeModelList(JsonElement element)
         {
