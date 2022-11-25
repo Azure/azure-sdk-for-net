@@ -19,6 +19,7 @@ using Microsoft.Identity.Client;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
 using Azure.AI.AnomalyDetector.Models;
+using Newtonsoft.Json;
 
 namespace Azure.AI.AnomalyDetector.Tests.Samples
 {
@@ -48,7 +49,6 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
             String model_id = null;
             try
             {
-                /*
                 model_id = TrainModel(client, datasource, start_time, end_time);
 
                 // detect
@@ -62,8 +62,6 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
                 }
 
                 //detect last
-                */
-                model_id = "9224e49c-6ba4-11ed-bb90-42f93900d41a";
                 LastDetectionResult last_detection_result = DetectLast(client, model_id);
                 Console.WriteLine("Variable States: {0}", last_detection_result.VariableStates);
                 Console.WriteLine("Variable States length: {0}", last_detection_result.VariableStates.Count);
@@ -71,7 +69,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
                 Console.WriteLine("Results length: {0}", last_detection_result.Results.Count);
 
                 // delete
-                // DeleteModel(client, model_id);
+                DeleteModel(client, model_id);
             }
             catch (Exception e)
             {
@@ -101,6 +99,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
                 Console.WriteLine(String.Format("{0} available models before training.", GetModelNumber(client)));
 
                 ModelInfo request = new ModelInfo(datasource, start_time, end_time);
+                request.SlidingWindow = 200;
 
                 TestContext.Progress.WriteLine("Training new model...(it may take a few minutes)");
                 Model response = client.CreateAndTrainMultivariateModel(request);
@@ -207,13 +206,15 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
             try
             {
                 List<VariableValues> variables = new List<VariableValues>();
-                variables.Add(new VariableValues("series_0", new[] { "2021-01-01 00:00:00", "2021-01-01 01:00:00", "2021-01-01 02:00:00" }, new[] { 0.0f, 0.0f, 0.0f }));
-                variables.Add(new VariableValues("series_1", new[] { "2021-01-01 00:00:00", "2021-01-01 01:00:00", "2021-01-01 02:00:00" }, new[] { 0.0f, 0.0f, 0.0f }));
-                // using (StreamReader r = new StreamReader("./samples/data/multivariate_sample_data.json"))
-                // {
-                //     string json = r.ReadToEnd();
-                //     data = JsonDocument.Parse(json).RootElement;
-                // }
+                using (StreamReader r = new StreamReader("./samples/data/multivariate_sample_data.json"))
+                {
+                    string json = r.ReadToEnd();
+                    JsonElement lastDetectVariables = JsonDocument.Parse(json).RootElement.GetProperty("variables");
+                    foreach (var index in Enumerable.Range(0, lastDetectVariables.GetArrayLength()))
+                    {
+                        variables.Add(new VariableValues(lastDetectVariables[index].GetProperty("variable").ToString(), JsonConvert.DeserializeObject<IEnumerable<String>>(lastDetectVariables[index].GetProperty("timestamps").ToString()), JsonConvert.DeserializeObject<IEnumerable<float>>(lastDetectVariables[index].GetProperty("values").ToString())));
+                    }
+                }
                 LastDetectionRequest request = new LastDetectionRequest(variables, 1);
                 LastDetectionResult response = client.DetectMultivariateLastAnomaly(model_id, request);
                 return response;
