@@ -7,7 +7,7 @@
 
 namespace Azure.AI.AnomalyDetector.Models
 {
-    /// <summary> The AlignPolicy. </summary>
+    /// <summary> An optional field, indicating the manner to align multiple variables. </summary>
     public partial class AlignPolicy
     {
         /// <summary> Initializes a new instance of AlignPolicy. </summary>
@@ -16,9 +16,9 @@ namespace Azure.AI.AnomalyDetector.Models
         }
 
         /// <summary> Initializes a new instance of AlignPolicy. </summary>
-        /// <param name="alignMode"> An optional field, indicating how we align different variables to the same time-range. Either Inner or Outer. </param>
-        /// <param name="fillNAMethod"> An optional field, indicating how missing values will be filled. One of Previous, Subsequent, Linear, Zero, Fixed, and NotFill. Cannot be set to NotFill, when the alignMode is Outer. </param>
-        /// <param name="paddingValue"> An optional field. Required when fillNAMethod is Fixed. </param>
+        /// <param name="alignMode"></param>
+        /// <param name="fillNAMethod"></param>
+        /// <param name="paddingValue"></param>
         internal AlignPolicy(AlignMode? alignMode, FillNAMethod? fillNAMethod, float? paddingValue)
         {
             AlignMode = alignMode;
@@ -26,11 +26,11 @@ namespace Azure.AI.AnomalyDetector.Models
             PaddingValue = paddingValue;
         }
 
-        /// <summary> An optional field, indicating how we align different variables to the same time-range. Either Inner or Outer. </summary>
+        /// <summary> Gets or sets the align mode. </summary>
         public AlignMode? AlignMode { get; set; }
-        /// <summary> An optional field, indicating how missing values will be filled. One of Previous, Subsequent, Linear, Zero, Fixed, and NotFill. Cannot be set to NotFill, when the alignMode is Outer. </summary>
+        /// <summary> Gets or sets the fill na method. </summary>
         public FillNAMethod? FillNAMethod { get; set; }
-        /// <summary> An optional field. Required when fillNAMethod is Fixed. </summary>
+        /// <summary> Gets or sets the padding value. </summary>
         public float? PaddingValue { get; set; }
     }
 }

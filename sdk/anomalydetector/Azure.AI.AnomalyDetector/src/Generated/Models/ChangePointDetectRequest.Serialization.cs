@@ -22,29 +22,63 @@ namespace Azure.AI.AnomalyDetector.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("granularity");
-            writer.WriteStringValue(Granularity.ToSerialString());
             if (Optional.IsDefined(CustomInterval))
             {
-                writer.WritePropertyName("customInterval");
-                writer.WriteNumberValue(CustomInterval.Value);
+                if (CustomInterval != null)
+                {
+                    writer.WritePropertyName("customInterval");
+                    writer.WriteNumberValue(CustomInterval.Value);
+                }
+                else
+                {
+                    writer.WriteNull("customInterval");
+                }
             }
             if (Optional.IsDefined(Period))
             {
-                writer.WritePropertyName("period");
-                writer.WriteNumberValue(Period.Value);
+                if (Period != null)
+                {
+                    writer.WritePropertyName("period");
+                    writer.WriteNumberValue(Period.Value);
+                }
+                else
+                {
+                    writer.WriteNull("period");
+                }
             }
             if (Optional.IsDefined(StableTrendWindow))
             {
-                writer.WritePropertyName("stableTrendWindow");
-                writer.WriteNumberValue(StableTrendWindow.Value);
+                if (StableTrendWindow != null)
+                {
+                    writer.WritePropertyName("stableTrendWindow");
+                    writer.WriteNumberValue(StableTrendWindow.Value);
+                }
+                else
+                {
+                    writer.WriteNull("stableTrendWindow");
+                }
             }
             if (Optional.IsDefined(Threshold))
             {
-                writer.WritePropertyName("threshold");
-                writer.WriteNumberValue(Threshold.Value);
+                if (Threshold != null)
+                {
+                    writer.WritePropertyName("threshold");
+                    writer.WriteNumberValue(Threshold.Value);
+                }
+                else
+                {
+                    writer.WriteNull("threshold");
+                }
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -508,7 +508,7 @@ namespace Azure.AI.TextAnalytics
         /// and categorize those entities into types such as US social security
         /// number, drivers license number, or credit card number.
         /// <para>For more information on available categories, see
-        /// <see href="https://aka.ms/tanerpii"/>.</para>
+        /// <see href="https://aka.ms/azsdk/language/pii"/>.</para>
         /// <para>For a list of languages supported by this operation, see
         /// <see href="https://aka.ms/talangs"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
@@ -542,7 +542,7 @@ namespace Azure.AI.TextAnalytics
         /// and categorize those entities into types such as US social security
         /// number, drivers license number, or credit card number.
         /// <para>For more information on available categories, see
-        /// <see href="https://aka.ms/tanerpii"/>.</para>
+        /// <see href="https://aka.ms/azsdk/language/pii"/>.</para>
         /// <para>For a list of languages supported by this operation, see
         /// <see href="https://aka.ms/talangs"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
@@ -576,7 +576,7 @@ namespace Azure.AI.TextAnalytics
         /// and categorize those entities into types such as US social security
         /// number, drivers license number, or credit card number.
         /// <para>For more information on available categories, see
-        /// <see href="https://aka.ms/tanerpii"/>.</para>
+        /// <see href="https://aka.ms/azsdk/language/pii"/>.</para>
         /// <para>For a list of languages supported by this operation, see
         /// <see href="https://aka.ms/talangs"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
@@ -610,7 +610,7 @@ namespace Azure.AI.TextAnalytics
         /// and categorize those entities into types such as US social security
         /// number, drivers license number, or credit card number.
         /// <para>For more information on available categories, see
-        /// <see href="https://aka.ms/tanerpii"/>.</para>
+        /// <see href="https://aka.ms/azsdk/language/pii"/>.</para>
         /// <para>For a list of languages supported by this operation, see
         /// <see href="https://aka.ms/talangs"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
@@ -644,7 +644,7 @@ namespace Azure.AI.TextAnalytics
         /// and categorize those entities into types such as US social security
         /// number, drivers license number, or credit card number.
         /// <para>For more information on available categories, see
-        /// <see href="https://aka.ms/tanerpii"/>.</para>
+        /// <see href="https://aka.ms/azsdk/language/pii"/>.</para>
         /// <para>For a list of languages supported by this operation, see
         /// <see href="https://aka.ms/talangs"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
@@ -673,7 +673,7 @@ namespace Azure.AI.TextAnalytics
         /// and categorize those entities into types such as US social security
         /// number, drivers license number, or credit card number.
         /// <para>For more information on available categories, see
-        /// <see href="https://aka.ms/tanerpii"/>.</para>
+        /// <see href="https://aka.ms/azsdk/language/pii"/>.</para>
         /// <para>For a list of languages supported by this operation, see
         /// <see href="https://aka.ms/talangs"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector.Models
@@ -17,21 +18,16 @@ namespace Azure.AI.AnomalyDetector.Models
         internal CorrelationChanges()
         {
             ChangedVariables = new ChangeTrackingList<string>();
-            ChangedValues = new ChangeTrackingList<float>();
         }
 
         /// <summary> Initializes a new instance of CorrelationChanges. </summary>
-        /// <param name="changedVariables"> correlated variables. </param>
-        /// <param name="changedValues"> changes in correlation. </param>
-        internal CorrelationChanges(IReadOnlyList<string> changedVariables, IReadOnlyList<float> changedValues)
+        /// <param name="changedVariables"></param>
+        internal CorrelationChanges(IReadOnlyList<string> changedVariables)
         {
-            ChangedVariables = changedVariables;
-            ChangedValues = changedValues;
+            ChangedVariables = changedVariables.ToList();
         }
 
-        /// <summary> correlated variables. </summary>
+        /// <summary> Gets the changed variables. </summary>
         public IReadOnlyList<string> ChangedVariables { get; }
-        /// <summary> changes in correlation. </summary>
-        public IReadOnlyList<float> ChangedValues { get; }
     }
 }

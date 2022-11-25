@@ -5,9 +5,9 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector.Models
@@ -16,14 +16,14 @@ namespace Azure.AI.AnomalyDetector.Models
     {
         internal static DetectionResult DeserializeDetectionResult(JsonElement element)
         {
-            Guid resultId = default;
+            string resultId = default;
             DetectionResultSummary summary = default;
             IReadOnlyList<AnomalyState> results = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resultId"))
                 {
-                    resultId = property.Value.GetGuid();
+                    resultId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("summary"))
@@ -43,6 +43,14 @@ namespace Azure.AI.AnomalyDetector.Models
                 }
             }
             return new DetectionResult(resultId, summary, results);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DetectionResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDetectionResult(document.RootElement);
         }
     }
 }
