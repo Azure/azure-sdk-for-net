@@ -171,15 +171,14 @@ namespace Azure.ResourceManager.MachineLearning
             return GetMachineLearningPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of WorkspaceConnectionResources in the MachineLearningWorkspace. </summary>
-        /// <returns> An object representing collection of WorkspaceConnectionResources and their operations over a WorkspaceConnectionResource. </returns>
-        public virtual WorkspaceConnectionCollection GetWorkspaceConnections()
+        /// <summary> Gets a collection of WorkspaceConnectionPropertiesV2BasicResources in the MachineLearningWorkspace. </summary>
+        /// <returns> An object representing collection of WorkspaceConnectionPropertiesV2BasicResources and their operations over a WorkspaceConnectionPropertiesV2BasicResource. </returns>
+        public virtual WorkspaceConnectionPropertiesV2BasicResourceCollection GetWorkspaceConnectionPropertiesV2BasicResources()
         {
-            return GetCachedClient(Client => new WorkspaceConnectionCollection(Client, Id));
+            return GetCachedClient(Client => new WorkspaceConnectionPropertiesV2BasicResourceCollection(Client, Id));
         }
 
         /// <summary>
-        /// Get the detail of a workspace connection.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}
         /// Operation Id: WorkspaceConnections_Get
         /// </summary>
@@ -188,13 +187,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<WorkspaceConnectionResource>> GetWorkspaceConnectionAsync(string connectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WorkspaceConnectionPropertiesV2BasicResource>> GetWorkspaceConnectionPropertiesV2BasicResourceAsync(string connectionName, CancellationToken cancellationToken = default)
         {
-            return await GetWorkspaceConnections().GetAsync(connectionName, cancellationToken).ConfigureAwait(false);
+            return await GetWorkspaceConnectionPropertiesV2BasicResources().GetAsync(connectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Get the detail of a workspace connection.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}
         /// Operation Id: WorkspaceConnections_Get
         /// </summary>
@@ -203,9 +201,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<WorkspaceConnectionResource> GetWorkspaceConnection(string connectionName, CancellationToken cancellationToken = default)
+        public virtual Response<WorkspaceConnectionPropertiesV2BasicResource> GetWorkspaceConnectionPropertiesV2BasicResource(string connectionName, CancellationToken cancellationToken = default)
         {
-            return GetWorkspaceConnections().Get(connectionName, cancellationToken);
+            return GetWorkspaceConnectionPropertiesV2BasicResources().Get(connectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of BatchEndpointResources in the MachineLearningWorkspace. </summary>
@@ -539,6 +537,43 @@ namespace Azure.ResourceManager.MachineLearning
         public virtual Response<OnlineEndpointResource> GetOnlineEndpoint(string endpointName, CancellationToken cancellationToken = default)
         {
             return GetOnlineEndpoints().Get(endpointName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ScheduleResources in the MachineLearningWorkspace. </summary>
+        /// <returns> An object representing collection of ScheduleResources and their operations over a ScheduleResource. </returns>
+        public virtual ScheduleCollection GetSchedules()
+        {
+            return GetCachedClient(Client => new ScheduleCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Get schedule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/schedules/{name}
+        /// Operation Id: Schedules_Get
+        /// </summary>
+        /// <param name="name"> Schedule name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ScheduleResource>> GetScheduleAsync(string name, CancellationToken cancellationToken = default)
+        {
+            return await GetSchedules().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get schedule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/schedules/{name}
+        /// Operation Id: Schedules_Get
+        /// </summary>
+        /// <param name="name"> Schedule name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ScheduleResource> GetSchedule(string name, CancellationToken cancellationToken = default)
+        {
+            return GetSchedules().Get(name, cancellationToken);
         }
 
         /// <summary>
