@@ -337,20 +337,20 @@ namespace Azure.ResourceManager.OperationalInsights
         }
         #endregion
 
-        #region LogAnalyticsQueryPackQueryResource
+        #region LogAnalyticsQueryResource
         /// <summary>
-        /// Gets an object representing a <see cref="LogAnalyticsQueryPackQueryResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LogAnalyticsQueryPackQueryResource.CreateResourceIdentifier" /> to create a <see cref="LogAnalyticsQueryPackQueryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LogAnalyticsQueryResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LogAnalyticsQueryResource.CreateResourceIdentifier" /> to create a <see cref="LogAnalyticsQueryResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LogAnalyticsQueryPackQueryResource" /> object. </returns>
-        public static LogAnalyticsQueryPackQueryResource GetLogAnalyticsQueryPackQueryResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LogAnalyticsQueryResource" /> object. </returns>
+        public static LogAnalyticsQueryResource GetLogAnalyticsQueryResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                LogAnalyticsQueryPackQueryResource.ValidateResourceId(id);
-                return new LogAnalyticsQueryPackQueryResource(client, id);
+                LogAnalyticsQueryResource.ValidateResourceId(id);
+                return new LogAnalyticsQueryResource(client, id);
             }
             );
         }

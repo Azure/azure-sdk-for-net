@@ -20,28 +20,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.OperationalInsights
 {
     /// <summary>
-    /// A class representing a collection of <see cref="LogAnalyticsQueryPackQueryResource" /> and their operations.
-    /// Each <see cref="LogAnalyticsQueryPackQueryResource" /> in the collection will belong to the same instance of <see cref="LogAnalyticsQueryPackResource" />.
-    /// To get a <see cref="LogAnalyticsQueryPackQueryCollection" /> instance call the GetLogAnalyticsQueryPackQueries method from an instance of <see cref="LogAnalyticsQueryPackResource" />.
+    /// A class representing a collection of <see cref="LogAnalyticsQueryResource" /> and their operations.
+    /// Each <see cref="LogAnalyticsQueryResource" /> in the collection will belong to the same instance of <see cref="LogAnalyticsQueryPackResource" />.
+    /// To get a <see cref="LogAnalyticsQueryCollection" /> instance call the GetLogAnalyticsQueries method from an instance of <see cref="LogAnalyticsQueryPackResource" />.
     /// </summary>
-    public partial class LogAnalyticsQueryPackQueryCollection : ArmCollection, IEnumerable<LogAnalyticsQueryPackQueryResource>, IAsyncEnumerable<LogAnalyticsQueryPackQueryResource>
+    public partial class LogAnalyticsQueryCollection : ArmCollection, IEnumerable<LogAnalyticsQueryResource>, IAsyncEnumerable<LogAnalyticsQueryResource>
     {
-        private readonly ClientDiagnostics _logAnalyticsQueryPackQueryQueriesClientDiagnostics;
-        private readonly QueriesRestOperations _logAnalyticsQueryPackQueryQueriesRestClient;
+        private readonly ClientDiagnostics _logAnalyticsQueryQueriesClientDiagnostics;
+        private readonly QueriesRestOperations _logAnalyticsQueryQueriesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="LogAnalyticsQueryPackQueryCollection"/> class for mocking. </summary>
-        protected LogAnalyticsQueryPackQueryCollection()
+        /// <summary> Initializes a new instance of the <see cref="LogAnalyticsQueryCollection"/> class for mocking. </summary>
+        protected LogAnalyticsQueryCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="LogAnalyticsQueryPackQueryCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LogAnalyticsQueryCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal LogAnalyticsQueryPackQueryCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal LogAnalyticsQueryCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _logAnalyticsQueryPackQueryQueriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", LogAnalyticsQueryPackQueryResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(LogAnalyticsQueryPackQueryResource.ResourceType, out string logAnalyticsQueryPackQueryQueriesApiVersion);
-            _logAnalyticsQueryPackQueryQueriesRestClient = new QueriesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, logAnalyticsQueryPackQueryQueriesApiVersion);
+            _logAnalyticsQueryQueriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", LogAnalyticsQueryResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(LogAnalyticsQueryResource.ResourceType, out string logAnalyticsQueryQueriesApiVersion);
+            _logAnalyticsQueryQueriesRestClient = new QueriesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, logAnalyticsQueryQueriesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -64,17 +64,17 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<LogAnalyticsQueryPackQueryResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string id, LogAnalyticsQueryPackQueryData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<LogAnalyticsQueryResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string id, LogAnalyticsQueryData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _logAnalyticsQueryPackQueryQueriesClientDiagnostics.CreateScope("LogAnalyticsQueryPackQueryCollection.CreateOrUpdate");
+            using var scope = _logAnalyticsQueryQueriesClientDiagnostics.CreateScope("LogAnalyticsQueryCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _logAnalyticsQueryPackQueryQueriesRestClient.PutAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, data, cancellationToken).ConfigureAwait(false);
-                var operation = new OperationalInsightsArmOperation<LogAnalyticsQueryPackQueryResource>(Response.FromValue(new LogAnalyticsQueryPackQueryResource(Client, response), response.GetRawResponse()));
+                var response = await _logAnalyticsQueryQueriesRestClient.PutAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, data, cancellationToken).ConfigureAwait(false);
+                var operation = new OperationalInsightsArmOperation<LogAnalyticsQueryResource>(Response.FromValue(new LogAnalyticsQueryResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -97,17 +97,17 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<LogAnalyticsQueryPackQueryResource> CreateOrUpdate(WaitUntil waitUntil, string id, LogAnalyticsQueryPackQueryData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<LogAnalyticsQueryResource> CreateOrUpdate(WaitUntil waitUntil, string id, LogAnalyticsQueryData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _logAnalyticsQueryPackQueryQueriesClientDiagnostics.CreateScope("LogAnalyticsQueryPackQueryCollection.CreateOrUpdate");
+            using var scope = _logAnalyticsQueryQueriesClientDiagnostics.CreateScope("LogAnalyticsQueryCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _logAnalyticsQueryPackQueryQueriesRestClient.Put(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, data, cancellationToken);
-                var operation = new OperationalInsightsArmOperation<LogAnalyticsQueryPackQueryResource>(Response.FromValue(new LogAnalyticsQueryPackQueryResource(Client, response), response.GetRawResponse()));
+                var response = _logAnalyticsQueryQueriesRestClient.Put(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, data, cancellationToken);
+                var operation = new OperationalInsightsArmOperation<LogAnalyticsQueryResource>(Response.FromValue(new LogAnalyticsQueryResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -128,18 +128,18 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public virtual async Task<Response<LogAnalyticsQueryPackQueryResource>> GetAsync(string id, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LogAnalyticsQueryResource>> GetAsync(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using var scope = _logAnalyticsQueryPackQueryQueriesClientDiagnostics.CreateScope("LogAnalyticsQueryPackQueryCollection.Get");
+            using var scope = _logAnalyticsQueryQueriesClientDiagnostics.CreateScope("LogAnalyticsQueryCollection.Get");
             scope.Start();
             try
             {
-                var response = await _logAnalyticsQueryPackQueryQueriesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, cancellationToken).ConfigureAwait(false);
+                var response = await _logAnalyticsQueryQueriesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LogAnalyticsQueryPackQueryResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LogAnalyticsQueryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,18 +157,18 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public virtual Response<LogAnalyticsQueryPackQueryResource> Get(string id, CancellationToken cancellationToken = default)
+        public virtual Response<LogAnalyticsQueryResource> Get(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using var scope = _logAnalyticsQueryPackQueryQueriesClientDiagnostics.CreateScope("LogAnalyticsQueryPackQueryCollection.Get");
+            using var scope = _logAnalyticsQueryQueriesClientDiagnostics.CreateScope("LogAnalyticsQueryCollection.Get");
             scope.Start();
             try
             {
-                var response = _logAnalyticsQueryPackQueryQueriesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, cancellationToken);
+                var response = _logAnalyticsQueryQueriesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LogAnalyticsQueryPackQueryResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LogAnalyticsQueryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -186,17 +186,17 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="includeBody"> Flag indicating whether or not to return the body of each applicable query. If false, only return the query information. </param>
         /// <param name="skipToken"> Base64 encoded token used to fetch the next page of items. Default is null. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LogAnalyticsQueryPackQueryResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LogAnalyticsQueryPackQueryResource> GetAllAsync(long? top = null, bool? includeBody = null, string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="LogAnalyticsQueryResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<LogAnalyticsQueryResource> GetAllAsync(long? top = null, bool? includeBody = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<LogAnalyticsQueryPackQueryResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<LogAnalyticsQueryResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _logAnalyticsQueryPackQueryQueriesClientDiagnostics.CreateScope("LogAnalyticsQueryPackQueryCollection.GetAll");
+                using var scope = _logAnalyticsQueryQueriesClientDiagnostics.CreateScope("LogAnalyticsQueryCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _logAnalyticsQueryPackQueryQueriesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, includeBody, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LogAnalyticsQueryPackQueryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _logAnalyticsQueryQueriesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, includeBody, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new LogAnalyticsQueryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -204,14 +204,14 @@ namespace Azure.ResourceManager.OperationalInsights
                     throw;
                 }
             }
-            async Task<Page<LogAnalyticsQueryPackQueryResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<LogAnalyticsQueryResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _logAnalyticsQueryPackQueryQueriesClientDiagnostics.CreateScope("LogAnalyticsQueryPackQueryCollection.GetAll");
+                using var scope = _logAnalyticsQueryQueriesClientDiagnostics.CreateScope("LogAnalyticsQueryCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _logAnalyticsQueryPackQueryQueriesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, includeBody, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LogAnalyticsQueryPackQueryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _logAnalyticsQueryQueriesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, includeBody, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new LogAnalyticsQueryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -231,17 +231,17 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="includeBody"> Flag indicating whether or not to return the body of each applicable query. If false, only return the query information. </param>
         /// <param name="skipToken"> Base64 encoded token used to fetch the next page of items. Default is null. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LogAnalyticsQueryPackQueryResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LogAnalyticsQueryPackQueryResource> GetAll(long? top = null, bool? includeBody = null, string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="LogAnalyticsQueryResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<LogAnalyticsQueryResource> GetAll(long? top = null, bool? includeBody = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<LogAnalyticsQueryPackQueryResource> FirstPageFunc(int? pageSizeHint)
+            Page<LogAnalyticsQueryResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _logAnalyticsQueryPackQueryQueriesClientDiagnostics.CreateScope("LogAnalyticsQueryPackQueryCollection.GetAll");
+                using var scope = _logAnalyticsQueryQueriesClientDiagnostics.CreateScope("LogAnalyticsQueryCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _logAnalyticsQueryPackQueryQueriesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, includeBody, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LogAnalyticsQueryPackQueryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _logAnalyticsQueryQueriesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, includeBody, skipToken, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new LogAnalyticsQueryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -249,14 +249,14 @@ namespace Azure.ResourceManager.OperationalInsights
                     throw;
                 }
             }
-            Page<LogAnalyticsQueryPackQueryResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<LogAnalyticsQueryResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _logAnalyticsQueryPackQueryQueriesClientDiagnostics.CreateScope("LogAnalyticsQueryPackQueryCollection.GetAll");
+                using var scope = _logAnalyticsQueryQueriesClientDiagnostics.CreateScope("LogAnalyticsQueryCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _logAnalyticsQueryPackQueryQueriesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, includeBody, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LogAnalyticsQueryPackQueryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _logAnalyticsQueryQueriesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, includeBody, skipToken, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new LogAnalyticsQueryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -280,11 +280,11 @@ namespace Azure.ResourceManager.OperationalInsights
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using var scope = _logAnalyticsQueryPackQueryQueriesClientDiagnostics.CreateScope("LogAnalyticsQueryPackQueryCollection.Exists");
+            using var scope = _logAnalyticsQueryQueriesClientDiagnostics.CreateScope("LogAnalyticsQueryCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _logAnalyticsQueryPackQueryQueriesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _logAnalyticsQueryQueriesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -307,11 +307,11 @@ namespace Azure.ResourceManager.OperationalInsights
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using var scope = _logAnalyticsQueryPackQueryQueriesClientDiagnostics.CreateScope("LogAnalyticsQueryPackQueryCollection.Exists");
+            using var scope = _logAnalyticsQueryQueriesClientDiagnostics.CreateScope("LogAnalyticsQueryCollection.Exists");
             scope.Start();
             try
             {
-                var response = _logAnalyticsQueryPackQueryQueriesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, cancellationToken: cancellationToken);
+                var response = _logAnalyticsQueryQueriesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.OperationalInsights
             }
         }
 
-        IEnumerator<LogAnalyticsQueryPackQueryResource> IEnumerable<LogAnalyticsQueryPackQueryResource>.GetEnumerator()
+        IEnumerator<LogAnalyticsQueryResource> IEnumerable<LogAnalyticsQueryResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.OperationalInsights
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<LogAnalyticsQueryPackQueryResource> IAsyncEnumerable<LogAnalyticsQueryPackQueryResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<LogAnalyticsQueryResource> IAsyncEnumerable<LogAnalyticsQueryResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

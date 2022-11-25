@@ -16,18 +16,18 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> Initializes a new instance of OperationalInsightsWorkspaceCapping. </summary>
-        /// <param name="dailyQuotaGb"> The workspace daily quota for ingestion. </param>
+        /// <param name="dailyQuotaInGB"> The workspace daily quota for ingestion. </param>
         /// <param name="quotaNextResetTime"> The time when the quota will be rest. </param>
         /// <param name="dataIngestionStatus"> The status of data ingestion for this workspace. </param>
-        internal OperationalInsightsWorkspaceCapping(double? dailyQuotaGb, string quotaNextResetTime, OperationalInsightsDataIngestionStatus? dataIngestionStatus)
+        internal OperationalInsightsWorkspaceCapping(double? dailyQuotaInGB, string quotaNextResetTime, OperationalInsightsDataIngestionStatus? dataIngestionStatus)
         {
-            DailyQuotaGb = dailyQuotaGb;
+            DailyQuotaInGB = dailyQuotaInGB;
             QuotaNextResetTime = quotaNextResetTime;
             DataIngestionStatus = dataIngestionStatus;
         }
 
         /// <summary> The workspace daily quota for ingestion. </summary>
-        public double? DailyQuotaGb { get; set; }
+        public double? DailyQuotaInGB { get; set; }
         /// <summary> The time when the quota will be rest. </summary>
         public string QuotaNextResetTime { get; }
         /// <summary> The status of data ingestion for this workspace. </summary>

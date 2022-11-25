@@ -11,14 +11,25 @@ using Azure.Core;
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     /// <summary> The related metadata items for the function. </summary>
-    public partial class LogAnalyticsQueryPackQuerySearchRelatedMetadata
+    public partial class LogAnalyticsQueryRelatedMetadata
     {
-        /// <summary> Initializes a new instance of LogAnalyticsQueryPackQuerySearchRelatedMetadata. </summary>
-        public LogAnalyticsQueryPackQuerySearchRelatedMetadata()
+        /// <summary> Initializes a new instance of LogAnalyticsQueryRelatedMetadata. </summary>
+        public LogAnalyticsQueryRelatedMetadata()
         {
             Categories = new ChangeTrackingList<string>();
             ResourceTypes = new ChangeTrackingList<string>();
             Solutions = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of LogAnalyticsQueryRelatedMetadata. </summary>
+        /// <param name="categories"> The related categories for the function. </param>
+        /// <param name="resourceTypes"> The related resource types for the function. </param>
+        /// <param name="solutions"> The related Log Analytics solutions for the function. </param>
+        internal LogAnalyticsQueryRelatedMetadata(IList<string> categories, IList<string> resourceTypes, IList<string> solutions)
+        {
+            Categories = categories;
+            ResourceTypes = resourceTypes;
+            Solutions = solutions;
         }
 
         /// <summary> The related categories for the function. </summary>

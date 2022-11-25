@@ -22,7 +22,7 @@ format-by-name-rules:
   '*Uris': 'Uri'
   'clusterId': 'uuid'
   'dataExportId': 'uuid'
-  'lastSkuUpdate': 'datetime'
+  'lastSkuUpdatedOn': 'datetime'
   '*ResourceId': 'arm-id'
   'queryPackId': 'uuid'
   'customerId': 'uuid'
@@ -83,8 +83,6 @@ prepend-rp-prefix:
   - WorkspaceCapping
   - WorkspaceEntityStatus
   - WorkspaceFeatures
-  - WorkspacePurgeBody
-  - WorkspacePurgeBodyFilters
   - WorkspaceSku
 
 rename-mapping:
@@ -101,6 +99,9 @@ rename-mapping:
   WorkspacePatch.properties.modifiedDate: -|date-time
   DataExport.properties.enable: IsEnabled
   AvailableServiceTier.enabled: IsEnabled
+  AvailableServiceTier.lastSkuUpdate: LastSkuUpdatedOn
+  CapacityReservationProperties.lastSkuUpdate: LastSkuUpdatedOn
+  WorkspaceSku.lastSkuUpdate: LastSkuUpdatedOn
   IntelligencePack.enabled: IsEnabled
   WorkspaceFeatures.DisableLocalAuth: IsLocalAuthDisabled
   WorkspaceFeatures.enableDataExport: IsDataExportEnabled
@@ -111,6 +112,7 @@ rename-mapping:
   LogAnalyticsQueryPackQuery.properties.id: ApplicationId|uuid
   LogAnalyticsQueryPackQuery.properties.timeCreated: CreatedOn
   LogAnalyticsQueryPackQuery.properties.timeModified: ModifiedOn
+  LogAnalyticsQueryPackQuery: LogAnalyticsQuery
   ClusterSkuNameEnum: OperationalInsightsClusterSkuName
   ColumnDataTypeHintEnum: OperationalInsightsColumnDataTypeHint
   ColumnTypeEnum: OperationalInsightsColumnType
@@ -123,8 +125,9 @@ rename-mapping:
   SkuNameEnum: OperationalInsightsSkuName
   AssociatedWorkspace: OperationalInsightsClusterAssociatedWorkspace
   CoreSummary: OperationalInsightsSearchCoreSummary
-  LogAnalyticsQueryPackQueryPropertiesRelated: LogAnalyticsQueryPackQueryRelatedMetadata
-  LogAnalyticsQueryPackQuerySearchPropertiesRelated: LogAnalyticsQueryPackQuerySearchRelatedMetadata
+  LogAnalyticsQueryPackQuerySearchProperties: LogAnalyticsQuerySearchProperties
+  LogAnalyticsQueryPackQueryPropertiesRelated: LogAnalyticsQueryRelatedMetadata
+  LogAnalyticsQueryPackQuerySearchPropertiesRelated: LogAnalyticsQuerySearchRelatedMetadata
   PurgeState: OperationalInsightsWorkspacePurgeState
   SharedKeys: OperationalInsightsWorkspaceSharedKeys
   WorkspacePurgeResponse: OperationalInsightsWorkspacePurgeResult
@@ -132,12 +135,16 @@ rename-mapping:
   RestoredLogs: OperationalInsightsTableRestoredLogs
   SearchResults: OperationalInsightsTableSearchResults
   ResultStatistics: OperationalInsightsTableResultStatistics
+  ResultStatistics.scannedGb: ScannedGB
+  WorkspaceCapping.dailyQuotaGb: DailyQuotaInGB
   RetentionInDaysAsDefault: RetentionInDaysAsDefaultState
   TotalRetentionInDaysAsDefault: TotalRetentionInDaysAsDefaultState
   ManagementGroup.properties.created: CreatedOn
   ManagementGroup.properties.dataReceived: DataReceivedOn
   StorageAccount.id: -|arm-id
   WorkspacePurgeResponse.operationId: -|uuid
+  WorkspacePurgeBody: OperationalInsightsWorkspacePurgeContent
+  WorkspacePurgeBodyFilters: OperationalInsightsWorkspacePurgeFilter
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/linkedStorageAccounts/{dataSourceType}: OperationalInsightsLinkedStorageAccounts
@@ -188,5 +195,9 @@ directive:
     where: $.parameters
     transform: >
       $.GatewayIdParameter.format = 'uuid';
+  - from: DataSources.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/dataSources'].get.parameters[?(@.name === '$skiptoken')]
+    transform: >
+      $['x-ms-client-name'] = 'skipToken';
 
 ```

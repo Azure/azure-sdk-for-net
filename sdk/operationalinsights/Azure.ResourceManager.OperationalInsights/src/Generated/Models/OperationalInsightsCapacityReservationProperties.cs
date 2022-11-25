@@ -18,16 +18,16 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> Initializes a new instance of OperationalInsightsCapacityReservationProperties. </summary>
-        /// <param name="lastSkuUpdate"> The last time Sku was updated. </param>
+        /// <param name="lastSkuUpdatedOn"> The last time Sku was updated. </param>
         /// <param name="minCapacity"> Minimum CapacityReservation value in GB. </param>
-        internal OperationalInsightsCapacityReservationProperties(DateTimeOffset? lastSkuUpdate, long? minCapacity)
+        internal OperationalInsightsCapacityReservationProperties(DateTimeOffset? lastSkuUpdatedOn, long? minCapacity)
         {
-            LastSkuUpdate = lastSkuUpdate;
+            LastSkuUpdatedOn = lastSkuUpdatedOn;
             MinCapacity = minCapacity;
         }
 
         /// <summary> The last time Sku was updated. </summary>
-        public DateTimeOffset? LastSkuUpdate { get; }
+        public DateTimeOffset? LastSkuUpdatedOn { get; }
         /// <summary> Minimum CapacityReservation value in GB. </summary>
         public long? MinCapacity { get; }
     }

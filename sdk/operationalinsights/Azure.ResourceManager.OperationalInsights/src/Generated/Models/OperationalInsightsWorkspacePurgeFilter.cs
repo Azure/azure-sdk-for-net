@@ -10,10 +10,10 @@ using System;
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     /// <summary> User-defined filters to return data which will be purged from the table. </summary>
-    public partial class OperationalInsightsWorkspacePurgeBodyFilters
+    public partial class OperationalInsightsWorkspacePurgeFilter
     {
-        /// <summary> Initializes a new instance of OperationalInsightsWorkspacePurgeBodyFilters. </summary>
-        public OperationalInsightsWorkspacePurgeBodyFilters()
+        /// <summary> Initializes a new instance of OperationalInsightsWorkspacePurgeFilter. </summary>
+        public OperationalInsightsWorkspacePurgeFilter()
         {
         }
 

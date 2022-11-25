@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    public partial class LogAnalyticsQueryPackQueryRelatedMetadata : IUtf8JsonSerializable
+    public partial class LogAnalyticsQueryRelatedMetadata : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             writer.WriteEndObject();
         }
 
-        internal static LogAnalyticsQueryPackQueryRelatedMetadata DeserializeLogAnalyticsQueryPackQueryRelatedMetadata(JsonElement element)
+        internal static LogAnalyticsQueryRelatedMetadata DeserializeLogAnalyticsQueryRelatedMetadata(JsonElement element)
         {
             Optional<IList<string>> categories = default;
             Optional<IList<string>> resourceTypes = default;
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     continue;
                 }
             }
-            return new LogAnalyticsQueryPackQueryRelatedMetadata(Optional.ToList(categories), Optional.ToList(resourceTypes), Optional.ToList(solutions));
+            return new LogAnalyticsQueryRelatedMetadata(Optional.ToList(categories), Optional.ToList(resourceTypes), Optional.ToList(solutions));
         }
     }
 }

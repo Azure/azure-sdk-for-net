@@ -1050,18 +1050,18 @@ namespace Azure.ResourceManager.OperationalInsights
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/purge
         /// Operation Id: WorkspacePurge_Purge
         /// </summary>
-        /// <param name="body"> Describes the body of a request to purge data in a single table of an Log Analytics Workspace. </param>
+        /// <param name="content"> Describes the body of a request to purge data in a single table of an Log Analytics Workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<Response<OperationalInsightsWorkspacePurgeResult>> PurgeAsync(OperationalInsightsWorkspacePurgeBody body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<OperationalInsightsWorkspacePurgeResult>> PurgeAsync(OperationalInsightsWorkspacePurgeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _workspacePurgeClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.Purge");
             scope.Start();
             try
             {
-                var response = await _workspacePurgeRestClient.PurgeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
+                var response = await _workspacePurgeRestClient.PurgeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1079,18 +1079,18 @@ namespace Azure.ResourceManager.OperationalInsights
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/purge
         /// Operation Id: WorkspacePurge_Purge
         /// </summary>
-        /// <param name="body"> Describes the body of a request to purge data in a single table of an Log Analytics Workspace. </param>
+        /// <param name="content"> Describes the body of a request to purge data in a single table of an Log Analytics Workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual Response<OperationalInsightsWorkspacePurgeResult> Purge(OperationalInsightsWorkspacePurgeBody body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<OperationalInsightsWorkspacePurgeResult> Purge(OperationalInsightsWorkspacePurgeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _workspacePurgeClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.Purge");
             scope.Start();
             try
             {
-                var response = _workspacePurgeRestClient.Purge(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
+                var response = _workspacePurgeRestClient.Purge(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

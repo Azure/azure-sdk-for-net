@@ -11,16 +11,16 @@ using Azure.Core;
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     /// <summary> Properties that define an Log Analytics QueryPack-Query search properties. </summary>
-    public partial class LogAnalyticsQueryPackQuerySearchProperties
+    public partial class LogAnalyticsQuerySearchProperties
     {
-        /// <summary> Initializes a new instance of LogAnalyticsQueryPackQuerySearchProperties. </summary>
-        public LogAnalyticsQueryPackQuerySearchProperties()
+        /// <summary> Initializes a new instance of LogAnalyticsQuerySearchProperties. </summary>
+        public LogAnalyticsQuerySearchProperties()
         {
             Tags = new ChangeTrackingDictionary<string, IList<string>>();
         }
 
         /// <summary> The related metadata items for the function. </summary>
-        public LogAnalyticsQueryPackQuerySearchRelatedMetadata Related { get; set; }
+        public LogAnalyticsQuerySearchRelatedMetadata Related { get; set; }
         /// <summary> Tags associated with the query. </summary>
         public IDictionary<string, IList<string>> Tags { get; }
     }

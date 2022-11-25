@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="maximumRetention"> The maximum retention for the Service Tier, in days. </param>
         /// <param name="defaultRetention"> The default retention for the Service Tier, in days. </param>
         /// <param name="capacityReservationLevel"> The capacity reservation level in GB per day. Returned for the Capacity Reservation Service Tier. </param>
-        /// <param name="lastSkuUpdate"> Time when the sku was last updated for the workspace. Returned for the Capacity Reservation Service Tier. </param>
-        internal OperationalInsightsAvailableServiceTier(OperationalInsightsSkuName? serviceTier, bool? isEnabled, long? minimumRetention, long? maximumRetention, long? defaultRetention, long? capacityReservationLevel, DateTimeOffset? lastSkuUpdate)
+        /// <param name="lastSkuUpdatedOn"> Time when the sku was last updated for the workspace. Returned for the Capacity Reservation Service Tier. </param>
+        internal OperationalInsightsAvailableServiceTier(OperationalInsightsSkuName? serviceTier, bool? isEnabled, long? minimumRetention, long? maximumRetention, long? defaultRetention, long? capacityReservationLevel, DateTimeOffset? lastSkuUpdatedOn)
         {
             ServiceTier = serviceTier;
             IsEnabled = isEnabled;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             MaximumRetention = maximumRetention;
             DefaultRetention = defaultRetention;
             CapacityReservationLevel = capacityReservationLevel;
-            LastSkuUpdate = lastSkuUpdate;
+            LastSkuUpdatedOn = lastSkuUpdatedOn;
         }
 
         /// <summary> The name of the Service Tier. </summary>
@@ -49,6 +49,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> The capacity reservation level in GB per day. Returned for the Capacity Reservation Service Tier. </summary>
         public long? CapacityReservationLevel { get; }
         /// <summary> Time when the sku was last updated for the workspace. Returned for the Capacity Reservation Service Tier. </summary>
-        public DateTimeOffset? LastSkuUpdate { get; }
+        public DateTimeOffset? LastSkuUpdatedOn { get; }
     }
 }

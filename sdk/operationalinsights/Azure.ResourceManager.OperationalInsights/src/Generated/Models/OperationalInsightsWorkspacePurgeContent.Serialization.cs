@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    public partial class OperationalInsightsWorkspacePurgeBody : IUtf8JsonSerializable
+    public partial class OperationalInsightsWorkspacePurgeContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

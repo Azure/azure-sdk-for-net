@@ -181,11 +181,11 @@ namespace Azure.ResourceManager.OperationalInsights
         /// Operation Id: DataSources_ListByWorkspace
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
-        /// <param name="skiptoken"> Starting point of the collection of data source instances. </param>
+        /// <param name="skipToken"> Starting point of the collection of data source instances. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
         /// <returns> An async collection of <see cref="OperationalInsightsDataSourceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OperationalInsightsDataSourceResource> GetAllAsync(string filter, string skiptoken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<OperationalInsightsDataSourceResource> GetAllAsync(string filter, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 scope.Start();
                 try
                 {
-                    var response = await _operationalInsightsDataSourceDataSourcesRestClient.ListByWorkspaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _operationalInsightsDataSourceDataSourcesRestClient.ListByWorkspaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new OperationalInsightsDataSourceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 scope.Start();
                 try
                 {
-                    var response = await _operationalInsightsDataSourceDataSourcesRestClient.ListByWorkspaceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _operationalInsightsDataSourceDataSourcesRestClient.ListByWorkspaceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new OperationalInsightsDataSourceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -228,11 +228,11 @@ namespace Azure.ResourceManager.OperationalInsights
         /// Operation Id: DataSources_ListByWorkspace
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
-        /// <param name="skiptoken"> Starting point of the collection of data source instances. </param>
+        /// <param name="skipToken"> Starting point of the collection of data source instances. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
         /// <returns> A collection of <see cref="OperationalInsightsDataSourceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OperationalInsightsDataSourceResource> GetAll(string filter, string skiptoken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<OperationalInsightsDataSourceResource> GetAll(string filter, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 scope.Start();
                 try
                 {
-                    var response = _operationalInsightsDataSourceDataSourcesRestClient.ListByWorkspace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skiptoken, cancellationToken: cancellationToken);
+                    var response = _operationalInsightsDataSourceDataSourcesRestClient.ListByWorkspace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skipToken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new OperationalInsightsDataSourceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 scope.Start();
                 try
                 {
-                    var response = _operationalInsightsDataSourceDataSourcesRestClient.ListByWorkspaceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skiptoken, cancellationToken: cancellationToken);
+                    var response = _operationalInsightsDataSourceDataSourcesRestClient.ListByWorkspaceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skipToken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new OperationalInsightsDataSourceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

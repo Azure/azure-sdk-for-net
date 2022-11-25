@@ -13,16 +13,16 @@ using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    /// <summary> A class representing the LogAnalyticsQueryPackQuery data model. </summary>
-    public partial class LogAnalyticsQueryPackQueryData : ResourceData
+    /// <summary> A class representing the LogAnalyticsQuery data model. </summary>
+    public partial class LogAnalyticsQueryData : ResourceData
     {
-        /// <summary> Initializes a new instance of LogAnalyticsQueryPackQueryData. </summary>
-        public LogAnalyticsQueryPackQueryData()
+        /// <summary> Initializes a new instance of LogAnalyticsQueryData. </summary>
+        public LogAnalyticsQueryData()
         {
             Tags = new ChangeTrackingDictionary<string, IList<string>>();
         }
 
-        /// <summary> Initializes a new instance of LogAnalyticsQueryPackQueryData. </summary>
+        /// <summary> Initializes a new instance of LogAnalyticsQueryData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="related"> The related metadata items for the function. </param>
         /// <param name="tags"> Tags associated with the query. </param>
         /// <param name="properties"> Additional properties that can be set for the query. </param>
-        internal LogAnalyticsQueryPackQueryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? applicationId, string displayName, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, string author, string description, string body, LogAnalyticsQueryPackQueryRelatedMetadata related, IDictionary<string, IList<string>> tags, BinaryData properties) : base(id, name, resourceType, systemData)
+        internal LogAnalyticsQueryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? applicationId, string displayName, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, string author, string description, string body, LogAnalyticsQueryRelatedMetadata related, IDictionary<string, IList<string>> tags, BinaryData properties) : base(id, name, resourceType, systemData)
         {
             ApplicationId = applicationId;
             DisplayName = displayName;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <summary> Body of the query. </summary>
         public string Body { get; set; }
         /// <summary> The related metadata items for the function. </summary>
-        public LogAnalyticsQueryPackQueryRelatedMetadata Related { get; set; }
+        public LogAnalyticsQueryRelatedMetadata Related { get; set; }
         /// <summary> Tags associated with the query. </summary>
         public IDictionary<string, IList<string>> Tags { get; }
         /// <summary>

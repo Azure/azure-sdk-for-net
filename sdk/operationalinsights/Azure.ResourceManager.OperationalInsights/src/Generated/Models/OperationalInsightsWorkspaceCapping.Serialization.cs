@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DailyQuotaGb))
+            if (Optional.IsDefined(DailyQuotaInGB))
             {
                 writer.WritePropertyName("dailyQuotaGb");
-                writer.WriteNumberValue(DailyQuotaGb.Value);
+                writer.WriteNumberValue(DailyQuotaInGB.Value);
             }
             writer.WriteEndObject();
         }

@@ -17,46 +17,46 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.OperationalInsights
 {
     /// <summary>
-    /// A Class representing a LogAnalyticsQueryPackQuery along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="LogAnalyticsQueryPackQueryResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetLogAnalyticsQueryPackQueryResource method.
-    /// Otherwise you can get one from its parent resource <see cref="LogAnalyticsQueryPackResource" /> using the GetLogAnalyticsQueryPackQuery method.
+    /// A Class representing a LogAnalyticsQuery along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="LogAnalyticsQueryResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetLogAnalyticsQueryResource method.
+    /// Otherwise you can get one from its parent resource <see cref="LogAnalyticsQueryPackResource" /> using the GetLogAnalyticsQuery method.
     /// </summary>
-    public partial class LogAnalyticsQueryPackQueryResource : ArmResource
+    public partial class LogAnalyticsQueryResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="LogAnalyticsQueryPackQueryResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="LogAnalyticsQueryResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string queryPackName, string id)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/queryPacks/{queryPackName}/queries/{id}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _logAnalyticsQueryPackQueryQueriesClientDiagnostics;
-        private readonly QueriesRestOperations _logAnalyticsQueryPackQueryQueriesRestClient;
-        private readonly LogAnalyticsQueryPackQueryData _data;
+        private readonly ClientDiagnostics _logAnalyticsQueryQueriesClientDiagnostics;
+        private readonly QueriesRestOperations _logAnalyticsQueryQueriesRestClient;
+        private readonly LogAnalyticsQueryData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="LogAnalyticsQueryPackQueryResource"/> class for mocking. </summary>
-        protected LogAnalyticsQueryPackQueryResource()
+        /// <summary> Initializes a new instance of the <see cref="LogAnalyticsQueryResource"/> class for mocking. </summary>
+        protected LogAnalyticsQueryResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "LogAnalyticsQueryPackQueryResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "LogAnalyticsQueryResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal LogAnalyticsQueryPackQueryResource(ArmClient client, LogAnalyticsQueryPackQueryData data) : this(client, data.Id)
+        internal LogAnalyticsQueryResource(ArmClient client, LogAnalyticsQueryData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="LogAnalyticsQueryPackQueryResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LogAnalyticsQueryResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal LogAnalyticsQueryPackQueryResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal LogAnalyticsQueryResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _logAnalyticsQueryPackQueryQueriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string logAnalyticsQueryPackQueryQueriesApiVersion);
-            _logAnalyticsQueryPackQueryQueriesRestClient = new QueriesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, logAnalyticsQueryPackQueryQueriesApiVersion);
+            _logAnalyticsQueryQueriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string logAnalyticsQueryQueriesApiVersion);
+            _logAnalyticsQueryQueriesRestClient = new QueriesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, logAnalyticsQueryQueriesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.OperationalInsights
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual LogAnalyticsQueryPackQueryData Data
+        public virtual LogAnalyticsQueryData Data
         {
             get
             {
@@ -92,16 +92,16 @@ namespace Azure.ResourceManager.OperationalInsights
         /// Operation Id: Queries_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LogAnalyticsQueryPackQueryResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LogAnalyticsQueryResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _logAnalyticsQueryPackQueryQueriesClientDiagnostics.CreateScope("LogAnalyticsQueryPackQueryResource.Get");
+            using var scope = _logAnalyticsQueryQueriesClientDiagnostics.CreateScope("LogAnalyticsQueryResource.Get");
             scope.Start();
             try
             {
-                var response = await _logAnalyticsQueryPackQueryQueriesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _logAnalyticsQueryQueriesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LogAnalyticsQueryPackQueryResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LogAnalyticsQueryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,16 +116,16 @@ namespace Azure.ResourceManager.OperationalInsights
         /// Operation Id: Queries_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LogAnalyticsQueryPackQueryResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<LogAnalyticsQueryResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _logAnalyticsQueryPackQueryQueriesClientDiagnostics.CreateScope("LogAnalyticsQueryPackQueryResource.Get");
+            using var scope = _logAnalyticsQueryQueriesClientDiagnostics.CreateScope("LogAnalyticsQueryResource.Get");
             scope.Start();
             try
             {
-                var response = _logAnalyticsQueryPackQueryQueriesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _logAnalyticsQueryQueriesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LogAnalyticsQueryPackQueryResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LogAnalyticsQueryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -143,11 +143,11 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _logAnalyticsQueryPackQueryQueriesClientDiagnostics.CreateScope("LogAnalyticsQueryPackQueryResource.Delete");
+            using var scope = _logAnalyticsQueryQueriesClientDiagnostics.CreateScope("LogAnalyticsQueryResource.Delete");
             scope.Start();
             try
             {
-                var response = await _logAnalyticsQueryPackQueryQueriesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _logAnalyticsQueryQueriesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new OperationalInsightsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -169,11 +169,11 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _logAnalyticsQueryPackQueryQueriesClientDiagnostics.CreateScope("LogAnalyticsQueryPackQueryResource.Delete");
+            using var scope = _logAnalyticsQueryQueriesClientDiagnostics.CreateScope("LogAnalyticsQueryResource.Delete");
             scope.Start();
             try
             {
-                var response = _logAnalyticsQueryPackQueryQueriesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _logAnalyticsQueryQueriesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new OperationalInsightsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -194,16 +194,16 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="data"> Properties that need to be specified to create a new query and add it to a Log Analytics QueryPack. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<LogAnalyticsQueryPackQueryResource>> UpdateAsync(LogAnalyticsQueryPackQueryData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LogAnalyticsQueryResource>> UpdateAsync(LogAnalyticsQueryData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _logAnalyticsQueryPackQueryQueriesClientDiagnostics.CreateScope("LogAnalyticsQueryPackQueryResource.Update");
+            using var scope = _logAnalyticsQueryQueriesClientDiagnostics.CreateScope("LogAnalyticsQueryResource.Update");
             scope.Start();
             try
             {
-                var response = await _logAnalyticsQueryPackQueryQueriesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new LogAnalyticsQueryPackQueryResource(Client, response.Value), response.GetRawResponse());
+                var response = await _logAnalyticsQueryQueriesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new LogAnalyticsQueryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -220,16 +220,16 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="data"> Properties that need to be specified to create a new query and add it to a Log Analytics QueryPack. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<LogAnalyticsQueryPackQueryResource> Update(LogAnalyticsQueryPackQueryData data, CancellationToken cancellationToken = default)
+        public virtual Response<LogAnalyticsQueryResource> Update(LogAnalyticsQueryData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _logAnalyticsQueryPackQueryQueriesClientDiagnostics.CreateScope("LogAnalyticsQueryPackQueryResource.Update");
+            using var scope = _logAnalyticsQueryQueriesClientDiagnostics.CreateScope("LogAnalyticsQueryResource.Update");
             scope.Start();
             try
             {
-                var response = _logAnalyticsQueryPackQueryQueriesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                return Response.FromValue(new LogAnalyticsQueryPackQueryResource(Client, response.Value), response.GetRawResponse());
+                var response = _logAnalyticsQueryQueriesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                return Response.FromValue(new LogAnalyticsQueryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

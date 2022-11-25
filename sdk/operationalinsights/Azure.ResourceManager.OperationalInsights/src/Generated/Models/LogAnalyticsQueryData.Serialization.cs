@@ -14,7 +14,7 @@ using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    public partial class LogAnalyticsQueryPackQueryData : IUtf8JsonSerializable
+    public partial class LogAnalyticsQueryData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.OperationalInsights
             writer.WriteEndObject();
         }
 
-        internal static LogAnalyticsQueryPackQueryData DeserializeLogAnalyticsQueryPackQueryData(JsonElement element)
+        internal static LogAnalyticsQueryData DeserializeLogAnalyticsQueryData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.OperationalInsights
             Optional<string> author = default;
             Optional<string> description = default;
             Optional<string> body = default;
-            Optional<LogAnalyticsQueryPackQueryRelatedMetadata> related = default;
+            Optional<LogAnalyticsQueryRelatedMetadata> related = default;
             Optional<IDictionary<string, IList<string>>> tags = default;
             Optional<BinaryData> properties = default;
             foreach (var property in element.EnumerateObject())
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.OperationalInsights
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            related = LogAnalyticsQueryPackQueryRelatedMetadata.DeserializeLogAnalyticsQueryPackQueryRelatedMetadata(property0.Value);
+                            related = LogAnalyticsQueryRelatedMetadata.DeserializeLogAnalyticsQueryRelatedMetadata(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("tags"))
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.OperationalInsights
                     continue;
                 }
             }
-            return new LogAnalyticsQueryPackQueryData(id, name, type, systemData.Value, Optional.ToNullable(id0), displayName.Value, Optional.ToNullable(timeCreated), Optional.ToNullable(timeModified), author.Value, description.Value, body.Value, related.Value, Optional.ToDictionary(tags), properties.Value);
+            return new LogAnalyticsQueryData(id, name, type, systemData.Value, Optional.ToNullable(id0), displayName.Value, Optional.ToNullable(timeCreated), Optional.ToNullable(timeModified), author.Value, description.Value, body.Value, related.Value, Optional.ToDictionary(tags), properties.Value);
         }
     }
 }
