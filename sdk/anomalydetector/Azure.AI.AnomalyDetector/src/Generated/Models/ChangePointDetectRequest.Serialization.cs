@@ -22,6 +22,8 @@ namespace Azure.AI.AnomalyDetector.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
+            writer.WritePropertyName("granularity");
+            writer.WriteStringValue(Granularity.ToSerialString());
             if (Optional.IsDefined(CustomInterval))
             {
                 if (CustomInterval != null)

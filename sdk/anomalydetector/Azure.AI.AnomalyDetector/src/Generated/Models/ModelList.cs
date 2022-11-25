@@ -13,7 +13,7 @@ using Azure.Core;
 namespace Azure.AI.AnomalyDetector.Models
 {
     /// <summary> Response of listing models. </summary>
-    public partial class ModelList
+    internal partial class ModelList
     {
         /// <summary> Initializes a new instance of ModelList. </summary>
         /// <param name="models"></param>
