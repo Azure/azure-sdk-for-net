@@ -109,6 +109,7 @@
     {
       "filename": "**/sdk/analysisservices/**/*.cs",
       "words": [
+        "dotnetcli",
         "MSAL"
       ]
     },
