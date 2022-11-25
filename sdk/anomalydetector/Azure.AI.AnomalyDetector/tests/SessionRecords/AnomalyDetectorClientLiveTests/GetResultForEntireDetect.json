@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://test-maga-ppe-we.ppe.cognitiveservices.azure.com/anomalydetector/v1.1-preview.1/timeseries/entire/detect",
+      "RequestUri": "https://test-maga-ppe-we.ppe.cognitiveservices.azure.com/anomalydetector/v1.1/timeseries/entire/detect",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
