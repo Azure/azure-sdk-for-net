@@ -19,7 +19,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
         [Test]
         public void DetectEntireSeriesAnomaly()
         {
-            #region Snippet:CreateAnomalyDetectorClient
+            #region Snippet:CreateAnomalyDetectorClientEntire
 
             //read endpoint and apiKey
             string endpoint = TestEnvironment.Endpoint;
