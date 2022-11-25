@@ -37,11 +37,8 @@ namespace Azure.Communication
         {
             Assert.AreEqual(CommunicationCloudEnvironment.Public, (CommunicationIdentifier.FromRawId("8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130") as CommunicationUserIdentifier)?.Cloud);
             Assert.AreEqual(CommunicationCloudEnvironment.Public, (CommunicationIdentifier.FromRawId("8:spool:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130") as CommunicationUserIdentifier)?.Cloud);
-            Assert.AreEqual(CommunicationCloudEnvironment.Public, (CommunicationIdentifier.FromRawId("8:dod-acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130") as CommunicationUserIdentifier)?.Cloud);
             Assert.AreEqual(CommunicationCloudEnvironment.Gcch, (CommunicationIdentifier.FromRawId("8:gcch-acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130") as CommunicationUserIdentifier)?.Cloud);
-            Assert.AreEqual(CommunicationCloudEnvironment.AirGap08, (CommunicationIdentifier.FromRawId("8:ag08-acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130") as CommunicationUserIdentifier)?.Cloud);
-            Assert.AreEqual(CommunicationCloudEnvironment.AirGap09, (CommunicationIdentifier.FromRawId("8:ag09-acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130") as CommunicationUserIdentifier)?.Cloud);
-            Assert.AreEqual(CommunicationCloudEnvironment.Gallatin, (CommunicationIdentifier.FromRawId("8:gal-acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130") as CommunicationUserIdentifier)?.Cloud);
+            Assert.AreEqual(CommunicationCloudEnvironment.Public, (CommunicationIdentifier.FromRawId("8:dod-acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130") as CommunicationUserIdentifier)?.Cloud);
         }
 
         [Test]

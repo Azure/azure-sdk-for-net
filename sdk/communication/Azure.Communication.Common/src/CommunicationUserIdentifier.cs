@@ -11,7 +11,7 @@ namespace Azure.Communication
         /// <summary>The id of the communication user.</summary>
         public string Id { get; }
 
-        /// <summary> The cloud that the identifier belongs to.</summary>
+        /// <summary>The cloud environment that the identifier belongs to.</summary>
         public CommunicationCloudEnvironment Cloud { get; }
 
         /// <summary>
@@ -30,26 +30,11 @@ namespace Azure.Communication
         /// <exception cref="System.ArgumentException">
         /// Thrown when the <paramref name="id"/> is empty.
         /// </exception>
-        public CommunicationUserIdentifier(string id) : this(id, CommunicationCloudEnvironment.Public)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of <see cref="CommunicationUserIdentifier"/>.
-        /// </summary>
-        /// <param name="id">Id of the communication user.</param>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when the <paramref name="id"/> is null.
-        /// </exception>
-        /// <exception cref="System.ArgumentException">
-        /// Thrown when the <paramref name="id"/> is empty.
-        /// </exception>
-        /// <param name="cloud">The cloud that the ACS user belongs to.</param>
-        public CommunicationUserIdentifier(string id, CommunicationCloudEnvironment cloud)
+        public CommunicationUserIdentifier(string id)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             Id = id;
-            Cloud = cloud;
+            Cloud = GetAcsCloudEnvironmentFromRawId(id);
         }
 
         /// <inheritdoc />
@@ -58,5 +43,24 @@ namespace Azure.Communication
         /// <inheritdoc />
         public override bool Equals(CommunicationIdentifier other)
             => other is CommunicationUserIdentifier otherId && otherId.RawId == RawId;
+
+        private static CommunicationCloudEnvironment GetAcsCloudEnvironmentFromRawId(string rawId)
+        {
+            var segments = rawId.Split(':');
+
+            if (segments.Length < 2)
+            {
+                return CommunicationCloudEnvironment.Public;
+            }
+
+            var cloudEnvironment = segments[1];
+
+            return cloudEnvironment switch
+            {
+                "acs" or "spool" => CommunicationCloudEnvironment.Public,
+                "gcch-acs" => CommunicationCloudEnvironment.Gcch,
+                _ => CommunicationCloudEnvironment.Public,
+            };
+        }
     }
 }

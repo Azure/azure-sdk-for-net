@@ -17,9 +17,6 @@ namespace Azure.Communication
         internal const string ACS_USER_ACS_PREFIX = "8:acs:";
         internal const string ACS_USER_SPOOL_PREFIX = "8:spool:";
         internal const string ACS_USER_GCCH_PREFIX = "8:gcch-acs:";
-        internal const string ACS_USER_AIR_GAP_08_PREFIX = "8:ag08-acs:";
-        internal const string ACS_USER_AIR_GAP_09_PREFIX = "8:ag09-acs:";
-        internal const string ACS_GALLATIN_PREFIX = "8:gal-acs:";
         internal const string ACS_USER_DOD_PREFIX = "8:dod-acs:";
 
         /// <summary>
@@ -84,12 +81,12 @@ namespace Azure.Communication
                 TEAMS_USER_ORGID_PREFIX => new MicrosoftTeamsUserIdentifier(suffix, false, CommunicationCloudEnvironment.Public),
                 TEAMS_USER_DOD_PREFIX => new MicrosoftTeamsUserIdentifier(suffix, false, CommunicationCloudEnvironment.Dod),
                 TEAMS_USER_GCCH_PREFIX => new MicrosoftTeamsUserIdentifier(suffix, false, CommunicationCloudEnvironment.Gcch),
-                ACS_USER_ACS_PREFIX or ACS_USER_SPOOL_PREFIX => new CommunicationUserIdentifier(rawId, CommunicationCloudEnvironment.Public),
-                ACS_USER_GCCH_PREFIX => new CommunicationUserIdentifier(rawId, CommunicationCloudEnvironment.Gcch),
-                ACS_USER_AIR_GAP_08_PREFIX => new CommunicationUserIdentifier(rawId, CommunicationCloudEnvironment.AirGap08),
-                ACS_USER_AIR_GAP_09_PREFIX => new CommunicationUserIdentifier(rawId, CommunicationCloudEnvironment.AirGap09),
-                ACS_GALLATIN_PREFIX => new CommunicationUserIdentifier(rawId, CommunicationCloudEnvironment.Gallatin),
+
+                ACS_USER_ACS_PREFIX or
+                ACS_USER_SPOOL_PREFIX or
+                ACS_USER_GCCH_PREFIX or
                 ACS_USER_DOD_PREFIX => new CommunicationUserIdentifier(rawId),
+
                 _ => new UnknownIdentifier(rawId),
             };
         }
