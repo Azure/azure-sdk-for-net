@@ -29,24 +29,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("compute");
                 }
             }
-            if (Optional.IsCollectionDefined(MirrorTraffic))
-            {
-                if (MirrorTraffic != null)
-                {
-                    writer.WritePropertyName("mirrorTraffic");
-                    writer.WriteStartObject();
-                    foreach (var item in MirrorTraffic)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteNumberValue(item.Value);
-                    }
-                    writer.WriteEndObject();
-                }
-                else
-                {
-                    writer.WriteNull("mirrorTraffic");
-                }
-            }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess");
@@ -120,7 +102,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal static OnlineEndpointProperties DeserializeOnlineEndpointProperties(JsonElement element)
         {
             Optional<string> compute = default;
-            Optional<IDictionary<string, int>> mirrorTraffic = default;
             Optional<EndpointProvisioningState> provisioningState = default;
             Optional<PublicNetworkAccessType> publicNetworkAccess = default;
             Optional<IDictionary<string, int>> traffic = default;
@@ -140,21 +121,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     compute = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("mirrorTraffic"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        mirrorTraffic = null;
-                        continue;
-                    }
-                    Dictionary<string, int> dictionary = new Dictionary<string, int>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetInt32());
-                    }
-                    mirrorTraffic = dictionary;
                     continue;
                 }
                 if (property.NameEquals("provisioningState"))
@@ -260,7 +226,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new OnlineEndpointProperties(authMode, description.Value, keys.Value, Optional.ToDictionary(properties), scoringUri.Value, swaggerUri.Value, compute.Value, Optional.ToDictionary(mirrorTraffic), Optional.ToNullable(provisioningState), Optional.ToNullable(publicNetworkAccess), Optional.ToDictionary(traffic));
+            return new OnlineEndpointProperties(authMode, description.Value, keys.Value, Optional.ToDictionary(properties), scoringUri.Value, swaggerUri.Value, compute.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(publicNetworkAccess), Optional.ToDictionary(traffic));
         }
     }
 }

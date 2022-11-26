@@ -13,34 +13,34 @@ namespace Azure.AI.AnomalyDetector.Models
     public partial class VariableState
     {
         /// <summary> Initializes a new instance of VariableState. </summary>
-        internal VariableState()
+        public VariableState()
         {
         }
 
         /// <summary> Initializes a new instance of VariableState. </summary>
-        /// <param name="variable"> Variable name. </param>
-        /// <param name="filledNARatio"> Proportion of NaN values filled of the variable. </param>
-        /// <param name="effectiveCount"> Number of effective points counted. </param>
-        /// <param name="startTime"> Start time of the variable. </param>
-        /// <param name="endTime"> End time of the variable. </param>
-        internal VariableState(string variable, float? filledNARatio, int? effectiveCount, DateTimeOffset? startTime, DateTimeOffset? endTime)
+        /// <param name="variable"></param>
+        /// <param name="filledNARatio"></param>
+        /// <param name="effectiveCount"></param>
+        /// <param name="firstTimestamp"></param>
+        /// <param name="lastTimestamp"></param>
+        internal VariableState(string variable, float? filledNARatio, int? effectiveCount, DateTimeOffset? firstTimestamp, DateTimeOffset? lastTimestamp)
         {
             Variable = variable;
             FilledNARatio = filledNARatio;
             EffectiveCount = effectiveCount;
-            StartTime = startTime;
-            EndTime = endTime;
+            FirstTimestamp = firstTimestamp;
+            LastTimestamp = lastTimestamp;
         }
 
-        /// <summary> Variable name. </summary>
-        public string Variable { get; }
-        /// <summary> Proportion of NaN values filled of the variable. </summary>
-        public float? FilledNARatio { get; }
-        /// <summary> Number of effective points counted. </summary>
-        public int? EffectiveCount { get; }
-        /// <summary> Start time of the variable. </summary>
-        public DateTimeOffset? StartTime { get; }
-        /// <summary> End time of the variable. </summary>
-        public DateTimeOffset? EndTime { get; }
+        /// <summary> Gets or sets the variable. </summary>
+        public string Variable { get; set; }
+        /// <summary> Gets or sets the filled na ratio. </summary>
+        public float? FilledNARatio { get; set; }
+        /// <summary> Gets or sets the effective count. </summary>
+        public int? EffectiveCount { get; set; }
+        /// <summary> Gets or sets the first timestamp. </summary>
+        public DateTimeOffset? FirstTimestamp { get; set; }
+        /// <summary> Gets or sets the last timestamp. </summary>
+        public DateTimeOffset? LastTimestamp { get; set; }
     }
 }

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,63 +16,52 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("frequency");
-            writer.WriteStringValue(Frequency.ToString());
-            writer.WritePropertyName("interval");
-            writer.WriteNumberValue(Interval);
-            if (Optional.IsDefined(Pattern))
+            writer.WritePropertyName("hours");
+            writer.WriteStartArray();
+            foreach (var item in Hours)
             {
-                if (Pattern != null)
+                writer.WriteNumberValue(item);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("minutes");
+            writer.WriteStartArray();
+            foreach (var item in Minutes)
+            {
+                writer.WriteNumberValue(item);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsCollectionDefined(MonthDays))
+            {
+                if (MonthDays != null)
                 {
-                    writer.WritePropertyName("pattern");
-                    writer.WriteObjectValue(Pattern);
+                    writer.WritePropertyName("monthDays");
+                    writer.WriteStartArray();
+                    foreach (var item in MonthDays)
+                    {
+                        writer.WriteNumberValue(item);
+                    }
+                    writer.WriteEndArray();
                 }
                 else
                 {
-                    writer.WriteNull("pattern");
+                    writer.WriteNull("monthDays");
                 }
             }
-            if (Optional.IsDefined(EndOn))
+            if (Optional.IsCollectionDefined(WeekDays))
             {
-                if (EndOn != null)
+                if (WeekDays != null)
                 {
-                    writer.WritePropertyName("endTime");
-                    writer.WriteStringValue(EndOn.Value, "O");
+                    writer.WritePropertyName("weekDays");
+                    writer.WriteStartArray();
+                    foreach (var item in WeekDays)
+                    {
+                        writer.WriteStringValue(item.ToString());
+                    }
+                    writer.WriteEndArray();
                 }
                 else
                 {
-                    writer.WriteNull("endTime");
-                }
-            }
-            if (Optional.IsDefined(ScheduleStatus))
-            {
-                writer.WritePropertyName("scheduleStatus");
-                writer.WriteStringValue(ScheduleStatus.Value.ToString());
-            }
-            writer.WritePropertyName("scheduleType");
-            writer.WriteStringValue(ScheduleType.ToString());
-            if (Optional.IsDefined(StartOn))
-            {
-                if (StartOn != null)
-                {
-                    writer.WritePropertyName("startTime");
-                    writer.WriteStringValue(StartOn.Value, "O");
-                }
-                else
-                {
-                    writer.WriteNull("startTime");
-                }
-            }
-            if (Optional.IsDefined(TimeZone))
-            {
-                if (TimeZone != null)
-                {
-                    writer.WritePropertyName("timeZone");
-                    writer.WriteStringValue(TimeZone);
-                }
-                else
-                {
-                    writer.WriteNull("timeZone");
+                    writer.WriteNull("weekDays");
                 }
             }
             writer.WriteEndObject();
@@ -80,83 +69,64 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static RecurrenceSchedule DeserializeRecurrenceSchedule(JsonElement element)
         {
-            RecurrenceFrequency frequency = default;
-            int interval = default;
-            Optional<RecurrencePattern> pattern = default;
-            Optional<DateTimeOffset?> endTime = default;
-            Optional<ScheduleStatus> scheduleStatus = default;
-            ScheduleType scheduleType = default;
-            Optional<DateTimeOffset?> startTime = default;
-            Optional<string> timeZone = default;
+            IList<int> hours = default;
+            IList<int> minutes = default;
+            Optional<IList<int>> monthDays = default;
+            Optional<IList<WeekDay>> weekDays = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("frequency"))
+                if (property.NameEquals("hours"))
                 {
-                    frequency = new RecurrenceFrequency(property.Value.GetString());
+                    List<int> array = new List<int>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetInt32());
+                    }
+                    hours = array;
                     continue;
                 }
-                if (property.NameEquals("interval"))
+                if (property.NameEquals("minutes"))
                 {
-                    interval = property.Value.GetInt32();
+                    List<int> array = new List<int>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetInt32());
+                    }
+                    minutes = array;
                     continue;
                 }
-                if (property.NameEquals("pattern"))
+                if (property.NameEquals("monthDays"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        pattern = null;
+                        monthDays = null;
                         continue;
                     }
-                    pattern = RecurrencePattern.DeserializeRecurrencePattern(property.Value);
+                    List<int> array = new List<int>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetInt32());
+                    }
+                    monthDays = array;
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("weekDays"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        endTime = null;
+                        weekDays = null;
                         continue;
                     }
-                    endTime = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("scheduleStatus"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    List<WeekDay> array = new List<WeekDay>();
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
+                        array.Add(new WeekDay(item.GetString()));
                     }
-                    scheduleStatus = new ScheduleStatus(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("scheduleType"))
-                {
-                    scheduleType = new ScheduleType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("startTime"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        startTime = null;
-                        continue;
-                    }
-                    startTime = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("timeZone"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        timeZone = null;
-                        continue;
-                    }
-                    timeZone = property.Value.GetString();
+                    weekDays = array;
                     continue;
                 }
             }
-            return new RecurrenceSchedule(Optional.ToNullable(endTime), Optional.ToNullable(scheduleStatus), scheduleType, Optional.ToNullable(startTime), timeZone.Value, frequency, interval, pattern.Value);
+            return new RecurrenceSchedule(hours, minutes, Optional.ToList(monthDays), Optional.ToList(weekDays));
         }
     }
 }

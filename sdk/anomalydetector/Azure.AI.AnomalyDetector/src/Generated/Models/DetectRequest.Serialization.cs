@@ -24,40 +24,97 @@ namespace Azure.AI.AnomalyDetector.Models
             writer.WriteEndArray();
             if (Optional.IsDefined(Granularity))
             {
-                writer.WritePropertyName("granularity");
-                writer.WriteStringValue(Granularity.Value.ToSerialString());
+                if (Granularity != null)
+                {
+                    writer.WritePropertyName("granularity");
+                    writer.WriteStringValue(Granularity.Value.ToSerialString());
+                }
+                else
+                {
+                    writer.WriteNull("granularity");
+                }
             }
             if (Optional.IsDefined(CustomInterval))
             {
-                writer.WritePropertyName("customInterval");
-                writer.WriteNumberValue(CustomInterval.Value);
+                if (CustomInterval != null)
+                {
+                    writer.WritePropertyName("customInterval");
+                    writer.WriteNumberValue(CustomInterval.Value);
+                }
+                else
+                {
+                    writer.WriteNull("customInterval");
+                }
             }
             if (Optional.IsDefined(Period))
             {
-                writer.WritePropertyName("period");
-                writer.WriteNumberValue(Period.Value);
+                if (Period != null)
+                {
+                    writer.WritePropertyName("period");
+                    writer.WriteNumberValue(Period.Value);
+                }
+                else
+                {
+                    writer.WriteNull("period");
+                }
             }
             if (Optional.IsDefined(MaxAnomalyRatio))
             {
-                writer.WritePropertyName("maxAnomalyRatio");
-                writer.WriteNumberValue(MaxAnomalyRatio.Value);
+                if (MaxAnomalyRatio != null)
+                {
+                    writer.WritePropertyName("maxAnomalyRatio");
+                    writer.WriteNumberValue(MaxAnomalyRatio.Value);
+                }
+                else
+                {
+                    writer.WriteNull("maxAnomalyRatio");
+                }
             }
             if (Optional.IsDefined(Sensitivity))
             {
-                writer.WritePropertyName("sensitivity");
-                writer.WriteNumberValue(Sensitivity.Value);
+                if (Sensitivity != null)
+                {
+                    writer.WritePropertyName("sensitivity");
+                    writer.WriteNumberValue(Sensitivity.Value);
+                }
+                else
+                {
+                    writer.WriteNull("sensitivity");
+                }
             }
             if (Optional.IsDefined(ImputeMode))
             {
-                writer.WritePropertyName("imputeMode");
-                writer.WriteStringValue(ImputeMode.Value.ToString());
+                if (ImputeMode != null)
+                {
+                    writer.WritePropertyName("imputeMode");
+                    writer.WriteStringValue(ImputeMode.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("imputeMode");
+                }
             }
             if (Optional.IsDefined(ImputeFixedValue))
             {
-                writer.WritePropertyName("imputeFixedValue");
-                writer.WriteNumberValue(ImputeFixedValue.Value);
+                if (ImputeFixedValue != null)
+                {
+                    writer.WritePropertyName("imputeFixedValue");
+                    writer.WriteNumberValue(ImputeFixedValue.Value);
+                }
+                else
+                {
+                    writer.WriteNull("imputeFixedValue");
+                }
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

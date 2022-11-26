@@ -7,18 +7,65 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector.Models
 {
-    public partial class ModelState
+    public partial class ModelState : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(EpochIds))
+            {
+                writer.WritePropertyName("epochIds");
+                writer.WriteStartArray();
+                foreach (var item in EpochIds)
+                {
+                    writer.WriteNumberValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(TrainLosses))
+            {
+                writer.WritePropertyName("trainLosses");
+                writer.WriteStartArray();
+                foreach (var item in TrainLosses)
+                {
+                    writer.WriteNumberValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ValidationLosses))
+            {
+                writer.WritePropertyName("validationLosses");
+                writer.WriteStartArray();
+                foreach (var item in ValidationLosses)
+                {
+                    writer.WriteNumberValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(LatenciesInSeconds))
+            {
+                writer.WritePropertyName("latenciesInSeconds");
+                writer.WriteStartArray();
+                foreach (var item in LatenciesInSeconds)
+                {
+                    writer.WriteNumberValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WriteEndObject();
+        }
+
         internal static ModelState DeserializeModelState(JsonElement element)
         {
-            Optional<IReadOnlyList<int>> epochIds = default;
-            Optional<IReadOnlyList<float>> trainLosses = default;
-            Optional<IReadOnlyList<float>> validationLosses = default;
-            Optional<IReadOnlyList<float>> latenciesInSeconds = default;
+            Optional<IList<int>> epochIds = default;
+            Optional<IList<float>> trainLosses = default;
+            Optional<IList<float>> validationLosses = default;
+            Optional<IList<float>> latenciesInSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("epochIds"))
@@ -83,6 +130,22 @@ namespace Azure.AI.AnomalyDetector.Models
                 }
             }
             return new ModelState(Optional.ToList(epochIds), Optional.ToList(trainLosses), Optional.ToList(validationLosses), Optional.ToList(latenciesInSeconds));
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ModelState FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeModelState(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

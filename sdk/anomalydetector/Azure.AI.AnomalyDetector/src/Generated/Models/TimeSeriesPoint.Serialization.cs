@@ -17,12 +17,25 @@ namespace Azure.AI.AnomalyDetector.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Timestamp))
             {
-                writer.WritePropertyName("timestamp");
-                writer.WriteStringValue(Timestamp.Value, "O");
+                if (Timestamp != null)
+                {
+                    writer.WritePropertyName("timestamp");
+                    writer.WriteStringValue(Timestamp.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("timestamp");
+                }
             }
-            writer.WritePropertyName("value");
-            writer.WriteNumberValue(Value);
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

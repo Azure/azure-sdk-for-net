@@ -7,7 +7,6 @@
 
 namespace Azure.AI.AnomalyDetector.Models
 {
-    /// <summary> Status of detection results. One of CREATED, RUNNING, READY, and FAILED. </summary>
     public enum DetectionStatus
     {
         /// <summary> CREATED. </summary>
