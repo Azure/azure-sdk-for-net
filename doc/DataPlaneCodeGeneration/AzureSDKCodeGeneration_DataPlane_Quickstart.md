@@ -83,16 +83,16 @@ sdk\<service name>\<package name>\<package name>.sln
 
 ```diff
         "dependencies": {
-          "@cadl-lang/compiler": "^0.36.0",
-          "@cadl-lang/rest": "^0.18.0",
-          "@azure-tools/cadl-azure-core": "^0.8.0",
-+         "@azure-tools/cadl-csharp": "0.1.6"
+          "@cadl-lang/compiler": "^0.37.0",
+          "@cadl-lang/rest": "^0.19.0",
+          "@azure-tools/cadl-azure-core": "^0.9.0",
++         "@azure-tools/cadl-csharp": "0.1.8"
         },
 ```
 
         Run `npm install` again to install @azure-tools/cadl-csharp.
 
-  **Notes**: @azure-tools/cadl-csharp: "0.1.6" only works with @cadl-lang/compiler: "0.36.0" and @cadl-lang/rest: "0.18.0"
+  **Notes**: @azure-tools/cadl-csharp: "0.1.8" only works with @cadl-lang/compiler: "0.37.0" and @cadl-lang/rest: "0.19.0"
   
 
   ***Modify (or create) cadl-project.yaml, add one line under emitters:***
@@ -118,7 +118,7 @@ emitters:
   @azure-tools/cadl-csharp emitter options:  
 
 - `namespace` define the client library namespace. e.g. Azure.IoT.DeviceUpdate.
-- `new-project` indicate it is a new sdk project, a project file (.csproj) will be generated.
+- `new-project` indicate if it is a new sdk project and need to generate a project file (.csproj).
 - `clear-output-folder` indicate if you want to clear up the output folder.
 
 
@@ -130,6 +130,16 @@ You can manually create the project folder. Please refer to [Azure.Template](htt
 
 - Please refer to [sdk-directory-layout](https://github.com/Azure/azure-sdk/blob/main/docs/policies/repostructure.md#sdk-directory-layout) for detail information.
 - remove `autorest.md` from sdk\<service name>\<package name>\src
+- add `cadl-location.yaml` under sdk\<service name>\<package name>\src
+  
+  `cadl-location.yaml` is a file to store the meta-data as following:
+
+  ```yml
+  directory: specification/cognitiveservices/data-plane/AnomalyDetector/stable/v1.1/cadl
+  commit: 8804b10cf61267b81e06ebccbd1dd46677a54425
+  repo: Azure/azure-rest-api-specs
+  cleanup: false
+  ```
 
 
 #### Generate the library source code
@@ -146,7 +156,7 @@ Generate the library source code files to the directory `<sdkPath>/sdk/<service>
   e.g.
 
   ```shell
-  npx cadl compile --emit @azure-tools/cadl-csharp --output-path /home/azure-sdk-for-net/sdk/deviceupdate/Azure.IoT.DeviceUpdate/src .
+  npx cadl compile --emit @azure-tools/cadl-csharp --output-path /home/azure-sdk-for-net/sdk/deviceupdate/Azure.IoT.DeviceUpdate/src main.cadl
   ```
 
 #### Build the library project
