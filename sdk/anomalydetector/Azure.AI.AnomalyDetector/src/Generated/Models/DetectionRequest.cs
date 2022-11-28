@@ -10,28 +10,35 @@ using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector.Models
 {
-    /// <summary> Detection request. </summary>
+    /// <summary>
+    /// Detection request for batch inference. This is an asynchronous inference which
+    /// will need another API to get detection results.
+    /// </summary>
     public partial class DetectionRequest
     {
         /// <summary> Initializes a new instance of DetectionRequest. </summary>
-        /// <param name="source"> Source link to the input variables. Each variable should be a csv with two columns, `timestamp` and `value`. The file name of the variable will be used as its name. The variables used in detection should be exactly the same with those used in the training phase. </param>
-        /// <param name="startTime"> A required field, indicating the start time of data for detection. Should be date-time. </param>
-        /// <param name="endTime"> A required field, indicating the end time of data for detection. Should be date-time. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="source"/> is null. </exception>
-        public DetectionRequest(string source, DateTimeOffset startTime, DateTimeOffset endTime)
+        /// <param name="dataSource"></param>
+        /// <param name="topContributorCount"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataSource"/> is null. </exception>
+        public DetectionRequest(string dataSource, int topContributorCount, DateTimeOffset startTime, DateTimeOffset endTime)
         {
-            Argument.AssertNotNull(source, nameof(source));
+            Argument.AssertNotNull(dataSource, nameof(dataSource));
 
-            Source = source;
+            DataSource = dataSource;
+            TopContributorCount = topContributorCount;
             StartTime = startTime;
             EndTime = endTime;
         }
 
-        /// <summary> Source link to the input variables. Each variable should be a csv with two columns, `timestamp` and `value`. The file name of the variable will be used as its name. The variables used in detection should be exactly the same with those used in the training phase. </summary>
-        public string Source { get; set; }
-        /// <summary> A required field, indicating the start time of data for detection. Should be date-time. </summary>
+        /// <summary> Gets or sets the data source. </summary>
+        public string DataSource { get; set; }
+        /// <summary> Gets or sets the top contributor count. </summary>
+        public int TopContributorCount { get; set; }
+        /// <summary> Gets or sets the start time. </summary>
         public DateTimeOffset StartTime { get; set; }
-        /// <summary> A required field, indicating the end time of data for detection. Should be date-time. </summary>
+        /// <summary> Gets or sets the end time. </summary>
         public DateTimeOffset EndTime { get; set; }
     }
 }

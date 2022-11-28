@@ -12,16 +12,17 @@ using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector.Models
 {
-    /// <summary> Response of the given resultId. </summary>
+    /// <summary> Detection results for the given resultId. </summary>
     public partial class DetectionResult
     {
         /// <summary> Initializes a new instance of DetectionResult. </summary>
         /// <param name="resultId"></param>
         /// <param name="summary"></param>
-        /// <param name="results"> Detection result for each timestamp. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="summary"/> or <paramref name="results"/> is null. </exception>
-        internal DetectionResult(Guid resultId, DetectionResultSummary summary, IEnumerable<AnomalyState> results)
+        /// <param name="results"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resultId"/>, <paramref name="summary"/> or <paramref name="results"/> is null. </exception>
+        internal DetectionResult(string resultId, DetectionResultSummary summary, IEnumerable<AnomalyState> results)
         {
+            Argument.AssertNotNull(resultId, nameof(resultId));
             Argument.AssertNotNull(summary, nameof(summary));
             Argument.AssertNotNull(results, nameof(results));
 
@@ -33,19 +34,19 @@ namespace Azure.AI.AnomalyDetector.Models
         /// <summary> Initializes a new instance of DetectionResult. </summary>
         /// <param name="resultId"></param>
         /// <param name="summary"></param>
-        /// <param name="results"> Detection result for each timestamp. </param>
-        internal DetectionResult(Guid resultId, DetectionResultSummary summary, IReadOnlyList<AnomalyState> results)
+        /// <param name="results"></param>
+        internal DetectionResult(string resultId, DetectionResultSummary summary, IReadOnlyList<AnomalyState> results)
         {
             ResultId = resultId;
             Summary = summary;
-            Results = results;
+            Results = results.ToList();
         }
 
         /// <summary> Gets the result id. </summary>
-        public Guid ResultId { get; }
+        public string ResultId { get; }
         /// <summary> Gets the summary. </summary>
         public DetectionResultSummary Summary { get; }
-        /// <summary> Detection result for each timestamp. </summary>
+        /// <summary> Gets the results. </summary>
         public IReadOnlyList<AnomalyState> Results { get; }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -113,7 +114,7 @@ Publisher = "{extension-Publisher}",
 ExtensionType = "{extension-Type}",
 TypeHandlerVersion = "{handler-version}",
 AutoUpgradeMinorVersion = false,
-Settings = BinaryData.FromObjectAsJson(new
+Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
 {
 }),
 SuppressFailures = true,
@@ -227,15 +228,15 @@ Publisher = "{extension-Publisher}",
 ExtensionType = "{extension-Type}",
 TypeHandlerVersion = "{handler-version}",
 AutoUpgradeMinorVersion = false,
-Settings = BinaryData.FromObjectAsJson(new
+Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
 {
 }),
-ProtectedSettingsFromKeyVault = BinaryData.FromObjectAsJson(new
+ProtectedSettingsFromKeyVault = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
 {
-secretUrl = "https://kvName.vault.azure.net/secrets/secretName/79b88b3a6f5440ffb2e73e44a0db712e",
-sourceVault = new
+["secretUrl"] = "https://kvName.vault.azure.net/secrets/secretName/79b88b3a6f5440ffb2e73e44a0db712e",
+["sourceVault"] = new Dictionary<string, object>()
 {
-id = "/subscriptions/a53f7094-a16c-47af-abe4-b05c05d0d79a/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/kvName"}}),
+["id"] = "/subscriptions/a53f7094-a16c-47af-abe4-b05c05d0d79a/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/kvName"}}),
 }
 },
                     },
@@ -2199,7 +2200,7 @@ Publisher = "{extension-Publisher}",
 ExtensionType = "{extension-Type}",
 TypeHandlerVersion = "{handler-version}",
 AutoUpgradeMinorVersion = false,
-Settings = BinaryData.FromObjectAsJson(new
+Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
 {
 }),
 }

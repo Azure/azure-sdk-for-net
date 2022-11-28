@@ -20,11 +20,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (property.NameEquals("publicIpAddress"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        publicIPAddress = null;
+                        continue;
+                    }
                     publicIPAddress = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("privateIpAddress"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        privateIPAddress = null;
+                        continue;
+                    }
                     privateIPAddress = property.Value.GetString();
                     continue;
                 }

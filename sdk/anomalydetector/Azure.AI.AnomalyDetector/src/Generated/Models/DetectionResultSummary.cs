@@ -7,16 +7,17 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector.Models
 {
-    /// <summary> The DetectionResultSummary. </summary>
+    /// <summary> Multivariate anomaly detection status. </summary>
     public partial class DetectionResultSummary
     {
         /// <summary> Initializes a new instance of DetectionResultSummary. </summary>
-        /// <param name="status"> Status of detection results. One of CREATED, RUNNING, READY, and FAILED. </param>
-        /// <param name="setupInfo"> Detection request. </param>
+        /// <param name="status"></param>
+        /// <param name="setupInfo"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="setupInfo"/> is null. </exception>
         internal DetectionResultSummary(DetectionStatus status, DetectionRequest setupInfo)
         {
@@ -29,25 +30,25 @@ namespace Azure.AI.AnomalyDetector.Models
         }
 
         /// <summary> Initializes a new instance of DetectionResultSummary. </summary>
-        /// <param name="status"> Status of detection results. One of CREATED, RUNNING, READY, and FAILED. </param>
-        /// <param name="errors"> Error message when detection is failed. </param>
+        /// <param name="status"></param>
+        /// <param name="errors"></param>
         /// <param name="variableStates"></param>
-        /// <param name="setupInfo"> Detection request. </param>
+        /// <param name="setupInfo"></param>
         internal DetectionResultSummary(DetectionStatus status, IReadOnlyList<ErrorResponse> errors, IReadOnlyList<VariableState> variableStates, DetectionRequest setupInfo)
         {
             Status = status;
-            Errors = errors;
-            VariableStates = variableStates;
+            Errors = errors.ToList();
+            VariableStates = variableStates.ToList();
             SetupInfo = setupInfo;
         }
 
-        /// <summary> Status of detection results. One of CREATED, RUNNING, READY, and FAILED. </summary>
+        /// <summary> Gets the status. </summary>
         public DetectionStatus Status { get; }
-        /// <summary> Error message when detection is failed. </summary>
+        /// <summary> Gets the errors. </summary>
         public IReadOnlyList<ErrorResponse> Errors { get; }
         /// <summary> Gets the variable states. </summary>
         public IReadOnlyList<VariableState> VariableStates { get; }
-        /// <summary> Detection request. </summary>
+        /// <summary> Gets the setup info. </summary>
         public DetectionRequest SetupInfo { get; }
     }
 }

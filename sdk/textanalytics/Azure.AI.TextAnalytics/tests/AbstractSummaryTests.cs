@@ -197,6 +197,30 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateSummaryBatchResult(resultCollection, MaxSentenceCount, true);
         }
 
+        [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32614")]
+        public async Task AnalyzeOperationAbstractSummaryWithAutoDetectedLanguageTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            List<string> documents = s_batchConvenienceDocuments;
+            TextAnalyticsActions actions = new()
+            {
+                AbstractSummaryActions = new List<AbstractSummaryAction>() { new AbstractSummaryAction() },
+                DisplayName = "AbstractSummaryWithAutoDetectedLanguage",
+            };
+
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, actions, "auto");
+            await operation.WaitForCompletionAsync();
+
+            // Take the first page.
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            IReadOnlyCollection<AbstractSummaryActionResult> actionResults = resultCollection.AbstractSummaryResults;
+            Assert.IsNotNull(actionResults);
+
+            AbstractSummaryResultCollection results = actionResults.FirstOrDefault().DocumentsResults;
+            ValidateSummaryBatchResult(results, isLanguageAutoDetected: true);
+        }
+
         private void ValidateOperationProperties(AbstractSummaryOperation operation)
         {
             Assert.AreNotEqual(new DateTimeOffset(), operation.CreatedOn);
@@ -212,7 +236,8 @@ namespace Azure.AI.TextAnalytics.Tests
         private void ValidateSummaryBatchResult(
             AbstractSummaryResultCollection results,
             int? maxSentenceCount = default,
-            bool includeStatistics = false)
+            bool includeStatistics = default,
+            bool isLanguageAutoDetected = default)
         {
             Assert.That(results.ModelVersion, Is.Not.Null.And.Not.Empty);
 
@@ -243,6 +268,21 @@ namespace Azure.AI.TextAnalytics.Tests
                 {
                     Assert.AreEqual(0, result.Statistics.CharacterCount);
                     Assert.AreEqual(0, result.Statistics.TransactionCount);
+                }
+
+                if (isLanguageAutoDetected)
+                {
+                    Assert.IsNotNull(result.DetectedLanguage);
+                    Assert.That(result.DetectedLanguage.Value.Name, Is.Not.Null.And.Not.Empty);
+                    Assert.That(result.DetectedLanguage.Value.Iso6391Name, Is.Not.Null.And.Not.Empty);
+                    Assert.GreaterOrEqual(result.DetectedLanguage.Value.ConfidenceScore, 0.0);
+                    Assert.LessOrEqual(result.DetectedLanguage.Value.ConfidenceScore, 1.0);
+                    Assert.IsNotNull(result.DetectedLanguage.Value.Warnings);
+                    Assert.IsEmpty(result.DetectedLanguage.Value.Warnings);
+                }
+                else
+                {
+                    Assert.IsNull(result.DetectedLanguage);
                 }
 
                 Assert.IsNotNull(result.Warnings);

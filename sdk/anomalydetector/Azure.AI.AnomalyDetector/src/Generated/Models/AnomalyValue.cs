@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector.Models
@@ -14,9 +15,9 @@ namespace Azure.AI.AnomalyDetector.Models
     public partial class AnomalyValue
     {
         /// <summary> Initializes a new instance of AnomalyValue. </summary>
-        /// <param name="isAnomaly"> True if an anomaly is detected at the current timestamp. </param>
-        /// <param name="severity"> Indicates the significance of the anomaly. The higher the severity, the more significant the anomaly. </param>
-        /// <param name="score"> Raw score from the model. </param>
+        /// <param name="isAnomaly"></param>
+        /// <param name="severity"></param>
+        /// <param name="score"></param>
         internal AnomalyValue(bool isAnomaly, float severity, float score)
         {
             IsAnomaly = isAnomaly;
@@ -26,23 +27,23 @@ namespace Azure.AI.AnomalyDetector.Models
         }
 
         /// <summary> Initializes a new instance of AnomalyValue. </summary>
-        /// <param name="isAnomaly"> True if an anomaly is detected at the current timestamp. </param>
-        /// <param name="severity"> Indicates the significance of the anomaly. The higher the severity, the more significant the anomaly. </param>
-        /// <param name="score"> Raw score from the model. </param>
+        /// <param name="isAnomaly"></param>
+        /// <param name="severity"></param>
+        /// <param name="score"></param>
         /// <param name="interpretation"></param>
         internal AnomalyValue(bool isAnomaly, float severity, float score, IReadOnlyList<AnomalyInterpretation> interpretation)
         {
             IsAnomaly = isAnomaly;
             Severity = severity;
             Score = score;
-            Interpretation = interpretation;
+            Interpretation = interpretation.ToList();
         }
 
-        /// <summary> True if an anomaly is detected at the current timestamp. </summary>
+        /// <summary> Gets the is anomaly. </summary>
         public bool IsAnomaly { get; }
-        /// <summary> Indicates the significance of the anomaly. The higher the severity, the more significant the anomaly. </summary>
+        /// <summary> Gets the severity. </summary>
         public float Severity { get; }
-        /// <summary> Raw score from the model. </summary>
+        /// <summary> Gets the score. </summary>
         public float Score { get; }
         /// <summary> Gets the interpretation. </summary>
         public IReadOnlyList<AnomalyInterpretation> Interpretation { get; }

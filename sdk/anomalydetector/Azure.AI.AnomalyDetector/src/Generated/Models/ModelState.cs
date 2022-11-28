@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector.Models
@@ -14,7 +15,7 @@ namespace Azure.AI.AnomalyDetector.Models
     public partial class ModelState
     {
         /// <summary> Initializes a new instance of ModelState. </summary>
-        internal ModelState()
+        public ModelState()
         {
             EpochIds = new ChangeTrackingList<int>();
             TrainLosses = new ChangeTrackingList<float>();
@@ -23,25 +24,25 @@ namespace Azure.AI.AnomalyDetector.Models
         }
 
         /// <summary> Initializes a new instance of ModelState. </summary>
-        /// <param name="epochIds"> Epoch id. </param>
+        /// <param name="epochIds"></param>
         /// <param name="trainLosses"></param>
         /// <param name="validationLosses"></param>
         /// <param name="latenciesInSeconds"></param>
-        internal ModelState(IReadOnlyList<int> epochIds, IReadOnlyList<float> trainLosses, IReadOnlyList<float> validationLosses, IReadOnlyList<float> latenciesInSeconds)
+        internal ModelState(IList<int> epochIds, IList<float> trainLosses, IList<float> validationLosses, IList<float> latenciesInSeconds)
         {
-            EpochIds = epochIds;
-            TrainLosses = trainLosses;
-            ValidationLosses = validationLosses;
-            LatenciesInSeconds = latenciesInSeconds;
+            EpochIds = epochIds.ToList();
+            TrainLosses = trainLosses.ToList();
+            ValidationLosses = validationLosses.ToList();
+            LatenciesInSeconds = latenciesInSeconds.ToList();
         }
 
-        /// <summary> Epoch id. </summary>
-        public IReadOnlyList<int> EpochIds { get; }
+        /// <summary> Gets the epoch ids. </summary>
+        public IList<int> EpochIds { get; }
         /// <summary> Gets the train losses. </summary>
-        public IReadOnlyList<float> TrainLosses { get; }
+        public IList<float> TrainLosses { get; }
         /// <summary> Gets the validation losses. </summary>
-        public IReadOnlyList<float> ValidationLosses { get; }
+        public IList<float> ValidationLosses { get; }
         /// <summary> Gets the latencies in seconds. </summary>
-        public IReadOnlyList<float> LatenciesInSeconds { get; }
+        public IList<float> LatenciesInSeconds { get; }
     }
 }

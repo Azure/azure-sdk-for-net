@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.AI.AnomalyDetector.Models;
@@ -17,7 +18,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
     public partial class AnomalyDetectorSamples : SamplesBase<AnomalyDetectorTestEnvironment>
     {
         [Test]
-        public async Task DetectLastPointAnomaly()
+        public void DetectLastPointAnomaly()
         {
             //read endpoint and apiKey
             string endpoint = TestEnvironment.Endpoint;
@@ -25,9 +26,10 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
 
             var endpointUri = new Uri(endpoint);
             var credential = new AzureKeyCredential(apiKey);
+            string apiVersion = "v1.1";
 
             //create client
-            AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, credential);
+            AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, apiVersion, credential);
 
             //read data
             string datapath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "samples", "data", "request-data.csv");
@@ -51,7 +53,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
 
             try
             {
-                LastDetectResponse result = await client.DetectLastPointAsync(request).ConfigureAwait(false);
+                LastDetectResponse result = client.DetectUnivariateLastPoint(request);
 
                 if (result.IsAnomaly)
                 {

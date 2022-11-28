@@ -23,16 +23,22 @@ namespace Azure.AI.TextAnalytics
             TextDocumentStatistics statistics,
             IList<HealthcareEntity> healthcareEntities,
             IList<HealthcareEntityRelation> entityRelations,
-            IList<TextAnalyticsWarning> warnings,
-            IDictionary<string, object> fhirBundle)
+            IDictionary<string, object> fhirBundle,
+            string detectedLanguage,
+            IList<TextAnalyticsWarning> warnings)
             : base(id, statistics)
         {
             _entities = new ReadOnlyCollection<HealthcareEntity>(healthcareEntities);
-            Warnings = new ReadOnlyCollection<TextAnalyticsWarning>(warnings);
             EntityRelations = new ReadOnlyCollection<HealthcareEntityRelation>(entityRelations);
+            DetectedLanguage = detectedLanguage;
+
             FhirBundle = (fhirBundle is not null)
                 ? new ReadOnlyDictionary<string, object>(fhirBundle)
                 : new Dictionary<string, object>();
+
+            Warnings = (warnings is not null)
+                ? new ReadOnlyCollection<TextAnalyticsWarning>(warnings)
+                : new List<TextAnalyticsWarning>();
         }
 
         /// <summary>
@@ -46,6 +52,12 @@ namespace Azure.AI.TextAnalytics
         /// Warnings encountered while processing document.
         /// </summary>
         public IReadOnlyCollection<TextAnalyticsWarning> Warnings { get; } = new List<TextAnalyticsWarning>();
+
+        /// <summary>
+        /// The language of the input document as detected by the service when requested to perform automatic language
+        /// detection, which is possible by specifying "auto" as the language of the input document.
+        /// </summary>
+        public string DetectedLanguage { get; }
 
         /// <summary>
         /// Gets the collection of healthcare entities in the document.

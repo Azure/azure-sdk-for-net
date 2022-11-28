@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Maps
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of CreatorResources in the MapsAccount. </summary>
-        /// <returns> An object representing collection of CreatorResources and their operations over a CreatorResource. </returns>
-        public virtual CreatorCollection GetCreators()
+        /// <summary> Gets a collection of MapsCreatorResources in the MapsAccount. </summary>
+        /// <returns> An object representing collection of MapsCreatorResources and their operations over a MapsCreatorResource. </returns>
+        public virtual MapsCreatorCollection GetMapsCreators()
         {
-            return GetCachedClient(Client => new CreatorCollection(Client, Id));
+            return GetCachedClient(Client => new MapsCreatorCollection(Client, Id));
         }
 
         /// <summary>
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.Maps
         /// <exception cref="ArgumentException"> <paramref name="creatorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="creatorName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CreatorResource>> GetCreatorAsync(string creatorName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MapsCreatorResource>> GetMapsCreatorAsync(string creatorName, CancellationToken cancellationToken = default)
         {
-            return await GetCreators().GetAsync(creatorName, cancellationToken).ConfigureAwait(false);
+            return await GetMapsCreators().GetAsync(creatorName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -121,9 +121,9 @@ namespace Azure.ResourceManager.Maps
         /// <exception cref="ArgumentException"> <paramref name="creatorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="creatorName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CreatorResource> GetCreator(string creatorName, CancellationToken cancellationToken = default)
+        public virtual Response<MapsCreatorResource> GetMapsCreator(string creatorName, CancellationToken cancellationToken = default)
         {
-            return GetCreators().Get(creatorName, cancellationToken);
+            return GetMapsCreators().Get(creatorName, cancellationToken);
         }
 
         /// <summary>
@@ -270,66 +270,6 @@ namespace Azure.ResourceManager.Maps
             {
                 var response = _mapsAccountAccountsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new MapsAccountResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Create and list an account shared access signature token. Use this SAS token for authentication to Azure Maps REST APIs through various Azure Maps SDKs. As prerequisite to create a SAS Token. 
-        /// 
-        /// Prerequisites:
-        /// 1. Create or have an existing User Assigned Managed Identity in the same Azure region as the account. 
-        /// 2. Create or update an Azure Map account with the same Azure region as the User Assigned Managed Identity is placed.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}/listSas
-        /// Operation Id: Accounts_ListSas
-        /// </summary>
-        /// <param name="content"> The updated parameters for the Maps Account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<MapsAccountSasToken>> GetSasAsync(AccountSasContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _mapsAccountAccountsClientDiagnostics.CreateScope("MapsAccountResource.GetSas");
-            scope.Start();
-            try
-            {
-                var response = await _mapsAccountAccountsRestClient.ListSasAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Create and list an account shared access signature token. Use this SAS token for authentication to Azure Maps REST APIs through various Azure Maps SDKs. As prerequisite to create a SAS Token. 
-        /// 
-        /// Prerequisites:
-        /// 1. Create or have an existing User Assigned Managed Identity in the same Azure region as the account. 
-        /// 2. Create or update an Azure Map account with the same Azure region as the User Assigned Managed Identity is placed.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}/listSas
-        /// Operation Id: Accounts_ListSas
-        /// </summary>
-        /// <param name="content"> The updated parameters for the Maps Account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<MapsAccountSasToken> GetSas(AccountSasContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _mapsAccountAccountsClientDiagnostics.CreateScope("MapsAccountResource.GetSas");
-            scope.Start();
-            try
-            {
-                var response = _mapsAccountAccountsRestClient.ListSas(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                return response;
             }
             catch (Exception e)
             {
