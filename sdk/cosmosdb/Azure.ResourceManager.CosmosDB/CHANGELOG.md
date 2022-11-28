@@ -4,6 +4,9 @@
 
 ### Features Added
 
+- Upgraded API version to 2022-08-15.
+- Added MongoDB RBAC APIs.
+
 ### Breaking Changes
 
 ### Bugs Fixed

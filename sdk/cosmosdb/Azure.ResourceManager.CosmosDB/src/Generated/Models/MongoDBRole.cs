@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="role"> The role name. </param>
         internal MongoDBRole(string db, string role)
         {
-            Db = db;
+            DB = db;
             Role = role;
         }
 
         /// <summary> The database name the role is applied. </summary>
-        public string Db { get; set; }
+        public string DB { get; set; }
         /// <summary> The role name. </summary>
         public string Role { get; set; }
     }
