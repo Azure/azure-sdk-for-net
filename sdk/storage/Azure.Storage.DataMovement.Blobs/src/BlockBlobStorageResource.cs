@@ -80,21 +80,6 @@ namespace Azure.Storage.DataMovement.Blobs
         }
 
         /// <summary>
-        /// Not Supported. Will throw an exception if called.
-        /// </summary>
-        /// <param name="overwrite"></param>
-        /// <param name="size"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public override Task CreateAsync(
-            bool overwrite,
-            long size = 0,
-            CancellationToken cancellationToken = default)
-        {
-            return Task.CompletedTask;
-        }
-
-        /// <summary>
         /// Consumes the readable stream to upload
         /// </summary>
         /// <param name="position">
@@ -127,7 +112,12 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="overwrite">
         /// If set to true, will overwrite the blob if exists.
         /// </param>
-        /// <param name="length"></param>
+        /// <param name="streamLength">
+        /// The length of the stream.
+        /// </param>
+        /// <param name="completeLength">
+        /// The expected complete length of the blob.
+        /// </param>
         /// <param name="stream"></param>
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
@@ -136,18 +126,27 @@ namespace Azure.Storage.DataMovement.Blobs
             Stream stream,
             bool overwrite,
             long position = 0,
-            long? length = default,
+            long? streamLength = default,
+            long completeLength = 0,
             StorageResourceWriteToOffsetOptions options = default,
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
-            if (!length.HasValue && position == 0)
+            BlobRequestConditions conditions = new BlobRequestConditions
+            {
+                // TODO: copy over the other conditions from the uploadOptions
+                IfNoneMatch = overwrite ? null : new ETag(Constants.Wildcard),
+            };
+            if ((streamLength == completeLength) && position == 0)
             {
                 // Default to Upload
                 await _blobClient.UploadAsync(
                     stream,
-                    new BlobUploadOptions(),
+                    new BlobUploadOptions()
+                    {
+                        Conditions = conditions,
+                    },
                     cancellationToken: cancellationToken).ConfigureAwait(false);
                 return;
             }
@@ -155,12 +154,15 @@ namespace Azure.Storage.DataMovement.Blobs
             string id = Shared.StorageExtensions.GenerateBlockId(position);
             if (!_blocks.TryAdd(position, id))
             {
-                throw new ArgumentException($"Cannot Stage Block to the specific offset \"{position}\", it already exists in the existing block list.");
+                throw new ArgumentException($"Cannot Stage Block to the specific offset \"{position}\", it already exists in the block list.");
             }
             await _blobClient.StageBlockAsync(
                 id,
                 stream,
-                new BlockBlobStageBlockOptions(),
+                new BlockBlobStageBlockOptions()
+                {
+                    Conditions = conditions,
+                },
                 cancellationToken).ConfigureAwait(false);
         }
 
@@ -202,6 +204,9 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="overwrite">
         /// If set to true, will overwrite the blob if exists.
         /// </param>
+        /// <param name="completeLength">
+        /// The expected complete length of the blob.
+        /// </param>
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
@@ -209,6 +214,7 @@ namespace Azure.Storage.DataMovement.Blobs
             StorageResource sourceResource,
             HttpRange range,
             bool overwrite,
+            long completeLength = 0,
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
         {
@@ -216,10 +222,15 @@ namespace Azure.Storage.DataMovement.Blobs
 
             if (ServiceCopyMethod == TransferCopyMethod.SyncCopy)
             {
+                BlobRequestConditions conditions = new BlobRequestConditions
+                {
+                    // TODO: copy over the other conditions from the uploadOptions
+                    IfNoneMatch = overwrite ? null : new ETag(Constants.Wildcard),
+                };
                 string id = options?.BlockId ?? Shared.StorageExtensions.GenerateBlockId(range.Offset);
                 if (!_blocks.TryAdd(range.Offset, id))
                 {
-                    throw new ArgumentException($"Cannot Stage Block to the specific offset \"{range.Offset}\", it already exists in the existing list");
+                    throw new ArgumentException($"Cannot Stage Block to the specific offset \"{range.Offset}\", it already exists in the block list");
                 }
                 await _blobClient.StageBlockFromUriAsync(
                     sourceResource.Uri,
@@ -227,6 +238,7 @@ namespace Azure.Storage.DataMovement.Blobs
                     options: new StageBlockFromUriOptions()
                     {
                         SourceRange = range,
+                        DestinationConditions = conditions
                     },
                     cancellationToken: cancellationToken).ConfigureAwait(false);
             }

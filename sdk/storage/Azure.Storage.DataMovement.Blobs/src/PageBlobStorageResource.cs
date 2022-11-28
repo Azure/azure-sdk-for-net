@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -57,7 +58,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Defines the maximum chunk size for the storage resource.
         /// </summary>
-        public override long MaxChunkSize => Constants.Blob.Block.MaxStageBytes;
+        public override long MaxChunkSize => Constants.Blob.Page.MaxPageBlockBytes;
 
         /// <summary>
         /// Constructor
@@ -68,40 +69,6 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             _blobClient = blobClient;
             _options = options;
-        }
-
-        /// <summary>
-        /// Creates the local page blob.
-        /// </summary>
-        /// <param name="overwrite"></param>
-        /// <param name="size"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public override async Task CreateAsync(
-            bool overwrite,
-            long size = 0,
-            CancellationToken cancellationToken = default)
-        {
-            try
-            {
-                PageBlobRequestConditions conditions = new PageBlobRequestConditions
-                {
-                    // TODO: copy over the other conditions from the uploadOptions
-                    IfNoneMatch = !overwrite ? new ETag(Constants.Wildcard) : null,
-                };
-                await _blobClient.CreateAsync(
-                    size: size,
-                    new PageBlobCreateOptions()
-                    {
-                        Conditions = conditions,
-                    }, cancellationToken).ConfigureAwait(false);
-            }
-            catch (RequestFailedException storageRequestFailedException)
-                when (overwrite && storageRequestFailedException.ErrorCode == BlobErrorCode.BlobAlreadyExists)
-            {
-                return;
-            }
-            // Let the exception throw if the above the conditions aren't met.
         }
 
         /// <summary>
@@ -138,8 +105,11 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="overwrite">
         /// If set to true, will overwrite the blob if exists.
         /// </param>
-        /// <param name="length">
+        /// <param name="streamLength">
         /// The length of the stream.
+        /// </param>
+        /// <param name="completeLength">
+        /// The expected complete length of the blob.
         /// </param>
         /// <param name="stream"></param>
         /// <param name="options"></param>
@@ -149,21 +119,36 @@ namespace Azure.Storage.DataMovement.Blobs
             Stream stream,
             bool overwrite,
             long position = 0,
-            long? length = default,
+            long? streamLength = default,
+            long completeLength = 0,
             StorageResourceWriteToOffsetOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            if (length > 0)
+            // Create the blob first before uploading the pages
+            PageBlobRequestConditions conditions = new PageBlobRequestConditions
+            {
+                // TODO: copy over the other conditions from the uploadOptions
+                IfNoneMatch = overwrite ? null : new ETag(Constants.Wildcard),
+            };
+            if (position == 0)
+            {
+                await _blobClient.CreateAsync(
+                    size: completeLength,
+                    new PageBlobCreateOptions()
+                    {
+                        Conditions = conditions,
+                    }, cancellationToken).ConfigureAwait(false);
+            }
+            if (streamLength > 0)
             {
                 await _blobClient.UploadPagesAsync(
                     content: stream,
                     offset: position,
-                    options: default,
+                    options: new PageBlobUploadPagesOptions()
+                    {
+                        Conditions = conditions,
+                    },
                     cancellationToken: cancellationToken).ConfigureAwait(false);
-            }
-            else
-            {
-                throw new ArgumentException("Cannot upload stream of 0 length");
             }
         }
 
@@ -201,6 +186,9 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="overwrite">
         /// If set to true, will overwrite the blob if exists.
         /// </param>
+        /// <param name="completeLength">
+        /// The expected complete length of the blob.
+        /// </param>
         /// <param name="range"></param>
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
@@ -209,21 +197,37 @@ namespace Azure.Storage.DataMovement.Blobs
             StorageResource sourceResource,
             HttpRange range,
             bool overwrite,
+            long completeLength = 0,
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
         {
             if (ServiceCopyMethod == TransferCopyMethod.SyncCopy)
             {
-                await _blobClient.UploadPagesFromUriAsync(
-                sourceResource.Uri,
-                sourceRange: range,
-                range: range,
-                options: new PageBlobUploadPagesFromUriOptions()
+                // Create the blob first before uploading the pages
+                PageBlobRequestConditions conditions = new PageBlobRequestConditions
                 {
-                    SourceAuthentication = options?.SourceAuthentication,
-                    DestinationConditions = _options?.CopyOptions.DestinationConditions
-                },
-                cancellationToken: cancellationToken).ConfigureAwait(false);
+                    // TODO: copy over the other conditions from the uploadOptions
+                    IfNoneMatch = overwrite ? null : new ETag(Constants.Wildcard),
+                };
+                if (range.Offset == 0)
+                {
+                    await _blobClient.CreateAsync(
+                        size: completeLength,
+                        new PageBlobCreateOptions()
+                        {
+                            Conditions = conditions,
+                        }, cancellationToken).ConfigureAwait(false);
+                }
+                await _blobClient.UploadPagesFromUriAsync(
+                    sourceResource.Uri,
+                    sourceRange: range,
+                    range: range,
+                    options: new PageBlobUploadPagesFromUriOptions()
+                    {
+                        SourceAuthentication = options?.SourceAuthentication,
+                        DestinationConditions = _options?.CopyOptions.DestinationConditions
+                    },
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             else
             {

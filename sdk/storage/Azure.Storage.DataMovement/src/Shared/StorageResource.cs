@@ -15,7 +15,7 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// Represents abstract Storage Resource
     /// </summary>
-    public abstract class StorageResource
+    public abstract class StorageResource : StorageResourceBase
     {
         internal TokenCredential _tokenCredential;
 
@@ -25,28 +25,11 @@ namespace Azure.Storage.DataMovement
         protected StorageResource() { }
 
         /// <summary>
-        /// Returns URL.
-        /// </summary>
-        /// <returns></returns>
-        public abstract Uri Uri { get; }
-
-        /// <summary>
-        /// Gets the path of the resource.
-        /// </summary>
-        public abstract string Path { get; }
-
-        /// <summary>
         /// If applicable, returns the preferred method of how to perform service to service
         /// transfers. See <see cref="TransferCopyMethod"/>. This value can be set when specifying
         /// the options bag for service related storage resources.
         /// </summary>
         public abstract TransferCopyMethod ServiceCopyMethod { get; }
-
-        /// <summary>
-        /// Defines whether the object can generate a URL to consume
-        /// </summary>
-        /// <returns></returns>
-        public abstract ProduceUriType CanProduceUri { get; }
 
         /// <summary>
         /// Defines the transfer type of the storage resource.
@@ -59,13 +42,9 @@ namespace Azure.Storage.DataMovement
         public abstract long MaxChunkSize { get; }
 
         /// <summary>
-        /// Creates the Storage Resource if possible. Will throw not supported if not necessary.
+        /// Storage Resource is a container.
         /// </summary>
-        /// <param name="overwrite"></param>
-        /// <param name="size"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public abstract Task CreateAsync(bool overwrite, long size = 0, CancellationToken cancellationToken = default);
+        public override bool IsContainer => false;
 
         /// <summary>
         /// Consumes the readable stream to upload
@@ -92,8 +71,11 @@ namespace Azure.Storage.DataMovement
         /// <param name="overwrite">
         /// If set to true, will overwrite the blob if exists.
         /// </param>
-        /// <param name="length">
+        /// <param name="streamLength">
         /// The length of the stream.
+        /// </param>
+        /// <param name="completeLength">
+        /// The expected complete length of the blob.
         /// </param>
         /// <param name="stream"></param>
         /// <param name="options"></param>
@@ -103,7 +85,8 @@ namespace Azure.Storage.DataMovement
             Stream stream,
             bool overwrite,
             long position = 0,
-            long? length = default,
+            long? streamLength = default,
+            long completeLength = 0,
             StorageResourceWriteToOffsetOptions options = default,
             CancellationToken cancellationToken = default);
 
@@ -131,6 +114,9 @@ namespace Azure.Storage.DataMovement
         /// <param name="overwrite">
         /// If set to true, will overwrite the blob if exists.
         /// </param>
+        /// <param name="completeLength">
+        /// The expected complete length of the blob.
+        /// </param>
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
@@ -138,6 +124,7 @@ namespace Azure.Storage.DataMovement
             StorageResource sourceResource,
             HttpRange range,
             bool overwrite,
+            long completeLength = 0,
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default);
 

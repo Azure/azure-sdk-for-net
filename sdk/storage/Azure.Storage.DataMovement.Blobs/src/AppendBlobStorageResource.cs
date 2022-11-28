@@ -72,39 +72,6 @@ namespace Azure.Storage.DataMovement.Blobs
         }
 
         /// <summary>
-        /// Creates the local file.
-        /// </summary>
-        /// <param name="overwrite"></param>
-        /// <param name="size"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public override async Task CreateAsync(
-            bool overwrite,
-            long size = 0,
-            CancellationToken cancellationToken = default)
-        {
-            try
-            {
-                AppendBlobRequestConditions conditions = new AppendBlobRequestConditions
-                {
-                    // TODO: copy over the other conditions from the uploadOptions
-                    IfNoneMatch = !overwrite ? new ETag(Constants.Wildcard) : null,
-                };
-                await _blobClient.CreateAsync(
-                    new AppendBlobCreateOptions()
-                    {
-                        Conditions = conditions,
-                    }, cancellationToken).ConfigureAwait(false);
-            }
-            catch (RequestFailedException storageRequestFailedException)
-                when (overwrite && storageRequestFailedException.ErrorCode == BlobErrorCode.BlobAlreadyExists)
-            {
-                return;
-            }
-            // Let the exception throw if the above the conditions aren't met.
-        }
-
-        /// <summary>
         /// Consumes the readable stream to upload
         /// </summary>
         /// <param name="position">
@@ -136,7 +103,12 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="overwrite">
         /// If set to true, will overwrite the blob if exists.
         /// </param>
-        /// <param name="length"></param>
+        /// <param name="streamLength">
+        /// The length of the stream.
+        /// </param>
+        /// <param name="completeLength">
+        /// The expected complete length of the blob.
+        /// </param>
         /// <param name="stream"></param>
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
@@ -145,26 +117,33 @@ namespace Azure.Storage.DataMovement.Blobs
             Stream stream,
             bool overwrite,
             long position = 0,
-            long? length = default,
+            long? streamLength = default,
+            long completeLength = 0,
             StorageResourceWriteToOffsetOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            if (length > 0)
+            AppendBlobRequestConditions conditions = new AppendBlobRequestConditions
+            {
+                // TODO: copy over the other conditions from the uploadOptions
+                IfNoneMatch = overwrite ? null : new ETag(Constants.Wildcard),
+            };
+            if (position == 0)
+            {
+                await _blobClient.CreateAsync(
+                    new AppendBlobCreateOptions()
+                    {
+                        Conditions = conditions,
+                    }, cancellationToken).ConfigureAwait(false);
+            }
+            if (streamLength > 0)
             {
                 await _blobClient.AppendBlockAsync(
                     content: stream,
                     new AppendBlobAppendBlockOptions()
                     {
-                        Conditions = new AppendBlobRequestConditions()
-                        {
-                            IfNoneMatch = !overwrite ? new ETag(Constants.Wildcard) : null,
-                        },
+                        Conditions = conditions
                     },
                     cancellationToken: cancellationToken).ConfigureAwait(false);
-            }
-            else
-            {
-                throw new ArgumentException("Cannot upload stream of 0 length");
             }
         }
 
@@ -205,6 +184,9 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="overwrite">
         /// If set to true, will overwrite the blob if exists.
         /// </param>
+        /// <param name="completeLength">
+        /// The expected complete length of the blob.
+        /// </param>
         /// <param name="range"></param>
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
@@ -213,11 +195,25 @@ namespace Azure.Storage.DataMovement.Blobs
             StorageResource sourceResource,
             HttpRange range,
             bool overwrite,
+            long completeLength = 0,
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
         {
             if (ServiceCopyMethod == TransferCopyMethod.SyncCopy)
             {
+                AppendBlobRequestConditions conditions = new AppendBlobRequestConditions
+                {
+                    // TODO: copy over the other conditions from the uploadOptions
+                    IfNoneMatch = overwrite ? null : new ETag(Constants.Wildcard),
+                };
+                if (range.Offset == 0)
+                {
+                    await _blobClient.CreateAsync(
+                        new AppendBlobCreateOptions()
+                        {
+                            Conditions = conditions,
+                        }, cancellationToken).ConfigureAwait(false);
+                }
                 await _blobClient.AppendBlockFromUriAsync(
                 sourceResource.Uri,
                 options: new AppendBlobAppendBlockFromUriOptions()

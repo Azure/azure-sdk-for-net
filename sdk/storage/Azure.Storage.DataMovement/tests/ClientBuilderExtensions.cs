@@ -92,6 +92,27 @@ namespace Azure.Storage.DataMovement.Tests
             return new DisposingBlobContainer(container);
         }
 
+        public static async Task<BlobContainerClient> GetContainerAsync(
+            this BlobsClientBuilder clientBuilder,
+            BlobServiceClient service = default,
+            string containerName = default,
+            IDictionary<string, string> metadata = default,
+            PublicAccessType? publicAccessType = default,
+            bool premium = default)
+        {
+            containerName ??= clientBuilder.GetNewContainerName();
+            service ??= clientBuilder.GetServiceClient_SharedKey();
+
+            if (publicAccessType == default)
+            {
+                publicAccessType = premium ? PublicAccessType.None : PublicAccessType.BlobContainer;
+            }
+
+            BlobContainerClient container = service.GetBlobContainerClient(containerName);
+            await container.CreateIfNotExistsAsync(metadata: metadata, publicAccessType: publicAccessType.Value);
+            return container;
+        }
+
         /// <summary>
         /// Makes a new instrumented BlobClient pointing to the same resource but with new client options.
         /// </summary>

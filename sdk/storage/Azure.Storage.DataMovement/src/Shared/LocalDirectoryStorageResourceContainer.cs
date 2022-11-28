@@ -53,7 +53,7 @@ namespace Azure.Storage.DataMovement
         /// <returns></returns>
         public override StorageResource GetChildStorageResource(string childPath)
         {
-            string concatPath = string.Concat(_path, "/", childPath);
+            string concatPath = string.Concat(Path, "\\", childPath);
             return new LocalFileStorageResource(concatPath);
         }
 
@@ -73,14 +73,24 @@ namespace Azure.Storage.DataMovement
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        public override async IAsyncEnumerable<StorageResource> GetStorageResourcesAsync(
+        public override async IAsyncEnumerable<StorageResourceBase> GetStorageResourcesAsync(
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             PathScanner scanner = new PathScanner(_path);
             foreach (FileSystemInfo fileSystemInfo in scanner.Scan(false))
             {
-                yield return GetChildStorageResource(fileSystemInfo.FullName);
+                if (fileSystemInfo.Attributes.HasFlag(FileAttributes.Directory))
+                {
+                    if (fileSystemInfo.FullName != Path)
+                    {
+                        yield return new LocalDirectoryStorageResourceContainer(fileSystemInfo.FullName);
+                    }
+                }
+                else
+                {
+                    yield return new LocalFileStorageResource(fileSystemInfo.FullName);
+                }
             }
         }
     }

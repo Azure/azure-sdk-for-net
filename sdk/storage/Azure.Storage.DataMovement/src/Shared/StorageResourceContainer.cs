@@ -14,7 +14,7 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// Inheritable class for storage container
     /// </summary>
-    public abstract class StorageResourceContainer
+    public abstract class StorageResourceContainer : StorageResourceBase
     {
         /// <summary>
         /// For mocking
@@ -22,28 +22,10 @@ namespace Azure.Storage.DataMovement
         protected StorageResourceContainer() { }
 
         /// <summary>
-        /// Defines whether we can produce a Uri
-        /// </summary>
-        /// <returns></returns>
-        public abstract ProduceUriType CanProduceUri { get; }
-
-        /// <summary>
-        /// Gets Uri
-        /// </summary>
-        /// <returns></returns>
-        public abstract Uri Uri { get; }
-
-        /// <summary>
-        /// Gets path split up
-        /// </summary>
-        /// <returns></returns>
-        public abstract string Path { get; }
-
-        /// <summary>
         /// Lists all the child storage resources in the path.
         /// </summary>
         /// <returns></returns>
-        public abstract IAsyncEnumerable<StorageResource> GetStorageResourcesAsync(
+        public abstract IAsyncEnumerable<StorageResourceBase> GetStorageResourcesAsync(
             CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -58,5 +40,10 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <returns></returns>
         public abstract StorageResourceContainer GetParentStorageResourceContainer();
+
+        /// <summary>
+        /// Storage Resource is a container.
+        /// </summary>
+        public override bool IsContainer => true;
     }
 }

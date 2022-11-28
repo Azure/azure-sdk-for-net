@@ -75,75 +75,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         }
 
         [RecordedTest]
-        public async Task CreateAsync()
-        {
-            // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
-            PageBlobClient blobClient = testContainer.Container.GetPageBlobClient(GetNewBlobName());
-            var length = Constants.KB;
-
-            PageBlobStorageResource storageResource = new PageBlobStorageResource(blobClient);
-
-            // Act
-            await storageResource.CreateAsync(false, length);
-
-            // Assert
-            Assert.IsTrue(await blobClient.ExistsAsync());
-        }
-
-        [RecordedTest]
-        public async Task CreateAsync_Overwrite()
-        {
-            // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
-            PageBlobClient blobClient = testContainer.Container.GetPageBlobClient(GetNewBlobName());
-            var length = Constants.KB;
-            await blobClient.CreateAsync(length);
-            var data = GetRandomBuffer(length);
-            using (var stream = new MemoryStream(data))
-            {
-                await blobClient.UploadPagesAsync(
-                    content: stream,
-                    offset: 0);
-            }
-
-            PageBlobStorageResource storageResource = new PageBlobStorageResource(blobClient);
-
-            // Act
-            await storageResource.CreateAsync(true, length);
-
-            // Assert
-            Assert.IsTrue(await blobClient.ExistsAsync());
-        }
-
-        [RecordedTest]
-        public async Task CreateAsync_Error()
-        {
-            // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
-            PageBlobClient blobClient = testContainer.Container.GetPageBlobClient(GetNewBlobName());
-            var length = Constants.KB;
-            await blobClient.CreateAsync(length);
-            var data = GetRandomBuffer(length);
-            using (var stream = new MemoryStream(data))
-            {
-                await blobClient.UploadPagesAsync(
-                    content: stream,
-                    offset: 0);
-            }
-
-            PageBlobStorageResource storageResource = new PageBlobStorageResource(blobClient);
-
-            // Assert
-            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                storageResource.CreateAsync(false, length),
-                e =>
-                {
-                    Assert.AreEqual("BlobAlreadyExists", e.ErrorCode);
-                });
-        }
-
-        [RecordedTest]
         public async Task ReadStreamAsync()
         {
             // Arrange
@@ -319,7 +250,11 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             {
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                storageResource.WriteFromStreamAsync(stream, false, position: position, length: length),
+                storageResource.WriteFromStreamAsync(
+                    stream: stream,
+                    overwrite: false,
+                    position: position,
+                    streamLength: length),
                 e =>
                 {
                     Assert.IsTrue(e.Message.Contains("The specified blob does not exist."));
@@ -595,7 +530,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             var data = GetRandomBuffer(length);
             using (var stream = new MemoryStream(data))
             {
-                await storageResource.WriteFromStreamAsync(stream, false, position: 0, length: Constants.KB);
+                await storageResource.WriteFromStreamAsync(stream, false, position: 0, streamLength: Constants.KB);
             }
 
             // Act

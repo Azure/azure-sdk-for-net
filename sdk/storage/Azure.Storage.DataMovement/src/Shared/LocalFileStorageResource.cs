@@ -63,29 +63,6 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Creates the local file.
-        /// </summary>
-        /// <param name="overwrite"></param>
-        /// <param name="size"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public override Task CreateAsync(
-            bool overwrite,
-            long size = 0,
-            CancellationToken cancellationToken = default)
-        {
-            if (overwrite || !File.Exists(_path))
-            {
-                File.Create(_path).Close();
-                FileAttributes attributes = File.GetAttributes(_path);
-                File.SetAttributes(_path, attributes | FileAttributes.Temporary);
-                return Task.CompletedTask;
-            }
-            // TODO: maybe better exception type?
-            throw new IOException($"File path `{_path}` already exists. Cannot overwite file");
-        }
-
-        /// <summary>
         /// Consumes the readable stream to upload
         /// </summary>
         /// <param name="position">
@@ -107,13 +84,36 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
+        /// Creates the local file.
+        /// </summary>
+        /// <param name="overwrite"></param>
+        /// <returns></returns>
+        internal Task CreateAsync(bool overwrite)
+        {
+            if (overwrite || !File.Exists(_path))
+            {
+                File.Create(_path).Close();
+                FileAttributes attributes = File.GetAttributes(_path);
+                File.SetAttributes(_path, attributes | FileAttributes.Temporary);
+                return Task.CompletedTask;
+            }
+            // TODO: maybe better exception type?
+            throw new IOException($"File path `{_path}` already exists. Cannot overwite file");
+        }
+
+        /// <summary>
         /// Consumes the readable stream to upload
         /// </summary>
         /// <param name="position"></param>
         /// <param name="overwrite">
         /// If set to true, will overwrite the blob if exists.
         /// </param>
-        /// <param name="length"></param>
+        /// <param name="streamLength">
+        /// The length of the stream.
+        /// </param>
+        /// <param name="completeLength">
+        /// The expected complete length of the blob.
+        /// </param>
         /// <param name="stream"></param>
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
@@ -122,27 +122,35 @@ namespace Azure.Storage.DataMovement
             Stream stream,
             bool overwrite,
             long position = 0,
-            long? length = default,
+            long? streamLength = default,
+            long completeLength = 0,
             StorageResourceWriteToOffsetOptions options = default,
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
-            // Appends incoming stream to the local file resource
-            using (FileStream fileStream = new FileStream(
-                    _path,
-                    FileMode.OpenOrCreate,
-                    FileAccess.Write))
+            if (position == 0)
             {
-                if (position > 0)
+                await CreateAsync(overwrite).ConfigureAwait(false);
+            }
+            if (completeLength > 0)
+            {
+                // Appends incoming stream to the local file resource
+                using (FileStream fileStream = new FileStream(
+                        _path,
+                        FileMode.OpenOrCreate,
+                        FileAccess.Write))
                 {
-                    fileStream.Seek(position, SeekOrigin.Begin);
+                    if (position > 0)
+                    {
+                        fileStream.Seek(position, SeekOrigin.Begin);
+                    }
+                    await stream.CopyToAsync(
+                        fileStream,
+                        (int)streamLength,
+                        cancellationToken)
+                        .ConfigureAwait(false);
                 }
-                await stream.CopyToAsync(
-                    fileStream,
-                    (int) length,
-                    cancellationToken)
-                    .ConfigureAwait(false);
             }
         }
 
@@ -173,6 +181,9 @@ namespace Azure.Storage.DataMovement
         /// <param name="overwrite">
         /// If set to true, will overwrite the blob if exists.
         /// </param>
+        /// <param name="completeLength">
+        /// The expected complete length of the blob.
+        /// </param>
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
@@ -180,6 +191,7 @@ namespace Azure.Storage.DataMovement
             StorageResource sourceResource,
             HttpRange range,
             bool overwrite,
+            long completeLength = 0,
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
         {
@@ -197,7 +209,7 @@ namespace Azure.Storage.DataMovement
             {
                 return Task.FromResult(fileInfo.ToStorageResourceProperties());
             }
-            return Task.FromResult<StorageResourceProperties>(default);
+            throw new FileNotFoundException();
         }
 
         /// <summary>

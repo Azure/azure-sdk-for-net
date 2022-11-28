@@ -13,12 +13,12 @@ namespace Azure.Storage.DataMovement.Blobs
     public class AppendBlobStorageResourceOptions
     {
         /// <summary>
-        /// When calling <see cref="BlockBlobStorageResource.CopyBlockFromUriAsync(StorageResource, HttpRange, bool, StorageResourceCopyFromUriOptions, System.Threading.CancellationToken)"/>
+        /// When calling <see cref="BlockBlobStorageResource.CopyBlockFromUriAsync(StorageResource, HttpRange, bool, long, StorageResourceCopyFromUriOptions, System.Threading.CancellationToken)"/>
         /// </summary>
         public AppendBlobStorageResourceServiceCopyOptions CopyOptions { get; set; }
 
         /// <summary>
-        /// When calling <see cref="AppendBlobStorageResource.WriteFromStreamAsync(System.IO.Stream, bool, long, long?, StorageResourceWriteToOffsetOptions, System.Threading.CancellationToken)"/>,
+        /// When calling <see cref="AppendBlobStorageResource.WriteFromStreamAsync(System.IO.Stream, bool, long, long?, long, StorageResourceWriteToOffsetOptions, System.Threading.CancellationToken)"/>,
         /// and <see cref="AppendBlobStorageResource.CompleteTransferAsync(System.Threading.CancellationToken)"/>.
         /// These options will apply to the blob service requests to complete uploading to the block blob.
         /// </summary>

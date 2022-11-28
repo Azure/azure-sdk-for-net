@@ -3,7 +3,9 @@
 using System;
 using System.Buffers;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -87,6 +89,11 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// If the transfer status of the job changes then the event will get added to this handler.
         /// </summary>
+        public SyncAsyncEventHandler<TransferStatusEventArgs> PartTransferStatusEventHandler { get; internal set; }
+
+        /// <summary>
+        /// If the transfer status of the job changes then the event will get added to this handler.
+        /// </summary>
         public SyncAsyncEventHandler<TransferStatusEventArgs> TransferStatusEventHandler { get; internal set; }
 
         /// <summary>
@@ -118,6 +125,7 @@ namespace Azure.Storage.DataMovement
             StorageResourceCreateMode createMode,
             TransferCheckpointer checkpointer,
             ArrayPool<byte> arrayPool,
+            SyncAsyncEventHandler<TransferStatusEventArgs> jobPartEventHandler,
             SyncAsyncEventHandler<TransferStatusEventArgs> statusEventHandler,
             SyncAsyncEventHandler<TransferFailedEventArgs> failedEventHandler,
             CancellationTokenSource cancellationTokenSource)
@@ -134,6 +142,7 @@ namespace Azure.Storage.DataMovement
             _maximumTransferChunkSize = maximumTransferChunkSize;
             _initialTransferSize = initialTransferSize;
             _arrayPool = arrayPool;
+            PartTransferStatusEventHandler = jobPartEventHandler;
             TransferStatusEventHandler = statusEventHandler;
             TransferFailedEventHandler = failedEventHandler;
         }
@@ -170,13 +179,17 @@ namespace Azure.Storage.DataMovement
             {
                 JobPartStatus = transferStatus;
                 // TODO: change to RaiseAsync
-                if (TransferStatusEventHandler != null)
+                if (PartTransferStatusEventHandler != null)
                 {
-                    await TransferStatusEventHandler.Invoke(new TransferStatusEventArgs(
+                    await PartTransferStatusEventHandler.Invoke(new TransferStatusEventArgs(
                         _dataTransfer.Id,
                         transferStatus,
                         false,
                         _cancellationTokenSource.Token)).ConfigureAwait(false);
+                }
+                else
+                {
+                    throw new ArgumentException("PartTransferStatusEventHandler was not enabled.");
                 }
             }
         }
@@ -231,76 +244,6 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        internal async Task<bool> CreateDestinationResource(long length)
-        {
-            if (_createMode == StorageResourceCreateMode.Overwrite)
-            {
-                try
-                {
-                    await _destinationResource.CreateAsync(
-                        overwrite: true,
-                        size: length,
-                        cancellationToken: _cancellationTokenSource.Token).ConfigureAwait(false);
-                    return true;
-                }
-                catch (NotSupportedException)
-                {
-                    // The following storage resource type does not require a Create call
-                    return true;
-                }
-                catch (Exception ex)
-                {
-                    await InvokeFailedArg(ex).ConfigureAwait(false);
-                }
-                return false;
-            }
-            else if (_createMode == StorageResourceCreateMode.Skip)
-            {
-                try
-                {
-                    await _destinationResource.CreateAsync(
-                        overwrite: false,
-                        size: length,
-                        cancellationToken: _cancellationTokenSource.Token).ConfigureAwait(false);
-                    return true;
-                }
-                catch (RequestFailedException exception)
-                when (exception.ErrorCode == "BlobAlreadyExists")
-                {
-                    await InvokeSkippedArg().ConfigureAwait(false);
-                }
-                catch (IOException exception)
-                when (exception.Message.Contains("Cannot overwite file"))
-                {
-                    // Skip this file
-                    await InvokeSkippedArg().ConfigureAwait(false);
-                }
-                catch (Exception exception)
-                {
-                    // Any other exception found should be documented as failed
-                    await InvokeFailedArg(exception).ConfigureAwait(false);
-                }
-                return false;
-            }
-            else // StorageResourceCreateMode.Fail
-            {
-                try
-                {
-                    await _destinationResource.CreateAsync(
-                        overwrite: false,
-                        size: length,
-                        cancellationToken: _cancellationTokenSource.Token).ConfigureAwait(false);
-                    return true;
-                }
-                catch (Exception exception)
-                {
-                    // Any other exception found should be documented as failed
-                    await InvokeFailedArg(exception).ConfigureAwait(false);
-                }
-                return false;
-            }
-        }
-
         internal long CalculateBlockSize(long length)
         {
             // If the caller provided an explicit block size, we'll use it.
@@ -309,13 +252,86 @@ namespace Azure.Storage.DataMovement
             if (_maximumTransferChunkSize.HasValue
             && _maximumTransferChunkSize > 0)
             {
-                return Math.Min(
-                _destinationResource.MaxChunkSize,
+                long assignedSize = Math.Min(
+                    _destinationResource.MaxChunkSize,
                     _maximumTransferChunkSize.Value);
+                return Math.Min(assignedSize, length);
             }
-            return length < Constants.LargeUploadThreshold ?
+            long blockSize = length < Constants.LargeUploadThreshold ?
                         Math.Min(Constants.DefaultBufferSize, _destinationResource.MaxChunkSize) :
                         Math.Min(Constants.LargeBufferSize, _destinationResource.MaxChunkSize);
+            return Math.Min(blockSize, length);
+        }
+
+        internal static long ParseRangeTotalLength(string range)
+        {
+            if (range == null)
+            {
+                return 0;
+            }
+            int lengthSeparator = range.IndexOf("/", StringComparison.InvariantCultureIgnoreCase);
+            if (lengthSeparator == -1)
+            {
+                throw new ArgumentException("Could not obtain the total length from HTTP range " + range);
+            }
+            return long.Parse(range.Substring(lengthSeparator + 1), CultureInfo.InvariantCulture);
+        }
+
+        internal static List<(long Offset, long Size)> GetCommitBlockList(long blockSize, long fileLength)
+        {
+            // The list tracking blocks IDs we're going to commit
+            List<(long Offset, long Size)> partitions = new List<(long, long)>();
+
+            // Partition the stream into individual blocks
+            foreach ((long Offset, long Length) block in GetPartitionIndexes(fileLength, blockSize))
+            {
+                /* We need to do this first! Length is calculated on the fly based on stream buffer
+                    * contents; We need to record the partition data first before consuming the stream
+                    * asynchronously. */
+                partitions.Add(block);
+            }
+            return partitions;
+        }
+
+        /// <summary>
+        /// Partition a stream into a series of blocks buffered as needed by an array pool.
+        /// </summary>
+        private static IEnumerable<(long Offset, long Length)> GetPartitionIndexes(
+            long streamLength, // StreamLength needed to divide before hand
+            long blockSize)
+        {
+            // The minimum amount of data we'll accept from a stream before
+            // splitting another block. Code that sets `blockSize` will always
+            // set it to a positive number. Min() only avoids edge case where
+            // user sets their block size to 1.
+            long acceptableBlockSize = Math.Max(1, blockSize);
+
+            // service has a max block count per blob
+            // block size * block count limit = max data length to upload
+            // if stream length is longer than specified max block size allows, can't upload
+            long minRequiredBlockSize = (long)Math.Ceiling((double)streamLength / Constants.Blob.Block.MaxBlocks);
+            if (blockSize < minRequiredBlockSize)
+            {
+                throw Errors.InsufficientStorageTransferOptions(streamLength, blockSize, minRequiredBlockSize);
+            }
+            // bring min up to our min required by the service
+            acceptableBlockSize = Math.Max(acceptableBlockSize, minRequiredBlockSize);
+
+            // Start the position at the first block size since the first block has potentially
+            // been already staged.
+            long absolutePosition = blockSize;
+            long blockLength = acceptableBlockSize;
+
+            // TODO: divide up paritions based on how much array pool is left
+            while (absolutePosition < streamLength)
+            {
+                // Return based on the size of the stream divided up by the acceptable blocksize.
+                blockLength = (absolutePosition + acceptableBlockSize < streamLength) ?
+                    acceptableBlockSize :
+                    streamLength - absolutePosition;
+                yield return (absolutePosition, blockLength);
+                absolutePosition += blockLength;
+            }
         }
     }
 }

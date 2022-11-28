@@ -62,7 +62,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             List<string> resultPaths = new List<string>();
-            await foreach (StorageResource resource in containerResource.GetStorageResourcesAsync())
+            await foreach (StorageResourceBase resource in containerResource.GetStorageResourcesAsync())
             {
                 resultPaths.Add(resource.Path);
             }
@@ -71,6 +71,57 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsNotEmpty(resultPaths);
             Assert.AreEqual(paths.Count, resultPaths.Count);
             Assert.IsTrue(paths.All(path => resultPaths.Contains(path)));
+        }
+
+        [Test]
+        public async Task GetChildStorageResourceAsync()
+        {
+            List<string> paths = new List<string>();
+            List<string> fileNames = new List<string>();
+            string folderPath = CreateRandomDirectory(Path.GetTempPath());
+            for (int i = 0; i < 3; i++)
+            {
+                string fileName = CreateRandomFile(folderPath);
+                paths.Add(fileName);
+                fileNames.Add(fileName.Substring(folderPath.Length));
+            }
+
+            StorageResourceContainer containerResource = new LocalDirectoryStorageResourceContainer(folderPath);
+            foreach (string fileName in fileNames)
+            {
+                StorageResource resource = containerResource.GetChildStorageResource(fileName);
+                // Assert
+                await resource.GetPropertiesAsync().ConfigureAwait(false);
+            }
+        }
+
+        [Test]
+        public async Task GetChildStorageResourceAsync_SubDir()
+        {
+            List<string> paths = new List<string>();
+            List<string> fileNames = new List<string>();
+            string folderPath = CreateRandomDirectory(Path.GetTempPath());
+            for (int i = 0; i < 3; i++)
+            {
+                string fileName = CreateRandomFile(folderPath);
+                paths.Add(fileName);
+                fileNames.Add(fileName.Substring(folderPath.Length));
+            }
+            string subdir = CreateRandomDirectory(folderPath);
+            for (int i = 0; i < 3; i++)
+            {
+                string fileName = CreateRandomFile(subdir);
+                paths.Add(fileName);
+                fileNames.Add(fileName.Substring(subdir.Length));
+            }
+
+            StorageResourceContainer containerResource = new LocalDirectoryStorageResourceContainer(folderPath);
+            foreach (string fileName in fileNames)
+            {
+                StorageResource resource = containerResource.GetChildStorageResource(fileName);
+                // Assert
+                await resource.GetPropertiesAsync().ConfigureAwait(false);
+            }
         }
     }
 }

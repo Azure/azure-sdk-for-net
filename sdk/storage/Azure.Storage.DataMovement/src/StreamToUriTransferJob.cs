@@ -94,14 +94,19 @@ namespace Azure.Storage.DataMovement
                         cancellationToken:_cancellationTokenSource.Token).ConfigureAwait(false))
                 {
                     // Pass each storage resource found in each list call
-                    StreamToUriJobPart part = new StreamToUriJobPart(
-                        job: this,
-                        partNumber: partNumber,
-                        sourceResource: resource,
-                        destinationResource: _destinationResourceContainer.GetChildStorageResource(resource.Path));
-                    _jobParts.Add(part);
-                    yield return part;
-                    partNumber++;
+                    if (!resource.IsContainer)
+                    {
+                        string sourceName = resource.Path.Substring(_sourceResourceContainer.Path.Length + 1);
+                        StreamToUriJobPart part = new StreamToUriJobPart(
+                            job: this,
+                            partNumber: partNumber,
+                            sourceResource: resource,
+                            destinationResource: _destinationResourceContainer.GetChildStorageResource(sourceName));
+                        _jobParts.Add(part);
+                        yield return part;
+                        partNumber++;
+                    }
+                    // When we have to deal with files we have to manually go and create each subdirectory
                 }
             }
             if (_jobParts.All((JobPartInternal x) => x.JobPartStatus == StorageTransferStatus.Completed)

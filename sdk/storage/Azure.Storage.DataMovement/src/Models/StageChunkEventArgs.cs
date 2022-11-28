@@ -1,13 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
-using Azure.Storage.DataMovement;
 
-namespace Azure.Storage.DataMovement.Blobs.Models
+namespace Azure.Storage.DataMovement
 {
     /// <summary>
     /// This class is interchangable for

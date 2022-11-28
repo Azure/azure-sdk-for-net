@@ -8,14 +8,13 @@ using Azure.Core;
 using Azure.Storage.DataMovement;
 using System.Threading.Tasks;
 using System.Threading;
-using Azure.Storage.DataMovement.Blobs.Models;
 
 namespace Azure.Storage.DataMovement
 {
     internal class CommitChunkHandler
     {
         #region Delegate Definitions
-        public delegate Task QueuePutBlockTaskInternal(long offset, long blockSize);
+        public delegate Task QueuePutBlockTaskInternal(long offset, long blockSize, long expectedLength);
         public delegate Task QueueCommitBlockTaskInternal();
         public delegate Task UpdateTransferStatusInternal(StorageTransferStatus status);
         public delegate void ReportProgressInBytes(long bytesWritten);
@@ -70,8 +69,8 @@ namespace Azure.Storage.DataMovement
             // Set expected length to perform commit task
             _expectedLength = expectedLength;
 
-            // Set bytes transferred to 0
-            _bytesTransferred = 0;
+            // Set bytes transferred to block size because we transferred the initial block
+            _bytesTransferred = blockSize;
 
             _blockSize = blockSize;
 
@@ -97,7 +96,7 @@ namespace Azure.Storage.DataMovement
                     }
                     else if (_bytesTransferred > _expectedLength)
                     {
-                        await _updateTransferStatus(StorageTransferStatus.Completed).ConfigureAwait(false);
+                        await _updateTransferStatus(StorageTransferStatus.CompletedWithSkippedTransfers).ConfigureAwait(false);
                         await _invokeFailedEventHandler(
                                 new Exception("Unexpected Error: Amount of bytes transferred exceeds expected length.")).ConfigureAwait(false);
                     }
@@ -124,7 +123,7 @@ namespace Azure.Storage.DataMovement
                             long blockLength = (newOffset + _blockSize < _expectedLength) ?
                                             _blockSize :
                                             _expectedLength - newOffset;
-                            await _queuePutBlockTask(newOffset, blockLength).ConfigureAwait(false);
+                            await _queuePutBlockTask(newOffset, blockLength, _expectedLength).ConfigureAwait(false);
                         }
                     }
                     else

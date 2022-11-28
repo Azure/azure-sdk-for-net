@@ -229,13 +229,13 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             var data = GetRandomBuffer(length);
             using (var stream = new MemoryStream(data))
             {
-                await storageResource.WriteFromStreamAsync(stream, false, position: position, length: length);
+                await storageResource.WriteFromStreamAsync(stream, false, position: position, streamLength: length);
             }
             using (var stream = new MemoryStream(data))
             {
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
-                storageResource.WriteFromStreamAsync(stream, false, position: position, length: length),
+                storageResource.WriteFromStreamAsync(stream, false, position: position, streamLength: length),
                 e =>
                 {
                     Assert.IsTrue(e.Message.Contains("Cannot Stage Block to the specific offset"));
@@ -487,7 +487,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             var data = GetRandomBuffer(Constants.KB);
             using (var stream = new MemoryStream(data))
             {
-                await storageResource.WriteFromStreamAsync(stream, false, position: 0, length: Constants.KB);
+                await storageResource.WriteFromStreamAsync(stream, false, position: 0, streamLength: Constants.KB);
             }
 
             // Act

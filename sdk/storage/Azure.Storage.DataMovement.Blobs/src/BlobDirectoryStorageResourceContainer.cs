@@ -106,16 +106,14 @@ namespace Azure.Storage.DataMovement.Blobs
         public override StorageResource GetChildStorageResource(string encodedPath)
         {
             // Recreate the blobName using the existing parent directory path
-            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(_blobContainerClient.Uri);
-            blobUriBuilder.BlobName += string.Concat("/", encodedPath);
             return new BlockBlobStorageResource(
-                new BlockBlobClient(blobUriBuilder.ToUri()),
+                _blobContainerClient.GetBlockBlobClient(string.Concat(_directoryPrefix, "/", encodedPath)),
                 new BlockBlobStorageResourceOptions()
                 {
-                    CopyOptions = _options.CopyOptions,
-                    UploadOptions = _options.UploadOptions,
-                    DownloadOptions= _options.DownloadOptions,
-                });
+                    CopyOptions = _options?.CopyOptions,
+                    UploadOptions = _options?.UploadOptions,
+                    DownloadOptions = _options?.DownloadOptions,
+                }); ;
         }
 
         /// <summary>
@@ -214,7 +212,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         /// <param name="cancellationToken">Cancellation Token</param>
         /// <returns>List of the child resources in the storage container</returns>
-        public override async IAsyncEnumerable<StorageResource> GetStorageResourcesAsync(
+        public override async IAsyncEnumerable<StorageResourceBase> GetStorageResourcesAsync(
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             AsyncPageable<BlobItem> pages = _blobContainerClient.GetBlobsAsync(

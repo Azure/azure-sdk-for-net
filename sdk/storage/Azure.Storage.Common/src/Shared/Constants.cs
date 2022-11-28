@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Storage
@@ -231,6 +232,7 @@ namespace Azure.Storage
             internal static class Page
             {
                 public const int PageSizeBytes = 512;
+                public const int MaxPageBlockBytes = 4 * Constants.MB; // 4MB
             }
 
             internal static class Container
@@ -710,6 +712,7 @@ namespace Azure.Storage
             internal const int CpuTuningMultiplier = 16;
             internal const int MaxJobPartReaders = 64;
             internal const int MaxJobChunkTasks = 300;
+            internal const int StatusCheckInSec = 10;
 
             internal static class ConcurrencyTuner
             {

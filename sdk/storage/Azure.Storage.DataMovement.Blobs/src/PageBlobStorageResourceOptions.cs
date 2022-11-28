@@ -13,12 +13,12 @@ namespace Azure.Storage.DataMovement.Blobs
     public class PageBlobStorageResourceOptions
     {
         /// <summary>
-        /// When calling <see cref="BlockBlobStorageResource.CopyBlockFromUriAsync(StorageResource, HttpRange, bool, StorageResourceCopyFromUriOptions, System.Threading.CancellationToken)"/>
+        /// When calling <see cref="BlockBlobStorageResource.CopyBlockFromUriAsync(StorageResource, HttpRange, bool, long, StorageResourceCopyFromUriOptions, System.Threading.CancellationToken)"/>
         /// </summary>
         public PageBlobStorageResourceServiceCopyOptions CopyOptions { get; set; }
 
         /// <summary>
-        /// When calling <see cref="PageBlobStorageResource.WriteFromStreamAsync(System.IO.Stream, bool, long, long?, StorageResourceWriteToOffsetOptions, System.Threading.CancellationToken)"/>,
+        /// When calling <see cref="PageBlobStorageResource.WriteFromStreamAsync(System.IO.Stream, bool, long, long?, long, StorageResourceWriteToOffsetOptions, System.Threading.CancellationToken)"/>,
         /// and <see cref="PageBlobStorageResource.CompleteTransferAsync(System.Threading.CancellationToken)"/>.
         /// These options will apply to the blob service requests to complete uploading to the block blob.
         /// </summary>

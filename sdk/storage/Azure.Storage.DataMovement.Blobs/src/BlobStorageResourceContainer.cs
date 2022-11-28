@@ -75,7 +75,7 @@ namespace Azure.Storage.DataMovement.Blobs
         ///
         /// Because blobs is a flat namespace, virtual directories will not be returned.
         /// </summary>
-        public override async IAsyncEnumerable<StorageResource> GetStorageResourcesAsync(
+        public override async IAsyncEnumerable<StorageResourceBase> GetStorageResourcesAsync(
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             AsyncPageable<BlobItem> pages = _blobContainerClient.GetBlobsAsync(

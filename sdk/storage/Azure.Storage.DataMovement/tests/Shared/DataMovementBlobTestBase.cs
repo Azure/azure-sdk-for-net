@@ -52,6 +52,14 @@ namespace Azure.Storage.DataMovement.Tests
             bool premium = default)
             => await BlobsClientBuilder.GetTestContainerAsync(service, containerName, metadata, publicAccessType, premium);
 
+        public async Task<BlobContainerClient> GetContainerAsync(
+            BlobServiceClient service = default,
+            string containerName = default,
+            IDictionary<string, string> metadata = default,
+            PublicAccessType? publicAccessType = PublicAccessType.None,
+            bool premium = default)
+            => await BlobsClientBuilder.GetContainerAsync(service, containerName, metadata, publicAccessType, premium);
+
         public BlobClientOptions GetBlobClientOptions(bool parallelRange = false)
             => BlobsClientBuilder.GetOptions(parallelRange);
 

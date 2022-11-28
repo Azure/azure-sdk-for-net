@@ -40,6 +40,7 @@ namespace Azure.Storage.DataMovement
                   job._createMode,
                   job._checkpointer,
                   job.UploadArrayPool,
+                  job.GetJobPartStatus(),
                   job.TransferStatusEventHandler,
                   job.TransferFailedEventHandler,
                   job._cancellationTokenSource)
@@ -67,6 +68,7 @@ namespace Azure.Storage.DataMovement
                   job._createMode,
                   job._checkpointer,
                   job.UploadArrayPool,
+                  job.GetJobPartStatus(),
                   job.TransferStatusEventHandler,
                   job.TransferFailedEventHandler,
                   job._cancellationTokenSource)
@@ -74,20 +76,7 @@ namespace Azure.Storage.DataMovement
 
         /// <summary>
         /// Processes the job to job parts
-        /// </summary>
-        /// <returns>The task that's queueing up the chunks</returns>
-        public override async Task ProcessPartToChunkAsync()
-        {
-            // we can default the length to 0 because we know the destination is local and
-            // does not require a length to be created.
-            if (await CreateDestinationResource(0).ConfigureAwait(false))
-            {
-                await InitiateDownload().ConfigureAwait(false);
-            }
-        }
-
-        #region PartitionedDownloader
-        /// <summary>
+        ///
         /// Just start downloading using an initial range.  If it's a
         /// small blob, we'll get the whole thing in one shot.  If it's
         /// a large blob, we'll get its full size in Content-Range and
@@ -97,8 +86,11 @@ namespace Azure.Storage.DataMovement
         /// then we will trigger more to download since we now know the
         /// content length.
         /// </summary>
-        internal async Task InitiateDownload()
+        /// <returns>The task that's queueing up the chunks</returns>
+        public override async Task ProcessPartToChunkAsync()
         {
+            // we can default the length to 0 because we know the destination is local and
+            // does not require a length to be created.
             await OnTransferStatusChanged(StorageTransferStatus.InProgress).ConfigureAwait(false);
 
             try
@@ -124,9 +116,15 @@ namespace Azure.Storage.DataMovement
                 // If the initial request returned no content (i.e., a 304),
                 // we'll pass that back to the user immediately
                 long initialLength = initialResult.Properties.ContentLength;
-                if (initialResult == default || initialLength == 0 )
+                if (initialResult == default || initialLength == 0)
                 {
-                    // Invoke event handler and progress handler
+                    // We just need to at minimum create the file
+                    await CopyToStreamInternal(
+                        offset: 0,
+                        sourceLength: 0,
+                        source: default,
+                        expectedLength: 0).ConfigureAwait(false);
+                    // Queue the work to end the download
                     await QueueChunk(
                         async () =>
                         await CompleteFileDownload().ConfigureAwait(false))
@@ -135,9 +133,13 @@ namespace Azure.Storage.DataMovement
                 }
 
                 // TODO: Change to use buffer instead of converting to stream
-                await CopyToStreamInternal(0, initialLength, initialResult.Content).ConfigureAwait(false);
-                ReportBytesWritten(initialLength);
                 long totalLength = ParseRangeTotalLength(initialResult.ContentRange);
+                await CopyToStreamInternal(
+                    offset: 0,
+                    sourceLength: initialLength,
+                    source: initialResult.Content,
+                    expectedLength: totalLength).ConfigureAwait(false);
+                ReportBytesWritten(initialLength);
                 if (totalLength == initialLength)
                 {
                     // Complete download since it was done in one go
@@ -149,12 +151,7 @@ namespace Azure.Storage.DataMovement
                 else
                 {
                     // Set rangeSize
-                    int rangeSize = Constants.DefaultBufferSize;
-                    if (_maximumTransferChunkSize.HasValue
-                        && _maximumTransferChunkSize.Value > 0)
-                    {
-                        rangeSize = Math.Min((int)_maximumTransferChunkSize.Value, Constants.Blob.Block.MaxDownloadBytes);
-                    }
+                    long rangeSize = CalculateBlockSize(totalLength);
 
                     // Get list of ranges of the blob
                     IList<HttpRange> ranges = GetRangesList(initialLength, totalLength, rangeSize);
@@ -184,6 +181,7 @@ namespace Azure.Storage.DataMovement
             }
         }
 
+        #region PartitionedDownloader
         internal async Task CompleteFileDownload()
         {
             CancellationHelper.ThrowIfCancellationRequested(_cancellationTokenSource.Token);
@@ -229,7 +227,11 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        public async Task CopyToStreamInternal(long offset, long sourceLength, Stream source)
+        public async Task CopyToStreamInternal(
+            long offset,
+            long sourceLength,
+            Stream source,
+            long expectedLength)
         {
             CancellationHelper.ThrowIfCancellationRequested(_cancellationTokenSource.Token);
 
@@ -237,12 +239,13 @@ namespace Azure.Storage.DataMovement
             {
                 // TODO: change to custom offset based on chunk offset
                 await _destinationResource.WriteFromStreamAsync(
-                    source,
-                    false,
-                    offset,
-                    sourceLength,
-                    default,
-                    _cancellationTokenSource.Token).ConfigureAwait(false);
+                    stream: source,
+                    overwrite: false,
+                    position: offset,
+                    streamLength: sourceLength,
+                    completeLength: expectedLength,
+                    options: default,
+                    cancellationToken: _cancellationTokenSource.Token).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -302,7 +305,7 @@ namespace Azure.Storage.DataMovement
         {
             return new DownloadChunkHandler.Behaviors()
             {
-                CopyToDestinationFile = (offset, length, result) => job.CopyToStreamInternal(offset, length, result),
+                CopyToDestinationFile = (offset, length, result, expectedLength) => job.CopyToStreamInternal(offset, length, result, expectedLength),
                 CopyToChunkFile = (chunkFilePath, source) => job.WriteChunkToTempFile(chunkFilePath, source),
                 ReportProgressInBytes= (progress) => job.ReportBytesWritten(progress),
                 InvokeFailedHandler = async (ex) => await job.InvokeFailedArg(ex).ConfigureAwait(false),
@@ -311,21 +314,7 @@ namespace Azure.Storage.DataMovement
             };
         }
 
-        private static long ParseRangeTotalLength(string range)
-        {
-            if (range == null)
-            {
-                return 0;
-            }
-            int lengthSeparator = range.IndexOf("/", StringComparison.InvariantCultureIgnoreCase);
-            if (lengthSeparator == -1)
-            {
-                throw new ArgumentException("Could not obtain the total length from HTTP range " + range);
-            }
-            return long.Parse(range.Substring(lengthSeparator + 1), CultureInfo.InvariantCulture);
-        }
-
-        private static IList<HttpRange> GetRangesList(long initialLength, long totalLength, int rangeSize)
+        private static IList<HttpRange> GetRangesList(long initialLength, long totalLength, long rangeSize)
         {
             IList<HttpRange> list = new List<HttpRange>();
             for (long offset = initialLength; offset < totalLength; offset += rangeSize)

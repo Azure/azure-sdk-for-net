@@ -95,11 +95,12 @@ namespace Azure.Storage.DataMovement
                         cancellationToken: _cancellationTokenSource.Token).ConfigureAwait(false))
                 {
                     // Pass each storage resource found in each list call
+                    string sourceName = resource.Path.Substring(_sourceResourceContainer.Path.Length + 1);
                     ServiceToServiceJobPart part = new ServiceToServiceJobPart(
                         job: this,
                         partNumber: partNum,
                         sourceResource: resource,
-                        destinationResource: _destinationResourceContainer.GetChildStorageResource(resource.Path));
+                        destinationResource: _destinationResourceContainer.GetChildStorageResource(sourceName));
                     _jobParts.Add(part);
                     yield return part;
                     partNum++;
