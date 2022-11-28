@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.ResourceManager.DataFactory.Models;
@@ -101,10 +102,10 @@ namespace Azure.ResourceManager.DataFactory.Tests
             abDataset.Format = new DatasetStorageFormat();
             abDataset.Format.DatasetStorageFormatType = "TextFormat";
 
-            abDataset.FolderPath = DataFactoryExpression.FromExpression<string>(folder);
+            abDataset.FolderPath = DataFactoryExpression<string>.FromExpression(folder);
 
             if (file != null)
-                abDataset.FileName = BinaryData.FromObjectAsJson(file);
+                abDataset.FileName = file;
             FactoryDatasetData data = new FactoryDatasetData(abDataset);
             return (await _dataFactory.GetFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
         }

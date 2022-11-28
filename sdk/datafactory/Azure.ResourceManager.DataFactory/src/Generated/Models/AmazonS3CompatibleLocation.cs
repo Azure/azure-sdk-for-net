@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="bucketName"> Specify the bucketName of Amazon S3 Compatible. Type: string (or Expression with resultType string). </param>
         /// <param name="version"> Specify the version of Amazon S3 Compatible. Type: string (or Expression with resultType string). </param>
-        internal AmazonS3CompatibleLocation(string datasetLocationType, BinaryData folderPath, BinaryData fileName, IDictionary<string, BinaryData> additionalProperties, BinaryData bucketName, BinaryData version) : base(datasetLocationType, folderPath, fileName, additionalProperties)
+        internal AmazonS3CompatibleLocation(string datasetLocationType, DataFactoryExpression<string> folderPath, DataFactoryExpression<string> fileName, IDictionary<string, BinaryData> additionalProperties, BinaryData bucketName, BinaryData version) : base(datasetLocationType, folderPath, fileName, additionalProperties)
         {
             BucketName = bucketName;
             Version = version;

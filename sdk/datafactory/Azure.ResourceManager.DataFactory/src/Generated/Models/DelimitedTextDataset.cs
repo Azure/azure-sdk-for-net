@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="escapeChar"> The escape character. Type: string (or Expression with resultType string). </param>
         /// <param name="firstRowAsHeader"> When used as input, treat the first row of data as headers. When used as output,write the headers into the output as the first row of data. The default value is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="nullValue"> The null value string. Type: string (or Expression with resultType string). </param>
-        internal DelimitedTextDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DatasetLocation dataLocation, BinaryData columnDelimiter, BinaryData rowDelimiter, BinaryData encodingName, BinaryData compressionCodec, BinaryData compressionLevel, BinaryData quoteChar, BinaryData escapeChar, BinaryData firstRowAsHeader, BinaryData nullValue) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal DelimitedTextDataset(string datasetType, string description, DataFactoryExpression<IList<DatasetDataElement>> structure, DataFactoryExpression<IList<DatasetSchemaDataElement>> schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DatasetLocation dataLocation, BinaryData columnDelimiter, BinaryData rowDelimiter, BinaryData encodingName, BinaryData compressionCodec, BinaryData compressionLevel, BinaryData quoteChar, BinaryData escapeChar, BinaryData firstRowAsHeader, BinaryData nullValue) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             DataLocation = dataLocation;
             ColumnDelimiter = columnDelimiter;

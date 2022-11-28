@@ -305,9 +305,23 @@ directive:
       $.StoreReadSettings.properties.maxConcurrentConnections['x-ms-format'] = 'dfe-int';
       $.StoreReadSettings.properties.disableMetricsCollection['x-ms-format'] = 'dfe-bool';
       $.MicrosoftAccessSource.properties.query['x-ms-format'] = 'dfe-string';
-      $.MicrosoftAccessSource.properties.additionalColumns['x-ms-format'] = 'dfe-listOfT';
-      $.MicrosoftAccessSource.properties.additionalColumns['x-ms-format-element-definition'] = 'AdditionalColumns';
-      $.XmlReadSettings.properties.namespacePrefixes['x-ms-format'] = 'dfe-keyValuePair';
+      $.MicrosoftAccessSource.properties.additionalColumns['x-ms-format'] = 'dfe-list-generic';
+      $.MicrosoftAccessSource.properties.additionalColumns['x-ms-format-element-type'] = 'AdditionalColumns';
+      $.XmlReadSettings.properties.namespacePrefixes['x-ms-format'] = 'dfe-key-value-pairs';
+  - from: Dataset.json
+    where: $.definitions
+    transform: >
+      $.Dataset.properties.structure['x-ms-format'] = 'dfe-list-generic';
+      $.Dataset.properties.structure['x-ms-format-element-type'] = 'DatasetDataElement';
+      $.Dataset.properties.schema['x-ms-format'] = 'dfe-list-generic';
+      $.Dataset.properties.schema['x-ms-format-element-type'] = 'DatasetSchemaDataElement';
+      $.DatasetLocation.properties.folderPath['x-ms-format'] = 'dfe-string';
+      $.DatasetLocation.properties.fileName['x-ms-format'] = 'dfe-string';
+      $.AzureBlobDatasetTypeProperties.properties.folderPath['x-ms-format'] = 'dfe-string';
+      $.AzureBlobDatasetTypeProperties.properties.fileName['x-ms-format'] = 'dfe-string';
+      $.AzureBlobDatasetTypeProperties.properties.tableRootLocation['x-ms-format'] = 'dfe-string';
+      $.AzureBlobDatasetTypeProperties.properties.modifiedDatetimeStart['x-ms-format'] = 'dfe-date-time-rfc1123';
+      $.AzureBlobDatasetTypeProperties.properties.modifiedDatetimeEnd['x-ms-format'] = 'dfe-date-time-rfc1123';
   - from: IntegrationRuntime.json
     where: $.definitions
     transform: >

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -40,20 +41,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(FolderPath);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(FolderPath.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, FolderPath);
             }
             if (Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("fileName");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(FileName);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(FileName.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, FileName);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -72,8 +65,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<BinaryData> bucketName = default;
             Optional<BinaryData> version = default;
             string type = default;
-            Optional<BinaryData> folderPath = default;
-            Optional<BinaryData> fileName = default;
+            Optional<DataFactoryExpression<string>> folderPath = default;
+            Optional<DataFactoryExpression<string>> fileName = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +103,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    folderPath = BinaryData.FromString(property.Value.GetRawText());
+                    folderPath = JsonSerializer.Deserialize<DataFactoryExpression<string>>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("fileName"))
@@ -120,7 +113,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    fileName = BinaryData.FromString(property.Value.GetRawText());
+                    fileName = JsonSerializer.Deserialize<DataFactoryExpression<string>>(property.Value.ToString());
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

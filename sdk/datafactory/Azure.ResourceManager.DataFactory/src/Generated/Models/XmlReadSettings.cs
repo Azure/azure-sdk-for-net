@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="detectDataType"> Indicates whether type detection is enabled when reading the xml files. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="namespaces"> Indicates whether namespace is enabled when reading the xml files. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="namespacePrefixes"> Namespace uri to prefix mappings to override the prefixes in column names when namespace is enabled, if no prefix is defined for a namespace uri, the prefix of xml element/attribute name in the xml data file will be used. Example: &quot;{&quot;http://www.example.com/xml&quot;:&quot;prefix&quot;}&quot; Type: object (or Expression with resultType object). </param>
-        internal XmlReadSettings(string formatReadSettingsType, IDictionary<string, BinaryData> additionalProperties, CompressionReadSettings compressionProperties, BinaryData validationMode, BinaryData detectDataType, BinaryData namespaces, BinaryData namespacePrefixes) : base(formatReadSettingsType, additionalProperties)
+        internal XmlReadSettings(string formatReadSettingsType, IDictionary<string, BinaryData> additionalProperties, CompressionReadSettings compressionProperties, BinaryData validationMode, BinaryData detectDataType, BinaryData namespaces, DataFactoryExpression<IDictionary<string, string>> namespacePrefixes) : base(formatReadSettingsType, additionalProperties)
         {
             CompressionProperties = compressionProperties;
             ValidationMode = validationMode;
@@ -140,36 +141,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </para>
         /// </summary>
         public BinaryData Namespaces { get; set; }
-        /// <summary>
-        /// Namespace uri to prefix mappings to override the prefixes in column names when namespace is enabled, if no prefix is defined for a namespace uri, the prefix of xml element/attribute name in the xml data file will be used. Example: &quot;{&quot;http://www.example.com/xml&quot;:&quot;prefix&quot;}&quot; Type: object (or Expression with resultType object).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData NamespacePrefixes { get; set; }
+        /// <summary> Namespace uri to prefix mappings to override the prefixes in column names when namespace is enabled, if no prefix is defined for a namespace uri, the prefix of xml element/attribute name in the xml data file will be used. Example: &quot;{&quot;http://www.example.com/xml&quot;:&quot;prefix&quot;}&quot; Type: object (or Expression with resultType object). </summary>
+        public DataFactoryExpression<IDictionary<string, string>> NamespacePrefixes { get; set; }
     }
 }

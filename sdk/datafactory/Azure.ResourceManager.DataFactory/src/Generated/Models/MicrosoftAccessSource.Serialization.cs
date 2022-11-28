@@ -26,11 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AdditionalColumns))
             {
                 writer.WritePropertyName("additionalColumns");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(AdditionalColumns);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(AdditionalColumns.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, AdditionalColumns);
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(CopySourceType);
@@ -85,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal static MicrosoftAccessSource DeserializeMicrosoftAccessSource(JsonElement element)
         {
             Optional<DataFactoryExpression<string>> query = default;
-            Optional<BinaryData> additionalColumns = default;
+            Optional<DataFactoryExpression<IList<AdditionalColumns>>> additionalColumns = default;
             string type = default;
             Optional<BinaryData> sourceRetryCount = default;
             Optional<BinaryData> sourceRetryWait = default;
@@ -112,7 +108,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    additionalColumns = BinaryData.FromString(property.Value.GetRawText());
+                    additionalColumns = JsonSerializer.Deserialize<DataFactoryExpression<IList<AdditionalColumns>>>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("type"))

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="container"> Specify the container of azure blob. Type: string (or Expression with resultType string). </param>
-        internal AzureBlobStorageLocation(string datasetLocationType, BinaryData folderPath, BinaryData fileName, IDictionary<string, BinaryData> additionalProperties, BinaryData container) : base(datasetLocationType, folderPath, fileName, additionalProperties)
+        internal AzureBlobStorageLocation(string datasetLocationType, DataFactoryExpression<string> folderPath, DataFactoryExpression<string> fileName, IDictionary<string, BinaryData> additionalProperties, BinaryData container) : base(datasetLocationType, folderPath, fileName, additionalProperties)
         {
             Container = container;
             DatasetLocationType = datasetLocationType ?? "AzureBlobStorageLocation";

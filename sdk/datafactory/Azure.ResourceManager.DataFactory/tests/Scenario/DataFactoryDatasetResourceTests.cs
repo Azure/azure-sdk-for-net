@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         private DataFactoryResource _dataFactory;
         private StorageAccountResource _storageAccount;
         public DataFactoryDatasetResourceTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+            : base(isAsync)
         {
         }
 
