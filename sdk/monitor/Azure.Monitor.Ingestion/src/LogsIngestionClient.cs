@@ -95,7 +95,7 @@ namespace Azure.Monitor.Ingestion
             List<T> currentLogList = new List<T>();
             var logEntriesList = logEntries.ToList();
             int logEntriesCount = logEntriesList.Count;
-            foreach (var log in logEntriesList())
+            foreach (var log in logEntriesList)
             {
                 BinaryData entry;
                 bool isLastEntry = (entryCount + 1 == logEntriesCount);
