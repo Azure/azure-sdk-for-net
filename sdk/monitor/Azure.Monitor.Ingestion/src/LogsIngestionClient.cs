@@ -2,10 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Buffers;
 using System.Collections.Generic;
-using System.Dynamic;
-using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Threading;
@@ -91,15 +88,15 @@ namespace Azure.Monitor.Ingestion
         internal static IEnumerable<BatchedLogs<T>> Batch<T>(IEnumerable<T> logEntries, UploadLogsOptions options = null)
         {
             // Create an ArrayBufferWriter as backing store for Utf8JsonWriter
-            Azure.Core.ArrayBufferWriter<byte> arrayBuffer = new Azure.Core.ArrayBufferWriter<byte>(SingleUploadThreshold);
+            ArrayBufferWriter<byte> arrayBuffer = new ArrayBufferWriter<byte>(SingleUploadThreshold);
             Utf8JsonWriter writer = new Utf8JsonWriter(arrayBuffer);
             writer.WriteStartArray();
             int entryCount = 0;
             List<T> currentLogList = new List<T>();
-            foreach (var log in logEntries)
+            bool isLastEntry = (entryCount + 1 == logEntries.Count());
+            foreach (var log in logEntries.ToList())
             {
                 BinaryData entry;
-                bool isLastEntry = ((entryCount + 1) == logEntries.Count()) ? true : false;
                 // If log is already BinaryData, no need to serialize it
                 if (log is BinaryData d)
                     entry = d;
@@ -171,7 +168,7 @@ namespace Azure.Monitor.Ingestion
         {
             using (JsonDocument doc = JsonDocument.Parse(memory))
             {
-                // Comma separator added automatically by JsonDocument
+                // Comma separator added automatically by JsonWriter
                 doc.RootElement.WriteTo(writer);
             }
         }
@@ -445,8 +442,6 @@ namespace Azure.Monitor.Ingestion
         /// <remarks> See error response code and error response message for more detail. </remarks>
         public virtual async Task<Response> UploadAsync(string ruleId, string streamName, RequestContent content, RequestContext context = null)
         {
-            // Check if content is already gzipped
-            // if (content.ContentType != null)
             return await UploadRequestContentAsync(ruleId, streamName, content, true, context).ConfigureAwait(false);
         }
 
