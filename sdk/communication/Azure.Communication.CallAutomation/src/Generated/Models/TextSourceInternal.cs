@@ -6,10 +6,9 @@
 #nullable disable
 
 using System;
-using Azure.Communication.CallAutomation;
 using Azure.Core;
 
-namespace Azure.Communication.CallAutomation.Models
+namespace Azure.Communication.CallAutomation
 {
     /// <summary> The TextSource. </summary>
     internal partial class TextSourceInternal

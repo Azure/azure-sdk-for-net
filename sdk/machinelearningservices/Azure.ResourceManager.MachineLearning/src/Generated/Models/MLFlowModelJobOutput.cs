@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of MLFlowModelJobOutput. </summary>
         public MLFlowModelJobOutput()
         {
-            JobOutputType = JobOutputType.MLFlowModel;
+            JobOutputType = JobOutputType.MlflowModel;
         }
 
         /// <summary> Initializes a new instance of MLFlowModelJobOutput. </summary>

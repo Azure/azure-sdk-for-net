@@ -32,6 +32,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("imagePullSecretName"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        imagePullSecretName = null;
+                        continue;
+                    }
                     imagePullSecretName = property.Value.GetString();
                     continue;
                 }

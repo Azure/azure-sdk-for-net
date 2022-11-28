@@ -86,11 +86,4 @@ while (!operation.HasCompleted)
 }
 ```
 
-## Source
-
-To see the full example source, see:
-
-* [Synchronous Sample1_HelloWorld.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/samples/Sample1_HelloWorld.cs)
-* [ASynchronous Sample1_HelloWorldAsync.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/samples/Sample1_HelloWorldAsync.cs)
-
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md

@@ -2245,7 +2245,11 @@ namespace Azure.Storage.Files.Shares
                         var readDestStream = new MemoryStream((int)initialResponse.Value.ContentLength);
                         if (async)
                         {
+#if NET6_0_OR_GREATER
+                            await initialResponse.Value.Content.CopyToAsync(readDestStream, cancellationToken).ConfigureAwait(false);
+#else
                             await initialResponse.Value.Content.CopyToAsync(readDestStream).ConfigureAwait(false);
+#endif
                         }
                         else
                         {

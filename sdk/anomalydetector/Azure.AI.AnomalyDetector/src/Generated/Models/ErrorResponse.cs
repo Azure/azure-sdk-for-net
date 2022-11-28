@@ -14,10 +14,10 @@ namespace Azure.AI.AnomalyDetector.Models
     public partial class ErrorResponse
     {
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
-        /// <param name="code"> The error code. </param>
-        /// <param name="message"> The message explaining the error reported by the service. </param>
+        /// <param name="code"></param>
+        /// <param name="message"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
-        internal ErrorResponse(string code, string message)
+        public ErrorResponse(string code, string message)
         {
             Argument.AssertNotNull(code, nameof(code));
             Argument.AssertNotNull(message, nameof(message));
@@ -26,9 +26,9 @@ namespace Azure.AI.AnomalyDetector.Models
             Message = message;
         }
 
-        /// <summary> The error code. </summary>
-        public string Code { get; }
-        /// <summary> The message explaining the error reported by the service. </summary>
-        public string Message { get; }
+        /// <summary> Gets or sets the code. </summary>
+        public string Code { get; set; }
+        /// <summary> Gets or sets the message. </summary>
+        public string Message { get; set; }
     }
 }

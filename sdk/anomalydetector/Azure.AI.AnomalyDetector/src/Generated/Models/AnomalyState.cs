@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector.Models
@@ -15,7 +16,7 @@ namespace Azure.AI.AnomalyDetector.Models
     public partial class AnomalyState
     {
         /// <summary> Initializes a new instance of AnomalyState. </summary>
-        /// <param name="timestamp"> timestamp. </param>
+        /// <param name="timestamp"></param>
         internal AnomalyState(DateTimeOffset timestamp)
         {
             Timestamp = timestamp;
@@ -23,21 +24,21 @@ namespace Azure.AI.AnomalyDetector.Models
         }
 
         /// <summary> Initializes a new instance of AnomalyState. </summary>
-        /// <param name="timestamp"> timestamp. </param>
+        /// <param name="timestamp"></param>
         /// <param name="value"></param>
-        /// <param name="errors"> Error message for the current timestamp. </param>
+        /// <param name="errors"></param>
         internal AnomalyState(DateTimeOffset timestamp, AnomalyValue value, IReadOnlyList<ErrorResponse> errors)
         {
             Timestamp = timestamp;
             Value = value;
-            Errors = errors;
+            Errors = errors.ToList();
         }
 
-        /// <summary> timestamp. </summary>
+        /// <summary> Gets the timestamp. </summary>
         public DateTimeOffset Timestamp { get; }
         /// <summary> Gets the value. </summary>
         public AnomalyValue Value { get; }
-        /// <summary> Error message for the current timestamp. </summary>
+        /// <summary> Gets the errors. </summary>
         public IReadOnlyList<ErrorResponse> Errors { get; }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector.Models
 {
@@ -13,22 +14,25 @@ namespace Azure.AI.AnomalyDetector.Models
     public partial class Model
     {
         /// <summary> Initializes a new instance of Model. </summary>
-        /// <param name="modelId"> Model identifier. </param>
-        /// <param name="createdTime"> Date and time (UTC) when the model was created. </param>
-        /// <param name="lastUpdatedTime"> Date and time (UTC) when the model was last updated. </param>
-        internal Model(Guid modelId, DateTimeOffset createdTime, DateTimeOffset lastUpdatedTime)
+        /// <param name="modelId"></param>
+        /// <param name="createdTime"></param>
+        /// <param name="lastUpdatedTime"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        internal Model(string modelId, DateTimeOffset createdTime, DateTimeOffset lastUpdatedTime)
         {
+            Argument.AssertNotNull(modelId, nameof(modelId));
+
             ModelId = modelId;
             CreatedTime = createdTime;
             LastUpdatedTime = lastUpdatedTime;
         }
 
         /// <summary> Initializes a new instance of Model. </summary>
-        /// <param name="modelId"> Model identifier. </param>
-        /// <param name="createdTime"> Date and time (UTC) when the model was created. </param>
-        /// <param name="lastUpdatedTime"> Date and time (UTC) when the model was last updated. </param>
-        /// <param name="modelInfo"> Train result of a model including status, errors and diagnose info for model and variables. </param>
-        internal Model(Guid modelId, DateTimeOffset createdTime, DateTimeOffset lastUpdatedTime, ModelInfo modelInfo)
+        /// <param name="modelId"></param>
+        /// <param name="createdTime"></param>
+        /// <param name="lastUpdatedTime"></param>
+        /// <param name="modelInfo"></param>
+        internal Model(string modelId, DateTimeOffset createdTime, DateTimeOffset lastUpdatedTime, ModelInfo modelInfo)
         {
             ModelId = modelId;
             CreatedTime = createdTime;
@@ -36,13 +40,13 @@ namespace Azure.AI.AnomalyDetector.Models
             ModelInfo = modelInfo;
         }
 
-        /// <summary> Model identifier. </summary>
-        public Guid ModelId { get; }
-        /// <summary> Date and time (UTC) when the model was created. </summary>
+        /// <summary> Gets the model id. </summary>
+        public string ModelId { get; }
+        /// <summary> Gets the created time. </summary>
         public DateTimeOffset CreatedTime { get; }
-        /// <summary> Date and time (UTC) when the model was last updated. </summary>
+        /// <summary> Gets the last updated time. </summary>
         public DateTimeOffset LastUpdatedTime { get; }
-        /// <summary> Train result of a model including status, errors and diagnose info for model and variables. </summary>
+        /// <summary> Gets the model info. </summary>
         public ModelInfo ModelInfo { get; }
     }
 }
