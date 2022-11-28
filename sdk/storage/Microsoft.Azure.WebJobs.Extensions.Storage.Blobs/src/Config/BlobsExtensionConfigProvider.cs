@@ -525,10 +525,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
             };
         }
 
-        /// <summary>
-        /// Type used to provide blob information that can be passed to
-        /// ParameterBindingData to enable workers to create a blob client
-        /// </summary>
         private class BlobParameterBindingDataContent
         {
             public string Connection { get; set; }
