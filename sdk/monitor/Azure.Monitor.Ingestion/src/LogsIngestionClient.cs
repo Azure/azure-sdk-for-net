@@ -37,13 +37,13 @@ namespace Azure.Monitor.Ingestion
 
         internal readonly struct BatchedLogs <T>
         {
-            public BatchedLogs(List<T> logsList, BinaryData logsData)
+            public BatchedLogs(int logsCount, BinaryData logsData)
             {
-                LogsList = logsList;
+                LogsCount = logsCount;
                 LogsData = logsData;
             }
 
-            public List<T> LogsList { get; }
+            public int LogsCount { get; }
             public BinaryData LogsData { get; }
         }
 
@@ -93,10 +93,10 @@ namespace Azure.Monitor.Ingestion
             writer.WriteStartArray();
             int entryCount = 0;
             List<T> currentLogList = new List<T>();
-            bool isLastEntry = (entryCount + 1 == logEntries.Count());
             foreach (var log in logEntries.ToList())
             {
                 BinaryData entry;
+                bool isLastEntry = (entryCount + 1 == logEntries.Count());
                 // If log is already BinaryData, no need to serialize it
                 if (log is BinaryData d)
                     entry = d;
@@ -118,7 +118,7 @@ namespace Azure.Monitor.Ingestion
                     WriteMemory(tempWriter, memory);
                     tempWriter.WriteEndArray();
                     tempWriter.Flush();
-                    yield return new BatchedLogs<T>(new List<T>{log}, BinaryData.FromBytes(tempArrayBuffer.WrittenMemory));
+                    yield return new BatchedLogs<T>(1, BinaryData.FromBytes(tempArrayBuffer.WrittenMemory));
                 }
                 // if adding this entry makes stream > 1 Mb send current stream now
                 else if ((writer.BytesPending + memory.Length + 1) >= SingleUploadThreshold)
@@ -126,7 +126,7 @@ namespace Azure.Monitor.Ingestion
                     writer.WriteEndArray();
                     writer.Flush();
                     // This batch is full so send it now
-                    yield return new BatchedLogs<T>(currentLogList, BinaryData.FromBytes(arrayBuffer.WrittenMemory));
+                    yield return new BatchedLogs<T>(currentLogList.Count, BinaryData.FromBytes(arrayBuffer.WrittenMemory));
 
                     // Reset arrayBuffer and writer for next batch
                     arrayBuffer = new Azure.Core.ArrayBufferWriter<byte>(SingleUploadThreshold);
@@ -143,7 +143,7 @@ namespace Azure.Monitor.Ingestion
                     {
                         writer.WriteEndArray();
                         writer.Flush();
-                        yield return new BatchedLogs<T>(currentLogList, BinaryData.FromBytes(arrayBuffer.WrittenMemory));
+                        yield return new BatchedLogs<T>(currentLogList.Count, BinaryData.FromBytes(arrayBuffer.WrittenMemory));
                     }
                 }
                 else
@@ -157,7 +157,7 @@ namespace Azure.Monitor.Ingestion
                     {
                         writer.WriteEndArray();
                         writer.Flush();
-                        yield return new BatchedLogs<T>(currentLogList, BinaryData.FromBytes(arrayBuffer.WrittenMemory));
+                        yield return new BatchedLogs<T>(currentLogList.Count, BinaryData.FromBytes(arrayBuffer.WrittenMemory));
                     }
                 }
                 entryCount++;
@@ -234,7 +234,7 @@ namespace Azure.Monitor.Ingestion
                 }
                 catch (Exception ex)
                 {
-                    logsFailed += batch.LogsList.Count;
+                    logsFailed += batch.LogsCount;
                     // If we have an error, add Exception from response into exceptions list without throwing
                     AddException(
                         ref exceptions,
@@ -312,7 +312,7 @@ namespace Azure.Monitor.Ingestion
                         cancellationToken);
 
                     // Add the block to our task and commit lists
-                    runningTasks.Add((task, batch.LogsList.Count));
+                    runningTasks.Add((task, batch.LogsCount));
 
                     // If we run out of workers
                     if (runningTasks.Count >= _maxWorkerCount)
