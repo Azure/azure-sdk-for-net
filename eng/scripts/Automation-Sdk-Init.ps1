@@ -46,3 +46,14 @@ bash $installScript --install-dir $dotnet -c 3.1
 if (Test-Path $installScript) {
     Remove-Item $installScript
 }
+
+$dotnetRoot = Resolve-Path ($dotnet)
+
+$outputJson = [PSCustomObject]@{
+    envs = [PSCustomObject]@{
+        PATH = "${dotnetRoot}:${env:PATH}"
+        DOTNET_ROOT = "$dotnetRoot"
+    }
+}
+
+$outputJson | ConvertTo-Json -depth 100 | Out-File $args[1]

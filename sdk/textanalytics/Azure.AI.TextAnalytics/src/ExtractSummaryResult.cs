@@ -2,44 +2,58 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// The result of the extractive text summarization operation on a given
-    /// document, containing a collection of the <see cref="SummarySentence"/>
-    /// objects extracted from that document.
+    /// A representation of the result of performing extractive summarization on a given document.
     /// </summary>
     public partial class ExtractSummaryResult : TextAnalyticsResult
     {
-        private readonly SummarySentenceCollection _sentences;
+        private readonly IReadOnlyCollection<SummarySentence> _sentences;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ExtractSummaryResult"/> class.
+        /// Initializes a successful <see cref="ExtractSummaryResult"/>.
         /// </summary>
-        internal ExtractSummaryResult(string id, TextDocumentStatistics statistics, SummarySentenceCollection sentences)
+        internal ExtractSummaryResult(
+            string id,
+            TextDocumentStatistics statistics,
+            IList<SummarySentence> sentences,
+            IList<TextAnalyticsWarning> warnings)
             : base(id, statistics)
         {
-            _sentences = sentences;
+            _sentences = (sentences is not null)
+                ? new ReadOnlyCollection<SummarySentence>(sentences)
+                : new List<SummarySentence>();
+
+            Warnings = (warnings is not null)
+                ? new ReadOnlyCollection<TextAnalyticsWarning>(warnings)
+                : new List<TextAnalyticsWarning>();
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ExtractSummaryResult"/>.
+        /// Initializes an <see cref="ExtractSummaryResult"/> with an error.
         /// </summary>
-        /// <param name="id">Analyze operation id.</param>
-        /// <param name="error">Operation error object.</param>
         internal ExtractSummaryResult(string id, TextAnalyticsError error) : base(id, error) { }
 
         /// <summary>
-        /// The collection of summary sentences extracted from the document.
+        /// The warnings that resulted from processing the document.
         /// </summary>
-        public SummarySentenceCollection Sentences
+        public IReadOnlyCollection<TextAnalyticsWarning> Warnings { get; } = new List<TextAnalyticsWarning>();
+
+        /// <summary>
+        /// The collection of summary sentences extracted from the input document.
+        /// </summary>
+        public IReadOnlyCollection<SummarySentence> Sentences
         {
             get
             {
                 if (HasError)
                 {
-                    throw new InvalidOperationException($"Cannot access result for document {Id}, due to error {Error.ErrorCode}: {Error.Message}");
+                    throw new InvalidOperationException(
+                        $"Cannot access result for document {Id}, due to error {Error.ErrorCode}: {Error.Message}");
                 }
                 return _sentences;
             }

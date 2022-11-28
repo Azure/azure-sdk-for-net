@@ -65,7 +65,7 @@ string documentA = @"Microsoft was founded by Bill Gates with some friends he me
                     Microsoft originally moved its headquarters to Bellevue, Washington in Januaray 1979, but is now
                     headquartered in Redmond";
 
-string documentB = @"Microsoft was founded by Bill Gates and Paul Allen on April 4, 1975, to develop and 
+string documentB = @"Microsoft was founded by Bill Gates and Paul Allen on April 4, 1975, to develop and
                     sell BASIC interpreters for the Altair 8800. During his career at Microsoft, Gates held
                     the positions of chairman chief executive officer, president and chief software architect
                     while also being the largest individual shareholder until May 2014.";
@@ -133,7 +133,7 @@ string documentA = @"Microsoft was founded by Bill Gates with some friends he me
 string documentB = @"El CEO de Microsoft es Satya Nadella, quien asumió esta posición en Febrero de 2014. Él
                     empezó como Ingeniero de Software en el año 1992.";
 
-string documentC = @"Microsoft was founded by Bill Gates and Paul Allen on April 4, 1975, to develop and 
+string documentC = @"Microsoft was founded by Bill Gates and Paul Allen on April 4, 1975, to develop and
                     sell BASIC interpreters for the Altair 8800. During his career at Microsoft, Gates held
                     the positions of chairman chief executive officer, president and chief software architect
                     while also being the largest individual shareholder until May 2014.";
@@ -209,15 +209,6 @@ Console.WriteLine($"  Invalid document count: {entitiesPerDocuments.Statistics.I
 Console.WriteLine($"  Transaction count: {entitiesPerDocuments.Statistics.TransactionCount}");
 Console.WriteLine("");
 ```
-
-To see the full example source files, see:
-
-* [Synchronous RecognizeLinkedEntities](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample6_RecognizeLinkedEntities.cs)
-* [Asynchronous RecognizeLinkedEntities](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample6_RecognizeLinkedEntitiesAsync.cs)
-* [Synchronous RecognizeLinkedEntitiesBatch](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample6_RecognizeLinkedEntitiesBatch.cs)
-* [Asynchronous RecognizeLinkedEntitiesBatch](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample6_RecognizeLinkedEntitiesBatchAsync.cs)
-* [Synchronous RecognizeLinkedEntitiesBatchConvenience](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample6_RecognizeLinkedEntitiesBatchConvenience.cs)
-* [Asynchronous RecognizeLinkedEntitiesBatchConvenience](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample6_RecognizeLinkedEntitiesBatchConvenienceAsync.cs)
 
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/README.md

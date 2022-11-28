@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Initializes a new instance of SavedSearchesListResult. </summary>
         internal SavedSearchesListResult()
         {
-            Value = new ChangeTrackingList<SavedSearchData>();
+            Value = new ChangeTrackingList<OperationalInsightsSavedSearchData>();
         }
 
         /// <summary> Initializes a new instance of SavedSearchesListResult. </summary>
         /// <param name="value"> The array of result values. </param>
-        internal SavedSearchesListResult(IReadOnlyList<SavedSearchData> value)
+        internal SavedSearchesListResult(IReadOnlyList<OperationalInsightsSavedSearchData> value)
         {
             Value = value;
         }
 
         /// <summary> The array of result values. </summary>
-        public IReadOnlyList<SavedSearchData> Value { get; }
+        public IReadOnlyList<OperationalInsightsSavedSearchData> Value { get; }
     }
 }

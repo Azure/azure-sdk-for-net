@@ -101,13 +101,6 @@ await foreach (AnalyzeActionsResult documentsInPage in operation.Value)
 }
 ```
 
-To see the full example source files, see:
-
-* [Synchronously RecognizeCustomEntities](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample8_RecognizeCustomEntities.cs)
-* [Asynchronously RecognizeCustomEntities](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample8_RecognizeCustomEntitiesAsync.cs)
-* [Synchronously RecognizeCustomEntities Convenience](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample8_RecognizeCustomEntitiesConvenience.cs)
-* [Asynchronously RecognizeCustomEntities Convenience](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample8_RecognizeCustomEntitiesConvenienceAsync.cs)
-
 <!-- LINKS -->
 [train_model]: https://aka.ms/azsdk/textanalytics/customentityrecognition
 [azure_language_studio]: https://language.azure.com/

@@ -7,6 +7,7 @@
 
 using System;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector.Models
@@ -16,8 +17,10 @@ namespace Azure.AI.AnomalyDetector.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("source");
-            writer.WriteStringValue(Source);
+            writer.WritePropertyName("dataSource");
+            writer.WriteStringValue(DataSource);
+            writer.WritePropertyName("topContributorCount");
+            writer.WriteNumberValue(TopContributorCount);
             writer.WritePropertyName("startTime");
             writer.WriteStringValue(StartTime, "O");
             writer.WritePropertyName("endTime");
@@ -27,14 +30,20 @@ namespace Azure.AI.AnomalyDetector.Models
 
         internal static DetectionRequest DeserializeDetectionRequest(JsonElement element)
         {
-            string source = default;
+            string dataSource = default;
+            int topContributorCount = default;
             DateTimeOffset startTime = default;
             DateTimeOffset endTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("source"))
+                if (property.NameEquals("dataSource"))
                 {
-                    source = property.Value.GetString();
+                    dataSource = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("topContributorCount"))
+                {
+                    topContributorCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("startTime"))
@@ -48,7 +57,23 @@ namespace Azure.AI.AnomalyDetector.Models
                     continue;
                 }
             }
-            return new DetectionRequest(source, startTime, endTime);
+            return new DetectionRequest(dataSource, topContributorCount, startTime, endTime);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DetectionRequest FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDetectionRequest(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector.Models
@@ -22,7 +23,7 @@ namespace Azure.AI.AnomalyDetector.Models
             bool isAnomaly = default;
             bool isNegativeAnomaly = default;
             bool isPositiveAnomaly = default;
-            Optional<float> severity = default;
+            Optional<float?> severity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("period"))
@@ -69,7 +70,7 @@ namespace Azure.AI.AnomalyDetector.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        severity = null;
                         continue;
                     }
                     severity = property.Value.GetSingle();
@@ -77,6 +78,14 @@ namespace Azure.AI.AnomalyDetector.Models
                 }
             }
             return new LastDetectResponse(period, suggestedWindow, expectedValue, upperMargin, lowerMargin, isAnomaly, isNegativeAnomaly, isPositiveAnomaly, Optional.ToNullable(severity));
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static LastDetectResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeLastDetectResponse(document.RootElement);
         }
     }
 }

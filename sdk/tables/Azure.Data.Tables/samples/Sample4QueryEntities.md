@@ -96,8 +96,3 @@ foreach (Page<TableEntity> page in queryResultsMaxPerPage.AsPages())
     }
 }
 ```
-
----
-To see the full example source files, see:
-- [Synchronous Query Entities](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/tests/samples/Sample4_QueryEntities.cs)
-- [Asynchronous Query Entities](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/tests/samples/Sample4_QueryEntitiesAsync.cs)

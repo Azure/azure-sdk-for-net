@@ -12,7 +12,7 @@ using Azure.Data.Tables.Models;
 
 namespace Azure.Data.Tables.Queryable
 {
-    internal class ExpressionWriter : LinqExpressionVisitor
+    internal class ExpressionWriter : ExpressionVisitor
     {
         internal readonly StringBuilder _builder;
         private readonly Stack<Expression> _expressionStack;
@@ -43,7 +43,7 @@ namespace Azure.Data.Tables.Queryable
             return serialized;
         }
 
-        internal override Expression Visit(Expression exp)
+        public override Expression Visit(Expression exp)
         {
             _expressionStack.Push(exp);
             Expression result = base.Visit(exp);
@@ -51,7 +51,7 @@ namespace Azure.Data.Tables.Queryable
             return result;
         }
 
-        internal override Expression VisitMethodCall(MethodCallExpression m)
+        protected override Expression VisitMethodCall(MethodCallExpression m)
         {
             if (ReflectionUtil.s_dictionaryMethodInfosHash.Contains(m.Method) && m.Arguments.Count == 1 && m.Arguments[0] is ConstantExpression ce)
             {
@@ -65,7 +65,7 @@ namespace Azure.Data.Tables.Queryable
             return m;
         }
 
-        internal override Expression VisitMemberAccess(MemberExpression m)
+        protected override Expression VisitMember(MemberExpression m)
         {
             if (m.Member is FieldInfo)
             {
@@ -96,7 +96,7 @@ namespace Azure.Data.Tables.Queryable
             return m;
         }
 
-        internal override Expression VisitConstant(ConstantExpression c)
+        protected override Expression VisitConstant(ConstantExpression c)
         {
             string result;
             if (c.Value == null)
@@ -116,7 +116,7 @@ namespace Azure.Data.Tables.Queryable
             return c;
         }
 
-        internal override Expression VisitUnary(UnaryExpression u)
+        protected override Expression VisitUnary(UnaryExpression u)
         {
             switch (u.NodeType)
             {
@@ -143,7 +143,7 @@ namespace Azure.Data.Tables.Queryable
             return u;
         }
 
-        internal override Expression VisitBinary(BinaryExpression b)
+        protected override Expression VisitBinary(BinaryExpression b)
         {
             VisitOperand(b.Left);
             _builder.Append(UriHelper.SPACE);
@@ -162,7 +162,7 @@ namespace Azure.Data.Tables.Queryable
             return b;
         }
 
-        internal override Expression VisitParameter(ParameterExpression p)
+        protected override Expression VisitParameter(ParameterExpression p)
         {
             return p;
         }

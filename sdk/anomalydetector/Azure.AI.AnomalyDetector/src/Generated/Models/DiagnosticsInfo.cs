@@ -6,15 +6,16 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector.Models
 {
-    /// <summary> The DiagnosticsInfo. </summary>
+    /// <summary> Diagnostics information to help inspect the states of model or variable. </summary>
     public partial class DiagnosticsInfo
     {
         /// <summary> Initializes a new instance of DiagnosticsInfo. </summary>
-        internal DiagnosticsInfo()
+        public DiagnosticsInfo()
         {
             VariableStates = new ChangeTrackingList<VariableState>();
         }
@@ -22,15 +23,15 @@ namespace Azure.AI.AnomalyDetector.Models
         /// <summary> Initializes a new instance of DiagnosticsInfo. </summary>
         /// <param name="modelState"></param>
         /// <param name="variableStates"></param>
-        internal DiagnosticsInfo(ModelState modelState, IReadOnlyList<VariableState> variableStates)
+        internal DiagnosticsInfo(ModelState modelState, IList<VariableState> variableStates)
         {
             ModelState = modelState;
-            VariableStates = variableStates;
+            VariableStates = variableStates.ToList();
         }
 
-        /// <summary> Gets the model state. </summary>
-        public ModelState ModelState { get; }
+        /// <summary> Gets or sets the model state. </summary>
+        public ModelState ModelState { get; set; }
         /// <summary> Gets the variable states. </summary>
-        public IReadOnlyList<VariableState> VariableStates { get; }
+        public IList<VariableState> VariableStates { get; }
     }
 }
