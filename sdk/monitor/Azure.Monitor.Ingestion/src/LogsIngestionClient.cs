@@ -114,7 +114,7 @@ namespace Azure.Monitor.Ingestion
                 if (memory.Length > SingleUploadThreshold)
                 {
                     // Create tempArrayBufferWriter (unsized to store log) and tempWriter for individual log
-                    Azure.Core.ArrayBufferWriter<byte> tempArrayBuffer = new Azure.Core.ArrayBufferWriter<byte>();
+                    ArrayBufferWriter<byte> tempArrayBuffer = new ArrayBufferWriter<byte>();
                     Utf8JsonWriter tempWriter = new Utf8JsonWriter(tempArrayBuffer);
                     tempWriter.WriteStartArray();
                     WriteMemory(tempWriter, memory);
@@ -131,7 +131,7 @@ namespace Azure.Monitor.Ingestion
                     yield return new BatchedLogs<T>(currentLogList.Count, BinaryData.FromBytes(arrayBuffer.WrittenMemory));
 
                     // Reset arrayBuffer and writer for next batch
-                    arrayBuffer = new Azure.Core.ArrayBufferWriter<byte>(SingleUploadThreshold);
+                    arrayBuffer = new ArrayBufferWriter<byte>(SingleUploadThreshold);
                     writer.Reset(arrayBuffer);
                     writer.WriteStartArray();
                     // reset log list
