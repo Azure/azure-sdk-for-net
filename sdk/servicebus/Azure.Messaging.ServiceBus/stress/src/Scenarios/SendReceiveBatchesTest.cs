@@ -50,7 +50,6 @@ public class SendReceiveBatchesTest : TestScenario
 
             case Role.Receiver:
                 var receiverConfiguration = new ReceiverConfiguration();
-                receiverConfiguration.UseBatches = true;
                 var receiver = new Receiver(_testParameters, receiverConfiguration, _metrics);
                 return Task.Run(() => receiver.RunAsync(cancellationToken));
 

@@ -18,7 +18,7 @@ namespace Azure.Messaging.ServiceBus.Stress;
 ///   duplicated, or have corrupted bodies.
 /// </summary>
 ///
-public static class EventTracking
+public static class MessageTracking
 {
     /// <summary>
     ///   The name of the <see cref="ServiceBusMessage"/> property that holds the sender-assigned index number.
@@ -80,7 +80,22 @@ public static class EventTracking
     }
 
     /// <summary>
-    ///   Processes the <see cref="ServiceBusMessage"/> instance held in the <see cref="ProcessMessageEventArgs"/> in order to determine
+    ///   Processes the <see cref="ServiceBusReceivedMessage"/> in order to determine
+    ///   if the event has already been seen, if the event was received out of order, or if the body is invalid.
+    /// </summary>
+    ///
+    /// <param name="message">The <see cref="ServiceBusReceivedMessage"/> received from the receiver.</param>
+    /// <param name="sha256Hash">The <see cref="SHA256"/> instance to hash the event body.</param>
+    /// <param name="metrics">The <see cref="Metrics"/> instance used to send information about the processed event to Application Insights.</param>
+    /// <param name="readMessages">The dictionary holding the key values of the unique Id's of all the messages that have been read so far.</param>
+    ///
+    public static void ReceiveMessageAsync(ServiceBusReceivedMessage message,
+                                               SHA256 sha256Hash,
+                                               Metrics metrics,
+                                               ConcurrentDictionary<string, byte> readMessages) => CheckMessage(message, sha256Hash, null, metrics, readMessages);
+
+    /// <summary>
+    ///   Processes the <see cref="ServiceBusReceivedMessage"/> instance held in the <see cref="ProcessMessageEventArgs"/> in order to determine
     ///   if the event has already been seen, if the event was received out of order, or if the body is invalid.
     /// </summary>
     ///
@@ -89,13 +104,13 @@ public static class EventTracking
     /// <param name="metrics">The <see cref="Metrics"/> instance used to send information about the processed event to Application Insights.</param>
     /// <param name="readMessages">The dictionary holding the key values of the unique Id's of all the messages that have been read so far.</param>
     ///
-    public static void ProcessEventAsync(ProcessMessageEventArgs args,
+    public static void ProcessMessageAsync(ProcessMessageEventArgs args,
                                                SHA256 sha256Hash,
                                                Metrics metrics,
                                                ConcurrentDictionary<string, byte> readMessages) => CheckMessage(args.Message, sha256Hash, null, metrics, readMessages);
 
     /// <summary>
-    ///   Processes the <see cref="ServiceBusMessage"/> instance held in the <see cref="ProcessSessionMessageEventArgs"/> in order to determine
+    ///   Processes the <see cref="ServiceBusReceivedMessage"/> instance held in the <see cref="ProcessSessionMessageEventArgs"/> in order to determine
     ///   if the event has already been seen, if the event was received out of order, or if the body is invalid.
     /// </summary>
     ///

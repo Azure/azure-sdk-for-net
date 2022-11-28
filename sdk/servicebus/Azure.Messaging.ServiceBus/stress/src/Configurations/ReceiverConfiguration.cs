@@ -13,15 +13,9 @@ namespace Azure.Messaging.ServiceBus.Stress;
 internal class ReceiverConfiguration
 {
     /// <summary>
-    ///   The value to use for <see cref="ReadEventOptions.MaximumWaitTime" />
-    ///   when reading events using an <see cref="ServiceBusReceiver" />.
+    ///   The <see cref="ServiceBusReceiverOptions" /> to use when
+    ///   creating a <see cref="ServiceBusReceiver" />.
     /// </summary>
     ///
-    public TimeSpan MaximumWaitTime = TimeSpan.FromSeconds(5);
-
-    /// <summary>
-    ///   If the <see cref="ServiceBusSender" /> should use batches to send.
-    /// </summary>
-    ///
-    public bool UseBatches = false;
+    public ServiceBusReceiverOptions options = default;
 }

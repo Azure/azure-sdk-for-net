@@ -19,34 +19,34 @@ namespace Azure.Messaging.ServiceBus.Stress;
 ///   at the end of the test run.
 /// </summary>
 ///
-internal class Receiver
+internal class TransactionReceiver
 {
-    /// <summary>The <see cref="Metrics" /> instance associated with this <see cref="Receiver" /> instance.</summary>
+    /// <summary>The <see cref="Metrics" /> instance associated with this <see cref="TransactionReceiver" /> instance.</summary>
     private Metrics _metrics { get; }
 
     /// <summary>The <see cref="TestParameters" /> used to run this test.</summary>
     private TestParameters _testParameters { get; }
 
-    /// <summary>The <see cref="ReceiverConfiguration" /> used to configure the instance of this role.</summary>
-    private ReceiverConfiguration _receiverConfiguration { get; }
+    /// <summary>The <see cref="TransactionReceiverConfiguration" /> used to configure the instance of this role.</summary>
+    private TransactionReceiverConfiguration _transactionReceiverConfiguration { get; }
 
     /// <summary>Holds the set of messages that have been read by this instance. The key is the event's unique Id set by the sender.</summary>
     private ConcurrentDictionary<string, byte> _readMessages { get; }
 
     /// <summary>
-    ///   Initializes a new <see cref="Receiver" \> instance.
+    ///   Initializes a new <see cref="TransactionReceiver" \> instance.
     /// </summary>
     ///
     /// <param name="testParameters">The <see cref="TestParameters"/> used to configure the test scenario run.</param>
-    /// <param name="receiverConfiguration">The <see cref="ReceiverConfiguration"/> instance used to configure this instance of <see cref="Receiver" />.</param>
+    /// <param name="transactionReceiverConfiguration">The <see cref="TransactionReceiverConfiguration"/> instance used to configure this instance of <see cref="Receiver" />.</param>
     /// <param name="metrics">The <see cref="Metrics"/> instance used to send metrics to Application Insights.</param>
     ///
-    public Receiver(TestParameters testParameters,
-                     ReceiverConfiguration receiverConfiguration,
+    public TransactionReceiver(TestParameters testParameters,
+                     TransactionReceiverConfiguration transactionReceiverConfiguration,
                      Metrics metrics)
     {
         _testParameters = testParameters;
-        _receiverConfiguration = receiverConfiguration;
+        _transactionReceiverConfiguration = transactionReceiverConfiguration;
         _metrics = metrics;
         _readMessages = new ConcurrentDictionary<string, byte>();
     }
@@ -62,7 +62,7 @@ internal class Receiver
     public async Task RunAsync(CancellationToken cancellationToken)
     {
         await using var client = new ServiceBusClient(_testParameters.ServiceBusConnectionString);
-        var receiver = client.CreateReceiver(_testParameters.QueueName, _receiverConfiguration.options);
+        var receiver = client.CreateReceiver(_testParameters.QueueName);
 
         while (!cancellationToken.IsCancellationRequested)
         {

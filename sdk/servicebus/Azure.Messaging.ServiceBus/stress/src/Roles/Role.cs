@@ -14,5 +14,7 @@ public enum Role
     SessionSender,
     SessionReceiver,
     Processor,
-    SessionProcessor
+    SessionProcessor,
+    TransactionSender,
+    TransactionReceiver
 }

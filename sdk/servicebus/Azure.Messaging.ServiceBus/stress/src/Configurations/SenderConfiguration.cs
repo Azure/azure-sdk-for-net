@@ -31,19 +31,25 @@ internal class SenderConfiguration
     ///   The minimum body size in bytes of events to generate when sending to the queue.
     /// </summary>
     ///
-    public int SendingBodyMinBytes = 100;
+    public int MessageBodyMinBytes = 50;
+
+    /// <summary>
+    ///   The maximum number of messages to send in each iteration of the test.
+    /// </summary>
+    ///
+    public int MaxNumberOfMessages = 50;
 
     /// <summary>
     ///   The maximum body size in bytes of events to generate when sending to the queue.
     /// </summary>
     ///
-    public int SendingBodyRegularMaxBytes = 262144;
+    public int MessageBodyMaxBytes = 262144;
 
     /// <summary>
     ///   The percentage of generated events for each send that have large bodies in bytes.
     /// </summary>
     ///
-    public int LargeMessageRandomFactorPercent = 50;
+    public int LargeMessageRandomFactorPercent = 10;
 
     /// <summary>
     ///   The amount of time to wait between sending a set of events.
@@ -54,9 +60,8 @@ internal class SenderConfiguration
     // Producer Configuration Values
 
     /// <summary>
-    ///   The value to use for <see cref="ServiceBusRetryOptions.TryTimeout" /> when configuring
-    ///   the <see cref="ServiceBusSender" />.
+    ///   The <see cref="ServiceBusSenderOptions"> to use when configuring the <see cref="ServiceBusSender" />.
     /// </summary>
     ///
-    public TimeSpan SendTimeout = TimeSpan.FromMinutes(3);
+    public ServiceBusSenderOptions options = default;
 }

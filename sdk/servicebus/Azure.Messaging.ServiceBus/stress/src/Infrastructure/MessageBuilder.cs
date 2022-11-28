@@ -16,6 +16,10 @@ internal static class MessageBuilder
     /// <summary>The random number generator to use for a specific thread.</summary>
     private static readonly ThreadLocal<Random> RandomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
 
+    /// <summary>
+    ///   Creates random values to fill <see cref="ServiceBusMessage"/> bodies.
+    /// </summary>
+    ///
     internal static ReadOnlyMemory<byte> CreateRandomBody(long bodySizeBytes)
     {
         var buffer = new byte[bodySizeBytes];
@@ -24,33 +28,59 @@ internal static class MessageBuilder
         return buffer;
     }
 
-    internal static IEnumerable<ServiceBusMessage> CreateMessages(int numberOfMessages,
+    /// <summary>
+    ///   Creates a random set of messages with random data and random body size within the specified constraints.
+    /// </summary>
+    ///
+    /// <param name="maxNumberOfMessages">The max number of messages to create.</param>
+    /// <param name="maximumBatchSize">The maximum size of the batch.</param>
+    /// <param name="largeMessageRandomFactor">The percentage of messages that should be large.</param>
+    /// <param name="minimumBodySize">The minimum size of the message body.</param>
+    /// <param name="maximumBodySize">The maximum size of the message body.</param>
+    ///
+    /// <returns>The requested set of messages.</returns>
+    ///
+    internal static IEnumerable<ServiceBusMessage> CreateMessages(int maxNumberOfMessages,
                                                         long maximumBatchSize,
-                                                        int largeMessageRandomFactor = 30,
+                                                        int largeMessageRandomFactor = 10,
                                                         int minimumBodySize = 15,
                                                         int maximumBodySize = 83886)
-    {
-        var totalBytesGenerated = 0;
-
-        if (RandomNumberGenerator.Value.Next(1, 100) < largeMessageRandomFactor)
         {
-            activeMinimumBodySize = (int)Math.Ceiling(maximumBodySize * 0.65);
-        }
-        else
-        {
-            activeMaximumBodySize = (int)Math.Floor((maximumBatchSize * 1.0f) / numberOfMessages);
+            var messagesBytesTotal = 0;
+            decimal bodySizeBase = (maximumBatchSize) / maxNumberOfMessages;
+            for (var index = 0; ((index < maxNumberOfMessages) && (messagesBytesTotal <= maximumBatchSize)); ++index)
+            {
+                int currentMessageLowerLimit;
+                int currentMessageUpperLimit;
+
+                if (RandomNumberGenerator.Value.Next(1, 100) < largeMessageRandomFactor)
+                {
+                    // Generate a "large" event
+                    currentMessageLowerLimit = (int)Math.Floor(bodySizeBase);
+                    currentMessageUpperLimit = maximumBodySize;
+                }
+                else
+                {
+                    // Generate a "small" event
+                    currentMessageUpperLimit = (int)Math.Floor(bodySizeBase);
+                    currentMessageLowerLimit = minimumBodySize;
+                }
+                var buffer = new byte[RandomNumberGenerator.Value.Next(currentMessageLowerLimit, currentMessageUpperLimit)];
+                RandomNumberGenerator.Value.NextBytes(buffer);
+                messagesBytesTotal += buffer.Length;
+
+                yield return CreateMessageFromBody(buffer);
+            }
         }
 
-        for (var index = 0; ((index < numberOfMessages) && (totalBytesGenerated <= maximumBatchSize)); ++index)
-        {
-            var buffer = new byte[RandomNumberGenerator.Value.Next(activeMinimumBodySize, activeMaximumBodySize)];
-            RandomNumberGenerator.Value.NextBytes(buffer);
-            totalBytesGenerated += buffer.Length;
-
-            yield return CreateMessageFromBody(buffer);
-        }
-    }
-
+    /// <summary>
+    ///   Creates a random set of small messages with random data and random body size within the specified constraints.
+    /// </summary>
+    ///
+    /// <param name="numberOfMessages">The number of messages to create.</param>
+    ///
+    /// <returns>The requested set of messages.</returns>
+    ///
     internal static IEnumerable<ServiceBusMessage> CreateSmallMessages(int numberOfMessages)
     {
         const int minimumBodySize = 5;
@@ -65,22 +95,37 @@ internal static class MessageBuilder
         }
     }
 
-    internal static ServiceBusMessage CreateMessagefromBody(ReadOnlyMemory<byte> eventBody)
+    /// <summary>
+    ///   Creates a message from the given message body.
+    /// </summary>
+    ///
+    /// <param name="messageBody">The body of the message to create.</param>
+    ///
+    /// <returns>The requested message.</returns>
+    ///
+    internal static ServiceBusMessage CreateMessageFromBody(ReadOnlyMemory<byte> messageBody)
     {
         var id = Guid.NewGuid().ToString();
 
-        return new ServiceBusMessage(eventBody)
-        {
-            MessageId = id,
-            Properties = {{ IdPropertyName, id }}
-        };
+        return new ServiceBusMessage(messageBody);
     }
+
+    /// <summary>
+    ///   Creates a batch with a given set of messages.
+    /// </summary>
+    ///
+    /// <param name="messages">The set of messages to add to the batch.</param>
+    /// <param name="sender">The sender to use to build the batch.</param>
+    /// <param name="cancellationToken">The token to signal cancellation of the task.</param>
+    ///
+    /// <returns>The requested message.</returns>
+    ///
 
     internal static async Task<IEnumerable<ServiceBusMessageBatch>> BuildBatchesAsync(IEnumerable<ServiceBusMessage> messages,
                                                                             ServiceBusSender sender,
                                                                             CancellationToken cancellationToken = default)
     {
-        ServiceBusMessage message;
+        ServiceBusMessage serviceBusMessage;
 
         var queuedMessages = new Queue<ServiceBusMessage>(messages);
         var batches = new List<ServiceBusMessageBatch>();

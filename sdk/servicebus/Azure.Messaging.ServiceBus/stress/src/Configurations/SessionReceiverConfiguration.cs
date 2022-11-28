@@ -18,4 +18,11 @@ internal class SessionReceiverConfiguration
     /// </summary>
     ///
     public TimeSpan MaximumWaitTime = TimeSpan.FromSeconds(5);
+
+    /// <summary>
+    ///   The value to use for <see cref="ServiceBusReceiverOptions" />
+    ///   when configuring an <see cref="ServiceBusSessionReceiver" />.
+    /// </summary>
+    ///
+    public ServiceBusReceiverOptions options = new ServiceBusReceiverOptions();
 }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Messaging.ServiceBus;
 
 namespace Azure.Messaging.ServiceBus.Stress;
 
@@ -13,30 +14,9 @@ namespace Azure.Messaging.ServiceBus.Stress;
 internal class SessionProcessorConfiguration
 {
     /// <summary>
-    ///   The value to use for <see cref="ServiceBusSessionProcessorOptions.MaxConcurrentCalls" />
+    ///   The value to use for <see cref="ServiceBusSessionProcessorOptions" />
     ///   when configuring the <see cref="ServiceBusSessionProcessor" />.
     /// </summary>
     ///
-    public int MaxConcurrentCalls = 5;
-
-    /// <summary>
-    ///   The value to use for <see cref="ServiceBusSessionProcessorOptions.AutoCompleteMessages" />
-    ///   when configuring the <see cref="ServiceBusSessionProcessor" />.
-    /// </summary>
-    ///
-    public bool AutoCompleteMessages = true;
-
-    /// <summary>
-    ///   The value to use for <see cref="ServiceBusSessionProcessorOptions.MaxConcurrentCallsPerSession" />
-    ///   when configuring the <see cref="ServiceBusSessionProcessor" />.
-    /// </summary>
-    ///
-    public int MaxConcurrentCallsPerSession = 2;
-
-    // /// <summary>
-    // ///   The value to use for <see cref="ServiceBusSessionProcessorOptions.MaxConcurrentCallsPerSession" />
-    // ///   when configuring the <see cref="ServiceBusSessionProcessor" />.
-    // /// </summary>
-    // ///
-    // public  SessionIds; TODO
+    public ServiceBusSessionProcessorOptions options = new ServiceBusSessionProcessorOptions();
 }

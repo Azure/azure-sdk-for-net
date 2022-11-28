@@ -40,15 +40,17 @@ internal class Processor
     /// <param name="testParameters">The <see cref="TestParameters"/> used to configure the test scenario run.</param>
     /// <param name="processorConfiguration">The <see cref="processorConfiguration"/> instance used to configure this instance of <see cref="Receiver" />.</param>
     /// <param name="metrics">The <see cref="Metrics"/> instance used to send metrics to Application Insights.</param>
+    /// <param name="readMessages">The dictionary holding the key values of the unique Id's of all the messages that have been read so far.</param>
     ///
     public Processor(TestParameters testParameters,
                      ProcessorConfiguration processorConfiguration,
-                     Metrics metrics)
+                     Metrics metrics,
+                     ConcurrentDictionary<string, byte> readMessages)
     {
         _testParameters = testParameters;
         _processorConfiguration = processorConfiguration;
         _metrics = metrics;
-        //_readMessages = readEvents;     /// <param name="readEvents">The dictionary holding the key values of the unique Id's of all the events that have been read so far.</param>
+        _readMessages = readMessages;
     }
 
     /// <summary>
@@ -62,8 +64,7 @@ internal class Processor
     public async Task RunAsync(Func<ProcessMessageEventArgs, Task> messageHandler, Func<ProcessErrorEventArgs, Task> errorHandler, CancellationToken cancellationToken)
     {
         await using var client = new ServiceBusClient(_testParameters.ServiceBusConnectionString);
-        // TODO add options
-        await using var processor = client.CreateProcessor(_testParameters.QueueName);
+        await using var processor = client.CreateProcessor(_testParameters.QueueName, _processorConfiguration.options);
 
         while (!cancellationToken.IsCancellationRequested)
         {
@@ -77,7 +78,7 @@ internal class Processor
             }
             catch (TaskCanceledException)
             {
-                // No action needed.
+                // Test is completed.
             }
             catch (Exception ex) when
                 (ex is OutOfMemoryException
@@ -88,8 +89,7 @@ internal class Processor
             }
             catch (Exception ex)
             {
-                // TODO: determine metrics
-                //_metrics.Client.GetMetric(Metrics.ConsumerRestarted).TrackValue(1);
+                _metrics.Client.GetMetric(Metrics.ProcessorRestarted).TrackValue(1);
                 _metrics.Client.TrackException(ex);
             }
             finally
@@ -103,7 +103,7 @@ internal class Processor
                 {
                     if (processor != null)
                     {
-                        _metrics.Client.TrackEvent("Stopping processing events");
+                        _metrics.Client.TrackEvent("Ending processing messages.");
                         await processor.StopProcessingAsync(cancellationSource.Token).ConfigureAwait(false);
                     }
                 }

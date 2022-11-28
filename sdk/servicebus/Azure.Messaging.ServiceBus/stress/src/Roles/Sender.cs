@@ -64,7 +64,7 @@ internal class Sender
             // Create the Service Bus client and sender
 
             await using var client = new ServiceBusClient(_testParameters.ServiceBusConnectionString);
-            var sender = client.CreateSender(_testParameters.QueueName);
+            var sender = client.CreateSender(_testParameters.QueueName, _senderConfiguration.options);
 
             try
             {
@@ -101,9 +101,7 @@ internal class Sender
             }
             catch (Exception ex)
             {
-                // If this catch is hit, it means the producer has restarted, collect metrics. TODO
-
-                //_metrics.Client.GetMetric(Metrics.ProducerRestarted).TrackValue(1);
+                _metrics.Client.GetMetric(Metrics.SenderRestarted).TrackValue(1);
                 _metrics.Client.TrackException(ex);
             }
         }
@@ -120,31 +118,38 @@ internal class Sender
     private async Task PerformSend(ServiceBusSender sender,
                                       CancellationToken cancellationToken)
     {
-        var messages = Enumerable.Repeat(new ServiceBusMessage("Hello"), 50); //TODO
-
+        var batch = await sender.CreateMessageBatchAsync().ConfigureAwait(false);
+        var messages = MessageBuilder.CreateMessages(_senderConfiguration.MaxNumberOfMessages,
+                                                     batch.MaxSizeInBytes,
+                                                     _senderConfiguration.LargeMessageRandomFactorPercent,
+                                                     _senderConfiguration.MessageBodyMinBytes,
+                                                     _senderConfiguration.MessageBodyMaxBytes);
         try
         {
-            await sender.SendMessagesAsync(messages, cancellationToken).ConfigureAwait(false);
-
             if (_senderConfiguration.UseBatches)
             {
-                // TODO: create batch and send
+                foreach (var message in messages)
+                {
+                    batch.TryAddMessage(message);
+                }
+                await sender.SendMessagesAsync(batch);
+                _metrics.Client.GetMetric(Metrics.MessagesSent).TrackValue(batch.Count);
             }
-
-            _metrics.Client.GetMetric(Metrics.MessagesSent).TrackValue(50);
+            else
+            {
+                await sender.SendMessagesAsync(messages, cancellationToken).ConfigureAwait(false);
+                _metrics.Client.GetMetric(Metrics.MessagesSent).TrackValue(messages.Count());
+            }
         }
         catch (TaskCanceledException)
         {
-            // Run is completed.
+            // Test is completed.
         }
         catch (Exception ex)
         {
             var exceptionProperties = new Dictionary<String, String>();
-
-            // Track that the exception took place during the enqueuing of an event
-
+            // Track that the exception took place during the sending of an event
             exceptionProperties.Add("Process", "Send");
-
             _metrics.Client.TrackException(ex, exceptionProperties);
         }
     }

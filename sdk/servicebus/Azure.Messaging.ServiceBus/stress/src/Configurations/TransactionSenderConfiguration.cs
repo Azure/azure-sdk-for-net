@@ -7,31 +7,37 @@ using System.Collections.Generic;
 namespace Azure.Messaging.ServiceBus.Stress;
 
 /// <summary>
-///   The set of configurations that can be specified when creating a <see cref="Sender" />
+///   The set of configurations that can be specified when creating a <see cref="TransactionSender" />
 ///   role.
 /// </summary>
 ///
-internal class SessionSenderConfiguration
+internal class TransactionSenderConfiguration
 {
     // Test Configuration Values
 
     /// <summary>
-    ///   The number of concurrent sends going to the same <see cref="ServiceBusSender" />.
+    ///   If the <see cref="ServiceBusSender" /> should use batches to send.
     /// </summary>
     ///
-    public int ConcurrentSends = 3;
+    public bool UseBatches = false;
+
+    /// <summary>
+    ///   The number of messages being sent during the transaction.
+    /// </summary>
+    ///
+    public int MessagesPerTransaction = 3;
 
     /// <summary>
     ///   The minimum body size in bytes of events to generate when sending to the queue.
     /// </summary>
     ///
-    public int SendingBodyMinBytes = 100;
+    public int MessageBodyMinBytes = 50;
 
     /// <summary>
     ///   The maximum body size in bytes of events to generate when sending to the queue.
     /// </summary>
     ///
-    public int SendingBodyRegularMaxBytes = 262144;
+    public int MessageBodyMaxBytes = 262144;
 
     /// <summary>
     ///   The percentage of generated events for each send that have large bodies in bytes.
@@ -50,4 +56,10 @@ internal class SessionSenderConfiguration
     /// </summary>
     ///
     public ServiceBusSenderOptions options = default;
+
+    /// <summary>
+    ///   The <see cref=""/> when configuring the <see cref="ServiceBusClient" />.
+    /// </summary>
+    ///
+    public ServiceBusClientOptions options = new ServiceBusClientOptions { EnableCrossEntityTransactions = true };
 }

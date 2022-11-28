@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Messaging.ServiceBus;
 
 namespace Azure.Messaging.ServiceBus.Stress;
 
@@ -13,16 +14,9 @@ namespace Azure.Messaging.ServiceBus.Stress;
 internal class ProcessorConfiguration
 {
     /// <summary>
-    ///   The value to use for <see cref="ServiceBusProcessorOptions.MaxConcurrentCalls" />
-    ///   when configuring the <see cref="ServiceBusProcessor" />.
+    ///   The value to use for <see cref="ServiceBusProcessorOptions" /> when configuring
+    ///   the <see cref="ServiceBusProcessor" />.
     /// </summary>
     ///
-    public int MaxConcurrentCalls = 2;
-
-    /// <summary>
-    ///   The value to use for <see cref="ServiceBusProcessorOptions.AutoCompleteMessages" />
-    ///   when configuring the <see cref="ServiceBusProcessor" />.
-    /// </summary>
-    ///
-    public bool AutoCompleteMessages = true;
+    public ServiceBusProcessorOptions options = new ServiceBusProcessorOptions();
 }

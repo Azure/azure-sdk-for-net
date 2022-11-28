@@ -20,7 +20,6 @@ public class Metrics
     ///
     public TelemetryClient Client;
 
-
     /// <summary>
     ///   This is the metric name used to collect metrics on generation zero
     ///   garbage collection.
@@ -95,6 +94,18 @@ public class Metrics
     /// </summary>
     ///
     public const string MessagesRead = "MessagesRead";
+
+    /// <summary>
+    ///   This is the metric name used to collect metrics on the number of messages received by the receiver.
+    /// </summary>
+    ///
+    public const string MessagesReceived = "MessagesReceived";
+
+    /// <summary>
+    ///   This is the metric name used to collect metrics on the number of messages completed by a receiver or processor.
+    /// </summary>
+    ///
+    public const string MessagesCompleted = "MessagesCompleted";
 
     /// <summary>
     ///   This is the metric name used to collect metrics on the number of messages processed by the processor.

@@ -48,7 +48,6 @@ internal class SessionReceiver
         _testParameters = testParameters;
         _sessionReceiverConfiguration = sessionReceiverConfiguration;
         _metrics = metrics;
-        //_readMessages = readEvents;     /// <param name="readEvents">The dictionary holding the key values of the unique Id's of all the events that have been read so far.</param>
     }
 
     /// <summary>
