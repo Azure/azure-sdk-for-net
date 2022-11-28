@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class Seasonality : IUtf8JsonSerializable
+    public partial class ForecastingSeasonality : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteEndObject();
         }
 
-        internal static Seasonality DeserializeSeasonality(JsonElement element)
+        internal static ForecastingSeasonality DeserializeForecastingSeasonality(JsonElement element)
         {
             if (element.TryGetProperty("mode", out JsonElement discriminator))
             {

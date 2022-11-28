@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class AzureDataLakeGen1Datastore : IUtf8JsonSerializable
+    public partial class MachineLearningAzureDataLakeGen1Datastore : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureDataLakeGen1Datastore DeserializeAzureDataLakeGen1Datastore(JsonElement element)
+        internal static MachineLearningAzureDataLakeGen1Datastore DeserializeMachineLearningAzureDataLakeGen1Datastore(JsonElement element)
         {
             Optional<ServiceDataAccessAuthIdentity> serviceDataAccessAuthIdentity = default;
             string storeName = default;
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new AzureDataLakeGen1Datastore(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), credentials, datastoreType, Optional.ToNullable(isDefault), Optional.ToNullable(serviceDataAccessAuthIdentity), storeName);
+            return new MachineLearningAzureDataLakeGen1Datastore(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), credentials, datastoreType, Optional.ToNullable(isDefault), Optional.ToNullable(serviceDataAccessAuthIdentity), storeName);
         }
     }
 }

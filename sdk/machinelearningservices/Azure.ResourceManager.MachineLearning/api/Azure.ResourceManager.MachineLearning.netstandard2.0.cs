@@ -1040,14 +1040,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator !=(Azure.ResourceManager.MachineLearning.Models.AutoRebuildSetting left, Azure.ResourceManager.MachineLearning.Models.AutoRebuildSetting right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AutoScaleProperties
-    {
-        public AutoScaleProperties() { }
-        public bool? Enabled { get { throw null; } set { } }
-        public int? MaxNodeCount { get { throw null; } set { } }
-        public int? MinNodeCount { get { throw null; } set { } }
-    }
-    public partial class AutoSeasonality : Azure.ResourceManager.MachineLearning.Models.Seasonality
+    public partial class AutoSeasonality : Azure.ResourceManager.MachineLearning.Models.ForecastingSeasonality
     {
         public AutoSeasonality() { }
     }
@@ -1058,21 +1051,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class AutoTargetRollingWindowSize : Azure.ResourceManager.MachineLearning.Models.TargetRollingWindowSize
     {
         public AutoTargetRollingWindowSize() { }
-    }
-    public partial class AzureBlobDatastore : Azure.ResourceManager.MachineLearning.Models.MachineLearningDatastoreProperties
-    {
-        public AzureBlobDatastore(Azure.ResourceManager.MachineLearning.Models.MachineLearningDatastoreCredentials credentials) : base (default(Azure.ResourceManager.MachineLearning.Models.MachineLearningDatastoreCredentials)) { }
-        public string AccountName { get { throw null; } set { } }
-        public string ContainerName { get { throw null; } set { } }
-        public string Endpoint { get { throw null; } set { } }
-        public string Protocol { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearning.Models.ServiceDataAccessAuthIdentity? ServiceDataAccessAuthIdentity { get { throw null; } set { } }
-    }
-    public partial class AzureDataLakeGen1Datastore : Azure.ResourceManager.MachineLearning.Models.MachineLearningDatastoreProperties
-    {
-        public AzureDataLakeGen1Datastore(Azure.ResourceManager.MachineLearning.Models.MachineLearningDatastoreCredentials credentials, string storeName) : base (default(Azure.ResourceManager.MachineLearning.Models.MachineLearningDatastoreCredentials)) { }
-        public Azure.ResourceManager.MachineLearning.Models.ServiceDataAccessAuthIdentity? ServiceDataAccessAuthIdentity { get { throw null; } set { } }
-        public string StoreName { get { throw null; } set { } }
     }
     public partial class AzureDataLakeGen2Datastore : Azure.ResourceManager.MachineLearning.Models.MachineLearningDatastoreProperties
     {
@@ -1363,7 +1341,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public CustomNCrossValidations(int value) { }
         public int Value { get { throw null; } set { } }
     }
-    public partial class CustomSeasonality : Azure.ResourceManager.MachineLearning.Models.Seasonality
+    public partial class CustomSeasonality : Azure.ResourceManager.MachineLearning.Models.ForecastingSeasonality
     {
         public CustomSeasonality(int value) { }
         public int Value { get { throw null; } set { } }
@@ -1713,6 +1691,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator !=(Azure.ResourceManager.MachineLearning.Models.ForecastingPrimaryMetric left, Azure.ResourceManager.MachineLearning.Models.ForecastingPrimaryMetric right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public abstract partial class ForecastingSeasonality
+    {
+        protected ForecastingSeasonality() { }
+    }
     public partial class ForecastingSettings
     {
         public ForecastingSettings() { }
@@ -1721,7 +1703,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public Azure.ResourceManager.MachineLearning.Models.FeatureLag? FeatureLags { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearning.Models.ForecastHorizon ForecastHorizon { get { throw null; } set { } }
         public string Frequency { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearning.Models.Seasonality Seasonality { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearning.Models.ForecastingSeasonality Seasonality { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearning.Models.ShortSeriesHandlingConfiguration? ShortSeriesHandlingConfig { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearning.Models.TargetAggregationFunction? TargetAggregateFunction { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearning.Models.TargetLags TargetLags { get { throw null; } set { } }
@@ -2239,6 +2221,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public MachineLearningAutoPauseProperties() { }
         public int? DelayInMinutes { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
+    }
+    public partial class MachineLearningAutoScaleProperties
+    {
+        public MachineLearningAutoScaleProperties() { }
+        public bool? IsEnabled { get { throw null; } set { } }
+        public int? MaxNodeCount { get { throw null; } set { } }
+        public int? MinNodeCount { get { throw null; } set { } }
+    }
+    public partial class MachineLearningAzureBlobDatastore : Azure.ResourceManager.MachineLearning.Models.MachineLearningDatastoreProperties
+    {
+        public MachineLearningAzureBlobDatastore(Azure.ResourceManager.MachineLearning.Models.MachineLearningDatastoreCredentials credentials) : base (default(Azure.ResourceManager.MachineLearning.Models.MachineLearningDatastoreCredentials)) { }
+        public string AccountName { get { throw null; } set { } }
+        public string ContainerName { get { throw null; } set { } }
+        public string Endpoint { get { throw null; } set { } }
+        public string Protocol { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearning.Models.ServiceDataAccessAuthIdentity? ServiceDataAccessAuthIdentity { get { throw null; } set { } }
+    }
+    public partial class MachineLearningAzureDataLakeGen1Datastore : Azure.ResourceManager.MachineLearning.Models.MachineLearningDatastoreProperties
+    {
+        public MachineLearningAzureDataLakeGen1Datastore(Azure.ResourceManager.MachineLearning.Models.MachineLearningDatastoreCredentials credentials, string storeName) : base (default(Azure.ResourceManager.MachineLearning.Models.MachineLearningDatastoreCredentials)) { }
+        public Azure.ResourceManager.MachineLearning.Models.ServiceDataAccessAuthIdentity? ServiceDataAccessAuthIdentity { get { throw null; } set { } }
+        public string StoreName { get { throw null; } set { } }
     }
     public partial class MachineLearningBatchDeploymentPatch
     {
@@ -3343,7 +3347,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         public MachineLearningSynapseSparkProperties() { }
         public Azure.ResourceManager.MachineLearning.Models.MachineLearningAutoPauseProperties AutoPauseProperties { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearning.Models.AutoScaleProperties AutoScaleProperties { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearning.Models.MachineLearningAutoScaleProperties AutoScaleProperties { get { throw null; } set { } }
         public int? NodeCount { get { throw null; } set { } }
         public string NodeSize { get { throw null; } set { } }
         public string NodeSizeFamily { get { throw null; } set { } }
@@ -4097,10 +4101,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public ScriptsToExecute() { }
         public Azure.ResourceManager.MachineLearning.Models.ScriptReference CreationScript { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearning.Models.ScriptReference StartupScript { get { throw null; } set { } }
-    }
-    public abstract partial class Seasonality
-    {
-        protected Seasonality() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ServiceDataAccessAuthIdentity : System.IEquatable<Azure.ResourceManager.MachineLearning.Models.ServiceDataAccessAuthIdentity>

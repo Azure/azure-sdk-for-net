@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class AzureBlobDatastore : IUtf8JsonSerializable
+    public partial class MachineLearningAzureBlobDatastore : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureBlobDatastore DeserializeAzureBlobDatastore(JsonElement element)
+        internal static MachineLearningAzureBlobDatastore DeserializeMachineLearningAzureBlobDatastore(JsonElement element)
         {
             Optional<string> accountName = default;
             Optional<string> containerName = default;
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new AzureBlobDatastore(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), credentials, datastoreType, Optional.ToNullable(isDefault), accountName.Value, containerName.Value, endpoint.Value, protocol.Value, Optional.ToNullable(serviceDataAccessAuthIdentity));
+            return new MachineLearningAzureBlobDatastore(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), credentials, datastoreType, Optional.ToNullable(isDefault), accountName.Value, containerName.Value, endpoint.Value, protocol.Value, Optional.ToNullable(serviceDataAccessAuthIdentity));
         }
     }
 }

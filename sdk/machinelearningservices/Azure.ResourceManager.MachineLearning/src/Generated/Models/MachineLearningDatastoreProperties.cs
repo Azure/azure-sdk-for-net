@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// Base definition for datastore contents configuration.
     /// Serialized Name: Datastore
     /// Please note <see cref="MachineLearningDatastoreProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AzureBlobDatastore"/>, <see cref="AzureDataLakeGen1Datastore"/>, <see cref="AzureDataLakeGen2Datastore"/> and <see cref="AzureFileDatastore"/>.
+    /// The available derived classes include <see cref="MachineLearningAzureBlobDatastore"/>, <see cref="MachineLearningAzureDataLakeGen1Datastore"/>, <see cref="AzureDataLakeGen2Datastore"/> and <see cref="AzureFileDatastore"/>.
     /// </summary>
     public partial class MachineLearningDatastoreProperties : MachineLearningResourceBase
     {

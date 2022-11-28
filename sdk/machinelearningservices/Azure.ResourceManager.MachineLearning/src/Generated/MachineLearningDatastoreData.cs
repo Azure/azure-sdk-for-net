@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// [Required] Additional attributes of the entity.
         /// Serialized Name: DatastoreResource.properties
         /// Please note <see cref="MachineLearningDatastoreProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureBlobDatastore"/>, <see cref="AzureDataLakeGen1Datastore"/>, <see cref="AzureDataLakeGen2Datastore"/> and <see cref="AzureFileDatastore"/>.
+        /// The available derived classes include <see cref="MachineLearningAzureBlobDatastore"/>, <see cref="MachineLearningAzureDataLakeGen1Datastore"/>, <see cref="AzureDataLakeGen2Datastore"/> and <see cref="AzureFileDatastore"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public MachineLearningDatastoreData(MachineLearningDatastoreProperties properties)
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// [Required] Additional attributes of the entity.
         /// Serialized Name: DatastoreResource.properties
         /// Please note <see cref="MachineLearningDatastoreProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureBlobDatastore"/>, <see cref="AzureDataLakeGen1Datastore"/>, <see cref="AzureDataLakeGen2Datastore"/> and <see cref="AzureFileDatastore"/>.
+        /// The available derived classes include <see cref="MachineLearningAzureBlobDatastore"/>, <see cref="MachineLearningAzureDataLakeGen1Datastore"/>, <see cref="AzureDataLakeGen2Datastore"/> and <see cref="AzureFileDatastore"/>.
         /// </param>
         internal MachineLearningDatastoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MachineLearningDatastoreProperties properties) : base(id, name, resourceType, systemData)
         {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// [Required] Additional attributes of the entity.
         /// Serialized Name: DatastoreResource.properties
         /// Please note <see cref="MachineLearningDatastoreProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureBlobDatastore"/>, <see cref="AzureDataLakeGen1Datastore"/>, <see cref="AzureDataLakeGen2Datastore"/> and <see cref="AzureFileDatastore"/>.
+        /// The available derived classes include <see cref="MachineLearningAzureBlobDatastore"/>, <see cref="MachineLearningAzureDataLakeGen1Datastore"/>, <see cref="AzureDataLakeGen2Datastore"/> and <see cref="AzureFileDatastore"/>.
         /// </summary>
         public MachineLearningDatastoreProperties Properties { get; set; }
     }

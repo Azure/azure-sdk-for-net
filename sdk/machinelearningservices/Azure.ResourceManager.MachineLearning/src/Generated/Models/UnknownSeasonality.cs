@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// The UnknownSeasonality.
     /// Serialized Name: UnknownSeasonality
     /// </summary>
-    internal partial class UnknownSeasonality : Seasonality
+    internal partial class UnknownSeasonality : ForecastingSeasonality
     {
         /// <summary> Initializes a new instance of UnknownSeasonality. </summary>
         /// <param name="mode">

@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureBlob": return AzureBlobDatastore.DeserializeAzureBlobDatastore(element);
-                    case "AzureDataLakeGen1": return AzureDataLakeGen1Datastore.DeserializeAzureDataLakeGen1Datastore(element);
+                    case "AzureBlob": return MachineLearningAzureBlobDatastore.DeserializeMachineLearningAzureBlobDatastore(element);
+                    case "AzureDataLakeGen1": return MachineLearningAzureDataLakeGen1Datastore.DeserializeMachineLearningAzureDataLakeGen1Datastore(element);
                     case "AzureDataLakeGen2": return AzureDataLakeGen2Datastore.DeserializeAzureDataLakeGen2Datastore(element);
                     case "AzureFile": return AzureFileDatastore.DeserializeAzureFileDatastore(element);
                 }

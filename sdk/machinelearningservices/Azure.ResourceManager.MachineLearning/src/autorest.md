@@ -226,6 +226,11 @@ rename-mapping:
   DiagnoseResult: MachineLearningDiagnoseResult
   DiagnoseResultLevel: MachineLearningDiagnoseResultLevel
   PartialManagedServiceIdentity: MachineLearningPartialManagedServiceIdentity
+  AutoScaleProperties: MachineLearningAutoScaleProperties
+  AutoScaleProperties.enabled: IsEnabled
+  Seasonality: ForecastingSeasonality
+  AzureBlobDatastore: MachineLearningAzureBlobDatastore
+  AzureDataLakeGen1Datastore: MachineLearningAzureDataLakeGen1Datastore
 
 directive:
   - from: swagger-document

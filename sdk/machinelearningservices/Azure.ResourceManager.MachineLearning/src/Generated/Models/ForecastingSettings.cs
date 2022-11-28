@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Set time series seasonality as an integer multiple of the series frequency.
         /// If seasonality is set to &apos;auto&apos;, it will be inferred.
         /// Serialized Name: ForecastingSettings.seasonality
-        /// Please note <see cref="Seasonality"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="ForecastingSeasonality"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AutoSeasonality"/> and <see cref="CustomSeasonality"/>.
         /// </param>
         /// <param name="shortSeriesHandlingConfig">
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Configure STL Decomposition of the time-series target column.
         /// Serialized Name: ForecastingSettings.useStl
         /// </param>
-        internal ForecastingSettings(string countryOrRegionForHolidays, int? cvStepSize, FeatureLag? featureLags, ForecastHorizon forecastHorizon, string frequency, Seasonality seasonality, ShortSeriesHandlingConfiguration? shortSeriesHandlingConfig, TargetAggregationFunction? targetAggregateFunction, TargetLags targetLags, TargetRollingWindowSize targetRollingWindowSize, string timeColumnName, IList<string> timeSeriesIdColumnNames, UseStl? useStl)
+        internal ForecastingSettings(string countryOrRegionForHolidays, int? cvStepSize, FeatureLag? featureLags, ForecastHorizon forecastHorizon, string frequency, ForecastingSeasonality seasonality, ShortSeriesHandlingConfiguration? shortSeriesHandlingConfig, TargetAggregationFunction? targetAggregateFunction, TargetLags targetLags, TargetRollingWindowSize targetRollingWindowSize, string timeColumnName, IList<string> timeSeriesIdColumnNames, UseStl? useStl)
         {
             CountryOrRegionForHolidays = countryOrRegionForHolidays;
             CvStepSize = cvStepSize;
@@ -140,10 +140,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Set time series seasonality as an integer multiple of the series frequency.
         /// If seasonality is set to &apos;auto&apos;, it will be inferred.
         /// Serialized Name: ForecastingSettings.seasonality
-        /// Please note <see cref="Seasonality"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="ForecastingSeasonality"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AutoSeasonality"/> and <see cref="CustomSeasonality"/>.
         /// </summary>
-        public Seasonality Seasonality { get; set; }
+        public ForecastingSeasonality Seasonality { get; set; }
         /// <summary>
         /// The parameter defining how if AutoML should handle short time series.
         /// Serialized Name: ForecastingSettings.shortSeriesHandlingConfig

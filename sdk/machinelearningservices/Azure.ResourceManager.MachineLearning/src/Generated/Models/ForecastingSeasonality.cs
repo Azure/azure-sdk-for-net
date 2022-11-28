@@ -10,22 +10,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary>
     /// Forecasting seasonality.
     /// Serialized Name: Seasonality
-    /// Please note <see cref="Seasonality"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// Please note <see cref="ForecastingSeasonality"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AutoSeasonality"/> and <see cref="CustomSeasonality"/>.
     /// </summary>
-    public abstract partial class Seasonality
+    public abstract partial class ForecastingSeasonality
     {
-        /// <summary> Initializes a new instance of Seasonality. </summary>
-        protected Seasonality()
+        /// <summary> Initializes a new instance of ForecastingSeasonality. </summary>
+        protected ForecastingSeasonality()
         {
         }
 
-        /// <summary> Initializes a new instance of Seasonality. </summary>
+        /// <summary> Initializes a new instance of ForecastingSeasonality. </summary>
         /// <param name="mode">
         /// [Required] Seasonality mode.
         /// Serialized Name: Seasonality.mode
         /// </param>
-        internal Seasonality(SeasonalityMode mode)
+        internal ForecastingSeasonality(SeasonalityMode mode)
         {
             Mode = mode;
         }

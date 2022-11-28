@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningSynapseSparkProperties DeserializeMachineLearningSynapseSparkProperties(JsonElement element)
         {
-            Optional<AutoScaleProperties> autoScaleProperties = default;
+            Optional<MachineLearningAutoScaleProperties> autoScaleProperties = default;
             Optional<MachineLearningAutoPauseProperties> autoPauseProperties = default;
             Optional<string> sparkVersion = default;
             Optional<int> nodeCount = default;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    autoScaleProperties = AutoScaleProperties.DeserializeAutoScaleProperties(property.Value);
+                    autoScaleProperties = MachineLearningAutoScaleProperties.DeserializeMachineLearningAutoScaleProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("autoPauseProperties"))

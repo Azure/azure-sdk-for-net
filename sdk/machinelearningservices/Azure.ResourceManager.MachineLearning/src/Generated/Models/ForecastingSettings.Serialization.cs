@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<FeatureLag> featureLags = default;
             Optional<ForecastHorizon> forecastHorizon = default;
             Optional<string> frequency = default;
-            Optional<Seasonality> seasonality = default;
+            Optional<ForecastingSeasonality> seasonality = default;
             Optional<ShortSeriesHandlingConfiguration> shortSeriesHandlingConfig = default;
             Optional<TargetAggregationFunction> targetAggregateFunction = default;
             Optional<TargetLags> targetLags = default;
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    seasonality = Seasonality.DeserializeSeasonality(property.Value);
+                    seasonality = ForecastingSeasonality.DeserializeForecastingSeasonality(property.Value);
                     continue;
                 }
                 if (property.NameEquals("shortSeriesHandlingConfig"))

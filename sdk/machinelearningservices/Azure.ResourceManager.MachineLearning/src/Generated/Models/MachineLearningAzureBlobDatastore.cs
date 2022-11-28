@@ -12,33 +12,27 @@ using Azure.Core;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
-    /// Azure Data Lake Gen1 datastore configuration.
-    /// Serialized Name: AzureDataLakeGen1Datastore
+    /// Azure Blob datastore configuration.
+    /// Serialized Name: AzureBlobDatastore
     /// </summary>
-    public partial class AzureDataLakeGen1Datastore : MachineLearningDatastoreProperties
+    public partial class MachineLearningAzureBlobDatastore : MachineLearningDatastoreProperties
     {
-        /// <summary> Initializes a new instance of AzureDataLakeGen1Datastore. </summary>
+        /// <summary> Initializes a new instance of MachineLearningAzureBlobDatastore. </summary>
         /// <param name="credentials">
         /// [Required] Account credentials.
         /// Serialized Name: Datastore.credentials
         /// Please note <see cref="MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
         /// </param>
-        /// <param name="storeName">
-        /// [Required] Azure Data Lake store name.
-        /// Serialized Name: AzureDataLakeGen1Datastore.storeName
-        /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="credentials"/> or <paramref name="storeName"/> is null. </exception>
-        public AzureDataLakeGen1Datastore(MachineLearningDatastoreCredentials credentials, string storeName) : base(credentials)
+        /// <exception cref="ArgumentNullException"> <paramref name="credentials"/> is null. </exception>
+        public MachineLearningAzureBlobDatastore(MachineLearningDatastoreCredentials credentials) : base(credentials)
         {
             Argument.AssertNotNull(credentials, nameof(credentials));
-            Argument.AssertNotNull(storeName, nameof(storeName));
 
-            StoreName = storeName;
-            DatastoreType = DatastoreType.AzureDataLakeGen1;
+            DatastoreType = DatastoreType.AzureBlob;
         }
 
-        /// <summary> Initializes a new instance of AzureDataLakeGen1Datastore. </summary>
+        /// <summary> Initializes a new instance of MachineLearningAzureBlobDatastore. </summary>
         /// <param name="description">
         /// The asset description text.
         /// Serialized Name: ResourceBase.description
@@ -65,30 +59,60 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Readonly property to indicate if datastore is the workspace default datastore
         /// Serialized Name: Datastore.isDefault
         /// </param>
+        /// <param name="accountName">
+        /// Storage account name.
+        /// Serialized Name: AzureBlobDatastore.accountName
+        /// </param>
+        /// <param name="containerName">
+        /// Storage account container name.
+        /// Serialized Name: AzureBlobDatastore.containerName
+        /// </param>
+        /// <param name="endpoint">
+        /// Azure cloud endpoint for the storage account.
+        /// Serialized Name: AzureBlobDatastore.endpoint
+        /// </param>
+        /// <param name="protocol">
+        /// Protocol used to communicate with the storage account.
+        /// Serialized Name: AzureBlobDatastore.protocol
+        /// </param>
         /// <param name="serviceDataAccessAuthIdentity">
         /// Indicates which identity to use to authenticate service data access to customer&apos;s storage.
-        /// Serialized Name: AzureDataLakeGen1Datastore.serviceDataAccessAuthIdentity
+        /// Serialized Name: AzureBlobDatastore.serviceDataAccessAuthIdentity
         /// </param>
-        /// <param name="storeName">
-        /// [Required] Azure Data Lake store name.
-        /// Serialized Name: AzureDataLakeGen1Datastore.storeName
-        /// </param>
-        internal AzureDataLakeGen1Datastore(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, MachineLearningDatastoreCredentials credentials, DatastoreType datastoreType, bool? isDefault, ServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity, string storeName) : base(description, properties, tags, credentials, datastoreType, isDefault)
+        internal MachineLearningAzureBlobDatastore(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, MachineLearningDatastoreCredentials credentials, DatastoreType datastoreType, bool? isDefault, string accountName, string containerName, string endpoint, string protocol, ServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity) : base(description, properties, tags, credentials, datastoreType, isDefault)
         {
+            AccountName = accountName;
+            ContainerName = containerName;
+            Endpoint = endpoint;
+            Protocol = protocol;
             ServiceDataAccessAuthIdentity = serviceDataAccessAuthIdentity;
-            StoreName = storeName;
             DatastoreType = datastoreType;
         }
 
         /// <summary>
+        /// Storage account name.
+        /// Serialized Name: AzureBlobDatastore.accountName
+        /// </summary>
+        public string AccountName { get; set; }
+        /// <summary>
+        /// Storage account container name.
+        /// Serialized Name: AzureBlobDatastore.containerName
+        /// </summary>
+        public string ContainerName { get; set; }
+        /// <summary>
+        /// Azure cloud endpoint for the storage account.
+        /// Serialized Name: AzureBlobDatastore.endpoint
+        /// </summary>
+        public string Endpoint { get; set; }
+        /// <summary>
+        /// Protocol used to communicate with the storage account.
+        /// Serialized Name: AzureBlobDatastore.protocol
+        /// </summary>
+        public string Protocol { get; set; }
+        /// <summary>
         /// Indicates which identity to use to authenticate service data access to customer&apos;s storage.
-        /// Serialized Name: AzureDataLakeGen1Datastore.serviceDataAccessAuthIdentity
+        /// Serialized Name: AzureBlobDatastore.serviceDataAccessAuthIdentity
         /// </summary>
         public ServiceDataAccessAuthIdentity? ServiceDataAccessAuthIdentity { get; set; }
-        /// <summary>
-        /// [Required] Azure Data Lake store name.
-        /// Serialized Name: AzureDataLakeGen1Datastore.storeName
-        /// </summary>
-        public string StoreName { get; set; }
     }
 }

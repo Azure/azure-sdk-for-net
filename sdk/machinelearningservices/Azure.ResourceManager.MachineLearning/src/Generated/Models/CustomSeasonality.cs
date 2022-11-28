@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// The CustomSeasonality.
     /// Serialized Name: CustomSeasonality
     /// </summary>
-    public partial class CustomSeasonality : Seasonality
+    public partial class CustomSeasonality : ForecastingSeasonality
     {
         /// <summary> Initializes a new instance of CustomSeasonality. </summary>
         /// <param name="value">

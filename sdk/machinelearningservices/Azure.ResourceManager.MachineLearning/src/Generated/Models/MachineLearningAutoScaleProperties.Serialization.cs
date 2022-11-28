@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class AutoScaleProperties : IUtf8JsonSerializable
+    public partial class MachineLearningAutoScaleProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("minNodeCount");
                 writer.WriteNumberValue(MinNodeCount.Value);
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(MaxNodeCount))
             {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteEndObject();
         }
 
-        internal static AutoScaleProperties DeserializeAutoScaleProperties(JsonElement element)
+        internal static MachineLearningAutoScaleProperties DeserializeMachineLearningAutoScaleProperties(JsonElement element)
         {
             Optional<int> minNodeCount = default;
             Optional<bool> enabled = default;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new AutoScaleProperties(Optional.ToNullable(minNodeCount), Optional.ToNullable(enabled), Optional.ToNullable(maxNodeCount));
+            return new MachineLearningAutoScaleProperties(Optional.ToNullable(minNodeCount), Optional.ToNullable(enabled), Optional.ToNullable(maxNodeCount));
         }
     }
 }

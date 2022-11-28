@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Pool name.
         /// Serialized Name: SynapseSparkProperties.poolName
         /// </param>
-        internal MachineLearningSynapseSparkProperties(AutoScaleProperties autoScaleProperties, MachineLearningAutoPauseProperties autoPauseProperties, string sparkVersion, int? nodeCount, string nodeSize, string nodeSizeFamily, string subscriptionId, string resourceGroup, string workspaceName, string poolName)
+        internal MachineLearningSynapseSparkProperties(MachineLearningAutoScaleProperties autoScaleProperties, MachineLearningAutoPauseProperties autoPauseProperties, string sparkVersion, int? nodeCount, string nodeSize, string nodeSizeFamily, string subscriptionId, string resourceGroup, string workspaceName, string poolName)
         {
             AutoScaleProperties = autoScaleProperties;
             AutoPauseProperties = autoPauseProperties;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Auto scale properties.
         /// Serialized Name: SynapseSparkProperties.autoScaleProperties
         /// </summary>
-        public AutoScaleProperties AutoScaleProperties { get; set; }
+        public MachineLearningAutoScaleProperties AutoScaleProperties { get; set; }
         /// <summary>
         /// Auto pause properties.
         /// Serialized Name: SynapseSparkProperties.autoPauseProperties
