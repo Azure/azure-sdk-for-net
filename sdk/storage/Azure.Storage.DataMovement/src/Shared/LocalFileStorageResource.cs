@@ -23,7 +23,6 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Returns URL
         /// </summary>
-        /// <returns></returns>
         public override Uri Uri => throw new NotSupportedException();
 
         /// <summary>
@@ -34,7 +33,6 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Cannot return a Url because this is a local path.
         /// </summary>
-        /// <returns></returns>
         public override ProduceUriType CanProduceUri => ProduceUriType.NoUri;
 
         /// <summary>

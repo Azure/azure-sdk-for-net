@@ -35,7 +35,6 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Can produce uri
         /// </summary>
-        /// <returns></returns>
         public override ProduceUriType CanProduceUri => ProduceUriType.ProducesUri;
 
         /// <summary>

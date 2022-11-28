@@ -33,7 +33,6 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Returns URL
         /// </summary>
-        /// <returns></returns>
         public override Uri Uri => _blobClient.Uri;
 
         /// <summary>
@@ -44,7 +43,6 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Defines whether the object can produce a SAS URL
         /// </summary>
-        /// <returns></returns>
         public override ProduceUriType CanProduceUri => ProduceUriType.ProducesUri;
 
         /// <summary>

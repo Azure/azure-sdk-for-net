@@ -30,13 +30,11 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Can produce uri
         /// </summary>
-        /// <returns></returns>
         public override ProduceUriType CanProduceUri => ProduceUriType.ProducesUri;
 
         /// <summary>
         /// Returns the path
         /// </summary>
-        /// <returns></returns>
         public override string Path => _directoryPrefix;
 
         internal Uri _uri;
@@ -44,7 +42,6 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Obtains the Uri of the blob directory resource, which means we can list
         /// </summary>
-        /// <returns></returns>
         public override Uri Uri => _uri;
 
         /// <summary>

@@ -20,19 +20,16 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Defines whether we can produce a Uri
         /// </summary>
-        /// <returns></returns>
         public abstract ProduceUriType CanProduceUri { get; }
 
         /// <summary>
         /// Gets Uri
         /// </summary>
-        /// <returns></returns>
         public abstract Uri Uri { get; }
 
         /// <summary>
         /// Gets path split up
         /// </summary>
-        /// <returns></returns>
         public abstract string Path { get; }
 
         /// <summary>

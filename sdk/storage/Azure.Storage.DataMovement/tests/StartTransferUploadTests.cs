@@ -197,7 +197,7 @@ namespace Azure.Storage.DataMovement.Tests
                         completedStatusWait));
 
                     // Act
-                    StorageResource sourceResource = LocalStorageResourceFactory.GetFile(localSourceFile);
+                    StorageResource sourceResource = new LocalFileStorageResource(localSourceFile);
                     await blobDataController.StartTransferAsync(sourceResource, destinationResource, options[i]);
                 }
 
@@ -557,7 +557,7 @@ namespace Azure.Storage.DataMovement.Tests
                         completedStatusWait));
 
                     // Act
-                    StorageResource sourceResource = LocalStorageResourceFactory.GetFile(localSourceFile);
+                    StorageResource sourceResource = new LocalFileStorageResource(localSourceFile);
                     await blobDataController.StartTransferAsync(sourceResource, destinationResource, options[i]);
                 }
 
@@ -904,7 +904,7 @@ namespace Azure.Storage.DataMovement.Tests
                         completedStatusWait));
 
                     // Act
-                    StorageResource sourceResource = LocalStorageResourceFactory.GetFile(localSourceFile);
+                    StorageResource sourceResource = new LocalFileStorageResource(localSourceFile);
                     await blobDataController.StartTransferAsync(sourceResource, destinationResource, options[i]);
                 }
 

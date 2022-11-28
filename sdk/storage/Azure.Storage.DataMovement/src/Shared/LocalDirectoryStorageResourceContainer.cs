@@ -22,19 +22,16 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Gets the path
         /// </summary>
-        /// <returns></returns>
         public override string Path => _path;
 
         /// <summary>
         /// Cannot produce Uri
         /// </summary>
-        /// <returns></returns>
         public override ProduceUriType CanProduceUri => ProduceUriType.NoUri;
 
         /// <summary>
-        /// Cannot get Uri
+        /// Cannot get Uri. Will throw NotSupportedException();
         /// </summary>
-        /// <returns><see cref="NotImplementedException"/></returns>
         public override Uri Uri => throw new NotSupportedException();
 
         /// <summary>
