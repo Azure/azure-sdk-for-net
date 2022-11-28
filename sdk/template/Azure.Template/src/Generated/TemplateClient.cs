@@ -112,6 +112,60 @@ namespace Azure.Template
             }
         }
 
+        /// <summary> A pageable list of Products. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="name"> The name of the product. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <include file="Docs/TemplateClient.xml" path="doc/members/member[@name='CreateProductAsync(WaitUntil,String,RequestContext)']/*" />
+        public virtual async Task<Operation<BinaryData>> CreateProductAsync(WaitUntil waitUntil, string name, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("TemplateClient.CreateProduct");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateProductRequest(name, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "TemplateClient.CreateProduct", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> A pageable list of Products. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="name"> The name of the product. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <include file="Docs/TemplateClient.xml" path="doc/members/member[@name='CreateProduct(WaitUntil,String,RequestContext)']/*" />
+        public virtual Operation<BinaryData> CreateProduct(WaitUntil waitUntil, string name, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("TemplateClient.CreateProduct");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateProductRequest(name, context);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "TemplateClient.CreateProduct", OperationFinalStateVia.Location, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         internal HttpMessage CreateGetSecretRequest(string secretName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -127,7 +181,23 @@ namespace Azure.Template
             return message;
         }
 
+        internal HttpMessage CreateCreateProductRequest(string name, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_vaultBaseUrl, false);
+            uri.AppendPath("/products/", false);
+            uri.AppendPath(name, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
         private static ResponseClassifier _responseClassifier200;
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier _responseClassifier200202;
+        private static ResponseClassifier ResponseClassifier200202 => _responseClassifier200202 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 202 });
     }
 }

@@ -77,5 +77,59 @@ Schema for <c>SecretBundle</c>:
 
 </remarks>
     </member>
+    <member name="CreateProductAsync(WaitUntil,String,RequestContext)">
+<example>
+This sample shows how to call CreateProductAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new TemplateClient("<vaultBaseUrl>", credential);
+
+var operation = await client.CreateProductAsync(WaitUntil.Completed, "<name>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>Product</c>:
+<code>{
+  name: string, # Optional. The product name.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CreateProduct(WaitUntil,String,RequestContext)">
+<example>
+This sample shows how to call CreateProduct with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new TemplateClient("<vaultBaseUrl>", credential);
+
+var operation = client.CreateProduct(WaitUntil.Completed, "<name>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>Product</c>:
+<code>{
+  name: string, # Optional. The product name.
+}
+</code>
+
+</remarks>
+    </member>
   </members>
 </doc>
