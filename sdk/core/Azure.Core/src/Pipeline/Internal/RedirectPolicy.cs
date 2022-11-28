@@ -8,15 +8,26 @@ using Azure.Core.Diagnostics;
 
 namespace Azure.Core.Pipeline
 {
-    internal sealed class RedirectPolicy : HttpPipelinePolicy
+    /// <summary>
+    /// </summary>
+    public sealed class RedirectPolicy : HttpPipelinePolicy
     {
         private readonly int _maxAutomaticRedirections;
 
-        public static RedirectPolicy Shared { get; } = new RedirectPolicy();
+        internal static RedirectPolicy Shared { get; } = new RedirectPolicy();
 
         private RedirectPolicy()
         {
             _maxAutomaticRedirections = 50;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="allowAutoRedirect"></param>
+        public static void AllowAutoRedirect(HttpMessage message, bool allowAutoRedirect)
+        {
+            message.SetInternalProperty(typeof(AllowRedirectsValueKey), allowAutoRedirect);
         }
 
         internal async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
@@ -164,11 +175,20 @@ namespace Azure.Core.Pipeline
         internal static bool IsSecureWebSocketScheme(string scheme) =>
             string.Equals(scheme, "wss", StringComparison.OrdinalIgnoreCase);
 
+        /// <summary>
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="pipeline"></param>
+        /// <returns></returns>
         public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             return ProcessAsync(message, pipeline, true);
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="pipeline"></param>
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             ProcessAsync(message, pipeline, false).EnsureCompleted();
@@ -245,5 +265,7 @@ namespace Azure.Core.Pipeline
             }
             return input;
         }
+
+        private class AllowRedirectsValueKey { }
     }
 }
