@@ -18,15 +18,11 @@ namespace Azure.ResourceManager.DataFactory.Tests
     {
         protected ArmClient Client { get; private set; }
 
-        protected DataFactoryManagementTestBase(bool isAsync, RecordedTestMode mode)
-        : base(isAsync, mode)
+        protected DataFactoryManagementTestBase(bool isAsync, RecordedTestMode? mode = null)
+            : base(isAsync, mode)
         {
             JsonPathSanitizers.Add("$.keys.[*].value");
-        }
-
-        protected DataFactoryManagementTestBase(bool isAsync)
-            : base(isAsync)
-        {
+            JsonPathSanitizers.Add("$.properties.typeProperties.connectionString.value");
         }
 
         [SetUp]
@@ -43,34 +39,61 @@ namespace Azure.ResourceManager.DataFactory.Tests
             return lro.Value;
         }
 
-        protected async Task<DataFactoryResource> CreateDataFactory(ResourceGroupResource resourceGroup, string dataFactoryName)
+        protected async Task<DataFactoryResource> CreateDataFactory(ResourceGroupResource resourceGroup)
         {
+            //data factory names are global so this might take a few tries
             DataFactoryData data = new DataFactoryData(resourceGroup.Data.Location);
-            var dataFactory = await resourceGroup.GetDataFactories().CreateOrUpdateAsync(WaitUntil.Completed, dataFactoryName, data);
-            return dataFactory.Value;
+            int retry = 0;
+            do
+            {
+                try
+                {
+                    var dataFactory = await resourceGroup.GetDataFactories().CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("DataFactory"), data);
+                    return dataFactory.Value;
+                }
+                catch (RequestFailedException ex) when (ex.Status == 409 && ex.Message.Contains("The specified resource name"))
+                {
+                    retry++;
+                }
+            } while (retry < 10);
+            throw new Exception("Tried to find a datafactory name 10 times and all of them were taken");
         }
 
-        protected async Task<FactoryLinkedServiceResource> CreateLinkedService(DataFactoryResource dataFactory, string linkedServiceName, string accessKey)
+        protected async Task<FactoryLinkedServiceResource> CreateLinkedService(DataFactoryResource dataFactory, string linkedServiceName, string accessKey, string storageAccountName)
         {
             AzureBlobStorageLinkedService azureBlobStorageLinkedService = new AzureBlobStorageLinkedService()
             {
-                ConnectionString = BinaryData.FromString($"\"{accessKey}\""),
+                ConnectionString = BinaryData.FromObjectAsJson(new { type = "SecureString", value = $"DefaultEndpointsProtocol=https;AccountName={storageAccountName};AccountKey={accessKey}" }),
             };
             FactoryLinkedServiceData data = new FactoryLinkedServiceData(azureBlobStorageLinkedService);
             var linkedService = await dataFactory.GetFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             return linkedService.Value;
         }
 
-        protected async Task<string> GetStorageAccountAccessKey(ResourceGroupResource resourceGroup)
+        protected async Task<StorageAccountResource> GetStorageAccountAsync(ResourceGroupResource resourceGroup, string containerName = null)
         {
-            string storageAccountName = Recording.GenerateAssetName("datafactory");
             StorageAccountCreateOrUpdateContent data = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.StandardLrs), StorageKind.BlobStorage, resourceGroup.Data.Location)
             {
                 AccessTier = StorageAccountAccessTier.Hot,
             };
-            var storage = await resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(WaitUntil.Completed, storageAccountName, data);
-            var key = await storage.Value.GetKeysAsync().FirstOrDefaultAsync(_ => true);
-            return key.Value;
+            int retry = 0;
+            do
+            {
+                string storageAccountName = Recording.GenerateAssetName("storageaccount");
+                try
+                {
+                    var storageAccount = (await resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(WaitUntil.Completed, storageAccountName, data)).Value;
+                    if (containerName is not null)
+                        await storageAccount.GetBlobService().GetBlobContainers().CreateOrUpdateAsync(WaitUntil.Completed, containerName, new BlobContainerData());
+
+                    return storageAccount;
+                }
+                catch (RequestFailedException ex) when (ex.Status == 409 && ex.Message.Contains("The storage account named"))
+                {
+                    retry++;
+                }
+            } while (retry < 10);
+            throw new Exception("Tried to find a storageaccount name 10 times and all of them were taken");
         }
     }
 }

@@ -7,7 +7,7 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.DataFactory.Tests.Scenario
+namespace Azure.ResourceManager.DataFactory.Tests
 {
     internal class DataFactoryTests : DataFactoryManagementTestBase
     {
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Exist()
         {
-            string dataFactoryName = Recording.GenerateAssetName("dataFactory-");
-            var dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            bool flag = await _resourceGroup.GetDataFactories().ExistsAsync(dataFactoryName);
+            var dataFactory = await CreateDataFactory(_resourceGroup);
+            bool flag = await _resourceGroup.GetDataFactories().ExistsAsync(dataFactory.Id.Name);
             Assert.IsTrue(flag);
         }
 
@@ -57,19 +56,18 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Get()
         {
-            string dataFactoryName = Recording.GenerateAssetName("dataFactory-");
-            await CreateDataFactory(_resourceGroup, dataFactoryName);
-            var dataFactory = await _resourceGroup.GetDataFactories().GetAsync(dataFactoryName);
+            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup);
+            var dataFactoryName = dataFactory.Id.Name;
+            dataFactory = await _resourceGroup.GetDataFactories().GetAsync(dataFactoryName);
             Assert.IsNotNull(dataFactory);
-            Assert.AreEqual(dataFactoryName, dataFactory.Value.Data.Name);
+            Assert.AreEqual(dataFactoryName, dataFactory.Data.Name);
         }
 
         [Test]
         [RecordedTest]
         public async Task GetAll()
         {
-            string dataFactoryName = Recording.GenerateAssetName("dataFactory-");
-            await CreateDataFactory(_resourceGroup, dataFactoryName);
+            await CreateDataFactory(_resourceGroup);
             var list = await _resourceGroup.GetDataFactories().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
         }
@@ -78,12 +76,11 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Delete()
         {
-            string dataFactoryName = Recording.GenerateAssetName("dataFactory-");
-            var dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            bool flag = await _resourceGroup.GetDataFactories().ExistsAsync(dataFactoryName);
+            var dataFactory = await CreateDataFactory(_resourceGroup);
+            bool flag = await _resourceGroup.GetDataFactories().ExistsAsync(dataFactory.Id.Name);
             Assert.IsTrue(flag);
             await dataFactory.DeleteAsync(WaitUntil.Completed);
-            flag = await _resourceGroup.GetDataFactories().ExistsAsync(dataFactoryName);
+            flag = await _resourceGroup.GetDataFactories().ExistsAsync(dataFactory.Id.Name);
             Assert.IsFalse(flag);
         }
     }

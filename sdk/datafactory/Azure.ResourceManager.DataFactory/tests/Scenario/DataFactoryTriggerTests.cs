@@ -8,7 +8,7 @@ using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.DataFactory.Tests.Scenario
+namespace Azure.ResourceManager.DataFactory.Tests
 {
     internal class DataFactoryTriggerTests : DataFactoryManagementTestBase
     {
@@ -22,9 +22,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         public async Task GlobalSetUp()
         {
             string rgName = SessionRecording.GenerateAssetName("DataFactory-RG-");
-            string dataFactoryName = SessionRecording.GenerateAssetName("DataFactory-");
             var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(AzureLocation.WestUS2));
-            var dataFactoryLro = await CreateDataFactory(rgLro.Value, dataFactoryName);
+            var dataFactoryLro = await CreateDataFactory(rgLro.Value);
             _dataFactoryIdentifier = dataFactoryLro.Id;
             await StopSessionRecordingAsync();
         }

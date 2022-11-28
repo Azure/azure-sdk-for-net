@@ -9,7 +9,7 @@ using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.DataFactory.Tests.Scenario
+namespace Azure.ResourceManager.DataFactory.Tests
 {
     internal class DataFactoryPrivateEndpointConnectionTests : DataFactoryManagementTestBase
     {
@@ -22,10 +22,9 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [Ignore("Must be manually operate.Error: Private Endpoint connection is requesting a status change for 'Approved', while current status is: 'Approved'.")]
         public async Task CreateOrUpdate()
         {
-            string dataFactoryName = Recording.GenerateAssetName("DataFactory-");
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             var resourceGroup = await CreateResourceGroup(subscription, "DataFactory-RG-", AzureLocation.WestUS2);
-            var dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
+            var dataFactory = await CreateDataFactory(resourceGroup);
 
             string connectionName = "DataFactory-5673.860b8eaf-a2d6-4870-96c3-784cfff79b42";
             FactoryPrivateEndpointConnectionCreateOrUpdateContent data = new FactoryPrivateEndpointConnectionCreateOrUpdateContent()
@@ -49,10 +48,9 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [PlaybackOnly("need to create a PrivateEndpointConnection manually")]
         public async Task PrivateEndpointConnectionApiTests()
         {
-            string dataFactoryName = Recording.GenerateAssetName("DataFactory-");
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             var resourceGroup = await CreateResourceGroup(subscription, "DataFactory-RG-", AzureLocation.WestUS2);
-            var dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
+            var dataFactory = await CreateDataFactory(resourceGroup);
 
             // GetAll
             var list = await dataFactory.GetFactoryPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
