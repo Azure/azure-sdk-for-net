@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             Optional<string> fqdn = default;
             Optional<string> resourceId = default;
-            Optional<NotebookPreparationError> notebookPreparationError = default;
+            Optional<MachineLearningNotebookPreparationError> notebookPreparationError = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fqdn"))
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         notebookPreparationError = null;
                         continue;
                     }
-                    notebookPreparationError = NotebookPreparationError.DeserializeNotebookPreparationError(property.Value);
+                    notebookPreparationError = MachineLearningNotebookPreparationError.DeserializeMachineLearningNotebookPreparationError(property.Value);
                     continue;
                 }
             }

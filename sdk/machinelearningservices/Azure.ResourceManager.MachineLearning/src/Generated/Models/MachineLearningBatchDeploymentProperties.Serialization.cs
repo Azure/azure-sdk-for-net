@@ -173,16 +173,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             Optional<string> compute = default;
             Optional<int> errorThreshold = default;
-            Optional<BatchLoggingLevel> loggingLevel = default;
+            Optional<MachineLearningBatchLoggingLevel> loggingLevel = default;
             Optional<int> maxConcurrencyPerInstance = default;
             Optional<long> miniBatchSize = default;
             Optional<MachineLearningAssetReferenceBase> model = default;
-            Optional<BatchOutputAction> outputAction = default;
+            Optional<MachineLearningBatchOutputAction> outputAction = default;
             Optional<string> outputFileName = default;
-            Optional<DeploymentProvisioningState> provisioningState = default;
-            Optional<DeploymentResourceConfiguration> resources = default;
-            Optional<BatchRetrySettings> retrySettings = default;
-            Optional<CodeConfiguration> codeConfiguration = default;
+            Optional<MachineLearningDeploymentProvisioningState> provisioningState = default;
+            Optional<MachineLearningDeploymentResourceConfiguration> resources = default;
+            Optional<MachineLearningBatchRetrySettings> retrySettings = default;
+            Optional<MachineLearningCodeConfiguration> codeConfiguration = default;
             Optional<string> description = default;
             Optional<string> environmentId = default;
             Optional<IDictionary<string, string>> environmentVariables = default;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    loggingLevel = new BatchLoggingLevel(property.Value.GetString());
+                    loggingLevel = new MachineLearningBatchLoggingLevel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("maxConcurrencyPerInstance"))
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    outputAction = new BatchOutputAction(property.Value.GetString());
+                    outputAction = new MachineLearningBatchOutputAction(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("outputFileName"))
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = new DeploymentProvisioningState(property.Value.GetString());
+                    provisioningState = new MachineLearningDeploymentProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resources"))
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         resources = null;
                         continue;
                     }
-                    resources = DeploymentResourceConfiguration.DeserializeDeploymentResourceConfiguration(property.Value);
+                    resources = MachineLearningDeploymentResourceConfiguration.DeserializeMachineLearningDeploymentResourceConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("retrySettings"))
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         retrySettings = null;
                         continue;
                     }
-                    retrySettings = BatchRetrySettings.DeserializeBatchRetrySettings(property.Value);
+                    retrySettings = MachineLearningBatchRetrySettings.DeserializeMachineLearningBatchRetrySettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("codeConfiguration"))
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         codeConfiguration = null;
                         continue;
                     }
-                    codeConfiguration = CodeConfiguration.DeserializeCodeConfiguration(property.Value);
+                    codeConfiguration = MachineLearningCodeConfiguration.DeserializeMachineLearningCodeConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("description"))

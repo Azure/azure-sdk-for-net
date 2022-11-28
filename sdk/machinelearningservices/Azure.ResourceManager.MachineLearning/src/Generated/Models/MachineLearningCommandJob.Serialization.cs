@@ -249,14 +249,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             Optional<string> codeId = default;
             string command = default;
-            Optional<DistributionConfiguration> distribution = default;
+            Optional<MachineLearningDistributionConfiguration> distribution = default;
             string environmentId = default;
             Optional<IDictionary<string, string>> environmentVariables = default;
-            Optional<IDictionary<string, JobInput>> inputs = default;
-            Optional<CommandJobLimits> limits = default;
-            Optional<IDictionary<string, JobOutput>> outputs = default;
+            Optional<IDictionary<string, MachineLearningJobInput>> inputs = default;
+            Optional<MachineLearningCommandJobLimits> limits = default;
+            Optional<IDictionary<string, MachineLearningJobOutput>> outputs = default;
             Optional<BinaryData> parameters = default;
-            Optional<JobResourceConfiguration> resources = default;
+            Optional<MachineLearningJobResourceConfiguration> resources = default;
             Optional<string> componentId = default;
             Optional<string> computeId = default;
             Optional<string> displayName = default;
@@ -264,8 +264,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<MachineLearningIdentityConfiguration> identity = default;
             Optional<bool> isArchived = default;
             JobType jobType = default;
-            Optional<IDictionary<string, JobService>> services = default;
-            Optional<JobStatus> status = default;
+            Optional<IDictionary<string, MachineLearningJobService>> services = default;
+            Optional<MachineLearningJobStatus> status = default;
             Optional<string> description = default;
             Optional<IDictionary<string, string>> properties = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         distribution = null;
                         continue;
                     }
-                    distribution = DistributionConfiguration.DeserializeDistributionConfiguration(property.Value);
+                    distribution = MachineLearningDistributionConfiguration.DeserializeMachineLearningDistributionConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("environmentId"))
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         inputs = null;
                         continue;
                     }
-                    Dictionary<string, JobInput> dictionary = new Dictionary<string, JobInput>();
+                    Dictionary<string, MachineLearningJobInput> dictionary = new Dictionary<string, MachineLearningJobInput>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         }
                         else
                         {
-                            dictionary.Add(property0.Name, JobInput.DeserializeJobInput(property0.Value));
+                            dictionary.Add(property0.Name, MachineLearningJobInput.DeserializeMachineLearningJobInput(property0.Value));
                         }
                     }
                     inputs = dictionary;
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         limits = null;
                         continue;
                     }
-                    limits = CommandJobLimits.DeserializeCommandJobLimits(property.Value);
+                    limits = MachineLearningCommandJobLimits.DeserializeMachineLearningCommandJobLimits(property.Value);
                     continue;
                 }
                 if (property.NameEquals("outputs"))
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         outputs = null;
                         continue;
                     }
-                    Dictionary<string, JobOutput> dictionary = new Dictionary<string, JobOutput>();
+                    Dictionary<string, MachineLearningJobOutput> dictionary = new Dictionary<string, MachineLearningJobOutput>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         }
                         else
                         {
-                            dictionary.Add(property0.Name, JobOutput.DeserializeJobOutput(property0.Value));
+                            dictionary.Add(property0.Name, MachineLearningJobOutput.DeserializeMachineLearningJobOutput(property0.Value));
                         }
                     }
                     outputs = dictionary;
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    resources = JobResourceConfiguration.DeserializeJobResourceConfiguration(property.Value);
+                    resources = MachineLearningJobResourceConfiguration.DeserializeMachineLearningJobResourceConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("componentId"))
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         services = null;
                         continue;
                     }
-                    Dictionary<string, JobService> dictionary = new Dictionary<string, JobService>();
+                    Dictionary<string, MachineLearningJobService> dictionary = new Dictionary<string, MachineLearningJobService>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         }
                         else
                         {
-                            dictionary.Add(property0.Name, JobService.DeserializeJobService(property0.Value));
+                            dictionary.Add(property0.Name, MachineLearningJobService.DeserializeMachineLearningJobService(property0.Value));
                         }
                     }
                     services = dictionary;
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new JobStatus(property.Value.GetString());
+                    status = new MachineLearningJobStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("description"))

@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningDataContainerProperties DeserializeMachineLearningDataContainerProperties(JsonElement element)
         {
-            DataType dataType = default;
+            MachineLearningDataType dataType = default;
             Optional<bool> isArchived = default;
             Optional<string> latestVersion = default;
             Optional<string> nextVersion = default;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (property.NameEquals("dataType"))
                 {
-                    dataType = new DataType(property.Value.GetString());
+                    dataType = new MachineLearningDataType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("isArchived"))

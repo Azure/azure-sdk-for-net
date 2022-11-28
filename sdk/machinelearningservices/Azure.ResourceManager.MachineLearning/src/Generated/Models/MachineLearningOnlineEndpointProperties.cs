@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// Online endpoint configuration
     /// Serialized Name: OnlineEndpoint
     /// </summary>
-    public partial class MachineLearningOnlineEndpointProperties : EndpointPropertiesBase
+    public partial class MachineLearningOnlineEndpointProperties : MachineLearningEndpointProperties
     {
         /// <summary> Initializes a new instance of MachineLearningOnlineEndpointProperties. </summary>
         /// <param name="authMode">
         /// [Required] Use &apos;Key&apos; for key based authentication and &apos;AMLToken&apos; for Azure Machine Learning token-based authentication. &apos;Key&apos; doesn&apos;t expire but &apos;AMLToken&apos; does.
         /// Serialized Name: EndpointPropertiesBase.authMode
         /// </param>
-        public MachineLearningOnlineEndpointProperties(EndpointAuthMode authMode) : base(authMode)
+        public MachineLearningOnlineEndpointProperties(MachineLearningEndpointAuthMode authMode) : base(authMode)
         {
             Traffic = new ChangeTrackingDictionary<string, int>();
         }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Percentage of traffic from endpoint to divert to each deployment. Traffic values need to sum to 100.
         /// Serialized Name: OnlineEndpoint.traffic
         /// </param>
-        internal MachineLearningOnlineEndpointProperties(EndpointAuthMode authMode, string description, EndpointAuthKeys keys, IDictionary<string, string> properties, Uri scoringUri, Uri swaggerUri, string compute, EndpointProvisioningState? provisioningState, PublicNetworkAccessType? publicNetworkAccess, IDictionary<string, int> traffic) : base(authMode, description, keys, properties, scoringUri, swaggerUri)
+        internal MachineLearningOnlineEndpointProperties(MachineLearningEndpointAuthMode authMode, string description, MachineLearningEndpointAuthKeys keys, IDictionary<string, string> properties, Uri scoringUri, Uri swaggerUri, string compute, MachineLearningEndpointProvisioningState? provisioningState, MachineLearningPublicNetworkAccessType? publicNetworkAccess, IDictionary<string, int> traffic) : base(authMode, description, keys, properties, scoringUri, swaggerUri)
         {
             Compute = compute;
             ProvisioningState = provisioningState;
@@ -88,12 +88,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Provisioning state for the endpoint.
         /// Serialized Name: OnlineEndpoint.provisioningState
         /// </summary>
-        public EndpointProvisioningState? ProvisioningState { get; }
+        public MachineLearningEndpointProvisioningState? ProvisioningState { get; }
         /// <summary>
         /// Set to &quot;Enabled&quot; for endpoints that should allow public access when Private Link is enabled.
         /// Serialized Name: OnlineEndpoint.publicNetworkAccess
         /// </summary>
-        public PublicNetworkAccessType? PublicNetworkAccess { get; set; }
+        public MachineLearningPublicNetworkAccessType? PublicNetworkAccess { get; set; }
         /// <summary>
         /// Percentage of traffic from endpoint to divert to each deployment. Traffic values need to sum to 100.
         /// Serialized Name: OnlineEndpoint.traffic

@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Value of weight decay when optimizer is &apos;sgd&apos;, &apos;adam&apos;, or &apos;adamw&apos;. Must be a float in the range[0, 1].
         /// Serialized Name: ImageModelSettings.weightDecay
         /// </param>
-        internal ImageModelSettings(string advancedSettings, bool? amsGradient, string augmentations, float? beta1, float? beta2, int? checkpointFrequency, MLFlowModelJobInput checkpointModel, string checkpointRunId, bool? distributed, bool? earlyStopping, int? earlyStoppingDelay, int? earlyStoppingPatience, bool? enableOnnxNormalization, int? evaluationFrequency, int? gradientAccumulationStep, int? layersToFreeze, float? learningRate, LearningRateScheduler? learningRateScheduler, string modelName, float? momentum, bool? nesterov, int? numberOfEpochs, int? numberOfWorkers, StochasticOptimizer? optimizer, int? randomSeed, float? stepLRGamma, int? stepLRStepSize, int? trainingBatchSize, int? validationBatchSize, float? warmupCosineLRCycles, int? warmupCosineLRWarmupEpochs, float? weightDecay)
+        internal ImageModelSettings(string advancedSettings, bool? amsGradient, string augmentations, float? beta1, float? beta2, int? checkpointFrequency, MachineLearningFlowModelJobInput checkpointModel, string checkpointRunId, bool? distributed, bool? earlyStopping, int? earlyStoppingDelay, int? earlyStoppingPatience, bool? enableOnnxNormalization, int? evaluationFrequency, int? gradientAccumulationStep, int? layersToFreeze, float? learningRate, LearningRateScheduler? learningRateScheduler, string modelName, float? momentum, bool? nesterov, int? numberOfEpochs, int? numberOfWorkers, StochasticOptimizer? optimizer, int? randomSeed, float? stepLRGamma, int? stepLRStepSize, int? trainingBatchSize, int? validationBatchSize, float? warmupCosineLRCycles, int? warmupCosineLRWarmupEpochs, float? weightDecay)
         {
             AdvancedSettings = advancedSettings;
             AmsGradient = amsGradient;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The pretrained checkpoint model for incremental training.
         /// Serialized Name: ImageModelSettings.checkpointModel
         /// </summary>
-        public MLFlowModelJobInput CheckpointModel { get; set; }
+        public MachineLearningFlowModelJobInput CheckpointModel { get; set; }
         /// <summary>
         /// The id of a previous run that has a pretrained checkpoint for incremental training.
         /// Serialized Name: ImageModelSettings.checkpointRunId

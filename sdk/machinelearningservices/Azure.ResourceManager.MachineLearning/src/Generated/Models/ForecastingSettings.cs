@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Configure STL Decomposition of the time-series target column.
         /// Serialized Name: ForecastingSettings.useStl
         /// </param>
-        internal ForecastingSettings(string countryOrRegionForHolidays, int? cvStepSize, FeatureLag? featureLags, ForecastHorizon forecastHorizon, string frequency, ForecastingSeasonality seasonality, ShortSeriesHandlingConfiguration? shortSeriesHandlingConfig, TargetAggregationFunction? targetAggregateFunction, TargetLags targetLags, TargetRollingWindowSize targetRollingWindowSize, string timeColumnName, IList<string> timeSeriesIdColumnNames, UseStl? useStl)
+        internal ForecastingSettings(string countryOrRegionForHolidays, int? cvStepSize, MachineLearningFeatureLag? featureLags, ForecastHorizon forecastHorizon, string frequency, ForecastingSeasonality seasonality, ShortSeriesHandlingConfiguration? shortSeriesHandlingConfig, TargetAggregationFunction? targetAggregateFunction, TargetLags targetLags, TargetRollingWindowSize targetRollingWindowSize, string timeColumnName, IList<string> timeSeriesIdColumnNames, UseStl? useStl)
         {
             CountryOrRegionForHolidays = countryOrRegionForHolidays;
             CvStepSize = cvStepSize;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Flag for generating lags for the numeric features with &apos;auto&apos; or null.
         /// Serialized Name: ForecastingSettings.featureLags
         /// </summary>
-        public FeatureLag? FeatureLags { get; set; }
+        public MachineLearningFeatureLag? FeatureLags { get; set; }
         /// <summary>
         /// The desired maximum forecast horizon in units of time-series frequency.
         /// Serialized Name: ForecastingSettings.forecastHorizon

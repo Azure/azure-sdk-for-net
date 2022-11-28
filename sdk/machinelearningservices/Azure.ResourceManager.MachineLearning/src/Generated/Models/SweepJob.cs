@@ -37,16 +37,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Serialized Name: SweepJob.trial
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="objective"/>, <paramref name="samplingAlgorithm"/>, <paramref name="searchSpace"/> or <paramref name="trial"/> is null. </exception>
-        public SweepJob(Objective objective, SamplingAlgorithm samplingAlgorithm, BinaryData searchSpace, TrialComponent trial)
+        public SweepJob(MachineLearningObjective objective, SamplingAlgorithm samplingAlgorithm, BinaryData searchSpace, TrialComponent trial)
         {
             Argument.AssertNotNull(objective, nameof(objective));
             Argument.AssertNotNull(samplingAlgorithm, nameof(samplingAlgorithm));
             Argument.AssertNotNull(searchSpace, nameof(searchSpace));
             Argument.AssertNotNull(trial, nameof(trial));
 
-            Inputs = new ChangeTrackingDictionary<string, JobInput>();
+            Inputs = new ChangeTrackingDictionary<string, MachineLearningJobInput>();
             Objective = objective;
-            Outputs = new ChangeTrackingDictionary<string, JobOutput>();
+            Outputs = new ChangeTrackingDictionary<string, MachineLearningJobOutput>();
             SamplingAlgorithm = samplingAlgorithm;
             SearchSpace = searchSpace;
             Trial = trial;
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="earlyTermination">
         /// Early termination policies enable canceling poor-performing runs before they complete
         /// Serialized Name: SweepJob.earlyTermination
-        /// Please note <see cref="EarlyTerminationPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="MachineLearningEarlyTerminationPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BanditPolicy"/>, <see cref="MedianStoppingPolicy"/> and <see cref="TruncationSelectionPolicy"/>.
         /// </param>
         /// <param name="inputs">
         /// Mapping of input data bindings used in the job.
         /// Serialized Name: SweepJob.inputs
-        /// Please note <see cref="JobInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CustomModelJobInput"/>, <see cref="LiteralJobInput"/>, <see cref="MLFlowModelJobInput"/>, <see cref="MLTableJobInput"/>, <see cref="TritonModelJobInput"/>, <see cref="UriFileJobInput"/> and <see cref="UriFolderJobInput"/>.
+        /// Please note <see cref="MachineLearningJobInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/> and <see cref="MachineLearningUriFolderJobInput"/>.
         /// </param>
         /// <param name="limits">
         /// Sweep Job limit.
@@ -129,8 +129,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="outputs">
         /// Mapping of output data bindings used in the job.
         /// Serialized Name: SweepJob.outputs
-        /// Please note <see cref="JobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CustomModelJobOutput"/>, <see cref="MLFlowModelJobOutput"/>, <see cref="MLTableJobOutput"/>, <see cref="TritonModelJobOutput"/>, <see cref="UriFileJobOutput"/> and <see cref="UriFolderJobOutput"/>.
+        /// Please note <see cref="MachineLearningJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MachineLearningCustomModelJobOutput"/>, <see cref="MachineLearningFlowModelJobOutput"/>, <see cref="MachineLearningTableJobOutput"/>, <see cref="MachineLearningTritonModelJobOutput"/>, <see cref="MachineLearningUriFileJobOutput"/> and <see cref="MachineLearningUriFolderJobOutput"/>.
         /// </param>
         /// <param name="samplingAlgorithm">
         /// [Required] The hyperparameter sampling algorithm
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// [Required] Trial component definition.
         /// Serialized Name: SweepJob.trial
         /// </param>
-        internal SweepJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, string componentId, string computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, IDictionary<string, JobService> services, JobStatus? status, EarlyTerminationPolicy earlyTermination, IDictionary<string, JobInput> inputs, SweepJobLimits limits, Objective objective, IDictionary<string, JobOutput> outputs, SamplingAlgorithm samplingAlgorithm, BinaryData searchSpace, TrialComponent trial) : base(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, services, status)
+        internal SweepJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, string componentId, string computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status, MachineLearningEarlyTerminationPolicy earlyTermination, IDictionary<string, MachineLearningJobInput> inputs, MachineLearningSweepJobLimits limits, MachineLearningObjective objective, IDictionary<string, MachineLearningJobOutput> outputs, SamplingAlgorithm samplingAlgorithm, BinaryData searchSpace, TrialComponent trial) : base(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, services, status)
         {
             EarlyTermination = earlyTermination;
             Inputs = inputs;
@@ -162,34 +162,34 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary>
         /// Early termination policies enable canceling poor-performing runs before they complete
         /// Serialized Name: SweepJob.earlyTermination
-        /// Please note <see cref="EarlyTerminationPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="MachineLearningEarlyTerminationPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BanditPolicy"/>, <see cref="MedianStoppingPolicy"/> and <see cref="TruncationSelectionPolicy"/>.
         /// </summary>
-        public EarlyTerminationPolicy EarlyTermination { get; set; }
+        public MachineLearningEarlyTerminationPolicy EarlyTermination { get; set; }
         /// <summary>
         /// Mapping of input data bindings used in the job.
         /// Serialized Name: SweepJob.inputs
-        /// Please note <see cref="JobInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CustomModelJobInput"/>, <see cref="LiteralJobInput"/>, <see cref="MLFlowModelJobInput"/>, <see cref="MLTableJobInput"/>, <see cref="TritonModelJobInput"/>, <see cref="UriFileJobInput"/> and <see cref="UriFolderJobInput"/>.
+        /// Please note <see cref="MachineLearningJobInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/> and <see cref="MachineLearningUriFolderJobInput"/>.
         /// </summary>
-        public IDictionary<string, JobInput> Inputs { get; set; }
+        public IDictionary<string, MachineLearningJobInput> Inputs { get; set; }
         /// <summary>
         /// Sweep Job limit.
         /// Serialized Name: SweepJob.limits
         /// </summary>
-        public SweepJobLimits Limits { get; set; }
+        public MachineLearningSweepJobLimits Limits { get; set; }
         /// <summary>
         /// [Required] Optimization objective.
         /// Serialized Name: SweepJob.objective
         /// </summary>
-        public Objective Objective { get; set; }
+        public MachineLearningObjective Objective { get; set; }
         /// <summary>
         /// Mapping of output data bindings used in the job.
         /// Serialized Name: SweepJob.outputs
-        /// Please note <see cref="JobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CustomModelJobOutput"/>, <see cref="MLFlowModelJobOutput"/>, <see cref="MLTableJobOutput"/>, <see cref="TritonModelJobOutput"/>, <see cref="UriFileJobOutput"/> and <see cref="UriFolderJobOutput"/>.
+        /// Please note <see cref="MachineLearningJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MachineLearningCustomModelJobOutput"/>, <see cref="MachineLearningFlowModelJobOutput"/>, <see cref="MachineLearningTableJobOutput"/>, <see cref="MachineLearningTritonModelJobOutput"/>, <see cref="MachineLearningUriFileJobOutput"/> and <see cref="MachineLearningUriFolderJobOutput"/>.
         /// </summary>
-        public IDictionary<string, JobOutput> Outputs { get; set; }
+        public IDictionary<string, MachineLearningJobOutput> Outputs { get; set; }
         /// <summary>
         /// [Required] The hyperparameter sampling algorithm
         /// Serialized Name: SweepJob.samplingAlgorithm

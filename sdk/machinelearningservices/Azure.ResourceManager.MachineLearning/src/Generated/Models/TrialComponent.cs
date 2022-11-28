@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="distribution">
         /// Distribution configuration of the job. If set, this should be one of Mpi, Tensorflow, PyTorch, or null.
         /// Serialized Name: TrialComponent.distribution
-        /// Please note <see cref="DistributionConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Mpi"/>, <see cref="PyTorch"/> and <see cref="TensorFlow"/>.
+        /// Please note <see cref="MachineLearningDistributionConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MpiDistributionConfiguration"/>, <see cref="PyTorchDistributionConfiguration"/> and <see cref="TensorFlowDistributionConfiguration"/>.
         /// </param>
         /// <param name="environmentId">
         /// [Required] The ARM resource ID of the Environment specification for the job.
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Compute Resource configuration for the job.
         /// Serialized Name: TrialComponent.resources
         /// </param>
-        internal TrialComponent(string codeId, string command, DistributionConfiguration distribution, string environmentId, IDictionary<string, string> environmentVariables, JobResourceConfiguration resources)
+        internal TrialComponent(string codeId, string command, MachineLearningDistributionConfiguration distribution, string environmentId, IDictionary<string, string> environmentVariables, MachineLearningJobResourceConfiguration resources)
         {
             CodeId = codeId;
             Command = command;
@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary>
         /// Distribution configuration of the job. If set, this should be one of Mpi, Tensorflow, PyTorch, or null.
         /// Serialized Name: TrialComponent.distribution
-        /// Please note <see cref="DistributionConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Mpi"/>, <see cref="PyTorch"/> and <see cref="TensorFlow"/>.
+        /// Please note <see cref="MachineLearningDistributionConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MpiDistributionConfiguration"/>, <see cref="PyTorchDistributionConfiguration"/> and <see cref="TensorFlowDistributionConfiguration"/>.
         /// </summary>
-        public DistributionConfiguration Distribution { get; set; }
+        public MachineLearningDistributionConfiguration Distribution { get; set; }
         /// <summary>
         /// [Required] The ARM resource ID of the Environment specification for the job.
         /// Serialized Name: TrialComponent.environmentId
@@ -105,6 +105,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Compute Resource configuration for the job.
         /// Serialized Name: TrialComponent.resources
         /// </summary>
-        public JobResourceConfiguration Resources { get; set; }
+        public MachineLearningJobResourceConfiguration Resources { get; set; }
     }
 }

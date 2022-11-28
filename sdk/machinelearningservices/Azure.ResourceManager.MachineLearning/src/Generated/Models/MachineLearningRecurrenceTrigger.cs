@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// The MachineLearningRecurrenceTrigger.
     /// Serialized Name: RecurrenceTrigger
     /// </summary>
-    public partial class MachineLearningRecurrenceTrigger : TriggerBase
+    public partial class MachineLearningRecurrenceTrigger : MachineLearningTriggerBase
     {
         /// <summary> Initializes a new instance of MachineLearningRecurrenceTrigger. </summary>
         /// <param name="frequency">
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// [Required] Specifies schedule interval in conjunction with frequency
         /// Serialized Name: RecurrenceTrigger.interval
         /// </param>
-        public MachineLearningRecurrenceTrigger(RecurrenceFrequency frequency, int interval)
+        public MachineLearningRecurrenceTrigger(MachineLearningRecurrenceFrequency frequency, int interval)
         {
             Frequency = frequency;
             Interval = interval;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The recurrence schedule.
         /// Serialized Name: RecurrenceTrigger.schedule
         /// </param>
-        internal MachineLearningRecurrenceTrigger(string endTime, string startTime, string timeZone, MachineLearningTriggerType triggerType, RecurrenceFrequency frequency, int interval, RecurrenceSchedule schedule) : base(endTime, startTime, timeZone, triggerType)
+        internal MachineLearningRecurrenceTrigger(string endTime, string startTime, string timeZone, MachineLearningTriggerType triggerType, MachineLearningRecurrenceFrequency frequency, int interval, MachineLearningRecurrenceSchedule schedule) : base(endTime, startTime, timeZone, triggerType)
         {
             Frequency = frequency;
             Interval = interval;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// [Required] The frequency to trigger schedule.
         /// Serialized Name: RecurrenceTrigger.frequency
         /// </summary>
-        public RecurrenceFrequency Frequency { get; set; }
+        public MachineLearningRecurrenceFrequency Frequency { get; set; }
         /// <summary>
         /// [Required] Specifies schedule interval in conjunction with frequency
         /// Serialized Name: RecurrenceTrigger.interval
@@ -83,6 +83,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The recurrence schedule.
         /// Serialized Name: RecurrenceTrigger.schedule
         /// </summary>
-        public RecurrenceSchedule Schedule { get; set; }
+        public MachineLearningRecurrenceSchedule Schedule { get; set; }
     }
 }

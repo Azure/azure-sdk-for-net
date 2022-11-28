@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningModelVersionProperties DeserializeMachineLearningModelVersionProperties(JsonElement element)
         {
-            Optional<IDictionary<string, FlavorData>> flavors = default;
+            Optional<IDictionary<string, MachineLearningFlavorData>> flavors = default;
             Optional<string> jobName = default;
             Optional<string> modelType = default;
             Optional<Uri> modelUri = default;
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         flavors = null;
                         continue;
                     }
-                    Dictionary<string, FlavorData> dictionary = new Dictionary<string, FlavorData>();
+                    Dictionary<string, MachineLearningFlavorData> dictionary = new Dictionary<string, MachineLearningFlavorData>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         }
                         else
                         {
-                            dictionary.Add(property0.Name, FlavorData.DeserializeFlavorData(property0.Value));
+                            dictionary.Add(property0.Name, MachineLearningFlavorData.DeserializeMachineLearningFlavorData(property0.Value));
                         }
                     }
                     flavors = dictionary;

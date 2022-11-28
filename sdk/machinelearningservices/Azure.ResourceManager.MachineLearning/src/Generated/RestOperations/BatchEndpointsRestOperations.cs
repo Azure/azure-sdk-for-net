@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="endpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<EndpointAuthKeys>> ListKeysAsync(string subscriptionId, string resourceGroupName, string workspaceName, string endpointName, CancellationToken cancellationToken = default)
+        public async Task<Response<MachineLearningEndpointAuthKeys>> ListKeysAsync(string subscriptionId, string resourceGroupName, string workspaceName, string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -506,9 +506,9 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 case 200:
                     {
-                        EndpointAuthKeys value = default;
+                        MachineLearningEndpointAuthKeys value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EndpointAuthKeys.DeserializeEndpointAuthKeys(document.RootElement);
+                        value = MachineLearningEndpointAuthKeys.DeserializeMachineLearningEndpointAuthKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="endpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<EndpointAuthKeys> ListKeys(string subscriptionId, string resourceGroupName, string workspaceName, string endpointName, CancellationToken cancellationToken = default)
+        public Response<MachineLearningEndpointAuthKeys> ListKeys(string subscriptionId, string resourceGroupName, string workspaceName, string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -537,9 +537,9 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 case 200:
                     {
-                        EndpointAuthKeys value = default;
+                        MachineLearningEndpointAuthKeys value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EndpointAuthKeys.DeserializeEndpointAuthKeys(document.RootElement);
+                        value = MachineLearningEndpointAuthKeys.DeserializeMachineLearningEndpointAuthKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Argument.AssertNotNull(dataUri, nameof(dataUri));
 
             ReferencedUris = new ChangeTrackingList<Uri>();
-            DataType = DataType.Mltable;
+            DataType = MachineLearningDataType.Mltable;
         }
 
         /// <summary> Initializes a new instance of MachineLearningTable. </summary>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Uris referenced in the MLTable definition (required for lineage)
         /// Serialized Name: MLTableData.referencedUris
         /// </param>
-        internal MachineLearningTable(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived, DataType dataType, Uri dataUri, IList<Uri> referencedUris) : base(description, properties, tags, isAnonymous, isArchived, dataType, dataUri)
+        internal MachineLearningTable(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived, MachineLearningDataType dataType, Uri dataUri, IList<Uri> referencedUris) : base(description, properties, tags, isAnonymous, isArchived, dataType, dataUri)
         {
             ReferencedUris = referencedUris;
             DataType = dataType;

@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="earlyTermination">
         /// Type of early termination policy.
         /// Serialized Name: ImageSweepSettings.earlyTermination
-        /// Please note <see cref="EarlyTerminationPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="MachineLearningEarlyTerminationPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BanditPolicy"/>, <see cref="MedianStoppingPolicy"/> and <see cref="TruncationSelectionPolicy"/>.
         /// </param>
         /// <param name="samplingAlgorithm">
         /// [Required] Type of the hyperparameter sampling algorithms.
         /// Serialized Name: ImageSweepSettings.samplingAlgorithm
         /// </param>
-        internal ImageSweepSettings(EarlyTerminationPolicy earlyTermination, SamplingAlgorithmType samplingAlgorithm)
+        internal ImageSweepSettings(MachineLearningEarlyTerminationPolicy earlyTermination, SamplingAlgorithmType samplingAlgorithm)
         {
             EarlyTermination = earlyTermination;
             SamplingAlgorithm = samplingAlgorithm;
@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary>
         /// Type of early termination policy.
         /// Serialized Name: ImageSweepSettings.earlyTermination
-        /// Please note <see cref="EarlyTerminationPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="MachineLearningEarlyTerminationPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BanditPolicy"/>, <see cref="MedianStoppingPolicy"/> and <see cref="TruncationSelectionPolicy"/>.
         /// </summary>
-        public EarlyTerminationPolicy EarlyTermination { get; set; }
+        public MachineLearningEarlyTerminationPolicy EarlyTermination { get; set; }
         /// <summary>
         /// [Required] Type of the hyperparameter sampling algorithms.
         /// Serialized Name: ImageSweepSettings.samplingAlgorithm

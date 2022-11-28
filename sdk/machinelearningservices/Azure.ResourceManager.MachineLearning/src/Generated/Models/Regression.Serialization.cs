@@ -178,15 +178,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<TableVerticalFeaturizationSettings> featurizationSettings = default;
             Optional<TableVerticalLimitSettings> limitSettings = default;
             Optional<NCrossValidations> nCrossValidations = default;
-            Optional<MLTableJobInput> testData = default;
+            Optional<MachineLearningTableJobInput> testData = default;
             Optional<double?> testDataSize = default;
-            Optional<MLTableJobInput> validationData = default;
+            Optional<MachineLearningTableJobInput> validationData = default;
             Optional<double?> validationDataSize = default;
             Optional<string> weightColumnName = default;
-            Optional<LogVerbosity> logVerbosity = default;
+            Optional<MachineLearningLogVerbosity> logVerbosity = default;
             Optional<string> targetColumnName = default;
             TaskType taskType = default;
-            MLTableJobInput trainingData = default;
+            MachineLearningTableJobInput trainingData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryMetric"))
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         testData = null;
                         continue;
                     }
-                    testData = MLTableJobInput.DeserializeMLTableJobInput(property.Value);
+                    testData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value);
                     continue;
                 }
                 if (property.NameEquals("testDataSize"))
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         validationData = null;
                         continue;
                     }
-                    validationData = MLTableJobInput.DeserializeMLTableJobInput(property.Value);
+                    validationData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value);
                     continue;
                 }
                 if (property.NameEquals("validationDataSize"))
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    logVerbosity = new LogVerbosity(property.Value.GetString());
+                    logVerbosity = new MachineLearningLogVerbosity(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetColumnName"))
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("trainingData"))
                 {
-                    trainingData = MLTableJobInput.DeserializeMLTableJobInput(property.Value);
+                    trainingData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value);
                     continue;
                 }
             }

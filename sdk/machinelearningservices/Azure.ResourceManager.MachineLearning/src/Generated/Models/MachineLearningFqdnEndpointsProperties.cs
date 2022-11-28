@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of MachineLearningFqdnEndpointsProperties. </summary>
         internal MachineLearningFqdnEndpointsProperties()
         {
-            Endpoints = new ChangeTrackingList<FqdnEndpoint>();
+            Endpoints = new ChangeTrackingList<MachineLearningFqdnEndpoint>();
         }
 
         /// <summary> Initializes a new instance of MachineLearningFqdnEndpointsProperties. </summary>
         /// <param name="category"> Serialized Name: FqdnEndpointsProperties.category. </param>
         /// <param name="endpoints"> Serialized Name: FqdnEndpointsProperties.endpoints. </param>
-        internal MachineLearningFqdnEndpointsProperties(string category, IReadOnlyList<FqdnEndpoint> endpoints)
+        internal MachineLearningFqdnEndpointsProperties(string category, IReadOnlyList<MachineLearningFqdnEndpoint> endpoints)
         {
             Category = category;
             Endpoints = endpoints;
@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Serialized Name: FqdnEndpointsProperties.category. </summary>
         public string Category { get; }
         /// <summary> Serialized Name: FqdnEndpointsProperties.endpoints. </summary>
-        public IReadOnlyList<FqdnEndpoint> Endpoints { get; }
+        public IReadOnlyList<MachineLearningFqdnEndpoint> Endpoints { get; }
     }
 }

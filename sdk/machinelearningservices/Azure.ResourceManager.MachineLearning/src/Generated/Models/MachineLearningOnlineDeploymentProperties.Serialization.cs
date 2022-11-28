@@ -193,22 +193,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Kubernetes": return KubernetesOnlineDeployment.DeserializeKubernetesOnlineDeployment(element);
-                    case "Managed": return ManagedOnlineDeployment.DeserializeManagedOnlineDeployment(element);
+                    case "Kubernetes": return MachineLearningKubernetesOnlineDeployment.DeserializeMachineLearningKubernetesOnlineDeployment(element);
+                    case "Managed": return MachineLearningManagedOnlineDeployment.DeserializeMachineLearningManagedOnlineDeployment(element);
                 }
             }
             Optional<bool> appInsightsEnabled = default;
-            Optional<EgressPublicNetworkAccessType> egressPublicNetworkAccess = default;
-            EndpointComputeType endpointComputeType = default;
+            Optional<MachineLearningEgressPublicNetworkAccessType> egressPublicNetworkAccess = default;
+            MachineLearningEndpointComputeType endpointComputeType = default;
             Optional<string> instanceType = default;
-            Optional<ProbeSettings> livenessProbe = default;
+            Optional<MachineLearningProbeSettings> livenessProbe = default;
             Optional<string> model = default;
             Optional<string> modelMountPath = default;
-            Optional<DeploymentProvisioningState> provisioningState = default;
-            Optional<ProbeSettings> readinessProbe = default;
-            Optional<OnlineRequestSettings> requestSettings = default;
-            Optional<OnlineScaleSettings> scaleSettings = default;
-            Optional<CodeConfiguration> codeConfiguration = default;
+            Optional<MachineLearningDeploymentProvisioningState> provisioningState = default;
+            Optional<MachineLearningProbeSettings> readinessProbe = default;
+            Optional<MachineLearningOnlineRequestSettings> requestSettings = default;
+            Optional<MachineLearningOnlineScaleSettings> scaleSettings = default;
+            Optional<MachineLearningCodeConfiguration> codeConfiguration = default;
             Optional<string> description = default;
             Optional<string> environmentId = default;
             Optional<IDictionary<string, string>> environmentVariables = default;
@@ -232,12 +232,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    egressPublicNetworkAccess = new EgressPublicNetworkAccessType(property.Value.GetString());
+                    egressPublicNetworkAccess = new MachineLearningEgressPublicNetworkAccessType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("endpointComputeType"))
                 {
-                    endpointComputeType = new EndpointComputeType(property.Value.GetString());
+                    endpointComputeType = new MachineLearningEndpointComputeType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("instanceType"))
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         livenessProbe = null;
                         continue;
                     }
-                    livenessProbe = ProbeSettings.DeserializeProbeSettings(property.Value);
+                    livenessProbe = MachineLearningProbeSettings.DeserializeMachineLearningProbeSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("model"))
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = new DeploymentProvisioningState(property.Value.GetString());
+                    provisioningState = new MachineLearningDeploymentProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("readinessProbe"))
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         readinessProbe = null;
                         continue;
                     }
-                    readinessProbe = ProbeSettings.DeserializeProbeSettings(property.Value);
+                    readinessProbe = MachineLearningProbeSettings.DeserializeMachineLearningProbeSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("requestSettings"))
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         requestSettings = null;
                         continue;
                     }
-                    requestSettings = OnlineRequestSettings.DeserializeOnlineRequestSettings(property.Value);
+                    requestSettings = MachineLearningOnlineRequestSettings.DeserializeMachineLearningOnlineRequestSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("scaleSettings"))
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         scaleSettings = null;
                         continue;
                     }
-                    scaleSettings = OnlineScaleSettings.DeserializeOnlineScaleSettings(property.Value);
+                    scaleSettings = MachineLearningOnlineScaleSettings.DeserializeMachineLearningOnlineScaleSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("codeConfiguration"))
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         codeConfiguration = null;
                         continue;
                     }
-                    codeConfiguration = CodeConfiguration.DeserializeCodeConfiguration(property.Value);
+                    codeConfiguration = MachineLearningCodeConfiguration.DeserializeMachineLearningCodeConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("description"))

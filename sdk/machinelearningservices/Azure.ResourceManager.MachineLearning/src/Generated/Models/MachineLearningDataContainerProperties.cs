@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// [Required] Specifies the type of data.
         /// Serialized Name: DataContainer.dataType
         /// </param>
-        public MachineLearningDataContainerProperties(DataType dataType)
+        public MachineLearningDataContainerProperties(MachineLearningDataType dataType)
         {
             DataType = dataType;
         }
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// [Required] Specifies the type of data.
         /// Serialized Name: DataContainer.dataType
         /// </param>
-        internal MachineLearningDataContainerProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isArchived, string latestVersion, string nextVersion, DataType dataType) : base(description, properties, tags, isArchived, latestVersion, nextVersion)
+        internal MachineLearningDataContainerProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isArchived, string latestVersion, string nextVersion, MachineLearningDataType dataType) : base(description, properties, tags, isArchived, latestVersion, nextVersion)
         {
             DataType = dataType;
         }
@@ -63,6 +63,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// [Required] Specifies the type of data.
         /// Serialized Name: DataContainer.dataType
         /// </summary>
-        public DataType DataType { get; set; }
+        public MachineLearningDataType DataType { get; set; }
     }
 }

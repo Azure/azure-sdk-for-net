@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// Operation Id: BatchEndpoints_ListKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<EndpointAuthKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MachineLearningEndpointAuthKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _machineLearningBatchEndpointBatchEndpointsClientDiagnostics.CreateScope("MachineLearningBatchEndpointResource.GetKeys");
             scope.Start();
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// Operation Id: BatchEndpoints_ListKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<EndpointAuthKeys> GetKeys(CancellationToken cancellationToken = default)
+        public virtual Response<MachineLearningEndpointAuthKeys> GetKeys(CancellationToken cancellationToken = default)
         {
             using var scope = _machineLearningBatchEndpointBatchEndpointsClientDiagnostics.CreateScope("MachineLearningBatchEndpointResource.GetKeys");
             scope.Start();

@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal static MachineLearningTable DeserializeMachineLearningTable(JsonElement element)
         {
             Optional<IList<Uri>> referencedUris = default;
-            DataType dataType = default;
+            MachineLearningDataType dataType = default;
             Uri dataUri = default;
             Optional<bool> isAnonymous = default;
             Optional<bool> isArchived = default;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("dataType"))
                 {
-                    dataType = new DataType(property.Value.GetString());
+                    dataType = new MachineLearningDataType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dataUri"))

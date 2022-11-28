@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="orderBy"> The option to order the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MachineLearningOnlineEndpointResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MachineLearningOnlineEndpointResource> GetAllAsync(string name = null, int? count = null, EndpointComputeType? computeType = null, string skip = null, string tags = null, string properties = null, OrderString? orderBy = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MachineLearningOnlineEndpointResource> GetAllAsync(string name = null, int? count = null, MachineLearningEndpointComputeType? computeType = null, string skip = null, string tags = null, string properties = null, MachineLearningOrderString? orderBy = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<MachineLearningOnlineEndpointResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="orderBy"> The option to order the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MachineLearningOnlineEndpointResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MachineLearningOnlineEndpointResource> GetAll(string name = null, int? count = null, EndpointComputeType? computeType = null, string skip = null, string tags = null, string properties = null, OrderString? orderBy = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<MachineLearningOnlineEndpointResource> GetAll(string name = null, int? count = null, MachineLearningEndpointComputeType? computeType = null, string skip = null, string tags = null, string properties = null, MachineLearningOrderString? orderBy = null, CancellationToken cancellationToken = default)
         {
             Page<MachineLearningOnlineEndpointResource> FirstPageFunc(int? pageSizeHint)
             {

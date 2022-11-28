@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// The CronTrigger.
     /// Serialized Name: CronTrigger
     /// </summary>
-    public partial class CronTrigger : TriggerBase
+    public partial class CronTrigger : MachineLearningTriggerBase
     {
         /// <summary> Initializes a new instance of CronTrigger. </summary>
         /// <param name="expression">

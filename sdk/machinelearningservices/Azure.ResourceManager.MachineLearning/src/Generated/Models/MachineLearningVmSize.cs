@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Specifies the compute types supported by the virtual machine size.
         /// Serialized Name: VirtualMachineSize.supportedComputeTypes
         /// </param>
-        internal MachineLearningVmSize(string name, string family, int? vcpUs, int? gpus, int? osVhdSizeMB, int? maxResourceVolumeMB, double? memoryGB, bool? lowPriorityCapable, bool? premiumIO, EstimatedVmPrices estimatedVmPrices, IReadOnlyList<string> supportedComputeTypes)
+        internal MachineLearningVmSize(string name, string family, int? vcpUs, int? gpus, int? osVhdSizeMB, int? maxResourceVolumeMB, double? memoryGB, bool? lowPriorityCapable, bool? premiumIO, MachineLearningEstimatedVmPrices estimatedVmPrices, IReadOnlyList<string> supportedComputeTypes)
         {
             Name = name;
             Family = family;
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The estimated price information for using a VM.
         /// Serialized Name: VirtualMachineSize.estimatedVMPrices
         /// </summary>
-        public EstimatedVmPrices EstimatedVmPrices { get; }
+        public MachineLearningEstimatedVmPrices EstimatedVmPrices { get; }
         /// <summary>
         /// Specifies the compute types supported by the virtual machine size.
         /// Serialized Name: VirtualMachineSize.supportedComputeTypes

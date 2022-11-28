@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             Argument.AssertNotNull(dataUri, nameof(dataUri));
 
-            DataType = DataType.UriFile;
+            DataType = MachineLearningDataType.UriFile;
         }
 
         /// <summary> Initializes a new instance of UriFileDataVersion. </summary>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// [Required] Uri of the data. Usage/meaning depends on Microsoft.MachineLearning.ManagementFrontEnd.Contracts.V20221001.Assets.DataVersionBase.DataType
         /// Serialized Name: DataVersionBase.dataUri
         /// </param>
-        internal UriFileDataVersion(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived, DataType dataType, Uri dataUri) : base(description, properties, tags, isAnonymous, isArchived, dataType, dataUri)
+        internal UriFileDataVersion(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived, MachineLearningDataType dataType, Uri dataUri) : base(description, properties, tags, isAnonymous, isArchived, dataType, dataUri)
         {
             DataType = dataType;
         }

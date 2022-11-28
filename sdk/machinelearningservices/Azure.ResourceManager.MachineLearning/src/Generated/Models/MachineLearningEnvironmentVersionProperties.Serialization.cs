@@ -110,12 +110,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal static MachineLearningEnvironmentVersionProperties DeserializeMachineLearningEnvironmentVersionProperties(JsonElement element)
         {
             Optional<AutoRebuildSetting> autoRebuild = default;
-            Optional<BuildContext> build = default;
+            Optional<MachineLearningBuildContext> build = default;
             Optional<string> condaFile = default;
-            Optional<EnvironmentType> environmentType = default;
+            Optional<MachineLearningEnvironmentType> environmentType = default;
             Optional<string> image = default;
-            Optional<InferenceContainerProperties> inferenceConfig = default;
-            Optional<OperatingSystemType> osType = default;
+            Optional<MachineLearningInferenceContainerProperties> inferenceConfig = default;
+            Optional<MachineLearningOperatingSystemType> osType = default;
             Optional<bool> isAnonymous = default;
             Optional<bool> isArchived = default;
             Optional<string> description = default;
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    build = BuildContext.DeserializeBuildContext(property.Value);
+                    build = MachineLearningBuildContext.DeserializeMachineLearningBuildContext(property.Value);
                     continue;
                 }
                 if (property.NameEquals("condaFile"))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    environmentType = new EnvironmentType(property.Value.GetString());
+                    environmentType = new MachineLearningEnvironmentType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("image"))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    inferenceConfig = InferenceContainerProperties.DeserializeInferenceContainerProperties(property.Value);
+                    inferenceConfig = MachineLearningInferenceContainerProperties.DeserializeMachineLearningInferenceContainerProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("osType"))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    osType = new OperatingSystemType(property.Value.GetString());
+                    osType = new MachineLearningOperatingSystemType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("isAnonymous"))

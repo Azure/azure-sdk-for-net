@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// type of this storage account.
         /// Serialized Name: ComputeInstanceDataDisk.storageAccountType
         /// </param>
-        internal MachineLearningComputeInstanceDataDisk(Caching? caching, int? diskSizeGB, int? lun, StorageAccountType? storageAccountType)
+        internal MachineLearningComputeInstanceDataDisk(MachineLearningCachingType? caching, int? diskSizeGB, int? lun, StorageAccountType? storageAccountType)
         {
             Caching = caching;
             DiskSizeGB = diskSizeGB;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Caching type of Data Disk.
         /// Serialized Name: ComputeInstanceDataDisk.caching
         /// </summary>
-        public Caching? Caching { get; }
+        public MachineLearningCachingType? Caching { get; }
         /// <summary>
         /// The initial disk size in gigabytes.
         /// Serialized Name: ComputeInstanceDataDisk.diskSizeGB

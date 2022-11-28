@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// Operation Id: OnlineEndpoints_ListKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<EndpointAuthKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MachineLearningEndpointAuthKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _machineLearningOnlineEndpointOnlineEndpointsClientDiagnostics.CreateScope("MachineLearningOnlineEndpointResource.GetKeys");
             scope.Start();
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// Operation Id: OnlineEndpoints_ListKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<EndpointAuthKeys> GetKeys(CancellationToken cancellationToken = default)
+        public virtual Response<MachineLearningEndpointAuthKeys> GetKeys(CancellationToken cancellationToken = default)
         {
             using var scope = _machineLearningOnlineEndpointOnlineEndpointsClientDiagnostics.CreateScope("MachineLearningOnlineEndpointResource.GetKeys");
             scope.Start();
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// Operation Id: OnlineEndpoints_GetToken
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<EndpointAuthToken>> GetTokenAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MachineLearningEndpointAuthToken>> GetTokenAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _machineLearningOnlineEndpointOnlineEndpointsClientDiagnostics.CreateScope("MachineLearningOnlineEndpointResource.GetToken");
             scope.Start();
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// Operation Id: OnlineEndpoints_GetToken
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<EndpointAuthToken> GetToken(CancellationToken cancellationToken = default)
+        public virtual Response<MachineLearningEndpointAuthToken> GetToken(CancellationToken cancellationToken = default)
         {
             using var scope = _machineLearningOnlineEndpointOnlineEndpointsClientDiagnostics.CreateScope("MachineLearningOnlineEndpointResource.GetToken");
             scope.Start();

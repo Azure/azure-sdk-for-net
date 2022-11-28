@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The OS type of the environment.
         /// Serialized Name: EnvironmentVersion.osType
         /// </param>
-        internal MachineLearningEnvironmentVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived, AutoRebuildSetting? autoRebuild, BuildContext build, string condaFile, EnvironmentType? environmentType, string image, InferenceContainerProperties inferenceConfig, OperatingSystemType? osType) : base(description, properties, tags, isAnonymous, isArchived)
+        internal MachineLearningEnvironmentVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived, AutoRebuildSetting? autoRebuild, MachineLearningBuildContext build, string condaFile, MachineLearningEnvironmentType? environmentType, string image, MachineLearningInferenceContainerProperties inferenceConfig, MachineLearningOperatingSystemType? osType) : base(description, properties, tags, isAnonymous, isArchived)
         {
             AutoRebuild = autoRebuild;
             Build = build;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Configuration settings for Docker build context.
         /// Serialized Name: EnvironmentVersion.build
         /// </summary>
-        public BuildContext Build { get; set; }
+        public MachineLearningBuildContext Build { get; set; }
         /// <summary>
         /// Standard configuration file used by Conda that lets you install any kind of package, including Python, R, and C/C++ packages.
         /// &lt;see href=&quot;https://repo2docker.readthedocs.io/en/latest/config_files.html#environment-yml-install-a-conda-environment&quot; /&gt;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// &lt;see href=&quot;https://docs.microsoft.com/en-us/azure/machine-learning/resource-curated-environments&quot; /&gt;
         /// Serialized Name: EnvironmentVersion.environmentType
         /// </summary>
-        public EnvironmentType? EnvironmentType { get; }
+        public MachineLearningEnvironmentType? EnvironmentType { get; }
         /// <summary>
         /// Name of the image that will be used for the environment.
         /// &lt;seealso href=&quot;https://docs.microsoft.com/en-us/azure/machine-learning/how-to-deploy-custom-docker-image#use-a-custom-base-image&quot; /&gt;
@@ -115,11 +115,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Defines configuration specific to inference.
         /// Serialized Name: EnvironmentVersion.inferenceConfig
         /// </summary>
-        public InferenceContainerProperties InferenceConfig { get; set; }
+        public MachineLearningInferenceContainerProperties InferenceConfig { get; set; }
         /// <summary>
         /// The OS type of the environment.
         /// Serialized Name: EnvironmentVersion.osType
         /// </summary>
-        public OperatingSystemType? OSType { get; set; }
+        public MachineLearningOperatingSystemType? OSType { get; set; }
     }
 }

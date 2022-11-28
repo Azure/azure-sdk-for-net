@@ -67,9 +67,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningRecurrenceTrigger DeserializeMachineLearningRecurrenceTrigger(JsonElement element)
         {
-            RecurrenceFrequency frequency = default;
+            MachineLearningRecurrenceFrequency frequency = default;
             int interval = default;
-            Optional<RecurrenceSchedule> schedule = default;
+            Optional<MachineLearningRecurrenceSchedule> schedule = default;
             Optional<string> endTime = default;
             Optional<string> startTime = default;
             Optional<string> timeZone = default;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (property.NameEquals("frequency"))
                 {
-                    frequency = new RecurrenceFrequency(property.Value.GetString());
+                    frequency = new MachineLearningRecurrenceFrequency(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("interval"))
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         schedule = null;
                         continue;
                     }
-                    schedule = RecurrenceSchedule.DeserializeRecurrenceSchedule(property.Value);
+                    schedule = MachineLearningRecurrenceSchedule.DeserializeMachineLearningRecurrenceSchedule(property.Value);
                     continue;
                 }
                 if (property.NameEquals("endTime"))

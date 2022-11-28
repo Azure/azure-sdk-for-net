@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<MachineLearningComputeInstanceConnectivityEndpoints> connectivityEndpoints = default;
             Optional<IReadOnlyList<MachineLearningComputeInstanceApplication>> applications = default;
             Optional<MachineLearningComputeInstanceCreatedBy> createdBy = default;
-            Optional<IReadOnlyList<ErrorResponse>> errors = default;
+            Optional<IReadOnlyList<MachineLearningError>> errors = default;
             Optional<MachineLearningComputeInstanceState> state = default;
             Optional<MachineLearningComputeInstanceAuthorizationType?> computeInstanceAuthorizationType = default;
             Optional<PersonalComputeInstanceSettings> personalComputeInstanceSettings = default;
@@ -194,10 +194,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ErrorResponse> array = new List<ErrorResponse>();
+                    List<MachineLearningError> array = new List<MachineLearningError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ErrorResponse.DeserializeErrorResponse(item));
+                        array.Add(MachineLearningError.DeserializeMachineLearningError(item));
                     }
                     errors = array;
                     continue;

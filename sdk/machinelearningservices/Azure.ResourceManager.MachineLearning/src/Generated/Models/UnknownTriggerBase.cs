@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// The UnknownTriggerBase.
     /// Serialized Name: UnknownTriggerBase
     /// </summary>
-    internal partial class UnknownTriggerBase : TriggerBase
+    internal partial class UnknownTriggerBase : MachineLearningTriggerBase
     {
         /// <summary> Initializes a new instance of UnknownTriggerBase. </summary>
         /// <param name="endTime">

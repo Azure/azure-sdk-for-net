@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// Batch endpoint configuration.
     /// Serialized Name: BatchEndpoint
     /// </summary>
-    public partial class MachineLearningBatchEndpointProperties : EndpointPropertiesBase
+    public partial class MachineLearningBatchEndpointProperties : MachineLearningEndpointProperties
     {
         /// <summary> Initializes a new instance of MachineLearningBatchEndpointProperties. </summary>
         /// <param name="authMode">
         /// [Required] Use &apos;Key&apos; for key based authentication and &apos;AMLToken&apos; for Azure Machine Learning token-based authentication. &apos;Key&apos; doesn&apos;t expire but &apos;AMLToken&apos; does.
         /// Serialized Name: EndpointPropertiesBase.authMode
         /// </param>
-        public MachineLearningBatchEndpointProperties(EndpointAuthMode authMode) : base(authMode)
+        public MachineLearningBatchEndpointProperties(MachineLearningEndpointAuthMode authMode) : base(authMode)
         {
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Provisioning state for the endpoint.
         /// Serialized Name: BatchEndpoint.provisioningState
         /// </param>
-        internal MachineLearningBatchEndpointProperties(EndpointAuthMode authMode, string description, EndpointAuthKeys keys, IDictionary<string, string> properties, Uri scoringUri, Uri swaggerUri, BatchEndpointDefaults defaults, EndpointProvisioningState? provisioningState) : base(authMode, description, keys, properties, scoringUri, swaggerUri)
+        internal MachineLearningBatchEndpointProperties(MachineLearningEndpointAuthMode authMode, string description, MachineLearningEndpointAuthKeys keys, IDictionary<string, string> properties, Uri scoringUri, Uri swaggerUri, BatchEndpointDefaults defaults, MachineLearningEndpointProvisioningState? provisioningState) : base(authMode, description, keys, properties, scoringUri, swaggerUri)
         {
             Defaults = defaults;
             ProvisioningState = provisioningState;
@@ -90,6 +90,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Provisioning state for the endpoint.
         /// Serialized Name: BatchEndpoint.provisioningState
         /// </summary>
-        public EndpointProvisioningState? ProvisioningState { get; }
+        public MachineLearningEndpointProvisioningState? ProvisioningState { get; }
     }
 }

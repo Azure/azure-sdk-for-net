@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Serialized Name: AutoMLVertical.trainingData
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="trainingData"/> is null. </exception>
-        public Regression(MLTableJobInput trainingData) : base(trainingData)
+        public Regression(MachineLearningTableJobInput trainingData) : base(trainingData)
         {
             Argument.AssertNotNull(trainingData, nameof(trainingData));
 
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The name of the sample weight column. Automated ML supports a weighted column as an input, causing rows in the data to be weighted up or down.
         /// Serialized Name: TableVertical.weightColumnName
         /// </param>
-        internal Regression(LogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MLTableJobInput trainingData, RegressionPrimaryMetric? primaryMetric, RegressionTrainingSettings trainingSettings, IList<string> cvSplitColumnNames, TableVerticalFeaturizationSettings featurizationSettings, TableVerticalLimitSettings limitSettings, NCrossValidations nCrossValidations, MLTableJobInput testData, double? testDataSize, MLTableJobInput validationData, double? validationDataSize, string weightColumnName) : base(logVerbosity, targetColumnName, taskType, trainingData)
+        internal Regression(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData, RegressionPrimaryMetric? primaryMetric, RegressionTrainingSettings trainingSettings, IList<string> cvSplitColumnNames, TableVerticalFeaturizationSettings featurizationSettings, TableVerticalLimitSettings limitSettings, NCrossValidations nCrossValidations, MachineLearningTableJobInput testData, double? testDataSize, MachineLearningTableJobInput validationData, double? validationDataSize, string weightColumnName) : base(logVerbosity, targetColumnName, taskType, trainingData)
         {
             PrimaryMetric = primaryMetric;
             TrainingSettings = trainingSettings;
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Test data input.
         /// Serialized Name: TableVertical.testData
         /// </summary>
-        public MLTableJobInput TestData { get; set; }
+        public MachineLearningTableJobInput TestData { get; set; }
         /// <summary>
         /// The fraction of test dataset that needs to be set aside for validation purpose.
         /// Values between (0.0 , 1.0)
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Validation data inputs.
         /// Serialized Name: TableVertical.validationData
         /// </summary>
-        public MLTableJobInput ValidationData { get; set; }
+        public MachineLearningTableJobInput ValidationData { get; set; }
         /// <summary>
         /// The fraction of training dataset that needs to be set aside for validation purpose.
         /// Values between (0.0 , 1.0)

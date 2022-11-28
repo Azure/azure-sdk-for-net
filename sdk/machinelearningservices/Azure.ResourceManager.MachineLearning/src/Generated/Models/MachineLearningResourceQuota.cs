@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// An enum describing the unit of quota measurement.
         /// Serialized Name: ResourceQuota.unit
         /// </param>
-        internal MachineLearningResourceQuota(string id, string amlWorkspaceLocation, string resourceQuotaType, ResourceName name, long? limit, QuotaUnit? unit)
+        internal MachineLearningResourceQuota(string id, string amlWorkspaceLocation, string resourceQuotaType, ResourceName name, long? limit, MachineLearningQuotaUnit? unit)
         {
             Id = id;
             AmlWorkspaceLocation = amlWorkspaceLocation;
@@ -82,6 +82,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// An enum describing the unit of quota measurement.
         /// Serialized Name: ResourceQuota.unit
         /// </summary>
-        public QuotaUnit? Unit { get; }
+        public MachineLearningQuotaUnit? Unit { get; }
     }
 }

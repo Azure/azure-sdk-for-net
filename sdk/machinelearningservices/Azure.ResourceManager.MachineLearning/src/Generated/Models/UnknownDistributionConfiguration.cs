@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// The UnknownDistributionConfiguration.
     /// Serialized Name: UnknownDistributionConfiguration
     /// </summary>
-    internal partial class UnknownDistributionConfiguration : DistributionConfiguration
+    internal partial class UnknownDistributionConfiguration : MachineLearningDistributionConfiguration
     {
         /// <summary> Initializes a new instance of UnknownDistributionConfiguration. </summary>
         /// <param name="distributionType">

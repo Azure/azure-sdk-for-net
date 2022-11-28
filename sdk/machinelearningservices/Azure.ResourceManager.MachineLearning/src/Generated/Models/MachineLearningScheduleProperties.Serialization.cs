@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningScheduleProperties DeserializeMachineLearningScheduleProperties(JsonElement element)
         {
-            ScheduleActionBase action = default;
+            MachineLearningScheduleAction action = default;
             Optional<string> displayName = default;
             Optional<bool> isEnabled = default;
             Optional<ScheduleProvisioningStatus> provisioningState = default;
-            TriggerBase trigger = default;
+            MachineLearningTriggerBase trigger = default;
             Optional<string> description = default;
             Optional<IDictionary<string, string>> properties = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (property.NameEquals("action"))
                 {
-                    action = ScheduleActionBase.DeserializeScheduleActionBase(property.Value);
+                    action = MachineLearningScheduleAction.DeserializeMachineLearningScheduleAction(property.Value);
                     continue;
                 }
                 if (property.NameEquals("displayName"))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("trigger"))
                 {
-                    trigger = TriggerBase.DeserializeTriggerBase(property.Value);
+                    trigger = MachineLearningTriggerBase.DeserializeMachineLearningTriggerBase(property.Value);
                     continue;
                 }
                 if (property.NameEquals("description"))

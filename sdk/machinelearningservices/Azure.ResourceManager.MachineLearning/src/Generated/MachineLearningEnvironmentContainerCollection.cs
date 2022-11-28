@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="listViewType"> View type for including/excluding (for example) archived entities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MachineLearningEnvironmentContainerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MachineLearningEnvironmentContainerResource> GetAllAsync(string skip = null, ListViewType? listViewType = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MachineLearningEnvironmentContainerResource> GetAllAsync(string skip = null, MachineLearningListViewType? listViewType = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<MachineLearningEnvironmentContainerResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="listViewType"> View type for including/excluding (for example) archived entities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MachineLearningEnvironmentContainerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MachineLearningEnvironmentContainerResource> GetAll(string skip = null, ListViewType? listViewType = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<MachineLearningEnvironmentContainerResource> GetAll(string skip = null, MachineLearningListViewType? listViewType = null, CancellationToken cancellationToken = default)
         {
             Page<MachineLearningEnvironmentContainerResource> FirstPageFunc(int? pageSizeHint)
             {

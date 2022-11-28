@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of MachineLearningComputeProperties. </summary>
         protected MachineLearningComputeProperties()
         {
-            ProvisioningErrors = new ChangeTrackingList<ErrorResponse>();
+            ProvisioningErrors = new ChangeTrackingList<MachineLearningError>();
         }
 
         /// <summary> Initializes a new instance of MachineLearningComputeProperties. </summary>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Opt-out of local authentication and ensure customers can use only MSI and AAD exclusively for authentication.
         /// Serialized Name: Compute.disableLocalAuth
         /// </param>
-        internal MachineLearningComputeProperties(ComputeType computeType, string computeLocation, MachineLearningProvisioningState? provisioningState, string description, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, ResourceIdentifier resourceId, IReadOnlyList<ErrorResponse> provisioningErrors, bool? isAttachedCompute, bool? disableLocalAuth)
+        internal MachineLearningComputeProperties(ComputeType computeType, string computeLocation, MachineLearningProvisioningState? provisioningState, string description, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, ResourceIdentifier resourceId, IReadOnlyList<MachineLearningError> provisioningErrors, bool? isAttachedCompute, bool? disableLocalAuth)
         {
             ComputeType = computeType;
             ComputeLocation = computeLocation;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Errors during provisioning
         /// Serialized Name: Compute.provisioningErrors
         /// </summary>
-        public IReadOnlyList<ErrorResponse> ProvisioningErrors { get; }
+        public IReadOnlyList<MachineLearningError> ProvisioningErrors { get; }
         /// <summary>
         /// Indicating whether the compute was provisioned by user and brought from outside if true, or machine learning service provisioned it if false.
         /// Serialized Name: Compute.isAttachedCompute

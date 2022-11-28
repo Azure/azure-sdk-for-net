@@ -102,12 +102,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal static MachineLearningOnlineEndpointProperties DeserializeMachineLearningOnlineEndpointProperties(JsonElement element)
         {
             Optional<string> compute = default;
-            Optional<EndpointProvisioningState> provisioningState = default;
-            Optional<PublicNetworkAccessType> publicNetworkAccess = default;
+            Optional<MachineLearningEndpointProvisioningState> provisioningState = default;
+            Optional<MachineLearningPublicNetworkAccessType> publicNetworkAccess = default;
             Optional<IDictionary<string, int>> traffic = default;
-            EndpointAuthMode authMode = default;
+            MachineLearningEndpointAuthMode authMode = default;
             Optional<string> description = default;
-            Optional<EndpointAuthKeys> keys = default;
+            Optional<MachineLearningEndpointAuthKeys> keys = default;
             Optional<IDictionary<string, string>> properties = default;
             Optional<Uri> scoringUri = default;
             Optional<Uri> swaggerUri = default;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = new EndpointProvisioningState(property.Value.GetString());
+                    provisioningState = new MachineLearningEndpointProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("publicNetworkAccess"))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    publicNetworkAccess = new PublicNetworkAccessType(property.Value.GetString());
+                    publicNetworkAccess = new MachineLearningPublicNetworkAccessType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("traffic"))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("authMode"))
                 {
-                    authMode = new EndpointAuthMode(property.Value.GetString());
+                    authMode = new MachineLearningEndpointAuthMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("description"))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         keys = null;
                         continue;
                     }
-                    keys = EndpointAuthKeys.DeserializeEndpointAuthKeys(property.Value);
+                    keys = MachineLearningEndpointAuthKeys.DeserializeMachineLearningEndpointAuthKeys(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"))

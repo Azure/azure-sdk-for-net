@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Command = command;
             EnvironmentId = environmentId;
             EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
-            Inputs = new ChangeTrackingDictionary<string, JobInput>();
-            Outputs = new ChangeTrackingDictionary<string, JobOutput>();
+            Inputs = new ChangeTrackingDictionary<string, MachineLearningJobInput>();
+            Outputs = new ChangeTrackingDictionary<string, MachineLearningJobOutput>();
             JobType = JobType.Command;
         }
 
@@ -104,8 +104,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="distribution">
         /// Distribution configuration of the job. If set, this should be one of Mpi, Tensorflow, PyTorch, or null.
         /// Serialized Name: CommandJob.distribution
-        /// Please note <see cref="DistributionConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Mpi"/>, <see cref="PyTorch"/> and <see cref="TensorFlow"/>.
+        /// Please note <see cref="MachineLearningDistributionConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MpiDistributionConfiguration"/>, <see cref="PyTorchDistributionConfiguration"/> and <see cref="TensorFlowDistributionConfiguration"/>.
         /// </param>
         /// <param name="environmentId">
         /// [Required] The ARM resource ID of the Environment specification for the job.
@@ -118,8 +118,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="inputs">
         /// Mapping of input data bindings used in the job.
         /// Serialized Name: CommandJob.inputs
-        /// Please note <see cref="JobInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CustomModelJobInput"/>, <see cref="LiteralJobInput"/>, <see cref="MLFlowModelJobInput"/>, <see cref="MLTableJobInput"/>, <see cref="TritonModelJobInput"/>, <see cref="UriFileJobInput"/> and <see cref="UriFolderJobInput"/>.
+        /// Please note <see cref="MachineLearningJobInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/> and <see cref="MachineLearningUriFolderJobInput"/>.
         /// </param>
         /// <param name="limits">
         /// Command Job limit.
@@ -128,8 +128,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="outputs">
         /// Mapping of output data bindings used in the job.
         /// Serialized Name: CommandJob.outputs
-        /// Please note <see cref="JobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CustomModelJobOutput"/>, <see cref="MLFlowModelJobOutput"/>, <see cref="MLTableJobOutput"/>, <see cref="TritonModelJobOutput"/>, <see cref="UriFileJobOutput"/> and <see cref="UriFolderJobOutput"/>.
+        /// Please note <see cref="MachineLearningJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MachineLearningCustomModelJobOutput"/>, <see cref="MachineLearningFlowModelJobOutput"/>, <see cref="MachineLearningTableJobOutput"/>, <see cref="MachineLearningTritonModelJobOutput"/>, <see cref="MachineLearningUriFileJobOutput"/> and <see cref="MachineLearningUriFolderJobOutput"/>.
         /// </param>
         /// <param name="parameters">
         /// Input parameters.
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Compute Resource configuration for the job.
         /// Serialized Name: CommandJob.resources
         /// </param>
-        internal MachineLearningCommandJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, string componentId, string computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, IDictionary<string, JobService> services, JobStatus? status, string codeId, string command, DistributionConfiguration distribution, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, JobInput> inputs, CommandJobLimits limits, IDictionary<string, JobOutput> outputs, BinaryData parameters, JobResourceConfiguration resources) : base(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, services, status)
+        internal MachineLearningCommandJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, string componentId, string computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status, string codeId, string command, MachineLearningDistributionConfiguration distribution, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, MachineLearningJobInput> inputs, MachineLearningCommandJobLimits limits, IDictionary<string, MachineLearningJobOutput> outputs, BinaryData parameters, MachineLearningJobResourceConfiguration resources) : base(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, services, status)
         {
             CodeId = codeId;
             Command = command;
@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary>
         /// Distribution configuration of the job. If set, this should be one of Mpi, Tensorflow, PyTorch, or null.
         /// Serialized Name: CommandJob.distribution
-        /// Please note <see cref="DistributionConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Mpi"/>, <see cref="PyTorch"/> and <see cref="TensorFlow"/>.
+        /// Please note <see cref="MachineLearningDistributionConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MpiDistributionConfiguration"/>, <see cref="PyTorchDistributionConfiguration"/> and <see cref="TensorFlowDistributionConfiguration"/>.
         /// </summary>
-        public DistributionConfiguration Distribution { get; set; }
+        public MachineLearningDistributionConfiguration Distribution { get; set; }
         /// <summary>
         /// [Required] The ARM resource ID of the Environment specification for the job.
         /// Serialized Name: CommandJob.environmentId
@@ -184,22 +184,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary>
         /// Mapping of input data bindings used in the job.
         /// Serialized Name: CommandJob.inputs
-        /// Please note <see cref="JobInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CustomModelJobInput"/>, <see cref="LiteralJobInput"/>, <see cref="MLFlowModelJobInput"/>, <see cref="MLTableJobInput"/>, <see cref="TritonModelJobInput"/>, <see cref="UriFileJobInput"/> and <see cref="UriFolderJobInput"/>.
+        /// Please note <see cref="MachineLearningJobInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/> and <see cref="MachineLearningUriFolderJobInput"/>.
         /// </summary>
-        public IDictionary<string, JobInput> Inputs { get; set; }
+        public IDictionary<string, MachineLearningJobInput> Inputs { get; set; }
         /// <summary>
         /// Command Job limit.
         /// Serialized Name: CommandJob.limits
         /// </summary>
-        public CommandJobLimits Limits { get; set; }
+        public MachineLearningCommandJobLimits Limits { get; set; }
         /// <summary>
         /// Mapping of output data bindings used in the job.
         /// Serialized Name: CommandJob.outputs
-        /// Please note <see cref="JobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CustomModelJobOutput"/>, <see cref="MLFlowModelJobOutput"/>, <see cref="MLTableJobOutput"/>, <see cref="TritonModelJobOutput"/>, <see cref="UriFileJobOutput"/> and <see cref="UriFolderJobOutput"/>.
+        /// Please note <see cref="MachineLearningJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MachineLearningCustomModelJobOutput"/>, <see cref="MachineLearningFlowModelJobOutput"/>, <see cref="MachineLearningTableJobOutput"/>, <see cref="MachineLearningTritonModelJobOutput"/>, <see cref="MachineLearningUriFileJobOutput"/> and <see cref="MachineLearningUriFolderJobOutput"/>.
         /// </summary>
-        public IDictionary<string, JobOutput> Outputs { get; set; }
+        public IDictionary<string, MachineLearningJobOutput> Outputs { get; set; }
         /// <summary>
         /// Input parameters.
         /// Serialized Name: CommandJob.parameters
@@ -236,6 +236,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Compute Resource configuration for the job.
         /// Serialized Name: CommandJob.resources
         /// </summary>
-        public JobResourceConfiguration Resources { get; set; }
+        public MachineLearningJobResourceConfiguration Resources { get; set; }
     }
 }

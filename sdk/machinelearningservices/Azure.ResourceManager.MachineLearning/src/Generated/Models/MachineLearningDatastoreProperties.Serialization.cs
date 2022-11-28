@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     case "AzureBlob": return MachineLearningAzureBlobDatastore.DeserializeMachineLearningAzureBlobDatastore(element);
                     case "AzureDataLakeGen1": return MachineLearningAzureDataLakeGen1Datastore.DeserializeMachineLearningAzureDataLakeGen1Datastore(element);
-                    case "AzureDataLakeGen2": return AzureDataLakeGen2Datastore.DeserializeAzureDataLakeGen2Datastore(element);
-                    case "AzureFile": return AzureFileDatastore.DeserializeAzureFileDatastore(element);
+                    case "AzureDataLakeGen2": return MachineLearningAzureDataLakeGen2Datastore.DeserializeMachineLearningAzureDataLakeGen2Datastore(element);
+                    case "AzureFile": return MachineLearningAzureFileDatastore.DeserializeMachineLearningAzureFileDatastore(element);
                 }
             }
             MachineLearningDatastoreCredentials credentials = default;

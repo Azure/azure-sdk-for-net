@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> vcName = default;
             Optional<string> @namespace = default;
             Optional<string> defaultInstanceType = default;
-            Optional<IDictionary<string, InstanceTypeSchema>> instanceTypes = default;
+            Optional<IDictionary<string, MachineLearningInstanceTypeSchema>> instanceTypes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("relayConnectionString"))
@@ -155,10 +155,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, InstanceTypeSchema> dictionary = new Dictionary<string, InstanceTypeSchema>();
+                    Dictionary<string, MachineLearningInstanceTypeSchema> dictionary = new Dictionary<string, MachineLearningInstanceTypeSchema>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, InstanceTypeSchema.DeserializeInstanceTypeSchema(property0.Value));
+                        dictionary.Add(property0.Name, MachineLearningInstanceTypeSchema.DeserializeMachineLearningInstanceTypeSchema(property0.Value));
                     }
                     instanceTypes = dictionary;
                     continue;

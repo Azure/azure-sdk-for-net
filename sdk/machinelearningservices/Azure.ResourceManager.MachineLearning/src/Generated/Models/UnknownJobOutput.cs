@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// The UnknownJobOutput.
     /// Serialized Name: UnknownJobOutput
     /// </summary>
-    internal partial class UnknownJobOutput : JobOutput
+    internal partial class UnknownJobOutput : MachineLearningJobOutput
     {
         /// <summary> Initializes a new instance of UnknownJobOutput. </summary>
         /// <param name="description">

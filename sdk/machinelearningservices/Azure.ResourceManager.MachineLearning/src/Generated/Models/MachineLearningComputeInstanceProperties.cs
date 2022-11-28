@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public MachineLearningComputeInstanceProperties()
         {
             Applications = new ChangeTrackingList<MachineLearningComputeInstanceApplication>();
-            Errors = new ChangeTrackingList<ErrorResponse>();
+            Errors = new ChangeTrackingList<MachineLearningError>();
             Containers = new ChangeTrackingList<MachineLearningComputeInstanceContainer>();
             DataDisks = new ChangeTrackingList<MachineLearningComputeInstanceDataDisk>();
             DataMounts = new ChangeTrackingList<MachineLearningComputeInstanceDataMount>();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// ComputeInstance version.
         /// Serialized Name: ComputeInstanceProperties.versions
         /// </param>
-        internal MachineLearningComputeInstanceProperties(string vmSize, ResourceId subnet, MachineLearningApplicationSharingPolicy? applicationSharingPolicy, MachineLearningComputeInstanceSshSettings sshSettings, MachineLearningComputeInstanceConnectivityEndpoints connectivityEndpoints, IReadOnlyList<MachineLearningComputeInstanceApplication> applications, MachineLearningComputeInstanceCreatedBy createdBy, IReadOnlyList<ErrorResponse> errors, MachineLearningComputeInstanceState? state, MachineLearningComputeInstanceAuthorizationType? computeInstanceAuthorizationType, PersonalComputeInstanceSettings personalComputeInstanceSettings, SetupScripts setupScriptsSettings, MachineLearningComputeInstanceLastOperation lastOperation, ComputeSchedules schedules, bool? enableNodePublicIP, IReadOnlyList<MachineLearningComputeInstanceContainer> containers, IReadOnlyList<MachineLearningComputeInstanceDataDisk> dataDisks, IReadOnlyList<MachineLearningComputeInstanceDataMount> dataMounts, ComputeInstanceVersion versions)
+        internal MachineLearningComputeInstanceProperties(string vmSize, ResourceId subnet, MachineLearningApplicationSharingPolicy? applicationSharingPolicy, MachineLearningComputeInstanceSshSettings sshSettings, MachineLearningComputeInstanceConnectivityEndpoints connectivityEndpoints, IReadOnlyList<MachineLearningComputeInstanceApplication> applications, MachineLearningComputeInstanceCreatedBy createdBy, IReadOnlyList<MachineLearningError> errors, MachineLearningComputeInstanceState? state, MachineLearningComputeInstanceAuthorizationType? computeInstanceAuthorizationType, PersonalComputeInstanceSettings personalComputeInstanceSettings, SetupScripts setupScriptsSettings, MachineLearningComputeInstanceLastOperation lastOperation, ComputeSchedules schedules, bool? enableNodePublicIP, IReadOnlyList<MachineLearningComputeInstanceContainer> containers, IReadOnlyList<MachineLearningComputeInstanceDataDisk> dataDisks, IReadOnlyList<MachineLearningComputeInstanceDataMount> dataMounts, ComputeInstanceVersion versions)
         {
             VmSize = vmSize;
             Subnet = subnet;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Collection of errors encountered on this ComputeInstance.
         /// Serialized Name: ComputeInstanceProperties.errors
         /// </summary>
-        public IReadOnlyList<ErrorResponse> Errors { get; }
+        public IReadOnlyList<MachineLearningError> Errors { get; }
         /// <summary>
         /// The current state of this ComputeInstance.
         /// Serialized Name: ComputeInstanceProperties.state

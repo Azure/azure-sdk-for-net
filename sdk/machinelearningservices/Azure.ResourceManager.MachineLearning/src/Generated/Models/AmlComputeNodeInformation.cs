@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// ID of the Experiment running on the node, if any else null.
         /// Serialized Name: AmlComputeNodeInformation.runId
         /// </param>
-        internal AmlComputeNodeInformation(string nodeId, string privateIPAddress, string publicIPAddress, int? port, NodeState? nodeState, string runId)
+        internal AmlComputeNodeInformation(string nodeId, string privateIPAddress, string publicIPAddress, int? port, MachineLearningNodeState? nodeState, string runId)
         {
             NodeId = nodeId;
             PrivateIPAddress = privateIPAddress;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// State of the compute node. Values are idle, running, preparing, unusable, leaving and preempted.
         /// Serialized Name: AmlComputeNodeInformation.nodeState
         /// </summary>
-        public NodeState? NodeState { get; }
+        public MachineLearningNodeState? NodeState { get; }
         /// <summary>
         /// ID of the Experiment running on the node, if any else null.
         /// Serialized Name: AmlComputeNodeInformation.runId

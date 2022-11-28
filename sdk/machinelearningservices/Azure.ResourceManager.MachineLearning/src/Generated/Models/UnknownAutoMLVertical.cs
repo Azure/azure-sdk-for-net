@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// [Required] Training data input.
         /// Serialized Name: AutoMLVertical.trainingData
         /// </param>
-        internal UnknownAutoMLVertical(LogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MLTableJobInput trainingData) : base(logVerbosity, targetColumnName, taskType, trainingData)
+        internal UnknownAutoMLVertical(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData) : base(logVerbosity, targetColumnName, taskType, trainingData)
         {
             TaskType = taskType;
         }

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal static UsernamePasswordAuthTypeWorkspaceConnectionProperties DeserializeUsernamePasswordAuthTypeWorkspaceConnectionProperties(JsonElement element)
         {
             Optional<WorkspaceConnectionUsernamePassword> credentials = default;
-            ConnectionAuthType authType = default;
+            MachineLearningConnectionAuthType authType = default;
             Optional<MachineLearningConnectionCategory> category = default;
             Optional<string> target = default;
             Optional<string> value = default;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("authType"))
                 {
-                    authType = new ConnectionAuthType(property.Value.GetString());
+                    authType = new MachineLearningConnectionAuthType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("category"))

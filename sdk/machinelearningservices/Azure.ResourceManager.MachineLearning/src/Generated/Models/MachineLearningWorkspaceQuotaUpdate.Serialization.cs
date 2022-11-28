@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> id = default;
             Optional<string> type = default;
             Optional<long> limit = default;
-            Optional<QuotaUnit> unit = default;
+            Optional<MachineLearningQuotaUnit> unit = default;
             Optional<Status> status = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    unit = new QuotaUnit(property.Value.GetString());
+                    unit = new MachineLearningQuotaUnit(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("status"))

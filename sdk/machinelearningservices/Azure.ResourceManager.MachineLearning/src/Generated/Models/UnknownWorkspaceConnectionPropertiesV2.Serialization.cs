@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static UnknownWorkspaceConnectionPropertiesV2 DeserializeUnknownWorkspaceConnectionPropertiesV2(JsonElement element)
         {
-            ConnectionAuthType authType = "Unknown";
+            MachineLearningConnectionAuthType authType = "Unknown";
             Optional<MachineLearningConnectionCategory> category = default;
             Optional<string> target = default;
             Optional<string> value = default;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (property.NameEquals("authType"))
                 {
-                    authType = new ConnectionAuthType(property.Value.GetString());
+                    authType = new MachineLearningConnectionAuthType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("category"))

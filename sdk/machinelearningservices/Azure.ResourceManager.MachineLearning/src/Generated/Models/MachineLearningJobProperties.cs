@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// Base definition for a job.
     /// Serialized Name: JobBase
     /// Please note <see cref="MachineLearningJobProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AutoMLJob"/>, <see cref="MachineLearningCommandJob"/>, <see cref="PipelineJob"/> and <see cref="SweepJob"/>.
+    /// The available derived classes include <see cref="AutoMLJob"/>, <see cref="MachineLearningCommandJob"/>, <see cref="MachineLearningPipelineJob"/> and <see cref="SweepJob"/>.
     /// </summary>
     public partial class MachineLearningJobProperties : MachineLearningResourceBase
     {
         /// <summary> Initializes a new instance of MachineLearningJobProperties. </summary>
         public MachineLearningJobProperties()
         {
-            Services = new ChangeTrackingDictionary<string, JobService>();
+            Services = new ChangeTrackingDictionary<string, MachineLearningJobService>();
         }
 
         /// <summary> Initializes a new instance of MachineLearningJobProperties. </summary>
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Status of the job.
         /// Serialized Name: JobBase.status
         /// </param>
-        internal MachineLearningJobProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, string componentId, string computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, IDictionary<string, JobService> services, JobStatus? status) : base(description, properties, tags)
+        internal MachineLearningJobProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, string componentId, string computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status) : base(description, properties, tags)
         {
             ComponentId = componentId;
             ComputeId = computeId;
@@ -133,11 +133,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
         /// Serialized Name: JobBase.services
         /// </summary>
-        public IDictionary<string, JobService> Services { get; set; }
+        public IDictionary<string, MachineLearningJobService> Services { get; set; }
         /// <summary>
         /// Status of the job.
         /// Serialized Name: JobBase.status
         /// </summary>
-        public JobStatus? Status { get; }
+        public MachineLearningJobStatus? Status { get; }
     }
 }

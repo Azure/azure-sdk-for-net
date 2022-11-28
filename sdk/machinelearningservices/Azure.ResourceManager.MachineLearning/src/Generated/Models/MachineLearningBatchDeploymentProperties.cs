@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// Batch inference settings per deployment.
     /// Serialized Name: BatchDeployment
     /// </summary>
-    public partial class MachineLearningBatchDeploymentProperties : EndpointDeploymentPropertiesBase
+    public partial class MachineLearningBatchDeploymentProperties : MachineLearningEndpointDeploymentProperties
     {
         /// <summary> Initializes a new instance of MachineLearningBatchDeploymentProperties. </summary>
         public MachineLearningBatchDeploymentProperties()
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// If not provided, will default to the defaults defined in BatchRetrySettings.
         /// Serialized Name: BatchDeployment.retrySettings
         /// </param>
-        internal MachineLearningBatchDeploymentProperties(CodeConfiguration codeConfiguration, string description, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, string> properties, string compute, int? errorThreshold, BatchLoggingLevel? loggingLevel, int? maxConcurrencyPerInstance, long? miniBatchSize, MachineLearningAssetReferenceBase model, BatchOutputAction? outputAction, string outputFileName, DeploymentProvisioningState? provisioningState, DeploymentResourceConfiguration resources, BatchRetrySettings retrySettings) : base(codeConfiguration, description, environmentId, environmentVariables, properties)
+        internal MachineLearningBatchDeploymentProperties(MachineLearningCodeConfiguration codeConfiguration, string description, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, string> properties, string compute, int? errorThreshold, MachineLearningBatchLoggingLevel? loggingLevel, int? maxConcurrencyPerInstance, long? miniBatchSize, MachineLearningAssetReferenceBase model, MachineLearningBatchOutputAction? outputAction, string outputFileName, MachineLearningDeploymentProvisioningState? provisioningState, MachineLearningDeploymentResourceConfiguration resources, MachineLearningBatchRetrySettings retrySettings) : base(codeConfiguration, description, environmentId, environmentVariables, properties)
         {
             Compute = compute;
             ErrorThreshold = errorThreshold;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Logging level for batch inference operation.
         /// Serialized Name: BatchDeployment.loggingLevel
         /// </summary>
-        public BatchLoggingLevel? LoggingLevel { get; set; }
+        public MachineLearningBatchLoggingLevel? LoggingLevel { get; set; }
         /// <summary>
         /// Indicates maximum number of parallelism per instance.
         /// Serialized Name: BatchDeployment.maxConcurrencyPerInstance
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Indicates how the output will be organized.
         /// Serialized Name: BatchDeployment.outputAction
         /// </summary>
-        public BatchOutputAction? OutputAction { get; set; }
+        public MachineLearningBatchOutputAction? OutputAction { get; set; }
         /// <summary>
         /// Customized output file name for append_row output action.
         /// Serialized Name: BatchDeployment.outputFileName
@@ -162,18 +162,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Provisioning state for the endpoint deployment.
         /// Serialized Name: BatchDeployment.provisioningState
         /// </summary>
-        public DeploymentProvisioningState? ProvisioningState { get; }
+        public MachineLearningDeploymentProvisioningState? ProvisioningState { get; }
         /// <summary>
         /// Indicates compute configuration for the job.
         /// If not provided, will default to the defaults defined in ResourceConfiguration.
         /// Serialized Name: BatchDeployment.resources
         /// </summary>
-        public DeploymentResourceConfiguration Resources { get; set; }
+        public MachineLearningDeploymentResourceConfiguration Resources { get; set; }
         /// <summary>
         /// Retry Settings for the batch inference operation.
         /// If not provided, will default to the defaults defined in BatchRetrySettings.
         /// Serialized Name: BatchDeployment.retrySettings
         /// </summary>
-        public BatchRetrySettings RetrySettings { get; set; }
+        public MachineLearningBatchRetrySettings RetrySettings { get; set; }
     }
 }

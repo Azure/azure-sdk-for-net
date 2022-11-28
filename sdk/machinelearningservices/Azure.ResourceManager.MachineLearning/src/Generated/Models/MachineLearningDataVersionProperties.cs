@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// [Required] Uri of the data. Usage/meaning depends on Microsoft.MachineLearning.ManagementFrontEnd.Contracts.V20221001.Assets.DataVersionBase.DataType
         /// Serialized Name: DataVersionBase.dataUri
         /// </param>
-        internal MachineLearningDataVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived, DataType dataType, Uri dataUri) : base(description, properties, tags, isAnonymous, isArchived)
+        internal MachineLearningDataVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived, MachineLearningDataType dataType, Uri dataUri) : base(description, properties, tags, isAnonymous, isArchived)
         {
             DataType = dataType;
             DataUri = dataUri;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// [Required] Specifies the type of data.
         /// Serialized Name: DataVersionBase.dataType
         /// </summary>
-        internal DataType DataType { get; set; }
+        internal MachineLearningDataType DataType { get; set; }
         /// <summary>
         /// [Required] Uri of the data. Usage/meaning depends on Microsoft.MachineLearning.ManagementFrontEnd.Contracts.V20221001.Assets.DataVersionBase.DataType
         /// Serialized Name: DataVersionBase.dataUri

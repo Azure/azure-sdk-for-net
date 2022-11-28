@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Classification": return Classification.DeserializeClassification(element);
+                    case "Classification": return ClassificationTask.DeserializeClassificationTask(element);
                     case "Forecasting": return Forecasting.DeserializeForecasting(element);
                     case "ImageClassification": return ImageClassification.DeserializeImageClassification(element);
                     case "ImageClassificationMultilabel": return ImageClassificationMultilabel.DeserializeImageClassificationMultilabel(element);

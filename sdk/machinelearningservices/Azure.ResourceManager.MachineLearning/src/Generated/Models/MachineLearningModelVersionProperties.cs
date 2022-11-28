@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of MachineLearningModelVersionProperties. </summary>
         public MachineLearningModelVersionProperties()
         {
-            Flavors = new ChangeTrackingDictionary<string, FlavorData>();
+            Flavors = new ChangeTrackingDictionary<string, MachineLearningFlavorData>();
         }
 
         /// <summary> Initializes a new instance of MachineLearningModelVersionProperties. </summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The URI path to the model contents.
         /// Serialized Name: ModelVersion.modelUri
         /// </param>
-        internal MachineLearningModelVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived, IDictionary<string, FlavorData> flavors, string jobName, string modelType, Uri modelUri) : base(description, properties, tags, isAnonymous, isArchived)
+        internal MachineLearningModelVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived, IDictionary<string, MachineLearningFlavorData> flavors, string jobName, string modelType, Uri modelUri) : base(description, properties, tags, isAnonymous, isArchived)
         {
             Flavors = flavors;
             JobName = jobName;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Mapping of model flavors to their properties.
         /// Serialized Name: ModelVersion.flavors
         /// </summary>
-        public IDictionary<string, FlavorData> Flavors { get; set; }
+        public IDictionary<string, MachineLearningFlavorData> Flavors { get; set; }
         /// <summary>
         /// Name of the training job which produced this model
         /// Serialized Name: ModelVersion.jobName

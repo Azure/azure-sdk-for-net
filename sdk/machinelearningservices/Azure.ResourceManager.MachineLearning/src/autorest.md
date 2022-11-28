@@ -49,6 +49,7 @@ rename-rules:
   Etag: ETag|etag
   AKS: Aks
   USD: Usd
+  PAT: Pat
 
 override-operation-name:
   Quotas_List: GetMachineLearningQuotas
@@ -231,6 +232,113 @@ rename-mapping:
   Seasonality: ForecastingSeasonality
   AzureBlobDatastore: MachineLearningAzureBlobDatastore
   AzureDataLakeGen1Datastore: MachineLearningAzureDataLakeGen1Datastore
+  AzureDataLakeGen2Datastore: MachineLearningAzureDataLakeGen2Datastore
+  AzureFileDatastore: MachineLearningAzureFileDatastore
+  BatchLoggingLevel: MachineLearningBatchLoggingLevel
+  BatchOutputAction: MachineLearningBatchOutputAction
+  BatchRetrySettings: MachineLearningBatchRetrySettings
+  BillingCurrency: MachineLearningBillingCurrency
+  BuildContext: MachineLearningBuildContext
+  EnvironmentType: MachineLearningEnvironmentType
+  OperatingSystemType: MachineLearningOperatingSystemType
+  InferenceContainerProperties: MachineLearningInferenceContainerProperties
+  Caching: MachineLearningCachingType
+  Classification: ClassificationTask
+  CodeConfiguration: MachineLearningCodeConfiguration
+  JobLimits: MachineLearningJobLimits
+  SweepJobLimits: MachineLearningSweepJobLimits
+  CommandJobLimits: MachineLearningCommandJobLimits
+  ContainerResourceRequirements: MachineLearningContainerResourceRequirements
+  ContainerResourceSettings: MachineLearningContainerResourceSettings
+  TriggerBase: MachineLearningTriggerBase
+  JobInput: MachineLearningJobInput
+  CustomModelJobInput: MachineLearningCustomModelJobInput
+  LiteralJobInput: MachineLearningLiteralJobInput
+  MLFlowModelJobInput: MachineLearningFlowModelJobInput
+  MLTableJobInput: MachineLearningTableJobInput
+  TritonModelJobInput: MachineLearningTritonModelJobInput
+  UriFileJobInput: MachineLearningUriFileJobInput
+  UriFolderJobInput: MachineLearningUriFolderJobInput
+  JobOutput: MachineLearningJobOutput
+  CustomModelJobOutput: MachineLearningCustomModelJobOutput
+  MLFlowModelJobOutput: MachineLearningFlowModelJobOutput
+  MLTableJobOutput: MachineLearningTableJobOutput
+  TritonModelJobOutput: MachineLearningTritonModelJobOutput
+  UriFileJobOutput: MachineLearningUriFileJobOutput
+  UriFolderJobOutput: MachineLearningUriFolderJobOutput
+  DataType: MachineLearningDataType
+  OnlineScaleSettings: MachineLearningOnlineScaleSettings
+  DefaultScaleSettings: MachineLearningDefaultScaleSettings
+  TargetUtilizationScaleSettings: MachineLearningTargetUtilizationScaleSettings
+  DeploymentProvisioningState: MachineLearningDeploymentProvisioningState
+  ResourceConfiguration: MachineLearningResourceConfiguration
+  DeploymentResourceConfiguration: MachineLearningDeploymentResourceConfiguration
+  JobResourceConfiguration: MachineLearningJobResourceConfiguration
+  DistributionConfiguration: MachineLearningDistributionConfiguration
+  Mpi: MpiDistributionConfiguration
+  PyTorch: PyTorchDistributionConfiguration
+  TensorFlow: TensorFlowDistributionConfiguration
+  EarlyTerminationPolicy: MachineLearningEarlyTerminationPolicy
+  EgressPublicNetworkAccessType: MachineLearningEgressPublicNetworkAccessType
+  EndpointAuthKeys: MachineLearningEndpointAuthKeys
+  EndpointAuthMode: MachineLearningEndpointAuthMode
+  EndpointAuthToken: MachineLearningEndpointAuthToken
+  EndpointComputeType: MachineLearningEndpointComputeType
+  EndpointDeploymentPropertiesBase: MachineLearningEndpointDeploymentProperties
+  EndpointPropertiesBase: MachineLearningEndpointProperties
+  EndpointProvisioningState: MachineLearningEndpointProvisioningState
+  EndpointScheduleAction: MachineLearningEndpointScheduleAction
+  ErrorResponse: MachineLearningError
+  EstimatedVMPrice: MachineLearningEstimatedVMPrice
+  VMPriceOSType: MachineLearningVMPriceOSType
+  VMTier: MachineLearningVmTier
+  EstimatedVMPrices: MachineLearningEstimatedVMPrices
+  UnitOfMeasure: MachineLearningUnitOfMeasure
+  FeatureLags: MachineLearningFeatureLag
+  FeaturizationMode: MachineLearningFeaturizationMode
+  FeaturizationSettings: MachineLearningFeaturizationSettings
+  FlavorData: MachineLearningFlavorData
+  FqdnEndpoint: MachineLearningFqdnEndpoint
+  FqdnEndpointDetail: MachineLearningFqdnEndpointDetail
+  Goal: MachineLearningGoal
+  InputDeliveryMode: MachineLearningInputDeliveryMode
+  OutputDeliveryMode: MachineLearningOutputDeliveryMode
+  InstanceTypeSchema: MachineLearningInstanceTypeSchema
+  InstanceTypeSchemaResources: MachineLearningInstanceTypeSchemaResources
+  ScheduleActionBase: MachineLearningScheduleAction
+  JobScheduleAction: MachineLearningJobScheduleAction
+  JobService: MachineLearningJobService
+  JobStatus: MachineLearningJobStatus
+  KeyType: MachineLearningKeyType
+  KubernetesOnlineDeployment: MachineLearningKubernetesOnlineDeployment
+  ListViewType: MachineLearningListViewType
+  LogVerbosity: MachineLearningLogVerbosity
+  ManagedIdentityAuthTypeWorkspaceConnectionProperties: MachineLearningManagedIdentityAuthTypeWorkspaceConnection
+  WorkspaceConnectionManagedIdentity: MachineLearningWorkspaceConnectionManagedIdentity
+  WorkspaceConnectionManagedIdentity.resourceId: -|arm-id
+  NoneAuthTypeWorkspaceConnectionProperties: MachineLearningNoneAuthTypeWorkspaceConnection
+  PATAuthTypeWorkspaceConnectionProperties: MachineLearningPATAuthTypeWorkspaceConnection
+  ConnectionAuthType: MachineLearningConnectionAuthType
+  ManagedOnlineDeployment: MachineLearningManagedOnlineDeployment
+  ModelSize: MachineLearningModelSize
+  NodeState: MachineLearningNodeState
+  NodeStateCounts: MachineLearningNodeStateCounts
+  NotebookPreparationError: MachineLearningNotebookPreparationError
+  Objective: MachineLearningObjective
+  OnlineRequestSettings: MachineLearningOnlineRequestSettings
+  OrderString: MachineLearningOrderString
+  OsType: MachineLearningOSType
+  PipelineJob: MachineLearningPipelineJob
+  PrivateEndpoint: MachineLearningPrivateEndpoint
+  PrivateEndpoint.id: -|arm-id
+  PrivateEndpoint.subnetArmId: -|arm-id
+  ProbeSettings: MachineLearningProbeSettings
+  PublicNetworkAccessType: MachineLearningPublicNetworkAccessType
+  QuotaBaseProperties: MachineLearningQuotaProperties
+  QuotaUnit: MachineLearningQuotaUnit
+  RecurrenceFrequency: MachineLearningRecurrenceFrequency
+  RecurrenceSchedule: MachineLearningRecurrenceSchedule
+  WeekDay: MachineLearningWeekday
 
 directive:
   - from: swagger-document

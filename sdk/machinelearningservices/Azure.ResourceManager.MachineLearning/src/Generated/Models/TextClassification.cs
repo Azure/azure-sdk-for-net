@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Serialized Name: AutoMLVertical.trainingData
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="trainingData"/> is null. </exception>
-        public TextClassification(MLTableJobInput trainingData) : base(trainingData)
+        public TextClassification(MachineLearningTableJobInput trainingData) : base(trainingData)
         {
             Argument.AssertNotNull(trainingData, nameof(trainingData));
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Validation data inputs.
         /// Serialized Name: NlpVertical.validationData
         /// </param>
-        internal TextClassification(LogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MLTableJobInput trainingData, ClassificationPrimaryMetric? primaryMetric, NlpVerticalFeaturizationSettings featurizationSettings, NlpVerticalLimitSettings limitSettings, MLTableJobInput validationData) : base(logVerbosity, targetColumnName, taskType, trainingData)
+        internal TextClassification(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData, ClassificationPrimaryMetric? primaryMetric, NlpVerticalFeaturizationSettings featurizationSettings, NlpVerticalLimitSettings limitSettings, MachineLearningTableJobInput validationData) : base(logVerbosity, targetColumnName, taskType, trainingData)
         {
             PrimaryMetric = primaryMetric;
             FeaturizationSettings = featurizationSettings;
@@ -107,6 +107,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Validation data inputs.
         /// Serialized Name: NlpVertical.validationData
         /// </summary>
-        public MLTableJobInput ValidationData { get; set; }
+        public MachineLearningTableJobInput ValidationData { get; set; }
     }
 }

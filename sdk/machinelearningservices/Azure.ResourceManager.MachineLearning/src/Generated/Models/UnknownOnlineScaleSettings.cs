@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// The UnknownOnlineScaleSettings.
     /// Serialized Name: UnknownOnlineScaleSettings
     /// </summary>
-    internal partial class UnknownOnlineScaleSettings : OnlineScaleSettings
+    internal partial class UnknownOnlineScaleSettings : MachineLearningOnlineScaleSettings
     {
         /// <summary> Initializes a new instance of UnknownOnlineScaleSettings. </summary>
         /// <param name="scaleType">

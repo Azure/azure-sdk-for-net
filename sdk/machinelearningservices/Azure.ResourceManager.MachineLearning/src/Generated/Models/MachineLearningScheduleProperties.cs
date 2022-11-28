@@ -21,17 +21,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="action">
         /// [Required] Specifies the action of the schedule
         /// Serialized Name: ScheduleProperties.action
-        /// Please note <see cref="ScheduleActionBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="JobScheduleAction"/> and <see cref="EndpointScheduleAction"/>.
+        /// Please note <see cref="MachineLearningScheduleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MachineLearningJobScheduleAction"/> and <see cref="MachineLearningEndpointScheduleAction"/>.
         /// </param>
         /// <param name="trigger">
         /// [Required] Specifies the trigger details
         /// Serialized Name: ScheduleProperties.trigger
-        /// Please note <see cref="TriggerBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="MachineLearningTriggerBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="CronTrigger"/> and <see cref="MachineLearningRecurrenceTrigger"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> or <paramref name="trigger"/> is null. </exception>
-        public MachineLearningScheduleProperties(ScheduleActionBase action, TriggerBase trigger)
+        public MachineLearningScheduleProperties(MachineLearningScheduleAction action, MachineLearningTriggerBase trigger)
         {
             Argument.AssertNotNull(action, nameof(action));
             Argument.AssertNotNull(trigger, nameof(trigger));
@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="action">
         /// [Required] Specifies the action of the schedule
         /// Serialized Name: ScheduleProperties.action
-        /// Please note <see cref="ScheduleActionBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="JobScheduleAction"/> and <see cref="EndpointScheduleAction"/>.
+        /// Please note <see cref="MachineLearningScheduleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MachineLearningJobScheduleAction"/> and <see cref="MachineLearningEndpointScheduleAction"/>.
         /// </param>
         /// <param name="displayName">
         /// Display name of schedule.
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="trigger">
         /// [Required] Specifies the trigger details
         /// Serialized Name: ScheduleProperties.trigger
-        /// Please note <see cref="TriggerBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="MachineLearningTriggerBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="CronTrigger"/> and <see cref="MachineLearningRecurrenceTrigger"/>.
         /// </param>
-        internal MachineLearningScheduleProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, ScheduleActionBase action, string displayName, bool? isEnabled, ScheduleProvisioningStatus? provisioningState, TriggerBase trigger) : base(description, properties, tags)
+        internal MachineLearningScheduleProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, MachineLearningScheduleAction action, string displayName, bool? isEnabled, ScheduleProvisioningStatus? provisioningState, MachineLearningTriggerBase trigger) : base(description, properties, tags)
         {
             Action = action;
             DisplayName = displayName;
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary>
         /// [Required] Specifies the action of the schedule
         /// Serialized Name: ScheduleProperties.action
-        /// Please note <see cref="ScheduleActionBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="JobScheduleAction"/> and <see cref="EndpointScheduleAction"/>.
+        /// Please note <see cref="MachineLearningScheduleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MachineLearningJobScheduleAction"/> and <see cref="MachineLearningEndpointScheduleAction"/>.
         /// </summary>
-        public ScheduleActionBase Action { get; set; }
+        public MachineLearningScheduleAction Action { get; set; }
         /// <summary>
         /// Display name of schedule.
         /// Serialized Name: ScheduleProperties.displayName
@@ -111,9 +111,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary>
         /// [Required] Specifies the trigger details
         /// Serialized Name: ScheduleProperties.trigger
-        /// Please note <see cref="TriggerBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="MachineLearningTriggerBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="CronTrigger"/> and <see cref="MachineLearningRecurrenceTrigger"/>.
         /// </summary>
-        public TriggerBase Trigger { get; set; }
+        public MachineLearningTriggerBase Trigger { get; set; }
     }
 }

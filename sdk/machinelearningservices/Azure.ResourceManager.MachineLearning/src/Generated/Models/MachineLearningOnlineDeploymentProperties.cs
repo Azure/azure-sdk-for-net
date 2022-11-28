@@ -13,9 +13,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// The MachineLearningOnlineDeploymentProperties.
     /// Serialized Name: OnlineDeployment
     /// Please note <see cref="MachineLearningOnlineDeploymentProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="KubernetesOnlineDeployment"/> and <see cref="ManagedOnlineDeployment"/>.
+    /// The available derived classes include <see cref="MachineLearningKubernetesOnlineDeployment"/> and <see cref="MachineLearningManagedOnlineDeployment"/>.
     /// </summary>
-    public partial class MachineLearningOnlineDeploymentProperties : EndpointDeploymentPropertiesBase
+    public partial class MachineLearningOnlineDeploymentProperties : MachineLearningEndpointDeploymentProperties
     {
         /// <summary> Initializes a new instance of MachineLearningOnlineDeploymentProperties. </summary>
         public MachineLearningOnlineDeploymentProperties()
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// it defaults to TargetUtilizationScaleSettings for KubernetesOnlineDeployment
         /// and to DefaultScaleSettings for ManagedOnlineDeployment.
         /// Serialized Name: OnlineDeployment.scaleSettings
-        /// Please note <see cref="OnlineScaleSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DefaultScaleSettings"/> and <see cref="TargetUtilizationScaleSettings"/>.
+        /// Please note <see cref="MachineLearningOnlineScaleSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MachineLearningDefaultScaleSettings"/> and <see cref="MachineLearningTargetUtilizationScaleSettings"/>.
         /// </param>
-        internal MachineLearningOnlineDeploymentProperties(CodeConfiguration codeConfiguration, string description, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, string> properties, bool? appInsightsEnabled, EgressPublicNetworkAccessType? egressPublicNetworkAccess, EndpointComputeType endpointComputeType, string instanceType, ProbeSettings livenessProbe, string model, string modelMountPath, DeploymentProvisioningState? provisioningState, ProbeSettings readinessProbe, OnlineRequestSettings requestSettings, OnlineScaleSettings scaleSettings) : base(codeConfiguration, description, environmentId, environmentVariables, properties)
+        internal MachineLearningOnlineDeploymentProperties(MachineLearningCodeConfiguration codeConfiguration, string description, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, string> properties, bool? appInsightsEnabled, MachineLearningEgressPublicNetworkAccessType? egressPublicNetworkAccess, MachineLearningEndpointComputeType endpointComputeType, string instanceType, MachineLearningProbeSettings livenessProbe, string model, string modelMountPath, MachineLearningDeploymentProvisioningState? provisioningState, MachineLearningProbeSettings readinessProbe, MachineLearningOnlineRequestSettings requestSettings, MachineLearningOnlineScaleSettings scaleSettings) : base(codeConfiguration, description, environmentId, environmentVariables, properties)
         {
             AppInsightsEnabled = appInsightsEnabled;
             EgressPublicNetworkAccess = egressPublicNetworkAccess;
@@ -116,12 +116,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// If Enabled, allow egress public network access. If Disabled, this will create secure egress. Default: Enabled.
         /// Serialized Name: OnlineDeployment.egressPublicNetworkAccess
         /// </summary>
-        public EgressPublicNetworkAccessType? EgressPublicNetworkAccess { get; set; }
+        public MachineLearningEgressPublicNetworkAccessType? EgressPublicNetworkAccess { get; set; }
         /// <summary>
         /// [Required] The compute type of the endpoint.
         /// Serialized Name: OnlineDeployment.endpointComputeType
         /// </summary>
-        internal EndpointComputeType EndpointComputeType { get; set; }
+        internal MachineLearningEndpointComputeType EndpointComputeType { get; set; }
         /// <summary>
         /// Compute instance type.
         /// Serialized Name: OnlineDeployment.instanceType
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Liveness probe monitors the health of the container regularly.
         /// Serialized Name: OnlineDeployment.livenessProbe
         /// </summary>
-        public ProbeSettings LivenessProbe { get; set; }
+        public MachineLearningProbeSettings LivenessProbe { get; set; }
         /// <summary>
         /// The URI path to the model.
         /// Serialized Name: OnlineDeployment.model
@@ -146,26 +146,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Provisioning state for the endpoint deployment.
         /// Serialized Name: OnlineDeployment.provisioningState
         /// </summary>
-        public DeploymentProvisioningState? ProvisioningState { get; }
+        public MachineLearningDeploymentProvisioningState? ProvisioningState { get; }
         /// <summary>
         /// Readiness probe validates if the container is ready to serve traffic. The properties and defaults are the same as liveness probe.
         /// Serialized Name: OnlineDeployment.readinessProbe
         /// </summary>
-        public ProbeSettings ReadinessProbe { get; set; }
+        public MachineLearningProbeSettings ReadinessProbe { get; set; }
         /// <summary>
         /// Request settings for the deployment.
         /// Serialized Name: OnlineDeployment.requestSettings
         /// </summary>
-        public OnlineRequestSettings RequestSettings { get; set; }
+        public MachineLearningOnlineRequestSettings RequestSettings { get; set; }
         /// <summary>
         /// Scale settings for the deployment.
         /// If it is null or not provided,
         /// it defaults to TargetUtilizationScaleSettings for KubernetesOnlineDeployment
         /// and to DefaultScaleSettings for ManagedOnlineDeployment.
         /// Serialized Name: OnlineDeployment.scaleSettings
-        /// Please note <see cref="OnlineScaleSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DefaultScaleSettings"/> and <see cref="TargetUtilizationScaleSettings"/>.
+        /// Please note <see cref="MachineLearningOnlineScaleSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MachineLearningDefaultScaleSettings"/> and <see cref="MachineLearningTargetUtilizationScaleSettings"/>.
         /// </summary>
-        public OnlineScaleSettings ScaleSettings { get; set; }
+        public MachineLearningOnlineScaleSettings ScaleSettings { get; set; }
     }
 }

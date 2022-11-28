@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The error that occurs when preparing notebook.
         /// Serialized Name: NotebookResourceInfo.notebookPreparationError
         /// </param>
-        internal MachineLearningNotebookResourceInfo(string fqdn, string resourceId, NotebookPreparationError notebookPreparationError)
+        internal MachineLearningNotebookResourceInfo(string fqdn, string resourceId, MachineLearningNotebookPreparationError notebookPreparationError)
         {
             Fqdn = fqdn;
             ResourceId = resourceId;
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The error that occurs when preparing notebook.
         /// Serialized Name: NotebookResourceInfo.notebookPreparationError
         /// </summary>
-        public NotebookPreparationError NotebookPreparationError { get; }
+        public MachineLearningNotebookPreparationError NotebookPreparationError { get; }
     }
 }

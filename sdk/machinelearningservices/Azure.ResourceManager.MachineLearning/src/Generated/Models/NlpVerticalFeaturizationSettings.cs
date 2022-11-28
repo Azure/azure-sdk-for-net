@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// The NlpVerticalFeaturizationSettings.
     /// Serialized Name: NlpVerticalFeaturizationSettings
     /// </summary>
-    internal partial class NlpVerticalFeaturizationSettings : FeaturizationSettings
+    internal partial class NlpVerticalFeaturizationSettings : MachineLearningFeaturizationSettings
     {
         /// <summary> Initializes a new instance of NlpVerticalFeaturizationSettings. </summary>
         public NlpVerticalFeaturizationSettings()

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of AmlComputeProperties. </summary>
         public AmlComputeProperties()
         {
-            Errors = new ChangeTrackingList<ErrorResponse>();
+            Errors = new ChangeTrackingList<MachineLearningError>();
         }
 
         /// <summary> Initializes a new instance of AmlComputeProperties. </summary>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// A property bag containing additional properties.
         /// Serialized Name: AmlComputeProperties.propertyBag
         /// </param>
-        internal AmlComputeProperties(OSType? osType, string vmSize, VmPriority? vmPriority, VirtualMachineImage virtualMachineImage, bool? isolatedNetwork, ScaleSettings scaleSettings, UserAccountCredentials userAccountCredentials, ResourceId subnet, RemoteLoginPortPublicAccess? remoteLoginPortPublicAccess, AmlAllocationState? allocationState, DateTimeOffset? allocationStateTransitionOn, IReadOnlyList<ErrorResponse> errors, int? currentNodeCount, int? targetNodeCount, NodeStateCounts nodeStateCounts, bool? enableNodePublicIP, BinaryData propertyBag)
+        internal AmlComputeProperties(MachineLearningOSType? osType, string vmSize, VmPriority? vmPriority, VirtualMachineImage virtualMachineImage, bool? isolatedNetwork, ScaleSettings scaleSettings, UserAccountCredentials userAccountCredentials, ResourceId subnet, RemoteLoginPortPublicAccess? remoteLoginPortPublicAccess, AmlAllocationState? allocationState, DateTimeOffset? allocationStateTransitionOn, IReadOnlyList<MachineLearningError> errors, int? currentNodeCount, int? targetNodeCount, MachineLearningNodeStateCounts nodeStateCounts, bool? enableNodePublicIP, BinaryData propertyBag)
         {
             OSType = osType;
             VmSize = vmSize;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Compute OS Type
         /// Serialized Name: AmlComputeProperties.osType
         /// </summary>
-        public OSType? OSType { get; set; }
+        public MachineLearningOSType? OSType { get; set; }
         /// <summary>
         /// Virtual Machine Size
         /// Serialized Name: AmlComputeProperties.vmSize
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Collection of errors encountered by various compute nodes during node setup.
         /// Serialized Name: AmlComputeProperties.errors
         /// </summary>
-        public IReadOnlyList<ErrorResponse> Errors { get; }
+        public IReadOnlyList<MachineLearningError> Errors { get; }
         /// <summary>
         /// The number of compute nodes currently assigned to the compute.
         /// Serialized Name: AmlComputeProperties.currentNodeCount
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Counts of various node states on the compute.
         /// Serialized Name: AmlComputeProperties.nodeStateCounts
         /// </summary>
-        public NodeStateCounts NodeStateCounts { get; }
+        public MachineLearningNodeStateCounts NodeStateCounts { get; }
         /// <summary>
         /// Enable or disable node public IP address provisioning. Possible values are: Possible values are: true - Indicates that the compute nodes will have public IPs provisioned. false - Indicates that the compute nodes will have a private endpoint and no public IPs.
         /// Serialized Name: AmlComputeProperties.enableNodePublicIp

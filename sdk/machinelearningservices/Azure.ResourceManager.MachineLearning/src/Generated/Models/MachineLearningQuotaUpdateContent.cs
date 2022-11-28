@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of MachineLearningQuotaUpdateContent. </summary>
         public MachineLearningQuotaUpdateContent()
         {
-            Value = new ChangeTrackingList<QuotaBaseProperties>();
+            Value = new ChangeTrackingList<MachineLearningQuotaProperties>();
         }
 
         /// <summary>
         /// The list for update quota.
         /// Serialized Name: QuotaUpdateParameters.value
         /// </summary>
-        public IList<QuotaBaseProperties> Value { get; }
+        public IList<MachineLearningQuotaProperties> Value { get; }
         /// <summary>
         /// Region of workspace quota to be updated.
         /// Serialized Name: QuotaUpdateParameters.location

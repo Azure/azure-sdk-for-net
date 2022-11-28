@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<IList<BlockedTransformer>> blockedTransformers = default;
             Optional<IDictionary<string, string>> columnNameAndTypes = default;
             Optional<bool> enableDnnFeaturization = default;
-            Optional<FeaturizationMode> mode = default;
+            Optional<MachineLearningFeaturizationMode> mode = default;
             Optional<IDictionary<string, IList<ColumnTransformer>>> transformerParams = default;
             Optional<string> datasetLanguage = default;
             foreach (var property in element.EnumerateObject())
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    mode = new FeaturizationMode(property.Value.GetString());
+                    mode = new MachineLearningFeaturizationMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("transformerParams"))

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static MachineLearningComputeInstanceDataDisk DeserializeMachineLearningComputeInstanceDataDisk(JsonElement element)
         {
-            Optional<Caching> caching = default;
+            Optional<MachineLearningCachingType> caching = default;
             Optional<int> diskSizeGB = default;
             Optional<int> lun = default;
             Optional<StorageAccountType> storageAccountType = default;
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    caching = new Caching(property.Value.GetString());
+                    caching = new MachineLearningCachingType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("diskSizeGB"))

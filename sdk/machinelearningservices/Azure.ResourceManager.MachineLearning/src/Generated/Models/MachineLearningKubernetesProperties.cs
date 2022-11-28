@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of MachineLearningKubernetesProperties. </summary>
         public MachineLearningKubernetesProperties()
         {
-            InstanceTypes = new ChangeTrackingDictionary<string, InstanceTypeSchema>();
+            InstanceTypes = new ChangeTrackingDictionary<string, MachineLearningInstanceTypeSchema>();
         }
 
         /// <summary> Initializes a new instance of MachineLearningKubernetesProperties. </summary>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Instance Type Schema
         /// Serialized Name: KubernetesProperties.instanceTypes
         /// </param>
-        internal MachineLearningKubernetesProperties(string relayConnectionString, string serviceBusConnectionString, string extensionPrincipalId, string extensionInstanceReleaseTrain, string vcName, string @namespace, string defaultInstanceType, IDictionary<string, InstanceTypeSchema> instanceTypes)
+        internal MachineLearningKubernetesProperties(string relayConnectionString, string serviceBusConnectionString, string extensionPrincipalId, string extensionInstanceReleaseTrain, string vcName, string @namespace, string defaultInstanceType, IDictionary<string, MachineLearningInstanceTypeSchema> instanceTypes)
         {
             RelayConnectionString = relayConnectionString;
             ServiceBusConnectionString = serviceBusConnectionString;
@@ -106,6 +106,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Instance Type Schema
         /// Serialized Name: KubernetesProperties.instanceTypes
         /// </summary>
-        public IDictionary<string, InstanceTypeSchema> InstanceTypes { get; }
+        public IDictionary<string, MachineLearningInstanceTypeSchema> InstanceTypes { get; }
     }
 }

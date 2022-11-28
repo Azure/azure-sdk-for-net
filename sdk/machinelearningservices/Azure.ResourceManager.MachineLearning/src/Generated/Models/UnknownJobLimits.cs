@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// The UnknownJobLimits.
     /// Serialized Name: UnknownJobLimits
     /// </summary>
-    internal partial class UnknownJobLimits : JobLimits
+    internal partial class UnknownJobLimits : MachineLearningJobLimits
     {
         /// <summary> Initializes a new instance of UnknownJobLimits. </summary>
         /// <param name="jobLimitsType">
