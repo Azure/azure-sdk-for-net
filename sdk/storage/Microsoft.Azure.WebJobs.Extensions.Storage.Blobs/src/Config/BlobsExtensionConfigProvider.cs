@@ -10,17 +10,22 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
+using Azure.Core;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Microsoft.Azure.WebJobs.Description;
+using Microsoft.Azure.WebJobs.Extensions.Clients.Shared;
 using Microsoft.Azure.WebJobs.Extensions.EventGrid;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Triggers;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
+using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Config;
+using Microsoft.Extensions.Azure;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 
@@ -44,6 +49,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
         private readonly SemaphoreSlim _semaphoreSlim = new SemaphoreSlim(1, 1);
         private readonly HttpRequestProcessor _httpRequestProcessor;
         private readonly IFunctionDataCache _functionDataCache;
+        private readonly IConfiguration _configuration;
 
         public BlobsExtensionConfigProvider(
             BlobServiceClientProvider blobServiceClientProvider,
@@ -54,8 +60,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
             BlobTriggerQueueWriterFactory blobTriggerQueueWriterFactory,
             HttpRequestProcessor httpRequestProcessor,
             IFunctionDataCache functionDataCache,
-            ILoggerFactory loggerFactory)
+            ILoggerFactory loggerFactory,
+            IConfiguration configuration)
         {
+            _configuration = configuration;
             _blobServiceClientProvider = blobServiceClientProvider;
             _triggerBinder = triggerBinder;
             _blobWrittenWatcherGetter = contextAccessor;
@@ -75,7 +83,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
             IConverterManager converterManager,
             BlobTriggerQueueWriterFactory blobTriggerQueueWriterFactory,
             HttpRequestProcessor httpRequestProcessor,
-            ILoggerFactory loggerFactory) : this(blobServiceClientProvider, triggerBinder, contextAccessor, nameResolver, converterManager, blobTriggerQueueWriterFactory, httpRequestProcessor, null, loggerFactory)
+            ILoggerFactory loggerFactory,
+            IConfiguration configuration) : this(blobServiceClientProvider, triggerBinder, contextAccessor, nameResolver, converterManager, blobTriggerQueueWriterFactory, httpRequestProcessor, null, loggerFactory, configuration)
         {
         }
 
@@ -210,10 +219,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
         private ParameterBindingData ConvertToParameterBindingData(BlobAttribute blobAttribute)
         {
             var blobPath = BlobPath.ParseAndValidate(blobAttribute.BlobPath);
+            string connectionName = !string.IsNullOrEmpty(blobAttribute.Connection) ? _nameResolver.ResolveWholeString(blobAttribute.Connection) : Constants.DefaultAzureStorageConnectionName;
+            IConfigurationSection connectionSection = _configuration.GetWebJobsConnectionStringSection(connectionName);
+
+            if (!connectionSection.Exists())
+            {
+                throw new InvalidOperationException($"Storage account connection string '{IConfigurationExtensions.GetPrefixedConnectionStringName(connectionName)}' does not exist. Make sure that it is a defined App Setting.");
+            }
 
             var blobDetails = new BlobParameterBindingDataContent()
             {
-                Connection = _nameResolver.Resolve(blobAttribute.Connection) ?? Constants.DefaultAzureStorageConnectionName,
+                Connection = connectionSection.Value,
                 BlobName = blobPath.BlobName,
                 ContainerName = blobPath.ContainerName
             };
