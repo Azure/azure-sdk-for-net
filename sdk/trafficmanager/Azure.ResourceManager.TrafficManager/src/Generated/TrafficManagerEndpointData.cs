@@ -39,7 +39,8 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="geoMapping"> The list of countries/regions mapped to this endpoint when using the &apos;Geographic&apos; traffic routing method. Please consult Traffic Manager Geographic documentation for a full list of accepted values. </param>
         /// <param name="subnets"> The list of subnets, IP addresses, and/or address ranges mapped to this endpoint when using the &apos;Subnet&apos; traffic routing method. An empty list will match all ranges not covered by other endpoints. </param>
         /// <param name="customHeaders"> List of custom headers. </param>
-        internal TrafficManagerEndpointData(ResourceIdentifier id, string name, ResourceType? resourceType, ResourceIdentifier targetResourceId, string target, TrafficManagerEndpointStatus? endpointStatus, long? weight, long? priority, string endpointLocation, TrafficManagerEndpointMonitorStatus? endpointMonitorStatus, long? minChildEndpoints, long? minChildEndpointsIPv4, long? minChildEndpointsIPv6, IList<string> geoMapping, IList<TrafficManagerEndpointSubnetInfo> subnets, IList<TrafficManagerEndpointCustomHeaderInfo> customHeaders) : base(id, name, resourceType)
+        /// <param name="alwaysServe"> If Always Serve is enabled, probing for endpoint health will be disabled and endpoints will be included in the traffic routing method. </param>
+        internal TrafficManagerEndpointData(ResourceIdentifier id, string name, ResourceType? resourceType, ResourceIdentifier targetResourceId, string target, TrafficManagerEndpointStatus? endpointStatus, long? weight, long? priority, string endpointLocation, TrafficManagerEndpointMonitorStatus? endpointMonitorStatus, long? minChildEndpoints, long? minChildEndpointsIPv4, long? minChildEndpointsIPv6, IList<string> geoMapping, IList<TrafficManagerEndpointSubnetInfo> subnets, IList<TrafficManagerEndpointCustomHeaderInfo> customHeaders, TrafficManagerEndpointAlwaysServeStatus? alwaysServe) : base(id, name, resourceType)
         {
             TargetResourceId = targetResourceId;
             Target = target;
@@ -54,6 +55,7 @@ namespace Azure.ResourceManager.TrafficManager
             GeoMapping = geoMapping;
             Subnets = subnets;
             CustomHeaders = customHeaders;
+            AlwaysServe = alwaysServe;
         }
 
         /// <summary> The Azure Resource URI of the of the endpoint. Not applicable to endpoints of type &apos;ExternalEndpoints&apos;. </summary>
@@ -82,5 +84,7 @@ namespace Azure.ResourceManager.TrafficManager
         public IList<TrafficManagerEndpointSubnetInfo> Subnets { get; }
         /// <summary> List of custom headers. </summary>
         public IList<TrafficManagerEndpointCustomHeaderInfo> CustomHeaders { get; }
+        /// <summary> If Always Serve is enabled, probing for endpoint health will be disabled and endpoints will be included in the traffic routing method. </summary>
+        public TrafficManagerEndpointAlwaysServeStatus? AlwaysServe { get; set; }
     }
 }

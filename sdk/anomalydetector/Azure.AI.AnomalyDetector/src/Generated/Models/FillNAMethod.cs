@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.AnomalyDetector.Models
 {
-    /// <summary> An optional field, indicating how missing values will be filled. One of Previous, Subsequent, Linear, Zero, Fixed, and NotFill. Cannot be set to NotFill, when the alignMode is Outer. </summary>
+    /// <summary> An optional field, indicating how missing values will be filled. One of Previous, Subsequent, Linear, Zero, Fixed. </summary>
     public readonly partial struct FillNAMethod : IEquatable<FillNAMethod>
     {
         private readonly string _value;
@@ -27,7 +27,6 @@ namespace Azure.AI.AnomalyDetector.Models
         private const string LinearValue = "Linear";
         private const string ZeroValue = "Zero";
         private const string FixedValue = "Fixed";
-        private const string NotFillValue = "NotFill";
 
         /// <summary> Previous. </summary>
         public static FillNAMethod Previous { get; } = new FillNAMethod(PreviousValue);
@@ -39,8 +38,6 @@ namespace Azure.AI.AnomalyDetector.Models
         public static FillNAMethod Zero { get; } = new FillNAMethod(ZeroValue);
         /// <summary> Fixed. </summary>
         public static FillNAMethod Fixed { get; } = new FillNAMethod(FixedValue);
-        /// <summary> NotFill. </summary>
-        public static FillNAMethod NotFill { get; } = new FillNAMethod(NotFillValue);
         /// <summary> Determines if two <see cref="FillNAMethod"/> values are the same. </summary>
         public static bool operator ==(FillNAMethod left, FillNAMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FillNAMethod"/> values are not the same. </summary>

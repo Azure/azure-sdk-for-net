@@ -144,8 +144,8 @@ namespace Azure.AI.TextAnalytics
         /// Gets the last HTTP response received from the server associated with this long-running operation.
         /// </summary>
         /// <remarks>
-        /// An instance of <see cref="AbstractSummaryOperation"/> sends requests to a server in UpdateStatusAsync, UpdateStatus, and other methods.
-        /// Responses from these requests can be accessed using GetRawResponse.
+        /// An instance of the <see cref="AbstractSummaryOperation"/> class sends requests to the server via methods
+        /// such as <see cref="UpdateStatus"/>, <see cref="UpdateStatusAsync"/>, etc.
         /// </remarks>
         public override Response GetRawResponse() => _operationInternal.RawResponse;
 

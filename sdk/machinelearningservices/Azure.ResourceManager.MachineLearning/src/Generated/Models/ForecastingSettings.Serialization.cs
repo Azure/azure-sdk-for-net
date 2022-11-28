@@ -30,8 +30,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(CvStepSize))
             {
-                writer.WritePropertyName("cvStepSize");
-                writer.WriteNumberValue(CvStepSize.Value);
+                if (CvStepSize != null)
+                {
+                    writer.WritePropertyName("cvStepSize");
+                    writer.WriteNumberValue(CvStepSize.Value);
+                }
+                else
+                {
+                    writer.WriteNull("cvStepSize");
+                }
             }
             if (Optional.IsDefined(FeatureLags))
             {
@@ -40,15 +47,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(ForecastHorizon))
             {
-                if (ForecastHorizon != null)
-                {
-                    writer.WritePropertyName("forecastHorizon");
-                    writer.WriteObjectValue(ForecastHorizon);
-                }
-                else
-                {
-                    writer.WriteNull("forecastHorizon");
-                }
+                writer.WritePropertyName("forecastHorizon");
+                writer.WriteObjectValue(ForecastHorizon);
             }
             if (Optional.IsDefined(Frequency))
             {
@@ -64,15 +64,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(Seasonality))
             {
-                if (Seasonality != null)
-                {
-                    writer.WritePropertyName("seasonality");
-                    writer.WriteObjectValue(Seasonality);
-                }
-                else
-                {
-                    writer.WriteNull("seasonality");
-                }
+                writer.WritePropertyName("seasonality");
+                writer.WriteObjectValue(Seasonality);
             }
             if (Optional.IsDefined(ShortSeriesHandlingConfig))
             {
@@ -148,7 +141,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal static ForecastingSettings DeserializeForecastingSettings(JsonElement element)
         {
             Optional<string> countryOrRegionForHolidays = default;
-            Optional<int> cvStepSize = default;
+            Optional<int?> cvStepSize = default;
             Optional<FeatureLag> featureLags = default;
             Optional<ForecastHorizon> forecastHorizon = default;
             Optional<string> frequency = default;
@@ -176,7 +169,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        cvStepSize = null;
                         continue;
                     }
                     cvStepSize = property.Value.GetInt32();
@@ -196,7 +189,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        forecastHorizon = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     forecastHorizon = ForecastHorizon.DeserializeForecastHorizon(property.Value);
@@ -216,7 +209,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        seasonality = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     seasonality = Seasonality.DeserializeSeasonality(property.Value);

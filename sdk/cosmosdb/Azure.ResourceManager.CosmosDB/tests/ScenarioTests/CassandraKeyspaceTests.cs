@@ -28,7 +28,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             _resourceGroup = await GlobalClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
 
-            _keyspaceAccountIdentifier = (await CreateDatabaseAccount(SessionRecording.GenerateAssetName("dbaccount-"), CosmosDBAccountKind.GlobalDocumentDB, new CosmosDBAccountCapability("EnableCassandra"))).Id;
+            List<CosmosDBAccountCapability> capabilities = new List<CosmosDBAccountCapability>();
+            capabilities.Add(new CosmosDBAccountCapability("EnableCassandra"));
+            _keyspaceAccountIdentifier = (await CreateDatabaseAccount(SessionRecording.GenerateAssetName("dbaccount-"), CosmosDBAccountKind.GlobalDocumentDB, capabilities)).Id;
             await StopSessionRecordingAsync();
         }
 

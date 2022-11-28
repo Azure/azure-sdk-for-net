@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -14,48 +15,98 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class Regression : AutoMLVertical
     {
         /// <summary> Initializes a new instance of Regression. </summary>
-        public Regression()
+        /// <param name="trainingData"> [Required] Training data input. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="trainingData"/> is null. </exception>
+        public Regression(MLTableJobInput trainingData) : base(trainingData)
         {
-            AllowedModels = new ChangeTrackingList<RegressionModel>();
-            BlockedModels = new ChangeTrackingList<RegressionModel>();
+            Argument.AssertNotNull(trainingData, nameof(trainingData));
+
+            CvSplitColumnNames = new ChangeTrackingList<string>();
             TaskType = TaskType.Regression;
         }
 
         /// <summary> Initializes a new instance of Regression. </summary>
         /// <param name="logVerbosity"> Log verbosity for the job. </param>
+        /// <param name="targetColumnName">
+        /// Target column name: This is prediction values column.
+        /// Also known as label column name in context of classification tasks.
+        /// </param>
         /// <param name="taskType"> [Required] Task type for AutoMLJob. </param>
-        /// <param name="allowedModels"> Allowed models for regression task. </param>
-        /// <param name="blockedModels"> Blocked models for regression task. </param>
+        /// <param name="trainingData"> [Required] Training data input. </param>
         /// <param name="primaryMetric"> Primary metric for regression task. </param>
-        /// <param name="dataSettings"> Data inputs for AutoMLJob. </param>
+        /// <param name="trainingSettings"> Inputs for training phase for an AutoML Job. </param>
+        /// <param name="cvSplitColumnNames"> Columns to use for CVSplit data. </param>
         /// <param name="featurizationSettings"> Featurization inputs needed for AutoML job. </param>
         /// <param name="limitSettings"> Execution constraints for AutoMLJob. </param>
-        /// <param name="trainingSettings"> Inputs for training phase for an AutoML Job. </param>
-        internal Regression(LogVerbosity? logVerbosity, TaskType taskType, IList<RegressionModel> allowedModels, IList<RegressionModel> blockedModels, RegressionPrimaryMetric? primaryMetric, TableVerticalDataSettings dataSettings, TableVerticalFeaturizationSettings featurizationSettings, TableVerticalLimitSettings limitSettings, TrainingSettings trainingSettings) : base(logVerbosity, taskType)
+        /// <param name="nCrossValidations">
+        /// Number of cross validation folds to be applied on training dataset
+        /// when validation dataset is not provided.
+        /// Please note <see cref="NCrossValidations"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AutoNCrossValidations"/> and <see cref="CustomNCrossValidations"/>.
+        /// </param>
+        /// <param name="testData"> Test data input. </param>
+        /// <param name="testDataSize">
+        /// The fraction of test dataset that needs to be set aside for validation purpose.
+        /// Values between (0.0 , 1.0)
+        /// Applied when validation dataset is not provided.
+        /// </param>
+        /// <param name="validationData"> Validation data inputs. </param>
+        /// <param name="validationDataSize">
+        /// The fraction of training dataset that needs to be set aside for validation purpose.
+        /// Values between (0.0 , 1.0)
+        /// Applied when validation dataset is not provided.
+        /// </param>
+        /// <param name="weightColumnName"> The name of the sample weight column. Automated ML supports a weighted column as an input, causing rows in the data to be weighted up or down. </param>
+        internal Regression(LogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MLTableJobInput trainingData, RegressionPrimaryMetric? primaryMetric, RegressionTrainingSettings trainingSettings, IList<string> cvSplitColumnNames, TableVerticalFeaturizationSettings featurizationSettings, TableVerticalLimitSettings limitSettings, NCrossValidations nCrossValidations, MLTableJobInput testData, double? testDataSize, MLTableJobInput validationData, double? validationDataSize, string weightColumnName) : base(logVerbosity, targetColumnName, taskType, trainingData)
         {
-            AllowedModels = allowedModels;
-            BlockedModels = blockedModels;
             PrimaryMetric = primaryMetric;
-            DataSettings = dataSettings;
+            TrainingSettings = trainingSettings;
+            CvSplitColumnNames = cvSplitColumnNames;
             FeaturizationSettings = featurizationSettings;
             LimitSettings = limitSettings;
-            TrainingSettings = trainingSettings;
+            NCrossValidations = nCrossValidations;
+            TestData = testData;
+            TestDataSize = testDataSize;
+            ValidationData = validationData;
+            ValidationDataSize = validationDataSize;
+            WeightColumnName = weightColumnName;
             TaskType = taskType;
         }
 
-        /// <summary> Allowed models for regression task. </summary>
-        public IList<RegressionModel> AllowedModels { get; set; }
-        /// <summary> Blocked models for regression task. </summary>
-        public IList<RegressionModel> BlockedModels { get; set; }
         /// <summary> Primary metric for regression task. </summary>
         public RegressionPrimaryMetric? PrimaryMetric { get; set; }
-        /// <summary> Data inputs for AutoMLJob. </summary>
-        public TableVerticalDataSettings DataSettings { get; set; }
+        /// <summary> Inputs for training phase for an AutoML Job. </summary>
+        public RegressionTrainingSettings TrainingSettings { get; set; }
+        /// <summary> Columns to use for CVSplit data. </summary>
+        public IList<string> CvSplitColumnNames { get; set; }
         /// <summary> Featurization inputs needed for AutoML job. </summary>
         public TableVerticalFeaturizationSettings FeaturizationSettings { get; set; }
         /// <summary> Execution constraints for AutoMLJob. </summary>
         public TableVerticalLimitSettings LimitSettings { get; set; }
-        /// <summary> Inputs for training phase for an AutoML Job. </summary>
-        public TrainingSettings TrainingSettings { get; set; }
+        /// <summary>
+        /// Number of cross validation folds to be applied on training dataset
+        /// when validation dataset is not provided.
+        /// Please note <see cref="NCrossValidations"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AutoNCrossValidations"/> and <see cref="CustomNCrossValidations"/>.
+        /// </summary>
+        public NCrossValidations NCrossValidations { get; set; }
+        /// <summary> Test data input. </summary>
+        public MLTableJobInput TestData { get; set; }
+        /// <summary>
+        /// The fraction of test dataset that needs to be set aside for validation purpose.
+        /// Values between (0.0 , 1.0)
+        /// Applied when validation dataset is not provided.
+        /// </summary>
+        public double? TestDataSize { get; set; }
+        /// <summary> Validation data inputs. </summary>
+        public MLTableJobInput ValidationData { get; set; }
+        /// <summary>
+        /// The fraction of training dataset that needs to be set aside for validation purpose.
+        /// Values between (0.0 , 1.0)
+        /// Applied when validation dataset is not provided.
+        /// </summary>
+        public double? ValidationDataSize { get; set; }
+        /// <summary> The name of the sample weight column. Automated ML supports a weighted column as an input, causing rows in the data to be weighted up or down. </summary>
+        public string WeightColumnName { get; set; }
     }
 }

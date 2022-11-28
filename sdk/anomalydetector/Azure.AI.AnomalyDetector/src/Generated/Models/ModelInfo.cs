@@ -7,68 +7,76 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector.Models
 {
-    /// <summary> Train result of a model including status, errors and diagnose info for model and variables. </summary>
+    /// <summary>
+    /// Training result of a model including its status, errors and diagnostics
+    /// information.
+    /// </summary>
     public partial class ModelInfo
     {
         /// <summary> Initializes a new instance of ModelInfo. </summary>
-        /// <param name="source"> Source link to the input variables. Each variable should be a csv file with two columns, `timestamp` and `value`. By default, the file name of the variable will be used as its variable name. </param>
-        /// <param name="startTime"> A required field, indicating the start time of training data. Should be date-time. </param>
-        /// <param name="endTime"> A required field, indicating the end time of training data. Should be date-time. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="source"/> is null. </exception>
-        public ModelInfo(string source, DateTimeOffset startTime, DateTimeOffset endTime)
+        /// <param name="dataSource"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataSource"/> is null. </exception>
+        public ModelInfo(string dataSource, DateTimeOffset startTime, DateTimeOffset endTime)
         {
-            Argument.AssertNotNull(source, nameof(source));
+            Argument.AssertNotNull(dataSource, nameof(dataSource));
 
-            Source = source;
+            DataSource = dataSource;
             StartTime = startTime;
             EndTime = endTime;
             Errors = new ChangeTrackingList<ErrorResponse>();
         }
 
         /// <summary> Initializes a new instance of ModelInfo. </summary>
-        /// <param name="slidingWindow"> An optional field, indicating how many previous points will be used to compute the anomaly score of the subsequent point. </param>
+        /// <param name="dataSource"></param>
+        /// <param name="dataSchema"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <param name="displayName"></param>
+        /// <param name="slidingWindow"></param>
         /// <param name="alignPolicy"></param>
-        /// <param name="source"> Source link to the input variables. Each variable should be a csv file with two columns, `timestamp` and `value`. By default, the file name of the variable will be used as its variable name. </param>
-        /// <param name="startTime"> A required field, indicating the start time of training data. Should be date-time. </param>
-        /// <param name="endTime"> A required field, indicating the end time of training data. Should be date-time. </param>
-        /// <param name="displayName"> An optional field. The name of the model whose maximum length is 24. </param>
-        /// <param name="status"> Model training status. </param>
-        /// <param name="errors"> Error messages when failed to create a model. </param>
+        /// <param name="status"></param>
+        /// <param name="errors"></param>
         /// <param name="diagnosticsInfo"></param>
-        internal ModelInfo(int? slidingWindow, AlignPolicy alignPolicy, string source, DateTimeOffset startTime, DateTimeOffset endTime, string displayName, ModelStatus? status, IReadOnlyList<ErrorResponse> errors, DiagnosticsInfo diagnosticsInfo)
+        internal ModelInfo(string dataSource, DataSchema? dataSchema, DateTimeOffset startTime, DateTimeOffset endTime, string displayName, int? slidingWindow, AlignPolicy alignPolicy, ModelStatus? status, IList<ErrorResponse> errors, DiagnosticsInfo diagnosticsInfo)
         {
-            SlidingWindow = slidingWindow;
-            AlignPolicy = alignPolicy;
-            Source = source;
+            DataSource = dataSource;
+            DataSchema = dataSchema;
             StartTime = startTime;
             EndTime = endTime;
             DisplayName = displayName;
+            SlidingWindow = slidingWindow;
+            AlignPolicy = alignPolicy;
             Status = status;
-            Errors = errors;
+            Errors = errors.ToList();
             DiagnosticsInfo = diagnosticsInfo;
         }
 
-        /// <summary> An optional field, indicating how many previous points will be used to compute the anomaly score of the subsequent point. </summary>
+        /// <summary> Gets or sets the data source. </summary>
+        public string DataSource { get; set; }
+        /// <summary> Gets or sets the data schema. </summary>
+        public DataSchema? DataSchema { get; set; }
+        /// <summary> Gets or sets the start time. </summary>
+        public DateTimeOffset StartTime { get; set; }
+        /// <summary> Gets or sets the end time. </summary>
+        public DateTimeOffset EndTime { get; set; }
+        /// <summary> Gets or sets the display name. </summary>
+        public string DisplayName { get; set; }
+        /// <summary> Gets or sets the sliding window. </summary>
         public int? SlidingWindow { get; set; }
         /// <summary> Gets or sets the align policy. </summary>
         public AlignPolicy AlignPolicy { get; set; }
-        /// <summary> Source link to the input variables. Each variable should be a csv file with two columns, `timestamp` and `value`. By default, the file name of the variable will be used as its variable name. </summary>
-        public string Source { get; set; }
-        /// <summary> A required field, indicating the start time of training data. Should be date-time. </summary>
-        public DateTimeOffset StartTime { get; set; }
-        /// <summary> A required field, indicating the end time of training data. Should be date-time. </summary>
-        public DateTimeOffset EndTime { get; set; }
-        /// <summary> An optional field. The name of the model whose maximum length is 24. </summary>
-        public string DisplayName { get; set; }
-        /// <summary> Model training status. </summary>
-        public ModelStatus? Status { get; }
-        /// <summary> Error messages when failed to create a model. </summary>
-        public IReadOnlyList<ErrorResponse> Errors { get; }
-        /// <summary> Gets the diagnostics info. </summary>
-        public DiagnosticsInfo DiagnosticsInfo { get; }
+        /// <summary> Gets or sets the status. </summary>
+        public ModelStatus? Status { get; set; }
+        /// <summary> Gets the errors. </summary>
+        public IList<ErrorResponse> Errors { get; }
+        /// <summary> Gets or sets the diagnostics info. </summary>
+        public DiagnosticsInfo DiagnosticsInfo { get; set; }
     }
 }

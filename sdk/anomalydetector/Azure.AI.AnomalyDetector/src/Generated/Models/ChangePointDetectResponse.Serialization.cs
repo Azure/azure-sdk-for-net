@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector.Models
@@ -15,7 +16,7 @@ namespace Azure.AI.AnomalyDetector.Models
     {
         internal static ChangePointDetectResponse DeserializeChangePointDetectResponse(JsonElement element)
         {
-            Optional<int> period = default;
+            Optional<int?> period = default;
             Optional<IReadOnlyList<bool>> isChangePoint = default;
             Optional<IReadOnlyList<float>> confidenceScores = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +25,7 @@ namespace Azure.AI.AnomalyDetector.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        period = null;
                         continue;
                     }
                     period = property.Value.GetInt32();
@@ -62,6 +63,14 @@ namespace Azure.AI.AnomalyDetector.Models
                 }
             }
             return new ChangePointDetectResponse(Optional.ToNullable(period), Optional.ToList(isChangePoint), Optional.ToList(confidenceScores));
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ChangePointDetectResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeChangePointDetectResponse(document.RootElement);
         }
     }
 }

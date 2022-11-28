@@ -168,14 +168,8 @@ await sender.CancelScheduledMessageAsync(seq);
 
 ### Setting time to live
 
-Message time to live can be configured at the queue or subscription level. By default, it is 14 days. Once this time has passed, the message is considered "expired". You can configure what happens to expired messages at the queue or subscription level. By default, these messages are deleted, but they can also be configured to move to the dead letter queue. More information about message expiry can be found [here](https://docs.microsoft.com/azure/service-bus-messaging/message-expiration). If you want to have an individual message expire before the entity-level configured time, you can set the `TimeToLive` property on the message.  
+Message time to live can be configured at the queue or subscription level. By default, it is 14 days. Once this time has passed, the message is considered "expired". You can configure what happens to expired messages at the queue or subscription level. By default, these messages are deleted, but they can also be configured to move to the dead letter queue. More information about message expiry can be found [here](https://docs.microsoft.com/azure/service-bus-messaging/message-expiration). If you want to have an individual message expire before the entity-level configured time, you can set the `TimeToLive` property on the message.
 
 ```C# Snippet:ServiceBusMessageTimeToLive
 var message = new ServiceBusMessage("Hello world!") { TimeToLive = TimeSpan.FromMinutes(5) };
 ```
-
-## Source
-
-To see the full example source, see:
-
-* [Sample01_SendReceive.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample01_SendReceive.cs)

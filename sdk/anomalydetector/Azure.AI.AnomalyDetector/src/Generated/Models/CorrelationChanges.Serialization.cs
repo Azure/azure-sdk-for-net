@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector.Models
@@ -16,7 +17,6 @@ namespace Azure.AI.AnomalyDetector.Models
         internal static CorrelationChanges DeserializeCorrelationChanges(JsonElement element)
         {
             Optional<IReadOnlyList<string>> changedVariables = default;
-            Optional<IReadOnlyList<float>> changedValues = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("changedVariables"))
@@ -34,23 +34,16 @@ namespace Azure.AI.AnomalyDetector.Models
                     changedVariables = array;
                     continue;
                 }
-                if (property.NameEquals("changedValues"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<float> array = new List<float>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetSingle());
-                    }
-                    changedValues = array;
-                    continue;
-                }
             }
-            return new CorrelationChanges(Optional.ToList(changedVariables), Optional.ToList(changedValues));
+            return new CorrelationChanges(Optional.ToList(changedVariables));
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CorrelationChanges FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCorrelationChanges(document.RootElement);
         }
     }
 }

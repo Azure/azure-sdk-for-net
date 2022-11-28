@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector.Models
@@ -17,34 +18,55 @@ namespace Azure.AI.AnomalyDetector.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AlignMode))
             {
-                writer.WritePropertyName("alignMode");
-                writer.WriteStringValue(AlignMode.Value.ToSerialString());
+                if (AlignMode != null)
+                {
+                    writer.WritePropertyName("alignMode");
+                    writer.WriteStringValue(AlignMode.Value.ToSerialString());
+                }
+                else
+                {
+                    writer.WriteNull("alignMode");
+                }
             }
             if (Optional.IsDefined(FillNAMethod))
             {
-                writer.WritePropertyName("fillNAMethod");
-                writer.WriteStringValue(FillNAMethod.Value.ToString());
+                if (FillNAMethod != null)
+                {
+                    writer.WritePropertyName("fillNAMethod");
+                    writer.WriteStringValue(FillNAMethod.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("fillNAMethod");
+                }
             }
             if (Optional.IsDefined(PaddingValue))
             {
-                writer.WritePropertyName("paddingValue");
-                writer.WriteNumberValue(PaddingValue.Value);
+                if (PaddingValue != null)
+                {
+                    writer.WritePropertyName("paddingValue");
+                    writer.WriteNumberValue(PaddingValue.Value);
+                }
+                else
+                {
+                    writer.WriteNull("paddingValue");
+                }
             }
             writer.WriteEndObject();
         }
 
         internal static AlignPolicy DeserializeAlignPolicy(JsonElement element)
         {
-            Optional<AlignMode> alignMode = default;
-            Optional<FillNAMethod> fillNAMethod = default;
-            Optional<float> paddingValue = default;
+            Optional<AlignMode?> alignMode = default;
+            Optional<FillNAMethod?> fillNAMethod = default;
+            Optional<float?> paddingValue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("alignMode"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        alignMode = null;
                         continue;
                     }
                     alignMode = property.Value.GetString().ToAlignMode();
@@ -54,7 +76,7 @@ namespace Azure.AI.AnomalyDetector.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        fillNAMethod = null;
                         continue;
                     }
                     fillNAMethod = new FillNAMethod(property.Value.GetString());
@@ -64,7 +86,7 @@ namespace Azure.AI.AnomalyDetector.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        paddingValue = null;
                         continue;
                     }
                     paddingValue = property.Value.GetSingle();
@@ -72,6 +94,22 @@ namespace Azure.AI.AnomalyDetector.Models
                 }
             }
             return new AlignPolicy(Optional.ToNullable(alignMode), Optional.ToNullable(fillNAMethod), Optional.ToNullable(paddingValue));
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AlignPolicy FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAlignPolicy(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }
