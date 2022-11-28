@@ -622,7 +622,10 @@ namespace Azure.AI.TextAnalytics
         /// <param name="entities">Sets the collection of <see cref="TextAnalytics.PiiEntityCollection"/>.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.RecognizePiiEntitiesResult"/> for mocking purposes.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RecognizePiiEntitiesResult RecognizePiiEntitiesResult(string id, TextDocumentStatistics statistics, PiiEntityCollection entities)
+        public static RecognizePiiEntitiesResult RecognizePiiEntitiesResult(
+            string id,
+            TextDocumentStatistics statistics,
+            PiiEntityCollection entities)
         {
             return new RecognizePiiEntitiesResult(id, statistics, entities, default);
         }
@@ -696,7 +699,10 @@ namespace Azure.AI.TextAnalytics
         /// <param name="keyPhrases">Sets the <see cref="ExtractKeyPhrasesResult.KeyPhrases"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.ExtractKeyPhrasesResult"/> for mocking purposes.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ExtractKeyPhrasesResult ExtractKeyPhrasesResult(string id, TextDocumentStatistics statistics, KeyPhraseCollection keyPhrases)
+        public static ExtractKeyPhrasesResult ExtractKeyPhrasesResult(
+            string id,
+            TextDocumentStatistics statistics,
+            KeyPhraseCollection keyPhrases)
         {
             return new ExtractKeyPhrasesResult(id, statistics, keyPhrases, default);
         }
@@ -918,7 +924,10 @@ namespace Azure.AI.TextAnalytics
         /// <param name="linkedEntities">Sets the collection of <see cref="TextAnalytics.LinkedEntity"/>.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.RecognizeLinkedEntitiesResult"/> for mocking purposes.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RecognizeLinkedEntitiesResult RecognizeLinkedEntitiesResult(string id, TextDocumentStatistics statistics, LinkedEntityCollection linkedEntities)
+        public static RecognizeLinkedEntitiesResult RecognizeLinkedEntitiesResult(
+            string id,
+            TextDocumentStatistics statistics,
+            LinkedEntityCollection linkedEntities)
         {
             return new RecognizeLinkedEntitiesResult(id, statistics, linkedEntities, default);
         }
