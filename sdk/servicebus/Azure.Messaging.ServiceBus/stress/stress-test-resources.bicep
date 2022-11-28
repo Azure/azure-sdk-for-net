@@ -31,4 +31,4 @@ output RESOURCE_GROUP string = resourceGroup().name
 output SERVICEBUS_NAMESPACE_CONNECTION_STRING string = listkeys(serviceBusAuthRuleResourceId, '2015-08-01').primaryConnectionString
 
 // Outputs for the SendReceive scenario
-output SERVICEBUS_QUEUE_SENDRECEIVE string = serviceBusQueue.name
+output SERVICEBUS_QUEUE string = serviceBusQueue.name
