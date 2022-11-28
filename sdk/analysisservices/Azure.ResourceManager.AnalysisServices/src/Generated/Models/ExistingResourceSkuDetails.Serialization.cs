@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AnalysisServices.Models
         internal static ExistingResourceSkuDetails DeserializeExistingResourceSkuDetails(JsonElement element)
         {
             Optional<ResourceSku> sku = default;
-            Optional<string> resourceType = default;
+            Optional<ResourceType> resourceType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
@@ -30,11 +30,16 @@ namespace Azure.ResourceManager.AnalysisServices.Models
                 }
                 if (property.NameEquals("resourceType"))
                 {
-                    resourceType = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resourceType = new ResourceType(property.Value.GetString());
                     continue;
                 }
             }
-            return new ExistingResourceSkuDetails(sku.Value, resourceType.Value);
+            return new ExistingResourceSkuDetails(sku.Value, Optional.ToNullable(resourceType));
         }
     }
 }

@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.AnalysisServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsEnablePowerBIService))
+            if (Optional.IsDefined(IsPowerBIServiceEnabled))
             {
                 writer.WritePropertyName("enablePowerBIService");
-                writer.WriteBooleanValue(IsEnablePowerBIService.Value);
+                writer.WriteBooleanValue(IsPowerBIServiceEnabled.Value);
             }
             writer.WriteEndObject();
         }

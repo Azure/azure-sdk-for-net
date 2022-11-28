@@ -26,7 +26,7 @@ rename-mapping:
   AnalysisServicesServer.properties.sku: AnalysisServicesServerSKU
   ServerAdministrators.members: AsAdministratorIdentities
   CheckServerNameAvailabilityResult.nameAvailable: IsNameAvailable
-  IPv4FirewallSettings.enablePowerBIService: IsEnablePowerBIService
+  IPv4FirewallSettings.enablePowerBIService: IsPowerBIServiceEnabled
   SkuDetailsForExistingResource: ExistingResourceSkuDetails
   SkuEnumerationForExistingResourceResult: ExistingResourceResultSkuEnumeration
   SkuEnumerationForNewResourceResult: NewResourceResultSkuEnumeration
@@ -74,5 +74,8 @@ directive:
           "name": "ServerMonitorMode",
           "modelAsString": true
         }
+  - from: analysisservices.json
+    where: $.definitions.SkuDetailsForExistingResource.properties.resourceType
+    transform: $["x-ms-format"] = "resource-type"
 
 ```

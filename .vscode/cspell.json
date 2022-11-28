@@ -109,8 +109,7 @@
     {
       "filename": "**/sdk/analysisservices/**/*.cs",
       "words": [
-        "Dmts",
-        "MSAL"
+        "Dmts"
       ]
     },
     {
