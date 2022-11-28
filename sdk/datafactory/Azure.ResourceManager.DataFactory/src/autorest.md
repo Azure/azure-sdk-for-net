@@ -306,7 +306,7 @@ directive:
       $.StoreReadSettings.properties.disableMetricsCollection['x-ms-format'] = 'dfe-bool';
       $.MicrosoftAccessSource.properties.query['x-ms-format'] = 'dfe-string';
       $.MicrosoftAccessSource.properties.additionalColumns['x-ms-format'] = 'dfe-listOfT';
-      $.MicrosoftAccessSource.properties.additionalColumns['x-ms-format-element-type'] = 'AdditionalColumns';
+      $.MicrosoftAccessSource.properties.additionalColumns['x-ms-format-element-definition'] = 'AdditionalColumns';
       $.XmlReadSettings.properties.namespacePrefixes['x-ms-format'] = 'dfe-keyValuePair';
   - from: IntegrationRuntime.json
     where: $.definitions

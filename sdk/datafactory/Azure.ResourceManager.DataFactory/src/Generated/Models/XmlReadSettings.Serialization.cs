@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -53,7 +52,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(NamespacePrefixes))
             {
                 writer.WritePropertyName("namespacePrefixes");
-                JsonSerializer.Serialize(writer, NamespacePrefixes);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(NamespacePrefixes);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(NamespacePrefixes.ToString()).RootElement);
+#endif
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(FormatReadSettingsType);
@@ -75,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<BinaryData> validationMode = default;
             Optional<BinaryData> detectDataType = default;
             Optional<BinaryData> namespaces = default;
-            Optional<DataFactoryExpression<IDictionary<string, string>>> namespacePrefixes = default;
+            Optional<BinaryData> namespacePrefixes = default;
             string type = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -128,7 +131,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    namespacePrefixes = JsonSerializer.Deserialize<DataFactoryExpression<IDictionary<string, string>>>(property.Value.ToString());
+                    namespacePrefixes = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"))
