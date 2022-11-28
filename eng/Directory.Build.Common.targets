@@ -145,12 +145,7 @@
 
   <Import Project="ApiListing.targets" />
 
-  <!-- Code Coverage -->
-  <PropertyGroup Condition="'$(CollectCoverage)' == 'true'">
-    <!-- Run Code Coverage only on the latest target if we're in a cross-compiling inner build. -->
-    <CodeCoverageTargetFramework Condition="'$(IsCrossTargetingBuild)' != 'true' and '$(TargetFrameworks)' != ''">$(TargetFrameworks.Split(";")[0])</CodeCoverageTargetFramework>
-  </PropertyGroup>
-  <Import Project="CodeCoverage.targets" Condition="'$(CollectCoverage)' == 'true' and '$(CodeCoverageTargetFramework)' != '' and '$(CodeCoverageTargetFramework)' == '$(TargetFramework)'" />
+  <Import Project="CodeCoverage.targets" Condition="'$(CollectCoverage)' == 'true'" />
 
   <Import Project="CodeGeneration.targets" Condition="'$(TemporaryUsePreviousGeneratorVersion)' == 'true'" />
 
