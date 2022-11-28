@@ -293,7 +293,7 @@ namespace Azure.Storage.DataMovement
         {
             // Determine the polling time we need to wait until we can queue
             // up the next GetProperties call.
-            TimeSpan suggestedInterval = TimeSpan.FromSeconds(Constants.DataMovement.StatusCheckInSec);
+            TimeSpan suggestedInterval = TimeSpan.FromSeconds(DataMovementConstants.StatusCheckInSec);
             await Task.Delay(suggestedInterval, _cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Call GetProperties

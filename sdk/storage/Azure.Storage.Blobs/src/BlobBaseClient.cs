@@ -321,7 +321,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// every request.
         /// </param>
         public BlobBaseClient(Uri blobUri, TokenCredential credential, BlobClientOptions options = default)
-            : this(blobUri, credential.AsPolicy(options), options, storageSharedKeyCredential: null)
+            : this(blobUri, credential.AsPolicy(options), options, credential)
         {
             Errors.VerifyHttpsTokenAuth(blobUri);
         }
@@ -642,7 +642,7 @@ namespace Azure.Storage.Blobs.Specialized
             }
         }
 
-        #region protected static accessors for Azure.Storage.DataMovement.Blobs
+        #region internal static accessors for Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Get a <see cref="BlobBaseClient"/>'s <see cref="TokenCredential"/>
         /// for passing the authorization when performing service to service copy

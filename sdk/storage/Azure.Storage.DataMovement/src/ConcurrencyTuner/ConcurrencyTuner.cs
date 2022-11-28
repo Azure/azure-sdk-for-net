@@ -107,7 +107,7 @@ namespace Azure.Storage.DataMovement
 
         internal async Task Worker(CancellationToken cancellationToken)
         {
-            double multiplier = Constants.DataMovement.ConcurrencyTuner.BoostedMultiplier;
+            double multiplier = DataMovementConstants.ConcurrencyTuner.BoostedMultiplier;
             double concurrency = _initialConcurrency;
             bool atMax = false;
             bool everSawHighCpu = false;
@@ -123,11 +123,11 @@ namespace Azure.Storage.DataMovement
             {
                 ConcurrencyTunerState rateChangeReason = ConcurrencyTunerState.ConcurrencyReasonSeeking;
 
-                if (concurrency >= Constants.DataMovement.ConcurrencyTuner.TopOfBoostZone
-                    && multiplier > Constants.DataMovement.ConcurrencyTuner.StandardMultiplier)
+                if (concurrency >= DataMovementConstants.ConcurrencyTuner.TopOfBoostZone
+                    && multiplier > DataMovementConstants.ConcurrencyTuner.StandardMultiplier)
                 {
                     // don't use boosted multiplier for ever
-                    multiplier = Constants.DataMovement.ConcurrencyTuner.StandardMultiplier;
+                    multiplier = DataMovementConstants.ConcurrencyTuner.StandardMultiplier;
                 }
 
                 // enforce a ceiling
@@ -143,7 +143,7 @@ namespace Azure.Storage.DataMovement
 
                 // we'd like it to speed up linearly, but we'll accept a _lot_ less,
                 // according to fudge factor in the interests of finding best possible speed
-                double desiredSpeedIncrease = lastSpeed.Mpbs * (multiplier - 1) * Constants.DataMovement.ConcurrencyTuner.FudgeFactor;
+                double desiredSpeedIncrease = lastSpeed.Mpbs * (multiplier - 1) * DataMovementConstants.ConcurrencyTuner.FudgeFactor;
                 double desiredNewSpeed = lastSpeed.Mpbs + desiredSpeedIncrease;
 
                 // action the increase and measure its effect
@@ -183,15 +183,15 @@ namespace Azure.Storage.DataMovement
                     concurrency /= multiplier;
 
                     // reduce multiplier to probe more slowly on the next iteration
-                    if (multiplier > Constants.DataMovement.ConcurrencyTuner.StandardMultiplier)
+                    if (multiplier > DataMovementConstants.ConcurrencyTuner.StandardMultiplier)
                     {
                         // just back off from our "boosted" multiplier
-                        multiplier = Constants.DataMovement.ConcurrencyTuner.StandardMultiplier;
+                        multiplier = DataMovementConstants.ConcurrencyTuner.StandardMultiplier;
                     }
                     else
                     {
                         // back off to a much smaller multiplier
-                        multiplier = 1 + (multiplier - 1) / Constants.DataMovement.ConcurrencyTuner.SlowdownFactor;
+                        multiplier = 1 + (multiplier - 1) / DataMovementConstants.ConcurrencyTuner.SlowdownFactor;
                     }
 
                     // bump multiplier up until its at least enough to influence the connection count by 1
@@ -206,7 +206,7 @@ namespace Azure.Storage.DataMovement
                         }
                     }
 
-                    if (multiplier < Constants.DataMovement.ConcurrencyTuner.MinMulitplier)
+                    if (multiplier < DataMovementConstants.ConcurrencyTuner.MinMulitplier)
                     {
                         break; // no point in tuning any more
                     }

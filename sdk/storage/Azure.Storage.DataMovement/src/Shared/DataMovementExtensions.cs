@@ -70,7 +70,7 @@ namespace Azure.Storage.DataMovement
             byte[] destinationQueryParams = jobPart._destinationResource.UriQueryToByteArray();
             return new JobPartPlanHeader()
             {
-                Version = Encoding.Unicode.GetBytes(Constants.DataMovement.PlanFile.SchemaVersion),
+                Version = Encoding.Unicode.GetBytes(DataMovementConstants.PlanFile.SchemaVersion),
                 StartTime = 0, // TODO: update to job start time
                 TransferId = jobPart._dataTransfer.Id,
                 PartNum = (uint)jobPart.PartNumber,

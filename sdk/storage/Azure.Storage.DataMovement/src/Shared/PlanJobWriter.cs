@@ -35,13 +35,13 @@ namespace Azure.Storage.DataMovement
             // To populate as jobs get added
             if (string.IsNullOrEmpty(planFolderPath))
             {
-                planFolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), Constants.DataMovement.DefaultTransferFilesPath);
+                planFolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), DataMovementConstants.DefaultTransferFilesPath);
                 Directory.CreateDirectory(planFolderPath);
             }
             TransferId = transferId;
-            PlanJobFilePath = Path.Combine(planFolderPath, $"{transferId}{Constants.DataMovement.PlanFile.FileExtension}");
+            PlanJobFilePath = Path.Combine(planFolderPath, $"{transferId}{DataMovementConstants.PlanFile.FileExtension}");
             File.Create(PlanJobFilePath).Close();
-            _memoryMappedFile = MemoryMappedFile.CreateFromFile(PlanJobFilePath, FileMode.Open, transferId, Constants.DataMovement.PlanFile.MemoryMappedFileSize);
+            _memoryMappedFile = MemoryMappedFile.CreateFromFile(PlanJobFilePath, FileMode.Open, transferId, DataMovementConstants.PlanFile.MemoryMappedFileSize);
         }
 
         /// <summary>

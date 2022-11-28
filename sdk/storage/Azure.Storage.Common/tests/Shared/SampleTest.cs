@@ -116,7 +116,6 @@ namespace Azure.Storage
         /// <summary>
         /// Create a temporary path for directories
         /// </summary>
-        /// <param name="extension">An optional file extension.</param>
         /// <returns>A temporary path for creating files.</returns>
         public string CreateTempDirectoryPath() =>
             Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());

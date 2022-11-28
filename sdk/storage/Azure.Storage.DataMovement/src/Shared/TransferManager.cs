@@ -114,7 +114,7 @@ namespace Azure.Storage.DataMovement
             _currentTaskIsProcessingJobPart = Task.Run(() => NotifyOfPendingJobPartProcessing());
             _currentTaskIsProcessingJobChunk = Task.Run(() => NotifyOfPendingJobChunkProcessing());
             _options = options != default ? options : new TransferManagerOptions();
-            _maxJobChunkTasks = options?.MaximumConcurrency ?? Constants.DataMovement.MaxJobChunkTasks;
+            _maxJobChunkTasks = options?.MaximumConcurrency ?? DataMovementConstants.MaxJobChunkTasks;
             _dataTransfers = new List<DataTransfer>();
             _arrayPool = ArrayPool<byte>.Shared;
             _checkpointer = options?.Checkpointer != default ? options.Checkpointer : CreateDefaultCheckpointer();
@@ -151,11 +151,11 @@ namespace Azure.Storage.DataMovement
         // Inform the Reader that there's work to be executed for this Channel.
         private async Task NotifyOfPendingJobPartProcessing()
         {
-            List<Task> chunkRunners = new List<Task>(Constants.DataMovement.MaxJobPartReaders);
+            List<Task> chunkRunners = new List<Task>(DataMovementConstants.MaxJobPartReaders);
             while (await _partsToProcessChannel.Reader.WaitToReadAsync().ConfigureAwait(false))
             {
                 JobPartInternal item = await _partsToProcessChannel.Reader.ReadAsync().ConfigureAwait(false);
-                if (chunkRunners.Count >= Constants.DataMovement.MaxJobPartReaders)
+                if (chunkRunners.Count >= DataMovementConstants.MaxJobPartReaders)
                 {
                     // Clear any completed blocks from the task list
                     int removedRunners = chunkRunners.RemoveAll(x => x.IsCompleted || x.IsCanceled || x.IsFaulted);
@@ -185,7 +185,7 @@ namespace Azure.Storage.DataMovement
 
         private async Task NotifyOfPendingJobChunkProcessing()
         {
-            List<Task> _currentChunkTasks = new List<Task>(Constants.DataMovement.MaxJobChunkTasks);
+            List<Task> _currentChunkTasks = new List<Task>(DataMovementConstants.MaxJobChunkTasks);
             while (await _chunksToProcessChannel.Reader.WaitToReadAsync().ConfigureAwait(false))
             {
                 Func<Task> item = await _chunksToProcessChannel.Reader.ReadAsync().ConfigureAwait(false);
@@ -444,7 +444,7 @@ namespace Azure.Storage.DataMovement
         private static LocalTransferCheckpointer CreateDefaultCheckpointer()
         {
             // Make folder path
-            string defaultPath = string.Concat(Environment.CurrentDirectory, "/", Constants.DataMovement.DefaultTransferFilesPath);
+            string defaultPath = string.Concat(Environment.CurrentDirectory, "/", DataMovementConstants.DefaultTransferFilesPath);
             // Create folder if it does not already exists. It's possible that this library could be run
             // multiple times in the same directory without defining a checkpointer.
             Directory.CreateDirectory(defaultPath);
