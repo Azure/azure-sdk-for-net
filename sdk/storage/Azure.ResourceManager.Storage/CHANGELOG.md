@@ -12,6 +12,8 @@
 
 ### Other Changes
 
+- Upgraded API version to 2022-09-01
+
 ## 1.0.0 (2022-09-08)
 
 This package is the first stable release of the Azure Storage management library.
