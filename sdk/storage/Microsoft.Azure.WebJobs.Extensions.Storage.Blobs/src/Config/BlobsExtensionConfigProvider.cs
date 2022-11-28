@@ -136,6 +136,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
                 BindToInput<Stream>(ConvertToCloudBlobStreamAsync);
 
             RegisterCommonConverters(rule);
+            rule.AddConverter<BlobBaseClient, ParameterBindingData>(ConvertBlobInputToParameterBindingData);
             rule.AddConverter(new StorageBlobConverter<BlobClient>());
         }
 
@@ -156,8 +157,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
         private void RegisterCommonConverters<T>(FluentBindingRule<T> rule) where T : Attribute
 #pragma warning restore CS0618 // Type or member is obsolete
         {
-             rule.AddConverter<BlobBaseClient, ParameterBindingData>(ConvertToInputParameterBindingData);
-
             // Converter manager already has Stream-->Byte[],String,TextReader
             rule.AddConverter<BlobBaseClient, Stream>(ConvertToStreamAsync);
 
@@ -217,21 +216,41 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
             return (T)blob.BlobClient;
         }
 
-        private ParameterBindingData ConvertToInputParameterBindingData(BlobBaseClient input)
-        {
-            var blobDetails = new BlobParameterBindingDataContent()
-            {
-                Connection = Constants.DefaultAzureStorageConnectionName,
-                BlobName = input.Name,
-                ContainerName = input.BlobContainerName
-            };
-            return CreateParameterBindingData(blobDetails);
-        }
-
         private ParameterBindingData ConvertToParameterBindingData(BlobAttribute blobAttribute)
         {
             var blobPath = BlobPath.ParseAndValidate(blobAttribute.BlobPath);
-            string connectionName = !string.IsNullOrEmpty(blobAttribute.Connection) ? _nameResolver.ResolveWholeString(blobAttribute.Connection) : Constants.DefaultAzureStorageConnectionName;
+            return CreateParameterBindingData(blobAttribute.Connection, blobPath.BlobName, blobPath.ContainerName);
+        }
+
+        private ParameterBindingData ConvertToParameterBindingData(BlobBaseClient input, BlobTriggerAttribute blobTriggerAttribute)
+        {
+            return CreateParameterBindingData(blobTriggerAttribute.Connection, input.Name, input.BlobContainerName);
+        }
+
+        private ParameterBindingData ConvertBlobInputToParameterBindingData(BlobBaseClient input)
+        {
+            return CreateParameterBindingData(null, input.Name, input.BlobContainerName);
+        }
+
+        private ParameterBindingData CreateParameterBindingData(string connection, string blobName, string containerName)
+        {
+            var connectionString = ResolveConnection(connection);
+
+            var blobDetails = new BlobParameterBindingDataContent()
+            {
+                Connection = connectionString,
+                BlobName = blobName,
+                ContainerName = containerName
+            };
+
+            var blobDetailsBinaryData = new BinaryData(blobDetails);
+            var bindingData = new ParameterBindingData("1.0", Constants.WebJobsBlobExtensionName, blobDetailsBinaryData, "application/json");
+            return bindingData;
+        }
+
+        private string ResolveConnection(string connection)
+        {
+            string connectionName = !string.IsNullOrEmpty(connection) ? _nameResolver.ResolveWholeString(connection) : Constants.DefaultAzureStorageConnectionName;
             IConfigurationSection connectionSection = _configuration.GetWebJobsConnectionStringSection(connectionName);
 
             if (!connectionSection.Exists())
@@ -239,33 +258,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
                 throw new InvalidOperationException($"Storage account connection string '{IConfigurationExtensions.GetPrefixedConnectionStringName(connectionName)}' does not exist. Make sure that it is a defined App Setting.");
             }
 
-            var blobDetails = new BlobParameterBindingDataContent()
-            {
-                Connection = connectionSection.Value,
-                BlobName = blobPath.BlobName,
-                ContainerName = blobPath.ContainerName
-            };
-
-            return CreateParameterBindingData(blobDetails);
-        }
-
-        private ParameterBindingData ConvertToParameterBindingData(BlobBaseClient input, BlobTriggerAttribute blobTriggerAttribute)
-        {
-            var blobDetails = new BlobParameterBindingDataContent()
-            {
-                Connection = _nameResolver.Resolve(blobTriggerAttribute.Connection) ?? Constants.DefaultAzureStorageConnectionName,
-                BlobName = input.Name,
-                ContainerName = input.BlobContainerName
-            };
-
-            return CreateParameterBindingData(blobDetails);
-        }
-
-        private static ParameterBindingData CreateParameterBindingData(BlobParameterBindingDataContent blobDetails)
-        {
-            var blobDetailsBinaryData = new BinaryData(blobDetails);
-            var bindingData = new ParameterBindingData("1.0", Constants.WebJobsBlobExtensionName, blobDetailsBinaryData, "application/json");
-            return bindingData;
+            return connectionSection.Value;
         }
 
         #endregion
