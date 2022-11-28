@@ -21,10 +21,7 @@ var client = new FormRecognizerClient(new Uri(endpoint), credential);
 
 Recognized receipts and custom forms are returned as `RecognizedForm` objects from the Form Recognizer client. Even though all recognized information can be obtained from them, sometimes they can be inconvenient to handle and, for this reason, we'll illustrate how to create a wrapper class to make the relevant fields easily accessible.
 
-We'll be using a recognized receipt as a sample, so we'll call our wrapper class `Receipt`. To store items listed in the receipt, we'll use a similar wrapper called `ReceiptItem`. To see the full source files, see:
-
-* [Receipt class](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/V3.1/Receipt.cs)
-* [ReceiptItem class](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/V3.1/ReceiptItem.cs)
+We'll be using a recognized receipt as a sample, so we'll call our wrapper class `Receipt`. To store items listed in the receipt, we'll use a similar wrapper called `ReceiptItem`.
 
 The `Receipt` class is composed of multiple `FormField<T>` properties. `FormField<T>` is a class defined in the main Form Recognizer library and used as a strongly-typed version of `FormField`, and it's more convenient to handle since there's no need to perform type checking.
 
@@ -104,9 +101,5 @@ foreach (RecognizedForm recognizedForm in recognizedForms)
 ```
 
 Using `FormField<T>` to make your fields strongly-typed, and populating a custom wrapper class, such as `Receipt`, is the recommended approach for handling forms where fields have known labels.
-
-To see the full example source files, see:
-
-* [Strongly typing a recognized form](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/V3.1/Sample4_StronglyTypingARecognizedForm.cs)
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started

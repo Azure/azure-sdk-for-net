@@ -31,16 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "UserIdentity": return UserIdentity.DeserializeUserIdentity(element);
                 }
             }
-            IdentityConfigurationType identityType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("identityType"))
-                {
-                    identityType = new IdentityConfigurationType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownIdentityConfiguration(identityType);
+            return UnknownIdentityConfiguration.DeserializeUnknownIdentityConfiguration(element);
         }
     }
 }

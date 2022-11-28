@@ -508,7 +508,7 @@ namespace Azure.AI.TextAnalytics
         /// and categorize those entities into types such as US social security
         /// number, drivers license number, or credit card number.
         /// <para>For more information on available categories, see
-        /// <see href="https://aka.ms/tanerpii"/>.</para>
+        /// <see href="https://aka.ms/azsdk/language/pii"/>.</para>
         /// <para>For a list of languages supported by this operation, see
         /// <see href="https://aka.ms/talangs"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
@@ -542,7 +542,7 @@ namespace Azure.AI.TextAnalytics
         /// and categorize those entities into types such as US social security
         /// number, drivers license number, or credit card number.
         /// <para>For more information on available categories, see
-        /// <see href="https://aka.ms/tanerpii"/>.</para>
+        /// <see href="https://aka.ms/azsdk/language/pii"/>.</para>
         /// <para>For a list of languages supported by this operation, see
         /// <see href="https://aka.ms/talangs"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
@@ -576,7 +576,7 @@ namespace Azure.AI.TextAnalytics
         /// and categorize those entities into types such as US social security
         /// number, drivers license number, or credit card number.
         /// <para>For more information on available categories, see
-        /// <see href="https://aka.ms/tanerpii"/>.</para>
+        /// <see href="https://aka.ms/azsdk/language/pii"/>.</para>
         /// <para>For a list of languages supported by this operation, see
         /// <see href="https://aka.ms/talangs"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
@@ -610,7 +610,7 @@ namespace Azure.AI.TextAnalytics
         /// and categorize those entities into types such as US social security
         /// number, drivers license number, or credit card number.
         /// <para>For more information on available categories, see
-        /// <see href="https://aka.ms/tanerpii"/>.</para>
+        /// <see href="https://aka.ms/azsdk/language/pii"/>.</para>
         /// <para>For a list of languages supported by this operation, see
         /// <see href="https://aka.ms/talangs"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
@@ -644,7 +644,7 @@ namespace Azure.AI.TextAnalytics
         /// and categorize those entities into types such as US social security
         /// number, drivers license number, or credit card number.
         /// <para>For more information on available categories, see
-        /// <see href="https://aka.ms/tanerpii"/>.</para>
+        /// <see href="https://aka.ms/azsdk/language/pii"/>.</para>
         /// <para>For a list of languages supported by this operation, see
         /// <see href="https://aka.ms/talangs"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
@@ -673,7 +673,7 @@ namespace Azure.AI.TextAnalytics
         /// and categorize those entities into types such as US social security
         /// number, drivers license number, or credit card number.
         /// <para>For more information on available categories, see
-        /// <see href="https://aka.ms/tanerpii"/>.</para>
+        /// <see href="https://aka.ms/azsdk/language/pii"/>.</para>
         /// <para>For a list of languages supported by this operation, see
         /// <see href="https://aka.ms/talangs"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
@@ -1657,117 +1657,175 @@ namespace Azure.AI.TextAnalytics
         #region Analyze Operation
 
         /// <summary>
-        /// StartAnalyzeActionsAsync enables the application to execute multiple actions in a set of documents. It includes:
+        /// Performs one or more text analysis actions on a set of documents. The list of supported actions includes:
         /// <list type="bullet">
         /// <item><description>Entity Recognition (Named, Linked, and Personally Identifiable Information (PII) entities)</description></item>
         /// <item><description>Key Phrases Extraction</description></item>
         /// <item><description>Sentiment Analysis</description></item>
         /// <item><description>Custom Entity Recognition</description></item>
         /// <item><description>Custom Single and Multi Label Classification</description></item>
-        /// <item><description>Extractive Text Summarization</description></item>
+        /// <item><description>Extractive Summarization</description></item>
+        /// <item><description>Abstractive Summarization</description></item>
         /// </list>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see more information
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits">here</see>.
         /// </para>
         /// </summary>
         /// <remarks>
-        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and newer.
-        /// See the service <see href="https://aka.ms/azsdk/textanalytics/customfunctionalities">documentation</see> for regional support of custom action features.
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>,
+        /// <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and newer. See the service
+        /// <see href="https://aka.ms/azsdk/textanalytics/customfunctionalities">documentation</see> for regional
+        /// support of custom action features.
         /// </remarks>
         /// <param name="documents">The list of documents to analyze.</param>
+        /// <param name="actions">The <see cref="TextAnalyticsActions"/> to perform on the list of documents.</param>
         /// <param name="language">The language that the document is written in.</param>
-        /// <param name="actions"> The different <see cref="TextAnalyticsActions"/> to execute in the list of documents.</param>
-        /// <param name="options">Sets the IncludeStatistcs property on the analyze action operation. </param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <exception cref="NotSupportedException">This method is only supported in service API version v3.1 and newer; and the <see cref="AnalyzeHealthcareEntitiesAction"/>, <see cref="MultiLabelClassifyAction"/>, <see cref="RecognizeCustomEntitiesAction"/>, and <see cref="SingleLabelClassifyAction"/> are only supported in service API version 2022-05-01 and newer.</exception>
-        /// <exception cref="RequestFailedException">Service returned a non-success
-        /// status code.</exception>
-        public virtual async Task<AnalyzeActionsOperation> StartAnalyzeActionsAsync(IEnumerable<string> documents, TextAnalyticsActions actions, string language = default, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default) =>
+        /// <param name="options">The <see cref="AnalyzeActionsOptions"/> used to configure the operation.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
+        /// <exception cref="NotSupportedException">
+        /// This method is only supported in service API version v3.1 and newer. The
+        /// <see cref="AnalyzeHealthcareEntitiesAction"/>, <see cref="MultiLabelClassifyAction"/>,
+        /// <see cref="RecognizeCustomEntitiesAction"/>, and <see cref="SingleLabelClassifyAction"/> are only supported
+        /// in service API version 2022-05-01 and newer. The <see cref="ExtractSummaryAction"/> and
+        /// <see cref="AbstractSummaryAction"/> are only supported in service API version 2022-10-01-preview and newer.
+        /// </exception>
+        /// <exception cref="RequestFailedException">
+        /// Service returned a non-success status code.
+        /// </exception>
+        public virtual async Task<AnalyzeActionsOperation> StartAnalyzeActionsAsync(
+            IEnumerable<string> documents,
+            TextAnalyticsActions actions,
+            string language = default,
+            AnalyzeActionsOptions options = default,
+            CancellationToken cancellationToken = default) =>
             await _serviceClient.StartAnalyzeActionsAsync(documents, actions, language, options, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// StartAnalyzeActionsAsync enables the application to execute multiple actions in a set of documents. It includes:
+        /// Performs one or more text analysis actions on a set of documents. The list of supported actions includes:
         /// <list type="bullet">
         /// <item><description>Entity Recognition (Named, Linked, and Personally Identifiable Information (PII) entities)</description></item>
         /// <item><description>Key Phrases Extraction</description></item>
         /// <item><description>Sentiment Analysis</description></item>
         /// <item><description>Custom Entity Recognition</description></item>
         /// <item><description>Custom Single and Multi Label Classification</description></item>
-        /// <item><description>Extractive Text Summarization</description></item>
+        /// <item><description>Extractive Summarization</description></item>
+        /// <item><description>Abstractive Summarization</description></item>
         /// </list>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits">here</see>.
         /// </para>
         /// </summary>
         /// <remarks>
-        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and newer.
-        /// See the service <see href="https://aka.ms/azsdk/textanalytics/customfunctionalities">documentation</see> for regional support of custom action features.
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>,
+        /// <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and newer. See the service
+        /// <see href="https://aka.ms/azsdk/textanalytics/customfunctionalities">documentation</see> for regional
+        /// support of custom action features.
         /// </remarks>
         /// <param name="documents">The list of documents to analyze.</param>
-        /// <param name="actions"> The different <see cref="TextAnalyticsActions"/> to execute in the list of documents.</param>
+        /// <param name="actions"> The <see cref="TextAnalyticsActions"/> to perform on the list of documents.</param>
         /// <param name="language">The language that the document is written in.</param>
-        /// <param name="options">Sets the IncludeStatistcs property on the analyze action operation. </param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <exception cref="NotSupportedException">This method is only supported in service API version v3.1 and newer; and the <see cref="AnalyzeHealthcareEntitiesAction"/>, <see cref="MultiLabelClassifyAction"/>, <see cref="RecognizeCustomEntitiesAction"/>, and <see cref="SingleLabelClassifyAction"/> are only supported in service API version 2022-05-01 and newer.</exception>
-        /// <exception cref="RequestFailedException">Service returned a non-success
-        /// status code.</exception>
-        public virtual AnalyzeActionsOperation StartAnalyzeActions(IEnumerable<string> documents, TextAnalyticsActions actions, string language = default, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default) =>
+        /// <param name="options">The <see cref="AnalyzeActionsOptions"/> used to configure the operation.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
+        /// <exception cref="NotSupportedException">
+        /// This method is only supported in service API version v3.1 and newer. The
+        /// <see cref="AnalyzeHealthcareEntitiesAction"/>, <see cref="MultiLabelClassifyAction"/>,
+        /// <see cref="RecognizeCustomEntitiesAction"/>, and <see cref="SingleLabelClassifyAction"/> are only supported
+        /// in service API version 2022-05-01 and newer. The <see cref="ExtractSummaryAction"/> and
+        /// <see cref="AbstractSummaryAction"/> are only supported in service API version 2022-10-01-preview and newer.
+        /// </exception>
+        /// <exception cref="RequestFailedException">
+        /// Service returned a non-success status code.
+        /// </exception>
+        public virtual AnalyzeActionsOperation StartAnalyzeActions(
+            IEnumerable<string> documents,
+            TextAnalyticsActions actions,
+            string language = default,
+            AnalyzeActionsOptions options = default,
+            CancellationToken cancellationToken = default) =>
             _serviceClient.StartAnalyzeActions(documents, actions, language, options, cancellationToken);
 
         /// <summary>
-        /// StartAnalyzeActionsAsync enables the application to execute multiple actions in a set of documents. It includes:
+        /// Performs one or more text analysis actions on a set of documents. The list of supported actions includes:
         /// <list type="bullet">
         /// <item><description>Entity Recognition (Named, Linked, and Personally Identifiable Information (PII) entities)</description></item>
         /// <item><description>Key Phrases Extraction</description></item>
         /// <item><description>Sentiment Analysis</description></item>
         /// <item><description>Custom Entity Recognition</description></item>
         /// <item><description>Custom Single and Multi Label Classification</description></item>
-        /// <item><description>Extractive Text Summarization</description></item>
+        /// <item><description>Extractive Summarization</description></item>
+        /// <item><description>Abstractive Summarization</description></item>
         /// </list>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits">here</see>.
         /// </para>
         /// </summary>
         /// <remarks>
-        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and newer.
-        /// See the service <see href="https://aka.ms/azsdk/textanalytics/customfunctionalities">documentation</see> for regional support of custom action features.
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>,
+        /// <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and newer. See the service
+        /// <see href="https://aka.ms/azsdk/textanalytics/customfunctionalities">documentation</see> for regional
+        /// support of custom action features.
         /// </remarks>
         /// <param name="documents">The list of documents to analyze.</param>
-        /// <param name="actions"> The different <see cref="TextAnalyticsActions"/> to execute in the list of documents.</param>
-        /// <param name="options">Sets the IncludeStatistcs property on the analyze action operation. </param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <exception cref="NotSupportedException">This method is only supported in service API version v3.1 and newer; and the <see cref="AnalyzeHealthcareEntitiesAction"/>, <see cref="MultiLabelClassifyAction"/>, <see cref="RecognizeCustomEntitiesAction"/>, and <see cref="SingleLabelClassifyAction"/> are only supported in service API version 2022-05-01 and newer.</exception>
-        /// <exception cref="RequestFailedException">Service returned a non-success
-        /// status code.</exception>
-        public virtual AnalyzeActionsOperation StartAnalyzeActions(IEnumerable<TextDocumentInput> documents, TextAnalyticsActions actions, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default) =>
+        /// <param name="actions"> The <see cref="TextAnalyticsActions"/> to perform on the list of documents.</param>
+        /// <param name="options">The <see cref="AnalyzeActionsOptions"/> used to configure the operation.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
+        /// <exception cref="NotSupportedException">
+        /// This method is only supported in service API version v3.1 and newer. The
+        /// <see cref="AnalyzeHealthcareEntitiesAction"/>, <see cref="MultiLabelClassifyAction"/>,
+        /// <see cref="RecognizeCustomEntitiesAction"/>, and <see cref="SingleLabelClassifyAction"/> are only supported
+        /// in service API version 2022-05-01 and newer. The <see cref="ExtractSummaryAction"/> and
+        /// <see cref="AbstractSummaryAction"/> are only supported in service API version 2022-10-01-preview and newer.
+        /// </exception>
+        /// <exception cref="RequestFailedException">
+        /// Service returned a non-success status code.
+        /// </exception>
+        public virtual AnalyzeActionsOperation StartAnalyzeActions(
+            IEnumerable<TextDocumentInput> documents,
+            TextAnalyticsActions actions,
+            AnalyzeActionsOptions options = default,
+            CancellationToken cancellationToken = default) =>
             _serviceClient.StartAnalyzeActions(documents, actions, options, cancellationToken);
 
         /// <summary>
-        /// StartAnalyzeActionsAsync enables the application to execute multiple actions in a set of documents. It includes:
+        /// Performs one or more text analysis actions on a set of documents. The list of supported actions includes:
         /// <list type="bullet">
         /// <item><description>Entity Recognition (Named, Linked, and Personally Identifiable Information (PII) entities)</description></item>
         /// <item><description>Key Phrases Extraction</description></item>
         /// <item><description>Sentiment Analysis</description></item>
         /// <item><description>Custom Entity Recognition</description></item>
         /// <item><description>Custom Single and Multi Label Classification</description></item>
-        /// <item><description>Extractive Text Summarization</description></item>
+        /// <item><description>Extractive Summarization</description></item>
+        /// <item><description>Abstractive Summarization</description></item>
         /// </list>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits">here</see>.
         /// </para>
         /// </summary>
         /// <remarks>
-        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and newer.
-        /// See the service <see href="https://aka.ms/azsdk/textanalytics/customfunctionalities">documentation</see> for regional support of custom action features.
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>,
+        /// <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and newer. See the service
+        /// <see href="https://aka.ms/azsdk/textanalytics/customfunctionalities">documentation</see> for regional
+        /// support of custom action features.
         /// </remarks>
         /// <param name="documents">The list of documents to analyze.</param>
-        /// <param name="actions"> The different <see cref="TextAnalyticsActions"/> to execute in the list of documents.</param>
-        /// <param name="options">Sets the IncludeStatistcs property on the analyze action operation. </param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <exception cref="NotSupportedException">This method is only supported in service API version v3.1 and newer; and the <see cref="AnalyzeHealthcareEntitiesAction"/>, <see cref="MultiLabelClassifyAction"/>, <see cref="RecognizeCustomEntitiesAction"/>, and <see cref="SingleLabelClassifyAction"/> are only supported in service API version 2022-05-01 and newer.</exception>
-        /// <exception cref="RequestFailedException">Service returned a non-success
-        /// status code.</exception>
-        public virtual async Task<AnalyzeActionsOperation> StartAnalyzeActionsAsync(IEnumerable<TextDocumentInput> documents, TextAnalyticsActions actions, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default) =>
+        /// <param name="actions"> The <see cref="TextAnalyticsActions"/> to perform on the list of documents.</param>
+        /// <param name="options">The <see cref="AnalyzeActionsOptions"/> used to configure the operation.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
+        /// <exception cref="NotSupportedException">
+        /// This method is only supported in service API version v3.1 and newer. The
+        /// <see cref="AnalyzeHealthcareEntitiesAction"/>, <see cref="MultiLabelClassifyAction"/>,
+        /// <see cref="RecognizeCustomEntitiesAction"/>, and <see cref="SingleLabelClassifyAction"/> are only supported
+        /// in service API version 2022-05-01 and newer. The <see cref="ExtractSummaryAction"/> and
+        /// <see cref="AbstractSummaryAction"/> are only supported in service API version 2022-10-01-preview and newer.
+        /// </exception>
+        /// <exception cref="RequestFailedException">
+        /// Service returned a non-success status code.
+        /// </exception>
+        public virtual async Task<AnalyzeActionsOperation> StartAnalyzeActionsAsync(
+            IEnumerable<TextDocumentInput> documents,
+            TextAnalyticsActions actions,
+            AnalyzeActionsOptions options = default,
+            CancellationToken cancellationToken = default) =>
             await _serviceClient.StartAnalyzeActionsAsync(documents, actions, options, cancellationToken).ConfigureAwait(false);
 
         #endregion
@@ -2043,9 +2101,8 @@ namespace Azure.AI.TextAnalytics
         #region Extract Summary
 
         /// <summary>
-        /// Performs extractive summarization on the given documents, which consists of extracting
-        /// sentences that collectively represent the most important or relevant information within
-        /// the original content.
+        /// Performs extractive summarization on the given documents, which consists of extracting sentences that
+        /// collectively represent the most important or relevant information within the original content.
         /// For a list of languages supported by this operation, see
         /// <see href="https://learn.microsoft.com/azure/cognitive-services/language-service/summarization/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
@@ -2055,13 +2112,13 @@ namespace Azure.AI.TextAnalytics
         /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
         /// </remarks>
         /// <param name="documents">The documents to analyze.</param>
-        /// <param name="language">The language that the document is written in.</param>
-        /// <param name="options">The additional configurable options<see cref="ExtractSummaryOptions"/></param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <param name="language">The language that the documents are written in.</param>
+        /// <param name="options">The additional <see cref="ExtractSummaryOptions"/> used to configure the operation.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
         /// <returns>
-        /// An <see cref="ExtractSummaryOperation"/> that can be used to monitor the status of this long-running operation.
-        /// Upon completion, the <see cref="ExtractSummaryOperation"/> will contain the collections of extracted summary
-        /// sentences for each document that was successfully analyzed.
+        /// An <see cref="ExtractSummaryOperation"/> that can be used to monitor the status of extractive
+        /// summarization. Upon completion, the operation will contain the collections of extracted summary sentences
+        /// for each document that was successfully analyzed.
         /// </returns>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
         /// <exception cref="RequestFailedException">Service returned a non-success status code.</exception>
@@ -2078,9 +2135,8 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Performs extractive summarization on the given documents, which consists of extracting
-        /// sentences that collectively represent the most important or relevant information within
-        /// the original content.
+        /// Performs extractive summarization on the given documents, which consists of extracting sentences that
+        /// collectively represent the most important or relevant information within the original content.
         /// For a list of languages supported by this operation, see
         /// <see href="https://learn.microsoft.com/azure/cognitive-services/language-service/summarization/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
@@ -2090,12 +2146,12 @@ namespace Azure.AI.TextAnalytics
         /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
         /// </remarks>
         /// <param name="documents">The documents to analyze.</param>
-        /// <param name="options">The additional configurable options<see cref="ExtractSummaryOptions"/></param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <param name="options">The additional <see cref="ExtractSummaryOptions"/> used to configure the operation.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
         /// <returns>
-        /// An <see cref="ExtractSummaryOperation"/> that can be used to monitor the status of this long-running operation.
-        /// Upon completion, the <see cref="ExtractSummaryOperation"/> will contain the collections of extracted summary
-        /// sentences for each document that was successfully analyzed.
+        /// An <see cref="ExtractSummaryOperation"/> that can be used to monitor the status of extractive
+        /// summarization. Upon completion, the operation will contain the collections of extracted summary sentences
+        /// for each document that was successfully analyzed.
         /// </returns>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
         /// <exception cref="RequestFailedException">Service returned a non-success status code.</exception>
@@ -2103,7 +2159,7 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="ArgumentNullException"><paramref name="documents"/> is null.</exception>
         public virtual ExtractSummaryOperation StartExtractSummary(
             IEnumerable<TextDocumentInput> documents,
-            ExtractSummaryOptions options,
+            ExtractSummaryOptions options = default,
             CancellationToken cancellationToken = default)
         {
             options?.CheckSupported(ServiceVersion);
@@ -2111,9 +2167,8 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Performs extractive summarization on the given documents, which consists of extracting
-        /// sentences that collectively represent the most important or relevant information within
-        /// the original content.
+        /// Performs extractive summarization on the given documents, which consists of extracting sentences that
+        /// collectively represent the most important or relevant information within the original content.
         /// For a list of languages supported by this operation, see
         /// <see href="https://learn.microsoft.com/azure/cognitive-services/language-service/summarization/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
@@ -2123,13 +2178,13 @@ namespace Azure.AI.TextAnalytics
         /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
         /// </remarks>
         /// <param name="documents">The documents to analyze.</param>
-        /// <param name="language">The language that the document is written in.</param>
-        /// <param name="options">The additional configurable <see cref="ExtractSummaryOptions"/> </param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <param name="language">The language that the documents are written in.</param>
+        /// <param name="options">The additional <see cref="ExtractSummaryOptions"/> used to configure the operation.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
         /// <returns>
-        /// An <see cref="ExtractSummaryOperation"/> that can be used to monitor the status of this long-running operation.
-        /// Upon completion, the <see cref="ExtractSummaryOperation"/> will contain the collections of extracted summary
-        /// sentences for each document that was successfully analyzed.
+        /// A <see cref="Task{ExtractSummaryOperation}"/> that can be used to monitor the status of the extractive
+        /// summarization. Upon completion, the operation will contain the collections of extracted summary sentences
+        /// for each document that was successfully analyzed.
         /// </returns>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
         /// <exception cref="RequestFailedException">Service returned a non-success status code.</exception>
@@ -2146,9 +2201,8 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Performs extractive summarization on the given documents, which consists of extracting
-        /// sentences that collectively represent the most important or relevant information within
-        /// the original content.
+        /// Performs extractive summarization on the given documents, which consists of extracting sentences that
+        /// collectively represent the most important or relevant information within the original content.
         /// For a list of languages supported by this operation, see
         /// <see href="https://learn.microsoft.com/azure/cognitive-services/language-service/summarization/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
@@ -2158,12 +2212,12 @@ namespace Azure.AI.TextAnalytics
         /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
         /// </remarks>
         /// <param name="documents">The documents to analyze.</param>
-        /// <param name="options">The additional configurable options<see cref="ExtractSummaryOptions"/></param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <param name="options">The additional <see cref="ExtractSummaryOptions"/> used to configure the operation.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
         /// <returns>
-        /// An <see cref="ExtractSummaryOperation"/> that can be used to monitor the status of this long-running operation.
-        /// Upon completion, the <see cref="ExtractSummaryOperation"/> will contain the collections of extracted summary
-        /// sentences for each document that was successfully analyzed.
+        /// A <see cref="Task{ExtractSummaryOperation}"/> that can be used to monitor the status of the extractive
+        /// summarization. Upon completion, the operation will contain the collections of extracted summary sentences
+        /// for each document that was successfully analyzed.
         /// </returns>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
         /// <exception cref="RequestFailedException">Service returned a non-success status code.</exception>
@@ -2176,6 +2230,142 @@ namespace Azure.AI.TextAnalytics
         {
             options?.CheckSupported(ServiceVersion);
             return await _serviceClient.StartExtractSummaryAsync(documents, options, cancellationToken).ConfigureAwait(false);
+        }
+
+        #endregion
+
+        #region Abstract Summary
+
+        /// <summary>
+        /// Performs abstractive summarization on a given set of documents, which consists of generating a summary with
+        /// concise, coherent sentences or words which are not simply extract sentences from the original document.
+        /// For a list of languages supported by this operation, see
+        /// <see href="https://learn.microsoft.com/azure/cognitive-services/language-service/summarization/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
+        /// </summary>
+        /// <remarks>
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
+        /// </remarks>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="language">The language that the documents are written in.</param>
+        /// <param name="options">The additional <see cref="AbstractSummaryOptions"/> used to configure the operation.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
+        /// <returns>
+        /// An <see cref="AbstractSummaryOperation"/> that can be used to monitor the status of the abstractive
+        /// summarization. Upon completion, the operation will contain the collections of summaries that were generated
+        /// for each document that was successfully analyzed.
+        /// </returns>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
+        /// <exception cref="RequestFailedException">Service returned a non-success status code.</exception>
+        /// <exception cref="ArgumentException"><paramref name="documents"/> is an empty collection.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="documents"/> is null.</exception>
+        public virtual AbstractSummaryOperation StartAbstractSummary(
+            IEnumerable<string> documents,
+            string language = default,
+            AbstractSummaryOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            options?.CheckSupported(ServiceVersion);
+            return _serviceClient.StartAbstractSummary(documents, language, options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Performs abstractive summarization on a given set of documents, which consists of generating a summary with
+        /// concise, coherent sentences or words which are not simply extract sentences from the original document.
+        /// For a list of languages supported by this operation, see
+        /// <see href="https://learn.microsoft.com/azure/cognitive-services/language-service/summarization/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
+        /// </summary>
+        /// <remarks>
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
+        /// </remarks>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="options">The additional <see cref="AbstractSummaryOptions"/> used to configure the operation.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
+        /// <returns>
+        /// An <see cref="AbstractSummaryOperation"/> that can be used to monitor the status of the abstractive
+        /// summarization. Upon completion, the operation will contain the collections of summaries that were generated
+        /// for each document that was successfully analyzed.
+        /// </returns>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
+        /// <exception cref="RequestFailedException">Service returned a non-success status code.</exception>
+        /// <exception cref="ArgumentException"><paramref name="documents"/> is an empty collection.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="documents"/> is null.</exception>
+        public virtual AbstractSummaryOperation StartAbstractSummary(
+            IEnumerable<TextDocumentInput> documents,
+            AbstractSummaryOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            options?.CheckSupported(ServiceVersion);
+            return _serviceClient.StartAbstractSummary(documents, options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Performs abstractive summarization on a given set of documents, which consists of generating a summary with
+        /// concise, coherent sentences or words which are not simply extract sentences from the original document.
+        /// For a list of languages supported by this operation, see
+        /// <see href="https://learn.microsoft.com/azure/cognitive-services/language-service/summarization/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
+        /// </summary>
+        /// <remarks>
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
+        /// </remarks>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="language">The language that the documents are written in.</param>
+        /// <param name="options">The additional <see cref="AbstractSummaryOptions"/> used to configure the operation.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
+        /// <returns>
+        /// A <see cref="Task{AbstractSummaryOperation}"/> that can be used to monitor the status of the abstractive
+        /// summarization. Upon completion, the operation will contain the collections of summaries that were generated
+        /// for each document that was successfully analyzed.
+        /// </returns>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
+        /// <exception cref="RequestFailedException">Service returned a non-success status code.</exception>
+        /// <exception cref="ArgumentException"><paramref name="documents"/> is an empty collection.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="documents"/> is null.</exception>
+        public virtual async Task<AbstractSummaryOperation> StartAbstractSummaryAsync(
+            IEnumerable<string> documents,
+            string language = default,
+            AbstractSummaryOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            options?.CheckSupported(ServiceVersion);
+            return await _serviceClient.StartAbstractSummaryAsync(documents, language, options, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Performs abstractive summarization on a given set of documents, which consists of generating a summary with
+        /// concise, coherent sentences or words which are not simply extract sentences from the original document.
+        /// For a list of languages supported by this operation, see
+        /// <see href="https://learn.microsoft.com/azure/cognitive-services/language-service/summarization/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
+        /// </summary>
+        /// <remarks>
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
+        /// </remarks>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="options">The additional <see cref="AbstractSummaryOptions"/> used to configure the operation.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
+        /// <returns>
+        /// A <see cref="Task{AbstractSummaryOperation}"/> that can be used to monitor the status of the abstractive
+        /// summarization. Upon completion, the operation will contain the collections of summaries that were generated
+        /// for each document that was successfully analyzed.
+        /// </returns>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
+        /// <exception cref="RequestFailedException">Service returned a non-success status code.</exception>
+        /// <exception cref="ArgumentException"><paramref name="documents"/> is an empty collection.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="documents"/> is null.</exception>
+        public virtual async Task<AbstractSummaryOperation> StartAbstractSummaryAsync(
+            IEnumerable<TextDocumentInput> documents,
+            AbstractSummaryOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            options?.CheckSupported(ServiceVersion);
+            return await _serviceClient.StartAbstractSummaryAsync(documents, options, cancellationToken).ConfigureAwait(false);
         }
 
         #endregion

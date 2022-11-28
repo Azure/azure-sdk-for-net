@@ -35,22 +35,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     case "StorageAccount": return DataBoxStorageAccountDetails.DeserializeDataBoxStorageAccountDetails(element);
                 }
             }
-            DataAccountType dataAccountType = default;
-            Optional<string> sharePassword = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("dataAccountType"))
-                {
-                    dataAccountType = property.Value.GetString().ToDataAccountType();
-                    continue;
-                }
-                if (property.NameEquals("sharePassword"))
-                {
-                    sharePassword = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownDataAccountDetails(dataAccountType, sharePassword.Value);
+            return UnknownDataAccountDetails.DeserializeUnknownDataAccountDetails(element);
         }
     }
 }

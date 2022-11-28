@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -17,7 +17,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
     public partial class AnomalyDetectorSamples : SamplesBase<AnomalyDetectorTestEnvironment>
     {
         [Test]
-        public async Task DetectChangePoint()
+        public void DetectChangePoint()
         {
             //read endpoint and apiKey
             string endpoint = TestEnvironment.Endpoint;
@@ -25,9 +25,10 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
 
             var endpointUri = new Uri(endpoint);
             var credential = new AzureKeyCredential(apiKey);
+            String apiVersion = "v1.1";
 
             //create client
-            AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, credential);
+            AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, apiVersion, credential);
 
             #region Snippet:ReadSeriesDataForChangePoint
 
@@ -50,7 +51,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
             //detect
             Console.WriteLine("Detecting the change point in the series.");
 
-            ChangePointDetectResponse result = await client.DetectChangePointAsync(request).ConfigureAwait(false);
+            ChangePointDetectResponse result = client.DetectUnivariateChangePoint(request);
 
             if (result.IsChangePoint.Contains(true))
             {

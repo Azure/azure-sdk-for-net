@@ -81,7 +81,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "AzureDataLakeGen1": return AzureDataLakeGen1Datastore.DeserializeAzureDataLakeGen1Datastore(element);
                     case "AzureDataLakeGen2": return AzureDataLakeGen2Datastore.DeserializeAzureDataLakeGen2Datastore(element);
                     case "AzureFile": return AzureFileDatastore.DeserializeAzureFileDatastore(element);
-                    case "Hdfs": return HdfsDatastore.DeserializeHdfsDatastore(element);
                 }
             }
             DatastoreCredentials credentials = default;

@@ -105,6 +105,35 @@ function Get-dotnet-OnboardedDocsMsPackages($DocRepoLocation) {
     return $onboardedPackages
 }
 
+# The function use docs package info as a key and metadata/package.json as value to build a map.
+function Get-dotnet-OnboardedDocsMsPackagesForMoniker ($DocRepoLocation, $moniker) {
+    $onboardingSpec = "$DocRepoLocation/bundlepackages/azure-dotnet.csv"
+    if ("preview" -eq $moniker) {
+        $onboardingSpec = "$DocRepoLocation/bundlepackages/azure-dotnet-preview.csv"
+    }
+    $onboardedPackages = @{}
+    $packageInfos = Get-DocsCiConfig $onboardingSpec
+    foreach ($packageInfo in $packageInfos) {
+        $packageName = $packageInfo.Name
+        if (!$packageName) {
+            LogError "Package name not folder. Please check csv file for the packageId: $($packageInfo.Id)"
+        }
+        $jsonFile = "$DocRepoLocation/metadata/$moniker/$packageName.json"
+        if (Test-Path $jsonFile) {
+            $packageInfoJson = ConvertFrom-Json (Get-Content $jsonFile -Raw)
+            if (!($packageInfoJson.PSObject.Members.Name -contains "DirectoryPath")) {
+                $packageInfoJson | Add-Member -Name "DirectoryPath" -value "" -MemberType NoteProperty
+            }
+            $onboardedPackages["$packageName"] = $packageInfoJson
+        }
+        else {
+            LogDebug "There is no package json for package $packageName."
+            $onboardedPackages["$packageName"] = $null
+        }
+    }
+    return $onboardedPackages
+}
+
 function GetPackageReadmeName($packageMetadata) {
     # Fallback to get package-level readme name if metadata file info does not exist
     $packageLevelReadmeName = $packageMetadata.Package.ToLower().Replace('azure.', '')
@@ -206,4 +235,8 @@ function Get-Toc-Children($package, $version, $docRepoLocation, $folderName) {
     # Keep the json file up to date.
     Set-Content $packageJsonPath -Value ($packageJson | ConvertTo-Json)
     return $namespaces
+}
+
+function Get-dotnet-PackageLevelReadme ($packageMetadata) {
+    return GetPackageReadmeName -packageMetadata $packageMetadata
 }

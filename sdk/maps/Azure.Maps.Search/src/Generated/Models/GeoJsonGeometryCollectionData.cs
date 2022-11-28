@@ -16,7 +16,11 @@ namespace Azure.Maps.Search.Models
     internal partial class GeoJsonGeometryCollectionData
     {
         /// <summary> Initializes a new instance of GeoJsonGeometryCollectionData. </summary>
-        /// <param name="geometries"> Contains a list of valid `GeoJSON` geometry objects. **Note** that coordinates in GeoJSON are in x, y order (longitude, latitude). </param>
+        /// <param name="geometries">
+        /// Contains a list of valid `GeoJSON` geometry objects. **Note** that coordinates in GeoJSON are in x, y order (longitude, latitude).
+        /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="GeoJsonGeometryCollection"/>, <see cref="GeoJsonLineString"/>, <see cref="GeoJsonMultiLineString"/>, <see cref="GeoJsonMultiPoint"/>, <see cref="GeoJsonMultiPolygon"/>, <see cref="GeoJsonPoint"/> and <see cref="GeoJsonPolygon"/>.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="geometries"/> is null. </exception>
         public GeoJsonGeometryCollectionData(IEnumerable<GeoJsonGeometry> geometries)
         {
@@ -26,13 +30,21 @@ namespace Azure.Maps.Search.Models
         }
 
         /// <summary> Initializes a new instance of GeoJsonGeometryCollectionData. </summary>
-        /// <param name="geometries"> Contains a list of valid `GeoJSON` geometry objects. **Note** that coordinates in GeoJSON are in x, y order (longitude, latitude). </param>
+        /// <param name="geometries">
+        /// Contains a list of valid `GeoJSON` geometry objects. **Note** that coordinates in GeoJSON are in x, y order (longitude, latitude).
+        /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="GeoJsonGeometryCollection"/>, <see cref="GeoJsonLineString"/>, <see cref="GeoJsonMultiLineString"/>, <see cref="GeoJsonMultiPoint"/>, <see cref="GeoJsonMultiPolygon"/>, <see cref="GeoJsonPoint"/> and <see cref="GeoJsonPolygon"/>.
+        /// </param>
         internal GeoJsonGeometryCollectionData(IList<GeoJsonGeometry> geometries)
         {
             Geometries = geometries;
         }
 
-        /// <summary> Contains a list of valid `GeoJSON` geometry objects. **Note** that coordinates in GeoJSON are in x, y order (longitude, latitude). </summary>
+        /// <summary>
+        /// Contains a list of valid `GeoJSON` geometry objects. **Note** that coordinates in GeoJSON are in x, y order (longitude, latitude).
+        /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="GeoJsonGeometryCollection"/>, <see cref="GeoJsonLineString"/>, <see cref="GeoJsonMultiLineString"/>, <see cref="GeoJsonMultiPoint"/>, <see cref="GeoJsonMultiPolygon"/>, <see cref="GeoJsonPoint"/> and <see cref="GeoJsonPolygon"/>.
+        /// </summary>
         public IList<GeoJsonGeometry> Geometries { get; }
     }
 }

@@ -22,23 +22,51 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(Cert))
             {
-                writer.WritePropertyName("cert");
-                writer.WriteStringValue(Cert);
+                if (Cert != null)
+                {
+                    writer.WritePropertyName("cert");
+                    writer.WriteStringValue(Cert);
+                }
+                else
+                {
+                    writer.WriteNull("cert");
+                }
             }
             if (Optional.IsDefined(Key))
             {
-                writer.WritePropertyName("key");
-                writer.WriteStringValue(Key);
+                if (Key != null)
+                {
+                    writer.WritePropertyName("key");
+                    writer.WriteStringValue(Key);
+                }
+                else
+                {
+                    writer.WriteNull("key");
+                }
             }
             if (Optional.IsDefined(Cname))
             {
-                writer.WritePropertyName("cname");
-                writer.WriteStringValue(Cname);
+                if (Cname != null)
+                {
+                    writer.WritePropertyName("cname");
+                    writer.WriteStringValue(Cname);
+                }
+                else
+                {
+                    writer.WriteNull("cname");
+                }
             }
             if (Optional.IsDefined(LeafDomainLabel))
             {
-                writer.WritePropertyName("leafDomainLabel");
-                writer.WriteStringValue(LeafDomainLabel);
+                if (LeafDomainLabel != null)
+                {
+                    writer.WritePropertyName("leafDomainLabel");
+                    writer.WriteStringValue(LeafDomainLabel);
+                }
+                else
+                {
+                    writer.WriteNull("leafDomainLabel");
+                }
             }
             if (Optional.IsDefined(OverwriteExistingDomain))
             {
@@ -50,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static SslConfiguration DeserializeSslConfiguration(JsonElement element)
         {
-            Optional<SslConfigurationStatus> status = default;
+            Optional<SslConfigStatus> status = default;
             Optional<string> cert = default;
             Optional<string> key = default;
             Optional<string> cname = default;
@@ -65,26 +93,46 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new SslConfigurationStatus(property.Value.GetString());
+                    status = new SslConfigStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("cert"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        cert = null;
+                        continue;
+                    }
                     cert = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("key"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        key = null;
+                        continue;
+                    }
                     key = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("cname"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        cname = null;
+                        continue;
+                    }
                     cname = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("leafDomainLabel"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        leafDomainLabel = null;
+                        continue;
+                    }
                     leafDomainLabel = property.Value.GetString();
                     continue;
                 }

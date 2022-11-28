@@ -43,46 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "FactoryVSTSConfiguration": return FactoryVstsConfiguration.DeserializeFactoryVstsConfiguration(element);
                 }
             }
-            string type = default;
-            string accountName = default;
-            string repositoryName = default;
-            string collaborationBranch = default;
-            string rootFolder = default;
-            Optional<string> lastCommitId = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("accountName"))
-                {
-                    accountName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("repositoryName"))
-                {
-                    repositoryName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("collaborationBranch"))
-                {
-                    collaborationBranch = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("rootFolder"))
-                {
-                    rootFolder = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("lastCommitId"))
-                {
-                    lastCommitId = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownFactoryRepoConfiguration(type, accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId.Value);
+            return UnknownFactoryRepoConfiguration.DeserializeUnknownFactoryRepoConfiguration(element);
         }
     }
 }

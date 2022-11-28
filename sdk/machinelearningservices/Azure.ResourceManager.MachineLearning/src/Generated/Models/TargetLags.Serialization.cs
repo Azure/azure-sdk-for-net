@@ -30,16 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "Custom": return CustomTargetLags.DeserializeCustomTargetLags(element);
                 }
             }
-            TargetLagsMode mode = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("mode"))
-                {
-                    mode = new TargetLagsMode(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownTargetLags(mode);
+            return UnknownTargetLags.DeserializeUnknownTargetLags(element);
         }
     }
 }

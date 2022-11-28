@@ -17,7 +17,11 @@ namespace Azure.AI.TextAnalytics.Models
     {
         /// <summary> Initializes a new instance of AnalyzeTextJobsInput. </summary>
         /// <param name="analysisInput"></param>
-        /// <param name="tasks"> The set of tasks to execute on the input documents. </param>
+        /// <param name="tasks">
+        /// The set of tasks to execute on the input documents.
+        /// Please note <see cref="AnalyzeTextLROTask"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AbstractiveSummarizationLROTask"/>, <see cref="CustomEntitiesLROTask"/>, <see cref="CustomMultiLabelClassificationLROTask"/>, <see cref="CustomSingleLabelClassificationLROTask"/>, <see cref="EntityLinkingLROTask"/>, <see cref="EntitiesLROTask"/>, <see cref="ExtractiveSummarizationLROTask"/>, <see cref="HealthcareLROTask"/>, <see cref="KeyPhraseLROTask"/>, <see cref="PiiLROTask"/> and <see cref="SentimentAnalysisLROTask"/>.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="analysisInput"/> or <paramref name="tasks"/> is null. </exception>
         public AnalyzeTextJobsInput(MultiLanguageAnalysisInput analysisInput, IEnumerable<AnalyzeTextLROTask> tasks)
         {
@@ -34,7 +38,11 @@ namespace Azure.AI.TextAnalytics.Models
         public string DefaultLanguage { get; set; }
         /// <summary> Gets the analysis input. </summary>
         public MultiLanguageAnalysisInput AnalysisInput { get; }
-        /// <summary> The set of tasks to execute on the input documents. </summary>
+        /// <summary>
+        /// The set of tasks to execute on the input documents.
+        /// Please note <see cref="AnalyzeTextLROTask"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AbstractiveSummarizationLROTask"/>, <see cref="CustomEntitiesLROTask"/>, <see cref="CustomMultiLabelClassificationLROTask"/>, <see cref="CustomSingleLabelClassificationLROTask"/>, <see cref="EntityLinkingLROTask"/>, <see cref="EntitiesLROTask"/>, <see cref="ExtractiveSummarizationLROTask"/>, <see cref="HealthcareLROTask"/>, <see cref="KeyPhraseLROTask"/>, <see cref="PiiLROTask"/> and <see cref="SentimentAnalysisLROTask"/>.
+        /// </summary>
         public IList<AnalyzeTextLROTask> Tasks { get; }
     }
 }

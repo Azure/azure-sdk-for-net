@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.HybridContainerService
             return GetCachedClient(Client => new ProvisionedClusterCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of VirtualNetworkResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of VirtualNetworkResources and their operations over a HybridContainerServiceVirtualNetworkResource. </returns>
-        public virtual HybridContainerServiceVirtualNetworkCollection GetVirtualNetworks()
+        /// <summary> Gets a collection of HybridContainerServiceVirtualNetworkResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of HybridContainerServiceVirtualNetworkResources and their operations over a HybridContainerServiceVirtualNetworkResource. </returns>
+        public virtual HybridContainerServiceVirtualNetworkCollection GetHybridContainerServiceVirtualNetworks()
         {
             return GetCachedClient(Client => new HybridContainerServiceVirtualNetworkCollection(Client, Id));
         }
