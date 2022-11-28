@@ -4,7 +4,7 @@
     <_IsCodeCoverable Condition="'$(IsClientLibrary)' == 'true'">true</_IsCodeCoverable>
   </PropertyGroup>
 
-  <!-- BUGBUG: When a specific framework is passed IsCrossTargetingBuild is unset but IsInnerBuild is still true. Cannot clean up past TestResults, but seeminly an edge case. -->
+  <!-- BUGBUG: When a specific framework is passed IsCrossTargetingBuild is unset but IsInnerBuild is still true. Cannot clean up past TestResults, but seemingly an edge case. -->
 
   <PropertyGroup Condition="'$(CollectCoverage)' == 'true' and '$(_IsCodeCoverable)' == 'true' and '$(IsTestProject)' == 'true' and '$(ExcludeFromCodeCoverage)' != 'true'">
     <CodeCoverageDirectory Condition="'$(CodeCoverageDirectory)' == ''">$([System.IO.Path]::GetFullPath("$(MSBuildProjectDirectory)\.."))</CodeCoverageDirectory>
