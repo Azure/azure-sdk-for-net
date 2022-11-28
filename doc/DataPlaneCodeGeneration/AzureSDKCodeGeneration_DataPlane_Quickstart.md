@@ -2,7 +2,7 @@
 
 We build Azure SDK libraries to give developers a consistent, unified experience working with Azure services, in the language ecosystem where they're most comfortable.  Azure SDK Code Generation allows you to quickly and easily create a client library so customers can work with your service as part of the SDK.  In this tutorial, we will step through the process of creating a new Azure SDK Generated Client library for a data plane Azure service.  The output library will have an API that follows [.NET Azure SDK Design Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html), which will give it the same look and feel of other .NET libraries in the Azure SDK.
 
-Azure SDK Code Generation takes an Open API spec or [Cadl](https://microsoft.github.io/cadl/) as input, and uses the [autorest.csharp](https://github.com/Azure/autorest.csharp) generator to output a generated library.  It is important that the input API spec follows the [Azure REST API Guidelines](https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md) or Cadl complies the cadl lint rules, to enable the output library to be consistent with the Azure SDK Guidelines.
+Azure SDK Code Generation takes an Open API spec or [Cadl](https://microsoft.github.io/cadl/) as input, and uses the [autorest.csharp](https://github.com/Azure/autorest.csharp) generator to output a generated library.  It is important that the input API spec should follow the [Azure REST API Guidelines](https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md) and Cadl files should comply with cadl lint rules, to enable the output library to be consistent with the Azure SDK Guidelines.
 
 **Learn more**: You can learn more about Azure SDK Data Plane Code Generation in the [Azure SDK Code Generation docs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md).
 
@@ -69,6 +69,8 @@ sdk\<service name>\<package name>\<package name>.sln
 
 #### Create Cadl project
   
+  You can download existing cadl project from [azure-rest-api-specs](https://github.com/Azure/azure-rest-api-specs) repo or you can follow following steps to create a new cadl project.
+
   ***Initialize Cadl Project***
 
   Follow [Cadl Getting Start](https://github.com/microsoft/cadl/#using-node--npm) to initialize your Cadl project.
@@ -90,6 +92,9 @@ sdk\<service name>\<package name>\<package name>.sln
 
         Run `npm install` again to install @azure-tools/cadl-csharp.
 
+  **Notes**: @azure-tools/cadl-csharp: "0.1.6" only works with @cadl-lang/compiler: "0.36.0" and @cadl-lang/rest: "0.18.0"
+  
+
   ***Modify (or create) cadl-project.yaml, add one line under emitters:***
 
   ```diff
@@ -108,11 +113,21 @@ emitters:
     clear-output-folder: true
 ```
 
+  **Notes**:
+  
+  @azure-tools/cadl-csharp emitter options:  
+
+- `namespace` define the client library namespace. e.g. Azure.IoT.DeviceUpdate.
+- `new-project` indicate it is a new sdk project, a project file (.csproj) will be generated.
+- `clear-output-folder` indicate if you want to clear up the output folder.
+
+
 #### Create a sdk project folder
   
 You can manually create the project folder. Please refer to [Azure.Template](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template) as an example.
 
 **Note**: 
+
 - Please refer to [sdk-directory-layout](https://github.com/Azure/azure-sdk/blob/main/docs/policies/repostructure.md#sdk-directory-layout) for detail information.
 - remove `autorest.md` from sdk\<service name>\<package name>\src
 
@@ -122,14 +137,16 @@ You can manually create the project folder. Please refer to [Azure.Template](htt
 Generate the library source code files to the directory `<sdkPath>/sdk/<service>/<namespace>/src/Generated`
 
   Enter `Cadl Project Folder`, run
-  ```
+
+  ```shell
   npm install
-  npx cadl compile --emit @azure-tools/cadl-csharp --output-path <Path-to-source-code-folder>
+  npx cadl compile --emit @azure-tools/cadl-csharp --output-path <Path-to-source-code-folder> <path-to-cadl-file>
   ```
 
   e.g.
-  ```
-  npx cadl compile --emit @azure-tools/cadl-csharp --output-path <sdkPath>/sdk/<service>/<namespace>/src
+
+  ```shell
+  npx cadl compile --emit @azure-tools/cadl-csharp --output-path /home/azure-sdk-for-net/sdk/deviceupdate/Azure.IoT.DeviceUpdate/src .
   ```
 
 #### Build the library project
@@ -220,5 +237,6 @@ eng\scripts\Export-API.ps1 deviceupdate
 Once you've done all above requirements, you will need to upload public API to [APIView Website](https://apiview.dev/) for review.
 
 Here are the steps:
+
 - Create the artifact: Run `dotnet pack` under `sdk\<service>\Azure.<group>.<service>` directory. The artifact will be generated to the directory `artifacts\packages\Debug\Azure.<group>.<service>`
 - Upload the artifact to [APIView Website](https://apiview.dev/) to create APIView of the service.
