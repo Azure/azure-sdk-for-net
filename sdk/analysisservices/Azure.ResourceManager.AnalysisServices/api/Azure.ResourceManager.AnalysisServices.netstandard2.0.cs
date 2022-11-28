@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AnalysisServices
         public AnalysisServicesServerData(Azure.Core.AzureLocation location, Azure.ResourceManager.AnalysisServices.Models.ResourceSku analysisServicesSKU) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.AnalysisServices.Models.ResourceSku AnalysisServicesServerSKU { get { throw null; } set { } }
         public Azure.ResourceManager.AnalysisServices.Models.ResourceSku AnalysisServicesSKU { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> AsAdministratorsAdministratorIdentities { get { throw null; } }
+        public System.Collections.Generic.IList<string> AsAdministratorIdentities { get { throw null; } }
         public System.Uri BackupBlobContainerUri { get { throw null; } set { } }
         public Azure.ResourceManager.AnalysisServices.Models.GatewayDetails GatewayDetails { get { throw null; } set { } }
         public Azure.ResourceManager.AnalysisServices.Models.IPv4FirewallSettings IPV4FirewallSettings { get { throw null; } set { } }
@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.AnalysisServices
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AnalysisServices.AnalysisServicesServerResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AnalysisServices.Models.GatewayListStatusLive> GetGatewayStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AnalysisServices.Models.GatewayListStatusLive>> GetGatewayStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.AnalysisServices.Models.SkuDetailsForExistingResource> GetSkusForExisting(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.AnalysisServices.Models.SkuDetailsForExistingResource> GetSkusForExistingAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AnalysisServices.Models.ExistingResourceSkuDetails> GetSkusForExisting(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AnalysisServices.Models.ExistingResourceSkuDetails> GetSkusForExistingAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AnalysisServices.AnalysisServicesServerResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AnalysisServices.AnalysisServicesServerResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Resume(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AnalysisServices.Models
     public partial class AnalysisServicesServerPatch
     {
         public AnalysisServicesServerPatch() { }
-        public System.Collections.Generic.IList<string> AsAdministratorsAdministratorIdentities { get { throw null; } }
+        public System.Collections.Generic.IList<string> AsAdministratorIdentities { get { throw null; } }
         public System.Uri BackupBlobContainerUri { get { throw null; } set { } }
         public Azure.ResourceManager.AnalysisServices.Models.GatewayDetails GatewayDetails { get { throw null; } set { } }
         public Azure.ResourceManager.AnalysisServices.Models.IPv4FirewallSettings IPV4FirewallSettings { get { throw null; } set { } }
@@ -166,14 +166,20 @@ namespace Azure.ResourceManager.AnalysisServices.Models
     public partial class CheckServerNameAvailabilityResult
     {
         internal CheckServerNameAvailabilityResult() { }
+        public bool? IsNameAvailable { get { throw null; } }
         public string Message { get { throw null; } }
-        public bool? NameAvailable { get { throw null; } }
         public string Reason { get { throw null; } }
     }
     public enum ConnectionMode
     {
         All = 0,
         ReadOnly = 1,
+    }
+    public partial class ExistingResourceSkuDetails
+    {
+        internal ExistingResourceSkuDetails() { }
+        public string ResourceType { get { throw null; } }
+        public Azure.ResourceManager.AnalysisServices.Models.ResourceSku Sku { get { throw null; } }
     }
     public partial class GatewayDetails
     {
@@ -197,8 +203,8 @@ namespace Azure.ResourceManager.AnalysisServices.Models
     public partial class IPv4FirewallSettings
     {
         public IPv4FirewallSettings() { }
-        public bool? EnablePowerBIService { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AnalysisServices.Models.IPv4FirewallRule> FirewallRules { get { throw null; } }
+        public bool? IsEnablePowerBIService { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ManagedMode : System.IEquatable<Azure.ResourceManager.AnalysisServices.Models.ManagedMode>
@@ -278,11 +284,5 @@ namespace Azure.ResourceManager.AnalysisServices.Models
         public static implicit operator Azure.ResourceManager.AnalysisServices.Models.ServerMonitorMode (int value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AnalysisServices.Models.ServerMonitorMode left, Azure.ResourceManager.AnalysisServices.Models.ServerMonitorMode right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class SkuDetailsForExistingResource
-    {
-        internal SkuDetailsForExistingResource() { }
-        public string ResourceType { get { throw null; } }
-        public Azure.ResourceManager.AnalysisServices.Models.ResourceSku Sku { get { throw null; } }
     }
 }
