@@ -146,6 +146,42 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             Assert.AreEqual(BlobName, resultBlobName);
         }
 
+        [Test]
+        public async Task Blob_IfBoundToParameterBindingDataArray_CreatesParameterBindingDataArray()
+        {
+            // Arrange
+            var program = new BindToParameterBindingDataArray();
+            IHost host = new HostBuilder()
+                .ConfigureDefaultTestHost<BindToParameterBindingDataArray>(program, builder =>
+                {
+                    builder.AddAzureStorageBlobs()
+                    .UseStorageServices(blobServiceClient, queueServiceClient);
+                })
+                .Build();
+
+            var jobHost = host.GetJobHost<BindToParameterBindingDataArray>();
+
+            // Act
+            await jobHost.CallAsync(nameof(BindToParameterBindingDataArray.Run));
+            IEnumerable<ParameterBindingData> result = program.Result;
+
+            Assert.NotNull(result);
+
+            var blobs = result?.Content.ToObjectFromJson<Dictionary<string,string>>();
+
+            // Assert
+            foreach (var blobData in blobs)
+            {
+                Assert.True(blobData.TryGetValue("Connection", out var resultConnection));
+                Assert.True(blobData.TryGetValue("ContainerName", out var resultContainerName));
+                Assert.True(blobData.TryGetValue("BlobName", out var resultBlobName));
+
+                Assert.AreEqual(ConnectionName, resultConnection);
+                Assert.AreEqual(ContainerName, resultContainerName);
+                Assert.AreEqual(BlobName, resultBlobName);
+            }
+        }
+
         private QueueClient CreateQueue(string queueName)
         {
             var queue = queueServiceClient.GetQueueClient(queueName);
@@ -216,5 +252,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
                 this.Result = blobData;
             }
         }
+
+        private class BindToParameterBindingDataArray
+        {
+            public IEnumerable<ParameterBindingData> Result { get; set; }
+
+            public void Run(
+                [Blob(BlobPath)] IEnumerable<ParameterBindingData> blobData)
+            {
+                this.Result = blobData;
+            }
+        }
+
     }
 }
