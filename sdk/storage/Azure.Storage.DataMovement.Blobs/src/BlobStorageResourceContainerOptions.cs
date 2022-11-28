@@ -10,9 +10,10 @@ using Azure.Storage.DataMovement.Models;
 namespace Azure.Storage.DataMovement.Blobs
 {
     /// <summary>
-    /// Options bag for <see cref="BlobDirectoryStorageResourceContainer"/>
+    /// Options bag for <see cref="BlobDirectoryStorageResourceContainer"/> and
+    /// <see cref="BlobStorageResourceContainer"/>.
     /// </summary>
-    public class BlobDirectoryStorageResourceContainerOptions
+    public class BlobStorageResourceContainerOptions
     {
         /// <summary>
         /// Optional. The <see cref="BlobTraits"/> for when calling the

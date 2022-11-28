@@ -85,6 +85,5 @@
     <Compile Include="$(AzureStorageSharedSources)StorageWriteStream.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(AzureStorageSharedSources)\StorageBearerTokenChallengeAuthorizationPolicy.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(AzureStorageSharedSources)ISupportsTenantIdChallenges.cs" LinkBase="Shared\Storage" />
-    <Compile Include="$(AzureStorageSharedSources)TaskThrottler.cs" LinkBase="Shared\Storage" />
   </ItemGroup>
 </Project>

@@ -62,7 +62,7 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public bool HasCompleted
         {
-            get { return _status == StorageTransferStatus.Completed; }
+            get { return _status >= StorageTransferStatus.Completed; }
             internal set { }
         }
 

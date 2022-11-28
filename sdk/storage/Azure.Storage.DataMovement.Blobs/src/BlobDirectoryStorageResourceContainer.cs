@@ -25,7 +25,7 @@ namespace Azure.Storage.DataMovement.Blobs
     {
         private BlobContainerClient _blobContainerClient;
         private string _directoryPrefix;
-        private BlobDirectoryStorageResourceContainerOptions _options;
+        private BlobStorageResourceContainerOptions _options;
 
         /// <summary>
         /// Can produce uri
@@ -39,19 +39,13 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <returns></returns>
         public override string Path => _directoryPrefix;
 
+        internal Uri _uri;
+
         /// <summary>
         /// Obtains the Uri of the blob directory resource, which means we can list
         /// </summary>
         /// <returns></returns>
-        public override Uri Uri
-        {
-            get
-            {
-                BlobUriBuilder blobUriBuilder = new BlobUriBuilder(_blobContainerClient.Uri);
-                blobUriBuilder.BlobName = string.Join("/", _directoryPrefix);
-                return blobUriBuilder.ToUri();
-            }
-        }
+        public override Uri Uri => _uri;
 
         /// <summary>
         /// Constructor for directory client.
@@ -70,29 +64,16 @@ namespace Azure.Storage.DataMovement.Blobs
         public BlobDirectoryStorageResourceContainer(
             BlobContainerClient containerClient,
             string directoryPrefix,
-            BlobDirectoryStorageResourceContainerOptions options = default)
+            BlobStorageResourceContainerOptions options = default)
         {
             Argument.AssertNotNull(containerClient, nameof(BlobContainerClient));
             Argument.AssertNotNullOrEmpty(directoryPrefix, nameof(directoryPrefix));
             _blobContainerClient = containerClient;
             _directoryPrefix = directoryPrefix;
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(_blobContainerClient.Uri);
+            blobUriBuilder.BlobName = string.Join("/", _directoryPrefix);
+            _uri = blobUriBuilder.ToUri();
             _options = options;
-        }
-
-        /// <summary>
-        /// Constructor for directory client
-        /// </summary>
-        /// <param name="containerClient">
-        /// The blob client which represents the virtual blob directory
-        /// to perform the transfer source or destination.
-        /// </param>
-        /// <param name="directoryPrefix">
-        /// The directory path of the blob virtual directory
-        /// </param>
-        public BlobDirectoryStorageResourceContainer(BlobContainerClient containerClient, string directoryPrefix)
-        {
-            _blobContainerClient = containerClient;
-            _directoryPrefix = directoryPrefix;
         }
 
         /// <summary>

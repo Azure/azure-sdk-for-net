@@ -26,7 +26,6 @@ namespace Azure.Storage.DataMovement.Blobs
 
         /// <summary>
         /// When calling for <see cref="AppendBlobStorageResource.ReadStreamAsync(long, long?, System.Threading.CancellationToken)"/>
-        ///
         /// these options will apply to the blob service requests.
         /// </summary>
         public BlobStorageResourceDownloadOptions DownloadOptions { get; set; }

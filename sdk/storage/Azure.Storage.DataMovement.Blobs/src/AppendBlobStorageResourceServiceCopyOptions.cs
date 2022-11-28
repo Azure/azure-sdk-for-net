@@ -13,13 +13,13 @@ namespace Azure.Storage.DataMovement.Blobs
     public class AppendBlobStorageResourceServiceCopyOptions
     {
         /// <summary>
-        /// Optional. Defines the copy operation to take.
+        /// Optionally specifies the copy operation to take.
         /// See <see cref="TransferCopyMethod"/>. Defaults to <see cref="TransferCopyMethod.SyncCopy"/>.
         /// </summary>
         public TransferCopyMethod CopyMethod { get; set; }
 
         /// <summary>
-        /// Optional <see cref="AppendBlobRequestConditions"/> to add
+        /// <see cref="AppendBlobRequestConditions"/> to apply when
         /// conditions on the copying of data to this append blob.
         /// </summary>
         public AppendBlobRequestConditions DestinationConditions { get; set; }

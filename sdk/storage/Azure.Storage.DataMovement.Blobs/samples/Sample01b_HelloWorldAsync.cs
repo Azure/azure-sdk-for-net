@@ -101,7 +101,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             // Create a SharedKeyCredential that we can use to authenticate
             StorageSharedKeyCredential credential = new StorageSharedKeyCredential(accountName, accountKey);
 
-            // Create a client that can authenticate with a connection string
+            // Create a client that can authenticate with a SharedKeyCredential
             BlobServiceClient service = new BlobServiceClient(serviceUri, credential);
             BlobContainerClient container = service.GetBlobContainerClient(Randomize("sample-container"));
             await container.CreateIfNotExistsAsync();
@@ -123,19 +123,19 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 {
                     ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
                 };
-                TransferManager dataController = new TransferManager(options);
+                TransferManager transferManager = new TransferManager(options);
 
                 // Simple Download Single Blob Job
                 StorageResource sourceResource = new BlockBlobStorageResource(sourceBlob);
                 StorageResource destinationResource = new LocalFileStorageResource(downloadPath);
-                await dataController.StartTransferAsync(
+                await transferManager.StartTransferAsync(
                     sourceResource,
                     destinationResource);
 
                 StorageResource sourceResource2 = new BlockBlobStorageResource(sourceBlob);
                 StorageResource destinationResource2 = new LocalFileStorageResource(downloadPath2);
 
-                await dataController.StartTransferAsync(
+                await transferManager.StartTransferAsync(
                     sourceResource: new BlockBlobStorageResource(sourceBlob, new BlockBlobStorageResourceOptions()
                         {
                             DownloadOptions = new BlobStorageResourceDownloadOptions()
@@ -212,7 +212,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 // Get a storage resource to a destination blob directory
                 StorageResourceContainer directoryDestination = new BlobDirectoryStorageResourceContainer(container, Randomize("sample-blob-directory"));
 
-                // Create BlobDataController with event handler in Options bag
+                // Create BlobtransferManager with event handler in Options bag
                 TransferManagerOptions transferManagerOptions = new TransferManagerOptions();
                 ContainerTransferOptions options = new ContainerTransferOptions()
                 {
@@ -291,7 +291,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             // Make a service request to verify we've successfully authenticated
             try
             {
-                // Create BlobDataController with event handler in Options bag
+                // Create BlobtransferManager with event handler in Options bag
                 TransferManagerOptions options = new TransferManagerOptions();
                 ContainerTransferOptions containerTransferOptions = new ContainerTransferOptions();
                 containerTransferOptions.SingleTransferCompleted += (SingleTransferCompletedEventArgs args) =>
@@ -374,7 +374,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             // Make a service request to verify we've successfully authenticated
             try
             {
-                // Create BlobDataController with event handler in Options bag
+                // Create BlobtransferManager with event handler in Options bag
                 TransferManagerOptions options = new TransferManagerOptions();
                 ContainerTransferOptions containerTransferOptions = new ContainerTransferOptions();
                 containerTransferOptions.TransferStatus += (TransferStatusEventArgs args) =>
@@ -470,7 +470,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 await container.UploadBlobAsync("second", File.OpenRead(CreateTempFile()));
                 await container.UploadBlobAsync("third", File.OpenRead(CreateTempFile()));
 
-                // Create BlobDataController with event handler in Options bag
+                // Create BlobtransferManager with event handler in Options bag
                 TransferManagerOptions options = new TransferManagerOptions();
                 ContainerTransferOptions downloadOptions = new ContainerTransferOptions();
                 downloadOptions.TransferFailed += async (TransferFailedEventArgs args) =>
@@ -614,7 +614,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 await container.UploadBlobAsync($"{sourceDirectoryName2}/ninth", File.OpenRead(originalPath));
 
                 // Create Blob Transfer Manager
-                TransferManager dataController = new TransferManager(default);
+                TransferManager transferManager = new TransferManager(default);
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
                 ContainerTransferOptions options = new ContainerTransferOptions();
                 options.TransferFailed += async (TransferFailedEventArgs args) =>
@@ -623,7 +623,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 };
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
 
-                await dataController.StartTransferAsync(
+                await transferManager.StartTransferAsync(
                     sourceDirectory1,
                     destinationDirectory1);
             }
@@ -1001,18 +1001,18 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 };
 
                 // Create Blob Transfer Manager
-                TransferManager dataController = new TransferManager(options);
+                TransferManager transferManager = new TransferManager(options);
 
                 // Create transfer single blob upload job with transfer options concurrency specified
                 // i.e. it's a bigger blob so it maybe need more help uploading fast
                 ContainerTransferOptions downloadOptions = new ContainerTransferOptions();
-                DataTransfer dataTranferInfo = await dataController.StartTransferAsync(
+                DataTransfer dataTranferInfo = await transferManager.StartTransferAsync(
                     sourceDirectory1,
                     destinationDirectory1);
-                DataTransfer dataTransferInfo2 = await dataController.StartTransferAsync(
+                DataTransfer dataTransferInfo2 = await transferManager.StartTransferAsync(
                     sourceDirectory2,
                     destinationDirectory2);
-                DataTransfer dataTransferInfo3 = await dataController.StartTransferAsync(
+                DataTransfer dataTransferInfo3 = await transferManager.StartTransferAsync(
                     sourceDirectory3,
                     destinationDirectory3);
 
@@ -1024,7 +1024,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
                 // Something else happens in the CX which causes them to pause all jobs the CX is using
                 // like an interrupt or something
-                if (await dataController.TryPauseAllTransfersAsync().ConfigureAwait(false))
+                if (await transferManager.TryPauseAllTransfersAsync().ConfigureAwait(false))
                 {
                     //  When they decide to allow the transferManager to resume
                     ContainerTransferOptions resumeOptions = new ContainerTransferOptions()
@@ -1033,7 +1033,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                         ResumeFromCheckpointId = dataTransferInfo2.Id
                     };
                     // We need to reprovide the crendentials / resources
-                    await dataController.StartTransferAsync(
+                    await transferManager.StartTransferAsync(
                         sourceDirectory2,
                         destinationDirectory2,
                         resumeOptions);
@@ -1113,7 +1113,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 };
 
                 // Create Blob Transfer Manager
-                TransferManager dataController = new TransferManager(options);
+                TransferManager transferManager = new TransferManager(options);
 
                 // Get a reference to a source blobs and upload sample content to download
                 StorageResourceContainer sourceDirectory1 = new BlobDirectoryStorageResourceContainer(container1, sourceDirectoryName);
@@ -1124,10 +1124,10 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 StorageResourceContainer destinationDirectory2 = new LocalDirectoryStorageResourceContainer(downloadPath2);
 
                 Dictionary<string, StoredCredentials> storedCredentials = new Dictionary<string, StoredCredentials>();
-                DataTransfer dataTransferInfo = await dataController.StartTransferAsync(
+                DataTransfer dataTransferInfo = await transferManager.StartTransferAsync(
                     sourceDirectory1,
                     destinationDirectory1);
-                DataTransfer dataTransferInfo2 = await dataController.StartTransferAsync(
+                DataTransfer dataTransferInfo2 = await transferManager.StartTransferAsync(
                     sourceDirectory2,
                     destinationDirectory2);
 

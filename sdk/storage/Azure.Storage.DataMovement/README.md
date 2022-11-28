@@ -7,7 +7,7 @@ highly available, secure, durable, scalable, and redundant. Azure Storage
 includes Azure Blobs (objects), Azure Data Lake Storage Gen2, Azure Files,
 and Azure Queues.
 
-The Azure.Storage.Common library provides infrastructure shared by the other
+The Azure.Storage.DataMovement library provides infrastructure shared by the other
 Azure Storage client libraries.
 
 [Source code][source] | [Package (NuGet)][package] | [API reference documentation][docs] | [REST API documentation][rest_docs] | [Product documentation][product_docs]
@@ -16,13 +16,11 @@ Azure Storage client libraries.
 
 ### Install the package
 
-Install the Azure Storage client library for .NET you'd like to use with
-[NuGet][nuget] and the `Azure.Storage.Common` client library will be included:
+Install the Azure Storage DataMovement client library for .NET you'd like to use with
+[NuGet][nuget] and the `Azure.Storage.DataMovement` client library will be included:
 
 ```dotnetcli
-dotnet add package Azure.Storage.Blobs
-dotnet add package Azure.Storage.Queues
-dotnet add package Azure.Storage.Files.Shares
+dotnet add package Azure.Storage.DataMovement.Blobs
 ```
 
 ### Prerequisites

@@ -38,8 +38,7 @@ namespace Azure.Storage.DataMovement.Blobs
     }
     public partial class BlobDirectoryStorageResourceContainer : Azure.Storage.DataMovement.StorageResourceContainer
     {
-        public BlobDirectoryStorageResourceContainer(Azure.Storage.Blobs.BlobContainerClient containerClient, string directoryPrefix) { }
-        public BlobDirectoryStorageResourceContainer(Azure.Storage.Blobs.BlobContainerClient containerClient, string directoryPrefix, Azure.Storage.DataMovement.Blobs.BlobDirectoryStorageResourceContainerOptions options = null) { }
+        public BlobDirectoryStorageResourceContainer(Azure.Storage.Blobs.BlobContainerClient containerClient, string directoryPrefix, Azure.Storage.DataMovement.Blobs.BlobStorageResourceContainerOptions options = null) { }
         public override Azure.Storage.DataMovement.ProduceUriType CanProduceUri { get { throw null; } }
         public override string Path { get { throw null; } }
         public override System.Uri Uri { get { throw null; } }
@@ -47,9 +46,19 @@ namespace Azure.Storage.DataMovement.Blobs
         public override Azure.Storage.DataMovement.StorageResourceContainer GetParentStorageResourceContainer() { throw null; }
         public override System.Collections.Generic.IAsyncEnumerable<Azure.Storage.DataMovement.StorageResourceBase> GetStorageResourcesAsync([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class BlobDirectoryStorageResourceContainerOptions
+    public partial class BlobStorageResourceContainer : Azure.Storage.DataMovement.StorageResourceContainer
     {
-        public BlobDirectoryStorageResourceContainerOptions() { }
+        public BlobStorageResourceContainer(Azure.Storage.Blobs.BlobContainerClient blobContainerClient, Azure.Storage.DataMovement.Blobs.BlobStorageResourceContainerOptions options = null) { }
+        public override Azure.Storage.DataMovement.ProduceUriType CanProduceUri { get { throw null; } }
+        public override string Path { get { throw null; } }
+        public override System.Uri Uri { get { throw null; } }
+        public override Azure.Storage.DataMovement.StorageResource GetChildStorageResource(string path) { throw null; }
+        public override Azure.Storage.DataMovement.StorageResourceContainer GetParentStorageResourceContainer() { throw null; }
+        public override System.Collections.Generic.IAsyncEnumerable<Azure.Storage.DataMovement.StorageResourceBase> GetStorageResourcesAsync([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class BlobStorageResourceContainerOptions
+    {
+        public BlobStorageResourceContainerOptions() { }
         public Azure.Storage.DataMovement.Blobs.BlockBlobStorageResourceServiceCopyOptions CopyOptions { get { throw null; } set { } }
         public Azure.Storage.DataMovement.Blobs.BlobStorageResourceDownloadOptions DownloadOptions { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobStates States { get { throw null; } set { } }
