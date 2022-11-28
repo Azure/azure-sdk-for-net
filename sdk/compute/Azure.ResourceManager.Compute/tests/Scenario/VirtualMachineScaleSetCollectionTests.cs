@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute.Tests
     public class VirtualMachineScaleSetCollectionTests : VirtualMachineScaleSetTestBase
     {
         public VirtualMachineScaleSetCollectionTests(bool isAsync, string apiVersion)
-            : base(isAsync, VirtualMachineScaleSetResource.ResourceType, apiVersion, RecordedTestMode.Record)
+            : base(isAsync, VirtualMachineScaleSetResource.ResourceType, apiVersion)//, RecordedTestMode.Record)
         {
         }
 
