@@ -8,17 +8,17 @@
 namespace Azure.ResourceManager.AnalysisServices.Models
 {
     /// <summary> An object that represents SKU details for existing resources. </summary>
-    public partial class SkuDetailsForExistingResource
+    public partial class ExistingResourceSkuDetails
     {
-        /// <summary> Initializes a new instance of SkuDetailsForExistingResource. </summary>
-        internal SkuDetailsForExistingResource()
+        /// <summary> Initializes a new instance of ExistingResourceSkuDetails. </summary>
+        internal ExistingResourceSkuDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of SkuDetailsForExistingResource. </summary>
+        /// <summary> Initializes a new instance of ExistingResourceSkuDetails. </summary>
         /// <param name="sku"> The SKU in SKU details for existing resources. </param>
         /// <param name="resourceType"> The resource type. </param>
-        internal SkuDetailsForExistingResource(ResourceSku sku, string resourceType)
+        internal ExistingResourceSkuDetails(ResourceSku sku, string resourceType)
         {
             Sku = sku;
             ResourceType = resourceType;

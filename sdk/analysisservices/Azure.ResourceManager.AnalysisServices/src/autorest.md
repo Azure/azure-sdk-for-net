@@ -20,11 +20,16 @@ modelerfour:
 rename-mapping:
   State: AnalysisServicesState
   Status: AnalysisServicesStatus
-  AnalysisServicesServers.value: Resources
+  AnalysisServicesServers.value: AnalysisServicesResources
 #   SkuEnumerationForNewResourceResult.value: SKUs
   Resource.sku: AnalysisServicesSKU
   AnalysisServicesServer.properties.sku: AnalysisServicesServerSKU
-  ServerAdministrators.members: AdministratorIdentities
+  ServerAdministrators.members: AsAdministratorIdentities
+  CheckServerNameAvailabilityResult.nameAvailable: IsNameAvailable
+  IPv4FirewallSettings.enablePowerBIService: IsEnablePowerBIService
+  SkuDetailsForExistingResource: ExistingResourceSkuDetails
+  SkuEnumerationForExistingResourceResult: ExistingResourceResultSkuEnumeration
+  SkuEnumerationForNewResourceResult: NewResourceResultSkuEnumeration
 #   SkuEnumerationForExistingResourceResult.value: ExistingResources
 
 format-by-name-rules:

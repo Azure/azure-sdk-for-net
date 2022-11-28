@@ -17,23 +17,23 @@ namespace Azure.ResourceManager.AnalysisServices.Models
     internal partial class AnalysisServicesServers
     {
         /// <summary> Initializes a new instance of AnalysisServicesServers. </summary>
-        /// <param name="resources"> An array of Analysis Services resources. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resources"/> is null. </exception>
-        internal AnalysisServicesServers(IEnumerable<AnalysisServicesServerData> resources)
+        /// <param name="analysisServicesResources"> An array of Analysis Services resources. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="analysisServicesResources"/> is null. </exception>
+        internal AnalysisServicesServers(IEnumerable<AnalysisServicesServerData> analysisServicesResources)
         {
-            Argument.AssertNotNull(resources, nameof(resources));
+            Argument.AssertNotNull(analysisServicesResources, nameof(analysisServicesResources));
 
-            Resources = resources.ToList();
+            AnalysisServicesResources = analysisServicesResources.ToList();
         }
 
         /// <summary> Initializes a new instance of AnalysisServicesServers. </summary>
-        /// <param name="resources"> An array of Analysis Services resources. </param>
-        internal AnalysisServicesServers(IReadOnlyList<AnalysisServicesServerData> resources)
+        /// <param name="analysisServicesResources"> An array of Analysis Services resources. </param>
+        internal AnalysisServicesServers(IReadOnlyList<AnalysisServicesServerData> analysisServicesResources)
         {
-            Resources = resources;
+            AnalysisServicesResources = analysisServicesResources;
         }
 
         /// <summary> An array of Analysis Services resources. </summary>
-        public IReadOnlyList<AnalysisServicesServerData> Resources { get; }
+        public IReadOnlyList<AnalysisServicesServerData> AnalysisServicesResources { get; }
     }
 }

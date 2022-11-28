@@ -21,16 +21,16 @@ namespace Azure.ResourceManager.AnalysisServices.Models
 
         /// <summary> Initializes a new instance of IPv4FirewallSettings. </summary>
         /// <param name="firewallRules"> An array of firewall rules. </param>
-        /// <param name="enablePowerBIService"> The indicator of enabling PBI service. </param>
-        internal IPv4FirewallSettings(IList<IPv4FirewallRule> firewallRules, bool? enablePowerBIService)
+        /// <param name="isEnablePowerBIService"> The indicator of enabling PBI service. </param>
+        internal IPv4FirewallSettings(IList<IPv4FirewallRule> firewallRules, bool? isEnablePowerBIService)
         {
             FirewallRules = firewallRules;
-            EnablePowerBIService = enablePowerBIService;
+            IsEnablePowerBIService = isEnablePowerBIService;
         }
 
         /// <summary> An array of firewall rules. </summary>
         public IList<IPv4FirewallRule> FirewallRules { get; }
         /// <summary> The indicator of enabling PBI service. </summary>
-        public bool? EnablePowerBIService { get; set; }
+        public bool? IsEnablePowerBIService { get; set; }
     }
 }
