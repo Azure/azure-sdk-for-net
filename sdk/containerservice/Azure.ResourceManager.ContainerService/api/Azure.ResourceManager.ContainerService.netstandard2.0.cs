@@ -93,6 +93,7 @@ namespace Azure.ResourceManager.ContainerService
         public bool? EnableNodePublicIP { get { throw null; } set { } }
         public bool? EnableUltraSsd { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerService.Models.GpuInstanceProfile? GpuInstanceProfile { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier HostGroupId { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerService.Models.KubeletConfig KubeletConfig { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerService.Models.KubeletDiskType? KubeletDiskType { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerService.Models.LinuxOSConfig LinuxOSConfig { get { throw null; } set { } }
@@ -245,13 +246,17 @@ namespace Azure.ResourceManager.ContainerService
         public int? MaxAgentPools { get { throw null; } }
         public Azure.ResourceManager.ContainerService.Models.ContainerServiceNetworkProfile NetworkProfile { get { throw null; } set { } }
         public string NodeResourceGroup { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerService.Models.ManagedClusterOidcIssuerProfile OidcIssuerProfile { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerService.Models.ManagedClusterPodIdentityProfile PodIdentityProfile { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerService.Models.ContainerServiceStateCode? PowerStateCode { get { throw null; } }
         public string PrivateFqdn { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ContainerService.Models.ContainerServicePrivateLinkResourceData> PrivateLinkResources { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.ContainerService.Models.ContainerServicePublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
         public Azure.ResourceManager.ContainerService.Models.ManagedClusterSecurityProfileAzureDefender SecurityAzureDefender { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerService.Models.ManagedClusterSecurityProfile SecurityProfile { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerService.Models.ManagedClusterServicePrincipalProfile ServicePrincipalProfile { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerService.Models.ManagedClusterSku Sku { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerService.Models.ManagedClusterStorageProfile StorageProfile { get { throw null; } set { } }
@@ -307,6 +312,8 @@ namespace Azure.ResourceManager.ContainerService
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerService.Models.ContainerServicePrivateLinkResourceData>> ResolvePrivateLinkServiceIdAsync(Azure.ResourceManager.ContainerService.Models.ContainerServicePrivateLinkResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation RotateClusterCertificates(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RotateClusterCertificatesAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation RotateServiceAccountSigningKeys(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RotateServiceAccountSigningKeysAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerService.Models.ManagedClusterRunCommandResult> RunCommand(Azure.WaitUntil waitUntil, Azure.ResourceManager.ContainerService.Models.ManagedClusterRunCommandContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerService.Models.ManagedClusterRunCommandResult>> RunCommandAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ContainerService.Models.ManagedClusterRunCommandContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ContainerService.ContainerServiceManagedClusterResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -462,6 +469,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static bool operator !=(Azure.ResourceManager.ContainerService.Models.AutoScaleExpander left, Azure.ResourceManager.ContainerService.Models.AutoScaleExpander right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class AzureKeyVaultKms
+    {
+        public AzureKeyVaultKms() { }
+        public bool? Enabled { get { throw null; } set { } }
+        public string KeyId { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerService.Models.KeyVaultNetworkAccessType? KeyVaultNetworkAccess { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier KeyVaultResourceId { get { throw null; } set { } }
+    }
     public partial class ContainerServiceEndpointDependency
     {
         internal ContainerServiceEndpointDependency() { }
@@ -526,6 +541,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         public ContainerServiceNetworkPlugin(string value) { throw null; }
         public static Azure.ResourceManager.ContainerService.Models.ContainerServiceNetworkPlugin Azure { get { throw null; } }
         public static Azure.ResourceManager.ContainerService.Models.ContainerServiceNetworkPlugin Kubenet { get { throw null; } }
+        public static Azure.ResourceManager.ContainerService.Models.ContainerServiceNetworkPlugin None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerService.Models.ContainerServiceNetworkPlugin other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -604,6 +620,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         public ContainerServiceOSSku(string value) { throw null; }
         public static Azure.ResourceManager.ContainerService.Models.ContainerServiceOSSku CblMariner { get { throw null; } }
         public static Azure.ResourceManager.ContainerService.Models.ContainerServiceOSSku Ubuntu { get { throw null; } }
+        public static Azure.ResourceManager.ContainerService.Models.ContainerServiceOSSku Windows2019 { get { throw null; } }
+        public static Azure.ResourceManager.ContainerService.Models.ContainerServiceOSSku Windows2022 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerService.Models.ContainerServiceOSSku other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -847,6 +865,24 @@ namespace Azure.ResourceManager.ContainerService.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct KeyVaultNetworkAccessType : System.IEquatable<Azure.ResourceManager.ContainerService.Models.KeyVaultNetworkAccessType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public KeyVaultNetworkAccessType(string value) { throw null; }
+        public static Azure.ResourceManager.ContainerService.Models.KeyVaultNetworkAccessType Private { get { throw null; } }
+        public static Azure.ResourceManager.ContainerService.Models.KeyVaultNetworkAccessType Public { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ContainerService.Models.KeyVaultNetworkAccessType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerService.Models.KeyVaultNetworkAccessType left, Azure.ResourceManager.ContainerService.Models.KeyVaultNetworkAccessType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerService.Models.KeyVaultNetworkAccessType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerService.Models.KeyVaultNetworkAccessType left, Azure.ResourceManager.ContainerService.Models.KeyVaultNetworkAccessType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct KubeConfigFormat : System.IEquatable<Azure.ResourceManager.ContainerService.Models.KubeConfigFormat>
     {
         private readonly object _dummy;
@@ -951,6 +987,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         public bool? EnableNodePublicIP { get { throw null; } set { } }
         public bool? EnableUltraSsd { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerService.Models.GpuInstanceProfile? GpuInstanceProfile { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier HostGroupId { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerService.Models.KubeletConfig KubeletConfig { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerService.Models.KubeletDiskType? KubeletDiskType { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerService.Models.LinuxOSConfig LinuxOSConfig { get { throw null; } set { } }
@@ -1054,6 +1091,12 @@ namespace Azure.ResourceManager.ContainerService.Models
         public int? IdleTimeoutInMinutes { get { throw null; } set { } }
         public int? ManagedOutboundIPCount { get { throw null; } set { } }
     }
+    public partial class ManagedClusterOidcIssuerProfile
+    {
+        public ManagedClusterOidcIssuerProfile() { }
+        public bool? Enabled { get { throw null; } set { } }
+        public string IssuerURL { get { throw null; } }
+    }
     public partial class ManagedClusterPodIdentity
     {
         public ManagedClusterPodIdentity(string name, string @namespace, Azure.ResourceManager.ContainerService.Models.ContainerServiceUserAssignedIdentity identity) { }
@@ -1131,10 +1174,22 @@ namespace Azure.ResourceManager.ContainerService.Models
         public string Reason { get { throw null; } }
         public System.DateTimeOffset? StartedOn { get { throw null; } }
     }
+    public partial class ManagedClusterSecurityProfile
+    {
+        public ManagedClusterSecurityProfile() { }
+        public Azure.ResourceManager.ContainerService.Models.AzureKeyVaultKms AzureKeyVaultKms { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerService.Models.ManagedClusterSecurityProfileDefender Defender { get { throw null; } set { } }
+    }
     public partial class ManagedClusterSecurityProfileAzureDefender
     {
         public ManagedClusterSecurityProfileAzureDefender() { }
         public bool? IsEnabled { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier LogAnalyticsWorkspaceResourceId { get { throw null; } set { } }
+    }
+    public partial class ManagedClusterSecurityProfileDefender
+    {
+        public ManagedClusterSecurityProfileDefender() { }
+        public bool? IsSecurityMonitoringEnabled { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier LogAnalyticsWorkspaceResourceId { get { throw null; } set { } }
     }
     public partial class ManagedClusterServicePrincipalProfile
@@ -1187,6 +1242,7 @@ namespace Azure.ResourceManager.ContainerService.Models
     public partial class ManagedClusterStorageProfile
     {
         public ManagedClusterStorageProfile() { }
+        public bool? BlobCsiDriverEnabled { get { throw null; } set { } }
         public bool? IsDiskCsiDriverEnabled { get { throw null; } set { } }
         public bool? IsFileCsiDriverEnabled { get { throw null; } set { } }
         public bool? IsSnapshotControllerEnabled { get { throw null; } set { } }

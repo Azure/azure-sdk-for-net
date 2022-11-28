@@ -30,6 +30,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("snapshotController");
                 writer.WriteObjectValue(SnapshotController);
             }
+            if (Optional.IsDefined(BlobCsiDriver))
+            {
+                writer.WritePropertyName("blobCSIDriver");
+                writer.WriteObjectValue(BlobCsiDriver);
+            }
             writer.WriteEndObject();
         }
 
@@ -38,6 +43,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<ManagedClusterStorageProfileDiskCsiDriver> diskCsiDriver = default;
             Optional<ManagedClusterStorageProfileFileCsiDriver> fileCsiDriver = default;
             Optional<ManagedClusterStorageProfileSnapshotController> snapshotController = default;
+            Optional<ManagedClusterStorageProfileBlobCsiDriver> blobCsiDriver = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskCSIDriver"))
@@ -70,8 +76,18 @@ namespace Azure.ResourceManager.ContainerService.Models
                     snapshotController = ManagedClusterStorageProfileSnapshotController.DeserializeManagedClusterStorageProfileSnapshotController(property.Value);
                     continue;
                 }
+                if (property.NameEquals("blobCSIDriver"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    blobCsiDriver = ManagedClusterStorageProfileBlobCsiDriver.DeserializeManagedClusterStorageProfileBlobCsiDriver(property.Value);
+                    continue;
+                }
             }
-            return new ManagedClusterStorageProfile(diskCsiDriver.Value, fileCsiDriver.Value, snapshotController.Value);
+            return new ManagedClusterStorageProfile(diskCsiDriver.Value, fileCsiDriver.Value, snapshotController.Value, blobCsiDriver.Value);
         }
     }
 }
