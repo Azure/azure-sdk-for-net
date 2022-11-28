@@ -17,23 +17,23 @@ namespace Azure.ResourceManager.AnalysisServices.Models
     internal partial class AnalysisServicesServers
     {
         /// <summary> Initializes a new instance of AnalysisServicesServers. </summary>
-        /// <param name="value"> An array of Analysis Services resources. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal AnalysisServicesServers(IEnumerable<AnalysisServicesServerData> value)
+        /// <param name="resources"> An array of Analysis Services resources. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resources"/> is null. </exception>
+        internal AnalysisServicesServers(IEnumerable<AnalysisServicesServerData> resources)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            Argument.AssertNotNull(resources, nameof(resources));
 
-            Value = value.ToList();
+            Resources = resources.ToList();
         }
 
         /// <summary> Initializes a new instance of AnalysisServicesServers. </summary>
-        /// <param name="value"> An array of Analysis Services resources. </param>
-        internal AnalysisServicesServers(IReadOnlyList<AnalysisServicesServerData> value)
+        /// <param name="resources"> An array of Analysis Services resources. </param>
+        internal AnalysisServicesServers(IReadOnlyList<AnalysisServicesServerData> resources)
         {
-            Value = value;
+            Resources = resources;
         }
 
         /// <summary> An array of Analysis Services resources. </summary>
-        public IReadOnlyList<AnalysisServicesServerData> Value { get; }
+        public IReadOnlyList<AnalysisServicesServerData> Resources { get; }
     }
 }

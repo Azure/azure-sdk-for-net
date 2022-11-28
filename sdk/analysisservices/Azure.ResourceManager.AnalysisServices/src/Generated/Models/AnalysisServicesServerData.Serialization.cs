@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AnalysisServices
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sku");
-            writer.WriteObjectValue(Sku);
+            writer.WriteObjectValue(AnalysisServicesSKU);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
@@ -71,10 +71,10 @@ namespace Azure.ResourceManager.AnalysisServices
                 writer.WritePropertyName("serverMonitorMode");
                 writer.WriteStringValue(ServerMonitorMode.Value.ToString());
             }
-            if (Optional.IsDefined(SkuPropertiesSku))
+            if (Optional.IsDefined(AnalysisServicesServerSKU))
             {
                 writer.WritePropertyName("sku");
-                writer.WriteObjectValue(SkuPropertiesSku);
+                writer.WriteObjectValue(AnalysisServicesServerSKU);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AnalysisServices
             Optional<ConnectionMode> querypoolConnectionMode = default;
             Optional<ManagedMode> managedMode = default;
             Optional<ServerMonitorMode> serverMonitorMode = default;
-            Optional<State> state = default;
+            Optional<AnalysisServicesState> state = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<string> serverFullName = default;
             Optional<ResourceSku> sku0 = default;
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.AnalysisServices
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            state = new State(property0.Value.GetString());
+                            state = new AnalysisServicesState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
