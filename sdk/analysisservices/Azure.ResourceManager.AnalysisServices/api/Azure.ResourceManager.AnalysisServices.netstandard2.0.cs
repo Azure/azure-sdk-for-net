@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.AnalysisServices.Models
     public partial class ExistingResourceSkuDetails
     {
         internal ExistingResourceSkuDetails() { }
-        public string ResourceType { get { throw null; } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
         public Azure.ResourceManager.AnalysisServices.Models.ResourceSku Sku { get { throw null; } }
     }
     public partial class GatewayDetails
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.AnalysisServices.Models
     {
         public IPv4FirewallSettings() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.AnalysisServices.Models.IPv4FirewallRule> FirewallRules { get { throw null; } }
-        public bool? IsEnablePowerBIService { get { throw null; } set { } }
+        public bool? IsPowerBIServiceEnabled { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ManagedMode : System.IEquatable<Azure.ResourceManager.AnalysisServices.Models.ManagedMode>
