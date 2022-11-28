@@ -7,8 +7,14 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed an issue where LINQ predicates containing New expressions, such as `ent => ent.TimeStamp > new DateTimeOffset(...)`, threw an exception.
 
 ### Other Changes
+
+## 12.7.1 (2022-12-06)
+
+### Bugs Fixed
+- Removed client side validation which prevented `GetEntity` and `GetEntityAsync` from getting an entity with an empty string as its RowKey or PartitionKey value. ([#32447](https://github.com/Azure/azure-sdk-for-net/issues/32447))
 
 ## 12.7.0 (2022-11-08)
 

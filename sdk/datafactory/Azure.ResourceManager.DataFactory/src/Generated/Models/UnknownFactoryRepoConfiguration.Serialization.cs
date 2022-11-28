@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static UnknownFactoryRepoConfiguration DeserializeUnknownFactoryRepoConfiguration(JsonElement element)
         {
-            string type = default;
+            string type = "Unknown";
             string accountName = default;
             string repositoryName = default;
             string collaborationBranch = default;

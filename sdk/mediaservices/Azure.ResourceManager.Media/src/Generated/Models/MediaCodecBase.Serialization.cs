@@ -43,22 +43,7 @@ namespace Azure.ResourceManager.Media.Models
                     case "#Microsoft.Media.Video": return MediaVideoBase.DeserializeMediaVideoBase(element);
                 }
             }
-            string odataType = default;
-            Optional<string> label = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("@odata.type"))
-                {
-                    odataType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("label"))
-                {
-                    label = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownMediaCodecBase(odataType, label.Value);
+            return UnknownCodec.DeserializeUnknownCodec(element);
         }
     }
 }

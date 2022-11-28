@@ -7,7 +7,6 @@
 
 namespace Azure.AI.AnomalyDetector.Models
 {
-    /// <summary> Model training status. </summary>
     public enum ModelStatus
     {
         /// <summary> CREATED. </summary>

@@ -7,19 +7,79 @@
 
 using System;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector.Models
 {
-    public partial class VariableState
+    public partial class VariableState : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Variable))
+            {
+                writer.WritePropertyName("variable");
+                writer.WriteStringValue(Variable);
+            }
+            if (Optional.IsDefined(FilledNARatio))
+            {
+                if (FilledNARatio != null)
+                {
+                    writer.WritePropertyName("filledNARatio");
+                    writer.WriteNumberValue(FilledNARatio.Value);
+                }
+                else
+                {
+                    writer.WriteNull("filledNARatio");
+                }
+            }
+            if (Optional.IsDefined(EffectiveCount))
+            {
+                if (EffectiveCount != null)
+                {
+                    writer.WritePropertyName("effectiveCount");
+                    writer.WriteNumberValue(EffectiveCount.Value);
+                }
+                else
+                {
+                    writer.WriteNull("effectiveCount");
+                }
+            }
+            if (Optional.IsDefined(FirstTimestamp))
+            {
+                if (FirstTimestamp != null)
+                {
+                    writer.WritePropertyName("firstTimestamp");
+                    writer.WriteStringValue(FirstTimestamp.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("firstTimestamp");
+                }
+            }
+            if (Optional.IsDefined(LastTimestamp))
+            {
+                if (LastTimestamp != null)
+                {
+                    writer.WritePropertyName("lastTimestamp");
+                    writer.WriteStringValue(LastTimestamp.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("lastTimestamp");
+                }
+            }
+            writer.WriteEndObject();
+        }
+
         internal static VariableState DeserializeVariableState(JsonElement element)
         {
             Optional<string> variable = default;
-            Optional<float> filledNARatio = default;
-            Optional<int> effectiveCount = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
+            Optional<float?> filledNARatio = default;
+            Optional<int?> effectiveCount = default;
+            Optional<DateTimeOffset?> firstTimestamp = default;
+            Optional<DateTimeOffset?> lastTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("variable"))
@@ -31,7 +91,7 @@ namespace Azure.AI.AnomalyDetector.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        filledNARatio = null;
                         continue;
                     }
                     filledNARatio = property.Value.GetSingle();
@@ -41,34 +101,50 @@ namespace Azure.AI.AnomalyDetector.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        effectiveCount = null;
                         continue;
                     }
                     effectiveCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("firstTimestamp"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        firstTimestamp = null;
                         continue;
                     }
-                    startTime = property.Value.GetDateTimeOffset("O");
+                    firstTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("lastTimestamp"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        lastTimestamp = null;
                         continue;
                     }
-                    endTime = property.Value.GetDateTimeOffset("O");
+                    lastTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
-            return new VariableState(variable.Value, Optional.ToNullable(filledNARatio), Optional.ToNullable(effectiveCount), Optional.ToNullable(startTime), Optional.ToNullable(endTime));
+            return new VariableState(variable, Optional.ToNullable(filledNARatio), Optional.ToNullable(effectiveCount), Optional.ToNullable(firstTimestamp), Optional.ToNullable(lastTimestamp));
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static VariableState FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeVariableState(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

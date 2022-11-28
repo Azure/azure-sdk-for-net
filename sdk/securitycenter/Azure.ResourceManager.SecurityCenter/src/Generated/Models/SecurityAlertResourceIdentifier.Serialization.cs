@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -22,16 +21,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     case "LogAnalytics": return LogAnalyticsIdentifier.DeserializeLogAnalyticsIdentifier(element);
                 }
             }
-            ResourceIdentifierType type = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = new ResourceIdentifierType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownSecurityAlertResourceIdentifier(type);
+            return UnknownAlertResourceIdentifier.DeserializeUnknownAlertResourceIdentifier(element);
         }
     }
 }

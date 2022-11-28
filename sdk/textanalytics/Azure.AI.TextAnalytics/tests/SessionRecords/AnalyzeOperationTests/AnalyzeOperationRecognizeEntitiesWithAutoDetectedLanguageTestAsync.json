@@ -1,0 +1,217 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs?api-version=2022-10-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "269",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-612f76b934aa372bb169d8f8f6c3ac3c-ee229e58f5a23a86-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221121.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "3a8dc92d5f0ca8222b263121f4c67a4e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "displayName": "RecognizeEntitiesWithAutoDetectedLanguage",
+        "analysisInput": {
+          "documents": [
+            {
+              "id": "0",
+              "text": "Microsoft was founded by Bill Gates and Paul Allen.",
+              "language": "auto"
+            }
+          ]
+        },
+        "tasks": [
+          {
+            "parameters": {
+              "stringIndexType": "Utf16CodeUnit"
+            },
+            "kind": "EntityRecognition"
+          }
+        ]
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "b048c13e-c52e-4f36-bfd4-b5060ced7711",
+        "Content-Length": "0",
+        "Date": "Tue, 22 Nov 2022 05:58:23 GMT",
+        "operation-location": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/643b4ef9-6fc6-449f-b7d1-8b4c92587f15?api-version=2022-10-01-preview",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "163",
+        "x-ms-region": "West US 2"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/643b4ef9-6fc6-449f-b7d1-8b4c92587f15?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221121.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "2d2d2ea00b3031de89e4af6f4b2a64d9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "bea9d607-e366-4bde-9ee8-0aaa19e0354a",
+        "Content-Length": "340",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 22 Nov 2022 05:58:23 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "16",
+        "x-ms-region": "West US 2"
+      },
+      "ResponseBody": {
+        "jobId": "643b4ef9-6fc6-449f-b7d1-8b4c92587f15",
+        "lastUpdateDateTime": "2022-11-22T05:58:24Z",
+        "createdDateTime": "2022-11-22T05:58:24Z",
+        "expirationDateTime": "2022-11-23T05:58:24Z",
+        "status": "notStarted",
+        "errors": [],
+        "displayName": "RecognizeEntitiesWithAutoDetectedLanguage",
+        "tasks": {
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 1,
+          "items": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/643b4ef9-6fc6-449f-b7d1-8b4c92587f15?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221121.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "1170f3c270285676196033310c626354",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "c22ae39a-5234-4527-a4e0-2b32dcba79d5",
+        "Content-Length": "337",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 22 Nov 2022 05:58:24 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "10",
+        "x-ms-region": "West US 2"
+      },
+      "ResponseBody": {
+        "jobId": "643b4ef9-6fc6-449f-b7d1-8b4c92587f15",
+        "lastUpdateDateTime": "2022-11-22T05:58:25Z",
+        "createdDateTime": "2022-11-22T05:58:24Z",
+        "expirationDateTime": "2022-11-23T05:58:24Z",
+        "status": "running",
+        "errors": [],
+        "displayName": "RecognizeEntitiesWithAutoDetectedLanguage",
+        "tasks": {
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 1,
+          "items": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/643b4ef9-6fc6-449f-b7d1-8b4c92587f15?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221121.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "27e875c5819a2208ea5cb127afb25d00",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "428a6163-7902-4c94-821d-ead255d393bc",
+        "Content-Length": "929",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 22 Nov 2022 05:58:26 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "27",
+        "x-ms-region": "West US 2"
+      },
+      "ResponseBody": {
+        "jobId": "643b4ef9-6fc6-449f-b7d1-8b4c92587f15",
+        "lastUpdateDateTime": "2022-11-22T05:58:26Z",
+        "createdDateTime": "2022-11-22T05:58:24Z",
+        "expirationDateTime": "2022-11-23T05:58:24Z",
+        "status": "succeeded",
+        "errors": [],
+        "displayName": "RecognizeEntitiesWithAutoDetectedLanguage",
+        "tasks": {
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 0,
+          "total": 1,
+          "items": [
+            {
+              "kind": "EntityRecognitionLROResults",
+              "lastUpdateDateTime": "2022-11-22T05:58:26.5433667Z",
+              "status": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "0",
+                    "entities": [
+                      {
+                        "text": "Microsoft",
+                        "category": "Organization",
+                        "offset": 0,
+                        "length": 9,
+                        "confidenceScore": 1.0
+                      },
+                      {
+                        "text": "Bill Gates",
+                        "category": "Person",
+                        "offset": 25,
+                        "length": 10,
+                        "confidenceScore": 1.0
+                      },
+                      {
+                        "text": "Paul Allen",
+                        "category": "Person",
+                        "offset": 40,
+                        "length": 10,
+                        "confidenceScore": 1.0
+                      }
+                    ],
+                    "warnings": [],
+                    "detectedLanguage": {
+                      "name": "English",
+                      "iso6391Name": "en",
+                      "confidenceScore": 0.94
+                    },
+                    "isLanguageDefaulted": false
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2021-06-01"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1386506591",
+    "TEXT_ANALYTICS_API_KEY": "Sanitized",
+    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
+  }
+}

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -17,9 +17,9 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
     public partial class AnomalyDetectorSamples : SamplesBase<AnomalyDetectorTestEnvironment>
     {
         [Test]
-        public async Task DetectEntireSeriesAnomaly()
+        public void DetectEntireSeriesAnomaly()
         {
-            #region Snippet:CreateAnomalyDetectorClient
+            #region Snippet:CreateAnomalyDetectorClientEntire
 
             //read endpoint and apiKey
             string endpoint = TestEnvironment.Endpoint;
@@ -27,9 +27,10 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
 
             var endpointUri = new Uri(endpoint);
             var credential = new AzureKeyCredential(apiKey);
+            String apiVersion = "v1.1";
 
             //create client
-            AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, credential);
+            AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, apiVersion, credential);
 
             #endregion
 
@@ -59,7 +60,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
 
             try
             {
-                EntireDetectResponse result = await client.DetectEntireSeriesAsync(request).ConfigureAwait(false);
+                EntireDetectResponse result = client.DetectUnivariateEntireSeries(request);
 
                 bool hasAnomaly = false;
                 for (int i = 0; i < request.Series.Count; ++i)

@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.HybridContainerService
                     {
                         HybridContainerServiceVirtualNetworkData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = HybridContainerServiceVirtualNetworkData.DeserializeVirtualNetworkData(document.RootElement);
+                        value = HybridContainerServiceVirtualNetworkData.DeserializeHybridContainerServiceVirtualNetworkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.HybridContainerService
                     {
                         HybridContainerServiceVirtualNetworkData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = HybridContainerServiceVirtualNetworkData.DeserializeVirtualNetworkData(document.RootElement);
+                        value = HybridContainerServiceVirtualNetworkData.DeserializeHybridContainerServiceVirtualNetworkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="virtualNetworksName"> Parameter for the name of the virtual network. </param>
-        /// <param name="data"> The VirtualNetwork to use. </param>
+        /// <param name="data"> The HybridContainerServiceVirtualNetwork to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworksName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworksName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="virtualNetworksName"> Parameter for the name of the virtual network. </param>
-        /// <param name="data"> The VirtualNetwork to use. </param>
+        /// <param name="data"> The HybridContainerServiceVirtualNetwork to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworksName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworksName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.HybridContainerService
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string virtualNetworksName, VirtualNetworkPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string virtualNetworksName, HybridContainerServiceVirtualNetworkPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -295,11 +295,11 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="virtualNetworksName"> Parameter for the name of the virtual network. </param>
-        /// <param name="patch"> The VirtualNetworkPatch to use. </param>
+        /// <param name="patch"> The HybridContainerServiceVirtualNetworkPatch to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworksName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworksName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string virtualNetworksName, VirtualNetworkPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string virtualNetworksName, HybridContainerServiceVirtualNetworkPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -322,11 +322,11 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="virtualNetworksName"> Parameter for the name of the virtual network. </param>
-        /// <param name="patch"> The VirtualNetworkPatch to use. </param>
+        /// <param name="patch"> The HybridContainerServiceVirtualNetworkPatch to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworksName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworksName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string virtualNetworksName, VirtualNetworkPatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string virtualNetworksName, HybridContainerServiceVirtualNetworkPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

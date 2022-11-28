@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -29,16 +30,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     case "#Microsoft.Azure.Search.SoftDeleteColumnDeletionDetectionPolicy": return SoftDeleteColumnDeletionDetectionPolicy.DeserializeSoftDeleteColumnDeletionDetectionPolicy(element);
                 }
             }
-            string odataType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("@odata.type"))
-                {
-                    odataType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new DataDeletionDetectionPolicy(odataType);
+            return UnknownDataDeletionDetectionPolicy.DeserializeUnknownDataDeletionDetectionPolicy(element);
         }
     }
 }

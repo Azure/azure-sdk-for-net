@@ -37,16 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     case "IaasVMRecoveryPoint": return IaasVmRecoveryPoint.DeserializeIaasVmRecoveryPoint(element);
                 }
             }
-            string objectType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("objectType"))
-                {
-                    objectType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownRecoveryPoint(objectType);
+            return UnknownRecoveryPoint.DeserializeUnknownRecoveryPoint(element);
         }
     }
 }

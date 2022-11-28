@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.OperationalInsights
     /// A Class representing a StorageInsight along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StorageInsightResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetStorageInsightResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WorkspaceResource" /> using the GetStorageInsight method.
+    /// Otherwise you can get one from its parent resource <see cref="OperationalInsightsWorkspaceResource" /> using the GetStorageInsight method.
     /// </summary>
     public partial class StorageInsightResource : ArmResource
     {

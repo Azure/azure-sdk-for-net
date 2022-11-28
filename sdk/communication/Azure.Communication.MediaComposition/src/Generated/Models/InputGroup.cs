@@ -9,7 +9,11 @@ using Azure.Communication.MediaComposition.Models;
 
 namespace Azure.Communication.MediaComposition
 {
-    /// <summary> Configure input group to be used in custom layouts. </summary>
+    /// <summary>
+    /// Configure input group to be used in custom layouts
+    /// Please note <see cref="InputGroup"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="AutoGridInputGroup"/> and <see cref="GridInputGroup"/>.
+    /// </summary>
     public partial class InputGroup
     {
         /// <summary> Initializes a new instance of InputGroup. </summary>
