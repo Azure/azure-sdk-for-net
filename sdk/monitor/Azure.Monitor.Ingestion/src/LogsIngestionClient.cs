@@ -93,10 +93,12 @@ namespace Azure.Monitor.Ingestion
             writer.WriteStartArray();
             int entryCount = 0;
             List<T> currentLogList = new List<T>();
-            foreach (var log in logEntries.ToList())
+            var logEntriesList = logEntries.ToList();
+            int logEntriesCount = logEntriesList.Count;
+            foreach (var log in logEntriesList())
             {
                 BinaryData entry;
-                bool isLastEntry = (entryCount + 1 == logEntries.Count());
+                bool isLastEntry = (entryCount + 1 == logEntriesCount);
                 // If log is already BinaryData, no need to serialize it
                 if (log is BinaryData d)
                     entry = d;
