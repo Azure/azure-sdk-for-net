@@ -131,11 +131,12 @@ namespace Azure.AI.TextAnalytics
             //Read sentiments
             foreach (var document in results.Documents)
             {
-                analyzedSentiments.Add(new AnalyzeSentimentResult(
-                    document.Id,
-                    document.Statistics ?? default,
-                    new DocumentSentiment(document),
-                    ConvertToDetectedLanguage(document.DetectedLanguage)));
+                analyzedSentiments.Add(
+                    new AnalyzeSentimentResult(
+                        document.Id,
+                        document.Statistics ?? default,
+                        new DocumentSentiment(document),
+                        ConvertToDetectedLanguage(document.DetectedLanguage)));
             }
 
             analyzedSentiments = SortHeterogeneousCollection(analyzedSentiments, idToIndexMap);
@@ -203,10 +204,10 @@ namespace Azure.AI.TextAnalytics
             {
                 recognizeEntities.Add(
                     new RecognizeEntitiesResult(
-                    document.Id,
-                    document.Statistics ?? default,
-                    ConvertToCategorizedEntityCollection(document),
-                    ConvertToDetectedLanguage(document.DetectedLanguage)));
+                        document.Id,
+                        document.Statistics ?? default,
+                        ConvertToCategorizedEntityCollection(document),
+                        ConvertToDetectedLanguage(document.DetectedLanguage)));
             }
 
             recognizeEntities = SortHeterogeneousCollection(recognizeEntities, idToIndexMap);
@@ -333,11 +334,12 @@ namespace Azure.AI.TextAnalytics
             // Read document entities.
             foreach (EntityLinkingResultWithDetectedLanguage document in results.Documents)
             {
-                recognizeLinkedEntities.Add(new RecognizeLinkedEntitiesResult(
-                    document.Id,
-                    document.Statistics ?? default,
-                    ConvertToLinkedEntityCollection(document),
-                    ConvertToDetectedLanguage(document.DetectedLanguage)));
+                recognizeLinkedEntities.Add(
+                    new RecognizeLinkedEntitiesResult(
+                        document.Id,
+                        document.Statistics ?? default,
+                        ConvertToLinkedEntityCollection(document),
+                        ConvertToDetectedLanguage(document.DetectedLanguage)));
             }
 
             recognizeLinkedEntities = SortHeterogeneousCollection(recognizeLinkedEntities, idToIndexMap);
@@ -457,12 +459,13 @@ namespace Azure.AI.TextAnalytics
             // Read classifications.
             foreach (var document in results.Documents)
             {
-                classifiedCustomCategoryResults.Add(new ClassifyDocumentResult(
-                    document.Id,
-                    document.Statistics ?? default,
-                    ConvertToClassificationCategoryCollection(document),
-                    ConvertToDetectedLanguage(document.DetectedLanguage),
-                    ConvertToWarnings(document.Warnings)));
+                classifiedCustomCategoryResults.Add(
+                    new ClassifyDocumentResult(
+                        document.Id,
+                        document.Statistics ?? default,
+                        ConvertToClassificationCategoryCollection(document),
+                        ConvertToDetectedLanguage(document.DetectedLanguage),
+                        ConvertToWarnings(document.Warnings)));
             }
 
             classifiedCustomCategoryResults = SortHeterogeneousCollection(classifiedCustomCategoryResults, idToIndexMap);
@@ -507,12 +510,13 @@ namespace Azure.AI.TextAnalytics
             // Read results.
             foreach (ExtractedSummaryDocumentResultWithDetectedLanguage document in results.Documents)
             {
-                extractSummaryResults.Add(new ExtractSummaryResult(
-                    document.Id,
-                    document.Statistics ?? default,
-                    ConvertToSummarySentenceList(document.Sentences),
-                    ConvertToDetectedLanguage(document.DetectedLanguage),
-                    ConvertToWarnings(document.Warnings)));
+                extractSummaryResults.Add(
+                    new ExtractSummaryResult(
+                        document.Id,
+                        document.Statistics ?? default,
+                        ConvertToSummarySentenceList(document.Sentences),
+                        ConvertToDetectedLanguage(document.DetectedLanguage),
+                        ConvertToWarnings(document.Warnings)));
             }
 
             extractSummaryResults = SortHeterogeneousCollection(extractSummaryResults, idToIndexMap);
@@ -554,12 +558,13 @@ namespace Azure.AI.TextAnalytics
             // Read results.
             foreach (AbstractiveSummaryDocumentResultWithDetectedLanguage document in results.Documents)
             {
-                abstractSummaryResults.Add(new AbstractSummaryResult(
-                    document.Id,
-                    document.Statistics ?? default,
-                    ConvertToSummaryList(document.Summaries),
-                    ConvertToDetectedLanguage(document.DetectedLanguage),
-                    ConvertToWarnings(document.Warnings)));
+                abstractSummaryResults.Add(
+                    new AbstractSummaryResult(
+                        document.Id,
+                        document.Statistics ?? default,
+                        ConvertToSummaryList(document.Summaries),
+                        ConvertToDetectedLanguage(document.DetectedLanguage),
+                        ConvertToWarnings(document.Warnings)));
             }
 
             abstractSummaryResults = SortHeterogeneousCollection(abstractSummaryResults, idToIndexMap);

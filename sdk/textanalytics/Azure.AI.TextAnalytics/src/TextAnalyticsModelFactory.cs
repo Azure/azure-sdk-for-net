@@ -87,7 +87,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="neutralScore">Sets the <see cref="SentimentConfidenceScores.Neutral"/> property.</param>
         /// <param name="negativeScore">Sets the <see cref="SentimentConfidenceScores.Negative"/> property.</param>
         /// <param name="sentenceSentiments">Sets the <see cref="DocumentSentiment.Sentences"/> property.</param>
-        /// <param name="warnings">Sets the <see cref="DetectedLanguage.Warnings"/> property.</param>
+        /// <param name="warnings">Sets the <see cref="DocumentSentiment.Warnings"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.DocumentSentiment"/> for mocking purposes.</returns>
         public static DocumentSentiment DocumentSentiment(TextSentiment sentiment, double positiveScore, double neutralScore, double negativeScore, List<SentenceSentiment> sentenceSentiments, IList<TextAnalyticsWarning> warnings = default)
         {
@@ -178,7 +178,10 @@ namespace Azure.AI.TextAnalytics
         /// <param name="documentSentiment">Sets the <see cref="AnalyzeSentimentResult.DocumentSentiment"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeSentimentResult"/> for mocking purposes.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AnalyzeSentimentResult AnalyzeSentimentResult(string id, TextDocumentStatistics statistics, DocumentSentiment documentSentiment)
+        public static AnalyzeSentimentResult AnalyzeSentimentResult(
+            string id,
+            TextDocumentStatistics statistics,
+            DocumentSentiment documentSentiment)
         {
             return new AnalyzeSentimentResult(id, statistics, documentSentiment, default);
         }
@@ -191,7 +194,11 @@ namespace Azure.AI.TextAnalytics
         /// <param name="documentSentiment">Sets the <see cref="AnalyzeSentimentResult.DocumentSentiment"/> property.</param>
         /// <param name="detectedLanguage">Sets the <see cref="AnalyzeSentimentResult.DetectedLanguage"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeSentimentResult"/> for mocking purposes.</returns>
-        public static AnalyzeSentimentResult AnalyzeSentimentResult(string id, TextDocumentStatistics statistics, DocumentSentiment documentSentiment, DetectedLanguage? detectedLanguage)
+        public static AnalyzeSentimentResult AnalyzeSentimentResult(
+            string id,
+            TextDocumentStatistics statistics,
+            DocumentSentiment documentSentiment,
+            DetectedLanguage? detectedLanguage = default)
         {
             return new AnalyzeSentimentResult(id, statistics, documentSentiment, detectedLanguage);
         }
@@ -376,7 +383,7 @@ namespace Azure.AI.TextAnalytics
             string id,
             TextDocumentStatistics statistics,
             CategorizedEntityCollection entities,
-            DetectedLanguage? detectedLanguage)
+            DetectedLanguage? detectedLanguage = default)
         {
             return new RecognizeEntitiesResult(id, statistics, entities, detectedLanguage);
         }
@@ -632,7 +639,7 @@ namespace Azure.AI.TextAnalytics
             string id,
             TextDocumentStatistics statistics,
             PiiEntityCollection entities,
-            DetectedLanguage? detectedLanguage)
+            DetectedLanguage? detectedLanguage = default)
         {
             return new RecognizePiiEntitiesResult(id, statistics, entities, detectedLanguage);
         }
@@ -706,7 +713,7 @@ namespace Azure.AI.TextAnalytics
             string id,
             TextDocumentStatistics statistics,
             KeyPhraseCollection keyPhrases,
-            DetectedLanguage? detectedLanguage)
+            DetectedLanguage? detectedLanguage = default)
         {
             return new ExtractKeyPhrasesResult(id, statistics, keyPhrases, detectedLanguage);
         }
@@ -781,7 +788,7 @@ namespace Azure.AI.TextAnalytics
             string id,
             TextDocumentStatistics statistics,
             ClassificationCategoryCollection documentClassificationCollection,
-            DetectedLanguage? detectedLanguage,
+            DetectedLanguage? detectedLanguage = default,
             IEnumerable<TextAnalyticsWarning> warnings = default)
         {
             return new ClassifyDocumentResult(id, statistics, documentClassificationCollection, detectedLanguage, warnings?.ToList());
@@ -928,7 +935,7 @@ namespace Azure.AI.TextAnalytics
             string id,
             TextDocumentStatistics statistics,
             LinkedEntityCollection linkedEntities,
-            DetectedLanguage? detectedLanguage)
+            DetectedLanguage? detectedLanguage = default)
         {
             return new RecognizeLinkedEntitiesResult(id, statistics, linkedEntities, detectedLanguage);
         }
@@ -1916,7 +1923,7 @@ namespace Azure.AI.TextAnalytics
             string id,
             TextDocumentStatistics statistics,
             IList<SummarySentence> sentences,
-            DetectedLanguage detectedLanguage,
+            DetectedLanguage? detectedLanguage = default,
             IList<TextAnalyticsWarning> warnings = default)
         {
             return new ExtractSummaryResult(id, statistics, sentences, detectedLanguage, warnings);
@@ -1987,7 +1994,7 @@ namespace Azure.AI.TextAnalytics
             string id,
             TextDocumentStatistics statistics,
             IList<AbstractiveSummary> summaries,
-            DetectedLanguage detectedLanguage,
+            DetectedLanguage? detectedLanguage = default,
             IList<TextAnalyticsWarning> warnings = default)
         {
             return new AbstractSummaryResult(id, statistics, summaries, detectedLanguage, warnings);
