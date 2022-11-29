@@ -2,18 +2,22 @@
 
 ## 1.0.0-beta.1 (2022-11-29)
 
+#### Package Name
+
+The package name has been changed from `Microsoft.Azure.Management.AnalysisServices` to `Azure.ResourceManager.AnalysisServices`
+
 ### Breaking Changes
 
 New design of track 2 initial commit.
-Corrected the format of all `uuid` type properties / parameters.
-Corrected the format of all `Uri` type properties / parameters.
-Corrected the format of all `ETag` type properties / parameters.
-Corrected the format of all `AzureLocation` type properties / parameters.
-Corrected the type of property `ResourceType` of ExistingResourceSkuDetails from `String` to `ResourceType`.
-The value of the int type generates an error when using ToSerialString() for type conversion, so the modelAsString in the corresponding property['x-ms-enum'] is converted to true in the autorest.md
-Corrected all acronyms that don't follow [Microsoft .NET Naming Guidelines](https://docs.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
-Prepended `AnalysisServices` prefix to all single / simple model names
-Optimized the name of some models and functions.
+- Corrected the format of all `uuid` type properties / parameters.
+- Corrected the format of all `Uri` type properties / parameters.
+- Corrected the format of all `ETag` type properties / parameters.
+- Corrected the format of all `AzureLocation` type properties / parameters.
+- Corrected the type of property `ResourceType` of ExistingResourceSkuDetails from `String` to `ResourceType`.
+- The value of the int type generates an error when using ToSerialString() for type conversion, so the modelAsString in the corresponding property['x-ms-enum'] is converted to true in the autorest.md
+- Corrected all acronyms that don't follow [Microsoft .NET Naming Guidelines](https://docs.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
+- Prepended `AnalysisServices` prefix to all single / simple model names
+- Optimized the name of some models and functions.
 
 ### General New Features
 
@@ -24,10 +28,6 @@ Optimized the name of some models and functions.
     - Support uniform telemetry across all languages.
 
 > NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
-
-#### Package Name
-
-The package name has been changed from `Microsoft.Azure.Management.AnalysisServices` to `Azure.ResourceManager.AnalysisServices`
 
 This package follows the [Azure SDK Design Guidelines for .NET](https://azure.github.io/azure-sdk/dotnet_introduction.html) which provide a number of core capabilities that are shared amongst all Azure SDKs, including the intuitive Azure Identity library, an HTTP Pipeline with custom policies, error-handling, distributed tracing, and much more.
 
