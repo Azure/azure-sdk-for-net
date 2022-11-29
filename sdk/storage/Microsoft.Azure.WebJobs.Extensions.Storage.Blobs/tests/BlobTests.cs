@@ -167,11 +167,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 
             Assert.NotNull(result);
 
-            var blobs = result?.Content.ToObjectFromJson<Dictionary<string,string>>();
-
             // Assert
-            foreach (var blobData in blobs)
+            foreach (var res in result)
             {
+                var blobData = res?.Content.ToObjectFromJson<Dictionary<string,string>>();
+
                 Assert.True(blobData.TryGetValue("Connection", out var resultConnection));
                 Assert.True(blobData.TryGetValue("ContainerName", out var resultContainerName));
                 Assert.True(blobData.TryGetValue("BlobName", out var resultBlobName));
