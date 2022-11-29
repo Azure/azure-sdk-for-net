@@ -23,6 +23,7 @@ namespace Azure.Messaging.WebPubSub.Clients
         private readonly TimeSpan _delay;
         private readonly TimeSpan _maxDelay;
         private readonly RetryMode _mode;
+        private readonly int _maxRetriesToGetMaxDelay;
 
         public WebPubSubRetryPolicy(RetryOptions options)
         {
@@ -30,6 +31,14 @@ namespace Azure.Messaging.WebPubSub.Clients
             _delay = options.Delay;
             _maxDelay = options.MaxDelay;
             _mode = options.Mode;
+            if (_mode == RetryMode.Exponential)
+            {
+                if (options.MaxDelay < options.Delay)
+                {
+                    throw new InvalidOperationException("RetryOptions.MaxDelay should larger or equal than RetryOptions.Delay");
+                }
+                _maxRetriesToGetMaxDelay = (int)Math.Ceiling(Math.Log(_maxDelay.Ticks, 2) - Math.Log(_delay.Ticks, 2) + 1);
+            }
         }
 
         /// <summary>
@@ -67,9 +76,11 @@ namespace Azure.Messaging.WebPubSub.Clients
 
         private TimeSpan CalculateExponentialDelay(int attempted)
         {
-            return TimeSpan.FromMilliseconds(
-                Math.Min((1 << (attempted - 1)) * (int)(_delay.TotalMilliseconds),
-                    _maxDelay.TotalMilliseconds));
+            if (attempted >= _maxRetriesToGetMaxDelay)
+            {
+                return _maxDelay;
+            }
+            return TimeSpan.FromMilliseconds((1 << (attempted - 1)) * (int)(_delay.TotalMilliseconds));
         }
     }
 }
