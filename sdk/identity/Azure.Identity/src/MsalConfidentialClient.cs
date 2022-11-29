@@ -104,7 +104,7 @@ namespace Azure.Identity
                 confClientBuilder.WithCertificate(clientCertificate);
             }
 
-            if (!string.IsNullOrEmpty(RegionalAuthority))
+            if (_appTokenProviderCallback == null && !string.IsNullOrEmpty(RegionalAuthority))
             {
                 confClientBuilder.WithAzureRegion(RegionalAuthority);
             }

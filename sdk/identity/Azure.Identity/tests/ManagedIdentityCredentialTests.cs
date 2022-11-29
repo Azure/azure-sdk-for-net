@@ -103,6 +103,40 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
+        [TestCase(null)]
+        [TestCase("Auto-Detect")]
+        [TestCase("eastus")]
+        [TestCase("westus")]
+        public async Task VerifyImdsRequestWithClientIdAndRegionalAuthorityNameMockAsync(string regionName)
+        {
+            using var environment = new TestEnvVar(new() { {"AZURE_REGIONAL_AUTHORITY_NAME", regionName}, {"MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
+
+            var response = CreateMockResponse(200, ExpectedToken);
+            var mockTransport = new MockTransport(response);
+            var options = new TokenCredentialOptions() { Transport = mockTransport };
+            var pipeline = CredentialPipeline.GetInstance(options);
+
+            ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential("mock-client-id", pipeline));
+
+            AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+
+            Assert.AreEqual(ExpectedToken, actualToken.Token);
+
+            MockRequest request = mockTransport.Requests[0];
+
+            string query = request.Uri.Query;
+
+            Assert.AreEqual(request.Uri.Host, "169.254.169.254");
+            Assert.AreEqual(request.Uri.Path, "/metadata/identity/oauth2/token");
+            Assert.IsTrue(query.Contains("api-version=2018-02-01"));
+            Assert.IsTrue(query.Contains($"resource={Uri.EscapeDataString(ScopeUtilities.ScopesToResource(MockScopes.Default))}"));
+            Assert.IsTrue(request.Headers.TryGetValue("Metadata", out string metadataValue));
+            Assert.IsTrue(query.Contains($"{Constants.ManagedIdentityClientId}=mock-client-id"));
+            Assert.AreEqual("true", metadataValue);
+        }
+
+        [NonParallelizable]
+        [Test]
         [TestCaseSource(nameof(AuthorityHostValues))]
         public async Task VerifyImdsRequestWithClientIdAndNonPubCloudMockAsync(Uri authority)
         {
