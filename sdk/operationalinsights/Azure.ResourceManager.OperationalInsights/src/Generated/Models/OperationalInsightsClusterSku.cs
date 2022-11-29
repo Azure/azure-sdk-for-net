@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Initializes a new instance of OperationalInsightsClusterSku. </summary>
         /// <param name="capacity"> The capacity value. </param>
         /// <param name="name"> The name of the SKU. </param>
-        internal OperationalInsightsClusterSku(long? capacity, OperationalInsightsClusterSkuName? name)
+        internal OperationalInsightsClusterSku(OperationalInsightsClusterCapacity? capacity, OperationalInsightsClusterSkuName? name)
         {
             Capacity = capacity;
             Name = name;
         }
 
         /// <summary> The capacity value. </summary>
-        public long? Capacity { get; set; }
+        public OperationalInsightsClusterCapacity? Capacity { get; set; }
         /// <summary> The name of the SKU. </summary>
         public OperationalInsightsClusterSkuName? Name { get; set; }
     }

@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public OperationalInsightsDataExportData() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
         public System.Guid? DataExportId { get { throw null; } set { } }
-        public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportsDestinationType? DestinationType { get { throw null; } }
+        public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportDestinationType? DestinationType { get { throw null; } }
         public string EventHubName { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } set { } }
@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     public partial class OperationalInsightsClusterAssociatedWorkspace
     {
         public OperationalInsightsClusterAssociatedWorkspace() { }
-        public System.DateTimeOffset? AssociateOn { get { throw null; } }
+        public System.DateTimeOffset? AssociatedOn { get { throw null; } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
         public System.Guid? WorkspaceId { get { throw null; } }
         public string WorkspaceName { get { throw null; } }
@@ -752,21 +752,21 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct OperationalInsightsDataExportsDestinationType : System.IEquatable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportsDestinationType>
+    public readonly partial struct OperationalInsightsDataExportDestinationType : System.IEquatable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportDestinationType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public OperationalInsightsDataExportsDestinationType(string value) { throw null; }
-        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportsDestinationType EventHub { get { throw null; } }
-        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportsDestinationType StorageAccount { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportsDestinationType other) { throw null; }
+        public OperationalInsightsDataExportDestinationType(string value) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportDestinationType EventHub { get { throw null; } }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportDestinationType StorageAccount { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportDestinationType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportsDestinationType left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportsDestinationType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportsDestinationType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportsDestinationType left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportsDestinationType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportDestinationType left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportDestinationType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportDestinationType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportDestinationType left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportDestinationType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1145,9 +1145,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public OperationalInsightsWorkspaceFeatures() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public Azure.Core.ResourceIdentifier ClusterResourceId { get { throw null; } set { } }
-        public bool? DisableLocalAuth { get { throw null; } set { } }
         public bool? ImmediatePurgeDataOn30Days { get { throw null; } set { } }
         public bool? IsDataExportEnabled { get { throw null; } set { } }
+        public bool? IsLocalAuthDisabled { get { throw null; } set { } }
         public bool? IsLogAccessUsingOnlyResourcePermissionsEnabled { get { throw null; } set { } }
     }
     public partial class OperationalInsightsWorkspacePatch : Azure.ResourceManager.Models.ResourceData

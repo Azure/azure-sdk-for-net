@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity");
-                writer.WriteNumberValue(Capacity.Value);
+                writer.WriteStringValue(Capacity.Value.ToSerialInt64());
             }
             if (Optional.IsDefined(Name))
             {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         internal static OperationalInsightsClusterSku DeserializeOperationalInsightsClusterSku(JsonElement element)
         {
-            Optional<long> capacity = default;
+            Optional<OperationalInsightsClusterCapacity> capacity = default;
             Optional<OperationalInsightsClusterSkuName> name = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    capacity = property.Value.GetInt64();
+                    capacity = property.Value.GetInt64().ToOperationalInsightsClusterCapacity();
                     continue;
                 }
                 if (property.NameEquals("name"))

@@ -13,7 +13,7 @@ using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    public partial class OperationalInsightsLinkedStorageAccountData : IUtf8JsonSerializable
+    public partial class OperationalInsightsLinkedStorageAccountsData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.OperationalInsights
             writer.WriteEndObject();
         }
 
-        internal static OperationalInsightsLinkedStorageAccountData DeserializeOperationalInsightsLinkedStorageAccountData(JsonElement element)
+        internal static OperationalInsightsLinkedStorageAccountsData DeserializeOperationalInsightsLinkedStorageAccountsData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.OperationalInsights
                     continue;
                 }
             }
-            return new OperationalInsightsLinkedStorageAccountData(id, name, type, systemData.Value, Optional.ToNullable(dataSourceType), Optional.ToList(storageAccountIds));
+            return new OperationalInsightsLinkedStorageAccountsData(id, name, type, systemData.Value, Optional.ToNullable(dataSourceType), Optional.ToList(storageAccountIds));
         }
     }
 }
