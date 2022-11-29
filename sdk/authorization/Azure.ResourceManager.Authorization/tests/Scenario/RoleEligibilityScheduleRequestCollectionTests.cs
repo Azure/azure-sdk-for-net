@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
         {
         }
 
-        public RoleDefinitionResource Definition { get; set; }
+        public AuthorizationRoleDefinitionResource Definition { get; set; }
 
         private async Task<RoleEligibilityScheduleRequestCollection> GetRoleEligibilityScheduleRequestCollectionAsync()
         {
             var resourceGroup = await CreateResourceGroupAsync();
-            var definitionCollection = resourceGroup.GetRoleDefinitions();
+            var definitionCollection = resourceGroup.GetAuthorizationRoleDefinitions();
             Definition = (await definitionCollection.GetAllAsync().ToEnumerableAsync()).FirstOrDefault();
             return resourceGroup.GetRoleEligibilityScheduleRequests();
         }
@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
                 StartOn = DateTimeOffset.Parse("2020-09-09T21:31:27.91Z"),
                 Duration = TypeFormatters.ParseTimeSpan("P365D", "P"),
                 EndOn = null,
-                ExpirationType = RoleEligibilityScheduleExpirationType.AfterDuration,
-                RequestType = RoleEligibilityScheduleRequestType.AdminAssign,
+                ExpirationType = RoleManagementScheduleExpirationType.AfterDuration,
+                RequestType = RoleManagementScheduleRequestType.AdminAssign,
                 RoleDefinitionId = Definition.Id,
                 PrincipalId = Guid.Parse(TestEnvironment.ClientId)
             };

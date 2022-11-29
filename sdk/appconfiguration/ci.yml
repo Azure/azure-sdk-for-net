@@ -9,6 +9,8 @@ trigger:
   paths:
     include:
     - sdk/appconfiguration/
+    exclude:
+    - sdk/appconfiguration/Azure.ResourceManager.AppConfiguration/
 
 pr:
   branches:
@@ -20,8 +22,8 @@ pr:
   paths:
     include:
     - sdk/appconfiguration/
-    - sdk/resourcemanager/
-    - sdk/network/
+    exclude:
+    - sdk/appconfiguration/Azure.ResourceManager.AppConfiguration/
 
 # These comments should stay.
 
@@ -33,5 +35,3 @@ extends:
     Artifacts:
     - name: Azure.Data.AppConfiguration
       safeName: AzureDataAppConfiguration
-    - name: Azure.ResourceManager.AppConfiguration
-      safeName: AzureResourceManagerAppConfiguration

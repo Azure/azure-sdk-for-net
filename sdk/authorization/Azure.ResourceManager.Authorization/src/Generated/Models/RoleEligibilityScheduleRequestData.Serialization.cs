@@ -104,21 +104,21 @@ namespace Azure.ResourceManager.Authorization
             Optional<string> scope = default;
             Optional<ResourceIdentifier> roleDefinitionId = default;
             Optional<Guid> principalId = default;
-            Optional<RoleEligibilitySchedulePrincipalType> principalType = default;
-            Optional<RoleEligibilityScheduleRequestType> requestType = default;
-            Optional<RoleEligibilityScheduleStatus> status = default;
+            Optional<RoleManagementPrincipalType> principalType = default;
+            Optional<RoleManagementScheduleRequestType> requestType = default;
+            Optional<RoleManagementScheduleStatus> status = default;
             Optional<string> approvalId = default;
-            Optional<string> targetRoleEligibilityScheduleId = default;
-            Optional<string> targetRoleEligibilityScheduleInstanceId = default;
+            Optional<ResourceIdentifier> targetRoleEligibilityScheduleId = default;
+            Optional<ResourceIdentifier> targetRoleEligibilityScheduleInstanceId = default;
             Optional<string> justification = default;
             Optional<RoleEligibilityScheduleRequestPropertiesTicketInfo> ticketInfo = default;
             Optional<string> condition = default;
             Optional<string> conditionVersion = default;
             Optional<DateTimeOffset> createdOn = default;
             Optional<Guid> requestorId = default;
-            Optional<ExpandedProperties> expandedProperties = default;
+            Optional<RoleManagementExpandedProperties> expandedProperties = default;
             Optional<DateTimeOffset> startDateTime = default;
-            Optional<RoleEligibilityScheduleExpirationType> type0 = default;
+            Optional<RoleManagementScheduleExpirationType> type0 = default;
             Optional<DateTimeOffset> endDateTime = default;
             Optional<TimeSpan> duration = default;
             foreach (var property in element.EnumerateObject())
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Authorization
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            principalType = new RoleEligibilitySchedulePrincipalType(property0.Value.GetString());
+                            principalType = new RoleManagementPrincipalType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("requestType"))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Authorization
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            requestType = new RoleEligibilityScheduleRequestType(property0.Value.GetString());
+                            requestType = new RoleManagementScheduleRequestType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("status"))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Authorization
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            status = new RoleEligibilityScheduleStatus(property0.Value.GetString());
+                            status = new RoleManagementScheduleStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("approvalId"))
@@ -219,12 +219,22 @@ namespace Azure.ResourceManager.Authorization
                         }
                         if (property0.NameEquals("targetRoleEligibilityScheduleId"))
                         {
-                            targetRoleEligibilityScheduleId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            targetRoleEligibilityScheduleId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("targetRoleEligibilityScheduleInstanceId"))
                         {
-                            targetRoleEligibilityScheduleInstanceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            targetRoleEligibilityScheduleInstanceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("justification"))
@@ -279,7 +289,7 @@ namespace Azure.ResourceManager.Authorization
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            expandedProperties = ExpandedProperties.DeserializeExpandedProperties(property0.Value);
+                            expandedProperties = RoleManagementExpandedProperties.DeserializeRoleManagementExpandedProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("scheduleInfo"))
@@ -317,7 +327,7 @@ namespace Azure.ResourceManager.Authorization
                                                 property2.ThrowNonNullablePropertyIsNull();
                                                 continue;
                                             }
-                                            type0 = new RoleEligibilityScheduleExpirationType(property2.Value.GetString());
+                                            type0 = new RoleManagementScheduleExpirationType(property2.Value.GetString());
                                             continue;
                                         }
                                         if (property2.NameEquals("endDateTime"))

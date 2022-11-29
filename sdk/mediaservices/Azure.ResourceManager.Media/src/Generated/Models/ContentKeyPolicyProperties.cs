@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -15,16 +16,13 @@ namespace Azure.ResourceManager.Media.Models
     public partial class ContentKeyPolicyProperties
     {
         /// <summary> Initializes a new instance of ContentKeyPolicyProperties. </summary>
-        /// <param name="preferences"> The Key Policy options. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="preferences"/> is null. </exception>
-        internal ContentKeyPolicyProperties(IEnumerable<ContentKeyPolicyPreference> preferences)
+        /// <param name="options"> The Key Policy options. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        internal ContentKeyPolicyProperties(IEnumerable<ContentKeyPolicyOption> options)
         {
-            if (preferences == null)
-            {
-                throw new ArgumentNullException(nameof(preferences));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
-            Preferences = preferences.ToList();
+            Options = options.ToList();
         }
 
         /// <summary> Initializes a new instance of ContentKeyPolicyProperties. </summary>
@@ -32,14 +30,14 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="createdOn"> The creation date of the Policy. </param>
         /// <param name="lastModifiedOn"> The last modified date of the Policy. </param>
         /// <param name="description"> A description for the Policy. </param>
-        /// <param name="preferences"> The Key Policy options. </param>
-        internal ContentKeyPolicyProperties(Guid? policyId, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, IReadOnlyList<ContentKeyPolicyPreference> preferences)
+        /// <param name="options"> The Key Policy options. </param>
+        internal ContentKeyPolicyProperties(Guid? policyId, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, IReadOnlyList<ContentKeyPolicyOption> options)
         {
             PolicyId = policyId;
             CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;
             Description = description;
-            Preferences = preferences;
+            Options = options;
         }
 
         /// <summary> The legacy Policy ID. </summary>
@@ -51,6 +49,6 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> A description for the Policy. </summary>
         public string Description { get; }
         /// <summary> The Key Policy options. </summary>
-        public IReadOnlyList<ContentKeyPolicyPreference> Preferences { get; }
+        public IReadOnlyList<ContentKeyPolicyOption> Options { get; }
     }
 }

@@ -101,11 +101,4 @@ DecryptParameters decryptParams = DecryptParameters.A256GcmParameters(
 DecryptResult decryptResult = cryptoClient.Decrypt(decryptParams);
 ```
 
-## Source
-
-To see the full example source, see:
-
-* [Synchronous Sample4_EncryptDecrypt.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/tests/samples/Sample4_EncryptDecrypt.cs)
-* [ASynchronous Sample4_EncryptDecryptAsync.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/tests/samples/Sample4_EncryptDecryptAsync.cs)
-
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md

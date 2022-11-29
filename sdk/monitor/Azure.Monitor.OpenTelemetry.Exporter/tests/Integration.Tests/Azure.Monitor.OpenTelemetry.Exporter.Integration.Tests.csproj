@@ -40,4 +40,8 @@
     <ProjectReference Include="..\Integration.Tests.AspNetCoreWebApp\Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.AspNetCoreWebApp.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="..\Azure.Monitor.OpenTelemetry.Exporter.Tests\CommonTestFramework\**" Link="CommonTestFramework\%(Filename)%(Extension)" />
+  </ItemGroup>
+  
 </Project>

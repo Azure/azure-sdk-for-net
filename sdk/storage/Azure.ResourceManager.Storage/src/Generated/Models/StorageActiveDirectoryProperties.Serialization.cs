@@ -18,16 +18,28 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             writer.WritePropertyName("domainName");
             writer.WriteStringValue(DomainName);
-            writer.WritePropertyName("netBiosDomainName");
-            writer.WriteStringValue(NetBiosDomainName);
-            writer.WritePropertyName("forestName");
-            writer.WriteStringValue(ForestName);
+            if (Optional.IsDefined(NetBiosDomainName))
+            {
+                writer.WritePropertyName("netBiosDomainName");
+                writer.WriteStringValue(NetBiosDomainName);
+            }
+            if (Optional.IsDefined(ForestName))
+            {
+                writer.WritePropertyName("forestName");
+                writer.WriteStringValue(ForestName);
+            }
             writer.WritePropertyName("domainGuid");
             writer.WriteStringValue(DomainGuid);
-            writer.WritePropertyName("domainSid");
-            writer.WriteStringValue(DomainSid);
-            writer.WritePropertyName("azureStorageSid");
-            writer.WriteStringValue(AzureStorageSid);
+            if (Optional.IsDefined(DomainSid))
+            {
+                writer.WritePropertyName("domainSid");
+                writer.WriteStringValue(DomainSid);
+            }
+            if (Optional.IsDefined(AzureStorageSid))
+            {
+                writer.WritePropertyName("azureStorageSid");
+                writer.WriteStringValue(AzureStorageSid);
+            }
             if (Optional.IsDefined(SamAccountName))
             {
                 writer.WritePropertyName("samAccountName");
@@ -44,11 +56,11 @@ namespace Azure.ResourceManager.Storage.Models
         internal static StorageActiveDirectoryProperties DeserializeStorageActiveDirectoryProperties(JsonElement element)
         {
             string domainName = default;
-            string netBiosDomainName = default;
-            string forestName = default;
+            Optional<string> netBiosDomainName = default;
+            Optional<string> forestName = default;
             Guid domainGuid = default;
-            string domainSid = default;
-            string azureStorageSid = default;
+            Optional<string> domainSid = default;
+            Optional<string> azureStorageSid = default;
             Optional<string> samAccountName = default;
             Optional<ActiveDirectoryAccountType> accountType = default;
             foreach (var property in element.EnumerateObject())
@@ -99,7 +111,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new StorageActiveDirectoryProperties(domainName, netBiosDomainName, forestName, domainGuid, domainSid, azureStorageSid, samAccountName.Value, Optional.ToNullable(accountType));
+            return new StorageActiveDirectoryProperties(domainName, netBiosDomainName.Value, forestName.Value, domainGuid, domainSid.Value, azureStorageSid.Value, samAccountName.Value, Optional.ToNullable(accountType));
         }
     }
 }

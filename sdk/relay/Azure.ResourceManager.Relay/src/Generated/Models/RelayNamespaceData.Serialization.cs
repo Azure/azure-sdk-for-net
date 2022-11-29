@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Relay
             Optional<string> serviceBusEndpoint = default;
             Optional<string> metricId = default;
             Optional<IList<RelayPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<PublicNetworkAccess> publicNetworkAccess = default;
+            Optional<RelayPublicNetworkAccess> publicNetworkAccess = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Relay
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
+                            publicNetworkAccess = new RelayPublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
                     }

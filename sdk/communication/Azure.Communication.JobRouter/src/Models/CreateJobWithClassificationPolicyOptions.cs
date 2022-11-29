@@ -36,12 +36,12 @@ namespace Azure.Communication.JobRouter
         /// <summary>
         /// Id of the job.
         /// </summary>
-        public string JobId { get; set; }
+        public string JobId { get; }
 
         /// <summary>
         /// The channel or modality upon which this job will be executed.
         /// </summary>
-        public string ChannelId { get; set; }
+        public string ChannelId { get; }
 
         /// <summary>
         /// The classification policy that will determine queue, priority and required abilities.
@@ -55,7 +55,7 @@ namespace Azure.Communication.JobRouter
         public string QueueId { get; set; }
 
         /// <summary> The priority of this job. </summary>
-        public int Priority { get; set; }
+        public int? Priority { get; set; }
 
 #pragma warning disable CA2227 // Collection properties should be read only
         /// <summary> A collection of manually specified label selectors, which a worker must satisfy in order to process this job. </summary>

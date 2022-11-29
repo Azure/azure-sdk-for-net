@@ -46,10 +46,12 @@ namespace Azure.Core.TestFramework
 
         internal async Task InitializeProxySettingsAsync()
         {
+            var assetsJson = _recordedTestBase.AssetsJsonPath;
+
             switch (Mode)
             {
                 case RecordedTestMode.Record:
-                    var recordResponse = await _proxy.Client.StartRecordAsync(new StartInformation(_sessionFile));
+                    var recordResponse = await _proxy.Client.StartRecordAsync(new StartInformation(_sessionFile) { XRecordingAssetsFile = assetsJson });
                     RecordingId = recordResponse.Headers.XRecordingId;
                     await AddProxySanitizersAsync();
 
@@ -58,7 +60,7 @@ namespace Azure.Core.TestFramework
                     ResponseWithHeaders<IReadOnlyDictionary<string, string>, TestProxyStartPlaybackHeaders> playbackResponse = null;
                     try
                     {
-                        playbackResponse = await _proxy.Client.StartPlaybackAsync(new StartInformation(_sessionFile));
+                        playbackResponse = await _proxy.Client.StartPlaybackAsync(new StartInformation(_sessionFile) { XRecordingAssetsFile = assetsJson });
                     }
                     catch (RequestFailedException ex)
                         when (ex.Status == 404)
@@ -242,6 +244,10 @@ namespace Azure.Core.TestFramework
             if (Mode == RecordedTestMode.Record)
             {
                 await _proxy.Client.StopRecordAsync(RecordingId, Variables, save ? null : "request-response");
+            }
+            else if (Mode == RecordedTestMode.Playback && HasRequests)
+            {
+                await _proxy.Client.StopPlaybackAsync(RecordingId);
             }
         }
 

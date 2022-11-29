@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Communication.Email.Models
 {
@@ -19,14 +20,8 @@ namespace Azure.Communication.Email.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="contentBytesBase64"/> is null. </exception>
         public EmailAttachment(string name, EmailAttachmentType attachmentType, string contentBytesBase64)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (contentBytesBase64 == null)
-            {
-                throw new ArgumentNullException(nameof(contentBytesBase64));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(contentBytesBase64, nameof(contentBytesBase64));
 
             Name = name;
             AttachmentType = attachmentType;

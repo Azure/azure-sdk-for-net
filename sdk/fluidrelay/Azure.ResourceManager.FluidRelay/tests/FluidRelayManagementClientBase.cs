@@ -10,7 +10,6 @@ using Azure.ResourceManager.TestFramework;
 
 namespace Azure.ResourceManager.FluidRelay.Tests
 {
-    [RunFrequency(RunTestFrequency.Manually)]
     public abstract class FluidRelayManagementClientBase : ManagementRecordedTestBase<fluidrelayManagementTestEnvironment>
     {
         public string SubscriptionId { get; set; }

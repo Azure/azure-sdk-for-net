@@ -18,18 +18,39 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RelayConnectionString))
             {
-                writer.WritePropertyName("relayConnectionString");
-                writer.WriteStringValue(RelayConnectionString);
+                if (RelayConnectionString != null)
+                {
+                    writer.WritePropertyName("relayConnectionString");
+                    writer.WriteStringValue(RelayConnectionString);
+                }
+                else
+                {
+                    writer.WriteNull("relayConnectionString");
+                }
             }
             if (Optional.IsDefined(ServiceBusConnectionString))
             {
-                writer.WritePropertyName("serviceBusConnectionString");
-                writer.WriteStringValue(ServiceBusConnectionString);
+                if (ServiceBusConnectionString != null)
+                {
+                    writer.WritePropertyName("serviceBusConnectionString");
+                    writer.WriteStringValue(ServiceBusConnectionString);
+                }
+                else
+                {
+                    writer.WriteNull("serviceBusConnectionString");
+                }
             }
             if (Optional.IsDefined(ExtensionPrincipalId))
             {
-                writer.WritePropertyName("extensionPrincipalId");
-                writer.WriteStringValue(ExtensionPrincipalId);
+                if (ExtensionPrincipalId != null)
+                {
+                    writer.WritePropertyName("extensionPrincipalId");
+                    writer.WriteStringValue(ExtensionPrincipalId);
+                }
+                else
+                {
+                    writer.WriteNull("extensionPrincipalId");
+                }
             }
             if (Optional.IsDefined(ExtensionInstanceReleaseTrain))
             {
@@ -79,16 +100,31 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (property.NameEquals("relayConnectionString"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        relayConnectionString = null;
+                        continue;
+                    }
                     relayConnectionString = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("serviceBusConnectionString"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        serviceBusConnectionString = null;
+                        continue;
+                    }
                     serviceBusConnectionString = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("extensionPrincipalId"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        extensionPrincipalId = null;
+                        continue;
+                    }
                     extensionPrincipalId = property.Value.GetString();
                     continue;
                 }

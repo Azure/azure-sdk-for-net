@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <exception cref="ArgumentNullException"> <paramref name="certificateThumbprint"/> is null. </exception>
         public ClusterClientCertificateThumbprint(bool isAdmin, BinaryData certificateThumbprint)
         {
-            if (certificateThumbprint == null)
-            {
-                throw new ArgumentNullException(nameof(certificateThumbprint));
-            }
+            Argument.AssertNotNull(certificateThumbprint, nameof(certificateThumbprint));
 
             IsAdmin = isAdmin;
             CertificateThumbprint = certificateThumbprint;
@@ -29,7 +27,36 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         /// <summary> Indicates if the client certificate has admin access to the cluster. Non admin clients can perform only read only operations on the cluster. </summary>
         public bool IsAdmin { get; set; }
-        /// <summary> The thumbprint of the client certificate. </summary>
+        /// <summary>
+        /// The thumbprint of the client certificate.
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public BinaryData CertificateThumbprint { get; set; }
     }
 }

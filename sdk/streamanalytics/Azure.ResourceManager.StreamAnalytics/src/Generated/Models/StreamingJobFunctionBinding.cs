@@ -12,10 +12,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// Please note <see cref="StreamingJobFunctionBinding"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="EMachineLearningStudioFunctionBinding"/>, <see cref="MachineLearningServiceFunctionBinding"/>, <see cref="CSharpFunctionBinding"/> and <see cref="JavaScriptFunctionBinding"/>.
     /// </summary>
-    public partial class StreamingJobFunctionBinding
+    public abstract partial class StreamingJobFunctionBinding
     {
         /// <summary> Initializes a new instance of StreamingJobFunctionBinding. </summary>
-        public StreamingJobFunctionBinding()
+        protected StreamingJobFunctionBinding()
         {
         }
 

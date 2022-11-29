@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <summary> Initializes a new instance of MoveCollectionResultList. </summary>
         internal MoveCollectionResultList()
         {
-            Value = new ChangeTrackingList<MoveCollectionData>();
+            Value = new ChangeTrackingList<MoverResourceSetData>();
         }
 
         /// <summary> Initializes a new instance of MoveCollectionResultList. </summary>
         /// <param name="value"> Gets the list of move collections. </param>
         /// <param name="nextLink"> Gets the value of  next link. </param>
-        internal MoveCollectionResultList(IReadOnlyList<MoveCollectionData> value, string nextLink)
+        internal MoveCollectionResultList(IReadOnlyList<MoverResourceSetData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Gets the list of move collections. </summary>
-        public IReadOnlyList<MoveCollectionData> Value { get; }
+        public IReadOnlyList<MoverResourceSetData> Value { get; }
         /// <summary> Gets the value of  next link. </summary>
         public string NextLink { get; }
     }

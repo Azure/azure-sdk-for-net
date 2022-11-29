@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,6 +18,20 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             writer.WritePropertyName("secretType");
             writer.WriteStringValue(SecretType.ToString());
             writer.WriteEndObject();
+        }
+
+        internal static SecretBaseInfo DeserializeSecretBaseInfo(JsonElement element)
+        {
+            if (element.TryGetProperty("secretType", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "keyVaultSecretReference": return KeyVaultSecretReferenceSecretInfo.DeserializeKeyVaultSecretReferenceSecretInfo(element);
+                    case "keyVaultSecretUri": return KeyVaultSecretUriSecretInfo.DeserializeKeyVaultSecretUriSecretInfo(element);
+                    case "rawValue": return RawValueSecretInfo.DeserializeRawValueSecretInfo(element);
+                }
+            }
+            return UnknownSecretInfoBase.DeserializeUnknownSecretInfoBase(element);
         }
     }
 }

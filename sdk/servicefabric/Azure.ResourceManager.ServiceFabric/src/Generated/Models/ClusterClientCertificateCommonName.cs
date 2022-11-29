@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -19,14 +20,8 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <exception cref="ArgumentNullException"> <paramref name="certificateCommonName"/> or <paramref name="certificateIssuerThumbprint"/> is null. </exception>
         public ClusterClientCertificateCommonName(bool isAdmin, string certificateCommonName, BinaryData certificateIssuerThumbprint)
         {
-            if (certificateCommonName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateCommonName));
-            }
-            if (certificateIssuerThumbprint == null)
-            {
-                throw new ArgumentNullException(nameof(certificateIssuerThumbprint));
-            }
+            Argument.AssertNotNull(certificateCommonName, nameof(certificateCommonName));
+            Argument.AssertNotNull(certificateIssuerThumbprint, nameof(certificateIssuerThumbprint));
 
             IsAdmin = isAdmin;
             CertificateCommonName = certificateCommonName;
@@ -37,7 +32,36 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public bool IsAdmin { get; set; }
         /// <summary> The common name of the client certificate. </summary>
         public string CertificateCommonName { get; set; }
-        /// <summary> The issuer thumbprint of the client certificate. </summary>
+        /// <summary>
+        /// The issuer thumbprint of the client certificate.
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public BinaryData CertificateIssuerThumbprint { get; set; }
     }
 }

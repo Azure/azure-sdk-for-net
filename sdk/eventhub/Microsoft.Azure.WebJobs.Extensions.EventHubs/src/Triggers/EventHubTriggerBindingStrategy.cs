@@ -49,6 +49,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         public Dictionary<string, Type> GetBindingContract(bool isSingleDispatch = true)
         {
             var contract = new Dictionary<string, Type>(StringComparer.OrdinalIgnoreCase);
+            contract.Add("TriggerPartitionContext", typeof(TriggerPartitionContext));
             contract.Add("PartitionContext", typeof(PartitionContext));
 
             AddBindingContractMember(contract, "PartitionKey", typeof(string), isSingleDispatch);
@@ -78,6 +79,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             }
 
             var bindingData = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
+            SafeAddValue(() => bindingData.Add("TriggerPartitionContext", value.ProcessorPartition?.PartitionContext));
             SafeAddValue(() => bindingData.Add("PartitionContext", value.ProcessorPartition?.PartitionContext));
 
             if (value.IsSingleDispatch)

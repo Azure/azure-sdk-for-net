@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
 
         public static List<TestCaseData> hostPoolCrudTestData = new List<TestCaseData>
         {
-            new TestCaseData(1, HostPoolType.Personal, LoadBalancerType.DepthFirst, LoadBalancerType.Persistent, PreferredAppGroupType.Desktop),
-            new TestCaseData(2, HostPoolType.Personal, LoadBalancerType.DepthFirst, LoadBalancerType.Persistent, PreferredAppGroupType.RailApplications),
-            new TestCaseData(3, HostPoolType.Personal, LoadBalancerType.BreadthFirst, LoadBalancerType.Persistent, PreferredAppGroupType.Desktop),
-            new TestCaseData(4, HostPoolType.Personal, LoadBalancerType.BreadthFirst, LoadBalancerType.Persistent, PreferredAppGroupType.RailApplications),
-            new TestCaseData(5, HostPoolType.Pooled, LoadBalancerType.DepthFirst, LoadBalancerType.DepthFirst, PreferredAppGroupType.Desktop),
-            new TestCaseData(6, HostPoolType.Pooled, LoadBalancerType.DepthFirst, LoadBalancerType.DepthFirst, PreferredAppGroupType.RailApplications),
-            new TestCaseData(7, HostPoolType.Pooled, LoadBalancerType.BreadthFirst, LoadBalancerType.BreadthFirst, PreferredAppGroupType.Desktop),
-            new TestCaseData(8, HostPoolType.Pooled, LoadBalancerType.BreadthFirst, LoadBalancerType.BreadthFirst, PreferredAppGroupType.RailApplications)
+            new TestCaseData(1, HostPoolType.Personal, HostPoolLoadBalancerType.DepthFirst, HostPoolLoadBalancerType.Persistent, PreferredAppGroupType.Desktop),
+            new TestCaseData(2, HostPoolType.Personal, HostPoolLoadBalancerType.DepthFirst, HostPoolLoadBalancerType.Persistent, PreferredAppGroupType.RailApplications),
+            new TestCaseData(3, HostPoolType.Personal, HostPoolLoadBalancerType.BreadthFirst, HostPoolLoadBalancerType.Persistent, PreferredAppGroupType.Desktop),
+            new TestCaseData(4, HostPoolType.Personal, HostPoolLoadBalancerType.BreadthFirst, HostPoolLoadBalancerType.Persistent, PreferredAppGroupType.RailApplications),
+            new TestCaseData(5, HostPoolType.Pooled, HostPoolLoadBalancerType.DepthFirst, HostPoolLoadBalancerType.DepthFirst, PreferredAppGroupType.Desktop),
+            new TestCaseData(6, HostPoolType.Pooled, HostPoolLoadBalancerType.DepthFirst, HostPoolLoadBalancerType.DepthFirst, PreferredAppGroupType.RailApplications),
+            new TestCaseData(7, HostPoolType.Pooled, HostPoolLoadBalancerType.BreadthFirst, HostPoolLoadBalancerType.BreadthFirst, PreferredAppGroupType.Desktop),
+            new TestCaseData(8, HostPoolType.Pooled, HostPoolLoadBalancerType.BreadthFirst, HostPoolLoadBalancerType.BreadthFirst, PreferredAppGroupType.RailApplications)
         };
 
         [TestCaseSource("hostPoolCrudTestData")]
         public async Task HostPoolCrud(
             int caseNumber,
             HostPoolType hostPoolType,
-            LoadBalancerType loadBalancerType,
-            LoadBalancerType expectedLoadBalancerType,
+            HostPoolLoadBalancerType HostPoolLoadBalancerType,
+            HostPoolLoadBalancerType expectedLoadBalancerType,
             PreferredAppGroupType preferredAppGroupType)
         {
             string hostPoolName = $"testHostPoolCrud{caseNumber}";
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
             HostPoolData hostPoolData = new HostPoolData(
                 DefaultLocation,
                 hostPoolType,
-                loadBalancerType,
+                HostPoolLoadBalancerType,
                 preferredAppGroupType);
 
             ArmOperation<HostPoolResource> op = await hostPoolCollection.CreateOrUpdateAsync(

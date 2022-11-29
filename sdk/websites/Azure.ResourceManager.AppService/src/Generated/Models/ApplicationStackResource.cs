@@ -27,16 +27,16 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="namePropertiesName"> Application stack name. </param>
+        /// <param name="stackName"> Application stack name. </param>
         /// <param name="display"> Application stack display name. </param>
         /// <param name="dependency"> Application stack dependency. </param>
         /// <param name="majorVersions"> List of major versions available. </param>
         /// <param name="frameworks"> List of frameworks associated with application stack. </param>
         /// <param name="isDeprecated"> &lt;code&gt;true&lt;/code&gt; if this is the stack is deprecated; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal ApplicationStackResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string namePropertiesName, string display, string dependency, IList<StackMajorVersion> majorVersions, IList<ApplicationStack> frameworks, IList<ApplicationStack> isDeprecated, string kind) : base(id, name, resourceType, systemData)
+        internal ApplicationStackResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string stackName, string display, string dependency, IList<StackMajorVersion> majorVersions, IList<ApplicationStack> frameworks, IList<ApplicationStack> isDeprecated, string kind) : base(id, name, resourceType, systemData)
         {
-            NamePropertiesName = namePropertiesName;
+            StackName = stackName;
             Display = display;
             Dependency = dependency;
             MajorVersions = majorVersions;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Application stack name. </summary>
-        public string NamePropertiesName { get; set; }
+        public string StackName { get; set; }
         /// <summary> Application stack display name. </summary>
         public string Display { get; set; }
         /// <summary> Application stack dependency. </summary>

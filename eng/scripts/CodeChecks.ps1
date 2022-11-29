@@ -23,6 +23,9 @@ Set-StrictMode -Version 1
 
 [string[]] $errors = @()
 
+# All errors should be logged using this function, as it tracks the errors in
+# the $errors array, which is used in the finally block of the script to determine 
+# the return code.
 function LogError([string]$message) {
     if ($env:TF_BUILD) {
         Write-Host ("##vso[task.logissue type=error]$message" -replace "`n","%0D%0A")
@@ -41,7 +44,7 @@ function Invoke-Block([scriptblock]$cmd) {
     if ((-not $?) -or ($lastexitcode -ne 0)) {
         if ($error -ne $null)
         {
-            Write-Warning $error[0]
+            LogError $error[0]
         }
         throw "Command failed to execute: $cmd"
     }
@@ -108,17 +111,17 @@ try {
         | % {
             $readmePath = $_
             $readmeContent = Get-Content $readmePath
-            
+
             if ($readmeContent -Match "Install-Package")
             {
                 LogError "README files should use dotnet CLI for installation instructions. '$readmePath'"
             }
-            
+
             if ($readmeContent -Match "dotnet add .*--version")
             {
                 LogError "Specific versions should not be specified in the installation instructions in '$readmePath'. For beta versions, include the --prerelease flag."
             }
-            
+
             if ($readmeContent -Match "dotnet add")
             {
                 $changelogPath = Join-Path $(Split-Path -Parent $readmePath) "CHANGELOG.md"

@@ -36,6 +36,16 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(TransformKql))
+            {
+                writer.WritePropertyName("transformKql");
+                writer.WriteStringValue(TransformKql);
+            }
+            if (Optional.IsDefined(OutputStream))
+            {
+                writer.WritePropertyName("outputStream");
+                writer.WriteStringValue(OutputStream);
+            }
             writer.WriteEndObject();
         }
 
@@ -43,6 +53,8 @@ namespace Azure.ResourceManager.Monitor.Models
         {
             Optional<IList<DataFlowStream>> streams = default;
             Optional<IList<string>> destinations = default;
+            Optional<string> transformKql = default;
+            Optional<string> outputStream = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("streams"))
@@ -75,8 +87,18 @@ namespace Azure.ResourceManager.Monitor.Models
                     destinations = array;
                     continue;
                 }
+                if (property.NameEquals("transformKql"))
+                {
+                    transformKql = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("outputStream"))
+                {
+                    outputStream = property.Value.GetString();
+                    continue;
+                }
             }
-            return new DataFlow(Optional.ToList(streams), Optional.ToList(destinations));
+            return new DataFlow(Optional.ToList(streams), Optional.ToList(destinations), transformKql.Value, outputStream.Value);
         }
     }
 }

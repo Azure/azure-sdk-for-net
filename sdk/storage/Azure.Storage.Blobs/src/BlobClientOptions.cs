@@ -101,7 +101,12 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// The 2021-10-04 service version.
             /// </summary>
-            V2021_10_04 = 14
+            V2021_10_04 = 14,
+
+            /// <summary>
+            /// The 2021-12-02 service version.
+            /// </summary>
+            V2021_12_02 = 15
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -140,6 +145,13 @@ namespace Azure.Storage.Blobs
         /// can optionally validate that the content matches the checksum.
         /// </summary>
         public TransferValidationOptions TransferValidation { get; } = new();
+
+        /// <summary>
+        /// Whether to trim leading and trailing slashes on a blob name when using
+        /// <see cref="BlobContainerClient.GetBlobClient(string)"/> and similar methods.
+        /// Defaults to true for backwards compatibility.
+        /// </summary>
+        public bool TrimBlobNameSlashes { get; set; } = Constants.DefaultTrimBlobNameSlashes;
 
         #region Advanced Options
         internal ClientSideEncryptionOptions _clientSideEncryptionOptions;

@@ -20,10 +20,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public HDInsightIPConfiguration(string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }
@@ -37,7 +34,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="privateIPAddress"> The IP address. </param>
         /// <param name="privateIPAllocationMethod"> The method that private IP address is allocated. </param>
         /// <param name="subnet"> The subnet resource id. </param>
-        internal HDInsightIPConfiguration(ResourceIdentifier id, string name, ResourceIdentifier resourceType, HDInsightPrivateLinkConfigurationProvisioningState? provisioningState, bool? isPrimary, IPAddress privateIPAddress, HDInsightPrivateIPAllocationMethod? privateIPAllocationMethod, WritableSubResource subnet)
+        internal HDInsightIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, HDInsightPrivateLinkConfigurationProvisioningState? provisioningState, bool? isPrimary, IPAddress privateIPAddress, HDInsightPrivateIPAllocationMethod? privateIPAllocationMethod, WritableSubResource subnet)
         {
             Id = id;
             Name = name;
@@ -54,7 +51,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> The name of private link IP configuration. </summary>
         public string Name { get; set; }
         /// <summary> The type of the private link IP configuration. </summary>
-        public ResourceIdentifier ResourceType { get; }
+        public ResourceType? ResourceType { get; }
         /// <summary> The private link configuration provisioning state, which only appears in the response. </summary>
         public HDInsightPrivateLinkConfigurationProvisioningState? ProvisioningState { get; }
         /// <summary> Indicates whether this IP configuration is primary for the corresponding NIC. </summary>

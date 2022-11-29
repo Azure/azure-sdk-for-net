@@ -16,20 +16,20 @@ namespace Azure.Communication.CallingServer
         /// <summary> Initializes a new instance of AddParticipantsResponseInternal. </summary>
         internal AddParticipantsResponseInternal()
         {
-            Participants = new ChangeTrackingList<AcsCallParticipantDtoInternal>();
+            Participants = new ChangeTrackingList<AcsCallParticipantInternal>();
         }
 
         /// <summary> Initializes a new instance of AddParticipantsResponseInternal. </summary>
         /// <param name="participants"></param>
         /// <param name="operationContext"> The operation context provided by client. </param>
-        internal AddParticipantsResponseInternal(IReadOnlyList<AcsCallParticipantDtoInternal> participants, string operationContext)
+        internal AddParticipantsResponseInternal(IReadOnlyList<AcsCallParticipantInternal> participants, string operationContext)
         {
             Participants = participants;
             OperationContext = operationContext;
         }
 
         /// <summary> Gets the participants. </summary>
-        public IReadOnlyList<AcsCallParticipantDtoInternal> Participants { get; }
+        public IReadOnlyList<AcsCallParticipantInternal> Participants { get; }
         /// <summary> The operation context provided by client. </summary>
         public string OperationContext { get; }
     }

@@ -776,9 +776,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public int Count { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Names { get { throw null; } }
     }
-    public partial class PartitionSchemeDescription
+    public abstract partial class PartitionSchemeDescription
     {
-        public PartitionSchemeDescription() { }
+        protected PartitionSchemeDescription() { }
     }
     public partial class ServiceCorrelationDescription
     {
@@ -931,9 +931,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static bool operator !=(Azure.ResourceManager.ServiceFabric.Models.ServiceLoadMetricWeight left, Azure.ResourceManager.ServiceFabric.Models.ServiceLoadMetricWeight right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ServicePlacementPolicyDescription
+    public abstract partial class ServicePlacementPolicyDescription
     {
-        public ServicePlacementPolicyDescription() { }
+        protected ServicePlacementPolicyDescription() { }
     }
     public partial class ServiceTypeDeltaHealthPolicy
     {

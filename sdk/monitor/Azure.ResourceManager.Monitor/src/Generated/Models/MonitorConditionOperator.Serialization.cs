@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.Monitor.Models
             MonitorConditionOperator.GreaterThanOrEqual => "GreaterThanOrEqual",
             MonitorConditionOperator.LessThan => "LessThan",
             MonitorConditionOperator.LessThanOrEqual => "LessThanOrEqual",
+            MonitorConditionOperator.EqualsValue => "Equals",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MonitorConditionOperator value.")
         };
 
@@ -26,6 +27,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (string.Equals(value, "GreaterThanOrEqual", StringComparison.InvariantCultureIgnoreCase)) return MonitorConditionOperator.GreaterThanOrEqual;
             if (string.Equals(value, "LessThan", StringComparison.InvariantCultureIgnoreCase)) return MonitorConditionOperator.LessThan;
             if (string.Equals(value, "LessThanOrEqual", StringComparison.InvariantCultureIgnoreCase)) return MonitorConditionOperator.LessThanOrEqual;
+            if (string.Equals(value, "Equals", StringComparison.InvariantCultureIgnoreCase)) return MonitorConditionOperator.EqualsValue;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MonitorConditionOperator value.");
         }
     }

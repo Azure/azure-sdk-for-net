@@ -1,6 +1,6 @@
 # Release History
 
-## 4.2.0-beta.1 (Unreleased)
+## 4.3.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,24 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 4.3.0-beta.1 (2022-11-09)
+
+### Features Added
+
+- Added `KeyVaultSettingsClient` to get and update Managed HSM settings.
+
+### Other Changes
+
+- The default service version is now "7.4-preview.1".
+
+## 4.2.0 (2022-09-20)
+
+### Breaking Changes
+
+- Verify the challenge resource matches the vault domain.
+  This should affect few customers who can set `KeyVaultAdministrationClientOptions.DisableChallengeResourceVerification` to `true` to disable.
+  See https://aka.ms/azsdk/blog/vault-uri for more information.
 
 ## 4.1.0 (2022-03-24)
 
@@ -88,7 +106,7 @@ Changes from both the last release and the last beta include:
 - Refactor `RestoreOperation` to return `RestoreResult`
 - Renamed `KeyVaultPermissions` Not\* properties to Deny\*
 - Renamed `KeyVaultRoleAssignment` `Type` property to `RoleAssignmentType`
-- Made `KeyVaultRoleAssignmentProperties` internal and moved its properties to method parameters for `CreateRoleAssignment` 
+- Made `KeyVaultRoleAssignmentProperties` internal and moved its properties to method parameters for `CreateRoleAssignment`
 
 ## 4.0.0-beta.2 (2020-10-06)
 

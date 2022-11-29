@@ -6,8 +6,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 csharp: true
 namespace: Azure.ResourceManager.Storage
-require: https://github.com/Azure/azure-rest-api-specs/blob/a9e895ccfe29d0646795f7ff1cb78e185bd09529/specification/storage/resource-manager/readme.md
-tag: package-2021-09
+require: https://github.com/Azure/azure-rest-api-specs/blob/da0cfefaa0e6c237e1e3819f1cb2e11d7606878d/specification/storage/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -162,7 +161,7 @@ rename-mapping:
   BlobInventoryPolicyRule.enabled: IsEnabled
   BlobInventoryPolicySchema.enabled: IsEnabled
   ActiveDirectoryProperties: StorageActiveDirectoryProperties
-  ActiveDirectoryPropertiesAccountType: ActiveDirectoryAccountType
+  AccountType: ActiveDirectoryAccountType
   StorageAccount.properties.failoverInProgress: IsFailoverInProgress
   StorageAccount.properties.isNfsV3Enabled: IsNfsV3Enabled
   StorageAccountCreateParameters.properties.isNfsV3Enabled: IsNfsV3Enabled
@@ -179,7 +178,7 @@ rename-mapping:
   ManagementPolicy: StorageAccountManagementPolicy
   AzureFilesIdentityBasedAuthentication: FilesIdentityBasedAuthentication
   BlobInventoryPolicyFilter.prefixMatch: IncludePrefix
-  CorsRuleAllowedMethodsItem: CorsRuleAllowedMethod
+  AllowedMethods: CorsRuleAllowedMethod
   DefaultSharePermission.StorageFileDataSmbShareReader: Reader
   DefaultSharePermission.StorageFileDataSmbShareContributor: Contributor
   DefaultSharePermission.StorageFileDataSmbShareElevatedContributor: ElevatedContributor
@@ -205,7 +204,7 @@ rename-mapping:
   KeySource.Microsoft.Keyvault: KeyVault
   StorageAccountListKeysResult: StorageAccountGetKeysResult
   TableAccessPolicy: StorageTableAccessPolicy
-  TableAccessPolicy.expiryTime: ExpiresOn
+  TableAccessPolicy.expiryTime: ExpireOn
   TableSignedIdentifier: StorageTableSignedIdentifier
   UpdateHistoryProperty: UpdateHistoryEntry
   UpdateHistoryProperty.update: UpdateType
@@ -226,6 +225,8 @@ rename-mapping:
   StorageAccountInternetEndpoints.file: FileUri
   StorageAccountInternetEndpoints.web: WebUri
   StorageAccountInternetEndpoints.dfs: DfsUri
+  FailoverType: StorageAccountFailoverType
+  ListEncryptionScopesInclude: EncryptionScopesIncludeType
 
 directive:
   - from: swagger-document
@@ -308,4 +309,7 @@ directive:
         "itemName": "keys",
         "nextLinkName": null
       };
+  - from: swagger-document
+    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/restoreBlobRanges"].post
+    transform: $["x-ms-long-running-operation-options"]["enable-interim-state"] = true
 ```

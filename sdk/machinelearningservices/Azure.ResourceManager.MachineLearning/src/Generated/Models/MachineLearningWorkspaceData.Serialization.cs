@@ -132,6 +132,11 @@ namespace Azure.ResourceManager.MachineLearning
                 writer.WritePropertyName("primaryUserAssignedIdentity");
                 writer.WriteStringValue(PrimaryUserAssignedIdentity);
             }
+            if (Optional.IsDefined(V1LegacyMode))
+            {
+                writer.WritePropertyName("v1LegacyMode");
+                writer.WriteBooleanValue(V1LegacyMode.Value);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -170,6 +175,7 @@ namespace Azure.ResourceManager.MachineLearning
             Optional<Guid> tenantId = default;
             Optional<bool> storageHnsEnabled = default;
             Optional<Uri> mlFlowTrackingUri = default;
+            Optional<bool> v1LegacyMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"))
@@ -452,11 +458,21 @@ namespace Azure.ResourceManager.MachineLearning
                             mlFlowTrackingUri = new Uri(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("v1LegacyMode"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            v1LegacyMode = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new MachineLearningWorkspaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku.Value, workspaceId.Value, description.Value, friendlyName.Value, keyVault.Value, applicationInsights.Value, containerRegistry.Value, storageAccount.Value, discoveryUrl.Value, Optional.ToNullable(provisioningState), encryption.Value, Optional.ToNullable(hbiWorkspace), serviceProvisionedResourceGroup.Value, Optional.ToNullable(privateLinkCount), imageBuildCompute.Value, Optional.ToNullable(allowPublicAccessWhenBehindVnet), Optional.ToNullable(publicNetworkAccess), Optional.ToList(privateEndpointConnections), Optional.ToList(sharedPrivateLinkResources), notebookInfo.Value, serviceManagedResourcesSettings.Value, primaryUserAssignedIdentity.Value, Optional.ToNullable(tenantId), Optional.ToNullable(storageHnsEnabled), mlFlowTrackingUri.Value);
+            return new MachineLearningWorkspaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku.Value, workspaceId.Value, description.Value, friendlyName.Value, keyVault.Value, applicationInsights.Value, containerRegistry.Value, storageAccount.Value, discoveryUrl.Value, Optional.ToNullable(provisioningState), encryption.Value, Optional.ToNullable(hbiWorkspace), serviceProvisionedResourceGroup.Value, Optional.ToNullable(privateLinkCount), imageBuildCompute.Value, Optional.ToNullable(allowPublicAccessWhenBehindVnet), Optional.ToNullable(publicNetworkAccess), Optional.ToList(privateEndpointConnections), Optional.ToList(sharedPrivateLinkResources), notebookInfo.Value, serviceManagedResourcesSettings.Value, primaryUserAssignedIdentity.Value, Optional.ToNullable(tenantId), Optional.ToNullable(storageHnsEnabled), mlFlowTrackingUri.Value, Optional.ToNullable(v1LegacyMode));
         }
     }
 }

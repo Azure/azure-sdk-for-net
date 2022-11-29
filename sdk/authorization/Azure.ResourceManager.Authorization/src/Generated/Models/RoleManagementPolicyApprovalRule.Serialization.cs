@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Authorization.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Setting))
+            if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("setting");
-                writer.WriteObjectValue(Setting);
+                writer.WriteObjectValue(Settings);
             }
             if (Optional.IsDefined(Id))
             {

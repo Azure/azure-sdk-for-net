@@ -76,11 +76,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("modelMountPath");
                 }
             }
-            if (Optional.IsDefined(PrivateNetworkConnection))
-            {
-                writer.WritePropertyName("privateNetworkConnection");
-                writer.WriteBooleanValue(PrivateNetworkConnection.Value);
-            }
             if (Optional.IsDefined(ReadinessProbe))
             {
                 if (ReadinessProbe != null)
@@ -201,7 +196,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<ProbeSettings> livenessProbe = default;
             Optional<string> model = default;
             Optional<string> modelMountPath = default;
-            Optional<bool> privateNetworkConnection = default;
             Optional<DeploymentProvisioningState> provisioningState = default;
             Optional<ProbeSettings> readinessProbe = default;
             Optional<OnlineRequestSettings> requestSettings = default;
@@ -276,16 +270,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     modelMountPath = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("privateNetworkConnection"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    privateNetworkConnection = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("provisioningState"))
@@ -403,7 +387,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new ManagedOnlineDeployment(codeConfiguration.Value, description.Value, environmentId.Value, Optional.ToDictionary(environmentVariables), Optional.ToDictionary(properties), Optional.ToNullable(appInsightsEnabled), Optional.ToNullable(egressPublicNetworkAccess), endpointComputeType, instanceType.Value, livenessProbe.Value, model.Value, modelMountPath.Value, Optional.ToNullable(privateNetworkConnection), Optional.ToNullable(provisioningState), readinessProbe.Value, requestSettings.Value, scaleSettings.Value);
+            return new ManagedOnlineDeployment(codeConfiguration.Value, description.Value, environmentId.Value, Optional.ToDictionary(environmentVariables), Optional.ToDictionary(properties), Optional.ToNullable(appInsightsEnabled), Optional.ToNullable(egressPublicNetworkAccess), endpointComputeType, instanceType.Value, livenessProbe.Value, model.Value, modelMountPath.Value, Optional.ToNullable(provisioningState), readinessProbe.Value, requestSettings.Value, scaleSettings.Value);
         }
     }
 }

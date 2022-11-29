@@ -10,7 +10,7 @@ namespace Azure.Search.Documents.Indexes.Models
     [CodeGenSuppress(nameof(SearchIndexerDataSourceConnection), typeof(string), typeof(SearchIndexerDataSourceType), typeof(DataSourceCredentials), typeof(SearchIndexerDataContainer))]
     public partial class SearchIndexerDataSourceConnection
     {
-        [CodeGenMember("etag")]
+        [CodeGenMember("ETag")]
         private string _etag;
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary>
         /// Gets or sets an <see cref="DataSourceCredentials"/> for de/serialization purposes only.
         /// </summary>
-        [CodeGenMember("credentials")]
+        [CodeGenMember("Credentials")]
         private DataSourceCredentials CredentialsInternal
         {
             get

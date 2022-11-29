@@ -20,14 +20,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="command"/> or <paramref name="environmentId"/> is null. </exception>
         public TrialComponent(string command, string environmentId)
         {
-            if (command == null)
-            {
-                throw new ArgumentNullException(nameof(command));
-            }
-            if (environmentId == null)
-            {
-                throw new ArgumentNullException(nameof(environmentId));
-            }
+            Argument.AssertNotNull(command, nameof(command));
+            Argument.AssertNotNull(environmentId, nameof(environmentId));
 
             Command = command;
             EnvironmentId = environmentId;
@@ -45,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="environmentId"> [Required] The ARM resource ID of the Environment specification for the job. </param>
         /// <param name="environmentVariables"> Environment variables included in the job. </param>
         /// <param name="resources"> Compute Resource configuration for the job. </param>
-        internal TrialComponent(string codeId, string command, DistributionConfiguration distribution, string environmentId, IDictionary<string, string> environmentVariables, ResourceConfiguration resources)
+        internal TrialComponent(string codeId, string command, DistributionConfiguration distribution, string environmentId, IDictionary<string, string> environmentVariables, JobResourceConfiguration resources)
         {
             CodeId = codeId;
             Command = command;
@@ -70,6 +64,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Environment variables included in the job. </summary>
         public IDictionary<string, string> EnvironmentVariables { get; set; }
         /// <summary> Compute Resource configuration for the job. </summary>
-        public ResourceConfiguration Resources { get; set; }
+        public JobResourceConfiguration Resources { get; set; }
     }
 }

@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
         [TestCase]
         public async Task TestListProductFamiliesMetadata()
         {
-            AsyncPageable<ProductFamiliesMetadataDetails> productFamiliesMetadata =
+            AsyncPageable<ProductFamiliesMetadata> productFamiliesMetadata =
                 EdgeOrderExtensions.GetProductFamiliesMetadataAsync(Subscription);
-            List<ProductFamiliesMetadataDetails> productFamiliesMetadataResult = await productFamiliesMetadata.ToEnumerableAsync();
+            List<ProductFamiliesMetadata> productFamiliesMetadataResult = await productFamiliesMetadata.ToEnumerableAsync();
 
             Assert.NotNull(productFamiliesMetadataResult);
             Assert.IsTrue(productFamiliesMetadataResult.Count >= 1);

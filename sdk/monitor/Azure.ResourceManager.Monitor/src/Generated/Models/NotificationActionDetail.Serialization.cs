@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<string> name = default;
             Optional<string> status = default;
             Optional<string> subState = default;
-            Optional<string> sendTime = default;
+            Optional<DateTimeOffset> sendTime = default;
             Optional<string> detail = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -44,7 +45,12 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("SendTime"))
                 {
-                    sendTime = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    sendTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("Detail"))
@@ -53,7 +59,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new NotificationActionDetail(mechanismType.Value, name.Value, status.Value, subState.Value, sendTime.Value, detail.Value);
+            return new NotificationActionDetail(mechanismType.Value, name.Value, status.Value, subState.Value, Optional.ToNullable(sendTime), detail.Value);
         }
     }
 }

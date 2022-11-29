@@ -27,26 +27,11 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="hostPartner"/>, <paramref name="guestPartner"/>, <paramref name="hostIdentity"/>, <paramref name="guestIdentity"/> or <paramref name="content"/> is null. </exception>
         public IntegrationAccountAgreementData(AzureLocation location, IntegrationAccountAgreementType agreementType, string hostPartner, string guestPartner, IntegrationAccountBusinessIdentity hostIdentity, IntegrationAccountBusinessIdentity guestIdentity, IntegrationAccountAgreementContent content) : base(location)
         {
-            if (hostPartner == null)
-            {
-                throw new ArgumentNullException(nameof(hostPartner));
-            }
-            if (guestPartner == null)
-            {
-                throw new ArgumentNullException(nameof(guestPartner));
-            }
-            if (hostIdentity == null)
-            {
-                throw new ArgumentNullException(nameof(hostIdentity));
-            }
-            if (guestIdentity == null)
-            {
-                throw new ArgumentNullException(nameof(guestIdentity));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(hostPartner, nameof(hostPartner));
+            Argument.AssertNotNull(guestPartner, nameof(guestPartner));
+            Argument.AssertNotNull(hostIdentity, nameof(hostIdentity));
+            Argument.AssertNotNull(guestIdentity, nameof(guestIdentity));
+            Argument.AssertNotNull(content, nameof(content));
 
             AgreementType = agreementType;
             HostPartner = hostPartner;
@@ -89,7 +74,36 @@ namespace Azure.ResourceManager.Logic
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The changed time. </summary>
         public DateTimeOffset? ChangedOn { get; }
-        /// <summary> The metadata. </summary>
+        /// <summary>
+        /// The metadata.
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public BinaryData Metadata { get; set; }
         /// <summary> The agreement type. </summary>
         public IntegrationAccountAgreementType AgreementType { get; set; }

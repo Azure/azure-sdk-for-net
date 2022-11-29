@@ -12,13 +12,14 @@ namespace Azure.ResourceManager.TrafficManager.Tests
 {
     public sealed class ProfileTests : ProfileTestBase
     {
-        public ProfileTests(bool isAsync) : base(isAsync) //, RecordedTestMode.Record)
+        public ProfileTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         { }
 
         [RecordedTest]
         public async Task GetTest()
         {
-            ProfileResource profileResource = await GetDefaultProfile();
+            TrafficManagerProfileResource profileResource = await GetDefaultProfile();
 
             Assert.IsNotNull(profileResource);
             Assert.IsNotNull(profileResource.Data);
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.TrafficManager.Tests
         [RecordedTest]
         public async Task UpdateEntityTest()
         {
-            ProfileResource profileResource = await GetDefaultProfile();
+            TrafficManagerProfileResource profileResource = await GetDefaultProfile();
 
             profileResource.Data.TrafficRoutingMethod = TrafficRoutingMethod.Priority;
 
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.TrafficManager.Tests
         [RecordedTest]
         public async Task UpdateCollectionTest()
         {
-            ProfileResource profileResource = await GetDefaultProfile();
+            TrafficManagerProfileResource profileResource = await GetDefaultProfile();
 
             profileResource.Data.TrafficRoutingMethod = TrafficRoutingMethod.Priority;
 
@@ -63,10 +64,13 @@ namespace Azure.ResourceManager.TrafficManager.Tests
             Assert.AreEqual(TrafficRoutingMethod.Priority, profileResource.Data.TrafficRoutingMethod);
         }
 
-        [RecordedTest]
-        public async Task AddTagTest()
+        [TestCase(null)]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task AddTagTest(bool? useTagResource)
         {
-            ProfileResource profileResource = await GetDefaultProfile();
+            SetTagResourceUsage(Client, useTagResource);
+            TrafficManagerProfileResource profileResource = await GetDefaultProfile();
 
             await profileResource.AddTagAsync(ExpectedKey, ExpectedValue);
 
@@ -76,11 +80,13 @@ namespace Azure.ResourceManager.TrafficManager.Tests
             Assert.AreEqual(ExpectedValue, value);
         }
 
-        [RecordedTest]
-        public async Task SetTagsTest()
+        [TestCase(null)]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task SetTagsTest(bool? useTagResource)
         {
             // add one default tag to check if the method overrides all values as expected
-            await AddTagTest();
+            await AddTagTest(useTagResource);
 
             IDictionary<string, string> expectedTags = new Dictionary<string, string>
             {
@@ -89,7 +95,7 @@ namespace Azure.ResourceManager.TrafficManager.Tests
                 { "tagKey3", "tagKey3" }
             };
 
-            ProfileResource profileResource = await GetDefaultProfile();
+            TrafficManagerProfileResource profileResource = await GetDefaultProfile();
 
             await profileResource.SetTagsAsync(expectedTags);
 
@@ -104,12 +110,14 @@ namespace Azure.ResourceManager.TrafficManager.Tests
             }
         }
 
-        [RecordedTest]
-        public async Task RemoveTagTest()
+        [TestCase(null)]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task RemoveTagTest(bool? useTagResource)
         {
-            await AddTagTest();
+            await AddTagTest(useTagResource);
 
-            ProfileResource profileResource = await GetDefaultProfile();
+            TrafficManagerProfileResource profileResource = await GetDefaultProfile();
 
             await profileResource.RemoveTagAsync(ExpectedKey);
 
@@ -121,21 +129,21 @@ namespace Azure.ResourceManager.TrafficManager.Tests
         [RecordedTest]
         public async Task GetEndpointTest()
         {
-            ProfileResource profileResource = await GetDefaultProfile();
+            TrafficManagerProfileResource profileResource = await GetDefaultProfile();
 
-            EndpointResource endpointResource = await profileResource.GetEndpointAsync("externalEndpoints", EndpointName1);
+            TrafficManagerEndpointResource endpointResource = await profileResource.GetTrafficManagerEndpointAsync("externalEndpoints", EndpointName1);
 
             Assert.IsNotNull(endpointResource);
             Assert.AreEqual(EndpointName1, endpointResource.Data.Name);
-            Assert.AreEqual(EndpointType, endpointResource.Data.ResourceType);
+            Assert.AreEqual(EndpointType, endpointResource.Data.ResourceType.ToString());
         }
 
         [RecordedTest]
         public async Task GetHeatMapModelsTest()
         {
-            ProfileResource profileResource = await GetDefaultProfile();
+            TrafficManagerProfileResource profileResource = await GetDefaultProfile();
 
-            Assert.IsNotNull(profileResource.GetHeatMapModels());
+            Assert.IsNotNull(profileResource.GetTrafficManagerHeatMaps());
         }
 
         [PlaybackOnlyAttribute("Hard to generate test data for execution in RecordedTestMode.Live. The test data here is a data generated by real users.")]
@@ -192,11 +200,11 @@ namespace Azure.ResourceManager.TrafficManager.Tests
 
             ResourceGroupResource resourceGroup = await _subscription.GetResourceGroupAsync(ProfileWithHeatmapResourceGroupName);
 
-            ProfileCollection profileCollection = resourceGroup.GetProfiles();
+            TrafficManagerProfileCollection profileCollection = resourceGroup.GetTrafficManagerProfiles();
 
-            ProfileResource profileResource = await profileCollection.GetAsync(ProfileWithHeatmapName);
+            TrafficManagerProfileResource profileResource = await profileCollection.GetAsync(ProfileWithHeatmapName);
 
-            HeatMapModelResource heatMapModelResource = await profileResource.GetHeatMapModelAsync(HeatMapType.Default, topLeft, botRight);
+            TrafficManagerHeatMapResource heatMapModelResource = await profileResource.GetTrafficManagerHeatMapAsync(TrafficManagerHeatMapType.Default, topLeft, botRight);
 
             Assert.IsNotNull(heatMapModelResource);
             Assert.IsTrue(heatMapModelResource.HasData);

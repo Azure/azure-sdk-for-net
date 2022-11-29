@@ -19,23 +19,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             List<TelemetryItem> telemetryItems = new();
             foreach (var metric in batch)
             {
-                if (MetricsData.IsSupportedType(metric.MetricType))
+                foreach (ref readonly var metricPoint in metric.GetMetricPoints())
                 {
-                    foreach (ref readonly var metricPoint in metric.GetMetricPoints())
+                    telemetryItems.Add(new TelemetryItem(metricPoint.EndTime.UtcDateTime, roleName, roleInstance, instrumentationKey)
                     {
-                        telemetryItems.Add(new TelemetryItem(metricPoint.EndTime.UtcDateTime, roleName, roleInstance, instrumentationKey)
+                        Data = new MonitorBase
                         {
-                            Data = new MonitorBase
-                            {
-                                BaseType = "MetricData",
-                                BaseData = new MetricsData(Version, metric, metricPoint)
-                            }
-                        });
-                    }
-                }
-                else
-                {
-                    // log not supported
+                            BaseType = "MetricData",
+                            BaseData = new MetricsData(Version, metric, metricPoint)
+                        }
+                    });
                 }
             }
 

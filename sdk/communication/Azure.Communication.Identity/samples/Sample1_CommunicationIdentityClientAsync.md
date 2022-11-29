@@ -65,6 +65,29 @@ Console.WriteLine($"Token: {token}");
 Console.WriteLine($"Expires On: {expiresOn}");
 ```
 
+It's also possible to create a Communication Identity access token by customizing the expiration time. Validity period of the token must be within [1,24] hours range. If not provided, the default value of 24 hours will be used.
+
+```C# Snippet:CreateCommunicationTokenAsyncWithCustomExpiration
+TimeSpan tokenExpiresIn = TimeSpan.FromHours(1);
+Response<AccessToken> tokenResponse = await client.GetTokenAsync(user, scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresIn);
+string token = tokenResponse.Value.Token;
+DateTimeOffset expiresOn = tokenResponse.Value.ExpiresOn;
+Console.WriteLine($"Token: {token}");
+Console.WriteLine($"Expires On: {expiresOn}");
+```
+
+## Creating a user and a token with custom expiration in the same request
+
+You can create user and token in the same request. You can specify expiration time for the token. The token can be configured to expire in as little as one hour or as long as 24 hours. The default expiration time is 24 hours.
+
+```C# Snippet:CreateCommunicationUserAndTokenWithCustomExpirationAsync
+TimeSpan tokenExpiresIn = TimeSpan.FromHours(1);
+Response<CommunicationUserIdentifierAndToken> response = await client.CreateUserAndTokenAsync(scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresIn);
+var (user, token) = response.Value;
+Console.WriteLine($"User id: {user.Id}");
+Console.WriteLine($"Token: {token.Token}");
+```
+
 ## Exchange an Azure AD access token of a Teams User for a Communication Identity access token
 
 The `CommunicationIdentityClient` can be used to exchange an Azure AD access token of a Teams user for a new Communication Identity access token with a matching expiration time.
@@ -80,13 +103,7 @@ string token = tokenResponse.Value.Token;
 Console.WriteLine($"Token: {token}");
 ```
 
-<!--
-To see the full example source files, see:
-* [Generate user token][GenerateUserTokenCode]
--->
-
 <!-- LINKS -->
 <!--
 [ReadMe](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.Administration/samples/ReadMe.md)
-[GenerateUserTokenCode](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.Administration/tests/samples/Sample1_CommunicationIdentityClient.cs)
 -->

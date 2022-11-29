@@ -20,8 +20,6 @@ namespace Azure.ResourceManager.Relay
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _namespacesClientDiagnostics;
-        private NamespacesRestOperations _namespacesRestClient;
         private ClientDiagnostics _relayNamespaceNamespacesClientDiagnostics;
         private NamespacesRestOperations _relayNamespaceNamespacesRestClient;
 
@@ -37,8 +35,6 @@ namespace Azure.ResourceManager.Relay
         {
         }
 
-        private ClientDiagnostics NamespacesClientDiagnostics => _namespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Relay", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private NamespacesRestOperations NamespacesRestClient => _namespacesRestClient ??= new NamespacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics RelayNamespaceNamespacesClientDiagnostics => _relayNamespaceNamespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Relay", RelayNamespaceResource.ResourceType.Namespace, Diagnostics);
         private NamespacesRestOperations RelayNamespaceNamespacesRestClient => _relayNamespaceNamespacesRestClient ??= new NamespacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(RelayNamespaceResource.ResourceType));
 
@@ -53,15 +49,15 @@ namespace Azure.ResourceManager.Relay
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Relay/checkNameAvailability
         /// Operation Id: Namespaces_CheckNameAvailability
         /// </summary>
-        /// <param name="checkNameAvailability"> Parameters to check availability of the specified namespace name. </param>
+        /// <param name="content"> Parameters to check availability of the specified namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityNamespaceAsync(CheckNameAvailability checkNameAvailability, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RelayNameAvailabilityResult>> CheckRelayNamespaceNameAvailabilityAsync(RelayNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = NamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityNamespace");
+            using var scope = RelayNamespaceNamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckRelayNamespaceNameAvailability");
             scope.Start();
             try
             {
-                var response = await NamespacesRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, checkNameAvailability, cancellationToken).ConfigureAwait(false);
+                var response = await RelayNamespaceNamespacesRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -76,15 +72,15 @@ namespace Azure.ResourceManager.Relay
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Relay/checkNameAvailability
         /// Operation Id: Namespaces_CheckNameAvailability
         /// </summary>
-        /// <param name="checkNameAvailability"> Parameters to check availability of the specified namespace name. </param>
+        /// <param name="content"> Parameters to check availability of the specified namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckNameAvailabilityResult> CheckNameAvailabilityNamespace(CheckNameAvailability checkNameAvailability, CancellationToken cancellationToken = default)
+        public virtual Response<RelayNameAvailabilityResult> CheckRelayNamespaceNameAvailability(RelayNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = NamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityNamespace");
+            using var scope = RelayNamespaceNamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckRelayNamespaceNameAvailability");
             scope.Start();
             try
             {
-                var response = NamespacesRestClient.CheckNameAvailability(Id.SubscriptionId, checkNameAvailability, cancellationToken);
+                var response = RelayNamespaceNamespacesRestClient.CheckNameAvailability(Id.SubscriptionId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

@@ -50,6 +50,7 @@ namespace Azure.ResourceManager.Monitor
             Optional<ResourceIdentifier> dataCollectionRuleId = default;
             Optional<ResourceIdentifier> dataCollectionEndpointId = default;
             Optional<DataCollectionRuleAssociationProvisioningState> provisioningState = default;
+            Optional<DataCollectionRuleAssociationMetadata> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -131,11 +132,21 @@ namespace Azure.ResourceManager.Monitor
                             provisioningState = new DataCollectionRuleAssociationProvisioningState(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("metadata"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            metadata = DataCollectionRuleAssociationMetadata.DeserializeDataCollectionRuleAssociationMetadata(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new DataCollectionRuleAssociationData(id, name, type, systemData.Value, Optional.ToNullable(etag), description.Value, dataCollectionRuleId.Value, dataCollectionEndpointId.Value, Optional.ToNullable(provisioningState));
+            return new DataCollectionRuleAssociationData(id, name, type, systemData.Value, Optional.ToNullable(etag), description.Value, dataCollectionRuleId.Value, dataCollectionEndpointId.Value, Optional.ToNullable(provisioningState), metadata.Value);
         }
     }
 }

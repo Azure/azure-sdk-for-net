@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Authorization.Models
         {
             Optional<string> id = default;
             Optional<string> displayName = default;
-            Optional<string> type = default;
+            Optional<RoleManagementPrincipalType> type = default;
             Optional<string> email = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,7 +32,12 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new RoleManagementPrincipalType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("email"))
@@ -41,7 +46,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     continue;
                 }
             }
-            return new RoleManagementPrincipal(id.Value, displayName.Value, type.Value, email.Value);
+            return new RoleManagementPrincipal(id.Value, displayName.Value, Optional.ToNullable(type), email.Value);
         }
     }
 }

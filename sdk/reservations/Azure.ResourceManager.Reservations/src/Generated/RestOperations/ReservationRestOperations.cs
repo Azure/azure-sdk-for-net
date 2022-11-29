@@ -380,9 +380,9 @@ namespace Azure.ResourceManager.Reservations
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(patch);
-            request.Content = content0;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(patch);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -425,6 +425,118 @@ namespace Azure.ResourceManager.Reservations
             {
                 case 200:
                 case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateArchiveRequest(Guid reservationOrderId, Guid reservationId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
+            uri.AppendPath(reservationOrderId, true);
+            uri.AppendPath("/reservations/", false);
+            uri.AppendPath(reservationId, true);
+            uri.AppendPath("/archive", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Archiving a `Reservation` moves it to `Archived` state. </summary>
+        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
+        /// <param name="reservationId"> Id of the Reservation Item. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response> ArchiveAsync(Guid reservationOrderId, Guid reservationId, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateArchiveRequest(reservationOrderId, reservationId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Archiving a `Reservation` moves it to `Archived` state. </summary>
+        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
+        /// <param name="reservationId"> Id of the Reservation Item. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response Archive(Guid reservationOrderId, Guid reservationId, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateArchiveRequest(reservationOrderId, reservationId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateUnarchiveRequest(Guid reservationOrderId, Guid reservationId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
+            uri.AppendPath(reservationOrderId, true);
+            uri.AppendPath("/reservations/", false);
+            uri.AppendPath(reservationId, true);
+            uri.AppendPath("/unarchive", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary>
+        /// Unarchiving a `Reservation` moves it to the state it was before archiving.
+        /// 
+        /// </summary>
+        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
+        /// <param name="reservationId"> Id of the Reservation Item. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response> UnarchiveAsync(Guid reservationOrderId, Guid reservationId, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateUnarchiveRequest(reservationOrderId, reservationId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary>
+        /// Unarchiving a `Reservation` moves it to the state it was before archiving.
+        /// 
+        /// </summary>
+        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
+        /// <param name="reservationId"> Id of the Reservation Item. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response Unarchive(Guid reservationOrderId, Guid reservationId, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateUnarchiveRequest(reservationOrderId, reservationId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);

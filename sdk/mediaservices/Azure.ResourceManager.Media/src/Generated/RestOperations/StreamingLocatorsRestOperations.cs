@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Media
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-11-01";
+            _apiVersion = apiVersion ?? "2022-08-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingLocatorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingLocatorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<GetPathsResult>> ListPathsAsync(string subscriptionId, string resourceGroupName, string accountName, string streamingLocatorName, CancellationToken cancellationToken = default)
+        public async Task<Response<StreamingPathsResult>> ListPathsAsync(string subscriptionId, string resourceGroupName, string accountName, string streamingLocatorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -519,9 +519,9 @@ namespace Azure.ResourceManager.Media
             {
                 case 200:
                     {
-                        GetPathsResult value = default;
+                        StreamingPathsResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = GetPathsResult.DeserializeGetPathsResult(document.RootElement);
+                        value = StreamingPathsResult.DeserializeStreamingPathsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingLocatorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingLocatorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<GetPathsResult> ListPaths(string subscriptionId, string resourceGroupName, string accountName, string streamingLocatorName, CancellationToken cancellationToken = default)
+        public Response<StreamingPathsResult> ListPaths(string subscriptionId, string resourceGroupName, string accountName, string streamingLocatorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -550,9 +550,9 @@ namespace Azure.ResourceManager.Media
             {
                 case 200:
                     {
-                        GetPathsResult value = default;
+                        StreamingPathsResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = GetPathsResult.DeserializeGetPathsResult(document.RootElement);
+                        value = StreamingPathsResult.DeserializeStreamingPathsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

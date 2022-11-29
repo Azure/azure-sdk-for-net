@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Authorization.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(EnabledRules))
+            if (Optional.IsCollectionDefined(EnablementRules))
             {
                 writer.WritePropertyName("enabledRules");
                 writer.WriteStartArray();
-                foreach (var item in EnabledRules)
+                foreach (var item in EnablementRules)
                 {
                     writer.WriteStringValue(item.ToString());
                 }

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Communication.JobRouter.Tests.Scenarios
@@ -80,10 +81,16 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
 
             Assert.ThrowsAsync<RequestFailedException>(async () => await client.DeclineJobOfferAsync(worker.Value.Id, offer.Id));
 
-            var complete = await client.CompleteJobAsync(new CompleteJobOptions(createJob.Value.Id, accept.Value.AssignmentId));
+            var complete = await client.CompleteJobAsync(new CompleteJobOptions(createJob.Value.Id, accept.Value.AssignmentId)
+            {
+                Note = $"Job completed by {workerId1}"
+            });
             Assert.AreEqual(200, complete.GetRawResponse().Status);
 
-            var close = await client.CloseJobAsync(new CloseJobOptions(createJob.Value.Id, accept.Value.AssignmentId));
+            var close = await client.CloseJobAsync(new CloseJobOptions(createJob.Value.Id, accept.Value.AssignmentId)
+            {
+                Note = $"Job closed by {workerId1}"
+            });
             Assert.AreEqual(200, complete.GetRawResponse().Status);
 
             var finalJobState = await client.GetJobAsync(createJob.Value.Id);
@@ -91,6 +98,8 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             Assert.AreEqual(worker.Value.Id, finalJobState.Value.Assignments[accept.Value.AssignmentId].WorkerId);
             Assert.IsNotNull(finalJobState.Value.Assignments[accept.Value.AssignmentId].CompleteTime);
             Assert.IsNotNull(finalJobState.Value.Assignments[accept.Value.AssignmentId].CloseTime);
+            Assert.IsNotEmpty(finalJobState.Value.Notes);
+            Assert.IsTrue(finalJobState.Value.Notes.Count == 2);
         }
     }
 }

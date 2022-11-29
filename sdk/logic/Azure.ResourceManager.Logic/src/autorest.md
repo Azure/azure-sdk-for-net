@@ -9,7 +9,6 @@ csharp: true
 library-name: Logic
 namespace: Azure.ResourceManager.Logic
 require: https://github.com/Azure/azure-rest-api-specs/blob/353d84dac009c19ae776c25eb361f07e85f26c8d/specification/logic/resource-manager/readme.md
-tag: package-2019-05
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -160,7 +159,7 @@ rename-mapping:
   X12AcknowledgementSettings.batchTechnicalAcknowledgements: BatchTechnicalAcknowledgement
   X12AcknowledgementSettings.batchFunctionalAcknowledgements: BatchFunctionalAcknowledgement
   X12AcknowledgementSettings.batchImplementationAcknowledgements: BatchImplementationAcknowledgement
-  
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
@@ -221,7 +220,7 @@ directive:
       $.OpenAuthenticationAccessPolicies.properties.policies['x-ms-client-name'] = 'AccessPolicies';
       $.ResourceReference.properties.id['x-ms-format'] = 'arm-id';
       $.ResourceReference.properties.type['x-ms-format'] = 'resource-type';
-      $.IpAddress.properties.address['x-ms-format'] = 'ip-address';
+      $.IpAddress.properties.address['x-ms-client-name'] = 'CidrAddress';
       $.IntegrationServiceEnvironmentSkuDefinition.properties.resourceType['x-ms-format'] = 'resource-type';
       $.KeyVaultKeyReference.properties.keyVault['x-ms-client-flatten'] = true;
       $.KeyVaultKeyReference.properties.keyVault.properties.id['x-ms-format'] = 'arm-id';

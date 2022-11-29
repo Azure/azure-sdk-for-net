@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.FluidRelay.Models
 
         /// <summary> Initializes a new instance of EncryptionProperties. </summary>
         /// <param name="customerManagedKeyEncryption"> All Customer-managed key encryption properties for the resource. </param>
-        internal EncryptionProperties(CustomerManagedKeyEncryptionProperties customerManagedKeyEncryption)
+        internal EncryptionProperties(CmkEncryptionProperties customerManagedKeyEncryption)
         {
             CustomerManagedKeyEncryption = customerManagedKeyEncryption;
         }
 
         /// <summary> All Customer-managed key encryption properties for the resource. </summary>
-        public CustomerManagedKeyEncryptionProperties CustomerManagedKeyEncryption { get; set; }
+        public CmkEncryptionProperties CustomerManagedKeyEncryption { get; set; }
     }
 }

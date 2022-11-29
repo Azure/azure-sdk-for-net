@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,6 +18,22 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             writer.WritePropertyName("authType");
             writer.WriteStringValue(AuthType.ToString());
             writer.WriteEndObject();
+        }
+
+        internal static AuthBaseInfo DeserializeAuthBaseInfo(JsonElement element)
+        {
+            if (element.TryGetProperty("authType", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "secret": return SecretAuthInfo.DeserializeSecretAuthInfo(element);
+                    case "servicePrincipalCertificate": return ServicePrincipalCertificateAuthInfo.DeserializeServicePrincipalCertificateAuthInfo(element);
+                    case "servicePrincipalSecret": return ServicePrincipalSecretAuthInfo.DeserializeServicePrincipalSecretAuthInfo(element);
+                    case "systemAssignedIdentity": return SystemAssignedIdentityAuthInfo.DeserializeSystemAssignedIdentityAuthInfo(element);
+                    case "userAssignedIdentity": return UserAssignedIdentityAuthInfo.DeserializeUserAssignedIdentityAuthInfo(element);
+                }
+            }
+            return UnknownAuthInfoBase.DeserializeUnknownAuthInfoBase(element);
         }
     }
 }

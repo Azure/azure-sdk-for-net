@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AlertsManagement.Models;
@@ -18,28 +17,33 @@ namespace Azure.ResourceManager.AlertsManagement
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Essentials))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("essentials");
-                writer.WriteObjectValue(Essentials);
+                writer.WritePropertyName("properties");
+                writer.WriteObjectValue(Properties);
             }
-            writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static ServiceAlertData DeserializeServiceAlertData(JsonElement element)
         {
+            Optional<ServiceAlertProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ServiceAlertEssentials> essentials = default;
-            Optional<BinaryData> context = default;
-            Optional<BinaryData> egressConfig = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    properties = ServiceAlertProperties.DeserializeServiceAlertProperties(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("id"))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -65,50 +69,8 @@ namespace Azure.ResourceManager.AlertsManagement
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
-                if (property.NameEquals("properties"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("essentials"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            essentials = ServiceAlertEssentials.DeserializeServiceAlertEssentials(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("context"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            context = BinaryData.FromString(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("egressConfig"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            egressConfig = BinaryData.FromString(property0.Value.GetRawText());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
             }
-            return new ServiceAlertData(id, name, type, systemData.Value, essentials.Value, context.Value, egressConfig.Value);
+            return new ServiceAlertData(id, name, type, systemData.Value, properties.Value);
         }
     }
 }

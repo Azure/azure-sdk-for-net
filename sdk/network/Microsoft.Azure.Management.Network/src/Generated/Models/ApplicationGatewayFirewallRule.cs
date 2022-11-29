@@ -33,11 +33,22 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="ruleId">The identifier of the web application firewall
         /// rule.</param>
+        /// <param name="ruleIdString">The string representation of the web
+        /// application firewall rule identifier.</param>
+        /// <param name="state">The string representation of the web
+        /// application firewall rule state. Possible values include:
+        /// 'Enabled', 'Disabled'</param>
+        /// <param name="action">The string representation of the web
+        /// application firewall rule action. Possible values include: 'None',
+        /// 'AnomalyScoring', 'Allow', 'Block', 'Log'</param>
         /// <param name="description">The description of the web application
         /// firewall rule.</param>
-        public ApplicationGatewayFirewallRule(int ruleId, string description = default(string))
+        public ApplicationGatewayFirewallRule(int ruleId, string ruleIdString = default(string), string state = default(string), string action = default(string), string description = default(string))
         {
             RuleId = ruleId;
+            RuleIdString = ruleIdString;
+            State = state;
+            Action = action;
             Description = description;
             CustomInit();
         }
@@ -54,6 +65,28 @@ namespace Microsoft.Azure.Management.Network.Models
         public int RuleId { get; set; }
 
         /// <summary>
+        /// Gets or sets the string representation of the web application
+        /// firewall rule identifier.
+        /// </summary>
+        [JsonProperty(PropertyName = "ruleIdString")]
+        public string RuleIdString { get; set; }
+
+        /// <summary>
+        /// Gets or sets the string representation of the web application
+        /// firewall rule state. Possible values include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "state")]
+        public string State { get; set; }
+
+        /// <summary>
+        /// Gets or sets the string representation of the web application
+        /// firewall rule action. Possible values include: 'None',
+        /// 'AnomalyScoring', 'Allow', 'Block', 'Log'
+        /// </summary>
+        [JsonProperty(PropertyName = "action")]
+        public string Action { get; set; }
+
+        /// <summary>
         /// Gets or sets the description of the web application firewall rule.
         /// </summary>
         [JsonProperty(PropertyName = "description")]
@@ -67,7 +100,6 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </exception>
         public virtual void Validate()
         {
-            //Nothing to validate
         }
     }
 }

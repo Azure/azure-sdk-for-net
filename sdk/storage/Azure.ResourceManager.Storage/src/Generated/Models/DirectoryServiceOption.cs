@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary> Indicates the directory service used. </summary>
+    /// <summary> Indicates the directory service used. Note that this enum may be extended in the future. </summary>
     public readonly partial struct DirectoryServiceOption : IEquatable<DirectoryServiceOption>
     {
         private readonly string _value;
@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.Storage.Models
         private const string NoneValue = "None";
         private const string AaddsValue = "AADDS";
         private const string ADValue = "AD";
+        private const string AadkerbValue = "AADKERB";
 
         /// <summary> None. </summary>
         public static DirectoryServiceOption None { get; } = new DirectoryServiceOption(NoneValue);
@@ -32,6 +33,8 @@ namespace Azure.ResourceManager.Storage.Models
         public static DirectoryServiceOption Aadds { get; } = new DirectoryServiceOption(AaddsValue);
         /// <summary> AD. </summary>
         public static DirectoryServiceOption AD { get; } = new DirectoryServiceOption(ADValue);
+        /// <summary> AADKERB. </summary>
+        public static DirectoryServiceOption Aadkerb { get; } = new DirectoryServiceOption(AadkerbValue);
         /// <summary> Determines if two <see cref="DirectoryServiceOption"/> values are the same. </summary>
         public static bool operator ==(DirectoryServiceOption left, DirectoryServiceOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DirectoryServiceOption"/> values are not the same. </summary>

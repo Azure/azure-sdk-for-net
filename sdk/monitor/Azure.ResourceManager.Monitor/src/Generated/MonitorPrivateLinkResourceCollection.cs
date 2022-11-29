@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
     /// A class representing a collection of <see cref="MonitorPrivateLinkResource" /> and their operations.
-    /// Each <see cref="MonitorPrivateLinkResource" /> in the collection will belong to the same instance of <see cref="PrivateLinkScopeResource" />.
-    /// To get a <see cref="MonitorPrivateLinkResourceCollection" /> instance call the GetMonitorPrivateLinkResources method from an instance of <see cref="PrivateLinkScopeResource" />.
+    /// Each <see cref="MonitorPrivateLinkResource" /> in the collection will belong to the same instance of <see cref="MonitorPrivateLinkScopeResource" />.
+    /// To get a <see cref="MonitorPrivateLinkResourceCollection" /> instance call the GetMonitorPrivateLinkResources method from an instance of <see cref="MonitorPrivateLinkScopeResource" />.
     /// </summary>
     public partial class MonitorPrivateLinkResourceCollection : ArmCollection, IEnumerable<MonitorPrivateLinkResource>, IAsyncEnumerable<MonitorPrivateLinkResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Monitor
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != PrivateLinkScopeResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, PrivateLinkScopeResource.ResourceType), nameof(id));
+            if (id.ResourceType != MonitorPrivateLinkScopeResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, MonitorPrivateLinkScopeResource.ResourceType), nameof(id));
         }
 
         /// <summary>

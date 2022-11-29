@@ -23,6 +23,7 @@ namespace Azure.Communication.JobRouter
         public CreateQueueOptions(string queueId, string distributionPolicyId)
         {
             Argument.AssertNotNullOrWhiteSpace(queueId, nameof(queueId));
+            Argument.AssertNotNullOrWhiteSpace(distributionPolicyId, nameof(distributionPolicyId));
 
             QueueId = queueId;
             DistributionPolicyId = distributionPolicyId;
@@ -31,12 +32,12 @@ namespace Azure.Communication.JobRouter
         /// <summary>
         /// Unique key that identifies this queue.
         /// </summary>
-        public string QueueId { get; set; }
+        public string QueueId { get; }
 
         /// <summary>
         /// The ID of the distribution policy that will determine how a job is distributed to workers.
         /// </summary>
-        public string DistributionPolicyId { get; set; }
+        public string DistributionPolicyId { get; }
 
         /// <summary> The name of this queue. </summary>
         public string Name { get; set; }

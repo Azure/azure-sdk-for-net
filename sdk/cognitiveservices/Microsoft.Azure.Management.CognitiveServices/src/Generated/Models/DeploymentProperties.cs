@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.CognitiveServices.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -33,11 +35,16 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// the time the operation was called. Possible values include:
         /// 'Accepted', 'Creating', 'Deleting', 'Moving', 'Failed',
         /// 'Succeeded'</param>
-        public DeploymentProperties(string provisioningState = default(string), DeploymentModel model = default(DeploymentModel), DeploymentScaleSettings scaleSettings = default(DeploymentScaleSettings))
+        /// <param name="capabilities">The capabilities.</param>
+        /// <param name="raiPolicyName">The name of RAI policy.</param>
+        public DeploymentProperties(string provisioningState = default(string), DeploymentModel model = default(DeploymentModel), DeploymentScaleSettings scaleSettings = default(DeploymentScaleSettings), IDictionary<string, string> capabilities = default(IDictionary<string, string>), string raiPolicyName = default(string), CallRateLimit callRateLimit = default(CallRateLimit))
         {
             ProvisioningState = provisioningState;
             Model = model;
             ScaleSettings = scaleSettings;
+            Capabilities = capabilities;
+            RaiPolicyName = raiPolicyName;
+            CallRateLimit = callRateLimit;
             CustomInit();
         }
 
@@ -63,6 +70,23 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// </summary>
         [JsonProperty(PropertyName = "scaleSettings")]
         public DeploymentScaleSettings ScaleSettings { get; set; }
+
+        /// <summary>
+        /// Gets the capabilities.
+        /// </summary>
+        [JsonProperty(PropertyName = "capabilities")]
+        public IDictionary<string, string> Capabilities { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the name of RAI policy.
+        /// </summary>
+        [JsonProperty(PropertyName = "raiPolicyName")]
+        public string RaiPolicyName { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "callRateLimit")]
+        public CallRateLimit CallRateLimit { get; private set; }
 
     }
 }

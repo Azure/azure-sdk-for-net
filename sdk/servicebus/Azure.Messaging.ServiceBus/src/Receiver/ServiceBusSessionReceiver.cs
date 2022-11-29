@@ -76,26 +76,29 @@ namespace Azure.Messaging.ServiceBus
             try
             {
                 await receiver.OpenLinkAsync(cancellationToken).ConfigureAwait(false);
+                receiver.Logger.ClientCreateComplete(typeof(ServiceBusSessionReceiver), receiver.Identifier);
+                return receiver;
             }
             catch (ServiceBusException e)
                 when (e.Reason == ServiceBusFailureReason.ServiceTimeout && isProcessor)
             {
+                await receiver.CloseAsync(CancellationToken.None).ConfigureAwait(false);
                 receiver.Logger.ProcessorAcceptSessionTimeout(receiver.FullyQualifiedNamespace, entityPath, e.ToString());
                 throw;
             }
             catch (TaskCanceledException exception)
                 when (isProcessor)
             {
+                await receiver.CloseAsync(CancellationToken.None).ConfigureAwait(false);
                 receiver.Logger.ProcessorStoppingAcceptSessionCanceled(receiver.FullyQualifiedNamespace, entityPath, exception.ToString());
                 throw;
             }
             catch (Exception ex)
             {
+                await receiver.CloseAsync(CancellationToken.None).ConfigureAwait(false);
                 receiver.Logger.ClientCreateException(typeof(ServiceBusSessionReceiver), receiver.FullyQualifiedNamespace, entityPath, ex);
                 throw;
             }
-            receiver.Logger.ClientCreateComplete(typeof(ServiceBusSessionReceiver), receiver.Identifier);
-            return receiver;
         }
 
         /// <summary>

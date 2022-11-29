@@ -6,14 +6,11 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.DataFactory;
-using Azure.ResourceManager.DataFactory.Models;
-using Azure.ResourceManager.DataFactory.Tests;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Storage;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.IotHub.Tests.Scenario
+namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 {
     internal class LinkedServiceResourceTests : DataFactoryManagementTestBase
     {

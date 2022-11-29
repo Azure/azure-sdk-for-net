@@ -15,25 +15,25 @@ namespace Azure.ResourceManager.ResourceMover.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsValidateOnly))
+            if (Optional.IsDefined(ValidateOnly))
             {
                 writer.WritePropertyName("validateOnly");
-                writer.WriteBooleanValue(IsValidateOnly.Value);
+                writer.WriteBooleanValue(ValidateOnly.Value);
             }
-            if (Optional.IsCollectionDefined(MoveResources))
+            if (Optional.IsCollectionDefined(MoverResources))
             {
                 writer.WritePropertyName("moveResources");
                 writer.WriteStartArray();
-                foreach (var item in MoveResources)
+                foreach (var item in MoverResources)
                 {
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MoveResourceInputType))
+            if (Optional.IsDefined(MoverResourceInputType))
             {
                 writer.WritePropertyName("moveResourceInputType");
-                writer.WriteStringValue(MoveResourceInputType.Value.ToString());
+                writer.WriteStringValue(MoverResourceInputType.Value.ToString());
             }
             writer.WriteEndObject();
         }

@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// view.</param>
         /// <param name="timeCreated">Specifies the time at which the Dedicated
         /// Host resource was created.&lt;br&gt;&lt;br&gt;Minimum api-version:
-        /// 2022-03-01.</param>
+        /// 2021-11-01.</param>
         public DedicatedHost(string location, Sku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), int? platformFaultDomain = default(int?), bool? autoReplaceOnFailure = default(bool?), string hostId = default(string), IList<SubResourceReadOnly> virtualMachines = default(IList<SubResourceReadOnly>), DedicatedHostLicenseTypes? licenseType = default(DedicatedHostLicenseTypes?), System.DateTime? provisioningTime = default(System.DateTime?), string provisioningState = default(string), DedicatedHostInstanceView instanceView = default(DedicatedHostInstanceView), System.DateTime? timeCreated = default(System.DateTime?))
             : base(location, id, name, type, tags)
         {
@@ -154,7 +154,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets specifies the time at which the Dedicated Host resource was
         /// created.&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
-        /// 2022-03-01.
+        /// 2021-11-01.
         /// </summary>
         [JsonProperty(PropertyName = "properties.timeCreated")]
         public System.DateTime? TimeCreated { get; private set; }

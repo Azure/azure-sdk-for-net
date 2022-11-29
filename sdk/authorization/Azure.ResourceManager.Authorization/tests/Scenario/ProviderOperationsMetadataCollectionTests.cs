@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
         {
         }
 
-        private async Task<ProviderOperationsMetadataCollection> GetProviderOperationsCollectionAsync()
+        private async Task<AuthorizationProviderOperationsMetadataCollection> GetProviderOperationsCollectionAsync()
         {
             var tenants = await Client.GetTenants().GetAllAsync().ToEnumerableAsync();
-            return tenants.FirstOrDefault().GetAllProviderOperationsMetadata();
+            return tenants.FirstOrDefault().GetAllAuthorizationProviderOperationsMetadata();
         }
 
         [Test]

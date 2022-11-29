@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.AI.TextAnalytics;
+
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The DetectedLanguage. </summary>
@@ -14,11 +16,13 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="name"> Long name of a detected language (e.g. English, French). </param>
         /// <param name="iso6391Name"> A two letter representation of the detected language according to the ISO 639-1 standard (e.g. en, fr). </param>
         /// <param name="confidenceScore"> A confidence score between 0 and 1. Scores close to 1 indicate 100% certainty that the identified language is true. </param>
-        public DetectedLanguageInternal(string name, string iso6391Name, double confidenceScore)
+        /// <param name="script"> Identifies the script of the input document. </param>
+        public DetectedLanguageInternal(string name, string iso6391Name, double confidenceScore, ScriptKind? script)
         {
             Name = name;
             Iso6391Name = iso6391Name;
             ConfidenceScore = confidenceScore;
+            Script = script;
         }
 
         /// <summary> Long name of a detected language (e.g. English, French). </summary>
@@ -27,5 +31,7 @@ namespace Azure.AI.TextAnalytics.Models
         public string Iso6391Name { get; }
         /// <summary> A confidence score between 0 and 1. Scores close to 1 indicate 100% certainty that the identified language is true. </summary>
         public double ConfidenceScore { get; }
+        /// <summary> Identifies the script of the input document. </summary>
+        public ScriptKind? Script { get; }
     }
 }

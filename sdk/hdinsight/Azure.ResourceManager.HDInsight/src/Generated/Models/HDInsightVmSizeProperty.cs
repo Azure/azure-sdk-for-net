@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="label"> The label of the vm size. </param>
         /// <param name="maxDataDiskCount"> The max data disk count of the vm size. </param>
         /// <param name="memoryInMB"> The memory whose unit is MB of the vm size. </param>
-        /// <param name="supportedByVirtualMachines"> This indicates this vm size is supported by virtual machines or not. </param>
-        /// <param name="supportedByWebWorkerRoles"> The indicates this vm size is supported by web worker roles or not. </param>
+        /// <param name="isSupportedByVirtualMachines"> This indicates this vm size is supported by virtual machines or not. </param>
+        /// <param name="isSupportedByWebWorkerRoles"> The indicates this vm size is supported by web worker roles or not. </param>
         /// <param name="virtualMachineResourceDiskSizeInMB"> The virtual machine resource disk size whose unit is MB of the vm size. </param>
         /// <param name="webWorkerResourceDiskSizeInMB"> The web worker resource disk size whose unit is MB of the vm size. </param>
-        internal HDInsightVmSizeProperty(string name, int? cores, string dataDiskStorageTier, string label, long? maxDataDiskCount, long? memoryInMB, bool? supportedByVirtualMachines, bool? supportedByWebWorkerRoles, long? virtualMachineResourceDiskSizeInMB, long? webWorkerResourceDiskSizeInMB)
+        internal HDInsightVmSizeProperty(string name, int? cores, string dataDiskStorageTier, string label, long? maxDataDiskCount, long? memoryInMB, bool? isSupportedByVirtualMachines, bool? isSupportedByWebWorkerRoles, long? virtualMachineResourceDiskSizeInMB, long? webWorkerResourceDiskSizeInMB)
         {
             Name = name;
             Cores = cores;
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             Label = label;
             MaxDataDiskCount = maxDataDiskCount;
             MemoryInMB = memoryInMB;
-            SupportedByVirtualMachines = supportedByVirtualMachines;
-            SupportedByWebWorkerRoles = supportedByWebWorkerRoles;
+            IsSupportedByVirtualMachines = isSupportedByVirtualMachines;
+            IsSupportedByWebWorkerRoles = isSupportedByWebWorkerRoles;
             VirtualMachineResourceDiskSizeInMB = virtualMachineResourceDiskSizeInMB;
             WebWorkerResourceDiskSizeInMB = webWorkerResourceDiskSizeInMB;
         }
@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> The memory whose unit is MB of the vm size. </summary>
         public long? MemoryInMB { get; }
         /// <summary> This indicates this vm size is supported by virtual machines or not. </summary>
-        public bool? SupportedByVirtualMachines { get; }
+        public bool? IsSupportedByVirtualMachines { get; }
         /// <summary> The indicates this vm size is supported by web worker roles or not. </summary>
-        public bool? SupportedByWebWorkerRoles { get; }
+        public bool? IsSupportedByWebWorkerRoles { get; }
         /// <summary> The virtual machine resource disk size whose unit is MB of the vm size. </summary>
         public long? VirtualMachineResourceDiskSizeInMB { get; }
         /// <summary> The web worker resource disk size whose unit is MB of the vm size. </summary>

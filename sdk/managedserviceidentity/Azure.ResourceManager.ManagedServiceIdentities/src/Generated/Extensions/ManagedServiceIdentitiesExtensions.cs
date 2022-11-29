@@ -102,6 +102,15 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             return resourceGroupResource.GetUserAssignedIdentities().Get(resourceName, cancellationToken);
         }
 
+        private static ArmResourceExtensionClient GetExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ArmResourceExtensionClient(client, scope);
+            }
+            );
+        }
+
         private static ArmResourceExtensionClient GetExtensionClient(ArmResource armResource)
         {
             return armResource.GetCachedClient((client) =>
@@ -117,6 +126,15 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         public static SystemAssignedIdentityResource GetSystemAssignedIdentity(this ArmResource armResource)
         {
             return GetExtensionClient(armResource).GetSystemAssignedIdentity();
+        }
+
+        /// <summary> Gets an object representing a SystemAssignedIdentityResource along with the instance operations that can be performed on it in the ArmResource. </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> Returns a <see cref="SystemAssignedIdentityResource" /> object. </returns>
+        public static SystemAssignedIdentityResource GetSystemAssignedIdentity(this ArmClient client, ResourceIdentifier scope)
+        {
+            return GetExtensionClient(client, scope).GetSystemAssignedIdentity();
         }
 
         #region SystemAssignedIdentityResource
@@ -152,6 +170,25 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             {
                 UserAssignedIdentityResource.ValidateResourceId(id);
                 return new UserAssignedIdentityResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region FederatedIdentityCredentialResource
+        /// <summary>
+        /// Gets an object representing a <see cref="FederatedIdentityCredentialResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FederatedIdentityCredentialResource.CreateResourceIdentifier" /> to create a <see cref="FederatedIdentityCredentialResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="FederatedIdentityCredentialResource" /> object. </returns>
+        public static FederatedIdentityCredentialResource GetFederatedIdentityCredentialResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                FederatedIdentityCredentialResource.ValidateResourceId(id);
+                return new FederatedIdentityCredentialResource(client, id);
             }
             );
         }

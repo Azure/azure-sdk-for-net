@@ -18,20 +18,30 @@ namespace Azure.ResourceManager.Authorization.Models
         {
             Actions = new ChangeTrackingList<string>();
             NotActions = new ChangeTrackingList<string>();
+            DataActions = new ChangeTrackingList<string>();
+            NotDataActions = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of RoleDefinitionPermission. </summary>
         /// <param name="actions"> Allowed actions. </param>
         /// <param name="notActions"> Denied actions. </param>
-        internal RoleDefinitionPermission(IList<string> actions, IList<string> notActions)
+        /// <param name="dataActions"> Allowed Data actions. </param>
+        /// <param name="notDataActions"> Denied Data actions. </param>
+        internal RoleDefinitionPermission(IList<string> actions, IList<string> notActions, IList<string> dataActions, IList<string> notDataActions)
         {
             Actions = actions;
             NotActions = notActions;
+            DataActions = dataActions;
+            NotDataActions = notDataActions;
         }
 
         /// <summary> Allowed actions. </summary>
         public IList<string> Actions { get; }
         /// <summary> Denied actions. </summary>
         public IList<string> NotActions { get; }
+        /// <summary> Allowed Data actions. </summary>
+        public IList<string> DataActions { get; }
+        /// <summary> Denied Data actions. </summary>
+        public IList<string> NotDataActions { get; }
     }
 }

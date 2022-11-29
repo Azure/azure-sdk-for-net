@@ -90,13 +90,6 @@ await foreach (AnalyzeActionsResult documentsInPage in operation.Value)
 }
 ```
 
-To see the full example source files, see:
-
-* [Synchronously Multi Label Classify](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample10_MultiLabelClassify.cs)
-* [Asynchronously Multi Label Classify](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample10_MultiLabelClassifyAsync.cs)
-* [Synchronously Multi Label Classify Convenience](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample10_MultiLabelClassifyConvenience.cs)
-* [Asynchronously Multi Label Classify Convenience](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample10_MultiLabelClassifyConvenienceAsync.cs)
-
 [train_model]: https://aka.ms/azsdk/textanalytics/customfunctionalities
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/README.md

@@ -73,9 +73,15 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="restorableDroppedDatabaseId">The restorable dropped
         /// database resource id to restore when creating this
         /// database.</param>
+        /// <param name="storageContainerIdentity">Conditional. If createMode
+        /// is RestoreExternalBackup, this value is used. Specifies the
+        /// identity used for storage container authentication. Can be
+        /// 'SharedAccessSignature' or 'ManagedIdentity'; if not specified
+        /// 'SharedAccessSignature' is assumed.</param>
         /// <param name="storageContainerSasToken">Conditional. If createMode
-        /// is RestoreExternalBackup, this value is required. Specifies the
-        /// storage container sas token.</param>
+        /// is RestoreExternalBackup and storageContainerIdentity is not
+        /// ManagedIdentity, this value is required. Specifies the storage
+        /// container sas token.</param>
         /// <param name="failoverGroupId">Instance Failover Group resource
         /// identifier that this managed database belongs to.</param>
         /// <param name="recoverableDatabaseId">The resource identifier of the
@@ -89,7 +95,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="lastBackupName">Last backup file name for restore of
         /// this managed database.</param>
         /// <param name="tags">Resource tags.</param>
-        public ManagedDatabaseUpdate(string collation = default(string), string status = default(string), System.DateTime? creationDate = default(System.DateTime?), System.DateTime? earliestRestorePoint = default(System.DateTime?), System.DateTime? restorePointInTime = default(System.DateTime?), string defaultSecondaryLocation = default(string), string catalogCollation = default(string), string createMode = default(string), string storageContainerUri = default(string), string sourceDatabaseId = default(string), string restorableDroppedDatabaseId = default(string), string storageContainerSasToken = default(string), string failoverGroupId = default(string), string recoverableDatabaseId = default(string), string longTermRetentionBackupResourceId = default(string), bool? autoCompleteRestore = default(bool?), string lastBackupName = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public ManagedDatabaseUpdate(string collation = default(string), string status = default(string), System.DateTime? creationDate = default(System.DateTime?), System.DateTime? earliestRestorePoint = default(System.DateTime?), System.DateTime? restorePointInTime = default(System.DateTime?), string defaultSecondaryLocation = default(string), string catalogCollation = default(string), string createMode = default(string), string storageContainerUri = default(string), string sourceDatabaseId = default(string), string restorableDroppedDatabaseId = default(string), string storageContainerIdentity = default(string), string storageContainerSasToken = default(string), string failoverGroupId = default(string), string recoverableDatabaseId = default(string), string longTermRetentionBackupResourceId = default(string), bool? autoCompleteRestore = default(bool?), string lastBackupName = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Collation = collation;
             Status = status;
@@ -102,6 +108,7 @@ namespace Microsoft.Azure.Management.Sql.Models
             StorageContainerUri = storageContainerUri;
             SourceDatabaseId = sourceDatabaseId;
             RestorableDroppedDatabaseId = restorableDroppedDatabaseId;
+            StorageContainerIdentity = storageContainerIdentity;
             StorageContainerSasToken = storageContainerSasToken;
             FailoverGroupId = failoverGroupId;
             RecoverableDatabaseId = recoverableDatabaseId;
@@ -207,7 +214,18 @@ namespace Microsoft.Azure.Management.Sql.Models
 
         /// <summary>
         /// Gets or sets conditional. If createMode is RestoreExternalBackup,
-        /// this value is required. Specifies the storage container sas token.
+        /// this value is used. Specifies the identity used for storage
+        /// container authentication. Can be 'SharedAccessSignature' or
+        /// 'ManagedIdentity'; if not specified 'SharedAccessSignature' is
+        /// assumed.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.storageContainerIdentity")]
+        public string StorageContainerIdentity { get; set; }
+
+        /// <summary>
+        /// Gets or sets conditional. If createMode is RestoreExternalBackup
+        /// and storageContainerIdentity is not ManagedIdentity, this value is
+        /// required. Specifies the storage container sas token.
         /// </summary>
         [JsonProperty(PropertyName = "properties.storageContainerSasToken")]
         public string StorageContainerSasToken { get; set; }

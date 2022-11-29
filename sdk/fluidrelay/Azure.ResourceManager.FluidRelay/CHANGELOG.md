@@ -1,16 +1,32 @@
 # Release History
 
-## 1.0.0 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
-    add listKeys method
-    enable user to provide AMI and keyvaultURI for encryption.
+
 ### Breaking Changes
-    deprecate getKeys method
+
 ### Bugs Fixed
-    None
+
 ### Other Changes
-    add createtime and lastModifiedtime
+
+## 1.0.0 (2022-09-13)
+
+This is the first stable release of the Fluid Relay management library.
+
+### Breaking Changes
+    
+Polishing since last public beta release:
+- Prepended `FluidRelay` prefix to all single / simple model names.
+- Corrected the format of all `ResourceIdentifier` type properties / parameters.
+- Optimized the name of some models and functions.
+
+### Other Changes
+
+- Upgraded API version to 2022-06-01
+- Upgraded dependent Azure.ResourceManager to 1.3.1.
+- Optimized the implementation of methods related to tag operations.
+
 ## 1.0.0-beta.1 (2022-07-12)
 
 ### Breaking Changes

@@ -10,12 +10,39 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     [CodeGenModel("DocumentPage")]
     public partial class DocumentPage
     {
+        /// <summary> Initializes a new instance of DocumentPage. </summary>
+        /// <param name="pageNumber"> 1-based page number in the input document. </param>
+        /// <param name="angle"> The general orientation of the content in clockwise direction, measured in degrees between (-180, 180]. </param>
+        /// <param name="width"> The width of the image/PDF in pixels/inches, respectively. </param>
+        /// <param name="height"> The height of the image/PDF in pixels/inches, respectively. </param>
+        /// <param name="unitPrivate"> The unit used by the width, height, and polygon properties. For images, the unit is &quot;pixel&quot;. For PDF, the unit is &quot;inch&quot;. </param>
+        /// <param name="spans"> Location of the page in the reading order concatenated content. </param>
+        /// <param name="words"> Extracted words from the page. </param>
+        /// <param name="selectionMarks"> Extracted selection marks from the page. </param>
+        /// <param name="lines"> Extracted lines from the page, potentially containing both textual and visual elements. </param>
+        internal DocumentPage(int pageNumber, float? angle, float? width, float? height, V3LengthUnit? unitPrivate, IReadOnlyList<DocumentSpan> spans, IReadOnlyList<DocumentWord> words, IReadOnlyList<DocumentSelectionMark> selectionMarks, IReadOnlyList<DocumentLine> lines)
+        {
+            PageNumber = pageNumber;
+            Angle = angle;
+            Width = width;
+            Height = height;
+            UnitPrivate = unitPrivate;
+            Spans = spans;
+            Words = words;
+            SelectionMarks = selectionMarks;
+            Lines = lines;
+
+            foreach (DocumentLine line in Lines)
+            {
+                line.ContainingPage = this;
+            }
+        }
+
         /// <summary>
         /// Initializes a new instance of DocumentPage. Used by the <see cref="DocumentAnalysisModelFactory"/>.
         /// </summary>
-        internal DocumentPage(DocumentPageKind kind, int pageNumber, float? angle, float? width, float? height, LengthUnit? unit, IReadOnlyList<DocumentSpan> spans, IReadOnlyList<DocumentWord> words, IReadOnlyList<DocumentSelectionMark> selectionMarks, IReadOnlyList<DocumentLine> lines)
+        internal DocumentPage(int pageNumber, float? angle, float? width, float? height, DocumentPageLengthUnit? unit, IReadOnlyList<DocumentSpan> spans, IReadOnlyList<DocumentWord> words, IReadOnlyList<DocumentSelectionMark> selectionMarks, IReadOnlyList<DocumentLine> lines)
         {
-            Kind = kind;
             PageNumber = pageNumber;
             Angle = angle;
             Width = width;
@@ -25,15 +52,18 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Words = words;
             SelectionMarks = selectionMarks;
             Lines = lines;
+
+            foreach (DocumentLine line in Lines)
+            {
+                line.ContainingPage = this;
+            }
         }
 
         /// <summary>
-        /// The unit used by the width, height and <see cref="BoundingPolygon"/> properties. For images, the unit is
+        /// The unit used by the Width, Height and BoundingPolygon properties. For images, the unit is
         /// pixel. For PDF, the unit is inch.
         /// </summary>
-        public LengthUnit? Unit { get; private set; }
-
-        private IReadOnlyList<DocumentImage> Images { get; }
+        public DocumentPageLengthUnit? Unit { get; private set; }
 
         [CodeGenMember("Unit")]
         private V3LengthUnit? UnitPrivate
@@ -43,11 +73,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 if (value == V3LengthUnit.Inch)
                 {
-                    Unit = LengthUnit.Inch;
+                    Unit = DocumentPageLengthUnit.Inch;
                 }
                 else if (value == V3LengthUnit.Pixel)
                 {
-                    Unit = LengthUnit.Pixel;
+                    Unit = DocumentPageLengthUnit.Pixel;
                 }
                 else
                 {

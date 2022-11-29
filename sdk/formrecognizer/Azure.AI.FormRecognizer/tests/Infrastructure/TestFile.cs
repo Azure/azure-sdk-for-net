@@ -29,7 +29,7 @@ namespace Azure.AI.FormRecognizer.Tests
         public const string ReceiptPng = "contoso-allinone.png";
 
         /// <summary>A file with multiple receipts, one per page.</summary>
-        public const string ReceipMultipage = "multipleReceipt.pdf";
+        public const string ReceiptMultipage = "multipleReceipt.pdf";
 
         /// <summary>A three-page receipt file in which the second page is blank.</summary>
         public const string ReceipMultipageWithBlankPage = "multipageReceiptBlankPage.pdf";

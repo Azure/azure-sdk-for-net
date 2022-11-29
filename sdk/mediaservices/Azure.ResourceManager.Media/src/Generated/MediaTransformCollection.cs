@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Media
 {
     /// <summary>
     /// A class representing a collection of <see cref="MediaTransformResource" /> and their operations.
-    /// Each <see cref="MediaTransformResource" /> in the collection will belong to the same instance of <see cref="MediaServiceResource" />.
-    /// To get a <see cref="MediaTransformCollection" /> instance call the GetMediaTransforms method from an instance of <see cref="MediaServiceResource" />.
+    /// Each <see cref="MediaTransformResource" /> in the collection will belong to the same instance of <see cref="MediaServicesAccountResource" />.
+    /// To get a <see cref="MediaTransformCollection" /> instance call the GetMediaTransforms method from an instance of <see cref="MediaServicesAccountResource" />.
     /// </summary>
     public partial class MediaTransformCollection : ArmCollection, IEnumerable<MediaTransformResource>, IAsyncEnumerable<MediaTransformResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Media
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != MediaServiceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, MediaServiceResource.ResourceType), nameof(id));
+            if (id.ResourceType != MediaServicesAccountResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, MediaServicesAccountResource.ResourceType), nameof(id));
         }
 
         /// <summary>

@@ -10,20 +10,30 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    internal partial class DtmfOptionsInternal : IUtf8JsonSerializable
+    public partial class DtmfOptionsInternal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CollectTones))
+            if (Optional.IsDefined(InterToneTimeoutInSeconds))
             {
-                writer.WritePropertyName("collectTones");
-                writer.WriteObjectValue(CollectTones);
+                writer.WritePropertyName("interToneTimeoutInSeconds");
+                writer.WriteNumberValue(InterToneTimeoutInSeconds.Value);
             }
-            if (Optional.IsDefined(DtfmToneProducer))
+            if (Optional.IsDefined(MaxTonesToCollect))
             {
-                writer.WritePropertyName("dtfmToneProducer");
-                writer.WriteObjectValue(DtfmToneProducer);
+                writer.WritePropertyName("maxTonesToCollect");
+                writer.WriteNumberValue(MaxTonesToCollect.Value);
+            }
+            if (Optional.IsCollectionDefined(StopTones))
+            {
+                writer.WritePropertyName("stopTones");
+                writer.WriteStartArray();
+                foreach (var item in StopTones)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
             }
             writer.WriteEndObject();
         }

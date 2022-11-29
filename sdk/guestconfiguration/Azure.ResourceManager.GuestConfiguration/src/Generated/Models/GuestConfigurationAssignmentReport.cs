@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
     /// <summary> Report for the guest configuration assignment. Report contains information such as compliance status, reason, and more. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="id"> ARM resource id of the report for the guest configuration assignment. </param>
         /// <param name="name"> GUID that identifies the guest configuration assignment report under a subscription, resource group. </param>
         /// <param name="properties"> Properties of the guest configuration report. </param>
-        internal GuestConfigurationAssignmentReport(string id, string name, GuestConfigurationAssignmentReportProperties properties)
+        internal GuestConfigurationAssignmentReport(ResourceIdentifier id, string name, GuestConfigurationAssignmentReportProperties properties)
         {
             Id = id;
             Name = name;
@@ -27,7 +29,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         }
 
         /// <summary> ARM resource id of the report for the guest configuration assignment. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
         /// <summary> GUID that identifies the guest configuration assignment report under a subscription, resource group. </summary>
         public string Name { get; }
         /// <summary> Properties of the guest configuration report. </summary>

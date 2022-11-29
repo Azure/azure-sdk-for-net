@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,47 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0 (2022-09-28)
+
+### Features Added
+
+- Add `BlobReferenceInputDataSource.DeltaSnapshotRefreshInterval` to replace the old `StreamingJobOutputData.DeltaSnapshotRefreshRate`.
+- Add `BlobReferenceInputDataSource.FullSnapshotRefreshInterval` to replace the old `StreamingJobOutputData.FullSnapshotRefreshRate`.
+
+### Bugs Fixed
+
+- Fix the issue https://github.com/azure/azure-sdk-for-net/issues/31011:
+    - Add `SqlReferenceInputDataSource .RefreshInterval` to replace the old `StreamingJobOutputData.RefreshRate ` which the old property can't be processed properly.
+    - Add `StreamingJobOutputData.TimeFrame` to replace the old `StreamingJobOutputData.TimeWindow` which the old property can't be processed properly.
+
+## 1.0.0 (2022-09-05)
+
+This is the first stable release of the Stream Analytics Management client library.
+
+### Other Changes
+
+- Optimized the implementation of methods related to tag operations.
+
+## 1.0.0-beta.2 (2022-08-29)
+
+Polishing since last public beta release:
+- Prepended `StreamAnalytics` prefix to all single / simple model names.
+- Corrected the format of all `Guid` type properties / parameters.
+- Corrected the format of all `ResourceIdentifier` type properties / parameters.
+- Corrected the format of all `ResouceType` type properties / parameters.
+- Corrected the format of all `ETag` type properties / parameters.
+- Corrected the format of all `AzureLocation` type properties / parameters.
+- Corrected the format of all binary type properties / parameters.
+- Corrected all acronyms which not follow [.Net Naming Guidelines](https://docs.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
+- Corrected enumeration name by following [Naming Enumerations Rule](https://docs.microsoft.com/dotnet/standard/design-guidelines/names-of-classes-structs-and-interfaces#naming-enumerations).
+- Corrected the suffix of `DateTimeOffset` properties / parameters.
+- Corrected the name of interval / duration properties / parameters which end with units.
+- Optimized the name of some models and functions.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.3.0
 
 ## 1.0.0-beta.1 (2022-07-12)
 

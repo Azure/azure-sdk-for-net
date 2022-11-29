@@ -92,6 +92,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("runConcurrently");
                 writer.WriteObjectValue(RunConcurrently);
             }
+            if (Optional.IsDefined(SourceStagingConcurrency))
+            {
+                writer.WritePropertyName("sourceStagingConcurrency");
+                writer.WriteObjectValue(SourceStagingConcurrency);
+            }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -117,6 +122,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> traceLevel = default;
             Optional<object> continueOnError = default;
             Optional<object> runConcurrently = default;
+            Optional<object> sourceStagingConcurrency = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -260,13 +266,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             runConcurrently = property0.Value.GetObject();
                             continue;
                         }
+                        if (property0.NameEquals("sourceStagingConcurrency"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            sourceStagingConcurrency = property0.Value.GetObject();
+                            continue;
+                        }
                     }
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ExecuteDataFlowActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, dataflow, staging.Value, integrationRuntime.Value, compute.Value, traceLevel.Value, continueOnError.Value, runConcurrently.Value);
+            return new ExecuteDataFlowActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, dataflow, staging.Value, integrationRuntime.Value, compute.Value, traceLevel.Value, continueOnError.Value, runConcurrently.Value, sourceStagingConcurrency.Value);
         }
 
         internal partial class ExecuteDataFlowActivityConverter : JsonConverter<ExecuteDataFlowActivity>

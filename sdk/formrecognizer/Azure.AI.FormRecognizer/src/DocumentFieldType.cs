@@ -15,6 +15,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     public enum DocumentFieldType
     {
         /// <summary>
+        /// Used when the value of the field could not be parsed by the service. The expected
+        /// field type can be checked at <see cref="DocumentField.ExpectedFieldType"/>. Consider
+        /// using <see cref="DocumentField.Content"/> to get a textual representation of the field
+        /// and parsing it manually in this case.
+        /// </summary>
+        Unknown,
+
+        /// <summary>
         /// Used for <see cref="string"/> type.
         /// </summary>
         String,
@@ -59,7 +67,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         Dictionary,
 
         /// <summary>
-        /// Used for <see cref="SelectionMarkState"/> type.
+        /// Used for <see cref="DocumentSelectionMarkState"/> type.
         /// </summary>
         SelectionMark,
 

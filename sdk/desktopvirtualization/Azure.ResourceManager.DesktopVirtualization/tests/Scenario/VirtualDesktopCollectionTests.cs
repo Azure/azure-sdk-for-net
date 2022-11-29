@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
             HostPoolData hostPoolData = new HostPoolData(
                 DefaultLocation,
                 HostPoolType.Pooled,
-                LoadBalancerType.BreadthFirst,
+                HostPoolLoadBalancerType.BreadthFirst,
                 PreferredAppGroupType.Desktop);
 
             ArmOperation<HostPoolResource> opHostPoolCreate = await hostPoolCollection.CreateOrUpdateAsync(
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
                 hostPoolData);
 
             VirtualApplicationGroupCollection agCollection = rg.GetVirtualApplicationGroups();
-            VirtualApplicationGroupData agData = new VirtualApplicationGroupData(DefaultLocation, opHostPoolCreate.Value.Data.Id, ApplicationGroupType.Desktop);
+            VirtualApplicationGroupData agData = new VirtualApplicationGroupData(DefaultLocation, opHostPoolCreate.Value.Data.Id, VirtualApplicationGroupType.Desktop);
 
             ArmOperation<VirtualApplicationGroupResource> opApplicationGroupCreate = await agCollection.CreateOrUpdateAsync(
                 WaitUntil.Completed,

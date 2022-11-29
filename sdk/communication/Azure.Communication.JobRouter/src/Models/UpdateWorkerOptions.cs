@@ -29,13 +29,13 @@ namespace Azure.Communication.JobRouter
         /// <summary>
         /// Unique key that identifies this worker.
         /// </summary>
-        public string WorkerId { get; set; }
+        public string WorkerId { get; }
 
         /// <summary> The total capacity score this worker has to manage multiple concurrent jobs. </summary>
-        public int TotalCapacity { get; set; }
+        public int? TotalCapacity { get; set; }
 
         /// <summary> A flag indicating this worker is open to receive offers or not. </summary>
-        public bool AvailableForOffers { get; set; }
+        public bool? AvailableForOffers { get; set; }
 
         /// <summary>
         /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions.

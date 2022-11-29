@@ -1,36 +1,36 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://adu-sdk-testing.api.adu.microsoft.com/deviceUpdate/sdkinstance/updates/providers/fabrikam/names/vacuum/versions/2022.401.504.6?api-version=2022-07-01-preview",
+      "RequestUri": "https://adu-sdk-testing.api.adu.microsoft.com/deviceUpdate/sdkinstance/updates/providers/fabrikam/names/vacuum/versions/2022.809.131.21?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-f10047560b9c8140b3507629fd1ac07b-0fa2830c64f5c649-00",
-        "User-Agent": "azsdk-net-IoT.DeviceUpdate/1.0.0-alpha.20220701.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "ddc28a275709ab105a1ea14a63408e1e",
+        "traceparent": "00-394b1174a4e56c46960d4464ba9c420b-64b6a8234148284e-00",
+        "User-Agent": "azsdk-net-IoT.DeviceUpdate/1.0.0-alpha.20220901.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "6fcbedf7d65bdbf9780da9b4501f44a0",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "max-age=60, private",
-        "Content-Length": "453",
+        "Content-Length": "456",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 01 Jul 2022 21:48:03 GMT",
-        "ETag": "\u002246deecbf-a19e-41c8-939b-1a8a9ee6fcac\u0022",
-        "mise-correlation-id": "28ea2e79-b906-4a17-8456-adad295eae74",
-        "traceparent": "00-f10047560b9c8140b3507629fd1ac07b-0fa2830c64f5c649-00"
+        "Date": "Thu, 01 Sep 2022 20:26:19 GMT",
+        "ETag": "\u00220bc5c812-4d49-4166-a583-ddc0e0e21efe\u0022",
+        "mise-correlation-id": "6d4249d2-69c8-4bad-9ddb-86a7b86ce2a2",
+        "traceparent": "00-394b1174a4e56c46960d4464ba9c420b-64b6a8234148284e-00"
       },
       "ResponseBody": {
         "updateId": {
           "provider": "fabrikam",
           "name": "vacuum",
-          "version": "2022.401.504.6"
+          "version": "2022.809.131.21"
         },
         "isDeployable": true,
         "updateType": "microsoft/apt:1",
-        "installedCriteria": "apt-update-test-2022.401.504.6",
+        "installedCriteria": "apt-update-test-2022.809.131.21",
         "compatibility": [
           {
             "DeviceManufacturer": "fabrikam",
@@ -39,15 +39,16 @@
         ],
         "scanResult": "Success",
         "manifestVersion": "3.0",
-        "importedDateTime": "2022-04-02T00:06:08.5994525Z",
-        "createdDateTime": "2022-04-02T00:04:07.002276Z",
-        "etag": "\u002246deecbf-a19e-41c8-939b-1a8a9ee6fcac\u0022"
+        "importedDateTime": "2022-08-09T20:33:41.0935063Z",
+        "createdDateTime": "2022-08-09T20:31:22.2677901Z",
+        "etag": "\u00220bc5c812-4d49-4166-a583-ddc0e0e21efe\u0022"
       }
     }
   ],
   "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "DEVICEUPDATE_ACCOUNT_ENDPOINT": "adu-sdk-testing.api.adu.microsoft.com",
     "DEVICEUPDATE_INSTANCE_ID": "sdkinstance",
-    "RandomSeed": "750497876"
+    "RandomSeed": "884961352"
   }
 }

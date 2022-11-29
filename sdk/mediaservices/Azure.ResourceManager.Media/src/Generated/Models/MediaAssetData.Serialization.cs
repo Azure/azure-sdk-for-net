@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Media
             Optional<string> description = default;
             Optional<string> container = default;
             Optional<string> storageAccountName = default;
-            Optional<AssetStorageEncryptionFormat> storageEncryptionFormat = default;
+            Optional<MediaAssetStorageEncryptionFormat> storageEncryptionFormat = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Media
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            storageEncryptionFormat = new AssetStorageEncryptionFormat(property0.Value.GetString());
+                            storageEncryptionFormat = new MediaAssetStorageEncryptionFormat(property0.Value.GetString());
                             continue;
                         }
                     }

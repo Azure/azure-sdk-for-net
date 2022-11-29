@@ -19,6 +19,11 @@ namespace Azure.ResourceManager.Monitor
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Kind))
+            {
+                writer.WritePropertyName("kind");
+                writer.WriteStringValue(Kind.Value.ToString());
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
@@ -38,6 +43,22 @@ namespace Azure.ResourceManager.Monitor
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(DataCollectionEndpointId))
+            {
+                writer.WritePropertyName("dataCollectionEndpointId");
+                writer.WriteStringValue(DataCollectionEndpointId);
+            }
+            if (Optional.IsCollectionDefined(StreamDeclarations))
+            {
+                writer.WritePropertyName("streamDeclarations");
+                writer.WriteStartObject();
+                foreach (var item in StreamDeclarations)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
             if (Optional.IsDefined(DataSources))
             {
@@ -65,6 +86,7 @@ namespace Azure.ResourceManager.Monitor
 
         internal static DataCollectionRuleData DeserializeDataCollectionRuleData(JsonElement element)
         {
+            Optional<DataCollectionRuleResourceKind> kind = default;
             Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -74,12 +96,25 @@ namespace Azure.ResourceManager.Monitor
             Optional<SystemData> systemData = default;
             Optional<string> description = default;
             Optional<string> immutableId = default;
+            Optional<ResourceIdentifier> dataCollectionEndpointId = default;
+            Optional<DataCollectionRuleMetadata> metadata = default;
+            Optional<IDictionary<string, DataStreamDeclaration>> streamDeclarations = default;
             Optional<DataCollectionRuleDataSources> dataSources = default;
             Optional<DataCollectionRuleDestinations> destinations = default;
             Optional<IList<DataFlow>> dataFlows = default;
             Optional<DataCollectionRuleProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("kind"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    kind = new DataCollectionRuleResourceKind(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("etag"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -154,6 +189,41 @@ namespace Azure.ResourceManager.Monitor
                             immutableId = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("dataCollectionEndpointId"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            dataCollectionEndpointId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("metadata"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            metadata = DataCollectionRuleMetadata.DeserializeDataCollectionRuleMetadata(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("streamDeclarations"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            Dictionary<string, DataStreamDeclaration> dictionary = new Dictionary<string, DataStreamDeclaration>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, DataStreamDeclaration.DeserializeDataStreamDeclaration(property1.Value));
+                            }
+                            streamDeclarations = dictionary;
+                            continue;
+                        }
                         if (property0.NameEquals("dataSources"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -203,7 +273,7 @@ namespace Azure.ResourceManager.Monitor
                     continue;
                 }
             }
-            return new DataCollectionRuleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), description.Value, immutableId.Value, dataSources.Value, destinations.Value, Optional.ToList(dataFlows), Optional.ToNullable(provisioningState));
+            return new DataCollectionRuleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(kind), Optional.ToNullable(etag), description.Value, immutableId.Value, dataCollectionEndpointId.Value, metadata.Value, Optional.ToDictionary(streamDeclarations), dataSources.Value, destinations.Value, Optional.ToList(dataFlows), Optional.ToNullable(provisioningState));
         }
     }
 }

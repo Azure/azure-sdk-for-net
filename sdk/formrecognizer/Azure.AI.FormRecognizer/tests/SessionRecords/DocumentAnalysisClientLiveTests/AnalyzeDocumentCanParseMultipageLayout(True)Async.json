@@ -1,169 +1,174 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout:analyze?stringIndexType=utf16CodeUnit\u0026api-version=2022-06-30-preview",
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout:analyze?stringIndexType=utf16CodeUnit\u0026api-version=2022-08-31",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "711607",
         "Content-Type": "application/octet-stream",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-b3aa1848dcb03dbabc4f1c5589b47efe-0af7c293962b3dd9-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "a61db17755aca6025d7d919cc4f63686",
+        "traceparent": "00-7f3b616609df220d8adf78ab5d74b518-c851c73ffa4b7998-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "ecd425bf69f6c9bff25fbe2a0d4e3c95",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "35b34f56-4b11-4e2c-8a6a-006c268d37d6",
+        "apim-request-id": "79b0cde4-9464-4acc-8685-017749f8881d",
         "Content-Length": "0",
-        "Date": "Fri, 20 May 2022 22:29:47 GMT",
-        "Operation-Location": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout/analyzeResults/35b34f56-4b11-4e2c-8a6a-006c268d37d6?api-version=2022-06-30-preview",
+        "Date": "Tue, 16 Aug 2022 05:51:40 GMT",
+        "Operation-Location": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout/analyzeResults/79b0cde4-9464-4acc-8685-017749f8881d?api-version=2022-08-31",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "245"
+        "x-envoy-upstream-service-time": "218"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout/analyzeResults/35b34f56-4b11-4e2c-8a6a-006c268d37d6?api-version=2022-06-30-preview",
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout/analyzeResults/79b0cde4-9464-4acc-8685-017749f8881d?api-version=2022-08-31",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "905b7d828f7d32a066214b1e5e9b9198",
+        "traceparent": "00-7f3b616609df220d8adf78ab5d74b518-5e5d24a58fe1bded-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "fe14eee5fd6d6d1ed2d0c7b04dc3ae88",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "d7cbdaf4-5c32-45d8-91cf-d9cf66396bb0",
+        "apim-request-id": "d5c6d451-98d2-41f8-8331-e32c91b9e01c",
+        "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 20 May 2022 22:29:47 GMT",
+        "Date": "Tue, 16 Aug 2022 05:51:40 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "20"
+        "x-envoy-upstream-service-time": "27"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2022-05-20T22:29:47Z",
-        "lastUpdatedDateTime": "2022-05-20T22:29:47Z"
+        "createdDateTime": "2022-08-16T05:51:40Z",
+        "lastUpdatedDateTime": "2022-08-16T05:51:40Z"
       }
     },
     {
-      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout/analyzeResults/35b34f56-4b11-4e2c-8a6a-006c268d37d6?api-version=2022-06-30-preview",
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout/analyzeResults/79b0cde4-9464-4acc-8685-017749f8881d?api-version=2022-08-31",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "a4acbb3a7274339e707782c0068c8a9d",
+        "traceparent": "00-7f3b616609df220d8adf78ab5d74b518-805737754663ab93-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "ae24902caa4dc2050674ac77975ef005",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "4c950cc7-ec1f-4af4-9882-ec31278497d4",
+        "apim-request-id": "6440356c-5d67-4dbd-a40f-c3ff8bef640d",
+        "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 20 May 2022 22:29:49 GMT",
+        "Date": "Tue, 16 Aug 2022 05:51:41 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "16"
-      },
-      "ResponseBody": {
-        "status": "running",
-        "createdDateTime": "2022-05-20T22:29:47Z",
-        "lastUpdatedDateTime": "2022-05-20T22:29:47Z"
-      }
-    },
-    {
-      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout/analyzeResults/35b34f56-4b11-4e2c-8a6a-006c268d37d6?api-version=2022-06-30-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "6c53c6edac38e78b10ea3f8a0ae348c1",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "76d91ff4-d332-4e7f-b55f-0b1f45b87431",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 20 May 2022 22:29:50 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "15"
-      },
-      "ResponseBody": {
-        "status": "running",
-        "createdDateTime": "2022-05-20T22:29:47Z",
-        "lastUpdatedDateTime": "2022-05-20T22:29:47Z"
-      }
-    },
-    {
-      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout/analyzeResults/35b34f56-4b11-4e2c-8a6a-006c268d37d6?api-version=2022-06-30-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "0861f8ec91491012df2720060de02bda",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "8e151b71-8dce-4d3d-8f90-76ba7fd13018",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 20 May 2022 22:29:51 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
         "x-envoy-upstream-service-time": "23"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2022-05-20T22:29:47Z",
-        "lastUpdatedDateTime": "2022-05-20T22:29:51Z"
+        "createdDateTime": "2022-08-16T05:51:40Z",
+        "lastUpdatedDateTime": "2022-08-16T05:51:40Z"
       }
     },
     {
-      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout/analyzeResults/35b34f56-4b11-4e2c-8a6a-006c268d37d6?api-version=2022-06-30-preview",
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout/analyzeResults/79b0cde4-9464-4acc-8685-017749f8881d?api-version=2022-08-31",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "9831ae9724478e602fc493893313298c",
+        "traceparent": "00-7f3b616609df220d8adf78ab5d74b518-43733f0cbbb58fe2-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "4fd27bd0b03dc23107661a25a20f7c2e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "676eef11-b99e-45a6-a854-46093a25eeee",
+        "apim-request-id": "210f9c59-746e-479b-9927-8fd86f2de8ce",
+        "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 20 May 2022 22:29:53 GMT",
+        "Date": "Tue, 16 Aug 2022 05:51:42 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "38"
+        "x-envoy-upstream-service-time": "25"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2022-08-16T05:51:40Z",
+        "lastUpdatedDateTime": "2022-08-16T05:51:40Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout/analyzeResults/79b0cde4-9464-4acc-8685-017749f8881d?api-version=2022-08-31",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-7f3b616609df220d8adf78ab5d74b518-6b0b75de701b9e19-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "7dfd36b18d293b47e851f8f850a6d573",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "5dad8350-8deb-439c-9c03-4feb6d6a6421",
+        "Content-Length": "106",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 16 Aug 2022 05:51:43 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "22"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2022-08-16T05:51:40Z",
+        "lastUpdatedDateTime": "2022-08-16T05:51:40Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout/analyzeResults/79b0cde4-9464-4acc-8685-017749f8881d?api-version=2022-08-31",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-7f3b616609df220d8adf78ab5d74b518-3fbf00e15c7dcc09-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "d2e0c1e05ef17c4a5f62a7e690df20f6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "41dca958-0683-444f-ba7c-d0c97e66555c",
+        "Content-Length": "45429",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 16 Aug 2022 05:51:44 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "69"
       },
       "ResponseBody": {
         "status": "succeeded",
-        "createdDateTime": "2022-05-20T22:29:47Z",
-        "lastUpdatedDateTime": "2022-05-20T22:29:52Z",
+        "createdDateTime": "2022-08-16T05:51:40Z",
+        "lastUpdatedDateTime": "2022-08-16T05:51:44Z",
         "analyzeResult": {
-          "apiVersion": "2022-06-30-preview",
+          "apiVersion": "2022-08-31",
           "modelId": "prebuilt-layout",
           "stringIndexType": "utf16CodeUnit",
-          "content": "Vendor #:121\nVendor Registration\nContoso Ltd. Conference will be held on May 28-29, 2020 at the Elm Conference Center in Maple City, Massachusetts. The conference has sold out of its 1,500 tickets, with a 400 person waitlist. Vendor applications are being accepted through Feb 28, 2020. Please fill in the form below, and attach a check made out to:\nContoso Ltd. 2345 Dogwood Lane Birch, Kansas 98123\nRates:\nPackage\nIncluded\nPrice\nGold Sponsor\nFull booth Pre-keynote thank you Logo on poster\n$1,500\nFull page ad in program guide\nSilver Sponsor\nFull booth Post-keynote thank you Logo on poster\n$1,200\nHalf page ad in program guide\nBronze Sponsor\nFull booth\n$1,000\nLogo on poster 50% discount on program guide advertisements\nFull Booth\nFull booth 50% discount on program guide advertisements\n$600\nHalf Booth\nFull booth 25% discount on program guide advertisements\n$350\nVendor #:121\nVendor Details: Company Name: Southridge Video Contact: Jamie@southridgevideo.com Preferred Package: Gold Special Requests: N/a",
+          "content": "Vendor #:121\nVendor Registration\nContoso Ltd. Conference will be held on May 28-29, 2020 at the Elm Conference Center in Maple City, Massachusetts. The conference has sold out of its 1,500 tickets, with a 400 person waitlist. Vendor applications are being accepted through Feb 28, 2020. Please fill in the form below, and attach a check made out to:\nContoso Ltd. 2345 Dogwood Lane Birch, Kansas 98123\nRates:\nPackage\nIncluded\nPrice\nGold Sponsor\nFull booth\n$1,500\nPre-keynote thank you\nLogo on poster\n. Full page ad in program guide\nSilver Sponsor\nFull booth\n$1,200\nPost-keynote thank you\nLogo on poster\nHalf page ad in program guide\nBronze Sponsor\nFull booth\n$1,000\n. Logo on poster\n50% discount on program guide advertisements\nFull Booth\n. Full booth\n$600\n. 50% discount on program guide advertisements\nHalf Booth\n. Full booth\n$350\n. 25% discount on program guide advertisements\nVendor #:121\nVendor Details: Company Name: Southridge Video Contact: Jamie@southridgevideo.com Preferred Package: Gold Special Requests: N/a",
           "pages": [
             {
               "pageNumber": 1,
@@ -1523,6 +1528,24 @@
                   }
                 },
                 {
+                  "content": "$1,500",
+                  "polygon": [
+                    5.8328,
+                    4.8977,
+                    6.2829,
+                    4.8977,
+                    6.2829,
+                    5.0468,
+                    5.8328,
+                    5.0468
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 455,
+                    "length": 6
+                  }
+                },
+                {
                   "content": "Pre-keynote",
                   "polygon": [
                     3.214,
@@ -1536,7 +1559,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 455,
+                    "offset": 462,
                     "length": 11
                   }
                 },
@@ -1554,7 +1577,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 467,
+                    "offset": 474,
                     "length": 5
                   }
                 },
@@ -1572,7 +1595,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 473,
+                    "offset": 480,
                     "length": 3
                   }
                 },
@@ -1590,7 +1613,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 477,
+                    "offset": 484,
                     "length": 4
                   }
                 },
@@ -1608,7 +1631,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 482,
+                    "offset": 489,
                     "length": 2
                   }
                 },
@@ -1626,26 +1649,26 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 485,
+                    "offset": 492,
                     "length": 6
                   }
                 },
                 {
-                  "content": "$1,500",
+                  "content": ".",
                   "polygon": [
-                    5.8328,
-                    4.8977,
-                    6.2829,
-                    4.8977,
-                    6.2829,
-                    5.0468,
-                    5.8328,
-                    5.0468
+                    3.0378,
+                    5.5812,
+                    3.039,
+                    5.6425,
+                    2.9339,
+                    5.6444,
+                    2.9328,
+                    5.5832
                   ],
-                  "confidence": 1,
+                  "confidence": 0.672,
                   "span": {
-                    "offset": 492,
-                    "length": 6
+                    "offset": 499,
+                    "length": 1
                   }
                 },
                 {
@@ -1662,7 +1685,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 499,
+                    "offset": 501,
                     "length": 4
                   }
                 },
@@ -1680,7 +1703,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 504,
+                    "offset": 506,
                     "length": 4
                   }
                 },
@@ -1698,7 +1721,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 509,
+                    "offset": 511,
                     "length": 2
                   }
                 },
@@ -1716,7 +1739,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 512,
+                    "offset": 514,
                     "length": 2
                   }
                 },
@@ -1734,7 +1757,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 515,
+                    "offset": 517,
                     "length": 7
                   }
                 },
@@ -1752,7 +1775,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 523,
+                    "offset": 525,
                     "length": 5
                   }
                 },
@@ -1770,7 +1793,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 529,
+                    "offset": 531,
                     "length": 6
                   }
                 },
@@ -1788,7 +1811,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 536,
+                    "offset": 538,
                     "length": 7
                   }
                 },
@@ -1806,7 +1829,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 544,
+                    "offset": 546,
                     "length": 4
                   }
                 },
@@ -1824,8 +1847,26 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 549,
+                    "offset": 551,
                     "length": 5
+                  }
+                },
+                {
+                  "content": "$1,200",
+                  "polygon": [
+                    5.8328,
+                    5.9677,
+                    6.2829,
+                    5.9677,
+                    6.2829,
+                    6.1168,
+                    5.8328,
+                    6.1168
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 557,
+                    "length": 6
                   }
                 },
                 {
@@ -1842,7 +1883,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 555,
+                    "offset": 564,
                     "length": 12
                   }
                 },
@@ -1860,7 +1901,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 568,
+                    "offset": 577,
                     "length": 5
                   }
                 },
@@ -1878,7 +1919,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 574,
+                    "offset": 583,
                     "length": 3
                   }
                 },
@@ -1896,7 +1937,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 578,
+                    "offset": 587,
                     "length": 4
                   }
                 },
@@ -1914,7 +1955,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 583,
+                    "offset": 592,
                     "length": 2
                   }
                 },
@@ -1932,25 +1973,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 586,
-                    "length": 6
-                  }
-                },
-                {
-                  "content": "$1,200",
-                  "polygon": [
-                    5.8328,
-                    5.9677,
-                    6.2829,
-                    5.9677,
-                    6.2829,
-                    6.1168,
-                    5.8328,
-                    6.1168
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 593,
+                    "offset": 595,
                     "length": 6
                   }
                 },
@@ -1968,7 +1991,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 600,
+                    "offset": 602,
                     "length": 4
                   }
                 },
@@ -1986,7 +2009,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 605,
+                    "offset": 607,
                     "length": 4
                   }
                 },
@@ -2004,7 +2027,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 610,
+                    "offset": 612,
                     "length": 2
                   }
                 },
@@ -2022,7 +2045,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 613,
+                    "offset": 615,
                     "length": 2
                   }
                 },
@@ -2040,7 +2063,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 616,
+                    "offset": 618,
                     "length": 7
                   }
                 },
@@ -2058,7 +2081,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 624,
+                    "offset": 626,
                     "length": 5
                   }
                 },
@@ -2076,7 +2099,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 630,
+                    "offset": 632,
                     "length": 6
                   }
                 },
@@ -2094,7 +2117,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 637,
+                    "offset": 639,
                     "length": 7
                   }
                 },
@@ -2112,7 +2135,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 645,
+                    "offset": 647,
                     "length": 4
                   }
                 },
@@ -2130,7 +2153,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 650,
+                    "offset": 652,
                     "length": 5
                   }
                 },
@@ -2148,8 +2171,26 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 656,
+                    "offset": 658,
                     "length": 6
+                  }
+                },
+                {
+                  "content": ".",
+                  "polygon": [
+                    3.0421,
+                    7.0726,
+                    3.0472,
+                    7.1421,
+                    2.9281,
+                    7.1508,
+                    2.9231,
+                    7.0813
+                  ],
+                  "confidence": 0.677,
+                  "span": {
+                    "offset": 665,
+                    "length": 1
                   }
                 },
                 {
@@ -2166,7 +2207,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 663,
+                    "offset": 667,
                     "length": 4
                   }
                 },
@@ -2184,7 +2225,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 668,
+                    "offset": 672,
                     "length": 2
                   }
                 },
@@ -2202,7 +2243,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 671,
+                    "offset": 675,
                     "length": 6
                   }
                 },
@@ -2220,7 +2261,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 678,
+                    "offset": 682,
                     "length": 3
                   }
                 },
@@ -2238,7 +2279,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 682,
+                    "offset": 686,
                     "length": 8
                   }
                 },
@@ -2256,7 +2297,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 691,
+                    "offset": 695,
                     "length": 2
                   }
                 },
@@ -2274,7 +2315,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 694,
+                    "offset": 698,
                     "length": 7
                   }
                 },
@@ -2292,7 +2333,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 702,
+                    "offset": 706,
                     "length": 5
                   }
                 },
@@ -2310,7 +2351,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 708,
+                    "offset": 712,
                     "length": 14
                   }
                 },
@@ -2328,7 +2369,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 723,
+                    "offset": 727,
                     "length": 4
                   }
                 },
@@ -2346,8 +2387,26 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 728,
+                    "offset": 732,
                     "length": 5
+                  }
+                },
+                {
+                  "content": ".",
+                  "polygon": [
+                    3.0466,
+                    7.7153,
+                    3.0475,
+                    7.7894,
+                    2.9138,
+                    7.791,
+                    2.9129,
+                    7.7153
+                  ],
+                  "confidence": 0.85,
+                  "span": {
+                    "offset": 738,
+                    "length": 1
                   }
                 },
                 {
@@ -2364,7 +2423,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 734,
+                    "offset": 740,
                     "length": 4
                   }
                 },
@@ -2382,8 +2441,44 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 739,
+                    "offset": 745,
                     "length": 5
+                  }
+                },
+                {
+                  "content": "$600",
+                  "polygon": [
+                    5.8328,
+                    7.6711,
+                    6.1586,
+                    7.6711,
+                    6.1586,
+                    7.8165,
+                    5.8328,
+                    7.8165
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 751,
+                    "length": 4
+                  }
+                },
+                {
+                  "content": ".",
+                  "polygon": [
+                    3.0421,
+                    7.9218,
+                    3.0436,
+                    7.9887,
+                    2.929,
+                    7.9912,
+                    2.9276,
+                    7.9243
+                  ],
+                  "confidence": 0.693,
+                  "span": {
+                    "offset": 756,
+                    "length": 1
                   }
                 },
                 {
@@ -2400,7 +2495,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 745,
+                    "offset": 758,
                     "length": 3
                   }
                 },
@@ -2418,7 +2513,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 749,
+                    "offset": 762,
                     "length": 8
                   }
                 },
@@ -2436,7 +2531,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 758,
+                    "offset": 771,
                     "length": 2
                   }
                 },
@@ -2454,7 +2549,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 761,
+                    "offset": 774,
                     "length": 7
                   }
                 },
@@ -2472,7 +2567,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 769,
+                    "offset": 782,
                     "length": 5
                   }
                 },
@@ -2490,26 +2585,8 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 775,
+                    "offset": 788,
                     "length": 14
-                  }
-                },
-                {
-                  "content": "$600",
-                  "polygon": [
-                    5.8328,
-                    7.6711,
-                    6.1586,
-                    7.6711,
-                    6.1586,
-                    7.8165,
-                    5.8328,
-                    7.8165
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 790,
-                    "length": 4
                   }
                 },
                 {
@@ -2526,7 +2603,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 795,
+                    "offset": 803,
                     "length": 4
                   }
                 },
@@ -2544,8 +2621,26 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 800,
+                    "offset": 808,
                     "length": 5
+                  }
+                },
+                {
+                  "content": ".",
+                  "polygon": [
+                    3.0332,
+                    8.3494,
+                    3.0356,
+                    8.4022,
+                    2.945,
+                    8.4064,
+                    2.9426,
+                    8.3535
+                  ],
+                  "confidence": 0.68,
+                  "span": {
+                    "offset": 814,
+                    "length": 1
                   }
                 },
                 {
@@ -2562,7 +2657,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 806,
+                    "offset": 816,
                     "length": 4
                   }
                 },
@@ -2580,8 +2675,44 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 811,
+                    "offset": 821,
                     "length": 5
+                  }
+                },
+                {
+                  "content": "$350",
+                  "polygon": [
+                    5.8328,
+                    8.3061,
+                    6.1586,
+                    8.3061,
+                    6.1586,
+                    8.4515,
+                    5.8328,
+                    8.4515
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 827,
+                    "length": 4
+                  }
+                },
+                {
+                  "content": ".",
+                  "polygon": [
+                    3.0377,
+                    8.5565,
+                    3.039,
+                    8.615,
+                    2.9387,
+                    8.6171,
+                    2.9375,
+                    8.5586
+                  ],
+                  "confidence": 0.69,
+                  "span": {
+                    "offset": 832,
+                    "length": 1
                   }
                 },
                 {
@@ -2598,7 +2729,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 817,
+                    "offset": 834,
                     "length": 3
                   }
                 },
@@ -2616,7 +2747,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 821,
+                    "offset": 838,
                     "length": 8
                   }
                 },
@@ -2634,7 +2765,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 830,
+                    "offset": 847,
                     "length": 2
                   }
                 },
@@ -2652,7 +2783,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 833,
+                    "offset": 850,
                     "length": 7
                   }
                 },
@@ -2670,7 +2801,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 841,
+                    "offset": 858,
                     "length": 5
                   }
                 },
@@ -2688,26 +2819,8 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 847,
+                    "offset": 864,
                     "length": 14
-                  }
-                },
-                {
-                  "content": "$350",
-                  "polygon": [
-                    5.8328,
-                    8.3061,
-                    6.1586,
-                    8.3061,
-                    6.1586,
-                    8.4515,
-                    5.8328,
-                    8.4515
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 862,
-                    "length": 4
                   }
                 }
               ],
@@ -2998,6 +3111,25 @@
                   ]
                 },
                 {
+                  "content": "$1,500",
+                  "polygon": [
+                    5.8328,
+                    4.8977,
+                    6.2829,
+                    4.8977,
+                    6.2829,
+                    5.0468,
+                    5.8328,
+                    5.0468
+                  ],
+                  "spans": [
+                    {
+                      "offset": 455,
+                      "length": 6
+                    }
+                  ]
+                },
+                {
                   "content": "Pre-keynote thank you",
                   "polygon": [
                     3.214,
@@ -3011,7 +3143,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 455,
+                      "offset": 462,
                       "length": 21
                     }
                   ]
@@ -3030,27 +3162,27 @@
                   ],
                   "spans": [
                     {
-                      "offset": 477,
+                      "offset": 484,
                       "length": 14
                     }
                   ]
                 },
                 {
-                  "content": "$1,500",
+                  "content": ".",
                   "polygon": [
-                    5.8328,
-                    4.8977,
-                    6.2829,
-                    4.8977,
-                    6.2829,
-                    5.0468,
-                    5.8328,
-                    5.0468
+                    3.0323,
+                    5.543,
+                    3.0371,
+                    5.6719,
+                    2.932,
+                    5.6719,
+                    2.932,
+                    5.5477
                   ],
                   "spans": [
                     {
-                      "offset": 492,
-                      "length": 6
+                      "offset": 499,
+                      "length": 1
                     }
                   ]
                 },
@@ -3068,7 +3200,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 499,
+                      "offset": 501,
                       "length": 29
                     }
                   ]
@@ -3087,7 +3219,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 529,
+                      "offset": 531,
                       "length": 14
                     }
                   ]
@@ -3106,8 +3238,27 @@
                   ],
                   "spans": [
                     {
-                      "offset": 544,
+                      "offset": 546,
                       "length": 10
+                    }
+                  ]
+                },
+                {
+                  "content": "$1,200",
+                  "polygon": [
+                    5.8328,
+                    5.9677,
+                    6.2829,
+                    5.9677,
+                    6.2829,
+                    6.1168,
+                    5.8328,
+                    6.1168
+                  ],
+                  "spans": [
+                    {
+                      "offset": 557,
+                      "length": 6
                     }
                   ]
                 },
@@ -3125,7 +3276,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 555,
+                      "offset": 564,
                       "length": 22
                     }
                   ]
@@ -3144,27 +3295,8 @@
                   ],
                   "spans": [
                     {
-                      "offset": 578,
+                      "offset": 587,
                       "length": 14
-                    }
-                  ]
-                },
-                {
-                  "content": "$1,200",
-                  "polygon": [
-                    5.8328,
-                    5.9677,
-                    6.2829,
-                    5.9677,
-                    6.2829,
-                    6.1168,
-                    5.8328,
-                    6.1168
-                  ],
-                  "spans": [
-                    {
-                      "offset": 593,
-                      "length": 6
                     }
                   ]
                 },
@@ -3182,7 +3314,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 600,
+                      "offset": 602,
                       "length": 29
                     }
                   ]
@@ -3201,7 +3333,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 630,
+                      "offset": 632,
                       "length": 14
                     }
                   ]
@@ -3220,7 +3352,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 645,
+                      "offset": 647,
                       "length": 10
                     }
                   ]
@@ -3239,8 +3371,27 @@
                   ],
                   "spans": [
                     {
-                      "offset": 656,
+                      "offset": 658,
                       "length": 6
+                    }
+                  ]
+                },
+                {
+                  "content": ".",
+                  "polygon": [
+                    3.0419,
+                    7.0707,
+                    3.0514,
+                    7.2044,
+                    2.932,
+                    7.2092,
+                    2.9225,
+                    7.0803
+                  ],
+                  "spans": [
+                    {
+                      "offset": 665,
+                      "length": 1
                     }
                   ]
                 },
@@ -3258,7 +3409,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 663,
+                      "offset": 667,
                       "length": 14
                     }
                   ]
@@ -3277,7 +3428,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 678,
+                      "offset": 682,
                       "length": 29
                     }
                   ]
@@ -3296,7 +3447,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 708,
+                      "offset": 712,
                       "length": 14
                     }
                   ]
@@ -3315,8 +3466,27 @@
                   ],
                   "spans": [
                     {
-                      "offset": 723,
+                      "offset": 727,
                       "length": 10
+                    }
+                  ]
+                },
+                {
+                  "content": ".",
+                  "polygon": [
+                    3.0371,
+                    7.7153,
+                    3.0466,
+                    7.911,
+                    2.9129,
+                    7.9063,
+                    2.9177,
+                    7.7153
+                  ],
+                  "spans": [
+                    {
+                      "offset": 738,
+                      "length": 1
                     }
                   ]
                 },
@@ -3334,8 +3504,46 @@
                   ],
                   "spans": [
                     {
-                      "offset": 734,
+                      "offset": 740,
                       "length": 10
+                    }
+                  ]
+                },
+                {
+                  "content": "$600",
+                  "polygon": [
+                    5.8328,
+                    7.6711,
+                    6.1586,
+                    7.6711,
+                    6.1586,
+                    7.8165,
+                    5.8328,
+                    7.8165
+                  ],
+                  "spans": [
+                    {
+                      "offset": 751,
+                      "length": 4
+                    }
+                  ]
+                },
+                {
+                  "content": ".",
+                  "polygon": [
+                    3.0419,
+                    7.911,
+                    3.0419,
+                    8.0256,
+                    2.932,
+                    8.0256,
+                    2.9272,
+                    7.9158
+                  ],
+                  "spans": [
+                    {
+                      "offset": 756,
+                      "length": 1
                     }
                   ]
                 },
@@ -3353,7 +3561,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 745,
+                      "offset": 758,
                       "length": 29
                     }
                   ]
@@ -3372,27 +3580,8 @@
                   ],
                   "spans": [
                     {
-                      "offset": 775,
+                      "offset": 788,
                       "length": 14
-                    }
-                  ]
-                },
-                {
-                  "content": "$600",
-                  "polygon": [
-                    5.8328,
-                    7.6711,
-                    6.1586,
-                    7.6711,
-                    6.1586,
-                    7.8165,
-                    5.8328,
-                    7.8165
-                  ],
-                  "spans": [
-                    {
-                      "offset": 790,
-                      "length": 4
                     }
                   ]
                 },
@@ -3410,8 +3599,27 @@
                   ],
                   "spans": [
                     {
-                      "offset": 795,
+                      "offset": 803,
                       "length": 10
+                    }
+                  ]
+                },
+                {
+                  "content": ".",
+                  "polygon": [
+                    3.0323,
+                    8.3312,
+                    3.0371,
+                    8.4362,
+                    2.9416,
+                    8.4362,
+                    2.9368,
+                    8.3312
+                  ],
+                  "spans": [
+                    {
+                      "offset": 814,
+                      "length": 1
                     }
                   ]
                 },
@@ -3429,8 +3637,46 @@
                   ],
                   "spans": [
                     {
-                      "offset": 806,
+                      "offset": 816,
                       "length": 10
+                    }
+                  ]
+                },
+                {
+                  "content": "$350",
+                  "polygon": [
+                    5.8328,
+                    8.3061,
+                    6.1586,
+                    8.3061,
+                    6.1586,
+                    8.4515,
+                    5.8328,
+                    8.4515
+                  ],
+                  "spans": [
+                    {
+                      "offset": 827,
+                      "length": 4
+                    }
+                  ]
+                },
+                {
+                  "content": ".",
+                  "polygon": [
+                    3.0323,
+                    8.5269,
+                    3.0371,
+                    8.6415,
+                    2.9368,
+                    8.6463,
+                    2.9368,
+                    8.5317
+                  ],
+                  "spans": [
+                    {
+                      "offset": 832,
+                      "length": 1
                     }
                   ]
                 },
@@ -3448,7 +3694,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 817,
+                      "offset": 834,
                       "length": 29
                     }
                   ]
@@ -3467,27 +3713,8 @@
                   ],
                   "spans": [
                     {
-                      "offset": 847,
+                      "offset": 864,
                       "length": 14
-                    }
-                  ]
-                },
-                {
-                  "content": "$350",
-                  "polygon": [
-                    5.8328,
-                    8.3061,
-                    6.1586,
-                    8.3061,
-                    6.1586,
-                    8.4515,
-                    5.8328,
-                    8.4515
-                  ],
-                  "spans": [
-                    {
-                      "offset": 862,
-                      "length": 4
                     }
                   ]
                 }
@@ -3495,7 +3722,7 @@
               "spans": [
                 {
                   "offset": 0,
-                  "length": 866
+                  "length": 878
                 }
               ],
               "kind": "document"
@@ -3521,7 +3748,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 867,
+                    "offset": 879,
                     "length": 6
                   }
                 },
@@ -3539,7 +3766,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 874,
+                    "offset": 886,
                     "length": 5
                   }
                 },
@@ -3557,7 +3784,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 880,
+                    "offset": 892,
                     "length": 6
                   }
                 },
@@ -3575,7 +3802,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 887,
+                    "offset": 899,
                     "length": 8
                   }
                 },
@@ -3593,7 +3820,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 896,
+                    "offset": 908,
                     "length": 7
                   }
                 },
@@ -3611,7 +3838,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 904,
+                    "offset": 916,
                     "length": 5
                   }
                 },
@@ -3629,7 +3856,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 910,
+                    "offset": 922,
                     "length": 10
                   }
                 },
@@ -3647,7 +3874,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 921,
+                    "offset": 933,
                     "length": 5
                   }
                 },
@@ -3665,7 +3892,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 927,
+                    "offset": 939,
                     "length": 8
                   }
                 },
@@ -3683,7 +3910,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 936,
+                    "offset": 948,
                     "length": 25
                   }
                 },
@@ -3701,7 +3928,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 962,
+                    "offset": 974,
                     "length": 9
                   }
                 },
@@ -3719,7 +3946,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 972,
+                    "offset": 984,
                     "length": 8
                   }
                 },
@@ -3737,7 +3964,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 981,
+                    "offset": 993,
                     "length": 4
                   }
                 },
@@ -3755,7 +3982,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 986,
+                    "offset": 998,
                     "length": 7
                   }
                 },
@@ -3773,7 +4000,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 994,
+                    "offset": 1006,
                     "length": 9
                   }
                 },
@@ -3791,7 +4018,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1004,
+                    "offset": 1016,
                     "length": 3
                   }
                 }
@@ -3811,7 +4038,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 867,
+                      "offset": 879,
                       "length": 12
                     }
                   ]
@@ -3830,7 +4057,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 880,
+                      "offset": 892,
                       "length": 15
                     }
                   ]
@@ -3849,7 +4076,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 896,
+                      "offset": 908,
                       "length": 30
                     }
                   ]
@@ -3868,7 +4095,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 927,
+                      "offset": 939,
                       "length": 34
                     }
                   ]
@@ -3887,7 +4114,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 962,
+                      "offset": 974,
                       "length": 23
                     }
                   ]
@@ -3906,7 +4133,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 986,
+                      "offset": 998,
                       "length": 21
                     }
                   ]
@@ -3914,7 +4141,7 @@
               ],
               "spans": [
                 {
-                  "offset": 867,
+                  "offset": 879,
                   "length": 140
                 }
               ],
@@ -3924,7 +4151,7 @@
           "tables": [
             {
               "rowCount": 17,
-              "columnCount": 3,
+              "columnCount": 4,
               "cells": [
                 {
                   "kind": "columnHeader",
@@ -3935,14 +4162,14 @@
                     {
                       "pageNumber": 1,
                       "polygon": [
-                        0.9971,
-                        4.6503,
-                        2.6098,
-                        4.6437,
-                        2.6098,
-                        4.8557,
-                        0.9971,
-                        4.8557
+                        0.9974,
+                        4.6457,
+                        2.6124,
+                        4.6457,
+                        2.6124,
+                        4.858,
+                        0.9974,
+                        4.858
                       ]
                     }
                   ],
@@ -3957,19 +4184,20 @@
                   "kind": "columnHeader",
                   "rowIndex": 0,
                   "columnIndex": 1,
+                  "columnSpan": 2,
                   "content": "Included",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
                       "polygon": [
-                        2.6098,
-                        4.6437,
-                        5.7409,
-                        4.6437,
-                        5.7409,
-                        4.8557,
-                        2.6098,
-                        4.8557
+                        2.6124,
+                        4.6457,
+                        5.7477,
+                        4.6457,
+                        5.7477,
+                        4.858,
+                        2.6124,
+                        4.858
                       ]
                     }
                   ],
@@ -3983,20 +4211,20 @@
                 {
                   "kind": "columnHeader",
                   "rowIndex": 0,
-                  "columnIndex": 2,
+                  "columnIndex": 3,
                   "content": "Price",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
                       "polygon": [
-                        5.7409,
-                        4.6437,
-                        7.4818,
-                        4.6503,
-                        7.4818,
-                        4.8557,
-                        5.7409,
-                        4.8557
+                        5.7477,
+                        4.6457,
+                        7.4843,
+                        4.6457,
+                        7.4843,
+                        4.858,
+                        5.7477,
+                        4.858
                       ]
                     }
                   ],
@@ -4016,14 +4244,14 @@
                     {
                       "pageNumber": 1,
                       "polygon": [
-                        0.9971,
-                        4.8557,
-                        2.6098,
-                        4.8557,
-                        2.6166,
-                        5.929,
-                        0.9971,
-                        5.9224
+                        0.9974,
+                        4.858,
+                        2.6124,
+                        4.858,
+                        2.6191,
+                        5.9258,
+                        0.9974,
+                        5.9258
                       ]
                     }
                   ],
@@ -4037,83 +4265,242 @@
                 {
                   "rowIndex": 1,
                   "columnIndex": 1,
-                  "rowSpan": 3,
-                  "content": "Full booth Pre-keynote thank you Logo on poster",
+                  "columnSpan": 2,
+                  "content": "Full booth",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
                       "polygon": [
-                        2.6098,
-                        4.8557,
-                        5.7409,
-                        4.8557,
-                        5.7409,
-                        5.5182,
-                        2.6098,
-                        5.5182
+                        2.6124,
+                        4.858,
+                        5.7477,
+                        4.858,
+                        5.7477,
+                        5.0901,
+                        2.6124,
+                        5.0901
                       ]
                     }
                   ],
                   "spans": [
                     {
                       "offset": 444,
-                      "length": 47
+                      "length": 10
                     }
                   ]
                 },
                 {
                   "rowIndex": 1,
-                  "columnIndex": 2,
-                  "rowSpan": 5,
+                  "columnIndex": 3,
                   "content": "$1,500",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
                       "polygon": [
-                        5.7409,
-                        4.8557,
-                        7.4818,
-                        4.8557,
-                        7.4886,
-                        5.9224,
-                        5.7409,
-                        5.929
+                        5.7477,
+                        4.858,
+                        7.4843,
+                        4.858,
+                        7.4843,
+                        5.0901,
+                        5.7477,
+                        5.0901
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 492,
+                      "offset": 455,
                       "length": 6
                     }
                   ]
                 },
                 {
-                  "rowIndex": 4,
+                  "rowIndex": 2,
                   "columnIndex": 1,
-                  "rowSpan": 2,
-                  "content": "Full page ad in program guide",
+                  "columnSpan": 2,
+                  "content": "Pre-keynote thank you",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
                       "polygon": [
-                        2.6098,
-                        5.5182,
-                        5.7409,
-                        5.5182,
-                        5.7409,
-                        5.929,
-                        2.6166,
-                        5.929
+                        2.6124,
+                        5.0901,
+                        5.7477,
+                        5.0901,
+                        5.7477,
+                        5.309,
+                        2.6124,
+                        5.309
+                      ]
+                    }
+                  ],
+                  "spans": [
+                    {
+                      "offset": 462,
+                      "length": 21
+                    }
+                  ]
+                },
+                {
+                  "rowIndex": 2,
+                  "columnIndex": 3,
+                  "content": "",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        5.7477,
+                        5.0901,
+                        7.4843,
+                        5.0901,
+                        7.4843,
+                        5.309,
+                        5.7477,
+                        5.309
+                      ]
+                    }
+                  ],
+                  "spans": []
+                },
+                {
+                  "rowIndex": 3,
+                  "columnIndex": 1,
+                  "columnSpan": 2,
+                  "content": "Logo on poster",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        2.6124,
+                        5.309,
+                        5.7477,
+                        5.309,
+                        5.7477,
+                        5.5146,
+                        2.6124,
+                        5.5146
+                      ]
+                    }
+                  ],
+                  "spans": [
+                    {
+                      "offset": 484,
+                      "length": 14
+                    }
+                  ]
+                },
+                {
+                  "rowIndex": 3,
+                  "columnIndex": 3,
+                  "content": "",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        5.7477,
+                        5.309,
+                        7.4843,
+                        5.309,
+                        7.4911,
+                        5.5146,
+                        5.7477,
+                        5.5146
+                      ]
+                    }
+                  ],
+                  "spans": []
+                },
+                {
+                  "rowIndex": 4,
+                  "columnIndex": 1,
+                  "columnSpan": 2,
+                  "content": ". Full page ad in program guide",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        2.6124,
+                        5.5146,
+                        5.7477,
+                        5.5146,
+                        5.7477,
+                        5.76,
+                        2.6191,
+                        5.7533
                       ]
                     }
                   ],
                   "spans": [
                     {
                       "offset": 499,
-                      "length": 29
+                      "length": 31
                     }
                   ]
+                },
+                {
+                  "rowIndex": 4,
+                  "columnIndex": 3,
+                  "content": "",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        5.7477,
+                        5.5146,
+                        7.4911,
+                        5.5146,
+                        7.4911,
+                        5.7533,
+                        5.7477,
+                        5.76
+                      ]
+                    }
+                  ],
+                  "spans": []
+                },
+                {
+                  "rowIndex": 5,
+                  "columnIndex": 1,
+                  "columnSpan": 2,
+                  "content": "",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        2.6191,
+                        5.7533,
+                        5.7477,
+                        5.76,
+                        5.7477,
+                        5.9258,
+                        2.6191,
+                        5.9258
+                      ]
+                    }
+                  ],
+                  "spans": []
+                },
+                {
+                  "rowIndex": 5,
+                  "columnIndex": 3,
+                  "content": "",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        5.7477,
+                        5.76,
+                        7.4911,
+                        5.7533,
+                        7.4911,
+                        5.9258,
+                        5.7477,
+                        5.9258
+                      ]
+                    }
+                  ],
+                  "spans": []
                 },
                 {
                   "rowIndex": 6,
@@ -4124,20 +4511,20 @@
                     {
                       "pageNumber": 1,
                       "polygon": [
-                        0.9971,
-                        5.9224,
-                        2.6166,
-                        5.929,
-                        2.6166,
-                        6.7838,
-                        0.9971,
-                        6.7838
+                        0.9974,
+                        5.9258,
+                        2.6191,
+                        5.9258,
+                        2.6191,
+                        6.7814,
+                        0.9974,
+                        6.7814
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 529,
+                      "offset": 531,
                       "length": 14
                     }
                   ]
@@ -4145,82 +4532,199 @@
                 {
                   "rowIndex": 6,
                   "columnIndex": 1,
-                  "rowSpan": 3,
-                  "content": "Full booth Post-keynote thank you Logo on poster",
+                  "columnSpan": 2,
+                  "content": "Full booth",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
                       "polygon": [
-                        2.6166,
-                        5.929,
-                        5.7409,
-                        5.929,
-                        5.7409,
-                        6.585,
-                        2.6166,
-                        6.585
+                        2.6191,
+                        5.9258,
+                        5.7477,
+                        5.9258,
+                        5.7477,
+                        6.1579,
+                        2.6191,
+                        6.1579
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 544,
-                      "length": 48
+                      "offset": 546,
+                      "length": 10
                     }
                   ]
                 },
                 {
                   "rowIndex": 6,
-                  "columnIndex": 2,
-                  "rowSpan": 4,
+                  "columnIndex": 3,
                   "content": "$1,200",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
                       "polygon": [
-                        5.7409,
-                        5.929,
-                        7.4886,
-                        5.9224,
-                        7.4886,
-                        6.7838,
-                        5.7409,
-                        6.7838
+                        5.7477,
+                        5.9258,
+                        7.4911,
+                        5.9258,
+                        7.4911,
+                        6.1579,
+                        5.7477,
+                        6.1579
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 593,
+                      "offset": 557,
                       "length": 6
                     }
                   ]
                 },
                 {
-                  "rowIndex": 9,
+                  "rowIndex": 7,
                   "columnIndex": 1,
-                  "content": "Half page ad in program guide",
+                  "columnSpan": 2,
+                  "content": "Post-keynote thank you",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
                       "polygon": [
-                        2.6166,
-                        6.585,
-                        5.7409,
-                        6.585,
-                        5.7409,
-                        6.7838,
-                        2.6166,
-                        6.7838
+                        2.6191,
+                        6.1579,
+                        5.7477,
+                        6.1579,
+                        5.7477,
+                        6.3768,
+                        2.6191,
+                        6.3768
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 600,
+                      "offset": 564,
+                      "length": 22
+                    }
+                  ]
+                },
+                {
+                  "rowIndex": 7,
+                  "columnIndex": 3,
+                  "content": "",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        5.7477,
+                        6.1579,
+                        7.4911,
+                        6.1579,
+                        7.4911,
+                        6.3768,
+                        5.7477,
+                        6.3768
+                      ]
+                    }
+                  ],
+                  "spans": []
+                },
+                {
+                  "rowIndex": 8,
+                  "columnIndex": 1,
+                  "columnSpan": 2,
+                  "content": "Logo on poster",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        2.6191,
+                        6.3768,
+                        5.7477,
+                        6.3768,
+                        5.7477,
+                        6.5824,
+                        2.6191,
+                        6.5824
+                      ]
+                    }
+                  ],
+                  "spans": [
+                    {
+                      "offset": 587,
+                      "length": 14
+                    }
+                  ]
+                },
+                {
+                  "rowIndex": 8,
+                  "columnIndex": 3,
+                  "content": "",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        5.7477,
+                        6.3768,
+                        7.4911,
+                        6.3768,
+                        7.4911,
+                        6.5824,
+                        5.7477,
+                        6.5824
+                      ]
+                    }
+                  ],
+                  "spans": []
+                },
+                {
+                  "rowIndex": 9,
+                  "columnIndex": 1,
+                  "columnSpan": 2,
+                  "content": "Half page ad in program guide",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        2.6191,
+                        6.5824,
+                        5.7477,
+                        6.5824,
+                        5.7477,
+                        6.7814,
+                        2.6191,
+                        6.7814
+                      ]
+                    }
+                  ],
+                  "spans": [
+                    {
+                      "offset": 602,
                       "length": 29
                     }
                   ]
+                },
+                {
+                  "rowIndex": 9,
+                  "columnIndex": 3,
+                  "content": "",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        5.7477,
+                        6.5824,
+                        7.4911,
+                        6.5824,
+                        7.4911,
+                        6.7814,
+                        5.7477,
+                        6.7814
+                      ]
+                    }
+                  ],
+                  "spans": []
                 },
                 {
                   "rowIndex": 10,
@@ -4231,20 +4735,20 @@
                     {
                       "pageNumber": 1,
                       "polygon": [
-                        0.9971,
-                        6.7838,
-                        2.6166,
-                        6.7838,
-                        2.6166,
-                        7.6318,
-                        0.9971,
-                        7.6318
+                        0.9974,
+                        6.7814,
+                        2.6191,
+                        6.7814,
+                        2.6191,
+                        7.6303,
+                        0.9974,
+                        7.6303
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 630,
+                      "offset": 632,
                       "length": 14
                     }
                   ]
@@ -4252,51 +4756,52 @@
                 {
                   "rowIndex": 10,
                   "columnIndex": 1,
+                  "columnSpan": 2,
                   "content": "Full booth",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
                       "polygon": [
-                        2.6166,
-                        6.7838,
-                        5.7409,
-                        6.7838,
-                        5.7409,
-                        7.0223,
-                        2.6166,
-                        7.0223
+                        2.6191,
+                        6.7814,
+                        5.7477,
+                        6.7814,
+                        5.7477,
+                        7.0201,
+                        2.6191,
+                        7.0201
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 645,
+                      "offset": 647,
                       "length": 10
                     }
                   ]
                 },
                 {
                   "rowIndex": 10,
-                  "columnIndex": 2,
+                  "columnIndex": 3,
                   "content": "$1,000",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
                       "polygon": [
-                        5.7409,
-                        6.7838,
-                        7.4886,
-                        6.7838,
-                        7.4886,
-                        7.0157,
-                        5.7409,
-                        7.0223
+                        5.7477,
+                        6.7814,
+                        7.4911,
+                        6.7814,
+                        7.4911,
+                        7.0201,
+                        5.7477,
+                        7.0201
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 656,
+                      "offset": 658,
                       "length": 6
                     }
                   ]
@@ -4304,47 +4809,94 @@
                 {
                   "rowIndex": 11,
                   "columnIndex": 1,
-                  "rowSpan": 2,
-                  "content": "Logo on poster 50% discount on program guide advertisements",
+                  "columnSpan": 2,
+                  "content": ". Logo on poster",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
                       "polygon": [
-                        2.6166,
-                        7.0223,
-                        5.7409,
-                        7.0223,
-                        5.7409,
-                        7.6318,
-                        2.6166,
-                        7.6318
+                        2.6191,
+                        7.0201,
+                        5.7477,
+                        7.0201,
+                        5.7477,
+                        7.2324,
+                        2.6191,
+                        7.2257
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 663,
-                      "length": 59
+                      "offset": 665,
+                      "length": 16
                     }
                   ]
                 },
                 {
                   "rowIndex": 11,
-                  "columnIndex": 2,
-                  "rowSpan": 2,
+                  "columnIndex": 3,
                   "content": "",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
                       "polygon": [
-                        5.7409,
-                        7.0223,
-                        7.4886,
-                        7.0157,
-                        7.4886,
-                        7.6318,
-                        5.7409,
-                        7.6318
+                        5.7477,
+                        7.0201,
+                        7.4911,
+                        7.0201,
+                        7.4911,
+                        7.2324,
+                        5.7477,
+                        7.2324
+                      ]
+                    }
+                  ],
+                  "spans": []
+                },
+                {
+                  "rowIndex": 12,
+                  "columnIndex": 1,
+                  "columnSpan": 2,
+                  "content": "50% discount on program guide advertisements",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        2.6191,
+                        7.2257,
+                        5.7477,
+                        7.2324,
+                        5.7477,
+                        7.6303,
+                        2.6191,
+                        7.6303
+                      ]
+                    }
+                  ],
+                  "spans": [
+                    {
+                      "offset": 682,
+                      "length": 44
+                    }
+                  ]
+                },
+                {
+                  "rowIndex": 12,
+                  "columnIndex": 3,
+                  "content": "",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        5.7477,
+                        7.2324,
+                        7.4911,
+                        7.2324,
+                        7.4911,
+                        7.6303,
+                        5.7477,
+                        7.6303
                       ]
                     }
                   ],
@@ -4359,20 +4911,20 @@
                     {
                       "pageNumber": 1,
                       "polygon": [
-                        0.9971,
-                        7.6318,
-                        2.6166,
-                        7.6318,
-                        2.6166,
-                        8.2679,
-                        0.9971,
-                        8.2679
+                        0.9974,
+                        7.6303,
+                        2.6191,
+                        7.6303,
+                        2.6191,
+                        8.267,
+                        0.9974,
+                        8.267
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 723,
+                      "offset": 727,
                       "length": 10
                     }
                   ]
@@ -4380,56 +4932,103 @@
                 {
                   "rowIndex": 13,
                   "columnIndex": 1,
-                  "rowSpan": 2,
-                  "content": "Full booth 50% discount on program guide advertisements",
+                  "columnSpan": 2,
+                  "content": ". Full booth",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
                       "polygon": [
-                        2.6166,
-                        7.6318,
-                        5.7409,
-                        7.6318,
-                        5.7341,
-                        8.2679,
-                        2.6166,
-                        8.2679
+                        2.6191,
+                        7.6303,
+                        5.7477,
+                        7.6303,
+                        5.7477,
+                        7.8625,
+                        2.6191,
+                        7.8625
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 734,
-                      "length": 55
+                      "offset": 738,
+                      "length": 12
                     }
                   ]
                 },
                 {
                   "rowIndex": 13,
-                  "columnIndex": 2,
-                  "rowSpan": 2,
+                  "columnIndex": 3,
                   "content": "$600",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
                       "polygon": [
-                        5.7409,
-                        7.6318,
-                        7.4886,
-                        7.6318,
-                        7.4886,
-                        8.2679,
-                        5.7341,
-                        8.2679
+                        5.7477,
+                        7.6303,
+                        7.4911,
+                        7.6303,
+                        7.4911,
+                        7.8625,
+                        5.7477,
+                        7.8625
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 790,
+                      "offset": 751,
                       "length": 4
                     }
                   ]
+                },
+                {
+                  "rowIndex": 14,
+                  "columnIndex": 1,
+                  "columnSpan": 2,
+                  "content": ". 50% discount on program guide advertisements",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        2.6191,
+                        7.8625,
+                        5.7477,
+                        7.8625,
+                        5.7477,
+                        8.267,
+                        2.6191,
+                        8.267
+                      ]
+                    }
+                  ],
+                  "spans": [
+                    {
+                      "offset": 756,
+                      "length": 46
+                    }
+                  ]
+                },
+                {
+                  "rowIndex": 14,
+                  "columnIndex": 3,
+                  "content": "",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        5.7477,
+                        7.8625,
+                        7.4911,
+                        7.8625,
+                        7.4911,
+                        8.267,
+                        5.7477,
+                        8.267
+                      ]
+                    }
+                  ],
+                  "spans": []
                 },
                 {
                   "rowIndex": 15,
@@ -4440,20 +5039,20 @@
                     {
                       "pageNumber": 1,
                       "polygon": [
-                        0.9971,
-                        8.2679,
-                        2.6166,
-                        8.2679,
-                        2.6166,
-                        8.904,
-                        0.9971,
-                        8.8974
+                        0.9974,
+                        8.267,
+                        2.6191,
+                        8.267,
+                        2.6191,
+                        8.9038,
+                        0.9974,
+                        8.8971
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 795,
+                      "offset": 803,
                       "length": 10
                     }
                   ]
@@ -4461,77 +5060,124 @@
                 {
                   "rowIndex": 15,
                   "columnIndex": 1,
-                  "rowSpan": 2,
-                  "content": "Full booth 25% discount on program guide advertisements",
+                  "columnSpan": 2,
+                  "content": ". Full booth",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
                       "polygon": [
-                        2.6166,
-                        8.2679,
-                        5.7341,
-                        8.2679,
-                        5.7341,
-                        8.904,
-                        2.6166,
-                        8.904
+                        2.6191,
+                        8.267,
+                        5.7477,
+                        8.267,
+                        5.7477,
+                        8.4992,
+                        2.6191,
+                        8.4926
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 806,
-                      "length": 55
+                      "offset": 814,
+                      "length": 12
                     }
                   ]
                 },
                 {
                   "rowIndex": 15,
-                  "columnIndex": 2,
-                  "rowSpan": 2,
+                  "columnIndex": 3,
                   "content": "$350",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
                       "polygon": [
-                        5.7341,
-                        8.2679,
-                        7.4886,
-                        8.2679,
-                        7.4886,
-                        8.904,
-                        5.7341,
-                        8.904
+                        5.7477,
+                        8.267,
+                        7.4911,
+                        8.267,
+                        7.4911,
+                        8.4992,
+                        5.7477,
+                        8.4992
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 862,
+                      "offset": 827,
                       "length": 4
                     }
                   ]
+                },
+                {
+                  "rowIndex": 16,
+                  "columnIndex": 1,
+                  "columnSpan": 2,
+                  "content": ". 25% discount on program guide advertisements",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        2.6191,
+                        8.4926,
+                        5.7477,
+                        8.4992,
+                        5.7477,
+                        8.9038,
+                        2.6191,
+                        8.9038
+                      ]
+                    }
+                  ],
+                  "spans": [
+                    {
+                      "offset": 832,
+                      "length": 46
+                    }
+                  ]
+                },
+                {
+                  "rowIndex": 16,
+                  "columnIndex": 3,
+                  "content": "",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        5.7477,
+                        8.4992,
+                        7.4911,
+                        8.4992,
+                        7.4911,
+                        8.9038,
+                        5.7477,
+                        8.9038
+                      ]
+                    }
+                  ],
+                  "spans": []
                 }
               ],
               "boundingRegions": [
                 {
                   "pageNumber": 1,
                   "polygon": [
-                    0.992,
-                    4.6405,
-                    7.4968,
-                    4.6393,
-                    7.4975,
-                    8.9168,
-                    0.9924,
-                    8.9192
+                    0.9933,
+                    4.6352,
+                    7.5073,
+                    4.6402,
+                    7.506,
+                    8.9222,
+                    0.9915,
+                    8.9171
                   ]
                 }
               ],
               "spans": [
                 {
                   "offset": 408,
-                  "length": 458
+                  "length": 470
                 }
               ]
             }
@@ -4559,7 +5205,6 @@
                   ]
                 }
               ],
-              "role": "pageHeader",
               "content": "Vendor #:121"
             },
             {
@@ -4670,14 +5315,14 @@
                 {
                   "pageNumber": 1,
                   "polygon": [
-                    0.9971,
-                    4.6503,
-                    2.6098,
-                    4.6437,
-                    2.6098,
-                    4.8557,
-                    0.9971,
-                    4.8557
+                    0.9974,
+                    4.6457,
+                    2.6124,
+                    4.6457,
+                    2.6124,
+                    4.858,
+                    0.9974,
+                    4.858
                   ]
                 }
               ],
@@ -4694,14 +5339,14 @@
                 {
                   "pageNumber": 1,
                   "polygon": [
-                    2.6098,
-                    4.6437,
-                    5.7409,
-                    4.6437,
-                    5.7409,
-                    4.8557,
-                    2.6098,
-                    4.8557
+                    2.6124,
+                    4.6457,
+                    5.7477,
+                    4.6457,
+                    5.7477,
+                    4.858,
+                    2.6124,
+                    4.858
                   ]
                 }
               ],
@@ -4718,14 +5363,14 @@
                 {
                   "pageNumber": 1,
                   "polygon": [
-                    5.7409,
-                    4.6437,
-                    7.4818,
-                    4.6503,
-                    7.4818,
-                    4.8557,
-                    5.7409,
-                    4.8557
+                    5.7477,
+                    4.6457,
+                    7.4843,
+                    4.6457,
+                    7.4843,
+                    4.858,
+                    5.7477,
+                    4.858
                   ]
                 }
               ],
@@ -4742,14 +5387,14 @@
                 {
                   "pageNumber": 1,
                   "polygon": [
-                    0.9971,
-                    4.8557,
-                    2.6098,
-                    4.8557,
-                    2.6166,
-                    5.929,
-                    0.9971,
-                    5.9224
+                    0.9974,
+                    4.858,
+                    2.6124,
+                    4.858,
+                    2.6191,
+                    5.9258,
+                    0.9974,
+                    5.9258
                   ]
                 }
               ],
@@ -4759,198 +5404,6 @@
               "spans": [
                 {
                   "offset": 444,
-                  "length": 47
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    2.6098,
-                    4.8557,
-                    5.7409,
-                    4.8557,
-                    5.7409,
-                    5.5182,
-                    2.6098,
-                    5.5182
-                  ]
-                }
-              ],
-              "content": "Full booth Pre-keynote thank you Logo on poster"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 492,
-                  "length": 6
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    5.7409,
-                    4.8557,
-                    7.4818,
-                    4.8557,
-                    7.4886,
-                    5.9224,
-                    5.7409,
-                    5.929
-                  ]
-                }
-              ],
-              "content": "$1,500"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 499,
-                  "length": 29
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    2.6098,
-                    5.5182,
-                    5.7409,
-                    5.5182,
-                    5.7409,
-                    5.929,
-                    2.6166,
-                    5.929
-                  ]
-                }
-              ],
-              "content": "Full page ad in program guide"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 529,
-                  "length": 14
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    0.9971,
-                    5.9224,
-                    2.6166,
-                    5.929,
-                    2.6166,
-                    6.7838,
-                    0.9971,
-                    6.7838
-                  ]
-                }
-              ],
-              "content": "Silver Sponsor"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 544,
-                  "length": 48
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    2.6166,
-                    5.929,
-                    5.7409,
-                    5.929,
-                    5.7409,
-                    6.585,
-                    2.6166,
-                    6.585
-                  ]
-                }
-              ],
-              "content": "Full booth Post-keynote thank you Logo on poster"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 593,
-                  "length": 6
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    5.7409,
-                    5.929,
-                    7.4886,
-                    5.9224,
-                    7.4886,
-                    6.7838,
-                    5.7409,
-                    6.7838
-                  ]
-                }
-              ],
-              "content": "$1,200"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 600,
-                  "length": 29
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    2.6166,
-                    6.585,
-                    5.7409,
-                    6.585,
-                    5.7409,
-                    6.7838,
-                    2.6166,
-                    6.7838
-                  ]
-                }
-              ],
-              "content": "Half page ad in program guide"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 630,
-                  "length": 14
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    0.9971,
-                    6.7838,
-                    2.6166,
-                    6.7838,
-                    2.6166,
-                    7.6318,
-                    0.9971,
-                    7.6318
-                  ]
-                }
-              ],
-              "content": "Bronze Sponsor"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 645,
                   "length": 10
                 }
               ],
@@ -4958,14 +5411,14 @@
                 {
                   "pageNumber": 1,
                   "polygon": [
-                    2.6166,
-                    6.7838,
-                    5.7409,
-                    6.7838,
-                    5.7409,
-                    7.0223,
-                    2.6166,
-                    7.0223
+                    2.6124,
+                    4.858,
+                    5.7477,
+                    4.858,
+                    5.7477,
+                    5.0901,
+                    2.6124,
+                    5.0901
                   ]
                 }
               ],
@@ -4974,7 +5427,7 @@
             {
               "spans": [
                 {
-                  "offset": 656,
+                  "offset": 455,
                   "length": 6
                 }
               ],
@@ -4982,14 +5435,302 @@
                 {
                   "pageNumber": 1,
                   "polygon": [
-                    5.7409,
-                    6.7838,
-                    7.4886,
-                    6.7838,
-                    7.4886,
-                    7.0157,
-                    5.7409,
-                    7.0223
+                    5.7477,
+                    4.858,
+                    7.4843,
+                    4.858,
+                    7.4843,
+                    5.0901,
+                    5.7477,
+                    5.0901
+                  ]
+                }
+              ],
+              "content": "$1,500"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 462,
+                  "length": 21
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    2.6124,
+                    5.0901,
+                    5.7477,
+                    5.0901,
+                    5.7477,
+                    5.309,
+                    2.6124,
+                    5.309
+                  ]
+                }
+              ],
+              "content": "Pre-keynote thank you"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 484,
+                  "length": 14
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    2.6124,
+                    5.309,
+                    5.7477,
+                    5.309,
+                    5.7477,
+                    5.5146,
+                    2.6124,
+                    5.5146
+                  ]
+                }
+              ],
+              "content": "Logo on poster"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 499,
+                  "length": 31
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    2.6124,
+                    5.5146,
+                    5.7477,
+                    5.5146,
+                    5.7477,
+                    5.76,
+                    2.6191,
+                    5.7533
+                  ]
+                }
+              ],
+              "content": ". Full page ad in program guide"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 531,
+                  "length": 14
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    0.9974,
+                    5.9258,
+                    2.6191,
+                    5.9258,
+                    2.6191,
+                    6.7814,
+                    0.9974,
+                    6.7814
+                  ]
+                }
+              ],
+              "content": "Silver Sponsor"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 546,
+                  "length": 10
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    2.6191,
+                    5.9258,
+                    5.7477,
+                    5.9258,
+                    5.7477,
+                    6.1579,
+                    2.6191,
+                    6.1579
+                  ]
+                }
+              ],
+              "content": "Full booth"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 557,
+                  "length": 6
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    5.7477,
+                    5.9258,
+                    7.4911,
+                    5.9258,
+                    7.4911,
+                    6.1579,
+                    5.7477,
+                    6.1579
+                  ]
+                }
+              ],
+              "content": "$1,200"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 564,
+                  "length": 22
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    2.6191,
+                    6.1579,
+                    5.7477,
+                    6.1579,
+                    5.7477,
+                    6.3768,
+                    2.6191,
+                    6.3768
+                  ]
+                }
+              ],
+              "content": "Post-keynote thank you"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 587,
+                  "length": 14
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    2.6191,
+                    6.3768,
+                    5.7477,
+                    6.3768,
+                    5.7477,
+                    6.5824,
+                    2.6191,
+                    6.5824
+                  ]
+                }
+              ],
+              "content": "Logo on poster"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 602,
+                  "length": 29
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    2.6191,
+                    6.5824,
+                    5.7477,
+                    6.5824,
+                    5.7477,
+                    6.7814,
+                    2.6191,
+                    6.7814
+                  ]
+                }
+              ],
+              "content": "Half page ad in program guide"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 632,
+                  "length": 14
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    0.9974,
+                    6.7814,
+                    2.6191,
+                    6.7814,
+                    2.6191,
+                    7.6303,
+                    0.9974,
+                    7.6303
+                  ]
+                }
+              ],
+              "content": "Bronze Sponsor"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 647,
+                  "length": 10
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    2.6191,
+                    6.7814,
+                    5.7477,
+                    6.7814,
+                    5.7477,
+                    7.0201,
+                    2.6191,
+                    7.0201
+                  ]
+                }
+              ],
+              "content": "Full booth"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 658,
+                  "length": 6
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    5.7477,
+                    6.7814,
+                    7.4911,
+                    6.7814,
+                    7.4911,
+                    7.0201,
+                    5.7477,
+                    7.0201
                   ]
                 }
               ],
@@ -4998,31 +5739,55 @@
             {
               "spans": [
                 {
-                  "offset": 663,
-                  "length": 59
+                  "offset": 665,
+                  "length": 16
                 }
               ],
               "boundingRegions": [
                 {
                   "pageNumber": 1,
                   "polygon": [
-                    2.6166,
-                    7.0223,
-                    5.7409,
-                    7.0223,
-                    5.7409,
-                    7.6318,
-                    2.6166,
-                    7.6318
+                    2.6191,
+                    7.0201,
+                    5.7477,
+                    7.0201,
+                    5.7477,
+                    7.2324,
+                    2.6191,
+                    7.2257
                   ]
                 }
               ],
-              "content": "Logo on poster 50% discount on program guide advertisements"
+              "content": ". Logo on poster"
             },
             {
               "spans": [
                 {
-                  "offset": 723,
+                  "offset": 682,
+                  "length": 44
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    2.6191,
+                    7.2257,
+                    5.7477,
+                    7.2324,
+                    5.7477,
+                    7.6303,
+                    2.6191,
+                    7.6303
+                  ]
+                }
+              ],
+              "content": "50% discount on program guide advertisements"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 727,
                   "length": 10
                 }
               ],
@@ -5030,14 +5795,14 @@
                 {
                   "pageNumber": 1,
                   "polygon": [
-                    0.9971,
-                    7.6318,
-                    2.6166,
-                    7.6318,
-                    2.6166,
-                    8.2679,
-                    0.9971,
-                    8.2679
+                    0.9974,
+                    7.6303,
+                    2.6191,
+                    7.6303,
+                    2.6191,
+                    8.267,
+                    0.9974,
+                    8.267
                   ]
                 }
               ],
@@ -5046,31 +5811,31 @@
             {
               "spans": [
                 {
-                  "offset": 734,
-                  "length": 55
+                  "offset": 738,
+                  "length": 12
                 }
               ],
               "boundingRegions": [
                 {
                   "pageNumber": 1,
                   "polygon": [
-                    2.6166,
-                    7.6318,
-                    5.7409,
-                    7.6318,
-                    5.7341,
-                    8.2679,
-                    2.6166,
-                    8.2679
+                    2.6191,
+                    7.6303,
+                    5.7477,
+                    7.6303,
+                    5.7477,
+                    7.8625,
+                    2.6191,
+                    7.8625
                   ]
                 }
               ],
-              "content": "Full booth 50% discount on program guide advertisements"
+              "content": ". Full booth"
             },
             {
               "spans": [
                 {
-                  "offset": 790,
+                  "offset": 751,
                   "length": 4
                 }
               ],
@@ -5078,14 +5843,14 @@
                 {
                   "pageNumber": 1,
                   "polygon": [
-                    5.7409,
-                    7.6318,
-                    7.4886,
-                    7.6318,
-                    7.4886,
-                    8.2679,
-                    5.7341,
-                    8.2679
+                    5.7477,
+                    7.6303,
+                    7.4911,
+                    7.6303,
+                    7.4911,
+                    7.8625,
+                    5.7477,
+                    7.8625
                   ]
                 }
               ],
@@ -5094,7 +5859,31 @@
             {
               "spans": [
                 {
-                  "offset": 795,
+                  "offset": 756,
+                  "length": 46
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    2.6191,
+                    7.8625,
+                    5.7477,
+                    7.8625,
+                    5.7477,
+                    8.267,
+                    2.6191,
+                    8.267
+                  ]
+                }
+              ],
+              "content": ". 50% discount on program guide advertisements"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 803,
                   "length": 10
                 }
               ],
@@ -5102,14 +5891,14 @@
                 {
                   "pageNumber": 1,
                   "polygon": [
-                    0.9971,
-                    8.2679,
-                    2.6166,
-                    8.2679,
-                    2.6166,
-                    8.904,
-                    0.9971,
-                    8.8974
+                    0.9974,
+                    8.267,
+                    2.6191,
+                    8.267,
+                    2.6191,
+                    8.9038,
+                    0.9974,
+                    8.8971
                   ]
                 }
               ],
@@ -5118,31 +5907,31 @@
             {
               "spans": [
                 {
-                  "offset": 806,
-                  "length": 55
+                  "offset": 814,
+                  "length": 12
                 }
               ],
               "boundingRegions": [
                 {
                   "pageNumber": 1,
                   "polygon": [
-                    2.6166,
-                    8.2679,
-                    5.7341,
-                    8.2679,
-                    5.7341,
-                    8.904,
-                    2.6166,
-                    8.904
+                    2.6191,
+                    8.267,
+                    5.7477,
+                    8.267,
+                    5.7477,
+                    8.4992,
+                    2.6191,
+                    8.4926
                   ]
                 }
               ],
-              "content": "Full booth 25% discount on program guide advertisements"
+              "content": ". Full booth"
             },
             {
               "spans": [
                 {
-                  "offset": 862,
+                  "offset": 827,
                   "length": 4
                 }
               ],
@@ -5150,14 +5939,14 @@
                 {
                   "pageNumber": 1,
                   "polygon": [
-                    5.7341,
-                    8.2679,
-                    7.4886,
-                    8.2679,
-                    7.4886,
-                    8.904,
-                    5.7341,
-                    8.904
+                    5.7477,
+                    8.267,
+                    7.4911,
+                    8.267,
+                    7.4911,
+                    8.4992,
+                    5.7477,
+                    8.4992
                   ]
                 }
               ],
@@ -5166,7 +5955,31 @@
             {
               "spans": [
                 {
-                  "offset": 867,
+                  "offset": 832,
+                  "length": 46
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    2.6191,
+                    8.4926,
+                    5.7477,
+                    8.4992,
+                    5.7477,
+                    8.9038,
+                    2.6191,
+                    8.9038
+                  ]
+                }
+              ],
+              "content": ". 25% discount on program guide advertisements"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 879,
                   "length": 12
                 }
               ],
@@ -5190,7 +6003,7 @@
             {
               "spans": [
                 {
-                  "offset": 880,
+                  "offset": 892,
                   "length": 127
                 }
               ],
@@ -5219,7 +6032,7 @@
   ],
   "Variables": {
     "FORM_RECOGNIZER_API_KEY": "Sanitized",
-    "FORM_RECOGNIZER_ENDPOINT": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/",
-    "RandomSeed": "2057874390"
+    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/",
+    "RandomSeed": "1005380087"
   }
 }

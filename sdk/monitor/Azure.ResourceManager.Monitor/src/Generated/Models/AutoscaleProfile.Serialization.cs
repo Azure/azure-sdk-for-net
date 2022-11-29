@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Monitor.Models
         {
             string name = default;
             MonitorScaleCapacity capacity = default;
-            IList<ScaleRule> rules = default;
+            IList<AutoscaleRule> rules = default;
             Optional<MonitorTimeWindow> fixedDate = default;
             Optional<MonitorRecurrence> recurrence = default;
             foreach (var property in element.EnumerateObject())
@@ -61,10 +61,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("rules"))
                 {
-                    List<ScaleRule> array = new List<ScaleRule>();
+                    List<AutoscaleRule> array = new List<AutoscaleRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScaleRule.DeserializeScaleRule(item));
+                        array.Add(AutoscaleRule.DeserializeAutoscaleRule(item));
                     }
                     rules = array;
                     continue;

@@ -13,6 +13,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
+using Microsoft.Azure.Amqp;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -268,6 +269,23 @@ namespace Azure.Messaging.ServiceBus
                 DiagnosticScope.ActivityKind.Client);
 
             scope.SetMessageData(messages);
+
+            return scope;
+        }
+
+        private DiagnosticScope CreateDiagnosticScope(ServiceBusMessageBatch messageBatch, string activityName)
+        {
+            // Messages in a batch have already been instrumented when
+            // they are added to the batch so we don't need to instrument them here.
+            var messages = messageBatch.AsReadOnly<AmqpMessage>();
+
+            // create a new scope for the specified operation
+            DiagnosticScope scope = _scopeFactory.CreateScope(
+                activityName,
+                DiagnosticScope.ActivityKind.Client);
+
+            scope.SetMessageData(messages);
+
             return scope;
         }
 
@@ -357,7 +375,7 @@ namespace Azure.Messaging.ServiceBus
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.SendMessageStart(Identifier, messageBatch.Count);
             using DiagnosticScope scope = CreateDiagnosticScope(
-                messageBatch.AsReadOnly<ServiceBusMessage>(),
+                messageBatch,
                 DiagnosticProperty.SendActivityName);
             scope.Start();
 

@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> family = default;
             Optional<int> capacity = default;
             Optional<AppServiceSkuCapacity> skuCapacity = default;
-            Optional<IList<string>> locations = default;
-            Optional<IList<Capability>> capabilities = default;
+            Optional<IList<AzureLocation>> locations = default;
+            Optional<IList<AppServiceSkuCapability>> capabilities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -128,10 +128,10 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<AzureLocation> array = new List<AzureLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new AzureLocation(item.GetString()));
                     }
                     locations = array;
                     continue;
@@ -143,10 +143,10 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Capability> array = new List<Capability>();
+                    List<AppServiceSkuCapability> array = new List<AppServiceSkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Capability.DeserializeCapability(item));
+                        array.Add(AppServiceSkuCapability.DeserializeAppServiceSkuCapability(item));
                     }
                     capabilities = array;
                     continue;

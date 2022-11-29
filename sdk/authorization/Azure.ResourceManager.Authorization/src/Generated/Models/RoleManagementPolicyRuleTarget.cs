@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="targetObjects"> The list of target objects. </param>
         /// <param name="inheritableSettings"> The list of inheritable settings. </param>
         /// <param name="enforcedSettings"> The list of enforced settings. </param>
-        internal RoleManagementPolicyRuleTarget(string caller, IList<string> operations, string level, IList<string> targetObjects, IList<string> inheritableSettings, IList<string> enforcedSettings)
+        internal RoleManagementPolicyRuleTarget(string caller, IList<string> operations, RoleManagementAssignmentLevel? level, IList<string> targetObjects, IList<string> inheritableSettings, IList<string> enforcedSettings)
         {
             Caller = caller;
             Operations = operations;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> The type of operation. </summary>
         public IList<string> Operations { get; }
         /// <summary> The assignment level to which rule is applied. </summary>
-        public string Level { get; set; }
+        public RoleManagementAssignmentLevel? Level { get; set; }
         /// <summary> The list of target objects. </summary>
         public IList<string> TargetObjects { get; }
         /// <summary> The list of inheritable settings. </summary>

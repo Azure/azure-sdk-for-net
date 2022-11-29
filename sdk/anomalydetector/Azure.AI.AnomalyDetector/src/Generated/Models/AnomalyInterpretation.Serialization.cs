@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector.Models
@@ -15,7 +16,7 @@ namespace Azure.AI.AnomalyDetector.Models
         internal static AnomalyInterpretation DeserializeAnomalyInterpretation(JsonElement element)
         {
             Optional<string> variable = default;
-            Optional<float> contributionScore = default;
+            Optional<float?> contributionScore = default;
             Optional<CorrelationChanges> correlationChanges = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -28,7 +29,7 @@ namespace Azure.AI.AnomalyDetector.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        contributionScore = null;
                         continue;
                     }
                     contributionScore = property.Value.GetSingle();
@@ -45,7 +46,15 @@ namespace Azure.AI.AnomalyDetector.Models
                     continue;
                 }
             }
-            return new AnomalyInterpretation(variable.Value, Optional.ToNullable(contributionScore), correlationChanges.Value);
+            return new AnomalyInterpretation(variable, Optional.ToNullable(contributionScore), correlationChanges);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AnomalyInterpretation FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAnomalyInterpretation(document.RootElement);
         }
     }
 }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Grafana.Models
 {
     /// <summary> The properties parameters for a PATCH request to a grafana resource. </summary>
@@ -23,5 +25,17 @@ namespace Azure.ResourceManager.Grafana.Models
         public DeterministicOutboundIP? DeterministicOutboundIP { get; set; }
         /// <summary> Indicate the state for enable or disable traffic over the public interface. </summary>
         public GrafanaPublicNetworkAccess? PublicNetworkAccess { get; set; }
+        /// <summary> GrafanaIntegrations is a bundled observability experience (e.g. pre-configured data source, tailored Grafana dashboards, alerting defaults) for common monitoring scenarios. </summary>
+        internal GrafanaIntegrations GrafanaIntegrations { get; set; }
+        /// <summary> Gets the monitor workspace integrations. </summary>
+        public IList<MonitorWorkspaceIntegration> MonitorWorkspaceIntegrations
+        {
+            get
+            {
+                if (GrafanaIntegrations is null)
+                    GrafanaIntegrations = new GrafanaIntegrations();
+                return GrafanaIntegrations.MonitorWorkspaceIntegrations;
+            }
+        }
     }
 }

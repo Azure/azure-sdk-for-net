@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.ResourceMover
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _moveCollectionClientDiagnostics;
-        private MoveCollectionsRestOperations _moveCollectionRestClient;
+        private ClientDiagnostics _moverResourceSetMoveCollectionsClientDiagnostics;
+        private MoveCollectionsRestOperations _moverResourceSetMoveCollectionsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ResourceMover
         {
         }
 
-        private ClientDiagnostics MoveCollectionClientDiagnostics => _moveCollectionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceMover", MoveCollectionResource.ResourceType.Namespace, Diagnostics);
-        private MoveCollectionsRestOperations MoveCollectionRestClient => _moveCollectionRestClient ??= new MoveCollectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MoveCollectionResource.ResourceType));
+        private ClientDiagnostics MoverResourceSetMoveCollectionsClientDiagnostics => _moverResourceSetMoveCollectionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceMover", MoverResourceSetResource.ResourceType.Namespace, Diagnostics);
+        private MoveCollectionsRestOperations MoverResourceSetMoveCollectionsRestClient => _moverResourceSetMoveCollectionsRestClient ??= new MoveCollectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MoverResourceSetResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -49,17 +49,17 @@ namespace Azure.ResourceManager.ResourceMover
         /// Operation Id: MoveCollections_ListMoveCollectionsBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MoveCollectionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MoveCollectionResource> GetMoveCollectionsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MoverResourceSetResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MoverResourceSetResource> GetMoverResourceSetsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MoveCollectionResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<MoverResourceSetResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = MoveCollectionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMoveCollections");
+                using var scope = MoverResourceSetMoveCollectionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMoverResourceSets");
                 scope.Start();
                 try
                 {
-                    var response = await MoveCollectionRestClient.ListMoveCollectionsBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MoveCollectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await MoverResourceSetMoveCollectionsRestClient.ListMoveCollectionsBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new MoverResourceSetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -67,14 +67,14 @@ namespace Azure.ResourceManager.ResourceMover
                     throw;
                 }
             }
-            async Task<Page<MoveCollectionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<MoverResourceSetResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = MoveCollectionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMoveCollections");
+                using var scope = MoverResourceSetMoveCollectionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMoverResourceSets");
                 scope.Start();
                 try
                 {
-                    var response = await MoveCollectionRestClient.ListMoveCollectionsBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MoveCollectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await MoverResourceSetMoveCollectionsRestClient.ListMoveCollectionsBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new MoverResourceSetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -91,17 +91,17 @@ namespace Azure.ResourceManager.ResourceMover
         /// Operation Id: MoveCollections_ListMoveCollectionsBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MoveCollectionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MoveCollectionResource> GetMoveCollections(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MoverResourceSetResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MoverResourceSetResource> GetMoverResourceSets(CancellationToken cancellationToken = default)
         {
-            Page<MoveCollectionResource> FirstPageFunc(int? pageSizeHint)
+            Page<MoverResourceSetResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = MoveCollectionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMoveCollections");
+                using var scope = MoverResourceSetMoveCollectionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMoverResourceSets");
                 scope.Start();
                 try
                 {
-                    var response = MoveCollectionRestClient.ListMoveCollectionsBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MoveCollectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = MoverResourceSetMoveCollectionsRestClient.ListMoveCollectionsBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new MoverResourceSetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.ResourceMover
                     throw;
                 }
             }
-            Page<MoveCollectionResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<MoverResourceSetResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = MoveCollectionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMoveCollections");
+                using var scope = MoverResourceSetMoveCollectionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMoverResourceSets");
                 scope.Start();
                 try
                 {
-                    var response = MoveCollectionRestClient.ListMoveCollectionsBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MoveCollectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = MoverResourceSetMoveCollectionsRestClient.ListMoveCollectionsBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new MoverResourceSetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

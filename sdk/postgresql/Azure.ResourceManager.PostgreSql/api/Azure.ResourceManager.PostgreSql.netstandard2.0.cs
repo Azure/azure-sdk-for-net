@@ -1322,9 +1322,9 @@ namespace Azure.ResourceManager.PostgreSql.Models
         public string Description { get { throw null; } }
         public Azure.ResourceManager.PostgreSql.Models.PostgreSqlPrivateLinkServiceConnectionStateStatus Status { get { throw null; } }
     }
-    public partial class PostgreSqlServerPropertiesForCreate
+    public abstract partial class PostgreSqlServerPropertiesForCreate
     {
-        public PostgreSqlServerPropertiesForCreate() { }
+        protected PostgreSqlServerPropertiesForCreate() { }
         public Azure.ResourceManager.PostgreSql.Models.PostgreSqlInfrastructureEncryption? InfrastructureEncryption { get { throw null; } set { } }
         public Azure.ResourceManager.PostgreSql.Models.PostgreSqlMinimalTlsVersionEnum? MinimalTlsVersion { get { throw null; } set { } }
         public Azure.ResourceManager.PostgreSql.Models.PostgreSqlPublicNetworkAccessEnum? PublicNetworkAccess { get { throw null; } set { } }

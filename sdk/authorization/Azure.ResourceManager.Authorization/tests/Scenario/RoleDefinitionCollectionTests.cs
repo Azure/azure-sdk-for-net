@@ -20,17 +20,17 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
 
         public ResourceGroupResource ResourceGroup {get; set;}
 
-        private async Task<RoleDefinitionCollection> GetRoleDefinitionCollectionAsync()
+        private async Task<AuthorizationRoleDefinitionCollection> GetRoleDefinitionCollectionAsync()
         {
             ResourceGroup = await CreateResourceGroupAsync();
-            return ResourceGroup.GetRoleDefinitions();
+            return ResourceGroup.GetAuthorizationRoleDefinitions();
         }
 
         [Test]
         public async Task Create()
         {
             var collection = await GetRoleDefinitionCollectionAsync();
-            var data = new RoleDefinitionData()
+            var data = new AuthorizationRoleDefinitionData()
             {
                 RoleName = "SDKTestRole",
                 Description = "SDKTestDescription",

@@ -12,10 +12,10 @@ namespace Azure.ResourceManager.Monitor.Models
     /// Please note <see cref="AlertRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="RuleEmailAction"/> and <see cref="RuleWebhookAction"/>.
     /// </summary>
-    public partial class AlertRuleAction
+    public abstract partial class AlertRuleAction
     {
         /// <summary> Initializes a new instance of AlertRuleAction. </summary>
-        public AlertRuleAction()
+        protected AlertRuleAction()
         {
         }
 

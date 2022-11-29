@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,7 +16,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <summary> Initializes a new instance of SmartGroupModification. </summary>
         public SmartGroupModification()
         {
-            Modifications = new ChangeTrackingList<SmartGroupModificationItemData>();
         }
 
         /// <summary> Initializes a new instance of SmartGroupModification. </summary>
@@ -25,21 +23,13 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="smartGroupId"> Unique Id of the smartGroup for which the history is being retrieved. </param>
-        /// <param name="modifications"> Modification details. </param>
-        /// <param name="nextLink"> URL to fetch the next set of results. </param>
-        internal SmartGroupModification(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string smartGroupId, IList<SmartGroupModificationItemData> modifications, string nextLink) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> Properties of the smartGroup modification item. </param>
+        internal SmartGroupModification(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SmartGroupModificationProperties properties) : base(id, name, resourceType, systemData)
         {
-            SmartGroupId = smartGroupId;
-            Modifications = modifications;
-            NextLink = nextLink;
+            Properties = properties;
         }
 
-        /// <summary> Unique Id of the smartGroup for which the history is being retrieved. </summary>
-        public string SmartGroupId { get; }
-        /// <summary> Modification details. </summary>
-        public IList<SmartGroupModificationItemData> Modifications { get; }
-        /// <summary> URL to fetch the next set of results. </summary>
-        public string NextLink { get; set; }
+        /// <summary> Properties of the smartGroup modification item. </summary>
+        public SmartGroupModificationProperties Properties { get; set; }
     }
 }

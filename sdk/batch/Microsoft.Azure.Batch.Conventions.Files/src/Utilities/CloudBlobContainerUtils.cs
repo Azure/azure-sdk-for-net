@@ -12,8 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-﻿using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Blob;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using Azure;
 using System;
 using System.Collections.Generic;
 
@@ -21,45 +22,60 @@ namespace Microsoft.Azure.Batch.Conventions.Files.Utilities
 {
     internal static class CloudBlobContainerUtils
     {
-        internal static CloudBlobContainer GetContainerReference(Uri jobOutputContainerUri)
+        internal static BlobContainerClient GetContainerReference(Uri jobOutputContainerUri)
         {
             if (jobOutputContainerUri == null)
             {
                 throw new ArgumentNullException(nameof(jobOutputContainerUri));
             }
 
-            return new CloudBlobContainer(jobOutputContainerUri);
+            return new BlobContainerClient(jobOutputContainerUri);
         }
 
-        internal static CloudBlobContainer GetContainerReference(CloudStorageAccount storageAccount, string jobId)
+        internal static BlobContainerClient GetContainerReference(BlobServiceClient blobServiceClient, string jobId)
         {
-            if (storageAccount == null)
+            if (blobServiceClient == null)
             {
-                throw new ArgumentNullException(nameof(storageAccount));
+                throw new ArgumentNullException(nameof(blobServiceClient));
             }
 
             Validate.IsNotNullOrEmpty(jobId, nameof(jobId));
 
             var jobOutputContainerName = ContainerNameUtils.GetSafeContainerName(jobId);
-            return storageAccount.CreateCloudBlobClient().GetContainerReference(jobOutputContainerName);
+            return blobServiceClient.GetBlobContainerClient(jobOutputContainerName);
         }
 
-        internal static IEnumerable<IListBlobItem> ListBlobs(this CloudBlobContainer container, string prefix, bool useFlatBlobListing)
+        /*
+         * Lists blobs from the specified container through flat listing
+         */
+        internal static IEnumerable<BlobItem> ListBlobs(this BlobContainerClient container, string prefix = null)
         {
-            BlobContinuationToken continuationToken = null;
-            do
-            {
-                BlobResultSegment segment = container
-                    .ListBlobsSegmentedAsync(prefix, useFlatBlobListing, BlobListingDetails.None, null, continuationToken, null, null)
-                    .GetAwaiter()
-                    .GetResult();
-                foreach (var result in segment.Results)
-                {
-                    yield return result;
-                }
-                continuationToken = segment.ContinuationToken;
-            } while (continuationToken != null);
+            IEnumerable<Page<BlobItem>> resultSegment = container.GetBlobs(prefix: prefix).AsPages();
 
+            foreach (Page<BlobItem> page in resultSegment)
+            {
+                foreach (BlobItem blob in page.Values)
+                {
+                    yield return blob;
+                }
+
+            }
+        }
+
+        /*
+         * List blobs from the specified container by Hierachy
+         **/
+        internal static IEnumerable<BlobHierarchyItem> ListBlobsByHierachy(this BlobContainerClient container, string prefix = null, string delimiter = null)
+        {
+            IEnumerable<Page<BlobHierarchyItem>> resultSegment = container.GetBlobsByHierarchy(delimiter: delimiter, prefix: prefix).AsPages();
+
+            foreach (Page<BlobHierarchyItem> page in resultSegment)
+            {
+                foreach (BlobHierarchyItem blobHeiracyItem in page.Values)
+                {
+                    yield return blobHeiracyItem;
+                }
+            }
         }
     }
 }

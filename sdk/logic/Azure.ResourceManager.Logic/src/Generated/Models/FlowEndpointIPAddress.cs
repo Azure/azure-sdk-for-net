@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System.Net;
-
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The ip address. </summary>
@@ -18,13 +16,13 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of FlowEndpointIPAddress. </summary>
-        /// <param name="address"> The address. </param>
-        internal FlowEndpointIPAddress(IPAddress address)
+        /// <param name="cidrAddress"> The address. </param>
+        internal FlowEndpointIPAddress(string cidrAddress)
         {
-            Address = address;
+            CidrAddress = cidrAddress;
         }
 
         /// <summary> The address. </summary>
-        public IPAddress Address { get; set; }
+        public string CidrAddress { get; set; }
     }
 }

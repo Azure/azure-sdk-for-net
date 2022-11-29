@@ -1,0 +1,785 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fed2a274-8787-4a13-8371-f5282597b779?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Connection": "keep-alive",
+        "traceparent": "00-b5e7099bb383af4e8acd56e391f79308-9edb30ec48a8f043-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "ca64b54e7ecfd559af7114759425be90",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "394",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 24 Sep 2022 00:27:45 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "123f1b85-7650-4324-82ec-fe5ca7ccaa72",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "123f1b85-7650-4324-82ec-fe5ca7ccaa72",
+        "x-ms-routing-request-id": "WESTUS:20220924T002746Z:123f1b85-7650-4324-82ec-fe5ca7ccaa72"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fed2a274-8787-4a13-8371-f5282597b779",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "subscriptionId": "fed2a274-8787-4a13-8371-f5282597b779",
+        "tenantId": "3a689a02-340f-4a4e-a32c-6fce276c6bdc",
+        "displayName": "PayG04-15-2022",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Public_2014-09-01",
+          "quotaId": "PayAsYouGo_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/tenants?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-463332aa0f59cd4a930434fa7d9d45ec-19e9b8fa88c7004a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "b69b915cff1538e841bf0e6f495e687f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "140",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 24 Sep 2022 00:27:45 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "be315554-eea2-42c2-8c1c-16939b73ccce",
+        "x-ms-ratelimit-remaining-tenant-reads": "11999",
+        "x-ms-request-id": "be315554-eea2-42c2-8c1c-16939b73ccce",
+        "x-ms-routing-request-id": "WESTUS:20220924T002746Z:be315554-eea2-42c2-8c1c-16939b73ccce"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/tenants/3a689a02-340f-4a4e-a32c-6fce276c6bdc",
+            "tenantId": "3a689a02-340f-4a4e-a32c-6fce276c6bdc",
+            "tenantCategory": "Home"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.Capacity/reservations?api-version=2022-03-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-eacf34dfdee79946a86dfd26f7e0a218-974527cae0f64e45-00",
+        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.1.0-alpha.20220923.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "dbdb31a2fc148b3bae36468f8c9c5064",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "12080",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 24 Sep 2022 00:27:46 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "899bfe62-f133-44c8-a10a-1db62d88aac1",
+        "x-ms-request-id": "899bfe62-f133-44c8-a10a-1db62d88aac1",
+        "x-ms-routing-request-id": "WESTUS:20220924T002747Z:899bfe62-f133-44c8-a10a-1db62d88aac1"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/providers/Microsoft.Capacity/reservationOrders/7975fd80-9b03-4f6a-b73e-f31e56da7b2b/reservations/517b3f91-de9d-408e-bd78-5957e1cce25d",
+            "name": "7975fd80-9b03-4f6a-b73e-f31e56da7b2b/517b3f91-de9d-408e-bd78-5957e1cce25d",
+            "type": "Microsoft.Capacity/reservationOrders/reservations",
+            "location": "westeurope",
+            "sku": {
+              "name": "Standard_B1ls"
+            },
+            "properties": {
+              "expiryDate": "2023-09-23",
+              "purchaseDate": "2022-09-23",
+              "reservedResourceType": "VirtualMachines",
+              "userFriendlyRenewState": "Off",
+              "renew": false,
+              "archived": false,
+              "quantity": 3,
+              "appliedScopes": [
+                "/subscriptions/fed2a274-8787-4a13-8371-f5282597b779"
+              ],
+              "displayProvisioningState": "Succeeded",
+              "userFriendlyAppliedScopeType": "Single",
+              "effectiveDateTime": "0001-01-01T00:00:00Z",
+              "subscriptionName": "PayG04-15-2022",
+              "appliedScopeType": "Single",
+              "displayName": "testVM",
+              "provisioningState": "Succeeded",
+              "term": "P1Y",
+              "utilization": {
+                "aggregates": []
+              }
+            }
+          },
+          {
+            "id": "/providers/Microsoft.Capacity/reservationOrders/9daaf43f-9bb9-4e26-bdf2-953353f15669/reservations/63a37443-05e6-4d50-90ea-fe24d7015426",
+            "name": "9daaf43f-9bb9-4e26-bdf2-953353f15669/63a37443-05e6-4d50-90ea-fe24d7015426",
+            "type": "Microsoft.Capacity/reservationOrders/reservations",
+            "location": "westeurope",
+            "sku": {
+              "name": "Standard_B1ls"
+            },
+            "properties": {
+              "expiryDate": "2023-09-23",
+              "purchaseDate": "2022-09-23",
+              "reservedResourceType": "VirtualMachines",
+              "userFriendlyRenewState": "Off",
+              "renew": false,
+              "archived": false,
+              "quantity": 3,
+              "displayProvisioningState": "Succeeded",
+              "userFriendlyAppliedScopeType": "Shared",
+              "effectiveDateTime": "0001-01-01T00:00:00Z",
+              "appliedScopeType": "Shared",
+              "displayName": "testVM",
+              "provisioningState": "Succeeded",
+              "term": "P1Y",
+              "utilization": {
+                "aggregates": []
+              }
+            }
+          },
+          {
+            "id": "/providers/Microsoft.Capacity/reservationOrders/d3465d6a-8d07-40af-b854-63ac345f8b5d/reservations/0abcb619-09a4-42d6-bdc4-ccf84aead695",
+            "name": "d3465d6a-8d07-40af-b854-63ac345f8b5d/0abcb619-09a4-42d6-bdc4-ccf84aead695",
+            "type": "Microsoft.Capacity/reservationOrders/reservations",
+            "location": "westeurope",
+            "sku": {
+              "name": "Standard_B1ls"
+            },
+            "properties": {
+              "expiryDate": "2023-09-23",
+              "purchaseDate": "2022-09-23",
+              "reservedResourceType": "VirtualMachines",
+              "userFriendlyRenewState": "Off",
+              "renew": false,
+              "archived": false,
+              "quantity": 3,
+              "appliedScopes": [
+                "/subscriptions/fed2a274-8787-4a13-8371-f5282597b779"
+              ],
+              "displayProvisioningState": "Succeeded",
+              "userFriendlyAppliedScopeType": "Single",
+              "effectiveDateTime": "0001-01-01T00:00:00Z",
+              "subscriptionName": "PayG04-15-2022",
+              "appliedScopeType": "Single",
+              "displayName": "testVM",
+              "provisioningState": "Succeeded",
+              "term": "P1Y",
+              "utilization": {
+                "aggregates": []
+              }
+            }
+          },
+          {
+            "id": "/providers/Microsoft.Capacity/reservationOrders/381ff009-ddfb-4244-b1aa-b0c2030a4e76/reservations/48706bf3-b656-47a9-b2a2-28ca37748537",
+            "name": "381ff009-ddfb-4244-b1aa-b0c2030a4e76/48706bf3-b656-47a9-b2a2-28ca37748537",
+            "type": "Microsoft.Capacity/reservationOrders/reservations",
+            "location": "westeurope",
+            "sku": {
+              "name": "Standard_B1ls"
+            },
+            "properties": {
+              "expiryDate": "2023-09-23",
+              "purchaseDate": "2022-09-23",
+              "reservedResourceType": "VirtualMachines",
+              "userFriendlyRenewState": "Off",
+              "renew": false,
+              "archived": false,
+              "quantity": 3,
+              "displayProvisioningState": "Succeeded",
+              "userFriendlyAppliedScopeType": "Shared",
+              "effectiveDateTime": "0001-01-01T00:00:00Z",
+              "appliedScopeType": "Shared",
+              "displayName": "testVM",
+              "provisioningState": "Succeeded",
+              "term": "P1Y",
+              "utilization": {
+                "aggregates": []
+              }
+            }
+          },
+          {
+            "id": "/providers/Microsoft.Capacity/reservationOrders/66908363-21ba-473e-abaf-e0629def3c2c/reservations/134efc61-0790-4fa9-bf29-6cca0f091a1e",
+            "name": "66908363-21ba-473e-abaf-e0629def3c2c/134efc61-0790-4fa9-bf29-6cca0f091a1e",
+            "type": "Microsoft.Capacity/reservationOrders/reservations",
+            "location": "westeurope",
+            "sku": {
+              "name": "Standard_B1ls"
+            },
+            "properties": {
+              "expiryDate": "2023-09-23",
+              "purchaseDate": "2022-09-23",
+              "reservedResourceType": "VirtualMachines",
+              "userFriendlyRenewState": "Off",
+              "renew": false,
+              "archived": false,
+              "quantity": 3,
+              "appliedScopes": [
+                "/subscriptions/fed2a274-8787-4a13-8371-f5282597b779"
+              ],
+              "displayProvisioningState": "Succeeded",
+              "userFriendlyAppliedScopeType": "Single",
+              "effectiveDateTime": "0001-01-01T00:00:00Z",
+              "subscriptionName": "PayG04-15-2022",
+              "appliedScopeType": "Single",
+              "displayName": "testVM",
+              "provisioningState": "Succeeded",
+              "term": "P1Y",
+              "utilization": {
+                "aggregates": []
+              }
+            }
+          },
+          {
+            "id": "/providers/Microsoft.Capacity/reservationOrders/cd4df446-4948-453c-affa-c0286b568c23/reservations/4dcd4833-ec73-489a-89fd-89d8caaa5b57",
+            "name": "cd4df446-4948-453c-affa-c0286b568c23/4dcd4833-ec73-489a-89fd-89d8caaa5b57",
+            "type": "Microsoft.Capacity/reservationOrders/reservations",
+            "location": "westeurope",
+            "sku": {
+              "name": "Standard_B1ls"
+            },
+            "properties": {
+              "expiryDate": "2023-09-23",
+              "purchaseDate": "2022-09-23",
+              "reservedResourceType": "VirtualMachines",
+              "userFriendlyRenewState": "Off",
+              "renew": false,
+              "archived": false,
+              "quantity": 3,
+              "appliedScopes": [
+                "/subscriptions/fed2a274-8787-4a13-8371-f5282597b779"
+              ],
+              "displayProvisioningState": "Succeeded",
+              "userFriendlyAppliedScopeType": "Single",
+              "effectiveDateTime": "0001-01-01T00:00:00Z",
+              "subscriptionName": "PayG04-15-2022",
+              "appliedScopeType": "Single",
+              "displayName": "testVM",
+              "provisioningState": "Succeeded",
+              "term": "P1Y",
+              "utilization": {
+                "aggregates": []
+              }
+            }
+          },
+          {
+            "id": "/providers/Microsoft.Capacity/reservationOrders/c8113c59-4536-4ee5-bb2e-67d18166d3e1/reservations/2c9415af-06c9-4a60-a56d-df7cfa8699fb",
+            "name": "c8113c59-4536-4ee5-bb2e-67d18166d3e1/2c9415af-06c9-4a60-a56d-df7cfa8699fb",
+            "type": "Microsoft.Capacity/reservationOrders/reservations",
+            "location": "westeurope",
+            "sku": {
+              "name": "Standard_B1ls"
+            },
+            "properties": {
+              "expiryDate": "2023-09-23",
+              "purchaseDate": "2022-09-23",
+              "reservedResourceType": "VirtualMachines",
+              "userFriendlyRenewState": "Off",
+              "renew": false,
+              "archived": false,
+              "quantity": 3,
+              "displayProvisioningState": "Succeeded",
+              "userFriendlyAppliedScopeType": "Shared",
+              "effectiveDateTime": "0001-01-01T00:00:00Z",
+              "appliedScopeType": "Shared",
+              "displayName": "testVM",
+              "provisioningState": "Succeeded",
+              "term": "P1Y",
+              "utilization": {
+                "aggregates": []
+              }
+            }
+          },
+          {
+            "id": "/providers/Microsoft.Capacity/reservationOrders/f7d8881a-2631-4dc8-b056-ce5d34fceae9/reservations/28df6491-d2c1-4c01-9da9-048c9d7ca8b5",
+            "name": "f7d8881a-2631-4dc8-b056-ce5d34fceae9/28df6491-d2c1-4c01-9da9-048c9d7ca8b5",
+            "type": "Microsoft.Capacity/reservationOrders/reservations",
+            "location": "westeurope",
+            "sku": {
+              "name": "Standard_B1ls"
+            },
+            "properties": {
+              "expiryDate": "2023-09-23",
+              "purchaseDate": "2022-09-23",
+              "reservedResourceType": "VirtualMachines",
+              "userFriendlyRenewState": "Off",
+              "renew": false,
+              "archived": false,
+              "quantity": 3,
+              "displayProvisioningState": "Succeeded",
+              "userFriendlyAppliedScopeType": "Shared",
+              "effectiveDateTime": "0001-01-01T00:00:00Z",
+              "appliedScopeType": "Shared",
+              "displayName": "testVM",
+              "provisioningState": "Succeeded",
+              "term": "P1Y",
+              "utilization": {
+                "aggregates": []
+              }
+            }
+          },
+          {
+            "id": "/providers/Microsoft.Capacity/reservationOrders/5548b59c-67c1-43a7-a75c-55af519c5118/reservations/9e06111e-1398-48f7-aabb-f82d17677ac3",
+            "name": "5548b59c-67c1-43a7-a75c-55af519c5118/9e06111e-1398-48f7-aabb-f82d17677ac3",
+            "type": "Microsoft.Capacity/reservationOrders/reservations",
+            "location": "westeurope",
+            "sku": {
+              "name": "Standard_B1ls"
+            },
+            "properties": {
+              "expiryDate": "2023-09-23",
+              "purchaseDate": "2022-09-23",
+              "reservedResourceType": "VirtualMachines",
+              "userFriendlyRenewState": "Off",
+              "renew": false,
+              "archived": false,
+              "quantity": 3,
+              "displayProvisioningState": "Succeeded",
+              "userFriendlyAppliedScopeType": "Shared",
+              "effectiveDateTime": "0001-01-01T00:00:00Z",
+              "appliedScopeType": "Shared",
+              "displayName": "testVM",
+              "provisioningState": "Succeeded",
+              "term": "P1Y",
+              "utilization": {
+                "aggregates": []
+              }
+            }
+          },
+          {
+            "id": "/providers/Microsoft.Capacity/reservationOrders/29d5d832-bfcf-4218-a030-cc567343c9da/reservations/9c6070b6-1e86-478d-aa62-947f67ae7cef",
+            "name": "29d5d832-bfcf-4218-a030-cc567343c9da/9c6070b6-1e86-478d-aa62-947f67ae7cef",
+            "type": "Microsoft.Capacity/reservationOrders/reservations",
+            "location": "westeurope",
+            "sku": {
+              "name": "Standard_B1ls"
+            },
+            "properties": {
+              "expiryDate": "2023-09-23",
+              "purchaseDate": "2022-09-23",
+              "reservedResourceType": "VirtualMachines",
+              "userFriendlyRenewState": "Off",
+              "renew": false,
+              "archived": false,
+              "quantity": 3,
+              "displayProvisioningState": "Succeeded",
+              "userFriendlyAppliedScopeType": "Shared",
+              "effectiveDateTime": "0001-01-01T00:00:00Z",
+              "appliedScopeType": "Shared",
+              "displayName": "testVM",
+              "provisioningState": "Succeeded",
+              "term": "P1Y",
+              "utilization": {
+                "aggregates": []
+              }
+            }
+          },
+          {
+            "id": "/providers/Microsoft.Capacity/reservationOrders/be56711c-7ba2-4b62-bcb8-cb93ba191ea1/reservations/309f8162-14f0-423f-abe5-00941b91ced0",
+            "name": "be56711c-7ba2-4b62-bcb8-cb93ba191ea1/309f8162-14f0-423f-abe5-00941b91ced0",
+            "type": "Microsoft.Capacity/reservationOrders/reservations",
+            "location": "westeurope",
+            "sku": {
+              "name": "Standard_B1ls"
+            },
+            "properties": {
+              "expiryDate": "2023-09-23",
+              "purchaseDate": "2022-09-23",
+              "reservedResourceType": "VirtualMachines",
+              "userFriendlyRenewState": "Off",
+              "renew": false,
+              "archived": false,
+              "quantity": 28,
+              "displayProvisioningState": "Succeeded",
+              "userFriendlyAppliedScopeType": "Shared",
+              "effectiveDateTime": "0001-01-01T00:00:00Z",
+              "appliedScopeType": "Shared",
+              "displayName": "testVM",
+              "provisioningState": "Succeeded",
+              "term": "P1Y",
+              "utilization": {
+                "aggregates": []
+              }
+            }
+          },
+          {
+            "id": "/providers/Microsoft.Capacity/reservationOrders/be56711c-7ba2-4b62-bcb8-cb93ba191ea1/reservations/5541e724-eae8-4ed3-aac1-cdc88cc5621f",
+            "name": "be56711c-7ba2-4b62-bcb8-cb93ba191ea1/5541e724-eae8-4ed3-aac1-cdc88cc5621f",
+            "type": "Microsoft.Capacity/reservationOrders/reservations",
+            "location": "westeurope",
+            "sku": {
+              "name": "Standard_B1ls"
+            },
+            "properties": {
+              "expiryDate": "2023-09-23",
+              "purchaseDate": "2022-09-23",
+              "reservedResourceType": "VirtualMachines",
+              "userFriendlyRenewState": "NotApplicable",
+              "renew": false,
+              "archived": false,
+              "quantity": 2,
+              "displayProvisioningState": "Cancelled",
+              "userFriendlyAppliedScopeType": "Shared",
+              "effectiveDateTime": "0001-01-01T00:00:00Z",
+              "appliedScopeType": "Shared",
+              "displayName": "testVM",
+              "provisioningState": "Cancelled",
+              "term": "P1Y",
+              "utilization": {
+                "aggregates": []
+              }
+            }
+          },
+          {
+            "id": "/providers/Microsoft.Capacity/reservationOrders/ed249b73-634c-4632-a3f1-94431359deab/reservations/7245c7fd-d985-461a-9001-653063d21f07",
+            "name": "ed249b73-634c-4632-a3f1-94431359deab/7245c7fd-d985-461a-9001-653063d21f07",
+            "type": "Microsoft.Capacity/reservationOrders/reservations",
+            "location": "westeurope",
+            "sku": {
+              "name": "Standard_B1s"
+            },
+            "properties": {
+              "expiryDate": "2023-09-23",
+              "purchaseDate": "2022-09-23",
+              "reservedResourceType": "VirtualMachines",
+              "userFriendlyRenewState": "Off",
+              "renew": false,
+              "archived": false,
+              "quantity": 3,
+              "displayProvisioningState": "Succeeded",
+              "userFriendlyAppliedScopeType": "Shared",
+              "effectiveDateTime": "0001-01-01T00:00:00Z",
+              "appliedScopeType": "Shared",
+              "displayName": "testVM",
+              "provisioningState": "Succeeded",
+              "term": "P1Y",
+              "utilization": {
+                "aggregates": []
+              }
+            }
+          },
+          {
+            "id": "/providers/Microsoft.Capacity/reservationOrders/be56711c-7ba2-4b62-bcb8-cb93ba191ea1/reservations/dc84da8a-9650-455c-9968-b83ac2ae4adb",
+            "name": "be56711c-7ba2-4b62-bcb8-cb93ba191ea1/dc84da8a-9650-455c-9968-b83ac2ae4adb",
+            "type": "Microsoft.Capacity/reservationOrders/reservations",
+            "location": "westeurope",
+            "sku": {
+              "name": "Standard_B1ls"
+            },
+            "properties": {
+              "expiryDate": "2023-09-23",
+              "purchaseDate": "2022-09-23",
+              "reservedResourceType": "VirtualMachines",
+              "userFriendlyRenewState": "NotApplicable",
+              "renew": false,
+              "archived": false,
+              "quantity": 30,
+              "displayProvisioningState": "Cancelled",
+              "userFriendlyAppliedScopeType": "Shared",
+              "effectiveDateTime": "0001-01-01T00:00:00Z",
+              "appliedScopeType": "Shared",
+              "displayName": "testVM",
+              "provisioningState": "Cancelled",
+              "term": "P1Y",
+              "utilization": {
+                "aggregates": []
+              }
+            }
+          },
+          {
+            "id": "/providers/Microsoft.Capacity/reservationOrders/45e849ad-61e4-49f3-a210-85b47200f172/reservations/c3370612-6f57-4dac-a748-d2dca78f2632",
+            "name": "45e849ad-61e4-49f3-a210-85b47200f172/c3370612-6f57-4dac-a748-d2dca78f2632",
+            "type": "Microsoft.Capacity/reservationOrders/reservations",
+            "location": "westus",
+            "sku": {
+              "name": "Standard_B1ls"
+            },
+            "properties": {
+              "purchaseDate": "2022-09-23",
+              "reservedResourceType": "VirtualMachines",
+              "userFriendlyRenewState": "NotApplicable",
+              "renew": false,
+              "archived": false,
+              "quantity": 30,
+              "displayProvisioningState": "Failed",
+              "userFriendlyAppliedScopeType": "Shared",
+              "effectiveDateTime": "0001-01-01T00:00:00Z",
+              "appliedScopeType": "Shared",
+              "displayName": "testVM1",
+              "provisioningState": "Failed",
+              "term": "P1Y",
+              "utilization": {
+                "aggregates": []
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.Capacity/reservationOrders/7975fd80-9b03-4f6a-b73e-f31e56da7b2b?api-version=2022-03-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-d75d7bb2d51f9243866840ca615a56d6-83423a0aef660b46-00",
+        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.1.0-alpha.20220923.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "943bc89275fe4f40cd2c881070ea8b50",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "657",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 24 Sep 2022 00:27:46 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "70ef910e-600d-4c25-942f-eec61378b431",
+        "x-ms-ratelimit-remaining-tenant-reads": "11997",
+        "x-ms-request-id": "westus:2e2b7d68-d289-48c5-8ae2-315e4fe51a14",
+        "x-ms-routing-request-id": "WESTUS:20220924T002747Z:70ef910e-600d-4c25-942f-eec61378b431"
+      },
+      "ResponseBody": {
+        "id": "/providers/microsoft.capacity/reservationOrders/7975fd80-9b03-4f6a-b73e-f31e56da7b2b",
+        "type": "Microsoft.Capacity/reservationOrders",
+        "name": "7975fd80-9b03-4f6a-b73e-f31e56da7b2b",
+        "etag": 9,
+        "properties": {
+          "displayName": "testVM",
+          "requestDateTime": "2022-09-23T22:48:58.0650155Z",
+          "createdDateTime": "2022-09-23T22:51:23.1298316Z",
+          "expiryDate": "2023-09-23",
+          "benefitStartTime": "2022-09-23T22:51:22.7861288Z",
+          "term": "P1Y",
+          "provisioningState": "Succeeded",
+          "reservations": [
+            {
+              "id": "/providers/microsoft.capacity/reservationOrders/7975fd80-9b03-4f6a-b73e-f31e56da7b2b/reservations/517b3f91-de9d-408e-bd78-5957e1cce25d"
+            }
+          ],
+          "originalQuantity": 3,
+          "billingPlan": "Upfront"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.Capacity/reservationOrders/7975fd80-9b03-4f6a-b73e-f31e56da7b2b/calculateRefund?api-version=2022-03-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "320",
+        "Content-Type": "application/json",
+        "traceparent": "00-f7026fa93c53cf4686e85a7f17b5b40a-cd28dfdd9e2ada4f-00",
+        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.1.0-alpha.20220923.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "63d39509e34a5f7b560f07deb858aba5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "id": "/providers/Microsoft.Capacity/reservationOrders/7975fd80-9b03-4f6a-b73e-f31e56da7b2b",
+        "properties": {
+          "scope": "Reservation",
+          "reservationToReturn": {
+            "reservationId": "/providers/Microsoft.Capacity/reservationOrders/7975fd80-9b03-4f6a-b73e-f31e56da7b2b/reservations/517b3f91-de9d-408e-bd78-5957e1cce25d",
+            "quantity": 1
+          }
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "822",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 24 Sep 2022 00:27:55 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "b7020a17-2bf0-4a18-9295-7f8fc262d957",
+        "x-ms-ratelimit-remaining-tenant-writes": "1199",
+        "x-ms-request-id": "westus:44547b64-3810-4192-8b7d-0d7f05059efa",
+        "x-ms-routing-request-id": "WESTUS:20220924T002755Z:b7020a17-2bf0-4a18-9295-7f8fc262d957",
+        "x-ms-test": "{\u0022contact\u0022:\u0022yunga\u0022,\u0022scenarios\u0022:\u0022GtmRiPurchase,TestInProdcution,CSZ,Inv-v7,crs-vnext,GtmRiPurchase\u0022,\u0022retention\u0022:\u002212/22/2022 10:48:54 PM\u0022}"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.Capacity/reservationOrders/7975fd80-9b03-4f6a-b73e-f31e56da7b2b/reservations/517b3f91-de9d-408e-bd78-5957e1cce25d",
+        "properties": {
+          "sessionId": "d237c05d-258f-4354-9660-e66976c799b0",
+          "quantity": 1,
+          "billingRefundAmount": {
+            "currencyCode": "USD",
+            "amount": 31.0
+          },
+          "pricingRefundAmount": {
+            "currencyCode": "USD",
+            "amount": 31.0
+          },
+          "policyResult": {
+            "properties": {
+              "consumedRefundsTotal": {
+                "currencyCode": "USD",
+                "amount": 370.81
+              },
+              "maxRefundLimit": {
+                "currencyCode": "USD",
+                "amount": 50000.0
+              },
+              "policyErrors": []
+            }
+          },
+          "billingInformation": {
+            "billingPlan": "Upfront",
+            "completedTransactions": 1,
+            "totalTransactions": 1,
+            "billingCurrencyTotalPaidAmount": {
+              "currencyCode": "USD",
+              "amount": 93.0
+            },
+            "billingCurrencyProratedAmount": {
+              "currencyCode": "USD",
+              "amount": 62.0
+            },
+            "billingCurrencyRemainingCommitmentAmount": {
+              "currencyCode": "USD",
+              "amount": 0.0
+            }
+          }
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.Capacity/reservationOrders/7975fd80-9b03-4f6a-b73e-f31e56da7b2b/return?api-version=2022-03-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "301",
+        "Content-Type": "application/json",
+        "traceparent": "00-6b7a99f9588eb24f8621be751b6e73f8-71fa6a3519ef4b46-00",
+        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.1.0-alpha.20220923.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "81dda96ed3222d80f08b0ee8742a1bc4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "sessionId": "d237c05d-258f-4354-9660-e66976c799b0",
+          "scope": "Reservation",
+          "reservationToReturn": {
+            "reservationId": "/providers/Microsoft.Capacity/reservationOrders/7975fd80-9b03-4f6a-b73e-f31e56da7b2b/reservations/517b3f91-de9d-408e-bd78-5957e1cce25d",
+            "quantity": 1
+          },
+          "returnReason": "Test"
+        }
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "822",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 24 Sep 2022 00:28:05 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "73c8c2d2-5188-4ced-b303-664eed4b5c93",
+        "x-ms-ratelimit-remaining-tenant-writes": "1198",
+        "x-ms-request-id": "westus:dec66663-298e-47bb-807c-892c7840e859",
+        "x-ms-routing-request-id": "WESTUS:20220924T002805Z:73c8c2d2-5188-4ced-b303-664eed4b5c93",
+        "x-ms-test": "{\u0022contact\u0022:\u0022yunga\u0022,\u0022scenarios\u0022:\u0022GtmRiPurchase,TestInProdcution,CSZ,Inv-v7,crs-vnext,GtmRiPurchase\u0022,\u0022retention\u0022:\u002212/22/2022 10:48:54 PM\u0022}"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.Capacity/reservationOrders/7975fd80-9b03-4f6a-b73e-f31e56da7b2b/reservations/517b3f91-de9d-408e-bd78-5957e1cce25d",
+        "properties": {
+          "sessionId": "d237c05d-258f-4354-9660-e66976c799b0",
+          "quantity": 1,
+          "billingRefundAmount": {
+            "currencyCode": "USD",
+            "amount": 31.0
+          },
+          "pricingRefundAmount": {
+            "currencyCode": "USD",
+            "amount": 31.0
+          },
+          "policyResult": {
+            "properties": {
+              "consumedRefundsTotal": {
+                "currencyCode": "USD",
+                "amount": 370.81
+              },
+              "maxRefundLimit": {
+                "currencyCode": "USD",
+                "amount": 50000.0
+              },
+              "policyErrors": []
+            }
+          },
+          "billingInformation": {
+            "billingPlan": "Upfront",
+            "completedTransactions": 1,
+            "totalTransactions": 1,
+            "billingCurrencyTotalPaidAmount": {
+              "currencyCode": "USD",
+              "amount": 93.0
+            },
+            "billingCurrencyProratedAmount": {
+              "currencyCode": "USD",
+              "amount": 62.0
+            },
+            "billingCurrencyRemainingCommitmentAmount": {
+              "currencyCode": "USD",
+              "amount": 0.0
+            }
+          }
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1946179049",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "fed2a274-8787-4a13-8371-f5282597b779"
+  }
+}

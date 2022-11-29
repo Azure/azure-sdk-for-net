@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Class to specify configurations of Widevine in Streaming Policy. </summary>
@@ -19,12 +17,12 @@ namespace Azure.ResourceManager.Media.Models
 
         /// <summary> Initializes a new instance of StreamingPolicyWidevineConfiguration. </summary>
         /// <param name="customLicenseAcquisitionUriTemplate"> Template for the URL of the custom service delivering licenses to end user players.  Not required when using Azure Media Services for issuing licenses.  The template supports replaceable tokens that the service will update at runtime with the value specific to the request.  The currently supported token values are {AlternativeMediaId}, which is replaced with the value of StreamingLocatorId.AlternativeMediaId, and {ContentKeyId}, which is replaced with the value of identifier of the key being requested. </param>
-        internal StreamingPolicyWidevineConfiguration(Uri customLicenseAcquisitionUriTemplate)
+        internal StreamingPolicyWidevineConfiguration(string customLicenseAcquisitionUriTemplate)
         {
             CustomLicenseAcquisitionUriTemplate = customLicenseAcquisitionUriTemplate;
         }
 
         /// <summary> Template for the URL of the custom service delivering licenses to end user players.  Not required when using Azure Media Services for issuing licenses.  The template supports replaceable tokens that the service will update at runtime with the value specific to the request.  The currently supported token values are {AlternativeMediaId}, which is replaced with the value of StreamingLocatorId.AlternativeMediaId, and {ContentKeyId}, which is replaced with the value of identifier of the key being requested. </summary>
-        public Uri CustomLicenseAcquisitionUriTemplate { get; set; }
+        public string CustomLicenseAcquisitionUriTemplate { get; set; }
     }
 }

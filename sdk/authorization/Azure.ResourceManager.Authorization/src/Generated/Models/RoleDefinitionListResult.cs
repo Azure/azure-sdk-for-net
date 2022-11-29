@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> Initializes a new instance of RoleDefinitionListResult. </summary>
         internal RoleDefinitionListResult()
         {
-            Value = new ChangeTrackingList<RoleDefinitionData>();
+            Value = new ChangeTrackingList<AuthorizationRoleDefinitionData>();
         }
 
         /// <summary> Initializes a new instance of RoleDefinitionListResult. </summary>
         /// <param name="value"> Role definition list. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal RoleDefinitionListResult(IReadOnlyList<RoleDefinitionData> value, string nextLink)
+        internal RoleDefinitionListResult(IReadOnlyList<AuthorizationRoleDefinitionData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Role definition list. </summary>
-        public IReadOnlyList<RoleDefinitionData> Value { get; }
+        public IReadOnlyList<AuthorizationRoleDefinitionData> Value { get; }
         /// <summary> The URL to use for getting the next set of results. </summary>
         public string NextLink { get; }
     }

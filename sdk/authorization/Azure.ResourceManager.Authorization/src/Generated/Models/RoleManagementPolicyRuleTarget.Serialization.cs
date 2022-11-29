@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Authorization.Models
             if (Optional.IsDefined(Level))
             {
                 writer.WritePropertyName("level");
-                writer.WriteStringValue(Level);
+                writer.WriteStringValue(Level.Value.ToString());
             }
             if (Optional.IsCollectionDefined(TargetObjects))
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Authorization.Models
         {
             Optional<string> caller = default;
             Optional<IList<string>> operations = default;
-            Optional<string> level = default;
+            Optional<RoleManagementAssignmentLevel> level = default;
             Optional<IList<string>> targetObjects = default;
             Optional<IList<string>> inheritableSettings = default;
             Optional<IList<string>> enforcedSettings = default;
@@ -101,7 +101,12 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 if (property.NameEquals("level"))
                 {
-                    level = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    level = new RoleManagementAssignmentLevel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetObjects"))
@@ -150,7 +155,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     continue;
                 }
             }
-            return new RoleManagementPolicyRuleTarget(caller.Value, Optional.ToList(operations), level.Value, Optional.ToList(targetObjects), Optional.ToList(inheritableSettings), Optional.ToList(enforcedSettings));
+            return new RoleManagementPolicyRuleTarget(caller.Value, Optional.ToList(operations), Optional.ToNullable(level), Optional.ToList(targetObjects), Optional.ToList(inheritableSettings), Optional.ToList(enforcedSettings));
         }
     }
 }

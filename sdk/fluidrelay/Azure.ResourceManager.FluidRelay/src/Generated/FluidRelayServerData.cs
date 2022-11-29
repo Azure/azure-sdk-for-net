@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.FluidRelay
         /// <param name="provisioningState"> Provision states for FluidRelay RP. </param>
         /// <param name="encryption"> All encryption configuration for a resource. </param>
         /// <param name="storageSku"> Sku of the storage associated with the resource. </param>
-        internal FluidRelayServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, Guid? frsTenantId, FluidRelayEndpoints fluidRelayEndpoints, ProvisioningState? provisioningState, Models.EncryptionProperties encryption, StorageSku? storageSku) : base(id, name, resourceType, systemData, tags, location)
+        internal FluidRelayServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, Guid? frsTenantId, FluidRelayEndpoints fluidRelayEndpoints, FluidRelayProvisioningState? provisioningState, Models.EncryptionProperties encryption, FluidRelayStorageSku? storageSku) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             FrsTenantId = frsTenantId;
@@ -52,11 +52,11 @@ namespace Azure.ResourceManager.FluidRelay
         /// <summary> The Fluid Relay Service endpoints for this server. </summary>
         public FluidRelayEndpoints FluidRelayEndpoints { get; }
         /// <summary> Provision states for FluidRelay RP. </summary>
-        public ProvisioningState? ProvisioningState { get; set; }
+        public FluidRelayProvisioningState? ProvisioningState { get; set; }
         /// <summary> All encryption configuration for a resource. </summary>
         internal Models.EncryptionProperties Encryption { get; set; }
         /// <summary> All Customer-managed key encryption properties for the resource. </summary>
-        public CustomerManagedKeyEncryptionProperties CustomerManagedKeyEncryption
+        public CmkEncryptionProperties CustomerManagedKeyEncryption
         {
             get => Encryption is null ? default : Encryption.CustomerManagedKeyEncryption;
             set
@@ -68,6 +68,6 @@ namespace Azure.ResourceManager.FluidRelay
         }
 
         /// <summary> Sku of the storage associated with the resource. </summary>
-        public StorageSku? StorageSku { get; set; }
+        public FluidRelayStorageSku? StorageSku { get; set; }
     }
 }

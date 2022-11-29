@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> An InputDefinition that looks at each input file provided to select tracks specified by the IncludedTracks property. Generally used with the AudioTrackByAttribute and VideoTrackByAttribute to select tracks from each file given. </summary>
-    public partial class FromEachInputFile : MediaTransformJobInputDefinition
+    public partial class FromEachInputFile : MediaJobInputDefinition
     {
         /// <summary> Initializes a new instance of FromEachInputFile. </summary>
         public FromEachInputFile()

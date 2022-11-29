@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<string> correlationId = default;
             Optional<MonitorLocalizableString> eventName = default;
             Optional<MonitorLocalizableString> category = default;
-            Optional<HttpRequestInfo> httpRequest = default;
+            Optional<EventDataHttpRequestInfo> httpRequest = default;
             Optional<MonitorEventLevel> level = default;
             Optional<string> resourceGroupName = default;
             Optional<MonitorLocalizableString> resourceProviderName = default;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    httpRequest = HttpRequestInfo.DeserializeHttpRequestInfo(property.Value);
+                    httpRequest = EventDataHttpRequestInfo.DeserializeEventDataHttpRequestInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("level"))

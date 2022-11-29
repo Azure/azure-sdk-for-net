@@ -1,0 +1,194 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "AlphaIdsClient",
+      "description": "The alpha ids client uses Azure Communication Services to purchase and manage alpha ids.",
+      "version": "2022-09-26-preview"
+    },
+    "paths": {
+      "/alphaIds/configuration": {
+        "get": {
+          "tags": [
+            "AlphaIDs - Configuration"
+          ],
+          "summary": "Get the Alpha IDs configuration that's applied for the current resource.",
+          "operationId": "AlphaIds_GetConfiguration",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "$ref": "#/parameters/ApiVersionParameter"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "schema": {
+                "$ref": "#/definitions/AlphaIdConfiguration"
+              }
+            },
+            "default": {
+              "description": "Failure",
+              "schema": {
+                "$ref": "#/definitions/CommunicationErrorResponse"
+              }
+            }
+          },
+          "x-ms-examples": {
+            "Get the current Alpha IDs configuration": {
+              "$ref": "./examples/GetAlphaIdConfiguration.json"
+            }
+          }
+        },
+        "patch": {
+          "tags": [
+            "AlphaIDs - Configuration"
+          ],
+          "summary": "Creates or updates Alpha ID Configuration for the current resource.",
+          "operationId": "AlphaIds_UpsertConfiguration",
+          "consumes": [
+            "application/merge-patch+json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "$ref": "#/parameters/ApiVersionParameter"
+            },
+            {
+              "in": "body",
+              "name": "body",
+              "description": "The configuration data that is intended to be applied.",
+              "schema": {
+                "$ref": "#/definitions/AlphaIdConfiguration"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "schema": {
+                "$ref": "#/definitions/AlphaIdConfiguration"
+              }
+            },
+            "default": {
+              "description": "Failure",
+              "schema": {
+                "$ref": "#/definitions/CommunicationErrorResponse"
+              }
+            }
+          },
+          "x-ms-examples": {
+            "Enables Alpha ID for the current resource": {
+              "$ref": "./examples/UpsertAlphaIdConfiguration.json"
+            }
+          }
+        }
+      }
+    },
+    "definitions": {
+      "AlphaIdConfiguration": {
+        "description": "<br>Represents a collection of settings for configuring Alpha ID support for a specific resource.\r\n<br>\r\n            Initially, Alpha IDs were restricted to customers that had valid use cases for them, so this configuration could be leveraged to enable its usage.\r\n            ",
+        "required": [
+          "enabled"
+        ],
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "description": "Indicates whether the use of Alpha IDs is supported for a specific resource.",
+            "type": "boolean"
+          }
+        }
+      },
+      "CommunicationErrorResponse": {
+        "description": "The Communication Services error.",
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "properties": {
+          "error": {
+            "description": "The Communication Services error.",
+            "$ref": "#/definitions/CommunicationError"
+          }
+        }
+      },
+      "CommunicationError": {
+        "description": "The Communication Services error.",
+        "type": "object",
+        "required": [
+          "code",
+          "message"
+        ],
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "The error code."
+          },
+          "message": {
+            "type": "string",
+            "description": "The error message."
+          },
+          "target": {
+            "type": "string",
+            "readOnly": true,
+            "description": "The error target."
+          },
+          "details": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/CommunicationError"
+            },
+            "readOnly": true,
+            "description": "Further details about specific errors that led to this error."
+          },
+          "innererror": {
+            "x-ms-client-name": "innerError",
+            "readOnly": true,
+            "$ref": "#/definitions/CommunicationError",
+            "description": "The inner error if any."
+          }
+        }
+      }
+    },
+    "parameters": {
+      "ApiVersionParameter": {
+        "in": "query",
+        "name": "api-version",
+        "description": "Version of API to invoke",
+        "required": true,
+        "type": "string"
+      },
+      "Endpoint": {
+        "in": "path",
+        "name": "endpoint",
+        "description": "The communication resource, for example https://resourcename.communication.azure.com",
+        "required": true,
+        "type": "string",
+        "x-ms-skip-url-encoding": true,
+        "x-ms-parameter-location": "client"
+      }
+    },
+    "securityDefinitions": {
+      "azure_auth": {
+        "type": "oauth2",
+        "flow": "implicit",
+        "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize",
+        "scopes": {
+          "user_impersonation": "impersonate your user account"
+        },
+        "description": "Azure Active Directory OAuth2 Flow"
+      }
+    },
+    "x-ms-parameterized-host": {
+      "hostTemplate": "{endpoint}",
+      "useSchemePrefix": false,
+      "parameters": [
+        {
+          "$ref": "#/parameters/Endpoint"
+        }
+      ]
+    }
+  }

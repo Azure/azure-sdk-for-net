@@ -1162,9 +1162,19 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                     if (count == 1)
                     {
-                        var received = await args.GetReceiveActions().ReceiveMessagesAsync(messageCount);
+                        ProcessorReceiveActions receiveActions = args.GetReceiveActions();
+                        var received = await receiveActions.ReceiveMessagesAsync(messageCount);
                         Assert.IsNotEmpty(received);
                         count = Interlocked.Add(ref receivedCount, received.Count);
+
+                        var peeked = await receiveActions.PeekMessagesAsync(2);
+                        Assert.AreEqual(2, peeked.Count);
+                        var lastSeq = peeked[1].SequenceNumber;
+                        var nextPeek = await receiveActions.PeekMessagesAsync(1);
+                        Assert.Greater(nextPeek.Single().SequenceNumber, lastSeq);
+
+                        var peekWithSeq = await receiveActions.PeekMessagesAsync(1, fromSequenceNumber: lastSeq);
+                        Assert.AreEqual(lastSeq, peekWithSeq.Single().SequenceNumber);
                     }
 
                     if (manualRenew)

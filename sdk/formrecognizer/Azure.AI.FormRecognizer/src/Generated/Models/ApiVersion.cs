@@ -22,10 +22,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string TwoThousandTwentyTwo0630PreviewValue = "2022-06-30-preview";
+        private const string TwoThousandTwentyTwo0831Value = "2022-08-31";
 
-        /// <summary> 2022-06-30-preview. </summary>
-        public static ApiVersion TwoThousandTwentyTwo0630Preview { get; } = new ApiVersion(TwoThousandTwentyTwo0630PreviewValue);
+        /// <summary> 2022-08-31. </summary>
+        public static ApiVersion TwoThousandTwentyTwo0831 { get; } = new ApiVersion(TwoThousandTwentyTwo0831Value);
         /// <summary> Determines if two <see cref="ApiVersion"/> values are the same. </summary>
         public static bool operator ==(ApiVersion left, ApiVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApiVersion"/> values are not the same. </summary>

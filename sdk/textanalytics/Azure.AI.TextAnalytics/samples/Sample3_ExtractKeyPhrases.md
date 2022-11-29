@@ -19,7 +19,7 @@ var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(a
 To extract key phrases from a document, use the `ExtractKeyPhrases` method.  The returned value the collection of `KeyPhrases` that were extracted from the document.
 
 ```C# Snippet:ExtractKeyPhrases
-string document = @"My cat might need to see a veterinarian. It has been sneezing more than normal, and although my 
+string document = @"My cat might need to see a veterinarian. It has been sneezing more than normal, and although my
                     little sister thinks it is funny, I am worried it has the cold that I got last week.
                     We are going to call tomorrow and try to schedule an appointment for this week. Hopefully it
                     will be covered by the cat's insurance.
@@ -61,7 +61,7 @@ string documentB = @"Last week we stayed at Hotel Foo to celebrate our anniversa
 
 string documentC = @"That was the best day of my life! We went on a 4 day trip where we stayed at Hotel Foo.
                     They had great amenities that included an indoor pool, a spa, and a bar.
-                    The spa offered couples massages which were really good. 
+                    The spa offered couples massages which were really good.
                     The spa was clean and felt very peaceful. Overall the whole experience was great.
                     We will definitely come back.";
 
@@ -123,7 +123,7 @@ string documentB = @"Nos hospedamos en el Hotel Foo la semana pasada por nuestro
 
 string documentC = @"That was the best day of my life! We went on a 4 day trip where we stayed at Hotel Foo.
                     They had great amenities that included an indoor pool, a spa, and a bar.
-                    The spa offered couples massages which were really good. 
+                    The spa offered couples massages which were really good.
                     The spa was clean and felt very peaceful. Overall the whole experience was great.
                     We will definitely come back.";
 
@@ -187,16 +187,6 @@ Console.WriteLine($"  Invalid document count: {keyPhrasesInDocuments.Statistics.
 Console.WriteLine($"  Transaction count: {keyPhrasesInDocuments.Statistics.TransactionCount}");
 Console.WriteLine("");
 ```
-
-To see the full example source files, see:
-
-* [Synchronous ExtractKeyPhrases](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample3_ExtractKeyPhrases.cs)
-* [Asynchronous ExtractKeyPhrases](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample3_ExtractKeyPhrasesAsync.cs)
-* [ExtractKeyPhrases with warnings](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample3_ExtractKeyPhrasesWithWarnings.cs)
-* [Synchronous ExtractKeyPhrasesBatch](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample3_ExtractKeyPhrasesBatch.cs)
-* [Asynchronous ExtractKeyPhrasesBatch](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample3_ExtractKeyPhrasesBatchAsync.cs)
-* [Synchronous ExtractKeyPhrasesBatchConvenience](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample3_ExtractKeyPhrasesBatchConvenience.cs)
-* [Asynchronous ExtractKeyPhrasesBatchConvenience](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample3_ExtractKeyPhrasesBatchConvenienceAsync.cs)
 
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/README.md

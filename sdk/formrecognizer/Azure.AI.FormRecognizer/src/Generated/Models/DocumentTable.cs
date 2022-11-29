@@ -23,19 +23,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="cells"/> or <paramref name="spans"/> is null. </exception>
         internal DocumentTable(int rowCount, int columnCount, IEnumerable<DocumentTableCell> cells, IEnumerable<DocumentSpan> spans)
         {
-            if (cells == null)
-            {
-                throw new ArgumentNullException(nameof(cells));
-            }
-            if (spans == null)
-            {
-                throw new ArgumentNullException(nameof(spans));
-            }
+            Argument.AssertNotNull(cells, nameof(cells));
+            Argument.AssertNotNull(spans, nameof(spans));
 
             RowCount = rowCount;
             ColumnCount = columnCount;
             Cells = cells.ToList();
-            Footnotes = new ChangeTrackingList<DocumentFootnote>();
             BoundingRegions = new ChangeTrackingList<BoundingRegion>();
             Spans = spans.ToList();
         }
@@ -44,17 +37,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="rowCount"> Number of rows in the table. </param>
         /// <param name="columnCount"> Number of columns in the table. </param>
         /// <param name="cells"> Cells contained within the table. </param>
-        /// <param name="caption"> Caption associated with the table. </param>
-        /// <param name="footnotes"> Footnotes associated with the table. </param>
         /// <param name="boundingRegions"> Bounding regions covering the table. </param>
         /// <param name="spans"> Location of the table in the reading order concatenated content. </param>
-        internal DocumentTable(int rowCount, int columnCount, IReadOnlyList<DocumentTableCell> cells, DocumentCaption caption, IReadOnlyList<DocumentFootnote> footnotes, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans)
+        internal DocumentTable(int rowCount, int columnCount, IReadOnlyList<DocumentTableCell> cells, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans)
         {
             RowCount = rowCount;
             ColumnCount = columnCount;
             Cells = cells;
-            Caption = caption;
-            Footnotes = footnotes;
             BoundingRegions = boundingRegions;
             Spans = spans;
         }

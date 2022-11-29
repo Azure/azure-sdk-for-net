@@ -12,10 +12,10 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         // Force the constructor to set the field;
         // otherwise, when getting only names, the setter will throw.
-        [CodeGenMember("fields")]
+        [CodeGenMember("Fields")]
         private IList<SearchField> _fields;
 
-        [CodeGenMember("etag")]
+        [CodeGenMember("ETag")]
         private string _etag;
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary>
         /// Gets the name of the index.
         /// </summary>
-        [CodeGenMember("name")]
+        [CodeGenMember("Name")]
         public string Name { get; }
 
         /// <summary>

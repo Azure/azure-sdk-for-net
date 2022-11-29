@@ -8,7 +8,8 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/digitaltwins/
+    - sdk/digitaltwins/ci.yml
+    - sdk/digitaltwins/Azure.DigitalTwins.Core
 
 pr:
   branches:
@@ -19,7 +20,8 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/digitaltwins/
+    - sdk/digitaltwins/ci.yml
+    - sdk/digitaltwins/Azure.DigitalTwins.Core
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -29,4 +31,3 @@ extends:
     Artifacts:
     - name: Azure.DigitalTwins.Core
       safeName: AzureDigitalTwinsCore
-

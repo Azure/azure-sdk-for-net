@@ -1,5 +1,22 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 8.0.0
+###  Feature Additions
+### Breaking Changes
+- Added properties to spark job activity
+- Added disablePublish property into FactoryRepoConfiguration
+- Added scriptBlockExecutionTimeout property into Script Activity
+
+## Version 7.0.0
+###  Feature Additions
+### Breaking Changes
+- Fixed Stored Procedure Parameters in ADF
+
+## Version 6.4.0
+###  Feature Additions
+- Added GoogleSheets connector in ADF
+- Added Synapse Spark activities in ADF
+
 ## Version 6.3.0
 ###  Feature Additions
 - Changed FactoryGitHubConfiguration url format for hostName description

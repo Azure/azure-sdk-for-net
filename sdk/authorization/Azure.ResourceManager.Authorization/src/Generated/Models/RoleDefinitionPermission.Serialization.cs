@@ -36,6 +36,26 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(DataActions))
+            {
+                writer.WritePropertyName("dataActions");
+                writer.WriteStartArray();
+                foreach (var item in DataActions)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(NotDataActions))
+            {
+                writer.WritePropertyName("notDataActions");
+                writer.WriteStartArray();
+                foreach (var item in NotDataActions)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
         }
 
@@ -43,6 +63,8 @@ namespace Azure.ResourceManager.Authorization.Models
         {
             Optional<IList<string>> actions = default;
             Optional<IList<string>> notActions = default;
+            Optional<IList<string>> dataActions = default;
+            Optional<IList<string>> notDataActions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actions"))
@@ -75,8 +97,38 @@ namespace Azure.ResourceManager.Authorization.Models
                     notActions = array;
                     continue;
                 }
+                if (property.NameEquals("dataActions"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    dataActions = array;
+                    continue;
+                }
+                if (property.NameEquals("notDataActions"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    notDataActions = array;
+                    continue;
+                }
             }
-            return new RoleDefinitionPermission(Optional.ToList(actions), Optional.ToList(notActions));
+            return new RoleDefinitionPermission(Optional.ToList(actions), Optional.ToList(notActions), Optional.ToList(dataActions), Optional.ToList(notDataActions));
         }
     }
 }

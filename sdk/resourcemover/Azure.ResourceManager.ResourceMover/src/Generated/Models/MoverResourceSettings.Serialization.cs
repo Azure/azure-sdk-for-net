@@ -36,29 +36,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     case "Microsoft.Network/networkInterfaces": return NetworkInterfaceResourceSettings.DeserializeNetworkInterfaceResourceSettings(element);
                     case "Microsoft.Network/networkSecurityGroups": return NetworkSecurityGroupResourceSettings.DeserializeNetworkSecurityGroupResourceSettings(element);
                     case "Microsoft.Network/publicIPAddresses": return PublicIPAddressResourceSettings.DeserializePublicIPAddressResourceSettings(element);
-                    case "Microsoft.Network/virtualNetworks": return VirtualNetworkResourceSettings.DeserializeVirtualNetworkResourceSettings(element);
+                    case "Microsoft.Network/virtualNetworks": return MoverVirtualNetworkResourceSettings.DeserializeMoverVirtualNetworkResourceSettings(element);
                     case "Microsoft.Sql/servers": return SqlServerResourceSettings.DeserializeSqlServerResourceSettings(element);
                     case "Microsoft.Sql/servers/databases": return SqlDatabaseResourceSettings.DeserializeSqlDatabaseResourceSettings(element);
                     case "Microsoft.Sql/servers/elasticPools": return SqlElasticPoolResourceSettings.DeserializeSqlElasticPoolResourceSettings(element);
                     case "resourceGroups": return ResourceGroupResourceSettings.DeserializeResourceGroupResourceSettings(element);
                 }
             }
-            string resourceType = default;
-            string targetResourceName = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("resourceType"))
-                {
-                    resourceType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("targetResourceName"))
-                {
-                    targetResourceName = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new MoverResourceSettings(resourceType, targetResourceName);
+            return UnknownResourceSettings.DeserializeUnknownResourceSettings(element);
         }
     }
 }

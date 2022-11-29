@@ -1,5 +1,70 @@
 # Release History
 
+## 5.3.0-beta.1 (Unreleased)
+
+### Features Added
+- Added the `AnalyzeHealthcareEntitiesOptions.FhirVersion` and `AnalyzeHealthcareEntitiesOptions.DocumentType` properties.
+- Added the `AnalyzeHealthcareEntitiesAction.FhirVersion` and `AnalyzeHealthcareEntitiesAction.DocumentType` properties.
+- Added the `AnalyzeHealthcareEntitiesResult.FhirBundle` property.
+- Added the `HealthcareEntityRelation.ConfidenceScore` property.
+- Added the `WellKnownFhirVersion` and `HealthcareDocumentType` enums.
+- Added the `TextAnalyticsActions.ExtractSummaryActions` property to support extractive summarization in a batch of actions.
+- Added the `TextAnalyticsActions.AbstractSummaryActions` property to support abstractive summarization in a batch of actions.
+- Added the `TextAnalyticsClient.StartExtractSummary` and `TextAnalyticsClient.StartExtractSummaryAsync` methods to perform extractive summarization on a collection of documents.
+- Added the `TextAnalyticsClient.StartAbstractSummary` and `TextAnalyticsClient.StartAbstractSummaryAsync` methods to perform abstractive summarization on a collection of documents.
+- Added the `DetectedLanguage.Script` property.
+- Added the `ScriptKind` enum.
+- Added the `CategorizedEntity.Resolutions` property.
+- Added the following classes: `AgeResolution`, `AreaResolution`, `BaseResolution`, `BooleanResolution`, `CurrencyResolution`, `DateTimeResolution`, `InformationResolution`, `LengthResolution`, `NumberResolution`, `NumericRangeResolution`, `OrdinalResolution`, `SpeedResolution`, `TemperatureResolution`, `TemporalSpanResolution` `VolumeResolution`, and `WeightResolution`.
+- Added the following enums: `AgeUnit`, `AreaUnit`, `DateTimeSubKind`, `InformationUnit`,`LengthUnit`, `NumberKind`, `RangeKind`, `RelativeTo`, `SpeedUnit`, `TemperatureUnit`,`TemporalModifier`, `VolumeUnit`, and `WeightUnit`.
+- Added the `AbstractSummaryResult.DetectedLanguage` property.
+- Added the `AnalyzeHealthcareEntitiesResult.DetectedLanguage` property.
+- Added the `AnalyzeSentimentResult.DetectedLanguage` property.
+- Added the `ClassifyDocumentResult.DetectedLanguage` property.
+- Added the `ExtractKeyPhrasesResult.DetectedLanguage` property.
+- Added the `ExtractSummaryResult.DetectedLanguage` property.
+- Added the `RecognizeEntitiesResult.DetectedLanguage` property.
+- Added the `RecognizeLinkedEntitiesResult.DetectedLanguage` property.
+- Added the `RecognizePiiEntitiesResult.DetectedLanguage` property.
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 5.2.0 (2022-09-08)
+
+### Features Added
+
+- Added `DisplayName` property to the following classes to set the optional display name of the operations below:
+  - `AnalyzeHealthcareEntitiesOptions`
+  - `MultiLabelClassifyOptions`
+  - `RecognizeCustomEntitiesOptions`
+  - `SingleLabelClassifyOptions`
+- Added `DisplayName` property to the following operations to read the optional display name set on options classes above:
+  - `AnalyzeHealthcareEntitiesOperation` from `AnalyzeHealthcareEntitiesOptions`
+  - `ClassifyDocumentOperation` from `MultiLabelClassifyOptions` and `SingleLabelClassifyOptions`
+  - `RecognizeCustomEntitiesOperation` from `RecognizeCustomEntitiesOptions`
+- Added the following members to `HealthcareEntityCategory` following proper naming guidelines:
+  - `Age`
+  - `GeneOrProtein`
+  - `SymptomOrSign`
+
+### Breaking Changes
+
+- Changed type `MultiLabelClassifyOptions.IncludeStatistics` from `bool` to `bool?`.
+- Changed type `RecognizeCustomEntitiesOptions.IncludeStatistics` from `bool` to `bool?`.
+- Changed type `SingleLabelClassifyOptions.IncludeStatistics` from `bool` to `bool?`.
+
+### Bugs Fixed
+
+- The values of `HealthcareEntityCategory` have been redefined to match what the service actually returns. ([#20024](https://github.com/Azure/azure-rest-api-specs/issues/20024))
+
+### Other Changes
+
+- Validate that a number of operations and model properties are only used for API versions in which they were defined, or newer API versions.
+
 ## 5.2.0-beta.4 (2022-08-12)
 
 ### Features Added

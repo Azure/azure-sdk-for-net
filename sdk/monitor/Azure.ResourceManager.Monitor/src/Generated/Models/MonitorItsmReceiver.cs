@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -18,29 +19,13 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="connectionId"> Unique identification of ITSM connection among multiple defined in above workspace. </param>
         /// <param name="ticketConfiguration"> JSON blob for the configurations of the ITSM action. CreateMultipleWorkItems option will be part of this blob as well. </param>
         /// <param name="region"> Region in which workspace resides. Supported values:&apos;centralindia&apos;,&apos;japaneast&apos;,&apos;southeastasia&apos;,&apos;australiasoutheast&apos;,&apos;uksouth&apos;,&apos;westcentralus&apos;,&apos;canadacentral&apos;,&apos;eastus&apos;,&apos;westeurope&apos;. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="workspaceId"/>, <paramref name="connectionId"/>, <paramref name="ticketConfiguration"/> or <paramref name="region"/> is null. </exception>
-        public MonitorItsmReceiver(string name, string workspaceId, string connectionId, string ticketConfiguration, string region)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="workspaceId"/>, <paramref name="connectionId"/> or <paramref name="ticketConfiguration"/> is null. </exception>
+        public MonitorItsmReceiver(string name, string workspaceId, string connectionId, string ticketConfiguration, AzureLocation region)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (workspaceId == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceId));
-            }
-            if (connectionId == null)
-            {
-                throw new ArgumentNullException(nameof(connectionId));
-            }
-            if (ticketConfiguration == null)
-            {
-                throw new ArgumentNullException(nameof(ticketConfiguration));
-            }
-            if (region == null)
-            {
-                throw new ArgumentNullException(nameof(region));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(workspaceId, nameof(workspaceId));
+            Argument.AssertNotNull(connectionId, nameof(connectionId));
+            Argument.AssertNotNull(ticketConfiguration, nameof(ticketConfiguration));
 
             Name = name;
             WorkspaceId = workspaceId;
@@ -58,6 +43,6 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> JSON blob for the configurations of the ITSM action. CreateMultipleWorkItems option will be part of this blob as well. </summary>
         public string TicketConfiguration { get; set; }
         /// <summary> Region in which workspace resides. Supported values:&apos;centralindia&apos;,&apos;japaneast&apos;,&apos;southeastasia&apos;,&apos;australiasoutheast&apos;,&apos;uksouth&apos;,&apos;westcentralus&apos;,&apos;canadacentral&apos;,&apos;eastus&apos;,&apos;westeurope&apos;. </summary>
-        public string Region { get; set; }
+        public AzureLocation Region { get; set; }
     }
 }

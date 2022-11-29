@@ -33,13 +33,27 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             if (Optional.IsDefined(EncryptionAlgorithm))
             {
-                writer.WritePropertyName("encryptionAlgorithm");
-                writer.WriteStringValue(EncryptionAlgorithm.Value.ToString());
+                if (EncryptionAlgorithm != null)
+                {
+                    writer.WritePropertyName("encryptionAlgorithm");
+                    writer.WriteStringValue(EncryptionAlgorithm.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("encryptionAlgorithm");
+                }
             }
             if (Optional.IsDefined(MsiResourceId))
             {
-                writer.WritePropertyName("msiResourceId");
-                writer.WriteStringValue(MsiResourceId);
+                if (MsiResourceId != null)
+                {
+                    writer.WritePropertyName("msiResourceId");
+                    writer.WriteStringValue(MsiResourceId);
+                }
+                else
+                {
+                    writer.WriteNull("msiResourceId");
+                }
             }
             if (Optional.IsDefined(IsEncryptionAtHostEnabled))
             {
@@ -54,7 +68,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<Uri> vaultUri = default;
             Optional<string> keyName = default;
             Optional<string> keyVersion = default;
-            Optional<JsonWebKeyEncryptionAlgorithm> encryptionAlgorithm = default;
+            Optional<JsonWebKeyEncryptionAlgorithm?> encryptionAlgorithm = default;
             Optional<ResourceIdentifier> msiResourceId = default;
             Optional<bool> encryptionAtHost = default;
             foreach (var property in element.EnumerateObject())
@@ -83,7 +97,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        encryptionAlgorithm = null;
                         continue;
                     }
                     encryptionAlgorithm = new JsonWebKeyEncryptionAlgorithm(property.Value.GetString());
@@ -93,7 +107,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        msiResourceId = null;
                         continue;
                     }
                     msiResourceId = new ResourceIdentifier(property.Value.GetString());

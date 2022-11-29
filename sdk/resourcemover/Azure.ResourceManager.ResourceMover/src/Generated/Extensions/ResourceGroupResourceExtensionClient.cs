@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.ResourceMover
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of MoveCollectionResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of MoveCollectionResources and their operations over a MoveCollectionResource. </returns>
-        public virtual MoveCollectionCollection GetMoveCollections()
+        /// <summary> Gets a collection of MoverResourceSetResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of MoverResourceSetResources and their operations over a MoverResourceSetResource. </returns>
+        public virtual MoverResourceSetCollection GetMoverResourceSets()
         {
-            return GetCachedClient(Client => new MoveCollectionCollection(Client, Id));
+            return GetCachedClient(Client => new MoverResourceSetCollection(Client, Id));
         }
     }
 }

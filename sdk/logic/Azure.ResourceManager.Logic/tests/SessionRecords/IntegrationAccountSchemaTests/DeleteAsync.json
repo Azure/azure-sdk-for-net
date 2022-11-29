@@ -1,0 +1,213 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/LogicAppRG-9192/providers/Microsoft.Logic/integrationAccounts/intergrationAccount5389?api-version=2019-05-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-4f3ac5836c307543856a50027d186e7f-502970febaf09c46-00",
+        "User-Agent": "azsdk-net-ResourceManager.Logic/1.0.0-alpha.20220824.1 (.NET Core 3.1.28; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "b6357ca43c4f8a0b5c464d458b36c52e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "331",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Aug 2022 09:08:13 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "6e5e5a04-a7cc-453b-9c50-dc537a799a85",
+        "x-ms-ratelimit-remaining-subscription-reads": "11975",
+        "x-ms-request-id": "centralus:26e0bb71-8e00-4ab1-9cc8-2d2601e64a40",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220824T090813Z:6e5e5a04-a7cc-453b-9c50-dc537a799a85"
+      },
+      "ResponseBody": {
+        "properties": {
+          "state": "Enabled"
+        },
+        "sku": {
+          "name": "Standard"
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/LogicAppRG-9192/providers/Microsoft.Logic/integrationAccounts/intergrationAccount5389",
+        "name": "intergrationAccount5389",
+        "type": "Microsoft.Logic/integrationAccounts",
+        "location": "centralus",
+        "tags": {}
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/LogicAppRG-9192/providers/Microsoft.Logic/integrationAccounts/intergrationAccount5389/schemas/schema8792?api-version=2019-05-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "10966",
+        "Content-Type": "application/json",
+        "traceparent": "00-4cfb8467ce4beb4a8cdc6831445e38c5-2e590923a391694a-00",
+        "User-Agent": "azsdk-net-ResourceManager.Logic/1.0.0-alpha.20220824.1 (.NET Core 3.1.28; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "30b4a0ea5666486a96c26b6d80d9840b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "centralus",
+        "properties": {
+          "schemaType": "Xml",
+          "content": "\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-16\u0022?\u003E\r\n\u003Cxs:schema xmlns:b=\u0022http://schemas.microsoft.com/BizTalk/2003\u0022 xmlns=\u0022http://Inbound_EDI.OrderFile\u0022 targetNamespace=\u0022http://Inbound_EDI.OrderFile\u0022 xmlns:xs=\u0022http://www.w3.org/2001/XMLSchema\u0022\u003E\r\n  \u003Cxs:annotation\u003E\r\n    \u003Cxs:appinfo\u003E\r\n      \u003Cb:schemaInfo default_pad_char=\u0022 \u0022 count_positions_by_byte=\u0022false\u0022 parser_optimization=\u0022speed\u0022 lookahead_depth=\u00223\u0022 suppress_empty_nodes=\u0022false\u0022 generate_empty_nodes=\u0022true\u0022 allow_early_termination=\u0022false\u0022 early_terminate_optional_fields=\u0022false\u0022 allow_message_breakup_of_infix_root=\u0022false\u0022 compile_parse_tables=\u0022false\u0022 standard=\u0022Flat File\u0022 root_reference=\u0022OrderFile\u0022 /\u003E\r\n      \u003CschemaEditorExtension:schemaInfo namespaceAlias=\u0022b\u0022 extensionClass=\u0022Microsoft.BizTalk.FlatFileExtension.FlatFileExtension\u0022 standardName=\u0022Flat File\u0022 xmlns:schemaEditorExtension=\u0022http://schemas.microsoft.com/BizTalk/2003/SchemaEditorExtensions\u0022 /\u003E\r\n    \u003C/xs:appinfo\u003E\r\n  \u003C/xs:annotation\u003E\r\n  \u003Cxs:element name=\u0022OrderFile\u0022\u003E\r\n    \u003Cxs:annotation\u003E\r\n      \u003Cxs:appinfo\u003E\r\n        \u003Cb:recordInfo structure=\u0022delimited\u0022 preserve_delimiter_for_empty_data=\u0022true\u0022 suppress_trailing_delimiters=\u0022false\u0022 sequence_number=\u00221\u0022 /\u003E\r\n      \u003C/xs:appinfo\u003E\r\n    \u003C/xs:annotation\u003E\r\n    \u003Cxs:complexType\u003E\r\n      \u003Cxs:sequence\u003E\r\n        \u003Cxs:annotation\u003E\r\n          \u003Cxs:appinfo\u003E\r\n            \u003Cb:groupInfo sequence_number=\u00220\u0022 /\u003E\r\n          \u003C/xs:appinfo\u003E\r\n        \u003C/xs:annotation\u003E\r\n        \u003Cxs:element name=\u0022Order\u0022\u003E\r\n          \u003Cxs:annotation\u003E\r\n            \u003Cxs:appinfo\u003E\r\n              \u003Cb:recordInfo sequence_number=\u00221\u0022 structure=\u0022delimited\u0022 preserve_delimiter_for_empty_data=\u0022true\u0022 suppress_trailing_delimiters=\u0022false\u0022 child_delimiter_type=\u0022hex\u0022 child_delimiter=\u00220x0D 0x0A\u0022 child_order=\u0022infix\u0022 /\u003E\r\n            \u003C/xs:appinfo\u003E\r\n          \u003C/xs:annotation\u003E\r\n          \u003Cxs:complexType\u003E\r\n            \u003Cxs:sequence\u003E\r\n              \u003Cxs:annotation\u003E\r\n                \u003Cxs:appinfo\u003E\r\n                  \u003Cb:groupInfo sequence_number=\u00220\u0022 /\u003E\r\n                \u003C/xs:appinfo\u003E\r\n              \u003C/xs:annotation\u003E\r\n              \u003Cxs:element name=\u0022Header\u0022\u003E\r\n                \u003Cxs:annotation\u003E\r\n                  \u003Cxs:appinfo\u003E\r\n                    \u003Cb:recordInfo sequence_number=\u00221\u0022 structure=\u0022delimited\u0022 preserve_delimiter_for_empty_data=\u0022true\u0022 suppress_trailing_delimiters=\u0022false\u0022 child_delimiter_type=\u0022char\u0022 child_delimiter=\u0022|\u0022 child_order=\u0022infix\u0022 tag_name=\u0022HDR|\u0022 /\u003E\r\n                  \u003C/xs:appinfo\u003E\r\n                \u003C/xs:annotation\u003E\r\n                \u003Cxs:complexType\u003E\r\n                  \u003Cxs:sequence\u003E\r\n                    \u003Cxs:annotation\u003E\r\n                      \u003Cxs:appinfo\u003E\r\n                        \u003Cb:groupInfo sequence_number=\u00220\u0022 /\u003E\r\n                      \u003C/xs:appinfo\u003E\r\n                    \u003C/xs:annotation\u003E\r\n                    \u003Cxs:element name=\u0022PODate\u0022 type=\u0022xs:string\u0022\u003E\r\n                      \u003Cxs:annotation\u003E\r\n                        \u003Cxs:appinfo\u003E\r\n                          \u003Cb:fieldInfo sequence_number=\u00221\u0022 justification=\u0022left\u0022 /\u003E\r\n                        \u003C/xs:appinfo\u003E\r\n                      \u003C/xs:annotation\u003E\r\n                    \u003C/xs:element\u003E\r\n                    \u003Cxs:element name=\u0022PONumber\u0022 type=\u0022xs:string\u0022\u003E\r\n                      \u003Cxs:annotation\u003E\r\n                        \u003Cxs:appinfo\u003E\r\n                          \u003Cb:fieldInfo justification=\u0022left\u0022 sequence_number=\u00222\u0022 /\u003E\r\n                        \u003C/xs:appinfo\u003E\r\n                      \u003C/xs:annotation\u003E\r\n                    \u003C/xs:element\u003E\r\n                    \u003Cxs:element name=\u0022CustomerID\u0022 type=\u0022xs:string\u0022\u003E\r\n                      \u003Cxs:annotation\u003E\r\n                        \u003Cxs:appinfo\u003E\r\n                          \u003Cb:fieldInfo sequence_number=\u00223\u0022 justification=\u0022left\u0022 /\u003E\r\n                        \u003C/xs:appinfo\u003E\r\n                      \u003C/xs:annotation\u003E\r\n                    \u003C/xs:element\u003E\r\n                    \u003Cxs:element name=\u0022CustomerContactName\u0022 type=\u0022xs:string\u0022\u003E\r\n                      \u003Cxs:annotation\u003E\r\n                        \u003Cxs:appinfo\u003E\r\n                          \u003Cb:fieldInfo sequence_number=\u00224\u0022 justification=\u0022left\u0022 /\u003E\r\n                        \u003C/xs:appinfo\u003E\r\n                      \u003C/xs:annotation\u003E\r\n                    \u003C/xs:element\u003E\r\n                    \u003Cxs:element name=\u0022CustomerContactPhone\u0022 type=\u0022xs:string\u0022\u003E\r\n                      \u003Cxs:annotation\u003E\r\n                        \u003Cxs:appinfo\u003E\r\n                          \u003Cb:fieldInfo sequence_number=\u00225\u0022 justification=\u0022left\u0022 /\u003E\r\n                        \u003C/xs:appinfo\u003E\r\n                      \u003C/xs:annotation\u003E\r\n                    \u003C/xs:element\u003E\r\n                  \u003C/xs:sequence\u003E\r\n                \u003C/xs:complexType\u003E\r\n              \u003C/xs:element\u003E\r\n              \u003Cxs:element minOccurs=\u00221\u0022 maxOccurs=\u0022unbounded\u0022 name=\u0022LineItems\u0022\u003E\r\n                \u003Cxs:annotation\u003E\r\n                  \u003Cxs:appinfo\u003E\r\n                    \u003Cb:recordInfo sequence_number=\u00222\u0022 structure=\u0022delimited\u0022 preserve_delimiter_for_empty_data=\u0022true\u0022 suppress_trailing_delimiters=\u0022false\u0022 child_delimiter_type=\u0022char\u0022 child_delimiter=\u0022|\u0022 child_order=\u0022infix\u0022 tag_name=\u0022DTL|\u0022 /\u003E\r\n                  \u003C/xs:appinfo\u003E\r\n                \u003C/xs:annotation\u003E\r\n                \u003Cxs:complexType\u003E\r\n                  \u003Cxs:sequence\u003E\r\n                    \u003Cxs:annotation\u003E\r\n                      \u003Cxs:appinfo\u003E\r\n                        \u003Cb:groupInfo sequence_number=\u00220\u0022 /\u003E\r\n                      \u003C/xs:appinfo\u003E\r\n                    \u003C/xs:annotation\u003E\r\n                    \u003Cxs:element name=\u0022PONumber\u0022 type=\u0022xs:string\u0022\u003E\r\n                      \u003Cxs:annotation\u003E\r\n                        \u003Cxs:appinfo\u003E\r\n                          \u003Cb:fieldInfo sequence_number=\u00221\u0022 justification=\u0022left\u0022 /\u003E\r\n                        \u003C/xs:appinfo\u003E\r\n                      \u003C/xs:annotation\u003E\r\n                    \u003C/xs:element\u003E\r\n                    \u003Cxs:element name=\u0022ItemOrdered\u0022 type=\u0022xs:string\u0022\u003E\r\n                      \u003Cxs:annotation\u003E\r\n                        \u003Cxs:appinfo\u003E\r\n                          \u003Cb:fieldInfo sequence_number=\u00222\u0022 justification=\u0022left\u0022 /\u003E\r\n                        \u003C/xs:appinfo\u003E\r\n                      \u003C/xs:annotation\u003E\r\n                    \u003C/xs:element\u003E\r\n                    \u003Cxs:element name=\u0022Quantity\u0022 type=\u0022xs:string\u0022\u003E\r\n                      \u003Cxs:annotation\u003E\r\n                        \u003Cxs:appinfo\u003E\r\n                          \u003Cb:fieldInfo sequence_number=\u00223\u0022 justification=\u0022left\u0022 /\u003E\r\n                        \u003C/xs:appinfo\u003E\r\n                      \u003C/xs:annotation\u003E\r\n                    \u003C/xs:element\u003E\r\n                    \u003Cxs:element name=\u0022UOM\u0022 type=\u0022xs:string\u0022\u003E\r\n                      \u003Cxs:annotation\u003E\r\n                        \u003Cxs:appinfo\u003E\r\n                          \u003Cb:fieldInfo sequence_number=\u00224\u0022 justification=\u0022left\u0022 /\u003E\r\n                        \u003C/xs:appinfo\u003E\r\n                      \u003C/xs:annotation\u003E\r\n                    \u003C/xs:element\u003E\r\n                    \u003Cxs:element name=\u0022Price\u0022 type=\u0022xs:string\u0022\u003E\r\n                      \u003Cxs:annotation\u003E\r\n                        \u003Cxs:appinfo\u003E\r\n                          \u003Cb:fieldInfo sequence_number=\u00225\u0022 justification=\u0022left\u0022 /\u003E\r\n                        \u003C/xs:appinfo\u003E\r\n                      \u003C/xs:annotation\u003E\r\n                    \u003C/xs:element\u003E\r\n                    \u003Cxs:element name=\u0022ExtendedPrice\u0022 type=\u0022xs:string\u0022\u003E\r\n                      \u003Cxs:annotation\u003E\r\n                        \u003Cxs:appinfo\u003E\r\n                          \u003Cb:fieldInfo sequence_number=\u00226\u0022 justification=\u0022left\u0022 /\u003E\r\n                        \u003C/xs:appinfo\u003E\r\n                      \u003C/xs:annotation\u003E\r\n                    \u003C/xs:element\u003E\r\n                    \u003Cxs:element name=\u0022Description\u0022 type=\u0022xs:string\u0022\u003E\r\n                      \u003Cxs:annotation\u003E\r\n                        \u003Cxs:appinfo\u003E\r\n                          \u003Cb:fieldInfo sequence_number=\u00227\u0022 justification=\u0022left\u0022 /\u003E\r\n                        \u003C/xs:appinfo\u003E\r\n                      \u003C/xs:annotation\u003E\r\n                    \u003C/xs:element\u003E\r\n                  \u003C/xs:sequence\u003E\r\n                \u003C/xs:complexType\u003E\r\n              \u003C/xs:element\u003E\r\n            \u003C/xs:sequence\u003E\r\n          \u003C/xs:complexType\u003E\r\n        \u003C/xs:element\u003E\r\n      \u003C/xs:sequence\u003E\r\n    \u003C/xs:complexType\u003E\r\n  \u003C/xs:element\u003E\r\n\u003C/xs:schema\u003E",
+          "contentType": "application/xml"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "785",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Aug 2022 09:08:16 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "7715ba8f-b4d6-41dc-a856-3298b7e90288",
+        "x-ms-ratelimit-remaining-subscription-writes": "1182",
+        "x-ms-request-id": "centralus:133cfade-11db-471f-afb0-0ebcd18c873f",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220824T090816Z:7715ba8f-b4d6-41dc-a856-3298b7e90288"
+      },
+      "ResponseBody": {
+        "properties": {
+          "schemaType": "Xml",
+          "targetNamespace": "http://Inbound_EDI.OrderFile",
+          "documentName": "OrderFile",
+          "contentLink": {
+            "uri": "https://prod-02.centralus.logic.azure.com:443/integrationAccounts/28f6057cb323449ca5a09fd89e07a982/schemas/schema8792/contents/Value?api-version=2015-08-01-preview\u0026se=2022-08-24T13%3A08%3A16.1307804Z\u0026sp=%2Fschemas%2Fschema8792%2Fread\u0026sv=1.0\u0026sig=2ID5X_KV8Hz6j_pN3cUkGTR-oJs0IgpmvZQbejANUQw",
+            "contentSize": 7901
+          },
+          "createdTime": "2022-08-24T09:08:16.1213273Z",
+          "changedTime": "2022-08-24T09:08:16.1214192Z"
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/LogicAppRG-9192/providers/Microsoft.Logic/integrationAccounts/intergrationAccount5389/schemas/schema8792",
+        "name": "schema8792",
+        "type": "Microsoft.Logic/integrationAccounts/schemas"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/LogicAppRG-9192/providers/Microsoft.Logic/integrationAccounts/intergrationAccount5389/schemas/schema8792?api-version=2019-05-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-be6f26ae19507049a8825061055e3a02-a65d3cd6a2116c43-00",
+        "User-Agent": "azsdk-net-ResourceManager.Logic/1.0.0-alpha.20220824.1 (.NET Core 3.1.28; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "a3470b2e935005719205f8dc6ef65c04",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "785",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Aug 2022 09:08:16 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "0f8baf97-b0e5-4f9f-a27d-49f27a49af22",
+        "x-ms-ratelimit-remaining-subscription-reads": "11974",
+        "x-ms-request-id": "centralus:21bca54d-e6f3-4561-8098-11cb1c9d1af0",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220824T090817Z:0f8baf97-b0e5-4f9f-a27d-49f27a49af22"
+      },
+      "ResponseBody": {
+        "properties": {
+          "schemaType": "Xml",
+          "targetNamespace": "http://Inbound_EDI.OrderFile",
+          "documentName": "OrderFile",
+          "contentLink": {
+            "uri": "https://prod-02.centralus.logic.azure.com:443/integrationAccounts/28f6057cb323449ca5a09fd89e07a982/schemas/schema8792/contents/Value?api-version=2015-08-01-preview\u0026se=2022-08-24T13%3A08%3A16.9276603Z\u0026sp=%2Fschemas%2Fschema8792%2Fread\u0026sv=1.0\u0026sig=_PYRYjhL3iUjUlW4SKdnyvvoxfrZLKV3vIYdLynH_yM",
+            "contentSize": 7901
+          },
+          "createdTime": "2022-08-24T09:08:16.1213273Z",
+          "changedTime": "2022-08-24T09:08:16.1214192Z"
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/LogicAppRG-9192/providers/Microsoft.Logic/integrationAccounts/intergrationAccount5389/schemas/schema8792",
+        "name": "schema8792",
+        "type": "Microsoft.Logic/integrationAccounts/schemas"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/LogicAppRG-9192/providers/Microsoft.Logic/integrationAccounts/intergrationAccount5389/schemas/schema8792?api-version=2019-05-01",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-b626e559f3b15e4da97b9ea3212b67a9-8f9d23c541f2ac48-00",
+        "User-Agent": "azsdk-net-ResourceManager.Logic/1.0.0-alpha.20220824.1 (.NET Core 3.1.28; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "3a622c4d7ee8263eca6db97aa01cdb6d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Wed, 24 Aug 2022 09:08:17 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "82d4ba4f-9a89-40fe-94b9-4e3637473b13",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14997",
+        "x-ms-request-id": "centralus:b5f11311-bdab-423a-bc3d-1f0309f61f0b",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220824T090817Z:82d4ba4f-9a89-40fe-94b9-4e3637473b13"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/LogicAppRG-9192/providers/Microsoft.Logic/integrationAccounts/intergrationAccount5389/schemas/schema8792?api-version=2019-05-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-06f512ec513fbc45b5b10b4cd8d7b36c-4f4b4edd03b73847-00",
+        "User-Agent": "azsdk-net-ResourceManager.Logic/1.0.0-alpha.20220824.1 (.NET Core 3.1.28; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "2b5d3ac88b7d56972eae9d605d8dd99f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "140",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Aug 2022 09:08:18 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "8dce5a46-3556-49a2-93b9-f0f9b575645a",
+        "x-ms-ratelimit-remaining-subscription-reads": "11973",
+        "x-ms-request-id": "centralus:1843187d-175a-45c5-8530-2a7da169217b",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220824T090818Z:8dce5a46-3556-49a2-93b9-f0f9b575645a"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "SchemaNotFound",
+          "message": "The schema \u0027schema8792\u0027 could not be found in integration account \u0027intergrationAccount5389\u0027."
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1109125793",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

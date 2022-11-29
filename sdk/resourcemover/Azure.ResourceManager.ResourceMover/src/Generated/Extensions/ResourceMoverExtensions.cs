@@ -68,10 +68,10 @@ namespace Azure.ResourceManager.ResourceMover
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MoveCollectionResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<MoveCollectionResource> GetMoveCollectionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MoverResourceSetResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<MoverResourceSetResource> GetMoverResourceSetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetMoveCollectionsAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetMoverResourceSetsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.ResourceMover
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MoveCollectionResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<MoveCollectionResource> GetMoveCollections(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MoverResourceSetResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<MoverResourceSetResource> GetMoverResourceSets(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetMoveCollections(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetMoverResourceSets(cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.ResourceMover
             );
         }
 
-        /// <summary> Gets a collection of MoveCollectionResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of MoverResourceSetResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of MoveCollectionResources and their operations over a MoveCollectionResource. </returns>
-        public static MoveCollectionCollection GetMoveCollections(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of MoverResourceSetResources and their operations over a MoverResourceSetResource. </returns>
+        public static MoverResourceSetCollection GetMoverResourceSets(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetMoveCollections();
+            return GetExtensionClient(resourceGroupResource).GetMoverResourceSets();
         }
 
         /// <summary>
@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.ResourceMover
         /// Operation Id: MoveCollections_Get
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="moveCollectionName"> The Move Collection Name. </param>
+        /// <param name="moverResourceSetName"> The Move Collection Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="moveCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="moveCollectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="moverResourceSetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="moverResourceSetName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<MoveCollectionResource>> GetMoveCollectionAsync(this ResourceGroupResource resourceGroupResource, string moveCollectionName, CancellationToken cancellationToken = default)
+        public static async Task<Response<MoverResourceSetResource>> GetMoverResourceSetAsync(this ResourceGroupResource resourceGroupResource, string moverResourceSetName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetMoveCollections().GetAsync(moveCollectionName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetMoverResourceSets().GetAsync(moverResourceSetName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -126,49 +126,49 @@ namespace Azure.ResourceManager.ResourceMover
         /// Operation Id: MoveCollections_Get
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="moveCollectionName"> The Move Collection Name. </param>
+        /// <param name="moverResourceSetName"> The Move Collection Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="moveCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="moveCollectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="moverResourceSetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="moverResourceSetName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<MoveCollectionResource> GetMoveCollection(this ResourceGroupResource resourceGroupResource, string moveCollectionName, CancellationToken cancellationToken = default)
+        public static Response<MoverResourceSetResource> GetMoverResourceSet(this ResourceGroupResource resourceGroupResource, string moverResourceSetName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetMoveCollections().Get(moveCollectionName, cancellationToken);
+            return resourceGroupResource.GetMoverResourceSets().Get(moverResourceSetName, cancellationToken);
         }
 
-        #region MoveCollectionResource
+        #region MoverResourceSetResource
         /// <summary>
-        /// Gets an object representing a <see cref="MoveCollectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MoveCollectionResource.CreateResourceIdentifier" /> to create a <see cref="MoveCollectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MoverResourceSetResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MoverResourceSetResource.CreateResourceIdentifier" /> to create a <see cref="MoverResourceSetResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MoveCollectionResource" /> object. </returns>
-        public static MoveCollectionResource GetMoveCollectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MoverResourceSetResource" /> object. </returns>
+        public static MoverResourceSetResource GetMoverResourceSetResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                MoveCollectionResource.ValidateResourceId(id);
-                return new MoveCollectionResource(client, id);
+                MoverResourceSetResource.ValidateResourceId(id);
+                return new MoverResourceSetResource(client, id);
             }
             );
         }
         #endregion
 
-        #region MoveResource
+        #region MoverResource
         /// <summary>
-        /// Gets an object representing a <see cref="MoveResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MoveResource.CreateResourceIdentifier" /> to create a <see cref="MoveResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MoverResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MoverResource.CreateResourceIdentifier" /> to create a <see cref="MoverResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MoveResource" /> object. </returns>
-        public static MoveResource GetMoveResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MoverResource" /> object. </returns>
+        public static MoverResource GetMoverResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                MoveResource.ValidateResourceId(id);
-                return new MoveResource(client, id);
+                MoverResource.ValidateResourceId(id);
+                return new MoverResource(client, id);
             }
             );
         }

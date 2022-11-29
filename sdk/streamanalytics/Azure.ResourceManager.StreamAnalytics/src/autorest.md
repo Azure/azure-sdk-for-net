@@ -19,23 +19,25 @@ modelerfour:
 list-exception:
 - /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StreamAnalytics/streamingjobs/{jobName}/transformations/{transformationName}
 
+# add this configuration to avoid the type of cluster is changed to writeablesubresource from ClusterInfo automatically,The writeablesubresource type cannot fail to have the nullable attribute. In tests, the return value of the cluster is null.
+no-property-type-replacement:
+- ClusterInfo
 rename-mapping:
   SampleInput.dataLocale: dataLocalion|azure-location
   StreamingJob.properties.dataLocale: dataLocalion|azure-location
   StreamingJob.properties.jobId: -|uuid
   ClusterJob.id: -|arm-id
+  ClusterInfo.id: -|arm-id
   ClusterProperties.clusterId: -|uuid
-  LastOutputEventTimestamp.lastOutputEventTime: lastOutputEventOn|datetime
-  LastOutputEventTimestamp.lastUpdateTime: lastUpdatedOn|datetime
-  Output.properties.timeWindow: -|datetime
+  LastOutputEventTimestamp.lastOutputEventTime: lastOutputEventOn|date-time
+  LastOutputEventTimestamp.lastUpdateTime: lastUpdatedOn|date-time
   PowerBIOutputDataSource.properties.groupId: -|uuid
-  PrivateEndpointProperties.createdDate: createdOn|datetime
+  PrivateEndpointProperties.createdDate: createdOn|date-time
   PrivateLinkServiceConnection.properties.privateLinkServiceId: -|arm-id
-  SampleInputResult.lastArrivalTime: lastArrivedOn|datetime
+  SampleInputResult.lastArrivalTime: lastArrivedOn|date-time
   SubResource.id: -|arm-id
   SubResource.type: -|resource-type
-  AzureSqlReferenceInputDataSource.properties.refreshRate: -|date
-  DiagnosticCondition.since: -|datetime
+  DiagnosticCondition.since: -|date-time
   RawReferenceInputDataSource.properties.payload: -|any
   RawStreamInputDataSource.properties.payload: -|any
   AvroSerialization: AvroFormatSerialization
@@ -98,7 +100,7 @@ rename-mapping:
   Transformation: StreamingJobTransformation
   UpdateMode: StreamingJobFunctionUpdateMode
   UdfType: StreamingJobFunctionUdfType
-  
+
 prepend-rp-prefix:
   - AuthenticationMode
   - Cluster
@@ -210,5 +212,42 @@ directive:
             'modelAsString': true
           }
         };
-
+- from: swagger-document
+  where: $.definitions.StreamingJobProperties.properties.jobStorageAccount
+  transform: >
+        $["x-nullable"] = true;
+- from: swagger-document
+  where: $.definitions.PrivateEndpoint.properties.etag
+  transform: >
+        $["x-nullable"] = true;
+- from: swagger-document
+  where: $.definitions.StreamingJobProperties.properties.cluster
+  transform: >
+        $["x-nullable"] = true;
+- from: swagger-document
+  where: $.definitions.FunctionInput.properties.isConfigurationParameter
+  transform: >
+        $["x-nullable"] = true;
+# Fix format for RefreshRate
+- from: swagger-document
+  where: $.definitions.AzureSqlReferenceInputDataSourceProperties
+  transform: >
+    $.properties.refreshRate['format'] = 'time';
+    $.properties.refreshRate['x-ms-client-name'] = 'refreshInterval';
+- from: swagger-document
+  where: $.definitions.BlobReferenceInputDataSourceProperties
+  transform: >
+    $.properties.fullSnapshotRefreshRate['format'] = 'time';
+    $.properties.fullSnapshotRefreshRate['x-ms-client-name'] = 'fullSnapshotRefreshInterval';
+- from: swagger-document
+  where: $.definitions.BlobReferenceInputDataSourceProperties
+  transform: >
+    $.properties.deltaSnapshotRefreshRate['format'] = 'time';
+    $.properties.deltaSnapshotRefreshRate['x-ms-client-name'] = 'deltaSnapshotRefreshInterval';
+# Fix format for timeWindow
+- from: swagger-document
+  where: $.definitions.OutputProperties
+  transform: >
+    $.properties.timeWindow['format'] = 'time';
+    $.properties.timeWindow['x-ms-client-name'] = 'timeFrame';
 ```

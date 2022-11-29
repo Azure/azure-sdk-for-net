@@ -12,10 +12,10 @@ namespace Azure.ResourceManager.Monitor.Models
     /// Please note <see cref="AlertRuleCondition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="LocationThresholdRuleCondition"/>, <see cref="ManagementEventRuleCondition"/> and <see cref="ThresholdRuleCondition"/>.
     /// </summary>
-    public partial class AlertRuleCondition
+    public abstract partial class AlertRuleCondition
     {
         /// <summary> Initializes a new instance of AlertRuleCondition. </summary>
-        public AlertRuleCondition()
+        protected AlertRuleCondition()
         {
         }
 

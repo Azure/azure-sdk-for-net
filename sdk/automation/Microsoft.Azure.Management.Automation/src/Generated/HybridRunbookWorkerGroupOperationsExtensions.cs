@@ -185,12 +185,12 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='hybridRunbookWorkerGroupName'>
             /// The hybrid runbook worker group name
             /// </param>
-            /// <param name='parameters'>
+            /// <param name='hybridRunbookWorkerGroupUpdationParameters'>
             /// The hybrid runbook worker group
             /// </param>
-            public static HybridRunbookWorkerGroup Update(this IHybridRunbookWorkerGroupOperations operations, string resourceGroupName, string automationAccountName, string hybridRunbookWorkerGroupName, HybridRunbookWorkerGroupCreateOrUpdateParameters parameters)
+            public static HybridRunbookWorkerGroup Update(this IHybridRunbookWorkerGroupOperations operations, string resourceGroupName, string automationAccountName, string hybridRunbookWorkerGroupName, HybridRunbookWorkerGroupCreateOrUpdateParameters hybridRunbookWorkerGroupUpdationParameters)
             {
-                return operations.UpdateAsync(resourceGroupName, automationAccountName, hybridRunbookWorkerGroupName, parameters).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, automationAccountName, hybridRunbookWorkerGroupName, hybridRunbookWorkerGroupUpdationParameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -209,15 +209,15 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='hybridRunbookWorkerGroupName'>
             /// The hybrid runbook worker group name
             /// </param>
-            /// <param name='parameters'>
+            /// <param name='hybridRunbookWorkerGroupUpdationParameters'>
             /// The hybrid runbook worker group
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<HybridRunbookWorkerGroup> UpdateAsync(this IHybridRunbookWorkerGroupOperations operations, string resourceGroupName, string automationAccountName, string hybridRunbookWorkerGroupName, HybridRunbookWorkerGroupCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<HybridRunbookWorkerGroup> UpdateAsync(this IHybridRunbookWorkerGroupOperations operations, string resourceGroupName, string automationAccountName, string hybridRunbookWorkerGroupName, HybridRunbookWorkerGroupCreateOrUpdateParameters hybridRunbookWorkerGroupUpdationParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, automationAccountName, hybridRunbookWorkerGroupName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, automationAccountName, hybridRunbookWorkerGroupName, hybridRunbookWorkerGroupUpdationParameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

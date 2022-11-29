@@ -13,8 +13,8 @@
 // limitations under the License.
 
 ﻿using Microsoft.Azure.Batch.Conventions.Files.UnitTests.Utilities;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Auth;
+using Azure.Storage.Blobs;
+using Azure.Storage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,13 +30,13 @@ namespace Microsoft.Azure.Batch.Conventions.Files.UnitTests
         public void CannotCreateOutputStorageForNullTask()
         {
             CloudTask task = null;
-            CloudStorageAccount storageAccount = new CloudStorageAccount(new StorageCredentials("fake", "ZmFrZQ=="), true);
-            var ex = Assert.Throws<ArgumentNullException>(() => task.OutputStorage(storageAccount));
+            BlobServiceClient blobClient = new BlobServiceClient(new Uri("http://fakestorageaccount.blob.core.windows.net"), new StorageSharedKeyCredential("fake", "ZmFrZQ=="));
+            var ex = Assert.Throws<ArgumentNullException>(() => task.OutputStorage(blobClient));
             Assert.Equal("task", ex.ParamName);
         }
 
         [Fact]
-        public void CannotCreateOutputStorageForNullStorageAccount()
+        public void CannotCreateOutputStorageForNullBlobServiceClient()
         {
             var taskResponse = new Batch.Protocol.Models.CloudTask
             {
@@ -47,9 +47,9 @@ namespace Microsoft.Azure.Batch.Conventions.Files.UnitTests
             using (var batchClient = BatchClient.Open(new FakeBatchServiceClient(taskResponse)))
             {
                 CloudTask task = batchClient.JobOperations.GetTask("fakejob", "faketask");
-                CloudStorageAccount storageAccount = null;
-                var ex = Assert.Throws<ArgumentNullException>(() => task.OutputStorage(storageAccount));
-                Assert.Equal("storageAccount", ex.ParamName);
+                BlobServiceClient blobClient = null;
+                var ex = Assert.Throws<ArgumentNullException>(() => task.OutputStorage(blobClient));
+                Assert.Equal("blobClient", ex.ParamName);
             }
         }
 

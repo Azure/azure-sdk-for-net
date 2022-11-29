@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
         /// <summary> All encryption configuration for a resource. </summary>
         internal EncryptionProperties Encryption { get; set; }
         /// <summary> All Customer-managed key encryption properties for the resource. </summary>
-        public CustomerManagedKeyEncryptionProperties CustomerManagedKeyEncryption
+        public CmkEncryptionProperties CustomerManagedKeyEncryption
         {
             get => Encryption is null ? default : Encryption.CustomerManagedKeyEncryption;
             set

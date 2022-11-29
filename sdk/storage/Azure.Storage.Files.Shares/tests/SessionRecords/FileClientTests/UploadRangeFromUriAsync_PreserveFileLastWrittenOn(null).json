@@ -315,7 +315,7 @@
           "(.NET 6.0.1; Microsoft Windows 10.0.19044)"
         ],
         "x-ms-client-request-id": "655dc898-4759-fc03-d02c-e6d66d587dc5",
-        "x-ms-copy-source": "https://0c2xscnapby3pev24a.file.preprod.core.windows.net/test-share-07436c64-3624-34fa-a16a-3e89eecb8668/test-directory-ffd50f4c-dfc3-b876-625c-e552711f0832/test-file-fb135f34-9724-b0df-5b47-fd324a05a0a9?sv=2021-10-04\u0026se=2022-01-12T19%3A05%3A49Z\u0026sr=f\u0026sp=r\u0026sig=Sanitized",
+        "x-ms-copy-source": "https://0c2xscnapby3pev24a.file.preprod.core.windows.net/test-share-07436c64-3624-34fa-a16a-3e89eecb8668/test-directory-ffd50f4c-dfc3-b876-625c-e552711f0832/test-file-fb135f34-9724-b0df-5b47-fd324a05a0a9?sv=2021-12-02\u0026se=2022-01-12T19%3A05%3A49Z\u0026sr=f\u0026sp=r\u0026sig=Sanitized",
         "x-ms-date": "Tue, 11 Jan 2022 19:05:49 GMT",
         "x-ms-file-last-write-time": "Now",
         "x-ms-range": "bytes=0-1023",

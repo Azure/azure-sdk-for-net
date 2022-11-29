@@ -28,10 +28,11 @@ namespace Azure.Communication.JobRouter
         /// <summary>
         /// Unique key that identifies this policy.
         /// </summary>
-        public string ClassificationPolicyId { get; set; }
+        public string ClassificationPolicyId { get; }
 
         /// <summary> Friendly name of this policy. </summary>
         public string Name { get; set; }
+
         /// <summary> The fallback queue to select if the queue selector does not find a match. </summary>
         public string FallbackQueueId { get; set; }
 
