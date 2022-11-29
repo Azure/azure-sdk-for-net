@@ -66,6 +66,11 @@ namespace Azure.Storage.Files.DataLake.Models
         public string EncryptionScope { get; internal set; }
 
         /// <summary>
+        /// Encryption context.  Only applicable for files.
+        /// </summary>
+        public string EncryptionContext { get; internal set; }
+
+        /// <summary>
         /// Prevent direct instantiation of PathItem instances.
         /// You can use DataLakeModelFactory.PathItem instead.
         /// </summary>

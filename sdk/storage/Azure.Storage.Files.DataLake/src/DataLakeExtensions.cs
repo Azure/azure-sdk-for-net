@@ -45,7 +45,7 @@ namespace Azure.Storage.Files.DataLake
                     PreventEncryptionScopeOverride = containerProperties.PreventEncryptionScopeOverride
                 };
 
-        internal static FileDownloadDetails ToFileDownloadDetails(this BlobDownloadDetails blobDownloadProperties) =>
+        internal static FileDownloadDetails ToFileDownloadDetails(this BlobDownloadDetails blobDownloadProperties, string encryptionContext) =>
             new FileDownloadDetails()
             {
                 LastModified = blobDownloadProperties.LastModified,
@@ -66,26 +66,35 @@ namespace Azure.Storage.Files.DataLake
                 AcceptRanges = blobDownloadProperties.AcceptRanges,
                 IsServerEncrypted = blobDownloadProperties.IsServerEncrypted,
                 EncryptionKeySha256 = blobDownloadProperties.EncryptionKeySha256,
-                ContentHash = blobDownloadProperties.BlobContentHash
+                ContentHash = blobDownloadProperties.BlobContentHash,
+                EncryptionContext = encryptionContext
             };
 
-        internal static FileDownloadInfo ToFileDownloadInfo(this BlobDownloadInfo blobDownloadInfo) =>
-            new FileDownloadInfo()
+        internal static FileDownloadInfo ToFileDownloadInfo(this Response<BlobDownloadInfo> blobDownloadInfoResponse)
+        {
+            blobDownloadInfoResponse.GetRawResponse().Headers.TryGetValue(Constants.DataLake.EncryptionContextHeaderName, out string encryptionContext);
+            FileDownloadInfo fileDownloadInfo = new FileDownloadInfo()
             {
-                ContentLength = blobDownloadInfo.ContentLength,
-                Content = blobDownloadInfo.Content,
-                ContentHash = blobDownloadInfo.ContentHash,
-                Properties = blobDownloadInfo.Details.ToFileDownloadDetails()
+                ContentLength = blobDownloadInfoResponse.Value.ContentLength,
+                Content = blobDownloadInfoResponse.Value.Content,
+                ContentHash = blobDownloadInfoResponse.Value.ContentHash,
+                Properties = blobDownloadInfoResponse.Value.Details.ToFileDownloadDetails(encryptionContext)
             };
+            return fileDownloadInfo;
+        }
 
-        internal static FileDownloadInfo ToFileDownloadInfo(this BlobDownloadStreamingResult blobDownloadStreamingResult) =>
-            new FileDownloadInfo()
+        internal static FileDownloadInfo ToFileDownloadInfo(this Response<BlobDownloadStreamingResult> blobDownloadStreamingResultResponse)
+        {
+            blobDownloadStreamingResultResponse.GetRawResponse().Headers.TryGetValue(Constants.DataLake.EncryptionContextHeaderName, out string encryptionContext);
+            FileDownloadInfo fileDownloadInfo = new FileDownloadInfo()
             {
-                ContentLength = blobDownloadStreamingResult.Details.ContentLength,
-                Content = blobDownloadStreamingResult.Content,
-                ContentHash = blobDownloadStreamingResult.Details.ContentHash,
-                Properties = blobDownloadStreamingResult.Details.ToFileDownloadDetails()
+                ContentLength = blobDownloadStreamingResultResponse.Value.Details.ContentLength,
+                Content = blobDownloadStreamingResultResponse.Value.Content,
+                ContentHash = blobDownloadStreamingResultResponse.Value.Details.ContentHash,
+                Properties = blobDownloadStreamingResultResponse.Value.Details.ToFileDownloadDetails(encryptionContext)
             };
+            return fileDownloadInfo;
+        }
 
         internal static PathProperties ToPathProperties(this Response<BlobProperties> blobPropertiesResponse)
         {
@@ -584,7 +593,8 @@ namespace Azure.Storage.Files.DataLake
                 Permissions = path.Permissions,
                 CreatedOn = ParseFileTimeString(path.CreationTime),
                 ExpiresOn = ParseFileTimeString(path.ExpiryTime),
-                EncryptionScope = path.EncryptionScope
+                EncryptionScope = path.EncryptionScope,
+                EncryptionContext = path.EncryptionContext,
             };
         }
 

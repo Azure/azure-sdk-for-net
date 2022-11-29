@@ -150,6 +150,11 @@ namespace Azure.Storage.Files.DataLake.Models
 #pragma warning restore CA1819 // Properties should not return arrays
 
         /// <summary>
+        /// Encryption context of the file.
+        /// </summary>
+        public string EncryptionContext { get; internal set; }
+
+        /// <summary>
         /// Prevent direct instantiation of FileDownloadDetails instances.
         /// You can use DataLakeModelFactory.FileDownloadDetails instead.
         /// </summary>
