@@ -1731,8 +1731,11 @@ namespace Azure.AI.TextAnalytics
             TextAnalyticsActions actions,
             string language = default,
             AnalyzeActionsOptions options = default,
-            CancellationToken cancellationToken = default) =>
-            await _serviceClient.StartAnalyzeActionsAsync(documents, actions, language, options, cancellationToken).ConfigureAwait(false);
+            CancellationToken cancellationToken = default)
+        {
+            options?.CheckSupported(ServiceVersion);
+            return await _serviceClient.StartAnalyzeActionsAsync(documents, actions, language, options, cancellationToken).ConfigureAwait(false);
+        }
 
         /// <summary>
         /// Performs one or more text analysis actions on a set of documents. The list of supported actions includes:
@@ -1775,8 +1778,11 @@ namespace Azure.AI.TextAnalytics
             TextAnalyticsActions actions,
             string language = default,
             AnalyzeActionsOptions options = default,
-            CancellationToken cancellationToken = default) =>
-            _serviceClient.StartAnalyzeActions(documents, actions, language, options, cancellationToken);
+            CancellationToken cancellationToken = default)
+        {
+            options?.CheckSupported(ServiceVersion);
+            return _serviceClient.StartAnalyzeActions(documents, actions, language, options, cancellationToken);
+        }
 
         /// <summary>
         /// Performs one or more text analysis actions on a set of documents. The list of supported actions includes:
@@ -1817,8 +1823,11 @@ namespace Azure.AI.TextAnalytics
             IEnumerable<TextDocumentInput> documents,
             TextAnalyticsActions actions,
             AnalyzeActionsOptions options = default,
-            CancellationToken cancellationToken = default) =>
-            _serviceClient.StartAnalyzeActions(documents, actions, options, cancellationToken);
+            CancellationToken cancellationToken = default)
+        {
+            options?.CheckSupported(ServiceVersion);
+            return _serviceClient.StartAnalyzeActions(documents, actions, options, cancellationToken);
+        }
 
         /// <summary>
         /// Performs one or more text analysis actions on a set of documents. The list of supported actions includes:
@@ -1859,8 +1868,11 @@ namespace Azure.AI.TextAnalytics
             IEnumerable<TextDocumentInput> documents,
             TextAnalyticsActions actions,
             AnalyzeActionsOptions options = default,
-            CancellationToken cancellationToken = default) =>
-            await _serviceClient.StartAnalyzeActionsAsync(documents, actions, options, cancellationToken).ConfigureAwait(false);
+            CancellationToken cancellationToken = default)
+        {
+            options?.CheckSupported(ServiceVersion);
+            return await _serviceClient.StartAnalyzeActionsAsync(documents, actions, options, cancellationToken).ConfigureAwait(false);
+        }
 
         #endregion
 

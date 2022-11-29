@@ -389,7 +389,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
         [RecordedTest]
         [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
-        public void MultiLabelClassifyBatchWithDefaultLanguageThrows()
+        public void RecognizeCustomEntitiesBatchWithDefaultLanguageThrows()
         {
             TestDiagnostics = false;
 
