@@ -27,6 +27,8 @@ namespace Azure.Messaging.WebPubSub.Clients
     [SuppressMessage("Design", "CA1001:Types that own disposable fields should be disposable", Justification = "We don't want user to use client within a using block")]
     public class WebPubSubClient
     {
+        private const string ErrorNameDuplicate = "Duplicate";
+
         // Some exposed properties for testing
         internal IWebSocketClientFactory WebSocketClientFactory { get; set; }
         internal TimeSpan RecoverDelay { get; set; } = TimeSpan.FromSeconds(1);
@@ -36,7 +38,7 @@ namespace Azure.Messaging.WebPubSub.Clients
         private readonly WebPubSubProtocol _protocol;
         private readonly ConcurrentDictionary<string, WebPubSubGroup> _groups = new();
         private readonly WebPubSubRetryPolicy _reconnectRetryPolicy;
-        private readonly WebPubSubRetryPolicy _operationRetryPolicy;
+        private readonly WebPubSubRetryPolicy _messageRetryPolicy;
         private readonly ClientState _clientState;
         private ulong _nextAckId;
 
@@ -84,7 +86,7 @@ namespace Azure.Messaging.WebPubSub.Clients
             _clientState = new ClientState();
 
             _reconnectRetryPolicy = new WebPubSubRetryPolicy(_options.ReconnectRetryOptions);
-            _operationRetryPolicy = new WebPubSubRetryPolicy(_options.MessageRetryOptions);
+            _messageRetryPolicy = new WebPubSubRetryPolicy(_options.MessageRetryOptions);
         }
 
         /// <summary>
@@ -331,9 +333,9 @@ namespace Azure.Messaging.WebPubSub.Clients
             if (_ackCache.TryRemove(ackMessage.AckId, out var entity))
             {
                 if (ackMessage.Success ||
-                    ackMessage.Error?.Name == "Duplicate")
+                    ackMessage.Error?.Name == ErrorNameDuplicate)
                 {
-                    entity.SetResult(new WebPubSubResult(ackMessage.AckId, ackMessage.Error?.Name == "Duplicate"));
+                    entity.SetResult(new WebPubSubResult(ackMessage.AckId, ackMessage.Error?.Name == ErrorNameDuplicate));
                     return;
                 }
 
@@ -343,7 +345,7 @@ namespace Azure.Messaging.WebPubSub.Clients
 
         private AckEntity CreateAckEntity(ulong ackId)
         {
-            return _ackCache.AddOrUpdate(ackId, new AckEntity(ackId), (_, oldEntity) => oldEntity);
+            return _ackCache.GetOrAdd(ackId, id => new AckEntity(id));
         }
 
         private void ThrowIfDisposed()
@@ -376,7 +378,7 @@ namespace Azure.Messaging.WebPubSub.Clients
                 catch (Exception)
                 {
                     retryAttempt++;
-                    var delay = _operationRetryPolicy.NextRetryDelay(new RetryContext { RetryAttempt = retryAttempt });
+                    var delay = _messageRetryPolicy.NextRetryDelay(new RetryContext { RetryAttempt = retryAttempt });
 
                     if (delay == null)
                     {

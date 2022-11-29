@@ -15,9 +15,7 @@ namespace Azure.Messaging.WebPubSub.Clients
     /// </summary>
     internal class WebPubSubGroup
     {
-        private volatile bool _joined;
-
-        public bool Joined { get { return _joined; } set { _joined = value; } }
+        public bool Joined { get; set; }
 
         internal WebPubSubGroup(string name)
         {
