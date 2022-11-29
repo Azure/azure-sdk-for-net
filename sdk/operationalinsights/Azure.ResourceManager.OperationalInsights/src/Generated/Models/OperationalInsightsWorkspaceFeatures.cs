@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="immediatePurgeDataOn30Days"> Flag that describes if we want to remove the data after 30 days. </param>
         /// <param name="isLogAccessUsingOnlyResourcePermissionsEnabled"> Flag that indicate which permission to use - resource or workspace or both. </param>
         /// <param name="clusterResourceId"> Dedicated LA cluster resourceId that is linked to the workspaces. </param>
-        /// <param name="disableLocalAuth"> Disable Non-AAD based Auth. </param>
+        /// <param name="isLocalAuthDisabled"> Disable Non-AAD based Auth. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal OperationalInsightsWorkspaceFeatures(bool? isDataExportEnabled, bool? immediatePurgeDataOn30Days, bool? isLogAccessUsingOnlyResourcePermissionsEnabled, ResourceIdentifier clusterResourceId, bool? disableLocalAuth, IDictionary<string, BinaryData> additionalProperties)
+        internal OperationalInsightsWorkspaceFeatures(bool? isDataExportEnabled, bool? immediatePurgeDataOn30Days, bool? isLogAccessUsingOnlyResourcePermissionsEnabled, ResourceIdentifier clusterResourceId, bool? isLocalAuthDisabled, IDictionary<string, BinaryData> additionalProperties)
         {
             IsDataExportEnabled = isDataExportEnabled;
             ImmediatePurgeDataOn30Days = immediatePurgeDataOn30Days;
             IsLogAccessUsingOnlyResourcePermissionsEnabled = isLogAccessUsingOnlyResourcePermissionsEnabled;
             ClusterResourceId = clusterResourceId;
-            DisableLocalAuth = disableLocalAuth;
+            IsLocalAuthDisabled = isLocalAuthDisabled;
             AdditionalProperties = additionalProperties;
         }
 
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Dedicated LA cluster resourceId that is linked to the workspaces. </summary>
         public ResourceIdentifier ClusterResourceId { get; set; }
         /// <summary> Disable Non-AAD based Auth. </summary>
-        public bool? DisableLocalAuth { get; set; }
+        public bool? IsLocalAuthDisabled { get; set; }
         /// <summary>
         /// Additional Properties
         /// <para>

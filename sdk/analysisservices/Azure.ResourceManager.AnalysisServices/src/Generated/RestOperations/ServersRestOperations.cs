@@ -653,7 +653,7 @@ namespace Azure.ResourceManager.AnalysisServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SkuEnumerationForNewResourceResult>> ListSkusForNewAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<NewResourceResultSkuEnumeration>> ListSkusForNewAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -663,9 +663,9 @@ namespace Azure.ResourceManager.AnalysisServices
             {
                 case 200:
                     {
-                        SkuEnumerationForNewResourceResult value = default;
+                        NewResourceResultSkuEnumeration value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SkuEnumerationForNewResourceResult.DeserializeSkuEnumerationForNewResourceResult(document.RootElement);
+                        value = NewResourceResultSkuEnumeration.DeserializeNewResourceResultSkuEnumeration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -678,7 +678,7 @@ namespace Azure.ResourceManager.AnalysisServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SkuEnumerationForNewResourceResult> ListSkusForNew(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<NewResourceResultSkuEnumeration> ListSkusForNew(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -688,9 +688,9 @@ namespace Azure.ResourceManager.AnalysisServices
             {
                 case 200:
                     {
-                        SkuEnumerationForNewResourceResult value = default;
+                        NewResourceResultSkuEnumeration value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SkuEnumerationForNewResourceResult.DeserializeSkuEnumerationForNewResourceResult(document.RootElement);
+                        value = NewResourceResultSkuEnumeration.DeserializeNewResourceResultSkuEnumeration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -726,7 +726,7 @@ namespace Azure.ResourceManager.AnalysisServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SkuEnumerationForExistingResourceResult>> ListSkusForExistingAsync(string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
+        public async Task<Response<ExistingResourceResultSkuEnumeration>> ListSkusForExistingAsync(string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -738,9 +738,9 @@ namespace Azure.ResourceManager.AnalysisServices
             {
                 case 200:
                     {
-                        SkuEnumerationForExistingResourceResult value = default;
+                        ExistingResourceResultSkuEnumeration value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SkuEnumerationForExistingResourceResult.DeserializeSkuEnumerationForExistingResourceResult(document.RootElement);
+                        value = ExistingResourceResultSkuEnumeration.DeserializeExistingResourceResultSkuEnumeration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -755,7 +755,7 @@ namespace Azure.ResourceManager.AnalysisServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SkuEnumerationForExistingResourceResult> ListSkusForExisting(string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
+        public Response<ExistingResourceResultSkuEnumeration> ListSkusForExisting(string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -767,9 +767,9 @@ namespace Azure.ResourceManager.AnalysisServices
             {
                 case 200:
                     {
-                        SkuEnumerationForExistingResourceResult value = default;
+                        ExistingResourceResultSkuEnumeration value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SkuEnumerationForExistingResourceResult.DeserializeSkuEnumerationForExistingResourceResult(document.RootElement);
+                        value = ExistingResourceResultSkuEnumeration.DeserializeExistingResourceResultSkuEnumeration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

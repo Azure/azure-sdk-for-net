@@ -3,35 +3,43 @@
 ## 5.3.0-beta.1 (Unreleased)
 
 ### Features Added
-- Added the `AnalyzeHealthcareEntitiesOptions.FhirVersion` and `AnalyzeHealthcareEntitiesOptions.DocumentType` properties.
-- Added the `AnalyzeHealthcareEntitiesAction.FhirVersion` and `AnalyzeHealthcareEntitiesAction.DocumentType` properties.
-- Added the `AnalyzeHealthcareEntitiesResult.FhirBundle` property.
-- Added the `HealthcareEntityRelation.ConfidenceScore` property.
-- Added the `WellKnownFhirVersion` and `HealthcareDocumentType` enums.
-- Added the `TextAnalyticsActions.ExtractSummaryActions` property to support extractive summarization in a batch of actions.
-- Added the `TextAnalyticsActions.AbstractSummaryActions` property to support abstractive summarization in a batch of actions.
-- Added the `TextAnalyticsClient.StartExtractSummary` and `TextAnalyticsClient.StartExtractSummaryAsync` methods to perform extractive summarization on a collection of documents.
-- Added the `TextAnalyticsClient.StartAbstractSummary` and `TextAnalyticsClient.StartAbstractSummaryAsync` methods to perform abstractive summarization on a collection of documents.
-- Added the `DetectedLanguage.Script` property.
-- Added the `ScriptKind` enum.
-- Added the `CategorizedEntity.Resolutions` property.
-- Added the following classes: `AgeResolution`, `AreaResolution`, `BaseResolution`, `BooleanResolution`, `CurrencyResolution`, `DateTimeResolution`, `InformationResolution`, `LengthResolution`, `NumberResolution`, `NumericRangeResolution`, `OrdinalResolution`, `SpeedResolution`, `TemperatureResolution`, `TemporalSpanResolution` `VolumeResolution`, and `WeightResolution`.
-- Added the following enums: `AgeUnit`, `AreaUnit`, `DateTimeSubKind`, `InformationUnit`,`LengthUnit`, `NumberKind`, `RangeKind`, `RelativeTo`, `SpeedUnit`, `TemperatureUnit`,`TemporalModifier`, `VolumeUnit`, and `WeightUnit`.
-- Added the `AbstractSummaryResult.DetectedLanguage` property.
-- Added the `AnalyzeHealthcareEntitiesResult.DetectedLanguage` property.
-- Added the `AnalyzeSentimentResult.DetectedLanguage` property.
-- Added the `ClassifyDocumentResult.DetectedLanguage` property.
-- Added the `ExtractKeyPhrasesResult.DetectedLanguage` property.
-- Added the `ExtractSummaryResult.DetectedLanguage` property.
-- Added the `RecognizeEntitiesResult.DetectedLanguage` property.
-- Added the `RecognizeLinkedEntitiesResult.DetectedLanguage` property.
-- Added the `RecognizePiiEntitiesResult.DetectedLanguage` property.
+- Added support for extractive summarization.
+  - Added the `TextAnalyticsActions.ExtractSummaryActions` property to support extractive summarization in a batch of actions.
+  - Added the `TextAnalyticsClient.StartExtractSummary` and `TextAnalyticsClient.StartExtractSummaryAsync` methods to perform extractive summarization on a collection of documents.
+- Added support for abstractive summarization.
+  - Added the `TextAnalyticsActions.AbstractSummaryActions` property to support abstractive summarization in a batch of actions.
+  - Added the `TextAnalyticsClient.StartAbstractSummary` and `TextAnalyticsClient.StartAbstractSummaryAsync` methods to perform abstractive summarization on a collection of documents.
+- Added support for Fast Healthcare Interoperability Resources (FHIR) bundles as part of healthcare text analysis.
+  - Added the `AnalyzeHealthcareEntitiesOptions.FhirVersion` and `AnalyzeHealthcareEntitiesOptions.DocumentType` properties.
+  - Added the `AnalyzeHealthcareEntitiesAction.FhirVersion` and `AnalyzeHealthcareEntitiesAction.DocumentType` properties.
+  - Added the `AnalyzeHealthcareEntitiesResult.FhirBundle` property.
+  - Added the `WellKnownFhirVersion` and `HealthcareDocumentType` enums.
+- Added support for confidence scores in healthcare entity relations.
+  - Added the `HealthcareEntityRelation.ConfidenceScore` property.
+- Added support for named entity recognition (NER) resolutions.
+  - Added the `CategorizedEntity.Resolutions` property.
+  - Added the following classes: `AgeResolution`, `AreaResolution`, `BaseResolution`, `BooleanResolution`, `CurrencyResolution`, `DateTimeResolution`, `InformationResolution`, `LengthResolution`, `NumberResolution`, `NumericRangeResolution`, `OrdinalResolution`, `SpeedResolution`, `TemperatureResolution`, `TemporalSpanResolution` `VolumeResolution`, and `WeightResolution`.
+  - Added the following enums: `AgeUnit`, `AreaUnit`, `DateTimeSubKind`, `InformationUnit`,`LengthUnit`, `NumberKind`, `RangeKind`, `RelativeTo`, `SpeedUnit`, `TemperatureUnit`,`TemporalModifier`, `VolumeUnit`, and `WeightUnit`.
+- Added support for automatic language detection.
+  - Added the `AbstractSummaryResult.DetectedLanguage` property.
+  - Added the `AnalyzeHealthcareEntitiesResult.DetectedLanguage` property.
+  - Added the `AnalyzeSentimentResult.DetectedLanguage` property.
+  - Added the `ClassifyDocumentResult.DetectedLanguage` property.
+  - Added the `ExtractKeyPhrasesResult.DetectedLanguage` property.
+  - Added the `ExtractSummaryResult.DetectedLanguage` property.
+  - Added the `RecognizeEntitiesResult.DetectedLanguage` property.
+  - Added the `RecognizeLinkedEntitiesResult.DetectedLanguage` property.
+  - Added the `RecognizePiiEntitiesResult.DetectedLanguage` property.
+- Added support for script detection.
+  - Added the `DetectedLanguage.Script` property.
+  - Added the `ScriptKind` enum.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+The client now defaults to targeting service API version `2022-10-01-preview`.
 
 ## 5.2.0 (2022-09-08)
 
