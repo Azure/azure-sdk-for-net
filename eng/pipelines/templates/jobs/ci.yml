@@ -50,8 +50,6 @@ jobs:
       Codeql.Enabled: true
       Codeql.BuildIdentifier: ${{ parameters.ServiceDirectory }}
       Codeql.SkipTaskAutoInjection: false
-      ${{ if eq(variables['System.Debug'], 'true') }}:
-        DiagnosticArguments: /binaryLogger:LogFile=$(Build.ArtifactStagingDirectory)/pack.binlog
 
     steps:
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
@@ -84,6 +82,9 @@ jobs:
         displayName: 'Use Python 3.6'
         inputs:
           versionSpec: '3.6'
+      - template: /eng/pipelines/templates/steps/dotnet-diagnostics.yml
+        parameters:
+          LogFilePath: $(Build.ArtifactStagingDirectory)/pack.binlog
       - script: >-
           dotnet pack eng/service.proj -warnaserror
           /p:SDKType=${{ parameters.SDKType }}
