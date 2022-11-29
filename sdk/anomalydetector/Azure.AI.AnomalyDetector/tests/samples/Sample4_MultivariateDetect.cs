@@ -18,7 +18,7 @@ using Azure.Core.TestFramework;
 using Microsoft.Identity.Client;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
-using Azure.AI.AnomalyDetector.Models;
+using Azure.AI.AnomalyDetector;
 using Newtonsoft.Json;
 
 namespace Azure.AI.AnomalyDetector.Tests.Samples
