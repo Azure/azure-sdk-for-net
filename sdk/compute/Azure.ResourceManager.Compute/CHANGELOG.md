@@ -1,12 +1,14 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.0.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
+
+- Fixes a bug that exceptions are thrown during serialization when constructor `VirtualMachineScaleSetExtensionData(string name)` is called
 
 ### Other Changes
 
