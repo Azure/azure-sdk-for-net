@@ -22,6 +22,11 @@ namespace Azure.AI.TextAnalytics
         public string DisplayName { get; set; }
 
         /// <summary>
+        /// The default language to consider during automatic language detection.
+        /// </summary>
+        public string AutoDetectionDefaultLanguage { get; set; }
+
+        /// <summary>
         /// The maximum number of sentences to be returned in the result. If not set, the service default is used.
         /// </summary>
         public int? MaxSentenceCount { get; set; }
