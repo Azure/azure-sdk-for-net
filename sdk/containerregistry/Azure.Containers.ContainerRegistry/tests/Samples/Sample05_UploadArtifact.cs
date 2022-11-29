@@ -18,7 +18,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
         {
             Environment.SetEnvironmentVariable("REGISTRY_ENDPOINT", TestEnvironment.Endpoint);
 
-            #region Snippet:ContainerRegistry_Tests_Samples_UploadClientAsync
+            #region Snippet:ContainerRegistry_Tests_Samples_UploadArtifactAsync
 
             // Get the service endpoint from the environment
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
