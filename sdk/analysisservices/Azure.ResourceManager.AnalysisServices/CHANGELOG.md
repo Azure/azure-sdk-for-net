@@ -2,7 +2,7 @@
 
 ## 1.0.0-beta.1 (2022-11-29)
 
-#### Package Name
+### Package Name
 
 The package name has been changed from `Microsoft.Azure.Management.AnalysisServices` to `Azure.ResourceManager.AnalysisServices`
 
