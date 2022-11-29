@@ -50,6 +50,8 @@ jobs:
       Codeql.Enabled: true
       Codeql.BuildIdentifier: ${{ parameters.ServiceDirectory }}
       Codeql.SkipTaskAutoInjection: false
+      ${{ if eq(variables['System.Debug'], 'true') }}:
+        DiagnosticArguments: /binaryLogger:LogFile=$(Build.ArtifactStagingDirectory)/pack.binlog
 
     steps:
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
@@ -65,7 +67,7 @@ jobs:
         condition: and(eq(variables['Build.SourceBranchName'],variables['DefaultBranch']),eq(variables['Build.Reason'],'Schedule'))
       # Both 'Dump property properties' and 'Update package properties with dev version' serve the same purpose of generating package json.
       # We decided to only run the later one (update properties) in all pipelines for the following reasons:
-      # 1. 'Update properties' happens after 'build', we will have more information at the 'update properties' step. 
+      # 1. 'Update properties' happens after 'build', we will have more information at the 'update properties' step.
       # 2. We did not find any usage of package json before 'update properties' in .NET, so it is safe to skip the 'dump properties' for now.
       - template: /eng/common/pipelines/templates/steps/daily-dev-build-variable.yml
       - pwsh: |
@@ -91,6 +93,7 @@ jobs:
           /p:Configuration=$(BuildConfiguration)
           /p:CommitSHA=$(Build.SourceVersion)
           /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory)
+          $(DiagnosticArguments)
         displayName: "Build and Package"
 
       - task: Powershell@2
