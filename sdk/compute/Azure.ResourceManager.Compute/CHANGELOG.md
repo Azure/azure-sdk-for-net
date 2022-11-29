@@ -1,16 +1,10 @@
 # Release History
 
-## 1.0.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.0.1 (2022-11-29)
 
 ### Bugs Fixed
 
-- Fixes a bug that exceptions are thrown during serialization when constructor `VirtualMachineScaleSetExtensionData(string name)` is called
-
-### Other Changes
+- Fixes [a bug](https://github.com/Azure/azure-sdk-for-net/issues/32599) that exceptions are thrown during serialization when constructor `VirtualMachineScaleSetExtensionData(string name)` is called
 
 ## 1.0.0 (2022-07-11)
 
