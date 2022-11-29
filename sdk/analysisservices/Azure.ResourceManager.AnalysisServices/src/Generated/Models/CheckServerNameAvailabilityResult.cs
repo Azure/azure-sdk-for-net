@@ -16,18 +16,18 @@ namespace Azure.ResourceManager.AnalysisServices.Models
         }
 
         /// <summary> Initializes a new instance of CheckServerNameAvailabilityResult. </summary>
-        /// <param name="nameAvailable"> Indicator of available of the server name. </param>
+        /// <param name="isNameAvailable"> Indicator of available of the server name. </param>
         /// <param name="reason"> The reason of unavailability. </param>
         /// <param name="message"> The detailed message of the request unavailability. </param>
-        internal CheckServerNameAvailabilityResult(bool? nameAvailable, string reason, string message)
+        internal CheckServerNameAvailabilityResult(bool? isNameAvailable, string reason, string message)
         {
-            NameAvailable = nameAvailable;
+            IsNameAvailable = isNameAvailable;
             Reason = reason;
             Message = message;
         }
 
         /// <summary> Indicator of available of the server name. </summary>
-        public bool? NameAvailable { get; }
+        public bool? IsNameAvailable { get; }
         /// <summary> The reason of unavailability. </summary>
         public string Reason { get; }
         /// <summary> The detailed message of the request unavailability. </summary>

@@ -5,20 +5,22 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.AnalysisServices.Models
 {
     /// <summary> An object that represents SKU details for existing resources. </summary>
-    public partial class SkuDetailsForExistingResource
+    public partial class ExistingResourceSkuDetails
     {
-        /// <summary> Initializes a new instance of SkuDetailsForExistingResource. </summary>
-        internal SkuDetailsForExistingResource()
+        /// <summary> Initializes a new instance of ExistingResourceSkuDetails. </summary>
+        internal ExistingResourceSkuDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of SkuDetailsForExistingResource. </summary>
+        /// <summary> Initializes a new instance of ExistingResourceSkuDetails. </summary>
         /// <param name="sku"> The SKU in SKU details for existing resources. </param>
         /// <param name="resourceType"> The resource type. </param>
-        internal SkuDetailsForExistingResource(ResourceSku sku, string resourceType)
+        internal ExistingResourceSkuDetails(ResourceSku sku, ResourceType? resourceType)
         {
             Sku = sku;
             ResourceType = resourceType;
@@ -27,6 +29,6 @@ namespace Azure.ResourceManager.AnalysisServices.Models
         /// <summary> The SKU in SKU details for existing resources. </summary>
         public ResourceSku Sku { get; }
         /// <summary> The resource type. </summary>
-        public string ResourceType { get; }
+        public ResourceType? ResourceType { get; }
     }
 }

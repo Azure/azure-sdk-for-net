@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AnalysisServices.Models
 {
-    internal partial class SkuEnumerationForExistingResourceResult
+    internal partial class NewResourceResultSkuEnumeration
     {
-        internal static SkuEnumerationForExistingResourceResult DeserializeSkuEnumerationForExistingResourceResult(JsonElement element)
+        internal static NewResourceResultSkuEnumeration DeserializeNewResourceResultSkuEnumeration(JsonElement element)
         {
-            Optional<IReadOnlyList<SkuDetailsForExistingResource>> value = default;
+            Optional<IReadOnlyList<ResourceSku>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.AnalysisServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SkuDetailsForExistingResource> array = new List<SkuDetailsForExistingResource>();
+                    List<ResourceSku> array = new List<ResourceSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SkuDetailsForExistingResource.DeserializeSkuDetailsForExistingResource(item));
+                        array.Add(ResourceSku.DeserializeResourceSku(item));
                     }
                     value = array;
                     continue;
                 }
             }
-            return new SkuEnumerationForExistingResourceResult(Optional.ToList(value));
+            return new NewResourceResultSkuEnumeration(Optional.ToList(value));
         }
     }
 }
