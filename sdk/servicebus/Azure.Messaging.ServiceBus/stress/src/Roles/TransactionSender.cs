@@ -101,7 +101,6 @@ internal class TransactionSender
                 catch (Exception ex)
                 {
                     // If this catch is hit, it means the sender has restarted, collect metrics.
-
                     _metrics.Client.GetMetric(Metrics.SenderRestarted).TrackValue(1);
                     _metrics.Client.TrackException(ex);
                 }
@@ -111,9 +110,13 @@ internal class TransactionSender
 
     private async Task TransactionSend(IEnumerable<ServiceBusMessage> messages)
     {
+        var transactionGUID = new Guid.NewGuid();
+        var transactionId = $"transaction-{transactionGUID}";
         foreach (var message in messages)
         {
-            await sender.SendMessageAsync(messages, cancellationToken).ConfigureAwait(false);
+            MessageTracking.AugmentTransactionMessage(message);
         }
+
+        await sender.SendMessageAsync(messages, cancellationToken).ConfigureAwait(false);
     }
 }

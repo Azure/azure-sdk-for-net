@@ -27,17 +27,30 @@ public static class MessageTracking
     public static readonly string IndexNumberPropertyName = "IndexNumber";
 
     /// <summary>
+    ///   The name of the <see cref="ServiceBusMessage"/> property that holds the sender-assigned transaction index number.
+    /// </summary>
+    ///
+    public static readonly string TransactionIndexNumberPropertyName = "TransactionIndexNumber";
+
+    /// <summary>
     ///   The name of the <see cref="ServiceBusMessage"/> property that holds the time the message was sent.
     /// </summary>
     ///
     public static readonly string SendTimePropertyName = "SendTime";
 
     /// <summary>
-    ///   The name of the <see cref="EventData"/> property that holds the session Id the sender
+    ///   The name of the <see cref="ServiceBusMessage"/> property that holds the session Id the sender
     ///   was intending to send to, if any.
     /// </summary>
     ///
     public static readonly string SessionIdPropertyName = "SessionId";
+
+    /// <summary>
+    ///   The name of the <see cref="ServiceBusMessage"/> property that holds the transaction Id of the current
+    ///   transaction.
+    /// </summary>
+    ///
+    public static readonly string TransactionIdPropertyName = "TransactionId";
 
     /// <summary>
     ///   The name of the <see cref="ServiceBusMessage"/> property that holds the ID assigned to this event by
@@ -54,7 +67,7 @@ public static class MessageTracking
 
     /// <summary>
     ///   Adds properties to the given <see cref="ServiceBusMessage"/> instance, allowing for the processor to determine that events
-    ///   were received in order, not duplicated, and have valid event bodies.
+    ///   were not duplicated and have valid event bodies.
     /// </summary>
     ///
     /// <param name="message">The <see cref="ServiceBusMessage"/> instance to augment.</param>
@@ -77,6 +90,29 @@ public static class MessageTracking
         {
             message.ApplicationProperties.Add(SessionIdPropertyName, sessionId);
         }
+    }
+
+    /// <summary>
+    ///   Adds properties to the given <see cref="ServiceBusMessage"/> instance, allowing for the transaction receiver to determine that all events
+    ///   from the transaction were received, not duplicated, and have valid event bodies.
+    /// </summary>
+    ///
+    /// <param name="message">The <see cref="ServiceBusMessage"/> instance to augment.</param>
+    /// <param name="sha256Hash">The <see cref="SHA256"/> instance to hash the event body.</param>
+    /// <param name="indexNumber">The producer assigned index number for this event.</param>
+    /// <param name="sessionId">The session id, if any, that this message was intended to be sent to.</param>
+    ///
+    public static void AugmentTransactionMessage(ServiceBusMessage message,
+                                    SHA256 sha256Hash,
+                                    int indexNumber,
+                                    string transactionId)
+    {
+        message.ApplicationProperties.Add(TransactionIndexNumberPropertyName, indexNumber);
+        message.ApplicationProperties.Add(SendTimePropertyName, DateTimeOffset.UtcNow);
+        message.ApplicationProperties.Add(IdPropertyName, Guid.NewGuid().ToString());
+        message.ApplicationProperties.Add(TransactionIdPropertyName, transactionId);
+
+        message.ApplicationProperties.Add(MessageBodyHashPropertyName, sha256Hash.ComputeHash(message.Body.ToArray()).ToString());
     }
 
     /// <summary>
