@@ -4,7 +4,7 @@
 
 ### Bugs Fixed
 
-- Fixes a bug that exceptions are thrown during serialization when constructor `VirtualMachineScaleSetExtensionData(string name)` is called
+- Fixes [a bug](https://github.com/Azure/azure-sdk-for-net/issues/32599) that exceptions are thrown during serialization when constructor `VirtualMachineScaleSetExtensionData(string name)` is called
 
 ## 1.0.0 (2022-07-11)
 
