@@ -15,11 +15,6 @@ Polishing since last public beta release:
 - Corrected the name of interval / duration properties / parameters that end with units.
 - Optimized the name of some models and functions.
 
-### Other Changes
-
-- Upgraded dependent Azure.ResourceManager to 1.3.1.
-- Optimized the implementation of methods related to tag operations.
-
 ## 1.0.0-beta.1 (2022-09-22)
 
 ### Breaking Changes
