@@ -85,29 +85,44 @@ namespace Azure.ResourceManager.DataFactory.Tests
 
             var result = await pipeline.CreateRunAsync();
             DateTime timeout = DateTime.Now.AddMinutes(2);
-            int sleep = Mode == RecordedTestMode.Playback ? 0 : 2000;
             do
             {
                 var run = _dataFactory.GetPipelineRunAsync(result.Value.RunId.ToString());
                 if (run.Status == TaskStatus.RanToCompletion)
                     break;
-                Thread.Sleep(sleep);
+                await Delay(2000);
             } while (DateTime.Now < timeout);
         }
 
         private async Task<FactoryDatasetResource> CreateInputDatasetAsync(string name, string folder, string file)
         {
-            FactoryLinkedServiceReference linkedServiceReference = new FactoryLinkedServiceReference(FactoryLinkedServiceReferenceType.LinkedServiceReference, _linkedServiceName);
+            FactoryLinkedServiceReference linkedServiceReference =
+                new FactoryLinkedServiceReference(FactoryLinkedServiceReferenceType.LinkedServiceReference, _linkedServiceName);
             AzureBlobDataset abDataset = new AzureBlobDataset(linkedServiceReference);
             abDataset.Format = new DatasetStorageFormat();
             abDataset.Format.DatasetStorageFormatType = "TextFormat";
 
             abDataset.FolderPath = DataFactoryExpression<string>.FromExpression(folder);
+            abDataset.Structure = new DataFactoryExpression<IList<DatasetDataElement>>(new List<DatasetDataElement>
+                {
+                    new("id", "Int32"),
+                    new("name", "String")
+                });
 
             if (file != null)
                 abDataset.FileName = file;
+            // TODO uncomment after updating DataFactoryExpression to support DateTimeOffset
+            // var start = DateTimeOffset.UtcNow;
+            // var end = start.AddDays(1);
+            // abDataset.ModifiedDatetimeStart = start;
+            // abDataset.ModifiedDatetimeEnd = end;
             FactoryDatasetData data = new FactoryDatasetData(abDataset);
-            return (await _dataFactory.GetFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
+            var resource = (await _dataFactory.GetFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
+
+            Assert.AreEqual(name, resource.Data.Name);
+            Assert.AreEqual(folder, ((AzureBlobDataset)resource.Data.Properties).FolderPath.ToString());
+
+            return resource;
         }
     }
 }
