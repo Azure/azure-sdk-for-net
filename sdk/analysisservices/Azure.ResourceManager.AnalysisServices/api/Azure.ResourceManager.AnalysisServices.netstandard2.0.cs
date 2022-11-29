@@ -34,8 +34,10 @@ namespace Azure.ResourceManager.AnalysisServices
     }
     public partial class AnalysisServicesServerData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public AnalysisServicesServerData(Azure.Core.AzureLocation location, Azure.ResourceManager.AnalysisServices.Models.ResourceSku sku) : base (default(Azure.Core.AzureLocation)) { }
-        public System.Collections.Generic.IList<string> AsAdministratorsMembers { get { throw null; } }
+        public AnalysisServicesServerData(Azure.Core.AzureLocation location, Azure.ResourceManager.AnalysisServices.Models.ResourceSku analysisServicesSKU) : base (default(Azure.Core.AzureLocation)) { }
+        public Azure.ResourceManager.AnalysisServices.Models.ResourceSku AnalysisServicesServerSKU { get { throw null; } set { } }
+        public Azure.ResourceManager.AnalysisServices.Models.ResourceSku AnalysisServicesSKU { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> AsAdministratorIdentities { get { throw null; } }
         public System.Uri BackupBlobContainerUri { get { throw null; } set { } }
         public Azure.ResourceManager.AnalysisServices.Models.GatewayDetails GatewayDetails { get { throw null; } set { } }
         public Azure.ResourceManager.AnalysisServices.Models.IPv4FirewallSettings IPV4FirewallSettings { get { throw null; } set { } }
@@ -44,9 +46,7 @@ namespace Azure.ResourceManager.AnalysisServices
         public Azure.ResourceManager.AnalysisServices.Models.ConnectionMode? QuerypoolConnectionMode { get { throw null; } set { } }
         public string ServerFullName { get { throw null; } }
         public Azure.ResourceManager.AnalysisServices.Models.ServerMonitorMode? ServerMonitorMode { get { throw null; } set { } }
-        public Azure.ResourceManager.AnalysisServices.Models.ResourceSku Sku { get { throw null; } set { } }
-        public Azure.ResourceManager.AnalysisServices.Models.ResourceSku SkuPropertiesSku { get { throw null; } set { } }
-        public Azure.ResourceManager.AnalysisServices.Models.State? State { get { throw null; } }
+        public Azure.ResourceManager.AnalysisServices.Models.AnalysisServicesState? State { get { throw null; } }
     }
     public partial class AnalysisServicesServerResource : Azure.ResourceManager.ArmResource
     {
@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.AnalysisServices
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AnalysisServices.AnalysisServicesServerResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AnalysisServices.Models.GatewayListStatusLive> GetGatewayStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AnalysisServices.Models.GatewayListStatusLive>> GetGatewayStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.AnalysisServices.Models.SkuDetailsForExistingResource> GetSkusForExisting(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.AnalysisServices.Models.SkuDetailsForExistingResource> GetSkusForExistingAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AnalysisServices.Models.ExistingResourceSkuDetails> GetSkusForExisting(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AnalysisServices.Models.ExistingResourceSkuDetails> GetSkusForExistingAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AnalysisServices.AnalysisServicesServerResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AnalysisServices.AnalysisServicesServerResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Resume(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AnalysisServices.Models
     public partial class AnalysisServicesServerPatch
     {
         public AnalysisServicesServerPatch() { }
-        public System.Collections.Generic.IList<string> AsAdministratorsMembers { get { throw null; } }
+        public System.Collections.Generic.IList<string> AsAdministratorIdentities { get { throw null; } }
         public System.Uri BackupBlobContainerUri { get { throw null; } set { } }
         public Azure.ResourceManager.AnalysisServices.Models.GatewayDetails GatewayDetails { get { throw null; } set { } }
         public Azure.ResourceManager.AnalysisServices.Models.IPv4FirewallSettings IPV4FirewallSettings { get { throw null; } set { } }
@@ -113,6 +113,50 @@ namespace Azure.ResourceManager.AnalysisServices.Models
         public static bool operator !=(Azure.ResourceManager.AnalysisServices.Models.AnalysisServicesSkuTier left, Azure.ResourceManager.AnalysisServices.Models.AnalysisServicesSkuTier right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AnalysisServicesState : System.IEquatable<Azure.ResourceManager.AnalysisServices.Models.AnalysisServicesState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AnalysisServicesState(string value) { throw null; }
+        public static Azure.ResourceManager.AnalysisServices.Models.AnalysisServicesState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.AnalysisServices.Models.AnalysisServicesState Failed { get { throw null; } }
+        public static Azure.ResourceManager.AnalysisServices.Models.AnalysisServicesState Paused { get { throw null; } }
+        public static Azure.ResourceManager.AnalysisServices.Models.AnalysisServicesState Pausing { get { throw null; } }
+        public static Azure.ResourceManager.AnalysisServices.Models.AnalysisServicesState Preparing { get { throw null; } }
+        public static Azure.ResourceManager.AnalysisServices.Models.AnalysisServicesState Provisioning { get { throw null; } }
+        public static Azure.ResourceManager.AnalysisServices.Models.AnalysisServicesState Resuming { get { throw null; } }
+        public static Azure.ResourceManager.AnalysisServices.Models.AnalysisServicesState Scaling { get { throw null; } }
+        public static Azure.ResourceManager.AnalysisServices.Models.AnalysisServicesState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.AnalysisServices.Models.AnalysisServicesState Suspended { get { throw null; } }
+        public static Azure.ResourceManager.AnalysisServices.Models.AnalysisServicesState Suspending { get { throw null; } }
+        public static Azure.ResourceManager.AnalysisServices.Models.AnalysisServicesState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AnalysisServices.Models.AnalysisServicesState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AnalysisServices.Models.AnalysisServicesState left, Azure.ResourceManager.AnalysisServices.Models.AnalysisServicesState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AnalysisServices.Models.AnalysisServicesState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AnalysisServices.Models.AnalysisServicesState left, Azure.ResourceManager.AnalysisServices.Models.AnalysisServicesState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AnalysisServicesStatus : System.IEquatable<Azure.ResourceManager.AnalysisServices.Models.AnalysisServicesStatus>
+    {
+        private readonly int _dummyPrimitive;
+        public AnalysisServicesStatus(int value) { throw null; }
+        public static Azure.ResourceManager.AnalysisServices.Models.AnalysisServicesStatus _0 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AnalysisServices.Models.AnalysisServicesStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AnalysisServices.Models.AnalysisServicesStatus left, Azure.ResourceManager.AnalysisServices.Models.AnalysisServicesStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AnalysisServices.Models.AnalysisServicesStatus (int value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AnalysisServices.Models.AnalysisServicesStatus left, Azure.ResourceManager.AnalysisServices.Models.AnalysisServicesStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class CheckServerNameAvailabilityContent
     {
         public CheckServerNameAvailabilityContent() { }
@@ -122,14 +166,20 @@ namespace Azure.ResourceManager.AnalysisServices.Models
     public partial class CheckServerNameAvailabilityResult
     {
         internal CheckServerNameAvailabilityResult() { }
+        public bool? IsNameAvailable { get { throw null; } }
         public string Message { get { throw null; } }
-        public bool? NameAvailable { get { throw null; } }
         public string Reason { get { throw null; } }
     }
     public enum ConnectionMode
     {
         All = 0,
         ReadOnly = 1,
+    }
+    public partial class ExistingResourceSkuDetails
+    {
+        internal ExistingResourceSkuDetails() { }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
+        public Azure.ResourceManager.AnalysisServices.Models.ResourceSku Sku { get { throw null; } }
     }
     public partial class GatewayDetails
     {
@@ -141,7 +191,7 @@ namespace Azure.ResourceManager.AnalysisServices.Models
     public partial class GatewayListStatusLive
     {
         internal GatewayListStatusLive() { }
-        public Azure.ResourceManager.AnalysisServices.Models.Status? Status { get { throw null; } }
+        public Azure.ResourceManager.AnalysisServices.Models.AnalysisServicesStatus? Status { get { throw null; } }
     }
     public partial class IPv4FirewallRule
     {
@@ -153,8 +203,8 @@ namespace Azure.ResourceManager.AnalysisServices.Models
     public partial class IPv4FirewallSettings
     {
         public IPv4FirewallSettings() { }
-        public bool? EnablePowerBIService { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AnalysisServices.Models.IPv4FirewallRule> FirewallRules { get { throw null; } }
+        public bool? IsPowerBIServiceEnabled { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ManagedMode : System.IEquatable<Azure.ResourceManager.AnalysisServices.Models.ManagedMode>
@@ -233,56 +283,6 @@ namespace Azure.ResourceManager.AnalysisServices.Models
         public static bool operator ==(Azure.ResourceManager.AnalysisServices.Models.ServerMonitorMode left, Azure.ResourceManager.AnalysisServices.Models.ServerMonitorMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.AnalysisServices.Models.ServerMonitorMode (int value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AnalysisServices.Models.ServerMonitorMode left, Azure.ResourceManager.AnalysisServices.Models.ServerMonitorMode right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class SkuDetailsForExistingResource
-    {
-        internal SkuDetailsForExistingResource() { }
-        public string ResourceType { get { throw null; } }
-        public Azure.ResourceManager.AnalysisServices.Models.ResourceSku Sku { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct State : System.IEquatable<Azure.ResourceManager.AnalysisServices.Models.State>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public State(string value) { throw null; }
-        public static Azure.ResourceManager.AnalysisServices.Models.State Deleting { get { throw null; } }
-        public static Azure.ResourceManager.AnalysisServices.Models.State Failed { get { throw null; } }
-        public static Azure.ResourceManager.AnalysisServices.Models.State Paused { get { throw null; } }
-        public static Azure.ResourceManager.AnalysisServices.Models.State Pausing { get { throw null; } }
-        public static Azure.ResourceManager.AnalysisServices.Models.State Preparing { get { throw null; } }
-        public static Azure.ResourceManager.AnalysisServices.Models.State Provisioning { get { throw null; } }
-        public static Azure.ResourceManager.AnalysisServices.Models.State Resuming { get { throw null; } }
-        public static Azure.ResourceManager.AnalysisServices.Models.State Scaling { get { throw null; } }
-        public static Azure.ResourceManager.AnalysisServices.Models.State Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.AnalysisServices.Models.State Suspended { get { throw null; } }
-        public static Azure.ResourceManager.AnalysisServices.Models.State Suspending { get { throw null; } }
-        public static Azure.ResourceManager.AnalysisServices.Models.State Updating { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.AnalysisServices.Models.State other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.AnalysisServices.Models.State left, Azure.ResourceManager.AnalysisServices.Models.State right) { throw null; }
-        public static implicit operator Azure.ResourceManager.AnalysisServices.Models.State (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.AnalysisServices.Models.State left, Azure.ResourceManager.AnalysisServices.Models.State right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Status : System.IEquatable<Azure.ResourceManager.AnalysisServices.Models.Status>
-    {
-        private readonly int _dummyPrimitive;
-        public Status(int value) { throw null; }
-        public static Azure.ResourceManager.AnalysisServices.Models.Status _0 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.AnalysisServices.Models.Status other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.AnalysisServices.Models.Status left, Azure.ResourceManager.AnalysisServices.Models.Status right) { throw null; }
-        public static implicit operator Azure.ResourceManager.AnalysisServices.Models.Status (int value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.AnalysisServices.Models.Status left, Azure.ResourceManager.AnalysisServices.Models.Status right) { throw null; }
         public override string ToString() { throw null; }
     }
 }

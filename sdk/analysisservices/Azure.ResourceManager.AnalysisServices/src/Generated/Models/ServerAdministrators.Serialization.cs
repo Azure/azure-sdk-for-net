@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.AnalysisServices.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Members))
+            if (Optional.IsCollectionDefined(AsAdministratorIdentities))
             {
                 writer.WritePropertyName("members");
                 writer.WriteStartArray();
-                foreach (var item in Members)
+                foreach (var item in AsAdministratorIdentities)
                 {
                     writer.WriteStringValue(item);
                 }

@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Communication.CallAutomation.Models;
 using Azure.Core.Pipeline;
 
 namespace Azure.Communication.CallAutomation

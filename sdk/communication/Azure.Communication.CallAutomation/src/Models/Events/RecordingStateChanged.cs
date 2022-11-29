@@ -3,7 +3,6 @@
 
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Communication.CallAutomation.Converters;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation

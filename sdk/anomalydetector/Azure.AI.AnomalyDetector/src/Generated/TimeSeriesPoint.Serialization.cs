@@ -27,6 +27,8 @@ namespace Azure.AI.AnomalyDetector
                     writer.WriteNull("timestamp");
                 }
             }
+            writer.WritePropertyName("value");
+            writer.WriteNumberValue(Value);
             writer.WriteEndObject();
         }
 

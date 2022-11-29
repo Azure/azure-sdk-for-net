@@ -273,14 +273,6 @@ namespace Azure.AI.AnomalyDetector.Models
         public System.DateTimeOffset StartTime { get { throw null; } set { } }
         public Azure.AI.AnomalyDetector.Models.ModelStatus? Status { get { throw null; } set { } }
     }
-    public partial class ModelList
-    {
-        internal ModelList() { }
-        public int CurrentCount { get { throw null; } }
-        public int MaxCount { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.AnomalyDetector.Models.Model> Models { get { throw null; } }
-        public string NextLink { get { throw null; } }
-    }
     public partial class ModelState
     {
         public ModelState() { }
