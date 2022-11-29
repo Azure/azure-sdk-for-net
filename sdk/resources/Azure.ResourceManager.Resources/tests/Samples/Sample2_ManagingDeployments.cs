@@ -62,7 +62,8 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
             var parametersObject = new { storageAccountType = new { value = "Standard_GRS" } };
             //convert this object to JsonElement
             var parametersString = JsonSerializer.Serialize(parametersObject);
-            var parameters = JsonDocument.Parse(parametersString).RootElement;
+            using var jsonDocument = JsonDocument.Parse(parametersString);
+            var parameters = jsonDocument.RootElement;
             var input = new ArmDeploymentContent(new ArmDeploymentProperties(ArmDeploymentMode.Incremental)
             {
                 TemplateLink = new ArmDeploymentTemplateLink()

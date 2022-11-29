@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="eventsJsonPaths"/> is null. </exception>
         public CodelessConnectorPollingResponseProperties(IEnumerable<string> eventsJsonPaths)
         {
-            if (eventsJsonPaths == null)
-            {
-                throw new ArgumentNullException(nameof(eventsJsonPaths));
-            }
+            Argument.AssertNotNull(eventsJsonPaths, nameof(eventsJsonPaths));
 
             EventsJsonPaths = eventsJsonPaths.ToList();
         }

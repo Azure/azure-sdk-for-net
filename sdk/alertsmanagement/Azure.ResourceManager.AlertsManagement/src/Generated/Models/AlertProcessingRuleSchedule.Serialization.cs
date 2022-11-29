@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             if (Optional.IsDefined(EffectiveFrom))
             {
                 writer.WritePropertyName("effectiveFrom");
-                writer.WriteStringValue(EffectiveFrom.Value);
+                writer.WriteStringValue(EffectiveFrom.Value, "O");
             }
             if (Optional.IsDefined(EffectiveUntil))
             {
                 writer.WritePropertyName("effectiveUntil");
-                writer.WriteStringValue(EffectiveUntil.Value);
+                writer.WriteStringValue(EffectiveUntil.Value, "O");
             }
             if (Optional.IsDefined(TimeZone))
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    effectiveFrom = property.Value.GetDateTimeOffset();
+                    effectiveFrom = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("effectiveUntil"))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    effectiveUntil = property.Value.GetDateTimeOffset();
+                    effectiveUntil = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("timeZone"))

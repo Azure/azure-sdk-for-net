@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> The version of Channel Integrity Key stored in the Client Key Vault. </summary>
         public string ChannelIntegrityKeyVersion { get; set; }
         /// <summary> For changing or to initiate the resync to key-vault set the status to KeyVaultSyncPending, rest of the status will not be applicable. </summary>
-        public KeyVaultSyncStatus? SyncStatus { get; set; }
+        public EdgeKeyVaultSyncStatus? SyncStatus { get; set; }
     }
 }

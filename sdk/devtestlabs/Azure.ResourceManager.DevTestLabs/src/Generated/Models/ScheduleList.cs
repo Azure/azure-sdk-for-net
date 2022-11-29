@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of ScheduleList. </summary>
         internal ScheduleList()
         {
-            Value = new ChangeTrackingList<ScheduleData>();
+            Value = new ChangeTrackingList<DevTestLabScheduleData>();
         }
 
         /// <summary> Initializes a new instance of ScheduleList. </summary>
         /// <param name="value"> Results of the list operation. </param>
         /// <param name="nextLink"> Link for next set of results. </param>
-        internal ScheduleList(IReadOnlyList<ScheduleData> value, string nextLink)
+        internal ScheduleList(IReadOnlyList<DevTestLabScheduleData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Results of the list operation. </summary>
-        public IReadOnlyList<ScheduleData> Value { get; }
+        public IReadOnlyList<DevTestLabScheduleData> Value { get; }
         /// <summary> Link for next set of results. </summary>
         public string NextLink { get; }
     }

@@ -1,13 +1,24 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
 trigger: none
-
-pr: none
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/maps/ci.mgmt.yml
+    - sdk/maps/Azure.ResourceManager.Maps/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
+    SDKType: mgmtclient
     ServiceDirectory: maps
+    LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.Maps
       safeName: AzureResourceManagerMaps

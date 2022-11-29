@@ -45,6 +45,16 @@ namespace Azure.ResourceManager.Kusto
                 writer.WritePropertyName("tableLevelSharingProperties");
                 writer.WriteObjectValue(TableLevelSharingProperties);
             }
+            if (Optional.IsDefined(DatabaseNameOverride))
+            {
+                writer.WritePropertyName("databaseNameOverride");
+                writer.WriteStringValue(DatabaseNameOverride);
+            }
+            if (Optional.IsDefined(DatabaseNamePrefix))
+            {
+                writer.WritePropertyName("databaseNamePrefix");
+                writer.WriteStringValue(DatabaseNamePrefix);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -60,8 +70,10 @@ namespace Azure.ResourceManager.Kusto
             Optional<string> databaseName = default;
             Optional<ResourceIdentifier> clusterResourceId = default;
             Optional<IReadOnlyList<string>> attachedDatabaseNames = default;
-            Optional<DefaultPrincipalsModificationKind> defaultPrincipalsModificationKind = default;
-            Optional<TableLevelSharingProperties> tableLevelSharingProperties = default;
+            Optional<KustoDatabaseDefaultPrincipalsModificationKind> defaultPrincipalsModificationKind = default;
+            Optional<KustoDatabaseTableLevelSharingProperties> tableLevelSharingProperties = default;
+            Optional<string> databaseNameOverride = default;
+            Optional<string> databaseNamePrefix = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
@@ -155,7 +167,7 @@ namespace Azure.ResourceManager.Kusto
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            defaultPrincipalsModificationKind = new DefaultPrincipalsModificationKind(property0.Value.GetString());
+                            defaultPrincipalsModificationKind = new KustoDatabaseDefaultPrincipalsModificationKind(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("tableLevelSharingProperties"))
@@ -165,14 +177,24 @@ namespace Azure.ResourceManager.Kusto
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            tableLevelSharingProperties = TableLevelSharingProperties.DeserializeTableLevelSharingProperties(property0.Value);
+                            tableLevelSharingProperties = KustoDatabaseTableLevelSharingProperties.DeserializeKustoDatabaseTableLevelSharingProperties(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("databaseNameOverride"))
+                        {
+                            databaseNameOverride = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("databaseNamePrefix"))
+                        {
+                            databaseNamePrefix = property0.Value.GetString();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new KustoAttachedDatabaseConfigurationData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(provisioningState), databaseName.Value, clusterResourceId.Value, Optional.ToList(attachedDatabaseNames), Optional.ToNullable(defaultPrincipalsModificationKind), tableLevelSharingProperties.Value);
+            return new KustoAttachedDatabaseConfigurationData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(provisioningState), databaseName.Value, clusterResourceId.Value, Optional.ToList(attachedDatabaseNames), Optional.ToNullable(defaultPrincipalsModificationKind), tableLevelSharingProperties.Value, databaseNameOverride.Value, databaseNamePrefix.Value);
         }
     }
 }

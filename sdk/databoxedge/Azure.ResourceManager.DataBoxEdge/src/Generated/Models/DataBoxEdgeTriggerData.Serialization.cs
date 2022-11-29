@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 switch (discriminator.GetString())
                 {
-                    case "FileEvent": return FileEventTrigger.DeserializeFileEventTrigger(element);
+                    case "FileEvent": return EdgeFileEventTrigger.DeserializeEdgeFileEventTrigger(element);
                     case "PeriodicTimerEvent": return PeriodicTimerEventTrigger.DeserializePeriodicTimerEventTrigger(element);
                 }
             }

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate");
-                writer.WriteStringValue(CreatedOn.Value);
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsDefined(ClusterState))
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    createdDate = property.Value.GetDateTimeOffset();
+                    createdDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("clusterState"))

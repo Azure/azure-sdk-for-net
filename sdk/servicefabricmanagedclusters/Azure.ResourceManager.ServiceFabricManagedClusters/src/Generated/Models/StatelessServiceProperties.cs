@@ -7,31 +7,26 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> The properties of a stateless service resource. </summary>
-    public partial class StatelessServiceProperties : ServiceResourceProperties
+    public partial class StatelessServiceProperties : ManagedServiceProperties
     {
         /// <summary> Initializes a new instance of StatelessServiceProperties. </summary>
         /// <param name="serviceTypeName"> The name of the service type. </param>
         /// <param name="partitionDescription">
         /// Describes how the service is partitioned.
-        /// Please note <see cref="Partition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="ManagedServicePartitionScheme"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="NamedPartitionScheme"/>, <see cref="SingletonPartitionScheme"/> and <see cref="UniformInt64RangePartitionScheme"/>.
         /// </param>
         /// <param name="instanceCount"> The instance count. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceTypeName"/> or <paramref name="partitionDescription"/> is null. </exception>
-        public StatelessServiceProperties(string serviceTypeName, Partition partitionDescription, int instanceCount) : base(serviceTypeName, partitionDescription)
+        public StatelessServiceProperties(string serviceTypeName, ManagedServicePartitionScheme partitionDescription, int instanceCount) : base(serviceTypeName, partitionDescription)
         {
-            if (serviceTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceTypeName));
-            }
-            if (partitionDescription == null)
-            {
-                throw new ArgumentNullException(nameof(partitionDescription));
-            }
+            Argument.AssertNotNull(serviceTypeName, nameof(serviceTypeName));
+            Argument.AssertNotNull(partitionDescription, nameof(partitionDescription));
 
             InstanceCount = instanceCount;
             ServiceKind = ServiceKind.Stateless;
@@ -43,7 +38,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="serviceLoadMetrics"> The service load metrics is given as an array of ServiceLoadMetric objects. </param>
         /// <param name="servicePlacementPolicies">
         /// A list that describes the correlation of the service with other services.
-        /// Please note <see cref="ServicePlacementPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="ManagedServicePlacementPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ServicePlacementInvalidDomainPolicy"/>, <see cref="ServicePlacementNonPartiallyPlaceServicePolicy"/>, <see cref="ServicePlacementPreferPrimaryDomainPolicy"/>, <see cref="ServicePlacementRequiredDomainPolicy"/> and <see cref="ServicePlacementRequireDomainDistributionPolicy"/>.
         /// </param>
         /// <param name="defaultMoveCost"> Specifies the move cost for the service. </param>
@@ -53,14 +48,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="serviceTypeName"> The name of the service type. </param>
         /// <param name="partitionDescription">
         /// Describes how the service is partitioned.
-        /// Please note <see cref="Partition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="ManagedServicePartitionScheme"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="NamedPartitionScheme"/>, <see cref="SingletonPartitionScheme"/> and <see cref="UniformInt64RangePartitionScheme"/>.
         /// </param>
         /// <param name="servicePackageActivationMode"> The activation Mode of the service package. </param>
         /// <param name="instanceCount"> The instance count. </param>
         /// <param name="minInstanceCount"> MinInstanceCount is the minimum number of instances that must be up to meet the EnsureAvailability safety check during operations like upgrade or deactivate node. The actual number that is used is max( MinInstanceCount, ceil( MinInstancePercentage/100.0 * InstanceCount) ). Note, if InstanceCount is set to -1, during MinInstanceCount computation -1 is first converted into the number of nodes on which the instances are allowed to be placed according to the placement constraints on the service. </param>
         /// <param name="minInstancePercentage"> MinInstancePercentage is the minimum percentage of InstanceCount that must be up to meet the EnsureAvailability safety check during operations like upgrade or deactivate node. The actual number that is used is max( MinInstanceCount, ceil( MinInstancePercentage/100.0 * InstanceCount) ). Note, if InstanceCount is set to -1, during MinInstancePercentage computation, -1 is first converted into the number of nodes on which the instances are allowed to be placed according to the placement constraints on the service. </param>
-        internal StatelessServiceProperties(string placementConstraints, IList<ServiceCorrelation> correlationScheme, IList<ServiceLoadMetric> serviceLoadMetrics, IList<ServicePlacementPolicy> servicePlacementPolicies, MoveCost? defaultMoveCost, IList<ScalingPolicy> scalingPolicies, string provisioningState, ServiceKind serviceKind, string serviceTypeName, Partition partitionDescription, ServicePackageActivationMode? servicePackageActivationMode, int instanceCount, int? minInstanceCount, int? minInstancePercentage) : base(placementConstraints, correlationScheme, serviceLoadMetrics, servicePlacementPolicies, defaultMoveCost, scalingPolicies, provisioningState, serviceKind, serviceTypeName, partitionDescription, servicePackageActivationMode)
+        internal StatelessServiceProperties(string placementConstraints, IList<ManagedServiceCorrelation> correlationScheme, IList<ManagedServiceLoadMetric> serviceLoadMetrics, IList<ManagedServicePlacementPolicy> servicePlacementPolicies, ServiceFabricManagedServiceMoveCost? defaultMoveCost, IList<ManagedServiceScalingPolicy> scalingPolicies, string provisioningState, ServiceKind serviceKind, string serviceTypeName, ManagedServicePartitionScheme partitionDescription, ManagedServicePackageActivationMode? servicePackageActivationMode, int instanceCount, int? minInstanceCount, int? minInstancePercentage) : base(placementConstraints, correlationScheme, serviceLoadMetrics, servicePlacementPolicies, defaultMoveCost, scalingPolicies, provisioningState, serviceKind, serviceTypeName, partitionDescription, servicePackageActivationMode)
         {
             InstanceCount = instanceCount;
             MinInstanceCount = minInstanceCount;

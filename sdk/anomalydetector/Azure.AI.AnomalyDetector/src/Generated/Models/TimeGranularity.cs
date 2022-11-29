@@ -7,7 +7,6 @@
 
 namespace Azure.AI.AnomalyDetector.Models
 {
-    /// <summary> Optional argument, can be one of yearly, monthly, weekly, daily, hourly, minutely, secondly, microsecond or none. If granularity is not present, it will be none by default. If granularity is none, the timestamp property in time series point can be absent. </summary>
     public enum TimeGranularity
     {
         /// <summary> yearly. </summary>

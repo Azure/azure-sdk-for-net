@@ -20,11 +20,6 @@ namespace Azure.Storage
         public bool AutoValidateChecksum { get { throw null; } set { } }
         public Azure.Storage.StorageChecksumAlgorithm ChecksumAlgorithm { get { throw null; } set { } }
     }
-    public enum GeoRedundantReadMode
-    {
-        PrimaryThenSecondary = 0,
-        SecondaryThenPrimary = 1,
-    }
     public enum StorageChecksumAlgorithm
     {
         Auto = 0,
@@ -173,7 +168,7 @@ namespace Azure.Storage.Sas
     }
     public partial class SasQueryParameters
     {
-        public const string DefaultSasVersion = "2021-10-04";
+        public const string DefaultSasVersion = "2021-12-02";
         protected SasQueryParameters() { }
         protected SasQueryParameters(System.Collections.Generic.IDictionary<string, string> values) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

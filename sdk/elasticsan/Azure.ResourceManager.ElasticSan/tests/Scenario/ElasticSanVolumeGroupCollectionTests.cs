@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             };
             volumeGroupData.Tags.Add("tag1", "value1");
             // vnet resource id is created by following instructions in https://docs.microsoft.com/en-us/azure/storage/common/storage-network-security?tabs=azure-portal
-            string vnetResourceId = "/subscriptions/" + DefaultSubscription.Data.Id.Name + "/resourceGroups/" + ResourceGroupName + "/providers/Microsoft.Network/virtualNetworks/testvnet/subnets/subnet1";
-            volumeGroupData.VirtualNetworkRules.Add(new VirtualNetworkRule(vnetResourceId));
+            var vnetResourceId = new ResourceIdentifier("/subscriptions/" + DefaultSubscription.Data.Id.Name + "/resourceGroups/" + ResourceGroupName + "/providers/Microsoft.Network/virtualNetworks/testvnet/subnets/subnet1");
+            volumeGroupData.VirtualNetworkRules.Add(new ElasticSanVirtualNetworkRule(vnetResourceId));
 
             ElasticSanVolumeGroupResource volumeGroupResource = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, volumeGroupName, volumeGroupData)).Value;
             Assert.AreEqual(volumeGroupResource.Id.Name, volumeGroupName);

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector.Models
 {
@@ -15,16 +16,13 @@ namespace Azure.AI.AnomalyDetector.Models
     internal partial class ModelList
     {
         /// <summary> Initializes a new instance of ModelList. </summary>
-        /// <param name="models"> List of models. </param>
-        /// <param name="currentCount"> Current count of trained multivariate models. </param>
-        /// <param name="maxCount"> Max number of models that can be trained for this subscription. </param>
+        /// <param name="models"></param>
+        /// <param name="currentCount"></param>
+        /// <param name="maxCount"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="models"/> is null. </exception>
-        internal ModelList(IEnumerable<ModelSnapshot> models, int currentCount, int maxCount)
+        internal ModelList(IEnumerable<Model> models, int currentCount, int maxCount)
         {
-            if (models == null)
-            {
-                throw new ArgumentNullException(nameof(models));
-            }
+            Argument.AssertNotNull(models, nameof(models));
 
             Models = models.ToList();
             CurrentCount = currentCount;
@@ -32,25 +30,25 @@ namespace Azure.AI.AnomalyDetector.Models
         }
 
         /// <summary> Initializes a new instance of ModelList. </summary>
-        /// <param name="models"> List of models. </param>
-        /// <param name="currentCount"> Current count of trained multivariate models. </param>
-        /// <param name="maxCount"> Max number of models that can be trained for this subscription. </param>
-        /// <param name="nextLink"> The link to fetch more models. </param>
-        internal ModelList(IReadOnlyList<ModelSnapshot> models, int currentCount, int maxCount, string nextLink)
+        /// <param name="models"></param>
+        /// <param name="currentCount"></param>
+        /// <param name="maxCount"></param>
+        /// <param name="nextLink"></param>
+        internal ModelList(IReadOnlyList<Model> models, int currentCount, int maxCount, string nextLink)
         {
-            Models = models;
+            Models = models.ToList();
             CurrentCount = currentCount;
             MaxCount = maxCount;
             NextLink = nextLink;
         }
 
-        /// <summary> List of models. </summary>
-        public IReadOnlyList<ModelSnapshot> Models { get; }
-        /// <summary> Current count of trained multivariate models. </summary>
+        /// <summary> Gets the models. </summary>
+        public IReadOnlyList<Model> Models { get; }
+        /// <summary> Gets the current count. </summary>
         public int CurrentCount { get; }
-        /// <summary> Max number of models that can be trained for this subscription. </summary>
+        /// <summary> Gets the max count. </summary>
         public int MaxCount { get; }
-        /// <summary> The link to fetch more models. </summary>
+        /// <summary> Gets the next link. </summary>
         public string NextLink { get; }
     }
 }

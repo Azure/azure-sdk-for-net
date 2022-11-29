@@ -31,18 +31,18 @@ namespace Azure.ResourceManager.DevTestLabs
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of LabResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of LabResources and their operations over a LabResource. </returns>
-        public virtual LabCollection GetLabs()
+        /// <summary> Gets a collection of DevTestLabResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of DevTestLabResources and their operations over a DevTestLabResource. </returns>
+        public virtual DevTestLabCollection GetDevTestLabs()
         {
-            return GetCachedClient(Client => new LabCollection(Client, Id));
+            return GetCachedClient(Client => new DevTestLabCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ScheduleResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ScheduleResources and their operations over a ScheduleResource. </returns>
-        public virtual ScheduleCollection GetSchedules()
+        /// <summary> Gets a collection of DevTestLabGlobalScheduleResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of DevTestLabGlobalScheduleResources and their operations over a DevTestLabGlobalScheduleResource. </returns>
+        public virtual DevTestLabGlobalScheduleCollection GetDevTestLabGlobalSchedules()
         {
-            return GetCachedClient(Client => new ScheduleCollection(Client, Id));
+            return GetCachedClient(Client => new DevTestLabGlobalScheduleCollection(Client, Id));
         }
     }
 }

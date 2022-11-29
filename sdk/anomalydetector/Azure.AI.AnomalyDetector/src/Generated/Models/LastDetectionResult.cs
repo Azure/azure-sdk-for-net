@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector.Models
@@ -25,8 +26,8 @@ namespace Azure.AI.AnomalyDetector.Models
         /// <param name="results"></param>
         internal LastDetectionResult(IReadOnlyList<VariableState> variableStates, IReadOnlyList<AnomalyState> results)
         {
-            VariableStates = variableStates;
-            Results = results;
+            VariableStates = variableStates.ToList();
+            Results = results.ToList();
         }
 
         /// <summary> Gets the variable states. </summary>

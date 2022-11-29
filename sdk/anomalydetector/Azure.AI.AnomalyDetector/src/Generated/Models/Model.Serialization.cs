@@ -7,6 +7,7 @@
 
 using System;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector.Models
@@ -15,7 +16,7 @@ namespace Azure.AI.AnomalyDetector.Models
     {
         internal static Model DeserializeModel(JsonElement element)
         {
-            Guid modelId = default;
+            string modelId = default;
             DateTimeOffset createdTime = default;
             DateTimeOffset lastUpdatedTime = default;
             Optional<ModelInfo> modelInfo = default;
@@ -23,7 +24,7 @@ namespace Azure.AI.AnomalyDetector.Models
             {
                 if (property.NameEquals("modelId"))
                 {
-                    modelId = property.Value.GetGuid();
+                    modelId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("createdTime"))
@@ -47,7 +48,15 @@ namespace Azure.AI.AnomalyDetector.Models
                     continue;
                 }
             }
-            return new Model(modelId, createdTime, lastUpdatedTime, modelInfo.Value);
+            return new Model(modelId, createdTime, lastUpdatedTime, modelInfo);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static Model FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeModel(document.RootElement);
         }
     }
 }

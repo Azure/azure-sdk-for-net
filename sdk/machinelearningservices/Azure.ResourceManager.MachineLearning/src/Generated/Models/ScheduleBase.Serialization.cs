@@ -5,127 +5,52 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class ScheduleBase : IUtf8JsonSerializable
+    public partial class ScheduleBase
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(EndOn))
-            {
-                if (EndOn != null)
-                {
-                    writer.WritePropertyName("endTime");
-                    writer.WriteStringValue(EndOn.Value, "O");
-                }
-                else
-                {
-                    writer.WriteNull("endTime");
-                }
-            }
-            if (Optional.IsDefined(ScheduleStatus))
-            {
-                writer.WritePropertyName("scheduleStatus");
-                writer.WriteStringValue(ScheduleStatus.Value.ToString());
-            }
-            writer.WritePropertyName("scheduleType");
-            writer.WriteStringValue(ScheduleType.ToString());
-            if (Optional.IsDefined(StartOn))
-            {
-                if (StartOn != null)
-                {
-                    writer.WritePropertyName("startTime");
-                    writer.WriteStringValue(StartOn.Value, "O");
-                }
-                else
-                {
-                    writer.WriteNull("startTime");
-                }
-            }
-            if (Optional.IsDefined(TimeZone))
-            {
-                if (TimeZone != null)
-                {
-                    writer.WritePropertyName("timeZone");
-                    writer.WriteStringValue(TimeZone);
-                }
-                else
-                {
-                    writer.WriteNull("timeZone");
-                }
-            }
-            writer.WriteEndObject();
-        }
-
         internal static ScheduleBase DeserializeScheduleBase(JsonElement element)
         {
-            if (element.TryGetProperty("scheduleType", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "Cron": return CronSchedule.DeserializeCronSchedule(element);
-                    case "Recurrence": return RecurrenceSchedule.DeserializeRecurrenceSchedule(element);
-                }
-            }
-            Optional<DateTimeOffset?> endTime = default;
-            Optional<ScheduleStatus> scheduleStatus = default;
-            ScheduleType scheduleType = default;
-            Optional<DateTimeOffset?> startTime = default;
-            Optional<string> timeZone = default;
+            Optional<string> id = default;
+            Optional<ScheduleProvisioningState> provisioningStatus = default;
+            Optional<ScheduleStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("id"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        endTime = null;
+                        id = null;
                         continue;
                     }
-                    endTime = property.Value.GetDateTimeOffset("O");
+                    id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scheduleStatus"))
+                if (property.NameEquals("provisioningStatus"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    scheduleStatus = new ScheduleStatus(property.Value.GetString());
+                    provisioningStatus = new ScheduleProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("scheduleType"))
-                {
-                    scheduleType = new ScheduleType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("status"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        startTime = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    startTime = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("timeZone"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        timeZone = null;
-                        continue;
-                    }
-                    timeZone = property.Value.GetString();
+                    status = new ScheduleStatus(property.Value.GetString());
                     continue;
                 }
             }
-            return new UnknownScheduleBase(Optional.ToNullable(endTime), Optional.ToNullable(scheduleStatus), scheduleType, Optional.ToNullable(startTime), timeZone.Value);
+            return new ScheduleBase(id.Value, Optional.ToNullable(provisioningStatus), Optional.ToNullable(status));
         }
     }
 }

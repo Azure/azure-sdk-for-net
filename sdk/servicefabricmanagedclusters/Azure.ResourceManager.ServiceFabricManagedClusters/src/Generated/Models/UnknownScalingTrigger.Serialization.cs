@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static UnknownScalingTrigger DeserializeUnknownScalingTrigger(JsonElement element)
         {
-            ServiceScalingTriggerKind kind = default;
+            ServiceScalingTriggerKind kind = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))

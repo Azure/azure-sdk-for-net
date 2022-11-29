@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Maps.Routing.Models
+namespace Azure.Maps.Routing
 {
     public partial class RouteMatrixQuery : IUtf8JsonSerializable
     {

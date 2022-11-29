@@ -1,28 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <RunSettings>
-    <NUnit>
-        <ConsoleOut>0</ConsoleOut>
-    </NUnit>
-    <RunConfiguration>
-        <TargetPlatform>x64</TargetPlatform>
+	<NUnit>
+		<ConsoleOut>0</ConsoleOut>
+	</NUnit>
+	<RunConfiguration>
+		<TargetPlatform>x64</TargetPlatform>
 
-        <!-- Return non-zero exit code if a test run finds no tests -->
-        <!-- disable for now because there are a lot of test projects that don't find tests and would start failing -->
-        <!-- <TreatNoTestsAsError>true</TreatNoTestsAsError> -->
-    </RunConfiguration>
+		<!-- Return non-zero exit code if a test run finds no tests -->
+		<!-- disable for now because there are a lot of test projects that don't find tests and would start failing -->
+		<!-- <TreatNoTestsAsError>true</TreatNoTestsAsError> -->
+	</RunConfiguration>
 
-    <TestRunParameters>
-        <!-- Controls which service versions are running in live mode  -->
-        <!-- <Parameter name="LiveTestServiceVersions" value="V2019_02_02" /> -->
+	<TestRunParameters>
+		<!-- Controls which service versions are running in live mode  -->
+		<!-- <Parameter name="LiveTestServiceVersions" value="V2019_02_02" /> -->
 
-        <!-- Disables auto recording when using [RecordedTest] attribute -->
-        <!-- <Parameter name="DisableAutoRecording" value="true" /> -->
+		<!-- Disables auto recording when using [RecordedTest] attribute -->
+		<!-- <Parameter name="DisableAutoRecording" value="true" /> -->
 
-        <!-- Change the test mode -->
-        <!-- <Parameter name="TestMode" value="Record" /> -->
+		<!-- Change the test mode -->
+		<!-- <Parameter name="TestMode" value="Record" /> -->
 
-        <!-- Enable running Fiddler -->
-        <!-- <Parameter name="EnableFiddler" value="true" /> -->
-    </TestRunParameters>
+		<!-- Enable running Fiddler -->
+		<!-- <Parameter name="EnableFiddler" value="true" /> -->
+	</TestRunParameters>
 
 </RunSettings>

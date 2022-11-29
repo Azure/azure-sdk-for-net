@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,48 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0 (2022-11-17)
+
+### Features Added
+
+- Ability to exclude caller from being an admin on Database create/update.
+- EH and IoT hub data connection new property for lookback – start collecting data that was generated a while ago.
+- Follower name override/prefix – ability to define either different name for Read-Only-Following DB, or define prefix name for all DBs (in case of full cluster following scenario).
+- Enhancing Follower GET-related APIs to improve demonstration of follower-leader linage in Azure portal.
+
+### Bugs Fixed
+
+- Added `KustoClusterPrincipalAssignmentData.ClusterPrincipalId` to replace the old property `KustoClusterPrincipalAssignmentData.PrincipalId` to fix the issue https://github.com/Azure/azure-sdk-for-net/issues/32331.
+
+### Other Changes
+
+- Upgraded API version to 2022-07-07.
+- New API has the following new SKUs: Standard_L8s_v3, Standard_L16s_v3, Standard_L8as_v3, Standard_L16as_v3, Standard_E16s_v5+4TB_PS, Standard_E2d_v4, Standard_E4d_v4, Standard_E8d_v4, Standard_E16d_v4, Standard_E2d_v5, Standard_E4d_v5, Standard_E8d_v5, Standard_E16d_v5.
+
+## 1.0.1 (2022-10-09)
+
+### Bugs Fixed
+
+- Added `KustoDatabasePrincipalAssignmentData.DatabasePrincipalId` to replace the old property `KustoDatabasePrincipalAssignmentData.PrincipalId` to fix the issue https://github.com/Azure/azure-sdk-for-net/issues/31618.
+
+## 1.0.0 (2022-09-19)
+
+This is the first stable release of the Kusto Management library.
+
+### Breaking Changes
+
+Polishing since last public beta release:
+- Prepended `Kusto` prefix to all single / simple model names.
+- Corrected the format of all `Guid` type properties / parameters.
+- Corrected the format of all `ResourceIdentifier` type properties / parameters.
+- Corrected the format of all `AzureLocation` type properties / parameters.
+- Optimized the name of some models and functions.
+
+### Other Changes
+
+- Upgraded dependent Azure.ResourceManager to 1.3.1.
+- Optimized the implementation of methods related to tag operations.
 
 ## 1.0.0-beta.1 (2022-08-18)
 

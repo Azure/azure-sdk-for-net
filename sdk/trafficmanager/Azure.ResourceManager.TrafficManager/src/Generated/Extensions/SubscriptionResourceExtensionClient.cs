@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.TrafficManager
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _profileClientDiagnostics;
-        private ProfilesRestOperations _profileRestClient;
+        private ClientDiagnostics _trafficManagerProfileProfilesClientDiagnostics;
+        private ProfilesRestOperations _trafficManagerProfileProfilesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.TrafficManager
         {
         }
 
-        private ClientDiagnostics ProfileClientDiagnostics => _profileClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.TrafficManager", ProfileResource.ResourceType.Namespace, Diagnostics);
-        private ProfilesRestOperations ProfileRestClient => _profileRestClient ??= new ProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ProfileResource.ResourceType));
+        private ClientDiagnostics TrafficManagerProfileProfilesClientDiagnostics => _trafficManagerProfileProfilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.TrafficManager", TrafficManagerProfileResource.ResourceType.Namespace, Diagnostics);
+        private ProfilesRestOperations TrafficManagerProfileProfilesRestClient => _trafficManagerProfileProfilesRestClient ??= new ProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(TrafficManagerProfileResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.TrafficManager
             return apiVersion;
         }
 
-        /// <summary> Gets an object representing a UserMetricsModelResource along with the instance operations that can be performed on it in the SubscriptionResource. </summary>
-        /// <returns> Returns a <see cref="UserMetricsModelResource" /> object. </returns>
-        public virtual UserMetricsModelResource GetUserMetricsModel()
+        /// <summary> Gets an object representing a TrafficManagerUserMetricsResource along with the instance operations that can be performed on it in the SubscriptionResource. </summary>
+        /// <returns> Returns a <see cref="TrafficManagerUserMetricsResource" /> object. </returns>
+        public virtual TrafficManagerUserMetricsResource GetTrafficManagerUserMetrics()
         {
-            return new UserMetricsModelResource(Client, new ResourceIdentifier(Id.ToString() + "/providers/Microsoft.Network/trafficManagerUserMetricsKeys/default"));
+            return new TrafficManagerUserMetricsResource(Client, new ResourceIdentifier(Id.ToString() + "/providers/Microsoft.Network/trafficManagerUserMetricsKeys/default"));
         }
 
         /// <summary>
@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.TrafficManager
         /// Operation Id: Profiles_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProfileResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProfileResource> GetProfilesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="TrafficManagerProfileResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<TrafficManagerProfileResource> GetTrafficManagerProfilesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ProfileResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<TrafficManagerProfileResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ProfileClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetProfiles");
+                using var scope = TrafficManagerProfileProfilesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTrafficManagerProfiles");
                 scope.Start();
                 try
                 {
-                    var response = await ProfileRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProfileResource(Client, value)), null, response.GetRawResponse());
+                    var response = await TrafficManagerProfileProfilesRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new TrafficManagerProfileResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -83,17 +83,17 @@ namespace Azure.ResourceManager.TrafficManager
         /// Operation Id: Profiles_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProfileResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ProfileResource> GetProfiles(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="TrafficManagerProfileResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<TrafficManagerProfileResource> GetTrafficManagerProfiles(CancellationToken cancellationToken = default)
         {
-            Page<ProfileResource> FirstPageFunc(int? pageSizeHint)
+            Page<TrafficManagerProfileResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ProfileClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetProfiles");
+                using var scope = TrafficManagerProfileProfilesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTrafficManagerProfiles");
                 scope.Start();
                 try
                 {
-                    var response = ProfileRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProfileResource(Client, value)), null, response.GetRawResponse());
+                    var response = TrafficManagerProfileProfilesRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new TrafficManagerProfileResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

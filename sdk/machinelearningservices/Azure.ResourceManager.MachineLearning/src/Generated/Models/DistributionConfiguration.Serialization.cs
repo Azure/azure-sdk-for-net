@@ -31,16 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "TensorFlow": return TensorFlow.DeserializeTensorFlow(element);
                 }
             }
-            DistributionType distributionType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("distributionType"))
-                {
-                    distributionType = new DistributionType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownDistributionConfiguration(distributionType);
+            return UnknownDistributionConfiguration.DeserializeUnknownDistributionConfiguration(element);
         }
     }
 }

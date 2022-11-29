@@ -131,10 +131,15 @@ string schemaId = schemaProperties.Id;
 
 ### Retrieve a schema
 
-Retrieve a previously registered schema's content from the Azure Schema Registry.
+Retrieve a previously registered schema's content from the Azure Schema Registry with either a schema ID or the group name, schema name, and version.
 
 ```C# Snippet:SchemaRegistryRetrieveSchema
 SchemaRegistrySchema schema = client.GetSchema(schemaId);
+string definition = schema.Definition;
+```
+
+```C# Snippet:SchemaRegistryRetrieveSchemaVersion
+SchemaRegistrySchema schema = client.GetSchema(groupName, name, version);
 string definition = schema.Definition;
 ```
 

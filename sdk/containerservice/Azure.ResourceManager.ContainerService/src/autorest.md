@@ -52,7 +52,7 @@ rename-mapping:
   RunCommandResult: ManagedClusterRunCommandResult
   UserAssignedIdentity.objectId: -|uuid
   UserAssignedIdentity.clientId: -|uuid
-  ManagedClusterServicePrincipalProfile.clientId: -|uuid
+#   ManagedClusterServicePrincipalProfile.clientId: -|uuid
   ManagedClusterAADProfile.serverAppID: -|uuid
   ManagedClusterAADProfile.clientAppID: -|uuid
 #   ManagedClusterAADProfile.adminGroupObjectIDs.items: -|uuid

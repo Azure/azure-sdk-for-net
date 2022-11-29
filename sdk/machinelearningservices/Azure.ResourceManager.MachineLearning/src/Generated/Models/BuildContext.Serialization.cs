@@ -20,15 +20,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStringValue(ContextUri.AbsoluteUri);
             if (Optional.IsDefined(DockerfilePath))
             {
-                if (DockerfilePath != null)
-                {
-                    writer.WritePropertyName("dockerfilePath");
-                    writer.WriteStringValue(DockerfilePath);
-                }
-                else
-                {
-                    writer.WriteNull("dockerfilePath");
-                }
+                writer.WritePropertyName("dockerfilePath");
+                writer.WriteStringValue(DockerfilePath);
             }
             writer.WriteEndObject();
         }
@@ -46,11 +39,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("dockerfilePath"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        dockerfilePath = null;
-                        continue;
-                    }
                     dockerfilePath = property.Value.GetString();
                     continue;
                 }

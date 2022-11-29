@@ -6,10 +6,12 @@
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.GeoJson;
+using Azure.Maps.Routing.Models;
 
-namespace Azure.Maps.Routing.Models
+namespace Azure.Maps.Routing
 {
     /// <summary> An object with a matrix of coordinates. </summary>
+    [CodeGenModel("RouteMatrixQuery")]
     public partial class RouteMatrixQuery
     {
         /// <summary> A valid `GeoJSON MultiPoint` geometry type. Please refer to <see href="https://tools.ietf.org/html/rfc7946#section-3.1.3">RFC 7946</see> for details. </summary>

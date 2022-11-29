@@ -21,10 +21,12 @@ namespace Azure.ResourceManager.Kusto
         public System.Collections.Generic.IReadOnlyList<string> AttachedDatabaseNames { get { throw null; } }
         public Azure.Core.ResourceIdentifier ClusterResourceId { get { throw null; } set { } }
         public string DatabaseName { get { throw null; } set { } }
-        public Azure.ResourceManager.Kusto.Models.DefaultPrincipalsModificationKind? DefaultPrincipalsModificationKind { get { throw null; } set { } }
+        public string DatabaseNameOverride { get { throw null; } set { } }
+        public string DatabaseNamePrefix { get { throw null; } set { } }
+        public Azure.ResourceManager.Kusto.Models.KustoDatabaseDefaultPrincipalsModificationKind? DefaultPrincipalsModificationKind { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public Azure.ResourceManager.Kusto.Models.KustoProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Kusto.Models.TableLevelSharingProperties TableLevelSharingProperties { get { throw null; } set { } }
+        public Azure.ResourceManager.Kusto.Models.KustoDatabaseTableLevelSharingProperties TableLevelSharingProperties { get { throw null; } set { } }
     }
     public partial class KustoAttachedDatabaseConfigurationResource : Azure.ResourceManager.ArmResource
     {
@@ -61,6 +63,7 @@ namespace Azure.ResourceManager.Kusto
         public System.Collections.Generic.IList<Azure.ResourceManager.Kusto.Models.AcceptedAudience> AcceptedAudiences { get { throw null; } }
         public System.Collections.Generic.IList<string> AllowedFqdnList { get { throw null; } }
         public System.Collections.Generic.IList<string> AllowedIPRangeList { get { throw null; } }
+        public System.Uri ClusterUri { get { throw null; } }
         public System.Uri DataIngestionUri { get { throw null; } }
         public Azure.ResourceManager.Kusto.Models.KustoClusterEngineType? EngineType { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.Kusto
         public bool? IsPurgeEnabled { get { throw null; } set { } }
         public bool? IsStreamingIngestEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.Kusto.Models.KustoKeyVaultProperties KeyVaultProperties { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Kusto.Models.LanguageExtension> LanguageExtensionsValue { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Kusto.Models.KustoLanguageExtension> LanguageExtensionsValue { get { throw null; } }
         public Azure.ResourceManager.Kusto.Models.OptimizedAutoscale OptimizedAutoscale { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Kusto.KustoPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.Kusto.Models.KustoProvisioningState? ProvisioningState { get { throw null; } }
@@ -81,8 +84,7 @@ namespace Azure.ResourceManager.Kusto
         public Azure.ResourceManager.Kusto.Models.KustoSku Sku { get { throw null; } set { } }
         public Azure.ResourceManager.Kusto.Models.KustoClusterState? State { get { throw null; } }
         public string StateReason { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Kusto.Models.TrustedExternalTenant> TrustedExternalTenants { get { throw null; } }
-        public System.Uri Uri { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Kusto.Models.KustoClusterTrustedExternalTenant> TrustedExternalTenants { get { throw null; } }
         public string VirtualClusterGraduationProperties { get { throw null; } set { } }
         public Azure.ResourceManager.Kusto.Models.KustoClusterVirtualNetworkConfiguration VirtualNetworkConfiguration { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Zones { get { throw null; } }
@@ -106,6 +108,9 @@ namespace Azure.ResourceManager.Kusto
     {
         public KustoClusterPrincipalAssignmentData() { }
         public System.Guid? AadObjectId { get { throw null; } }
+        public string ClusterPrincipalId { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use ClusterPrincipalId instead.", false)]
         public System.Guid? PrincipalId { get { throw null; } set { } }
         public string PrincipalName { get { throw null; } }
         public Azure.ResourceManager.Kusto.Models.KustoPrincipalAssignmentType? PrincipalType { get { throw null; } set { } }
@@ -134,8 +139,8 @@ namespace Azure.ResourceManager.Kusto
         protected KustoClusterResource() { }
         public virtual Azure.ResourceManager.Kusto.KustoClusterData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public virtual Azure.ResourceManager.ArmOperation AddLanguageExtensions(Azure.WaitUntil waitUntil, Azure.ResourceManager.Kusto.Models.LanguageExtensionList languageExtensionsToAdd, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> AddLanguageExtensionsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Kusto.Models.LanguageExtensionList languageExtensionsToAdd, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation AddLanguageExtensions(Azure.WaitUntil waitUntil, Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionList languageExtensionsToAdd, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> AddLanguageExtensionsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionList languageExtensionsToAdd, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Kusto.KustoClusterResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Kusto.KustoClusterResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Kusto.Models.KustoNameAvailabilityResult> CheckKustoAttachedDatabaseConfigurationNameAvailability(Azure.ResourceManager.Kusto.Models.KustoAttachedDatabaseConfigurationNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -177,12 +182,12 @@ namespace Azure.ResourceManager.Kusto
         public virtual Azure.Response<Azure.ResourceManager.Kusto.KustoPrivateLinkResource> GetKustoPrivateLinkResource(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Kusto.KustoPrivateLinkResource>> GetKustoPrivateLinkResourceAsync(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Kusto.KustoPrivateLinkResourceCollection GetKustoPrivateLinkResources() { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Kusto.Models.LanguageExtension> GetLanguageExtensions(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Kusto.Models.LanguageExtension> GetLanguageExtensionsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Kusto.Models.KustoLanguageExtension> GetLanguageExtensions(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Kusto.Models.KustoLanguageExtension> GetLanguageExtensionsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Kusto.Models.OutboundNetworkDependenciesEndpoint> GetOutboundNetworkDependenciesEndpoints(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Kusto.Models.OutboundNetworkDependenciesEndpoint> GetOutboundNetworkDependenciesEndpointsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation RemoveLanguageExtensions(Azure.WaitUntil waitUntil, Azure.ResourceManager.Kusto.Models.LanguageExtensionList languageExtensionsToRemove, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RemoveLanguageExtensionsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Kusto.Models.LanguageExtensionList languageExtensionsToRemove, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation RemoveLanguageExtensions(Azure.WaitUntil waitUntil, Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionList languageExtensionsToRemove, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RemoveLanguageExtensionsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionList languageExtensionsToRemove, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Kusto.KustoClusterResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Kusto.KustoClusterResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Kusto.KustoClusterResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -197,8 +202,10 @@ namespace Azure.ResourceManager.Kusto
     public partial class KustoDatabaseCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Kusto.KustoDatabaseResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.KustoDatabaseResource>, System.Collections.IEnumerable
     {
         protected KustoDatabaseCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Kusto.KustoDatabaseResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string databaseName, Azure.ResourceManager.Kusto.KustoDatabaseData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Kusto.KustoDatabaseResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string databaseName, Azure.ResourceManager.Kusto.KustoDatabaseData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Kusto.KustoDatabaseResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string databaseName, Azure.ResourceManager.Kusto.KustoDatabaseData data, Azure.ResourceManager.Kusto.Models.KustoDatabaseCallerRole? callerRole = default(Azure.ResourceManager.Kusto.Models.KustoDatabaseCallerRole?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Kusto.KustoDatabaseResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string databaseName, Azure.ResourceManager.Kusto.KustoDatabaseData data, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Kusto.KustoDatabaseResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string databaseName, Azure.ResourceManager.Kusto.KustoDatabaseData data, Azure.ResourceManager.Kusto.Models.KustoDatabaseCallerRole? callerRole = default(Azure.ResourceManager.Kusto.Models.KustoDatabaseCallerRole?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Kusto.KustoDatabaseResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string databaseName, Azure.ResourceManager.Kusto.KustoDatabaseData data, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<bool> Exists(string databaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string databaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Kusto.KustoDatabaseResource> Get(string databaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -233,6 +240,9 @@ namespace Azure.ResourceManager.Kusto
     {
         public KustoDatabasePrincipalAssignmentData() { }
         public System.Guid? AadObjectId { get { throw null; } }
+        public string DatabasePrincipalId { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use DatabasePrincipalId instead.", false)]
         public System.Guid? PrincipalId { get { throw null; } set { } }
         public string PrincipalName { get { throw null; } }
         public Azure.ResourceManager.Kusto.Models.KustoPrincipalAssignmentType? PrincipalType { get { throw null; } set { } }
@@ -287,8 +297,10 @@ namespace Azure.ResourceManager.Kusto
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipal> GetPrincipalsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipal> RemovePrincipals(Azure.ResourceManager.Kusto.Models.DatabasePrincipalList databasePrincipalsToRemove, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipal> RemovePrincipalsAsync(Azure.ResourceManager.Kusto.Models.DatabasePrincipalList databasePrincipalsToRemove, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Kusto.KustoDatabaseResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Kusto.KustoDatabaseData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Kusto.KustoDatabaseResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Kusto.KustoDatabaseData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Kusto.KustoDatabaseResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Kusto.KustoDatabaseData data, Azure.ResourceManager.Kusto.Models.KustoDatabaseCallerRole? callerRole = default(Azure.ResourceManager.Kusto.Models.KustoDatabaseCallerRole?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Kusto.KustoDatabaseResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Kusto.KustoDatabaseData data, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Kusto.KustoDatabaseResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Kusto.KustoDatabaseData data, Azure.ResourceManager.Kusto.Models.KustoDatabaseCallerRole? callerRole = default(Azure.ResourceManager.Kusto.Models.KustoDatabaseCallerRole?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Kusto.KustoDatabaseResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Kusto.KustoDatabaseData data, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Kusto.Models.DataConnectionValidationResults> ValidateDataConnection(Azure.WaitUntil waitUntil, Azure.ResourceManager.Kusto.Models.DataConnectionValidationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Kusto.Models.DataConnectionValidationResults>> ValidateDataConnectionAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Kusto.Models.DataConnectionValidationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -556,25 +568,6 @@ namespace Azure.ResourceManager.Kusto.Models
         internal DataConnectionValidationResults() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Kusto.Models.DataConnectionValidationResult> Value { get { throw null; } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DefaultPrincipalsModificationKind : System.IEquatable<Azure.ResourceManager.Kusto.Models.DefaultPrincipalsModificationKind>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DefaultPrincipalsModificationKind(string value) { throw null; }
-        public static Azure.ResourceManager.Kusto.Models.DefaultPrincipalsModificationKind None { get { throw null; } }
-        public static Azure.ResourceManager.Kusto.Models.DefaultPrincipalsModificationKind Replace { get { throw null; } }
-        public static Azure.ResourceManager.Kusto.Models.DefaultPrincipalsModificationKind Union { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Kusto.Models.DefaultPrincipalsModificationKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Kusto.Models.DefaultPrincipalsModificationKind left, Azure.ResourceManager.Kusto.Models.DefaultPrincipalsModificationKind right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Kusto.Models.DefaultPrincipalsModificationKind (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Kusto.Models.DefaultPrincipalsModificationKind left, Azure.ResourceManager.Kusto.Models.DefaultPrincipalsModificationKind right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class DiagnoseVirtualNetworkResult
     {
         internal DiagnoseVirtualNetworkResult() { }
@@ -687,7 +680,7 @@ namespace Azure.ResourceManager.Kusto.Models
         public bool? IsPurgeEnabled { get { throw null; } set { } }
         public bool? IsStreamingIngestEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.Kusto.Models.KustoKeyVaultProperties KeyVaultProperties { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Kusto.Models.LanguageExtension> LanguageExtensionsValue { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Kusto.Models.KustoLanguageExtension> LanguageExtensionsValue { get { throw null; } }
         public Azure.ResourceManager.Kusto.Models.OptimizedAutoscale OptimizedAutoscale { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Kusto.KustoPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.Kusto.Models.KustoProvisioningState? ProvisioningState { get { throw null; } }
@@ -697,7 +690,7 @@ namespace Azure.ResourceManager.Kusto.Models
         public Azure.ResourceManager.Kusto.Models.KustoSku Sku { get { throw null; } set { } }
         public Azure.ResourceManager.Kusto.Models.KustoClusterState? State { get { throw null; } }
         public string StateReason { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Kusto.Models.TrustedExternalTenant> TrustedExternalTenants { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Kusto.Models.KustoClusterTrustedExternalTenant> TrustedExternalTenants { get { throw null; } }
         public System.Uri Uri { get { throw null; } }
         public string VirtualClusterGraduationProperties { get { throw null; } set { } }
         public Azure.ResourceManager.Kusto.Models.KustoClusterVirtualNetworkConfiguration VirtualNetworkConfiguration { get { throw null; } set { } }
@@ -804,6 +797,11 @@ namespace Azure.ResourceManager.Kusto.Models
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoClusterState left, Azure.ResourceManager.Kusto.Models.KustoClusterState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class KustoClusterTrustedExternalTenant
+    {
+        public KustoClusterTrustedExternalTenant() { }
+        public string Value { get { throw null; } set { } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct KustoClusterType : System.IEquatable<Azure.ResourceManager.Kusto.Models.KustoClusterType>
     {
@@ -827,6 +825,43 @@ namespace Azure.ResourceManager.Kusto.Models
         public string DataManagementPublicIPId { get { throw null; } set { } }
         public string EnginePublicIPId { get { throw null; } set { } }
         public string SubnetId { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct KustoDatabaseCallerRole : System.IEquatable<Azure.ResourceManager.Kusto.Models.KustoDatabaseCallerRole>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public KustoDatabaseCallerRole(string value) { throw null; }
+        public static Azure.ResourceManager.Kusto.Models.KustoDatabaseCallerRole Admin { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.KustoDatabaseCallerRole None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Kusto.Models.KustoDatabaseCallerRole other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Kusto.Models.KustoDatabaseCallerRole left, Azure.ResourceManager.Kusto.Models.KustoDatabaseCallerRole right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.KustoDatabaseCallerRole (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoDatabaseCallerRole left, Azure.ResourceManager.Kusto.Models.KustoDatabaseCallerRole right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct KustoDatabaseDefaultPrincipalsModificationKind : System.IEquatable<Azure.ResourceManager.Kusto.Models.KustoDatabaseDefaultPrincipalsModificationKind>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public KustoDatabaseDefaultPrincipalsModificationKind(string value) { throw null; }
+        public static Azure.ResourceManager.Kusto.Models.KustoDatabaseDefaultPrincipalsModificationKind None { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.KustoDatabaseDefaultPrincipalsModificationKind Replace { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.KustoDatabaseDefaultPrincipalsModificationKind Union { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Kusto.Models.KustoDatabaseDefaultPrincipalsModificationKind other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Kusto.Models.KustoDatabaseDefaultPrincipalsModificationKind left, Azure.ResourceManager.Kusto.Models.KustoDatabaseDefaultPrincipalsModificationKind right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.KustoDatabaseDefaultPrincipalsModificationKind (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoDatabaseDefaultPrincipalsModificationKind left, Azure.ResourceManager.Kusto.Models.KustoDatabaseDefaultPrincipalsModificationKind right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class KustoDatabaseNameAvailabilityContent
     {
@@ -891,6 +926,25 @@ namespace Azure.ResourceManager.Kusto.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct KustoDatabasePrincipalsModificationKind : System.IEquatable<Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalsModificationKind>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public KustoDatabasePrincipalsModificationKind(string value) { throw null; }
+        public static Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalsModificationKind None { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalsModificationKind Replace { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalsModificationKind Union { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalsModificationKind other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalsModificationKind left, Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalsModificationKind right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalsModificationKind (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalsModificationKind left, Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalsModificationKind right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct KustoDatabasePrincipalType : System.IEquatable<Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalType>
     {
         private readonly object _dummy;
@@ -931,6 +985,35 @@ namespace Azure.ResourceManager.Kusto.Models
         public static implicit operator Azure.ResourceManager.Kusto.Models.KustoDatabaseRouting (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoDatabaseRouting left, Azure.ResourceManager.Kusto.Models.KustoDatabaseRouting right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct KustoDatabaseShareOrigin : System.IEquatable<Azure.ResourceManager.Kusto.Models.KustoDatabaseShareOrigin>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public KustoDatabaseShareOrigin(string value) { throw null; }
+        public static Azure.ResourceManager.Kusto.Models.KustoDatabaseShareOrigin DataShare { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.KustoDatabaseShareOrigin Direct { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.KustoDatabaseShareOrigin Other { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Kusto.Models.KustoDatabaseShareOrigin other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Kusto.Models.KustoDatabaseShareOrigin left, Azure.ResourceManager.Kusto.Models.KustoDatabaseShareOrigin right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.KustoDatabaseShareOrigin (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoDatabaseShareOrigin left, Azure.ResourceManager.Kusto.Models.KustoDatabaseShareOrigin right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class KustoDatabaseTableLevelSharingProperties
+    {
+        public KustoDatabaseTableLevelSharingProperties() { }
+        public System.Collections.Generic.IList<string> ExternalTablesToExclude { get { throw null; } }
+        public System.Collections.Generic.IList<string> ExternalTablesToInclude { get { throw null; } }
+        public System.Collections.Generic.IList<string> MaterializedViewsToExclude { get { throw null; } }
+        public System.Collections.Generic.IList<string> MaterializedViewsToInclude { get { throw null; } }
+        public System.Collections.Generic.IList<string> TablesToExclude { get { throw null; } }
+        public System.Collections.Generic.IList<string> TablesToInclude { get { throw null; } }
     }
     public partial class KustoDataConnectionNameAvailabilityContent
     {
@@ -1017,6 +1100,7 @@ namespace Azure.ResourceManager.Kusto.Models
         public Azure.Core.ResourceIdentifier ManagedIdentityResourceId { get { throw null; } set { } }
         public string MappingRuleName { get { throw null; } set { } }
         public Azure.ResourceManager.Kusto.Models.KustoProvisioningState? ProvisioningState { get { throw null; } }
+        public System.DateTimeOffset? RetrievalStartOn { get { throw null; } set { } }
         public string TableName { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1057,6 +1141,8 @@ namespace Azure.ResourceManager.Kusto.Models
         public string AttachedDatabaseConfigurationName { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ClusterResourceId { get { throw null; } set { } }
         public string DatabaseName { get { throw null; } }
+        public Azure.ResourceManager.Kusto.Models.KustoDatabaseShareOrigin? DatabaseShareOrigin { get { throw null; } }
+        public Azure.ResourceManager.Kusto.Models.KustoDatabaseTableLevelSharingProperties TableLevelSharingProperties { get { throw null; } }
     }
     public partial class KustoIotHubDataConnection : Azure.ResourceManager.Kusto.KustoDataConnectionData
     {
@@ -1068,6 +1154,7 @@ namespace Azure.ResourceManager.Kusto.Models
         public Azure.Core.ResourceIdentifier IotHubResourceId { get { throw null; } set { } }
         public string MappingRuleName { get { throw null; } set { } }
         public Azure.ResourceManager.Kusto.Models.KustoProvisioningState? ProvisioningState { get { throw null; } }
+        public System.DateTimeOffset? RetrievalStartOn { get { throw null; } set { } }
         public string SharedAccessPolicyName { get { throw null; } set { } }
         public string TableName { get { throw null; } set { } }
     }
@@ -1110,6 +1197,34 @@ namespace Azure.ResourceManager.Kusto.Models
         public System.Uri KeyVaultUri { get { throw null; } set { } }
         public string KeyVersion { get { throw null; } set { } }
         public string UserIdentity { get { throw null; } set { } }
+    }
+    public partial class KustoLanguageExtension
+    {
+        public KustoLanguageExtension() { }
+        public Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionName? LanguageExtensionName { get { throw null; } set { } }
+    }
+    public partial class KustoLanguageExtensionList
+    {
+        public KustoLanguageExtensionList() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Kusto.Models.KustoLanguageExtension> Value { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct KustoLanguageExtensionName : System.IEquatable<Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionName>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public KustoLanguageExtensionName(string value) { throw null; }
+        public static Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionName Python { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionName R { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionName left, Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionName right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionName (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionName left, Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionName right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class KustoManagedPrivateEndpointNameAvailabilityContent
     {
@@ -1212,12 +1327,15 @@ namespace Azure.ResourceManager.Kusto.Models
     {
         public KustoReadOnlyFollowingDatabase() { }
         public string AttachedDatabaseConfigurationName { get { throw null; } }
+        public Azure.ResourceManager.Kusto.Models.KustoDatabaseShareOrigin? DatabaseShareOrigin { get { throw null; } }
         public System.TimeSpan? HotCachePeriod { get { throw null; } set { } }
         public string LeaderClusterResourceId { get { throw null; } }
-        public Azure.ResourceManager.Kusto.Models.PrincipalsModificationKind? PrincipalsModificationKind { get { throw null; } }
+        public string OriginalDatabaseName { get { throw null; } }
+        public Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalsModificationKind? PrincipalsModificationKind { get { throw null; } }
         public Azure.ResourceManager.Kusto.Models.KustoProvisioningState? ProvisioningState { get { throw null; } }
         public System.TimeSpan? SoftDeletePeriod { get { throw null; } }
         public float? StatisticsSize { get { throw null; } }
+        public Azure.ResourceManager.Kusto.Models.KustoDatabaseTableLevelSharingProperties TableLevelSharingProperties { get { throw null; } }
     }
     public partial class KustoReadWriteDatabase : Azure.ResourceManager.Kusto.KustoDatabaseData
     {
@@ -1318,14 +1436,20 @@ namespace Azure.ResourceManager.Kusto.Models
         public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardE16asV53TBPS { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardE16asV54TBPS { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardE16aV4 { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardE16dV4 { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardE16dV5 { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardE16sV43TBPS { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardE16sV44TBPS { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardE16sV53TBPS { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardE16sV54TBPS { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardE2adsV5 { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardE2aV4 { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardE2dV4 { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardE2dV5 { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardE4adsV5 { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardE4aV4 { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardE4dV4 { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardE4dV5 { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardE64iV3 { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardE80idsV4 { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardE8adsV5 { get { throw null; } }
@@ -1334,15 +1458,27 @@ namespace Azure.ResourceManager.Kusto.Models
         public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardE8asV51TBPS { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardE8asV52TBPS { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardE8aV4 { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardE8dV4 { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardE8dV5 { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardE8sV41TBPS { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardE8sV42TBPS { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardE8sV51TBPS { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardE8sV52TBPS { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardEC16adsV5 { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardEC16asV53TBPS { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardEC16asV54TBPS { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardEC8adsV5 { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardEC8asV51TBPS { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardEC8asV52TBPS { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardL16asV3 { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardL16s { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardL16sV2 { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardL16sV3 { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardL4s { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardL8asV3 { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardL8s { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardL8sV2 { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardL8sV3 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kusto.Models.KustoSkuName other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -1371,34 +1507,6 @@ namespace Azure.ResourceManager.Kusto.Models
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoSkuTier left, Azure.ResourceManager.Kusto.Models.KustoSkuTier right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class LanguageExtension
-    {
-        public LanguageExtension() { }
-        public Azure.ResourceManager.Kusto.Models.LanguageExtensionName? LanguageExtensionName { get { throw null; } set { } }
-    }
-    public partial class LanguageExtensionList
-    {
-        public LanguageExtensionList() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Kusto.Models.LanguageExtension> Value { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct LanguageExtensionName : System.IEquatable<Azure.ResourceManager.Kusto.Models.LanguageExtensionName>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public LanguageExtensionName(string value) { throw null; }
-        public static Azure.ResourceManager.Kusto.Models.LanguageExtensionName Python { get { throw null; } }
-        public static Azure.ResourceManager.Kusto.Models.LanguageExtensionName R { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Kusto.Models.LanguageExtensionName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Kusto.Models.LanguageExtensionName left, Azure.ResourceManager.Kusto.Models.LanguageExtensionName right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Kusto.Models.LanguageExtensionName (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Kusto.Models.LanguageExtensionName left, Azure.ResourceManager.Kusto.Models.LanguageExtensionName right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class OptimizedAutoscale
     {
         public OptimizedAutoscale(int version, bool isEnabled, int minimum, int maximum) { }
@@ -1414,39 +1522,5 @@ namespace Azure.ResourceManager.Kusto.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Kusto.Models.EndpointDependency> Endpoints { get { throw null; } }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Kusto.Models.KustoProvisioningState? ProvisioningState { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PrincipalsModificationKind : System.IEquatable<Azure.ResourceManager.Kusto.Models.PrincipalsModificationKind>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public PrincipalsModificationKind(string value) { throw null; }
-        public static Azure.ResourceManager.Kusto.Models.PrincipalsModificationKind None { get { throw null; } }
-        public static Azure.ResourceManager.Kusto.Models.PrincipalsModificationKind Replace { get { throw null; } }
-        public static Azure.ResourceManager.Kusto.Models.PrincipalsModificationKind Union { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Kusto.Models.PrincipalsModificationKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Kusto.Models.PrincipalsModificationKind left, Azure.ResourceManager.Kusto.Models.PrincipalsModificationKind right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Kusto.Models.PrincipalsModificationKind (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Kusto.Models.PrincipalsModificationKind left, Azure.ResourceManager.Kusto.Models.PrincipalsModificationKind right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class TableLevelSharingProperties
-    {
-        public TableLevelSharingProperties() { }
-        public System.Collections.Generic.IList<string> ExternalTablesToExclude { get { throw null; } }
-        public System.Collections.Generic.IList<string> ExternalTablesToInclude { get { throw null; } }
-        public System.Collections.Generic.IList<string> MaterializedViewsToExclude { get { throw null; } }
-        public System.Collections.Generic.IList<string> MaterializedViewsToInclude { get { throw null; } }
-        public System.Collections.Generic.IList<string> TablesToExclude { get { throw null; } }
-        public System.Collections.Generic.IList<string> TablesToInclude { get { throw null; } }
-    }
-    public partial class TrustedExternalTenant
-    {
-        public TrustedExternalTenant() { }
-        public string Value { get { throw null; } set { } }
     }
 }

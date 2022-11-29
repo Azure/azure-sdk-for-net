@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -31,7 +30,7 @@ namespace Azure.Communication.JobRouter
                     case "wait-time": return WaitTimeExceptionTrigger.DeserializeWaitTimeExceptionTrigger(element);
                 }
             }
-            throw new NotSupportedException("Deserialization of abstract type 'global::Azure.Communication.JobRouter.JobExceptionTrigger' not supported.");
+            return UnknownJobExceptionTrigger.DeserializeUnknownJobExceptionTrigger(element);
         }
     }
 }

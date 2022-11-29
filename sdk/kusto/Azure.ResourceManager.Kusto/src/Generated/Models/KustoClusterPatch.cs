@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="location"> The location. </param>
         public KustoClusterPatch(AzureLocation location) : base(location)
         {
-            TrustedExternalTenants = new ChangeTrackingList<TrustedExternalTenant>();
+            TrustedExternalTenants = new ChangeTrackingList<KustoClusterTrustedExternalTenant>();
             AllowedIPRangeList = new ChangeTrackingList<string>();
             AcceptedAudiences = new ChangeTrackingList<AcceptedAudience>();
             AllowedFqdnList = new ChangeTrackingList<string>();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="publicIPType"> Indicates what public IP type to create - IPv4 (default), or DualStack (both IPv4 and IPv6). </param>
         /// <param name="virtualClusterGraduationProperties"> Virtual Cluster graduation properties. </param>
         /// <param name="privateEndpointConnections"> A list of private endpoint connections. </param>
-        internal KustoClusterPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, KustoSku sku, ManagedServiceIdentity identity, KustoClusterState? state, KustoProvisioningState? provisioningState, Uri uri, Uri dataIngestionUri, string stateReason, IList<TrustedExternalTenant> trustedExternalTenants, OptimizedAutoscale optimizedAutoscale, bool? isDiskEncryptionEnabled, bool? isStreamingIngestEnabled, KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration, KustoKeyVaultProperties keyVaultProperties, bool? isPurgeEnabled, LanguageExtensionList languageExtensions, bool? isDoubleEncryptionEnabled, KustoClusterPublicNetworkAccess? publicNetworkAccess, IList<string> allowedIPRangeList, KustoClusterEngineType? engineType, IList<AcceptedAudience> acceptedAudiences, bool? isAutoStopEnabled, KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess, IList<string> allowedFqdnList, KustoClusterPublicIPType? publicIPType, string virtualClusterGraduationProperties, IReadOnlyList<KustoPrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
+        internal KustoClusterPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, KustoSku sku, ManagedServiceIdentity identity, KustoClusterState? state, KustoProvisioningState? provisioningState, Uri uri, Uri dataIngestionUri, string stateReason, IList<KustoClusterTrustedExternalTenant> trustedExternalTenants, OptimizedAutoscale optimizedAutoscale, bool? isDiskEncryptionEnabled, bool? isStreamingIngestEnabled, KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration, KustoKeyVaultProperties keyVaultProperties, bool? isPurgeEnabled, KustoLanguageExtensionList languageExtensions, bool? isDoubleEncryptionEnabled, KustoClusterPublicNetworkAccess? publicNetworkAccess, IList<string> allowedIPRangeList, KustoClusterEngineType? engineType, IList<AcceptedAudience> acceptedAudiences, bool? isAutoStopEnabled, KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess, IList<string> allowedFqdnList, KustoClusterPublicIPType? publicIPType, string virtualClusterGraduationProperties, IReadOnlyList<KustoPrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Identity = identity;
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> The reason for the cluster&apos;s current state. </summary>
         public string StateReason { get; }
         /// <summary> The cluster&apos;s external tenants. </summary>
-        public IList<TrustedExternalTenant> TrustedExternalTenants { get; }
+        public IList<KustoClusterTrustedExternalTenant> TrustedExternalTenants { get; }
         /// <summary> Optimized auto scale definition. </summary>
         public OptimizedAutoscale OptimizedAutoscale { get; set; }
         /// <summary> A boolean value that indicates if the cluster&apos;s disks are encrypted. </summary>
@@ -119,9 +119,9 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> A boolean value that indicates if the purge operations are enabled. </summary>
         public bool? IsPurgeEnabled { get; set; }
         /// <summary> List of the cluster&apos;s language extensions. </summary>
-        internal LanguageExtensionList LanguageExtensions { get; }
+        internal KustoLanguageExtensionList LanguageExtensions { get; }
         /// <summary> The list of language extensions. </summary>
-        public IList<LanguageExtension> LanguageExtensionsValue
+        public IList<KustoLanguageExtension> LanguageExtensionsValue
         {
             get => LanguageExtensions?.Value;
         }

@@ -452,10 +452,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// Operation Id: IotDpsResource_ListKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SharedAccessSignatureAuthorizationRuleAccessRightsDescription" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SharedAccessSignatureAuthorizationRuleAccessRightsDescription> GetKeysAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DeviceProvisioningServicesSharedAccessKey" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DeviceProvisioningServicesSharedAccessKey> GetKeysAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SharedAccessSignatureAuthorizationRuleAccessRightsDescription>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<DeviceProvisioningServicesSharedAccessKey>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceResource.GetKeys");
                 scope.Start();
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                     throw;
                 }
             }
-            async Task<Page<SharedAccessSignatureAuthorizationRuleAccessRightsDescription>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<DeviceProvisioningServicesSharedAccessKey>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceResource.GetKeys");
                 scope.Start();
@@ -494,10 +494,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// Operation Id: IotDpsResource_ListKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SharedAccessSignatureAuthorizationRuleAccessRightsDescription" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SharedAccessSignatureAuthorizationRuleAccessRightsDescription> GetKeys(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DeviceProvisioningServicesSharedAccessKey" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DeviceProvisioningServicesSharedAccessKey> GetKeys(CancellationToken cancellationToken = default)
         {
-            Page<SharedAccessSignatureAuthorizationRuleAccessRightsDescription> FirstPageFunc(int? pageSizeHint)
+            Page<DeviceProvisioningServicesSharedAccessKey> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceResource.GetKeys");
                 scope.Start();
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                     throw;
                 }
             }
-            Page<SharedAccessSignatureAuthorizationRuleAccessRightsDescription> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<DeviceProvisioningServicesSharedAccessKey> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceResource.GetKeys");
                 scope.Start();
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
-        public virtual async Task<Response<SharedAccessSignatureAuthorizationRuleAccessRightsDescription>> GetKeyAsync(string keyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeviceProvisioningServicesSharedAccessKey>> GetKeyAsync(string keyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
-        public virtual Response<SharedAccessSignatureAuthorizationRuleAccessRightsDescription> GetKey(string keyName, CancellationToken cancellationToken = default)
+        public virtual Response<DeviceProvisioningServicesSharedAccessKey> GetKey(string keyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 

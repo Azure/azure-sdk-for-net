@@ -91,8 +91,14 @@ rename-mapping:
 override-operation-name:
   EmailRegistrations_ActivateEmail: ActivateEmail
   EmailRegistrations_RegisterEmail: RegisterEmail
-  ConsumerInvitations_ListInvitations: GetConsumerInvitations
+  ConsumerInvitations_ListInvitations: GetAll
   ConsumerInvitations_RejectInvitation: RejectConsumerInvitation
+
+request-path-to-parent:
+  /providers/Microsoft.DataShare/listInvitations: /providers/Microsoft.DataShare/locations/{location}/consumerInvitations/{invitationId}
+
+operation-positions:
+  ConsumerInvitations_ListInvitations: collection
 
 directive:
   - from: DataShare.json

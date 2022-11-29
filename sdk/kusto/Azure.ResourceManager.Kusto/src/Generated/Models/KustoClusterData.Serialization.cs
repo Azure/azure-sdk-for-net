@@ -178,14 +178,14 @@ namespace Azure.ResourceManager.Kusto
             Optional<Uri> uri = default;
             Optional<Uri> dataIngestionUri = default;
             Optional<string> stateReason = default;
-            Optional<IList<TrustedExternalTenant>> trustedExternalTenants = default;
+            Optional<IList<KustoClusterTrustedExternalTenant>> trustedExternalTenants = default;
             Optional<OptimizedAutoscale> optimizedAutoscale = default;
             Optional<bool> enableDiskEncryption = default;
             Optional<bool> enableStreamingIngest = default;
             Optional<KustoClusterVirtualNetworkConfiguration> virtualNetworkConfiguration = default;
             Optional<KustoKeyVaultProperties> keyVaultProperties = default;
             Optional<bool> enablePurge = default;
-            Optional<LanguageExtensionList> languageExtensions = default;
+            Optional<KustoLanguageExtensionList> languageExtensions = default;
             Optional<bool> enableDoubleEncryption = default;
             Optional<KustoClusterPublicNetworkAccess> publicNetworkAccess = default;
             Optional<IList<string>> allowedIPRangeList = default;
@@ -345,10 +345,10 @@ namespace Azure.ResourceManager.Kusto
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<TrustedExternalTenant> array = new List<TrustedExternalTenant>();
+                            List<KustoClusterTrustedExternalTenant> array = new List<KustoClusterTrustedExternalTenant>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TrustedExternalTenant.DeserializeTrustedExternalTenant(item));
+                                array.Add(KustoClusterTrustedExternalTenant.DeserializeKustoClusterTrustedExternalTenant(item));
                             }
                             trustedExternalTenants = array;
                             continue;
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.Kusto
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            languageExtensions = LanguageExtensionList.DeserializeLanguageExtensionList(property0.Value);
+                            languageExtensions = KustoLanguageExtensionList.DeserializeKustoLanguageExtensionList(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("enableDoubleEncryption"))

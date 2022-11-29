@@ -31,18 +31,18 @@ namespace Azure.ResourceManager.MarketplaceOrdering
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of OfferTypePublisherOfferPlanAgreementResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of OfferTypePublisherOfferPlanAgreementResources and their operations over a OfferTypePublisherOfferPlanAgreementResource. </returns>
-        public virtual OfferTypePublisherOfferPlanAgreementCollection GetOfferTypePublisherOfferPlanAgreements()
+        /// <summary> Gets a collection of MarketplaceAgreementTermResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of MarketplaceAgreementTermResources and their operations over a MarketplaceAgreementTermResource. </returns>
+        public virtual MarketplaceAgreementTermCollection GetMarketplaceAgreementTerms()
         {
-            return GetCachedClient(Client => new OfferTypePublisherOfferPlanAgreementCollection(Client, Id));
+            return GetCachedClient(Client => new MarketplaceAgreementTermCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of AgreementOfferPlanResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of AgreementOfferPlanResources and their operations over a AgreementOfferPlanResource. </returns>
-        public virtual AgreementOfferPlanCollection GetAgreementOfferPlans()
+        /// <summary> Gets a collection of MarketplaceAgreementResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of MarketplaceAgreementResources and their operations over a MarketplaceAgreementResource. </returns>
+        public virtual MarketplaceAgreementCollection GetMarketplaceAgreements()
         {
-            return GetCachedClient(Client => new AgreementOfferPlanCollection(Client, Id));
+            return GetCachedClient(Client => new MarketplaceAgreementCollection(Client, Id));
         }
     }
 }

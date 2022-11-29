@@ -24,7 +24,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             if (Optional.IsDefined(Certificate))
             {
                 writer.WritePropertyName("certificate");
-                writer.WriteBase64StringValue(Certificate, "D");
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Certificate);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Certificate.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -33,9 +37,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         {
             Optional<string> subject = default;
             Optional<DateTimeOffset> expiry = default;
-            Optional<string> thumbprint = default;
+            Optional<BinaryData> thumbprint = default;
             Optional<bool> isVerified = default;
-            Optional<byte[]> certificate = default;
+            Optional<BinaryData> certificate = default;
             Optional<DateTimeOffset> created = default;
             Optional<DateTimeOffset> updated = default;
             foreach (var property in element.EnumerateObject())
@@ -57,7 +61,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
                 if (property.NameEquals("thumbprint"))
                 {
-                    thumbprint = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    thumbprint = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("isVerified"))
@@ -77,7 +86,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    certificate = property.Value.GetBytesFromBase64("D");
+                    certificate = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("created"))

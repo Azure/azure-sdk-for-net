@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ElasticSan.Models;
@@ -17,9 +18,18 @@ namespace Azure.ResourceManager.ElasticSan
     {
         /// <summary> Initializes a new instance of ElasticSanData. </summary>
         /// <param name="location"> The location. </param>
-        public ElasticSanData(AzureLocation location) : base(location)
+        /// <param name="sku"> resource sku. </param>
+        /// <param name="baseSizeTiB"> Base size of the Elastic San appliance in TiB. </param>
+        /// <param name="extendedCapacitySizeTiB"> Extended size of the Elastic San appliance in TiB. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
+        public ElasticSanData(AzureLocation location, ElasticSanSku sku, long baseSizeTiB, long extendedCapacitySizeTiB) : base(location)
         {
+            Argument.AssertNotNull(sku, nameof(sku));
+
+            Sku = sku;
             AvailabilityZones = new ChangeTrackingList<string>();
+            BaseSizeTiB = baseSizeTiB;
+            ExtendedCapacitySizeTiB = extendedCapacitySizeTiB;
         }
 
         /// <summary> Initializes a new instance of ElasticSanData. </summary>
@@ -34,20 +44,20 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="provisioningState"> State of the operation on the resource. </param>
         /// <param name="baseSizeTiB"> Base size of the Elastic San appliance in TiB. </param>
         /// <param name="extendedCapacitySizeTiB"> Extended size of the Elastic San appliance in TiB. </param>
-        /// <param name="totalElasticSanVolumeSizeGiB"> Total size of the provisioned Volumes in GiB. </param>
-        /// <param name="elasticSanVolumeGroupCount"> Total number of volume groups in this Elastic San appliance. </param>
+        /// <param name="totalVolumeSizeGiB"> Total size of the provisioned Volumes in GiB. </param>
+        /// <param name="volumeGroupCount"> Total number of volume groups in this Elastic San appliance. </param>
         /// <param name="totalIops"> Total Provisioned IOPS of the Elastic San appliance. </param>
         /// <param name="totalMbps"> Total Provisioned MBps Elastic San appliance. </param>
         /// <param name="totalSizeTiB"> Total size of the Elastic San appliance in TB. </param>
-        internal ElasticSanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ElasticSanSku sku, IList<string> availabilityZones, ProvisioningState? provisioningState, long? baseSizeTiB, long? extendedCapacitySizeTiB, long? totalElasticSanVolumeSizeGiB, long? elasticSanVolumeGroupCount, long? totalIops, long? totalMbps, long? totalSizeTiB) : base(id, name, resourceType, systemData, tags, location)
+        internal ElasticSanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ElasticSanSku sku, IList<string> availabilityZones, ElasticSanProvisioningState? provisioningState, long baseSizeTiB, long extendedCapacitySizeTiB, long? totalVolumeSizeGiB, long? volumeGroupCount, long? totalIops, long? totalMbps, long? totalSizeTiB) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             AvailabilityZones = availabilityZones;
             ProvisioningState = provisioningState;
             BaseSizeTiB = baseSizeTiB;
             ExtendedCapacitySizeTiB = extendedCapacitySizeTiB;
-            TotalElasticSanVolumeSizeGiB = totalElasticSanVolumeSizeGiB;
-            ElasticSanVolumeGroupCount = elasticSanVolumeGroupCount;
+            TotalVolumeSizeGiB = totalVolumeSizeGiB;
+            VolumeGroupCount = volumeGroupCount;
             TotalIops = totalIops;
             TotalMbps = totalMbps;
             TotalSizeTiB = totalSizeTiB;
@@ -58,15 +68,15 @@ namespace Azure.ResourceManager.ElasticSan
         /// <summary> Logical zone for Elastic San resource; example: [&quot;1&quot;]. </summary>
         public IList<string> AvailabilityZones { get; }
         /// <summary> State of the operation on the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public ElasticSanProvisioningState? ProvisioningState { get; }
         /// <summary> Base size of the Elastic San appliance in TiB. </summary>
-        public long? BaseSizeTiB { get; set; }
+        public long BaseSizeTiB { get; set; }
         /// <summary> Extended size of the Elastic San appliance in TiB. </summary>
-        public long? ExtendedCapacitySizeTiB { get; set; }
+        public long ExtendedCapacitySizeTiB { get; set; }
         /// <summary> Total size of the provisioned Volumes in GiB. </summary>
-        public long? TotalElasticSanVolumeSizeGiB { get; }
+        public long? TotalVolumeSizeGiB { get; }
         /// <summary> Total number of volume groups in this Elastic San appliance. </summary>
-        public long? ElasticSanVolumeGroupCount { get; }
+        public long? VolumeGroupCount { get; }
         /// <summary> Total Provisioned IOPS of the Elastic San appliance. </summary>
         public long? TotalIops { get; }
         /// <summary> Total Provisioned MBps Elastic San appliance. </summary>

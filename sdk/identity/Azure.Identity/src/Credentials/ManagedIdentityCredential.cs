@@ -10,7 +10,6 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
-using Azure.Identitiy;
 
 namespace Azure.Identity
 {
@@ -24,7 +23,7 @@ namespace Azure.Identity
         internal const string MsiUnavailableError = "No managed identity endpoint found.";
 
         private readonly CredentialPipeline _pipeline;
-        private readonly ManagedIdentityClient _client;
+        internal ManagedIdentityClient Client { get; }
         private readonly string _clientId;
         private readonly bool _logAccountDetails;
 
@@ -82,7 +81,7 @@ namespace Azure.Identity
         internal ManagedIdentityCredential(ManagedIdentityClient client)
         {
             _pipeline = client.Pipeline;
-            _client = client;
+            Client = client;
         }
 
         /// <summary>
@@ -117,7 +116,7 @@ namespace Azure.Identity
 
             try
             {
-                AccessToken result = await _client.AuthenticateAsync(async, requestContext, cancellationToken).ConfigureAwait(false);
+                AccessToken result = await Client.AuthenticateAsync(async, requestContext, cancellationToken).ConfigureAwait(false);
                 if (_logAccountDetails)
                 {
                     var accountDetails = TokenHelper.ParseAccountInfoFromToken(result.Token);

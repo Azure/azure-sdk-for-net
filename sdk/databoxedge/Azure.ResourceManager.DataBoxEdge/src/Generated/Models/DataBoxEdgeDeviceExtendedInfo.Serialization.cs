@@ -72,9 +72,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<Uri> clientSecretStoreUrl = default;
             Optional<string> channelIntegrityKeyName = default;
             Optional<string> channelIntegrityKeyVersion = default;
-            Optional<KeyVaultSyncStatus> keyVaultSyncStatus = default;
+            Optional<EdgeKeyVaultSyncStatus> keyVaultSyncStatus = default;
             Optional<IReadOnlyDictionary<string, DataBoxEdgeDeviceSecret>> deviceSecrets = default;
-            Optional<ClusterWitnessType> clusterWitnessType = default;
+            Optional<EdgeClusterWitnessType> clusterWitnessType = default;
             Optional<string> fileShareWitnessLocation = default;
             Optional<string> fileShareWitnessUsername = default;
             Optional<string> cloudWitnessStorageAccountName = default;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            keyVaultSyncStatus = new KeyVaultSyncStatus(property0.Value.GetString());
+                            keyVaultSyncStatus = new EdgeKeyVaultSyncStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("deviceSecrets"))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            clusterWitnessType = new ClusterWitnessType(property0.Value.GetString());
+                            clusterWitnessType = new EdgeClusterWitnessType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("fileShareWitnessLocation"))

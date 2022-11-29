@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Support
 {
     /// <summary>
     /// A class representing a collection of <see cref="ProblemClassificationResource" /> and their operations.
-    /// Each <see cref="ProblemClassificationResource" /> in the collection will belong to the same instance of <see cref="ServiceResource" />.
-    /// To get a <see cref="ProblemClassificationCollection" /> instance call the GetProblemClassifications method from an instance of <see cref="ServiceResource" />.
+    /// Each <see cref="ProblemClassificationResource" /> in the collection will belong to the same instance of <see cref="SupportAzureServiceResource" />.
+    /// To get a <see cref="ProblemClassificationCollection" /> instance call the GetProblemClassifications method from an instance of <see cref="SupportAzureServiceResource" />.
     /// </summary>
     public partial class ProblemClassificationCollection : ArmCollection, IEnumerable<ProblemClassificationResource>, IAsyncEnumerable<ProblemClassificationResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Support
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ServiceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ServiceResource.ResourceType), nameof(id));
+            if (id.ResourceType != SupportAzureServiceResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SupportAzureServiceResource.ResourceType), nameof(id));
         }
 
         /// <summary>

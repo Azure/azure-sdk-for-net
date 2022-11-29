@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector.Models
 {
@@ -15,23 +16,20 @@ namespace Azure.AI.AnomalyDetector.Models
     public partial class LastDetectionRequest
     {
         /// <summary> Initializes a new instance of LastDetectionRequest. </summary>
-        /// <param name="variables"> variables. </param>
-        /// <param name="detectingPoints"> number of timestamps on which the model detects. </param>
+        /// <param name="variables"></param>
+        /// <param name="topContributorCount"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="variables"/> is null. </exception>
-        public LastDetectionRequest(IEnumerable<VariableValues> variables, int detectingPoints)
+        public LastDetectionRequest(IEnumerable<VariableValues> variables, int topContributorCount)
         {
-            if (variables == null)
-            {
-                throw new ArgumentNullException(nameof(variables));
-            }
+            Argument.AssertNotNull(variables, nameof(variables));
 
             Variables = variables.ToList();
-            DetectingPoints = detectingPoints;
+            TopContributorCount = topContributorCount;
         }
 
-        /// <summary> variables. </summary>
+        /// <summary> Gets the variables. </summary>
         public IList<VariableValues> Variables { get; }
-        /// <summary> number of timestamps on which the model detects. </summary>
-        public int DetectingPoints { get; }
+        /// <summary> Gets the top contributor count. </summary>
+        public int TopContributorCount { get; }
     }
 }

@@ -9,6 +9,8 @@ trigger:
   paths:
     include:
     - sdk/operationalinsights/
+    exclude:
+    - sdk/operationalinsights/Azure.ResourceManager.OperationalInsights/
 
 pr:
   branches:
@@ -20,6 +22,8 @@ pr:
   paths:
     include:
     - sdk/operationalinsights/
+    exclude:
+    - sdk/operationalinsights/Azure.ResourceManager.OperationalInsights/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

@@ -19,6 +19,12 @@ namespace Azure.ResourceManager.NetApp
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity");
+                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
@@ -56,6 +62,7 @@ namespace Azure.ResourceManager.NetApp
         internal static NetAppAccountData DeserializeNetAppAccountData(JsonElement element)
         {
             Optional<ETag> etag = default;
+            Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -64,7 +71,8 @@ namespace Azure.ResourceManager.NetApp
             Optional<SystemData> systemData = default;
             Optional<string> provisioningState = default;
             Optional<IList<NetAppAccountActiveDirectory>> activeDirectories = default;
-            Optional<AccountEncryption> encryption = default;
+            Optional<NetAppAccountEncryption> encryption = default;
+            Optional<bool?> disableShowmount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -75,6 +83,17 @@ namespace Azure.ResourceManager.NetApp
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("identity"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString(), serializeOptions);
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -158,14 +177,24 @@ namespace Azure.ResourceManager.NetApp
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryption = AccountEncryption.DeserializeAccountEncryption(property0.Value);
+                            encryption = NetAppAccountEncryption.DeserializeNetAppAccountEncryption(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("disableShowmount"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                disableShowmount = null;
+                                continue;
+                            }
+                            disableShowmount = property0.Value.GetBoolean();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new NetAppAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), provisioningState.Value, Optional.ToList(activeDirectories), encryption.Value);
+            return new NetAppAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), identity, provisioningState.Value, Optional.ToList(activeDirectories), encryption.Value, Optional.ToNullable(disableShowmount));
         }
     }
 }

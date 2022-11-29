@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("scope");
                 writer.WriteStringValue(Scope);
             }
-            if (Optional.IsDefined(ExpiresOn))
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDate");
-                writer.WriteStringValue(ExpiresOn.Value, "O");
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (Optional.IsDefined(DisplayName))
             {

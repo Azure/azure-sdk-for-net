@@ -15,16 +15,21 @@ namespace Azure.ResourceManager.Dynatrace.Models
     {
         internal static AppServiceListResponse DeserializeAppServiceListResponse(JsonElement element)
         {
-            IReadOnlyList<AppServiceInfo> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<DynatraceOneAgentEnabledAppServiceInfo>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<AppServiceInfo> array = new List<AppServiceInfo>();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<DynatraceOneAgentEnabledAppServiceInfo> array = new List<DynatraceOneAgentEnabledAppServiceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServiceInfo.DeserializeAppServiceInfo(item));
+                        array.Add(DynatraceOneAgentEnabledAppServiceInfo.DeserializeDynatraceOneAgentEnabledAppServiceInfo(item));
                     }
                     value = array;
                     continue;
@@ -35,7 +40,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     continue;
                 }
             }
-            return new AppServiceListResponse(value, nextLink);
+            return new AppServiceListResponse(Optional.ToList(value), nextLink.Value);
         }
     }
 }

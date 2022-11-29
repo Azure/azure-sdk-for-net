@@ -200,7 +200,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Alert>> ChangeStateWithHttpMessagesAsync(string alertId, string newState, string comment = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Alert>> ChangeStateWithHttpMessagesAsync(string alertId, string newState, Comments comment = default(Comments), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get the history of an alert, which captures any monitor condition
         /// changes (Fired/Resolved) and alert state changes

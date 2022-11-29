@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -17,13 +18,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public MLFlowModelJobInput(Uri uri)
         {
-            if (uri == null)
-            {
-                throw new ArgumentNullException(nameof(uri));
-            }
+            Argument.AssertNotNull(uri, nameof(uri));
 
             Uri = uri;
-            JobInputType = JobInputType.MLFlowModel;
+            JobInputType = JobInputType.MlflowModel;
         }
 
         /// <summary> Initializes a new instance of MLFlowModelJobInput. </summary>

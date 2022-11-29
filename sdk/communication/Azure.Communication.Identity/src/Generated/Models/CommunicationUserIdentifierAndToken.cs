@@ -7,6 +7,7 @@
 
 using System;
 using Azure.Communication.Identity.Models;
+using Azure.Core;
 
 namespace Azure.Communication.Identity
 {
@@ -18,10 +19,7 @@ namespace Azure.Communication.Identity
         /// <exception cref="ArgumentNullException"> <paramref name="identity"/> is null. </exception>
         internal CommunicationUserIdentifierAndToken(CommunicationIdentity identity)
         {
-            if (identity == null)
-            {
-                throw new ArgumentNullException(nameof(identity));
-            }
+            Argument.AssertNotNull(identity, nameof(identity));
 
             Identity = identity;
         }

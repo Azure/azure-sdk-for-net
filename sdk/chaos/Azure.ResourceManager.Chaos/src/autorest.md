@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: Chaos
 namespace: Azure.ResourceManager.Chaos
+# default tag is a preview version
 require: https://github.com/Azure/azure-rest-api-specs/blob/650a2be17c499104c7ad20f7a38f33f582170308/specification/chaos/resource-manager/readme.md
-tag: package-2022-07-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true

@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DataBoxEdge
                 switch (discriminator.GetString())
                 {
                     case "CloudEdgeManagement": return CloudEdgeManagementRole.DeserializeCloudEdgeManagementRole(element);
-                    case "IOT": return IotRole.DeserializeIotRole(element);
-                    case "Kubernetes": return KubernetesRole.DeserializeKubernetesRole(element);
+                    case "IOT": return EdgeIotRole.DeserializeEdgeIotRole(element);
+                    case "Kubernetes": return EdgeKubernetesRole.DeserializeEdgeKubernetesRole(element);
                     case "MEC": return MecRole.DeserializeMecRole(element);
                 }
             }
-            RoleType kind = default;
+            DataBoxEdgeRoleType kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 if (property.NameEquals("kind"))
                 {
-                    kind = new RoleType(property.Value.GetString());
+                    kind = new DataBoxEdgeRoleType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))

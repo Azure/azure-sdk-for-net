@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.LabServices.Models
             Optional<long> @default = default;
             Optional<long> minimum = default;
             Optional<long> maximum = default;
-            Optional<SkuCapacityScaleType> scaleType = default;
+            Optional<LabServicesSkuCapacityScaleType> scaleType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("default"))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.LabServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    scaleType = new SkuCapacityScaleType(property.Value.GetString());
+                    scaleType = new LabServicesSkuCapacityScaleType(property.Value.GetString());
                     continue;
                 }
             }

@@ -9,6 +9,8 @@ trigger:
   paths:
     include:
     - sdk/cognitiveservices/
+    exclude:
+    - sdk/cognitiveservices/Azure.ResourceManager.CognitiveServices/
 
 pr:
   branches:
@@ -20,6 +22,8 @@ pr:
   paths:
     include:
     - sdk/cognitiveservices/
+    exclude:
+    - sdk/cognitiveservices/Azure.ResourceManager.CognitiveServices/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

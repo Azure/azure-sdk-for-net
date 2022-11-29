@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -20,10 +21,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="contextUri"/> is null. </exception>
         public BuildContext(Uri contextUri)
         {
-            if (contextUri == null)
-            {
-                throw new ArgumentNullException(nameof(contextUri));
-            }
+            Argument.AssertNotNull(contextUri, nameof(contextUri));
 
             ContextUri = contextUri;
         }

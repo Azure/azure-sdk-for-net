@@ -61,7 +61,8 @@ namespace Azure.ResourceManager.Tests
         public void DeserializationTest()
         {
             string json = "{\"id\":\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.ClassicStorage/storageAccounts/account1\",\"kind\":\"KindForResource\",\"location\":\"eastus\",\"managedBy\":\"ManagedByForResource\",\"name\":\"account1\",\"plan\":{\"name\":\"NameForPlan\",\"publisher\":\"PublisherForPlan\",\"product\":\"ProductForPlan\",\"promotionCode\":\"PromotionCodeForPlan\",\"version\":\"VersionForPlan\"},\"sku\":{\"name\":\"NameForSku\",\"tier\":\"Basic\",\"size\":\"SizeForSku\",\"family\":\"FamilyForSku\",\"capacity\":15464547},\"tags\":{},\"type\":\"Microsoft.ClassicStorage/storageAccounts\"}";
-            JsonElement element = JsonDocument.Parse(json).RootElement;
+            using var jsonDocument = JsonDocument.Parse(json);
+            JsonElement element = jsonDocument.RootElement;
             GenericResourceData data = GenericResourceData.DeserializeGenericResourceData(element);
             Assert.AreEqual("account1", data.Name);
             Assert.AreEqual(AzureLocation.EastUS, data.Location);
@@ -72,7 +73,8 @@ namespace Azure.ResourceManager.Tests
         public void InvalidDeserializationTest()
         {
             string json = "{\"notId\":\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.ClassicStorage/storageAccounts/account1\",\"location\":\"eastus\",\"managedBy\":\"ManagedByForResource\",\"name\":\"account1\",\"plan\":{\"name\":\"NameForPlan\",\"publisher\":\"PublisherForPlan\",\"product\":\"ProductForPlan\",\"promotionCode\":\"PromotionCodeForPlan\",\"version\":\"VersionForPlan\"},\"sku\":{\"name\":\"NameForSku\",\"tier\":\"Basic\",\"size\":\"SizeForSku\",\"family\":\"FamilyForSku\",\"capacity\":15464547},\"tags\":{},\"type\":\"Microsoft.ClassicStorage/storageAccounts\"}";
-            JsonElement element = JsonDocument.Parse(json).RootElement;
+            using var jsonDocument = JsonDocument.Parse(json);
+            JsonElement element = jsonDocument.RootElement;
             GenericResourceData data = GenericResourceData.DeserializeGenericResourceData(element);
             Assert.IsNull(data.Id);
             Assert.IsNull(data.Kind);

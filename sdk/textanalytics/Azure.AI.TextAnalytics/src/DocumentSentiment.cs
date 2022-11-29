@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Xml.Linq;
 using Azure.AI.TextAnalytics.Models;
 
 namespace Azure.AI.TextAnalytics
@@ -16,15 +17,23 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public class DocumentSentiment
     {
-        internal DocumentSentiment(TextSentiment sentiment, double positiveScore, double neutralScore, double negativeScore, List<SentenceSentiment> sentenceSentiments, IList<TextAnalyticsWarning> warnings)
+        internal DocumentSentiment(
+            TextSentiment sentiment,
+            double positiveScore,
+            double neutralScore,
+            double negativeScore,
+            List<SentenceSentiment> sentenceSentiments,
+            IList<TextAnalyticsWarning> warnings)
         {
             Sentiment = sentiment;
             ConfidenceScores = new SentimentConfidenceScores(positiveScore, neutralScore, negativeScore);
             Sentences = new ReadOnlyCollection<SentenceSentiment>(sentenceSentiments);
-            Warnings = new ReadOnlyCollection<TextAnalyticsWarning>(warnings);
+            Warnings = (warnings is not null)
+                ? new ReadOnlyCollection<TextAnalyticsWarning>(warnings)
+                : new List<TextAnalyticsWarning>();
         }
 
-        internal DocumentSentiment(SentimentDocumentResult documentSentiment)
+        internal DocumentSentiment(SentimentResponseDocumentsItem documentSentiment)
         {
             Sentiment = documentSentiment.Sentiment;
             ConfidenceScores = documentSentiment.ConfidenceScores;

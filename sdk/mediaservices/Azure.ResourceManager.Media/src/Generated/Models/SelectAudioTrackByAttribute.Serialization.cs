@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Media.Models
         internal static SelectAudioTrackByAttribute DeserializeSelectAudioTrackByAttribute(JsonElement element)
         {
             TrackAttribute attribute = default;
-            AttributeFilter filter = default;
+            TrackAttributeFilter filter = default;
             Optional<string> filterValue = default;
             Optional<ChannelMapping> channelMapping = default;
             string odataType = default;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 if (property.NameEquals("filter"))
                 {
-                    filter = new AttributeFilter(property.Value.GetString());
+                    filter = new TrackAttributeFilter(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("filterValue"))

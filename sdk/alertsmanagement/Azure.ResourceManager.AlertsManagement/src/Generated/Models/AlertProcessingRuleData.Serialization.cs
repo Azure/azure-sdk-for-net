@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AlertsManagement
 
         internal static AlertProcessingRuleData DeserializeAlertProcessingRuleData(JsonElement element)
         {
-            Optional<ServiceAlertProcessingRuleProperties> properties = default;
+            Optional<AlertProcessingRuleProperties> properties = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AlertsManagement
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = ServiceAlertProcessingRuleProperties.DeserializeServiceAlertProcessingRuleProperties(property.Value);
+                    properties = AlertProcessingRuleProperties.DeserializeAlertProcessingRuleProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))

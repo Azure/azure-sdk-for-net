@@ -539,6 +539,50 @@
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
 
+        [Fact]
+        [LiveTest]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
+        public void TestNodeCommunicationMode()
+        {
+            void test()
+            {
+                using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
+                string jobId = "TestNodeCommunicationMode-" + TestUtilities.GetMyName();
+
+                try
+                {
+                    CloudJob job = batchCli.JobOperations.CreateJob(jobId, new PoolInformation());
+                    AutoPoolSpecification autoPoolSpec = new AutoPoolSpecification();
+                    autoPoolSpec.PoolLifetimeOption = PoolLifetimeOption.Job;
+
+                    autoPoolSpec.PoolSpecification = new PoolSpecification()
+                    {
+                        VirtualMachineSize = PoolFixture.VMSize,
+                        TargetNodeCommunicationMode = NodeCommunicationMode.Classic,
+                        CloudServiceConfiguration = new CloudServiceConfiguration(PoolFixture.OSFamily, "*")
+                };
+
+                    job.PoolInformation = new PoolInformation()
+                    {
+                        AutoPoolSpecification = autoPoolSpec
+                    };
+
+                    job.Commit();
+
+                    job = batchCli.JobOperations.GetJob(jobId);
+                    Assert.Equal(NodeCommunicationMode.Classic, job.PoolInformation.AutoPoolSpecification.PoolSpecification.TargetNodeCommunicationMode);
+
+                }
+                finally
+                {
+                    TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).Wait();
+                }
+
+            }
+
+            SynchronizationContextHelper.RunTest(test, TestTimeout);
+        }
+
         #region Test helpers
 
         private static void AssertJobCorrectness(

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -28,13 +27,13 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterServicePrincipalProfile DeserializeManagedClusterServicePrincipalProfile(JsonElement element)
         {
-            Guid clientId = default;
+            string clientId = default;
             Optional<string> secret = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientId"))
                 {
-                    clientId = property.Value.GetGuid();
+                    clientId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("secret"))

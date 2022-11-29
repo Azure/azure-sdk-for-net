@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Optional<Guid> meterGuid = default;
             BillingType billingType = default;
             Optional<double> multiplier = default;
-            Optional<ChargingType> chargingType = default;
+            Optional<EdgeOrderProductChargingType> chargingType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("meterGuid"))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    chargingType = new ChargingType(property.Value.GetString());
+                    chargingType = new EdgeOrderProductChargingType(property.Value.GetString());
                     continue;
                 }
             }

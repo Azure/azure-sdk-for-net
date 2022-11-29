@@ -18,10 +18,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <exception cref="ArgumentNullException"> <paramref name="syncProperties"/> is null. </exception>
         public ConnectedRegistryParent(ConnectedRegistrySyncProperties syncProperties)
         {
-            if (syncProperties == null)
-            {
-                throw new ArgumentNullException(nameof(syncProperties));
-            }
+            Argument.AssertNotNull(syncProperties, nameof(syncProperties));
 
             SyncProperties = syncProperties;
         }

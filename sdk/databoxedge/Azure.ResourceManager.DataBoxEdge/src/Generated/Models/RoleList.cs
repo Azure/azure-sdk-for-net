@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="value">
         /// The Value.
         /// Please note <see cref="DataBoxEdgeRoleData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CloudEdgeManagementRole"/>, <see cref="IotRole"/>, <see cref="KubernetesRole"/> and <see cref="MecRole"/>.
+        /// The available derived classes include <see cref="CloudEdgeManagementRole"/>, <see cref="EdgeIotRole"/>, <see cref="EdgeKubernetesRole"/> and <see cref="MecRole"/>.
         /// </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
         internal RoleList(IReadOnlyList<DataBoxEdgeRoleData> value, string nextLink)
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary>
         /// The Value.
         /// Please note <see cref="DataBoxEdgeRoleData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CloudEdgeManagementRole"/>, <see cref="IotRole"/>, <see cref="KubernetesRole"/> and <see cref="MecRole"/>.
+        /// The available derived classes include <see cref="CloudEdgeManagementRole"/>, <see cref="EdgeIotRole"/>, <see cref="EdgeKubernetesRole"/> and <see cref="MecRole"/>.
         /// </summary>
         public IReadOnlyList<DataBoxEdgeRoleData> Value { get; }
         /// <summary> Link to the next set of results. </summary>

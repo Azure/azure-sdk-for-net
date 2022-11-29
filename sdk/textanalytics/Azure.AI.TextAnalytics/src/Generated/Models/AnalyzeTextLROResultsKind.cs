@@ -28,9 +28,11 @@ namespace Azure.AI.TextAnalytics.Models
         private const string KeyPhraseExtractionLROResultsValue = "KeyPhraseExtractionLROResults";
         private const string EntityLinkingLROResultsValue = "EntityLinkingLROResults";
         private const string HealthcareLROResultsValue = "HealthcareLROResults";
+        private const string ExtractiveSummarizationLROResultsValue = "ExtractiveSummarizationLROResults";
         private const string CustomEntityRecognitionLROResultsValue = "CustomEntityRecognitionLROResults";
         private const string CustomSingleLabelClassificationLROResultsValue = "CustomSingleLabelClassificationLROResults";
         private const string CustomMultiLabelClassificationLROResultsValue = "CustomMultiLabelClassificationLROResults";
+        private const string AbstractiveSummarizationLROResultsValue = "AbstractiveSummarizationLROResults";
 
         /// <summary> SentimentAnalysisLROResults. </summary>
         public static AnalyzeTextLROResultsKind SentimentAnalysisLROResults { get; } = new AnalyzeTextLROResultsKind(SentimentAnalysisLROResultsValue);
@@ -44,12 +46,16 @@ namespace Azure.AI.TextAnalytics.Models
         public static AnalyzeTextLROResultsKind EntityLinkingLROResults { get; } = new AnalyzeTextLROResultsKind(EntityLinkingLROResultsValue);
         /// <summary> HealthcareLROResults. </summary>
         public static AnalyzeTextLROResultsKind HealthcareLROResults { get; } = new AnalyzeTextLROResultsKind(HealthcareLROResultsValue);
+        /// <summary> ExtractiveSummarizationLROResults. </summary>
+        public static AnalyzeTextLROResultsKind ExtractiveSummarizationLROResults { get; } = new AnalyzeTextLROResultsKind(ExtractiveSummarizationLROResultsValue);
         /// <summary> CustomEntityRecognitionLROResults. </summary>
         public static AnalyzeTextLROResultsKind CustomEntityRecognitionLROResults { get; } = new AnalyzeTextLROResultsKind(CustomEntityRecognitionLROResultsValue);
         /// <summary> CustomSingleLabelClassificationLROResults. </summary>
         public static AnalyzeTextLROResultsKind CustomSingleLabelClassificationLROResults { get; } = new AnalyzeTextLROResultsKind(CustomSingleLabelClassificationLROResultsValue);
         /// <summary> CustomMultiLabelClassificationLROResults. </summary>
         public static AnalyzeTextLROResultsKind CustomMultiLabelClassificationLROResults { get; } = new AnalyzeTextLROResultsKind(CustomMultiLabelClassificationLROResultsValue);
+        /// <summary> AbstractiveSummarizationLROResults. </summary>
+        public static AnalyzeTextLROResultsKind AbstractiveSummarizationLROResults { get; } = new AnalyzeTextLROResultsKind(AbstractiveSummarizationLROResultsValue);
         /// <summary> Determines if two <see cref="AnalyzeTextLROResultsKind"/> values are the same. </summary>
         public static bool operator ==(AnalyzeTextLROResultsKind left, AnalyzeTextLROResultsKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AnalyzeTextLROResultsKind"/> values are not the same. </summary>

@@ -15,8 +15,8 @@ namespace Azure.AI.AnomalyDetector.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
-            writer.WriteStringValue(Name);
+            writer.WritePropertyName("variable");
+            writer.WriteStringValue(Variable);
             writer.WritePropertyName("timestamps");
             writer.WriteStartArray();
             foreach (var item in Timestamps)
@@ -32,6 +32,14 @@ namespace Azure.AI.AnomalyDetector.Models
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }
