@@ -158,19 +158,21 @@ namespace Azure.AI.TextAnalytics.Tests
                 new TextDocumentInput("2", document2)
             };
             List<string> categories = new() { "Health", "Politics", "Music", "Sports" };
-            DynamicClassifyOptions options = new(categories);
 
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.DynamicClassifyAsync(null, options));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.DynamicClassifyAsync(string.Empty, options));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.DynamicClassifyAsync(null, categories));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.DynamicClassifyAsync(string.Empty, categories));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.DynamicClassifyAsync(document1, null));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.DynamicClassifyAsync(document1, Array.Empty<string>()));
 
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.DynamicClassifyBatchAsync((string[])null, options));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.DynamicClassifyBatchAsync(Array.Empty<string>(), options));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.DynamicClassifyBatchAsync((string[])null, categories));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.DynamicClassifyBatchAsync(Array.Empty<string>(), categories));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.DynamicClassifyBatchAsync(batchConvenienceDocuments, null));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.DynamicClassifyBatchAsync(batchConvenienceDocuments, Array.Empty<string>()));
 
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.DynamicClassifyBatchAsync((TextDocumentInput[])null, options));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.DynamicClassifyBatchAsync(Array.Empty<TextDocumentInput>(), options));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.DynamicClassifyBatchAsync((TextDocumentInput[])null, categories));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.DynamicClassifyBatchAsync(Array.Empty<TextDocumentInput>(), categories));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.DynamicClassifyBatchAsync(batchDocuments, null));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.DynamicClassifyBatchAsync(batchDocuments, Array.Empty<string>()));
         }
 
         [Test]

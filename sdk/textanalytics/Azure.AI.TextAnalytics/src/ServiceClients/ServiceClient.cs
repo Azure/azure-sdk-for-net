@@ -155,22 +155,50 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
         #region Dynamic Classify
 
-        public virtual Response<ClassificationCategoryCollection> DynamicClassify(string document, DynamicClassifyOptions options, string language = default, CancellationToken cancellationToken = default) =>
+        public virtual Response<ClassificationCategoryCollection> DynamicClassify(
+            string document,
+            IEnumerable<string> categories,
+            string language = default,
+            DynamicClassifyOptions options = default,
+            CancellationToken cancellationToken = default) =>
             throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.DynamicClassify)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
 
-        public virtual Response<DynamicClassifyDocumentResultCollection> DynamicClassifyBatch(IEnumerable<string> documents, DynamicClassifyOptions options, string language = default, CancellationToken cancellationToken = default) =>
+        public virtual Response<DynamicClassifyDocumentResultCollection> DynamicClassifyBatch(
+            IEnumerable<string> documents,
+            IEnumerable<string> categories,
+            string language = default,
+            DynamicClassifyOptions options = default,
+            CancellationToken cancellationToken = default) =>
             throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.DynamicClassifyBatch)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
 
-        public virtual Response<DynamicClassifyDocumentResultCollection> DynamicClassifyBatch(IEnumerable<TextDocumentInput> documents, DynamicClassifyOptions options, CancellationToken cancellationToken = default) =>
+        public virtual Response<DynamicClassifyDocumentResultCollection> DynamicClassifyBatch(
+            IEnumerable<TextDocumentInput> documents,
+            IEnumerable<string> categories,
+            DynamicClassifyOptions options = default,
+            CancellationToken cancellationToken = default) =>
             throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.DynamicClassifyBatch)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
 
-        public virtual Task<Response<ClassificationCategoryCollection>> DynamicClassifyAsync(string document, DynamicClassifyOptions options, string language = default, CancellationToken cancellationToken = default) =>
+        public virtual Task<Response<ClassificationCategoryCollection>> DynamicClassifyAsync(
+            string document,
+            IEnumerable<string> categories,
+            string language = default,
+            DynamicClassifyOptions options = default,
+            CancellationToken cancellationToken = default) =>
             throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.DynamicClassifyAsync)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
 
-        public virtual Task<Response<DynamicClassifyDocumentResultCollection>> DynamicClassifyBatchAsync(IEnumerable<string> documents, DynamicClassifyOptions options, string language = default, CancellationToken cancellationToken = default) =>
+        public virtual Task<Response<DynamicClassifyDocumentResultCollection>> DynamicClassifyBatchAsync(
+            IEnumerable<string> documents,
+            IEnumerable<string> categories,
+            string language = default,
+            DynamicClassifyOptions options = default,
+            CancellationToken cancellationToken = default) =>
             throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.DynamicClassifyBatchAsync)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
 
-        public virtual Task<Response<DynamicClassifyDocumentResultCollection>> DynamicClassifyBatchAsync(IEnumerable<TextDocumentInput> documents, DynamicClassifyOptions options, CancellationToken cancellationToken = default) =>
+        public virtual Task<Response<DynamicClassifyDocumentResultCollection>> DynamicClassifyBatchAsync(
+            IEnumerable<TextDocumentInput> documents,
+            IEnumerable<string> categories,
+            DynamicClassifyOptions options = default,
+            CancellationToken cancellationToken = default) =>
             throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.DynamicClassifyBatchAsync)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
 
         #endregion

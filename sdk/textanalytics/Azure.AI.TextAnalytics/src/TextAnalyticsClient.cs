@@ -2109,6 +2109,7 @@ namespace Azure.AI.TextAnalytics
         /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
         /// </remarks>
         /// <param name="document">The document to analyze.</param>
+        /// <param name="categories">The categories that the documents can be classified with.</param>
         /// <param name="language">The language that the documents are written in.</param>
         /// <param name="options">The additional <see cref="DynamicClassifyOptions"/> used to configure the operation.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
@@ -2117,14 +2118,15 @@ namespace Azure.AI.TextAnalytics
         /// </returns>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
         /// <exception cref="RequestFailedException">The service returned a non-success status code.</exception>
-        /// <exception cref="ArgumentException"><paramref name="document"/> is an empty string.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="document"/> or <paramref name="options"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="document"/> is an empty string or <paramref name="categories"/> is an empty collection.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="document"/> or <paramref name="categories"/> is null.</exception>
         public virtual Response<ClassificationCategoryCollection> DynamicClassify(
             string document,
-            DynamicClassifyOptions options,
+            IEnumerable<string> categories,
             string language = default,
+            DynamicClassifyOptions options = default,
             CancellationToken cancellationToken = default) =>
-            _serviceClient.DynamicClassify(document, options, language, cancellationToken);
+            _serviceClient.DynamicClassify(document, categories, language, options, cancellationToken);
 
         /// <summary>
         /// Performs dynamic classification on the given documents.
@@ -2135,6 +2137,7 @@ namespace Azure.AI.TextAnalytics
         /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
         /// </remarks>
         /// <param name="documents">The documents to analyze.</param>
+        /// <param name="categories">The categories that the documents can be classified with.</param>
         /// <param name="language">The language that the documents are written in.</param>
         /// <param name="options">The additional <see cref="DynamicClassifyOptions"/> used to configure the operation.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
@@ -2143,16 +2146,17 @@ namespace Azure.AI.TextAnalytics
         /// </returns>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
         /// <exception cref="RequestFailedException">The service returned a non-success status code.</exception>
-        /// <exception cref="ArgumentException"><paramref name="documents"/> is an empty collection.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="documents"/> or <paramref name="options"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="documents"/> or <paramref name="categories"/> is an empty collection.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="documents"/> or <paramref name="categories"/> is null.</exception>
         public virtual Response<DynamicClassifyDocumentResultCollection> DynamicClassifyBatch(
             IEnumerable<string> documents,
-            DynamicClassifyOptions options,
+            IEnumerable<string> categories,
             string language = default,
+            DynamicClassifyOptions options = default,
             CancellationToken cancellationToken = default)
         {
             options?.CheckSupported(ServiceVersion);
-            return _serviceClient.DynamicClassifyBatch(documents, options, language, cancellationToken);
+            return _serviceClient.DynamicClassifyBatch(documents, categories, language, options, cancellationToken);
         }
 
         /// <summary>
@@ -2164,6 +2168,7 @@ namespace Azure.AI.TextAnalytics
         /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
         /// </remarks>
         /// <param name="documents">The documents to analyze.</param>
+        /// <param name="categories">The categories that the documents can be classified with.</param>
         /// <param name="options">The additional <see cref="DynamicClassifyOptions"/> used to configure the operation.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
         /// <returns>
@@ -2171,15 +2176,16 @@ namespace Azure.AI.TextAnalytics
         /// </returns>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
         /// <exception cref="RequestFailedException">The service returned a non-success status code.</exception>
-        /// <exception cref="ArgumentException"><paramref name="documents"/> is an empty collection.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="documents"/> or <paramref name="options"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="documents"/> or <paramref name="categories"/> is an empty collection.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="documents"/> or <paramref name="categories"/> is null.</exception>
         public virtual Response<DynamicClassifyDocumentResultCollection> DynamicClassifyBatch(
             IEnumerable<TextDocumentInput> documents,
-            DynamicClassifyOptions options,
+            IEnumerable<string> categories,
+            DynamicClassifyOptions options = default,
             CancellationToken cancellationToken = default)
         {
             options?.CheckSupported(ServiceVersion);
-            return _serviceClient.DynamicClassifyBatch(documents, options, cancellationToken);
+            return _serviceClient.DynamicClassifyBatch(documents, categories, options, cancellationToken);
         }
 
         /// <summary>
@@ -2191,6 +2197,7 @@ namespace Azure.AI.TextAnalytics
         /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
         /// </remarks>
         /// <param name="document">The document to analyze.</param>
+        /// <param name="categories">The categories that the documents can be classified with.</param>
         /// <param name="language">The language that the documents are written in.</param>
         /// <param name="options">The additional <see cref="DynamicClassifyOptions"/> used to configure the operation.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
@@ -2199,14 +2206,15 @@ namespace Azure.AI.TextAnalytics
         /// </returns>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
         /// <exception cref="RequestFailedException">The service returned a non-success status code.</exception>
-        /// <exception cref="ArgumentException"><paramref name="document"/> is an empty string.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="document"/> or <paramref name="options"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="document"/> is an empty string or <paramref name="categories"/> is an empty collection.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="document"/> or <paramref name="categories"/> is null.</exception>
         public virtual async Task<Response<ClassificationCategoryCollection>> DynamicClassifyAsync(
             string document,
-            DynamicClassifyOptions options,
+            IEnumerable<string> categories,
             string language = default,
+            DynamicClassifyOptions options = default,
             CancellationToken cancellationToken = default) =>
-            await _serviceClient.DynamicClassifyAsync(document, options, language, cancellationToken).ConfigureAwait(false);
+            await _serviceClient.DynamicClassifyAsync(document, categories, language, options, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Performs dynamic classification on the given documents.
@@ -2217,6 +2225,7 @@ namespace Azure.AI.TextAnalytics
         /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
         /// </remarks>
         /// <param name="documents">The documents to analyze.</param>
+        /// <param name="categories">The categories that the documents can be classified with.</param>
         /// <param name="language">The language that the documents are written in.</param>
         /// <param name="options">The additional <see cref="DynamicClassifyOptions"/> used to configure the operation.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
@@ -2225,16 +2234,17 @@ namespace Azure.AI.TextAnalytics
         /// </returns>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
         /// <exception cref="RequestFailedException">The service returned a non-success status code.</exception>
-        /// <exception cref="ArgumentException"><paramref name="documents"/> is an empty collection.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="documents"/> or <paramref name="options"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="documents"/> or <paramref name="categories"/> is an empty collection.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="documents"/> or <paramref name="categories"/> is null.</exception>
         public virtual async Task<Response<DynamicClassifyDocumentResultCollection>> DynamicClassifyBatchAsync(
             IEnumerable<string> documents,
-            DynamicClassifyOptions options,
+            IEnumerable<string> categories,
             string language = default,
+            DynamicClassifyOptions options = default,
             CancellationToken cancellationToken = default)
         {
             options?.CheckSupported(ServiceVersion);
-            return await _serviceClient.DynamicClassifyBatchAsync(documents, options, language, cancellationToken).ConfigureAwait(false);
+            return await _serviceClient.DynamicClassifyBatchAsync(documents, categories, language, options,cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2246,6 +2256,7 @@ namespace Azure.AI.TextAnalytics
         /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
         /// </remarks>
         /// <param name="documents">The documents to analyze.</param>
+        /// <param name="categories">The categories that the documents can be classified with.</param>
         /// <param name="options">The additional <see cref="DynamicClassifyOptions"/> used to configure the operation.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
         /// <returns>
@@ -2253,15 +2264,16 @@ namespace Azure.AI.TextAnalytics
         /// </returns>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
         /// <exception cref="RequestFailedException">The service returned a non-success status code.</exception>
-        /// <exception cref="ArgumentException"><paramref name="documents"/> is an empty collection.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="documents"/> or <paramref name="options"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="documents"/> or <paramref name="categories"/> is an empty collection.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="documents"/> or <paramref name="categories"/> is null.</exception>
         public virtual async Task<Response<DynamicClassifyDocumentResultCollection>> DynamicClassifyBatchAsync(
             IEnumerable<TextDocumentInput> documents,
-            DynamicClassifyOptions options,
+            IEnumerable<string> categories,
+            DynamicClassifyOptions options = default,
             CancellationToken cancellationToken = default)
         {
             options?.CheckSupported(ServiceVersion);
-            return await _serviceClient.DynamicClassifyBatchAsync(documents, options, cancellationToken).ConfigureAwait(false);
+            return await _serviceClient.DynamicClassifyBatchAsync(documents, categories, options, cancellationToken).ConfigureAwait(false);
         }
 
         #endregion

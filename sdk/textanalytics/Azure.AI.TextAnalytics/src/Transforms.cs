@@ -509,11 +509,13 @@ namespace Azure.AI.TextAnalytics
             // Read results.
             foreach (DynamicClassificationResultDocumentsItem document in result.Documents)
             {
-                documentResults.Add(new ClassifyDocumentResult(
-                    document.Id,
-                    document.Statistics ?? default,
-                    ConvertToClassificationCategoryCollection(document),
-                    ConvertToWarnings(document.Warnings)));
+                documentResults.Add(
+                    new ClassifyDocumentResult(
+                        document.Id,
+                        document.Statistics ?? default,
+                        ConvertToClassificationCategoryCollection(document),
+                        detectedLanguage: default,
+                        ConvertToWarnings(document.Warnings)));
             }
 
             documentResults = SortHeterogeneousCollection(documentResults, idToIndexMap);

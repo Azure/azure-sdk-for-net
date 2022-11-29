@@ -50,10 +50,8 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task DynamicClassifyTest()
         {
             TextAnalyticsClient client = GetClient();
-            string document = ClassifyDocument1;
-            DynamicClassifyOptions options = new(s_categories);
 
-            ClassificationCategoryCollection classificationCategories = await client.DynamicClassifyAsync(document, options);
+            ClassificationCategoryCollection classificationCategories = await client.DynamicClassifyAsync(ClassifyDocument1, s_categories);
 
             ValidateDocumentResult(classificationCategories, ClassificationType.Multi);
         }
@@ -62,10 +60,9 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task DynamicClassifyWithDisableServiceLogs()
         {
             TextAnalyticsClient client = GetClient();
-            string document = ClassifyDocument1;
-            DynamicClassifyOptions options = new(s_categories) { DisableServiceLogs = true };
+            DynamicClassifyOptions options = new() { DisableServiceLogs = true };
 
-            ClassificationCategoryCollection classificationCategories = await client.DynamicClassifyAsync(document, options);
+            ClassificationCategoryCollection classificationCategories = await client.DynamicClassifyAsync(ClassifyDocument1, s_categories, options: options);
 
             ValidateDocumentResult(classificationCategories, ClassificationType.Multi);
         }
@@ -78,10 +75,8 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task DynamicClassifyBatchConvenienceTest()
         {
             TextAnalyticsClient client = GetClient();
-            List<string> documents = s_batchConvenienceDocuments;
-            DynamicClassifyOptions options = new(s_categories);
 
-            DynamicClassifyDocumentResultCollection results = await client.DynamicClassifyBatchAsync(documents, options);
+            DynamicClassifyDocumentResultCollection results = await client.DynamicClassifyBatchAsync(s_batchConvenienceDocuments, s_categories);
 
             ValidateBatchDocumentsResult(results, ClassificationType.Multi);
         }
@@ -95,9 +90,8 @@ namespace Azure.AI.TextAnalytics.Tests
                 ClassifyDocument1,
                 string.Empty
             };
-            DynamicClassifyOptions options = new(s_categories);
 
-            DynamicClassifyDocumentResultCollection results = await client.DynamicClassifyBatchAsync(documents, options);
+            DynamicClassifyDocumentResultCollection results = await client.DynamicClassifyBatchAsync(documents, s_categories);
 
             Assert.IsTrue(!results[0].HasError);
             var exceptionMessage = "Cannot access result for document 1, due to error InvalidDocument: Document text is empty.";
@@ -110,23 +104,21 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task DynamicClassifyBatchConvenienceWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
-            List<string> documents = s_batchConvenienceDocuments;
-            DynamicClassifyOptions options = new(s_categories) { IncludeStatistics = true };
+            DynamicClassifyOptions options = new() { IncludeStatistics = true };
 
-            DynamicClassifyDocumentResultCollection results = await client.DynamicClassifyBatchAsync(documents, options);
+            DynamicClassifyDocumentResultCollection results = await client.DynamicClassifyBatchAsync(s_batchConvenienceDocuments, s_categories, options: options);
 
             ValidateBatchDocumentsResult(results, ClassificationType.Multi, includeStatistics: true);
-            Assert.AreEqual(documents.Count, results.Statistics.DocumentCount);
+            Assert.AreEqual(s_batchConvenienceDocuments.Count(), results.Statistics.DocumentCount);
         }
 
         [RecordedTest]
         public async Task DynamicClassifyBatchConvenienceWithDisableServiceLogs()
         {
             TextAnalyticsClient client = GetClient();
-            List<string> documents = s_batchConvenienceDocuments;
-            DynamicClassifyOptions options = new(s_categories) { DisableServiceLogs = true };
+            DynamicClassifyOptions options = new() { DisableServiceLogs = true };
 
-            DynamicClassifyDocumentResultCollection results = await client.DynamicClassifyBatchAsync(documents, options);
+            DynamicClassifyDocumentResultCollection results = await client.DynamicClassifyBatchAsync(s_batchConvenienceDocuments, s_categories, options: options);
 
             ValidateBatchDocumentsResult(results, ClassificationType.Multi);
         }
@@ -139,10 +131,8 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task DynamicClassifyBatchTest()
         {
             TextAnalyticsClient client = GetClient();
-            List<TextDocumentInput> documents = s_batchDocuments;
-            DynamicClassifyOptions options = new(s_categories);
 
-            DynamicClassifyDocumentResultCollection results = await client.DynamicClassifyBatchAsync(documents, options);
+            DynamicClassifyDocumentResultCollection results = await client.DynamicClassifyBatchAsync(s_batchDocuments, s_categories);
 
             ValidateBatchDocumentsResult(results, ClassificationType.Multi);
         }
@@ -156,9 +146,8 @@ namespace Azure.AI.TextAnalytics.Tests
                 new TextDocumentInput("0", ClassifyDocument1),
                 new TextDocumentInput("1", string.Empty)
             };
-            DynamicClassifyOptions options = new(s_categories);
 
-            DynamicClassifyDocumentResultCollection results = await client.DynamicClassifyBatchAsync(documents, options);
+            DynamicClassifyDocumentResultCollection results = await client.DynamicClassifyBatchAsync(documents, s_categories);
 
             Assert.IsTrue(!results[0].HasError);
             var exceptionMessage = "Cannot access result for document 1, due to error InvalidDocument: Document text is empty.";
@@ -171,23 +160,21 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task DynamicClassifyBatchWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
-            List<TextDocumentInput> documents = s_batchDocuments;
-            DynamicClassifyOptions options = new(s_categories) { IncludeStatistics = true };
+            DynamicClassifyOptions options = new() { IncludeStatistics = true };
 
-            DynamicClassifyDocumentResultCollection results = await client.DynamicClassifyBatchAsync(documents, options);
+            DynamicClassifyDocumentResultCollection results = await client.DynamicClassifyBatchAsync(s_batchDocuments, s_categories, options: options);
 
             ValidateBatchDocumentsResult(results, ClassificationType.Multi, includeStatistics: true);
-            Assert.AreEqual(documents.Count, results.Statistics.DocumentCount);
+            Assert.AreEqual(s_batchDocuments.Count, results.Statistics.DocumentCount);
         }
 
         [RecordedTest]
         public async Task DynamicClassifyBatchWithDisableServiceLogs()
         {
             TextAnalyticsClient client = GetClient();
-            List<TextDocumentInput> documents = s_batchDocuments;
-            DynamicClassifyOptions options = new(s_categories) { DisableServiceLogs = true };
+            DynamicClassifyOptions options = new() { DisableServiceLogs = true };
 
-            DynamicClassifyDocumentResultCollection results = await client.DynamicClassifyBatchAsync(documents, options);
+            DynamicClassifyDocumentResultCollection results = await client.DynamicClassifyBatchAsync(s_batchDocuments, s_categories, options: options);
 
             ValidateBatchDocumentsResult(results, ClassificationType.Multi);
         }
@@ -197,9 +184,8 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             TextAnalyticsClient client = GetClient();
             List<TextDocumentInput> documents = new() { new TextDocumentInput(null, "Hello world") };
-            DynamicClassifyOptions options = new(s_categories);
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.DynamicClassifyBatchAsync(documents, options));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.DynamicClassifyBatchAsync(documents, s_categories));
             Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, ex.ErrorCode);
         }
 
@@ -208,9 +194,8 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             TextAnalyticsClient client = GetClient();
             List<TextDocumentInput> documents = new() { new TextDocumentInput("1", null) };
-            DynamicClassifyOptions options = new(s_categories);
 
-            DynamicClassifyDocumentResultCollection results = await client.DynamicClassifyBatchAsync(documents, options);
+            DynamicClassifyDocumentResultCollection results = await client.DynamicClassifyBatchAsync(documents, s_categories);
             var exceptionMessage = "Cannot access result for document 1, due to error InvalidDocument: Document text is empty.";
             Assert.IsTrue(results[0].HasError);
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => results[0].ClassificationCategories.Count());
@@ -221,10 +206,8 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task DynamicClassifyBatchWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
-            List<TextDocumentInput> documents = s_batchDocuments;
-            DynamicClassifyOptions options = new(s_categories);
 
-            DynamicClassifyDocumentResultCollection results = await client.DynamicClassifyBatchAsync(documents, options);
+            DynamicClassifyDocumentResultCollection results = await client.DynamicClassifyBatchAsync(s_batchDocuments, s_categories);
 
             ValidateBatchDocumentsResult(results, ClassificationType.Multi);
         }
@@ -233,10 +216,9 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task DynamicClassifyBatchWithSingleClassificationTypeTest()
         {
             TextAnalyticsClient client = GetClient();
-            List<TextDocumentInput> documents = s_batchDocuments;
-            DynamicClassifyOptions options = new(s_categories) { ClassificationType = ClassificationType.Single };
+            DynamicClassifyOptions options = new() { ClassificationType = ClassificationType.Single };
 
-            DynamicClassifyDocumentResultCollection results = await client.DynamicClassifyBatchAsync(documents, options);
+            DynamicClassifyDocumentResultCollection results = await client.DynamicClassifyBatchAsync(s_batchDocuments, s_categories, options: options);
 
             ValidateBatchDocumentsResult(results, ClassificationType.Single);
         }

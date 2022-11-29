@@ -13,9 +13,8 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of the <see cref="DynamicClassifyOptions"/> class.
         /// </summary>
-        public DynamicClassifyOptions(IList<string> categories)
+        public DynamicClassifyOptions()
         {
-            Categories = (categories is not null) ? categories : new List<string>();
         }
 
         /// <summary>
@@ -23,10 +22,5 @@ namespace Azure.AI.TextAnalytics
         /// categories. If not set, the service default is used.
         /// </summary>
         public ClassificationType? ClassificationType { get; set; }
-
-        /// <summary>
-        /// The categories that a given document can be classified with.
-        /// </summary>
-        public IList<string> Categories { get; internal set; } = new List<string>();
     }
 }
