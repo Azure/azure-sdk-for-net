@@ -54,5 +54,12 @@ namespace Azure.Storage.Files.DataLake.Models
         /// conditions on the creation of this file or directory.
         /// </summary>
         public DataLakeRequestConditions Conditions { get; set; }
+
+        /// <summary>
+        /// Optional encryption context that can be set the file.
+        /// Encryption context is intended to store metadata that can be used to decrypt the blob.
+        /// Not applicable for directories.
+        /// </summary>
+        public string EncryptionContext { get; set; }
     }
 }

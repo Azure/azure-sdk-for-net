@@ -5099,6 +5099,7 @@ namespace Azure.Storage.Files.DataLake
                         leaseDuration: default,
                         timeToExpire: default,
                         expiresOn: default,
+                        encryptionContext: default,
                         conditions: options?.OpenConditions,
                         async: async,
                         cancellationToken: cancellationToken)
@@ -5145,6 +5146,7 @@ namespace Azure.Storage.Files.DataLake
                             leaseDuration: default,
                             timeToExpire: default,
                             expiresOn: default,
+                            encryptionContext: default,
                             conditions: options?.OpenConditions,
                             async: async,
                             cancellationToken: cancellationToken)
@@ -5213,6 +5215,7 @@ namespace Azure.Storage.Files.DataLake
                         leaseDuration: default,
                         timeToExpire: default,
                         expiresOn: default,
+                        encryptionContext: default,
                         conditions: args.Conditions,
                         async: async,
                         cancellationToken: cancellationToken).ConfigureAwait(false),
