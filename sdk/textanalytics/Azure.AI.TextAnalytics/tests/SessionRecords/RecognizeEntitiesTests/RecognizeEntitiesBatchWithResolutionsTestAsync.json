@@ -5,12 +5,12 @@
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "790",
+        "Content-Length": "770",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-f14f29fcf1fd98c1a3fac1b6b0dd8901-999e52f903548259-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221117.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "55492667b9a07c92d1882bc93dd073ba",
+        "traceparent": "00-305b7eed2ebacfdfce2d7d65f042d749-71a7016dcfb1bf8f-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221123.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "6e6de3f7fa19ad69b87381d3457ea41e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -38,7 +38,7 @@
             },
             {
               "id": "5",
-              "text": "They retrieved 200 terabytes of data between October 24th, 2022 and October 28th, 2022.",
+              "text": "They retrieved 200 terabytes of data from 10/24/2022 to 10/28/2022.",
               "language": "en"
             }
           ]
@@ -51,15 +51,15 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "662f5a80-fa25-417e-a23d-53c20a91a21f",
-        "Content-Length": "4173",
+        "apim-request-id": "7dd40011-e066-4fbf-8599-14a8f0bb1c6a",
+        "Content-Length": "4148",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=5,CognitiveServices.TextAnalytics.TextRecords=5",
-        "Date": "Fri, 18 Nov 2022 06:29:53 GMT",
+        "Date": "Wed, 23 Nov 2022 19:56:07 GMT",
         "Set-Cookie": ".AspNetCore.Mvc.CookieTempDataProvider=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; samesite=lax; httponly",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "503",
+        "x-envoy-upstream-service-time": "253",
         "x-ms-region": "West US 2"
       },
       "ResponseBody": {
@@ -364,12 +364,12 @@
                   ]
                 },
                 {
-                  "text": "between October 24th, 2022 and October 28th, 2022",
+                  "text": "10/24/2022 to 10/28/2022",
                   "category": "DateTime",
                   "subcategory": "DateRange",
-                  "offset": 37,
-                  "length": 49,
-                  "confidenceScore": 0.69,
+                  "offset": 42,
+                  "length": 24,
+                  "confidenceScore": 0.85,
                   "resolutions": [
                     {
                       "resolutionKind": "TemporalSpanResolution",
@@ -390,7 +390,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "447905170",
+    "RandomSeed": "1195462607",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
     "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
   }

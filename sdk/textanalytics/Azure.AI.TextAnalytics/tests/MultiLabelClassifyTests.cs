@@ -288,6 +288,33 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateSummaryBatchResult(resultCollection);
         }
 
+        [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
+        public async Task AnalyzeOperationMultiLabelClassifyWithAutoDetectedLanguageTest()
+        {
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
+            List<string> documents = s_multiLabelClassifyBatchConvenienceDocuments;
+            TextAnalyticsActions actions = new()
+            {
+                MultiLabelClassifyActions = new List<MultiLabelClassifyAction>()
+                {
+                    new MultiLabelClassifyAction(TestEnvironment.MultiClassificationProjectName, TestEnvironment.MultiClassificationDeploymentName)
+                },
+                DisplayName = "MultiLabelClassifyWithAutoDetectedLanguage",
+            };
+
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, actions, "auto");
+            await operation.WaitForCompletionAsync();
+
+            // Take the first page.
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            IReadOnlyCollection<MultiLabelClassifyActionResult> actionResults = resultCollection.MultiLabelClassifyResults;
+            Assert.IsNotNull(actionResults);
+
+            ClassifyDocumentResultCollection results = actionResults.FirstOrDefault().DocumentsResults;
+            ValidateSummaryBatchResult(results, isLanguageAutoDetected: true);
+        }
+
         private void ValidateSummaryDocumentResult(ClassificationCategoryCollection classificationCollection)
         {
             Assert.IsNotNull(classificationCollection.Warnings);
@@ -300,7 +327,10 @@ namespace Azure.AI.TextAnalytics.Tests
             }
         }
 
-        private void ValidateSummaryBatchResult(ClassifyDocumentResultCollection results, bool includeStatistics = false)
+        private void ValidateSummaryBatchResult(
+            ClassifyDocumentResultCollection results,
+            bool includeStatistics = default,
+            bool isLanguageAutoDetected = default)
         {
             Assert.AreEqual(results.ProjectName, TestEnvironment.MultiClassificationProjectName);
             Assert.AreEqual(results.DeploymentName, TestEnvironment.MultiClassificationDeploymentName);
@@ -333,6 +363,21 @@ namespace Azure.AI.TextAnalytics.Tests
                 {
                     Assert.AreEqual(0, result.Statistics.CharacterCount);
                     Assert.AreEqual(0, result.Statistics.TransactionCount);
+                }
+
+                if (isLanguageAutoDetected)
+                {
+                    Assert.IsNotNull(result.DetectedLanguage);
+                    Assert.That(result.DetectedLanguage.Value.Name, Is.Not.Null.And.Not.Empty);
+                    Assert.That(result.DetectedLanguage.Value.Iso6391Name, Is.Not.Null.And.Not.Empty);
+                    Assert.GreaterOrEqual(result.DetectedLanguage.Value.ConfidenceScore, 0.0);
+                    Assert.LessOrEqual(result.DetectedLanguage.Value.ConfidenceScore, 1.0);
+                    Assert.IsNotNull(result.DetectedLanguage.Value.Warnings);
+                    Assert.IsEmpty(result.DetectedLanguage.Value.Warnings);
+                }
+                else
+                {
+                    Assert.IsNull(result.DetectedLanguage);
                 }
 
                 ValidateSummaryDocumentResult(result.ClassificationCategories);

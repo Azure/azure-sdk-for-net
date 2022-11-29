@@ -25,61 +25,61 @@ namespace Azure.AI.AnomalyDetector.Tests
         {
         }
 
-        [Test]
-        public async Task GetResultForEntireDetect()
-        {
-            var client = CreateAnomalyDetectorClient();
+        // [Test]
+        // public async Task GetResultForEntireDetect()
+        // {
+        //     var client = CreateAnomalyDetectorClient();
 
-            var request = TestData.TestPointSeries;
-            request.MaxAnomalyRatio = 0.25F;
-            request.Sensitivity = 95;
-            var result = await client.DetectEntireSeriesAsync(request);
+        //     var request = TestData.TestPointSeries;
+        //     request.MaxAnomalyRatio = 0.25F;
+        //     request.Sensitivity = 95;
+        //     var result = await client.DetectEntireSeriesAsync(request);
 
-            Assert.AreEqual(TestData.ExpectedEntireDetectResult.ExpectedValues, result.Value.ExpectedValues);
-            Assert.AreEqual(TestData.ExpectedEntireDetectResult.UpperMargins, result.Value.UpperMargins);
-            Assert.AreEqual(TestData.ExpectedEntireDetectResult.LowerMargins, result.Value.LowerMargins);
-            Assert.AreEqual(TestData.ExpectedEntireDetectResult.IsAnomaly, result.Value.IsAnomaly);
-            Assert.AreEqual(TestData.ExpectedEntireDetectResult.IsPositiveAnomaly, result.Value.IsPositiveAnomaly);
-            Assert.AreEqual(TestData.ExpectedEntireDetectResult.IsNegativeAnomaly, result.Value.IsNegativeAnomaly);
-            Assert.AreEqual(TestData.ExpectedEntireDetectResult.Severity, result.Value.Severity);
-        }
+        //     Assert.AreEqual(TestData.ExpectedEntireDetectResult.ExpectedValues, result.Value.ExpectedValues);
+        //     Assert.AreEqual(TestData.ExpectedEntireDetectResult.UpperMargins, result.Value.UpperMargins);
+        //     Assert.AreEqual(TestData.ExpectedEntireDetectResult.LowerMargins, result.Value.LowerMargins);
+        //     Assert.AreEqual(TestData.ExpectedEntireDetectResult.IsAnomaly, result.Value.IsAnomaly);
+        //     Assert.AreEqual(TestData.ExpectedEntireDetectResult.IsPositiveAnomaly, result.Value.IsPositiveAnomaly);
+        //     Assert.AreEqual(TestData.ExpectedEntireDetectResult.IsNegativeAnomaly, result.Value.IsNegativeAnomaly);
+        //     Assert.AreEqual(TestData.ExpectedEntireDetectResult.Severity, result.Value.Severity);
+        // }
 
-        [Test]
-        public async Task GetResultForLastDetect()
-        {
-            var client = CreateAnomalyDetectorClient();
+        // [Test]
+        // public async Task GetResultForLastDetect()
+        // {
+        //     var client = CreateAnomalyDetectorClient();
 
-            var request = TestData.TestPointSeries;
-            request.MaxAnomalyRatio = 0.25F;
-            request.Sensitivity = 95;
-            var result = await client.DetectLastPointAsync(request);
+        //     var request = TestData.TestPointSeries;
+        //     request.MaxAnomalyRatio = 0.25F;
+        //     request.Sensitivity = 95;
+        //     var result = await client.DetectLastPointAsync(request);
 
-            Assert.AreEqual(809.5658016931228F, result.Value.ExpectedValue);
-            Assert.AreEqual(false, result.Value.IsAnomaly);
-            Assert.AreEqual(false, result.Value.IsNegativeAnomaly);
-            Assert.AreEqual(false, result.Value.IsPositiveAnomaly);
-            Assert.AreEqual(40.47829008465612F, result.Value.LowerMargin);
-            Assert.AreEqual(12, result.Value.Period);
-            Assert.AreEqual(49, result.Value.SuggestedWindow);
-            Assert.AreEqual(40.47829008465612F, result.Value.UpperMargin);
-            Assert.AreEqual(0.0f, result.Value.Severity);
-        }
+        //     Assert.AreEqual(809.5658016931228F, result.Value.ExpectedValue);
+        //     Assert.AreEqual(false, result.Value.IsAnomaly);
+        //     Assert.AreEqual(false, result.Value.IsNegativeAnomaly);
+        //     Assert.AreEqual(false, result.Value.IsPositiveAnomaly);
+        //     Assert.AreEqual(40.47829008465612F, result.Value.LowerMargin);
+        //     Assert.AreEqual(12, result.Value.Period);
+        //     Assert.AreEqual(49, result.Value.SuggestedWindow);
+        //     Assert.AreEqual(40.47829008465612F, result.Value.UpperMargin);
+        //     Assert.AreEqual(0.0f, result.Value.Severity);
+        // }
 
-        [Test]
-        public async Task GetResultForChangePointDetect()
-        {
-            var client = CreateAnomalyDetectorClient();
+        // [Test]
+        // public async Task GetResultForChangePointDetect()
+        // {
+        //     var client = CreateAnomalyDetectorClient();
 
-            var request = TestData.TestChangePointSeries;
-            request.CustomInterval = 5;
-            request.StableTrendWindow = 10;
-            request.Threshold = 0.5F;
-            request.Period = 0;
-            var result = await client.DetectChangePointAsync(request);
+        //     var request = TestData.TestChangePointSeries;
+        //     request.CustomInterval = 5;
+        //     request.StableTrendWindow = 10;
+        //     request.Threshold = 0.5F;
+        //     request.Period = 0;
+        //     var result = await client.DetectChangePointAsync(request);
 
-            Assert.AreEqual(TestData.ExpectedChangePointResult.Period, result.Value.Period);
-            Assert.AreEqual(TestData.ExpectedChangePointResult.IsChangePoint, result.Value.IsChangePoint);
-            Assert.AreEqual(TestData.ExpectedChangePointResult.ConfidenceScores, result.Value.ConfidenceScores);
-        }
+        //     Assert.AreEqual(TestData.ExpectedChangePointResult.Period, result.Value.Period);
+        //     Assert.AreEqual(TestData.ExpectedChangePointResult.IsChangePoint, result.Value.IsChangePoint);
+        //     Assert.AreEqual(TestData.ExpectedChangePointResult.ConfidenceScores, result.Value.ConfidenceScores);
+        // }
     }
 }
