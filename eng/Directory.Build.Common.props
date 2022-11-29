@@ -93,8 +93,6 @@
 
   <PropertyGroup Condition="'$(IsShippingClientLibrary)' == 'true' and '$(TF_BUILD)' == 'true'">
     <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
-    <!-- See https://github.com/dotnet/sourcelink/tree/main/docs#deterministicsourcepaths for details. -->
-    <DeterministicSourcePaths>true</DeterministicSourcePaths>
   </PropertyGroup>
 
   <!-- TODO. REVIEW -->
