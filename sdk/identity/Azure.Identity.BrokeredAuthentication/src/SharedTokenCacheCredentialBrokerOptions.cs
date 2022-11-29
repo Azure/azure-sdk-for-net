@@ -12,24 +12,24 @@ namespace Azure.Identity.BrokeredAuthentication
     /// </summary>
     public class SharedTokenCacheCredentialBrokerOptions : SharedTokenCacheCredentialOptions, IMsalPublicClientInitializerOptions
     {
-        private bool _msaPassthrough;
+        private bool _msaPassThrough;
 
         /// <summary>
         /// Initializes a new instance of <see cref="SharedTokenCacheCredentialBrokerOptions"/>.
         /// </summary>
-        public SharedTokenCacheCredentialBrokerOptions(bool msaPassthrough = false)
-            : this(null, msaPassthrough)
+        public SharedTokenCacheCredentialBrokerOptions(bool msaPassThrough = false)
+            : this(null, msaPassThrough)
         { }
 
         /// <summary>
         /// Initializes a new instance of <see cref="SharedTokenCacheCredentialBrokerOptions"/>.
         /// </summary>
         /// <param name="tokenCacheOptions">The <see cref="TokenCachePersistenceOptions"/> that will apply to the token cache used by this credential.</param>
-        /// <param name="msaPassthrough">A legacy option available only to old Microsoft applications. Should be avoided where possible. Support is experimental.</param>
-        public SharedTokenCacheCredentialBrokerOptions(TokenCachePersistenceOptions tokenCacheOptions, bool msaPassthrough = false)
+        /// <param name="msaPassThrough">A legacy option available only to old Microsoft applications. Should be avoided where possible. Support is experimental.</param>
+        public SharedTokenCacheCredentialBrokerOptions(TokenCachePersistenceOptions tokenCacheOptions, bool msaPassThrough = false)
             : base(tokenCacheOptions)
         {
-            _msaPassthrough = msaPassthrough;
+            _msaPassThrough = msaPassThrough;
         }
 
         Action<PublicClientApplicationBuilder> IMsalPublicClientInitializerOptions.BeforeBuildClient => AddBroker;
@@ -39,7 +39,7 @@ namespace Azure.Identity.BrokeredAuthentication
             builder.WithBrokerPreview()
             .WithWindowsBrokerOptions(new WindowsBrokerOptions()
             {
-                MsaPassthrough = _msaPassthrough
+                MsaPassthrough = _msaPassThrough
             });
         }
     }

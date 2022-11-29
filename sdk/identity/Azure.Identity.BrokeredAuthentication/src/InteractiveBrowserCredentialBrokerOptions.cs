@@ -13,17 +13,17 @@ namespace Azure.Identity.BrokeredAuthentication
     public class InteractiveBrowserCredentialBrokerOptions : InteractiveBrowserCredentialOptions, IMsalPublicClientInitializerOptions
     {
         private IntPtr _parentWindowHandle;
-        private bool _msaPassthrough;
+        private bool _msaPassThrough;
 
         /// <summary>
         /// Creates a new instance of <see cref="InteractiveBrowserCredentialBrokerOptions"/> to configure a <see cref="InteractiveBrowserCredential"/>.
         /// </summary>
         /// <param name="parentWindowHandle">Handle of the parent window the system authentication broker should be docked to.</param>
-        /// <param name="msaPassthrough">A legacy option available only to old Microsoft applications. Should be avoided where possible. Support is experimental.</param>
-        public InteractiveBrowserCredentialBrokerOptions(IntPtr parentWindowHandle, bool msaPassthrough = false) : base()
+        /// <param name="msaPassThrough">A legacy option available only to old Microsoft applications. Should be avoided where possible. Support is experimental.</param>
+        public InteractiveBrowserCredentialBrokerOptions(IntPtr parentWindowHandle, bool msaPassThrough = false) : base()
         {
             _parentWindowHandle = parentWindowHandle;
-            _msaPassthrough = msaPassthrough;
+            _msaPassThrough = msaPassThrough;
         }
 
         Action<PublicClientApplicationBuilder> IMsalPublicClientInitializerOptions.BeforeBuildClient => AddBroker;
@@ -34,7 +34,7 @@ namespace Azure.Identity.BrokeredAuthentication
             .WithParentActivityOrWindow(() => _parentWindowHandle)
             .WithWindowsBrokerOptions(new WindowsBrokerOptions()
             {
-                MsaPassthrough = _msaPassthrough
+                MsaPassthrough = _msaPassThrough
             });
         }
     }

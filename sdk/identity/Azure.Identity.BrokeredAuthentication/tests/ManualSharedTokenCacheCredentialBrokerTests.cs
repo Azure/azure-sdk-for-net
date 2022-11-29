@@ -25,14 +25,14 @@ namespace Azure.Identity.BrokeredAuthentication.Tests
 
             // to fully manually verify the InteractiveBrowserCredential this test should be run both authenticating with a
             // school / organization account as well as a personal live account, i.e. a @outlook.com, @live.com, or @hotmail.com
-            const bool MsaPassthrough = true;
-            var cred = new InteractiveBrowserCredential(new InteractiveBrowserCredentialBrokerOptions(parentWindowHandle, MsaPassthrough) { TokenCachePersistenceOptions = persistenceOptions});
+            const bool MsaPassThrough = true;
+            var cred = new InteractiveBrowserCredential(new InteractiveBrowserCredentialBrokerOptions(parentWindowHandle, MsaPassThrough) { TokenCachePersistenceOptions = persistenceOptions});
 
             AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" })).ConfigureAwait(false);
 
             Assert.NotNull(token.Token);
 
-            var silentCred = new SharedTokenCacheCredential(new SharedTokenCacheCredentialBrokerOptions(MsaPassthrough));
+            var silentCred = new SharedTokenCacheCredential(new SharedTokenCacheCredentialBrokerOptions(MsaPassThrough));
 
             // The calls below this should be silent and not require user interaction
             token = await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" })).ConfigureAwait(false);
