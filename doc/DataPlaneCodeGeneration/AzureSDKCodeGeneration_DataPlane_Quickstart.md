@@ -132,7 +132,9 @@ You can manually create the project folder. Please refer to [Azure.Template](htt
 - remove `autorest.md` from sdk\<service name>\<package name>\src
 - add `cadl-location.yaml` under sdk\<service name>\<package name>\src
   
-  `cadl-location.yaml` is a file to store the meta-data as following:
+  Modify `cadl-location.yaml` to add some project meta data if needed, Otherwise just add an empty file.
+
+  e.g. if you want specify cadl project folder in azure-rest-api-spec repo, you can define (directory, commit, repo) to specify the cadl project.
 
   ```yml
   directory: specification/cognitiveservices/data-plane/AnomalyDetector/stable/v1.1/cadl
@@ -140,7 +142,6 @@ You can manually create the project folder. Please refer to [Azure.Template](htt
   repo: Azure/azure-rest-api-specs
   cleanup: false
   ```
-
 
 #### Generate the library source code
 
