@@ -235,8 +235,10 @@ namespace Azure.Storage.DataMovement.Blobs
 
         /// <summary>
         /// Get properties of the resource.
+        ///
+        /// See <see cref="StorageResourceProperties"/>.
         /// </summary>
-        /// <returns>Returns the length of the storage resource</returns>
+        /// <returns>Returns the properties of the Page Blob Storage Resource. See <see cref="StorageResourceProperties"/></returns>
         public override async Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
             BlobProperties properties = await _blobClient.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);

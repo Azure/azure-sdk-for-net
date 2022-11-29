@@ -129,9 +129,11 @@ namespace Azure.Storage.DataMovement
             CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Get lengths of the resource.
+        /// Get properties of the resource.
+        ///
+        /// See <see cref="StorageResourceProperties"/>.
         /// </summary>
-        /// <returns>Returns the properties of the storage resource</returns>
+        /// <returns>Returns the properties of the Storage Resource. See <see cref="StorageResourceProperties"/></returns>
         public abstract Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken token = default);
 
         /// <summary>

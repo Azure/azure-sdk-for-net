@@ -198,8 +198,10 @@ namespace Azure.Storage.DataMovement
 
         /// <summary>
         /// Get properties of the resource.
+        ///
+        /// See <see cref="StorageResourceProperties"/>.
         /// </summary>
-        /// <returns>Returns the length of the storage resource</returns>
+        /// <returns>Returns the properties of the Local File Storage Resource. See <see cref="StorageResourceProperties"/></returns>
         public override Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
             FileInfo fileInfo = new FileInfo(_path);

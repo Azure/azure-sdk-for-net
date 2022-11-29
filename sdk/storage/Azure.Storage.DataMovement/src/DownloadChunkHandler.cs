@@ -171,7 +171,6 @@ namespace Azure.Storage.DataMovement
                         // Check if we finished downloading the blob
                         if (_bytesTransferred == _expectedLength)
                         {
-                            // TODO: update progress handler, flush file
                             await _queueCompleteFileDownload().ConfigureAwait(false);
                         }
                     }
@@ -268,7 +267,14 @@ namespace Azure.Storage.DataMovement
                 {
                     if (File.Exists(tempChunkFile))
                     {
-                        File.Delete(tempChunkFile);
+                        try
+                        {
+                            File.Delete(tempChunkFile);
+                        }
+                        catch (Exception deleteException)
+                        {
+                            await _invokeFailedEventHandler(deleteException).ConfigureAwait(false);
+                        }
                     }
                 }
             }

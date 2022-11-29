@@ -248,8 +248,10 @@ namespace Azure.Storage.DataMovement.Blobs
 
         /// <summary>
         /// Get properties of the resource.
+        ///
+        /// See <see cref="StorageResourceProperties"/>.
         /// </summary>
-        /// <returns>Returns the length of the storage resource</returns>
+        /// <returns>Returns the properties of the Storage Resource. See <see cref="StorageResourceProperties"/></returns>
         public override async Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);

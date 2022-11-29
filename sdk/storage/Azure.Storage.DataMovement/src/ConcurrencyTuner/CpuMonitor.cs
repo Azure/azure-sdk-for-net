@@ -85,7 +85,7 @@ namespace Azure.Storage.DataMovement
             _monitoringWorker.Start();
 
             // discard first value, it doesn't seem very reliable
-            // durations.Remove(first value);
+            await durations.Reader.ReadAsync(cancellationToken).ConfigureAwait(false);
 
             // get the next 3 and average them, as our baseline. We chose 3 somewhat arbitrarily
             long firstSpan = 0;// get next duration.
