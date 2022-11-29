@@ -408,6 +408,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 {
                     Assert.AreEqual("2022-11-01", dateTime.Value);
                     Assert.AreEqual("2022-11-01", dateTime.Timex);
+                    Assert.AreEqual(DateTimeSubKind.Date, dateTime.DateTimeSubKind);
                     Assert.IsNull(dateTime.Modifier);
                 }
             }
