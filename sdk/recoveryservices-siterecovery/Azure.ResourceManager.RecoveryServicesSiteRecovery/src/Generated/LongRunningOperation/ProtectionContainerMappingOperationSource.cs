@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
-    internal class ProtectionContainerMappingOperationSource : IOperationSource<ProtectionContainerMappingResource>
+    internal class ProtectionContainerMappingOperationSource : Core.IOperationSource<ProtectionContainerMappingResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             _client = client;
         }
 
-        ProtectionContainerMappingResource IOperationSource<ProtectionContainerMappingResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ProtectionContainerMappingResource Core.IOperationSource<ProtectionContainerMappingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ProtectionContainerMappingData.DeserializeProtectionContainerMappingData(document.RootElement);
             return new ProtectionContainerMappingResource(_client, data);
         }
 
-        async ValueTask<ProtectionContainerMappingResource> IOperationSource<ProtectionContainerMappingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ProtectionContainerMappingResource> Core.IOperationSource<ProtectionContainerMappingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ProtectionContainerMappingData.DeserializeProtectionContainerMappingData(document.RootElement);

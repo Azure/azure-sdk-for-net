@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Compute
 {
-    internal class ComputePrivateEndpointConnectionOperationSource : IOperationSource<ComputePrivateEndpointConnectionResource>
+    internal class ComputePrivateEndpointConnectionOperationSource : Core.IOperationSource<ComputePrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Compute
             _client = client;
         }
 
-        ComputePrivateEndpointConnectionResource IOperationSource<ComputePrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ComputePrivateEndpointConnectionResource Core.IOperationSource<ComputePrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ComputePrivateEndpointConnectionData.DeserializeComputePrivateEndpointConnectionData(document.RootElement);
             return new ComputePrivateEndpointConnectionResource(_client, data);
         }
 
-        async ValueTask<ComputePrivateEndpointConnectionResource> IOperationSource<ComputePrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ComputePrivateEndpointConnectionResource> Core.IOperationSource<ComputePrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ComputePrivateEndpointConnectionData.DeserializeComputePrivateEndpointConnectionData(document.RootElement);

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CustomerInsights
 {
-    internal class PredictionResourceFormatOperationSource : IOperationSource<PredictionResourceFormatResource>
+    internal class PredictionResourceFormatOperationSource : Core.IOperationSource<PredictionResourceFormatResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.CustomerInsights
             _client = client;
         }
 
-        PredictionResourceFormatResource IOperationSource<PredictionResourceFormatResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        PredictionResourceFormatResource Core.IOperationSource<PredictionResourceFormatResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = PredictionResourceFormatData.DeserializePredictionResourceFormatData(document.RootElement);
             return new PredictionResourceFormatResource(_client, data);
         }
 
-        async ValueTask<PredictionResourceFormatResource> IOperationSource<PredictionResourceFormatResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PredictionResourceFormatResource> Core.IOperationSource<PredictionResourceFormatResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = PredictionResourceFormatData.DeserializePredictionResourceFormatData(document.RootElement);

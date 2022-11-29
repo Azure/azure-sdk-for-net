@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class DistributedAvailabilityGroupOperationSource : IOperationSource<DistributedAvailabilityGroupResource>
+    internal class DistributedAvailabilityGroupOperationSource : Core.IOperationSource<DistributedAvailabilityGroupResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        DistributedAvailabilityGroupResource IOperationSource<DistributedAvailabilityGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DistributedAvailabilityGroupResource Core.IOperationSource<DistributedAvailabilityGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DistributedAvailabilityGroupData.DeserializeDistributedAvailabilityGroupData(document.RootElement);
             return new DistributedAvailabilityGroupResource(_client, data);
         }
 
-        async ValueTask<DistributedAvailabilityGroupResource> IOperationSource<DistributedAvailabilityGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DistributedAvailabilityGroupResource> Core.IOperationSource<DistributedAvailabilityGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DistributedAvailabilityGroupData.DeserializeDistributedAvailabilityGroupData(document.RootElement);

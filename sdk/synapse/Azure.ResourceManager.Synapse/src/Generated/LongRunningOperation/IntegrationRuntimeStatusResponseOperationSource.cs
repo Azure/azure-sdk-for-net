@@ -14,15 +14,15 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    internal class IntegrationRuntimeStatusResponseOperationSource : IOperationSource<IntegrationRuntimeStatusResponse>
+    internal class IntegrationRuntimeStatusResponseOperationSource : Core.IOperationSource<IntegrationRuntimeStatusResponse>
     {
-        IntegrationRuntimeStatusResponse IOperationSource<IntegrationRuntimeStatusResponse>.CreateResult(Response response, CancellationToken cancellationToken)
+        IntegrationRuntimeStatusResponse Core.IOperationSource<IntegrationRuntimeStatusResponse>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return IntegrationRuntimeStatusResponse.DeserializeIntegrationRuntimeStatusResponse(document.RootElement);
         }
 
-        async ValueTask<IntegrationRuntimeStatusResponse> IOperationSource<IntegrationRuntimeStatusResponse>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<IntegrationRuntimeStatusResponse> Core.IOperationSource<IntegrationRuntimeStatusResponse>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return IntegrationRuntimeStatusResponse.DeserializeIntegrationRuntimeStatusResponse(document.RootElement);

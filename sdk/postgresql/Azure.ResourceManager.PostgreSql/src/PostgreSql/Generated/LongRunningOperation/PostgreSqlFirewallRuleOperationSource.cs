@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.PostgreSql
 {
-    internal class PostgreSqlFirewallRuleOperationSource : IOperationSource<PostgreSqlFirewallRuleResource>
+    internal class PostgreSqlFirewallRuleOperationSource : Core.IOperationSource<PostgreSqlFirewallRuleResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.PostgreSql
             _client = client;
         }
 
-        PostgreSqlFirewallRuleResource IOperationSource<PostgreSqlFirewallRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        PostgreSqlFirewallRuleResource Core.IOperationSource<PostgreSqlFirewallRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = PostgreSqlFirewallRuleData.DeserializePostgreSqlFirewallRuleData(document.RootElement);
             return new PostgreSqlFirewallRuleResource(_client, data);
         }
 
-        async ValueTask<PostgreSqlFirewallRuleResource> IOperationSource<PostgreSqlFirewallRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PostgreSqlFirewallRuleResource> Core.IOperationSource<PostgreSqlFirewallRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = PostgreSqlFirewallRuleData.DeserializePostgreSqlFirewallRuleData(document.RootElement);

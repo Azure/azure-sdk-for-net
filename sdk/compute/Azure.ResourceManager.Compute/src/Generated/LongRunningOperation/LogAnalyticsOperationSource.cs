@@ -14,15 +14,15 @@ using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    internal class LogAnalyticsOperationSource : IOperationSource<LogAnalytics>
+    internal class LogAnalyticsOperationSource : Core.IOperationSource<LogAnalytics>
     {
-        LogAnalytics IOperationSource<LogAnalytics>.CreateResult(Response response, CancellationToken cancellationToken)
+        LogAnalytics Core.IOperationSource<LogAnalytics>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return LogAnalytics.DeserializeLogAnalytics(document.RootElement);
         }
 
-        async ValueTask<LogAnalytics> IOperationSource<LogAnalytics>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<LogAnalytics> Core.IOperationSource<LogAnalytics>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return LogAnalytics.DeserializeLogAnalytics(document.RootElement);

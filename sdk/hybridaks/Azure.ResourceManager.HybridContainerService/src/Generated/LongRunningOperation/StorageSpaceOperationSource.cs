@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HybridContainerService
 {
-    internal class StorageSpaceOperationSource : IOperationSource<StorageSpaceResource>
+    internal class StorageSpaceOperationSource : Core.IOperationSource<StorageSpaceResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.HybridContainerService
             _client = client;
         }
 
-        StorageSpaceResource IOperationSource<StorageSpaceResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        StorageSpaceResource Core.IOperationSource<StorageSpaceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = StorageSpaceData.DeserializeStorageSpaceData(document.RootElement);
             return new StorageSpaceResource(_client, data);
         }
 
-        async ValueTask<StorageSpaceResource> IOperationSource<StorageSpaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<StorageSpaceResource> Core.IOperationSource<StorageSpaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = StorageSpaceData.DeserializeStorageSpaceData(document.RootElement);

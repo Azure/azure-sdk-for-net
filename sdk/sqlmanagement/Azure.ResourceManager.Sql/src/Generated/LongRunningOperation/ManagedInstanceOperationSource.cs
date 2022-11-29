@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class ManagedInstanceOperationSource : IOperationSource<ManagedInstanceResource>
+    internal class ManagedInstanceOperationSource : Core.IOperationSource<ManagedInstanceResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        ManagedInstanceResource IOperationSource<ManagedInstanceResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ManagedInstanceResource Core.IOperationSource<ManagedInstanceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ManagedInstanceData.DeserializeManagedInstanceData(document.RootElement);
             return new ManagedInstanceResource(_client, data);
         }
 
-        async ValueTask<ManagedInstanceResource> IOperationSource<ManagedInstanceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ManagedInstanceResource> Core.IOperationSource<ManagedInstanceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ManagedInstanceData.DeserializeManagedInstanceData(document.RootElement);

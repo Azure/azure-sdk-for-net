@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class BackupShortTermRetentionPolicyOperationSource : IOperationSource<BackupShortTermRetentionPolicyResource>
+    internal class BackupShortTermRetentionPolicyOperationSource : Core.IOperationSource<BackupShortTermRetentionPolicyResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        BackupShortTermRetentionPolicyResource IOperationSource<BackupShortTermRetentionPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        BackupShortTermRetentionPolicyResource Core.IOperationSource<BackupShortTermRetentionPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = BackupShortTermRetentionPolicyData.DeserializeBackupShortTermRetentionPolicyData(document.RootElement);
             return new BackupShortTermRetentionPolicyResource(_client, data);
         }
 
-        async ValueTask<BackupShortTermRetentionPolicyResource> IOperationSource<BackupShortTermRetentionPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<BackupShortTermRetentionPolicyResource> Core.IOperationSource<BackupShortTermRetentionPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = BackupShortTermRetentionPolicyData.DeserializeBackupShortTermRetentionPolicyData(document.RootElement);

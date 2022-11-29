@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class SqlServerVirtualNetworkRuleOperationSource : IOperationSource<SqlServerVirtualNetworkRuleResource>
+    internal class SqlServerVirtualNetworkRuleOperationSource : Core.IOperationSource<SqlServerVirtualNetworkRuleResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        SqlServerVirtualNetworkRuleResource IOperationSource<SqlServerVirtualNetworkRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SqlServerVirtualNetworkRuleResource Core.IOperationSource<SqlServerVirtualNetworkRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SqlServerVirtualNetworkRuleData.DeserializeSqlServerVirtualNetworkRuleData(document.RootElement);
             return new SqlServerVirtualNetworkRuleResource(_client, data);
         }
 
-        async ValueTask<SqlServerVirtualNetworkRuleResource> IOperationSource<SqlServerVirtualNetworkRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SqlServerVirtualNetworkRuleResource> Core.IOperationSource<SqlServerVirtualNetworkRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SqlServerVirtualNetworkRuleData.DeserializeSqlServerVirtualNetworkRuleData(document.RootElement);

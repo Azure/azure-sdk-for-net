@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class PrivateLinkServiceOperationSource : IOperationSource<PrivateLinkServiceResource>
+    internal class PrivateLinkServiceOperationSource : Core.IOperationSource<PrivateLinkServiceResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        PrivateLinkServiceResource IOperationSource<PrivateLinkServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        PrivateLinkServiceResource Core.IOperationSource<PrivateLinkServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = PrivateLinkServiceData.DeserializePrivateLinkServiceData(document.RootElement);
             return new PrivateLinkServiceResource(_client, data);
         }
 
-        async ValueTask<PrivateLinkServiceResource> IOperationSource<PrivateLinkServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PrivateLinkServiceResource> Core.IOperationSource<PrivateLinkServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = PrivateLinkServiceData.DeserializePrivateLinkServiceData(document.RootElement);

@@ -37,11 +37,14 @@ namespace Azure.ResourceManager.DevTestLabs
             _operation = new OperationInternal(clientDiagnostics, nextLinkOperation, response, "DevTestLabsArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
         }
 
+        internal DevTestLabsArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string id)
+        {
+            var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, id, out string finalResponse);
+            _operation = OperationInternal.Create(clientDiagnostics, nextLinkOperation, finalResponse, "DevTestLabsArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
+        }
+
         /// <inheritdoc />
-#pragma warning disable CA1822
-        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-        public override string Id => throw new NotImplementedException();
-#pragma warning restore CA1822
+        public override string Id => _operation.GetOperationId();
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;

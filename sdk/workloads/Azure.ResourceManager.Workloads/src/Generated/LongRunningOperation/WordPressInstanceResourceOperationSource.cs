@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Workloads
 {
-    internal class WordPressInstanceResourceOperationSource : IOperationSource<WordPressInstanceResource>
+    internal class WordPressInstanceResourceOperationSource : Core.IOperationSource<WordPressInstanceResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Workloads
             _client = client;
         }
 
-        WordPressInstanceResource IOperationSource<WordPressInstanceResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        WordPressInstanceResource Core.IOperationSource<WordPressInstanceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = WordPressInstanceResourceData.DeserializeWordPressInstanceResourceData(document.RootElement);
             return new WordPressInstanceResource(_client, data);
         }
 
-        async ValueTask<WordPressInstanceResource> IOperationSource<WordPressInstanceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<WordPressInstanceResource> Core.IOperationSource<WordPressInstanceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = WordPressInstanceResourceData.DeserializeWordPressInstanceResourceData(document.RootElement);

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    internal class EventGridPartnerNamespacePrivateEndpointConnectionOperationSource : IOperationSource<EventGridPartnerNamespacePrivateEndpointConnectionResource>
+    internal class EventGridPartnerNamespacePrivateEndpointConnectionOperationSource : Core.IOperationSource<EventGridPartnerNamespacePrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.EventGrid
             _client = client;
         }
 
-        EventGridPartnerNamespacePrivateEndpointConnectionResource IOperationSource<EventGridPartnerNamespacePrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        EventGridPartnerNamespacePrivateEndpointConnectionResource Core.IOperationSource<EventGridPartnerNamespacePrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = EventGridPrivateEndpointConnectionData.DeserializeEventGridPrivateEndpointConnectionData(document.RootElement);
             return new EventGridPartnerNamespacePrivateEndpointConnectionResource(_client, data);
         }
 
-        async ValueTask<EventGridPartnerNamespacePrivateEndpointConnectionResource> IOperationSource<EventGridPartnerNamespacePrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<EventGridPartnerNamespacePrivateEndpointConnectionResource> Core.IOperationSource<EventGridPartnerNamespacePrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = EventGridPrivateEndpointConnectionData.DeserializeEventGridPrivateEndpointConnectionData(document.RootElement);

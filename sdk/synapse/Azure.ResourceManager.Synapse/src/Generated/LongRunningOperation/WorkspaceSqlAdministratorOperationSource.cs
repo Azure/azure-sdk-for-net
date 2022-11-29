@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Synapse
 {
-    internal class WorkspaceSqlAdministratorOperationSource : IOperationSource<WorkspaceSqlAdministratorResource>
+    internal class WorkspaceSqlAdministratorOperationSource : Core.IOperationSource<WorkspaceSqlAdministratorResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Synapse
             _client = client;
         }
 
-        WorkspaceSqlAdministratorResource IOperationSource<WorkspaceSqlAdministratorResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        WorkspaceSqlAdministratorResource Core.IOperationSource<WorkspaceSqlAdministratorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = WorkspaceAadAdminInfoData.DeserializeWorkspaceAadAdminInfoData(document.RootElement);
             return new WorkspaceSqlAdministratorResource(_client, data);
         }
 
-        async ValueTask<WorkspaceSqlAdministratorResource> IOperationSource<WorkspaceSqlAdministratorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<WorkspaceSqlAdministratorResource> Core.IOperationSource<WorkspaceSqlAdministratorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = WorkspaceAadAdminInfoData.DeserializeWorkspaceAadAdminInfoData(document.RootElement);

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServices
 {
-    internal class VaultOperationSource : IOperationSource<VaultResource>
+    internal class VaultOperationSource : Core.IOperationSource<VaultResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.RecoveryServices
             _client = client;
         }
 
-        VaultResource IOperationSource<VaultResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        VaultResource Core.IOperationSource<VaultResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VaultData.DeserializeVaultData(document.RootElement);
             return new VaultResource(_client, data);
         }
 
-        async ValueTask<VaultResource> IOperationSource<VaultResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VaultResource> Core.IOperationSource<VaultResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VaultData.DeserializeVaultData(document.RootElement);

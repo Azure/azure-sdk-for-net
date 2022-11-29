@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class SqlServerDatabaseRestorePointOperationSource : IOperationSource<SqlServerDatabaseRestorePointResource>
+    internal class SqlServerDatabaseRestorePointOperationSource : Core.IOperationSource<SqlServerDatabaseRestorePointResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        SqlServerDatabaseRestorePointResource IOperationSource<SqlServerDatabaseRestorePointResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SqlServerDatabaseRestorePointResource Core.IOperationSource<SqlServerDatabaseRestorePointResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SqlServerDatabaseRestorePointData.DeserializeSqlServerDatabaseRestorePointData(document.RootElement);
             return new SqlServerDatabaseRestorePointResource(_client, data);
         }
 
-        async ValueTask<SqlServerDatabaseRestorePointResource> IOperationSource<SqlServerDatabaseRestorePointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SqlServerDatabaseRestorePointResource> Core.IOperationSource<SqlServerDatabaseRestorePointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SqlServerDatabaseRestorePointData.DeserializeSqlServerDatabaseRestorePointData(document.RootElement);

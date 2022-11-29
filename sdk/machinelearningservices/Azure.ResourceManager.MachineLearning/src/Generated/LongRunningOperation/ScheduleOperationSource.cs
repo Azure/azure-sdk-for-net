@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    internal class ScheduleOperationSource : IOperationSource<ScheduleResource>
+    internal class ScheduleOperationSource : Core.IOperationSource<ScheduleResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.MachineLearning
             _client = client;
         }
 
-        ScheduleResource IOperationSource<ScheduleResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ScheduleResource Core.IOperationSource<ScheduleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ScheduleData.DeserializeScheduleData(document.RootElement);
             return new ScheduleResource(_client, data);
         }
 
-        async ValueTask<ScheduleResource> IOperationSource<ScheduleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ScheduleResource> Core.IOperationSource<ScheduleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ScheduleData.DeserializeScheduleData(document.RootElement);

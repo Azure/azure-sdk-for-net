@@ -14,15 +14,15 @@ using Azure.ResourceManager.Kusto.Models;
 
 namespace Azure.ResourceManager.Kusto
 {
-    internal class DataConnectionValidationResultsOperationSource : IOperationSource<DataConnectionValidationResults>
+    internal class DataConnectionValidationResultsOperationSource : Core.IOperationSource<DataConnectionValidationResults>
     {
-        DataConnectionValidationResults IOperationSource<DataConnectionValidationResults>.CreateResult(Response response, CancellationToken cancellationToken)
+        DataConnectionValidationResults Core.IOperationSource<DataConnectionValidationResults>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return DataConnectionValidationResults.DeserializeDataConnectionValidationResults(document.RootElement);
         }
 
-        async ValueTask<DataConnectionValidationResults> IOperationSource<DataConnectionValidationResults>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DataConnectionValidationResults> Core.IOperationSource<DataConnectionValidationResults>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return DataConnectionValidationResults.DeserializeDataConnectionValidationResults(document.RootElement);

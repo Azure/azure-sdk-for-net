@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppPlatform
 {
-    internal class CertificateResourceOperationSource : IOperationSource<CertificateResource>
+    internal class CertificateResourceOperationSource : Core.IOperationSource<CertificateResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.AppPlatform
             _client = client;
         }
 
-        CertificateResource IOperationSource<CertificateResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        CertificateResource Core.IOperationSource<CertificateResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CertificateResourceData.DeserializeCertificateResourceData(document.RootElement);
             return new CertificateResource(_client, data);
         }
 
-        async ValueTask<CertificateResource> IOperationSource<CertificateResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CertificateResource> Core.IOperationSource<CertificateResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CertificateResourceData.DeserializeCertificateResourceData(document.RootElement);

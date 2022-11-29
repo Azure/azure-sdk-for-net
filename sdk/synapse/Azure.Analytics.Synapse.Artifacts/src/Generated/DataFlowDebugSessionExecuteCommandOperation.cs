@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Analytics.Synapse.Artifacts
 {
     /// <summary> Execute a data flow debug command. </summary>
-    public partial class DataFlowDebugSessionExecuteCommandOperation : Operation<DataFlowDebugCommandResponse>, IOperationSource<DataFlowDebugCommandResponse>
+    public partial class DataFlowDebugSessionExecuteCommandOperation : Operation<DataFlowDebugCommandResponse>, Core.IOperationSource<DataFlowDebugCommandResponse>
     {
         private readonly OperationInternal<DataFlowDebugCommandResponse> _operation;
 
@@ -67,13 +67,13 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <inheritdoc />
         public override ValueTask<Response<DataFlowDebugCommandResponse>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        DataFlowDebugCommandResponse IOperationSource<DataFlowDebugCommandResponse>.CreateResult(Response response, CancellationToken cancellationToken)
+        DataFlowDebugCommandResponse Core.IOperationSource<DataFlowDebugCommandResponse>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return DataFlowDebugCommandResponse.DeserializeDataFlowDebugCommandResponse(document.RootElement);
         }
 
-        async ValueTask<DataFlowDebugCommandResponse> IOperationSource<DataFlowDebugCommandResponse>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DataFlowDebugCommandResponse> Core.IOperationSource<DataFlowDebugCommandResponse>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return DataFlowDebugCommandResponse.DeserializeDataFlowDebugCommandResponse(document.RootElement);

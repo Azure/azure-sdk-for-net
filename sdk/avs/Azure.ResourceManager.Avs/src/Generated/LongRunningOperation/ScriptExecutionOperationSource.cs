@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Avs
 {
-    internal class ScriptExecutionOperationSource : IOperationSource<ScriptExecutionResource>
+    internal class ScriptExecutionOperationSource : Core.IOperationSource<ScriptExecutionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Avs
             _client = client;
         }
 
-        ScriptExecutionResource IOperationSource<ScriptExecutionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ScriptExecutionResource Core.IOperationSource<ScriptExecutionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ScriptExecutionData.DeserializeScriptExecutionData(document.RootElement);
             return new ScriptExecutionResource(_client, data);
         }
 
-        async ValueTask<ScriptExecutionResource> IOperationSource<ScriptExecutionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ScriptExecutionResource> Core.IOperationSource<ScriptExecutionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ScriptExecutionData.DeserializeScriptExecutionData(document.RootElement);

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Avs
 {
-    internal class WorkloadNetworkDnsServiceOperationSource : IOperationSource<WorkloadNetworkDnsServiceResource>
+    internal class WorkloadNetworkDnsServiceOperationSource : Core.IOperationSource<WorkloadNetworkDnsServiceResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Avs
             _client = client;
         }
 
-        WorkloadNetworkDnsServiceResource IOperationSource<WorkloadNetworkDnsServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        WorkloadNetworkDnsServiceResource Core.IOperationSource<WorkloadNetworkDnsServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = WorkloadNetworkDnsServiceData.DeserializeWorkloadNetworkDnsServiceData(document.RootElement);
             return new WorkloadNetworkDnsServiceResource(_client, data);
         }
 
-        async ValueTask<WorkloadNetworkDnsServiceResource> IOperationSource<WorkloadNetworkDnsServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<WorkloadNetworkDnsServiceResource> Core.IOperationSource<WorkloadNetworkDnsServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = WorkloadNetworkDnsServiceData.DeserializeWorkloadNetworkDnsServiceData(document.RootElement);

@@ -14,15 +14,15 @@ using Azure.ResourceManager.PostgreSql.Models;
 
 namespace Azure.ResourceManager.PostgreSql
 {
-    internal class PostgreSqlConfigurationListOperationSource : IOperationSource<PostgreSqlConfigurationList>
+    internal class PostgreSqlConfigurationListOperationSource : Core.IOperationSource<PostgreSqlConfigurationList>
     {
-        PostgreSqlConfigurationList IOperationSource<PostgreSqlConfigurationList>.CreateResult(Response response, CancellationToken cancellationToken)
+        PostgreSqlConfigurationList Core.IOperationSource<PostgreSqlConfigurationList>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return PostgreSqlConfigurationList.DeserializePostgreSqlConfigurationList(document.RootElement);
         }
 
-        async ValueTask<PostgreSqlConfigurationList> IOperationSource<PostgreSqlConfigurationList>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PostgreSqlConfigurationList> Core.IOperationSource<PostgreSqlConfigurationList>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return PostgreSqlConfigurationList.DeserializePostgreSqlConfigurationList(document.RootElement);

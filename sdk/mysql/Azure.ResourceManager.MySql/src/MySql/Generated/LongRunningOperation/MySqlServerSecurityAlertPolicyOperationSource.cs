@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MySql
 {
-    internal class MySqlServerSecurityAlertPolicyOperationSource : IOperationSource<MySqlServerSecurityAlertPolicyResource>
+    internal class MySqlServerSecurityAlertPolicyOperationSource : Core.IOperationSource<MySqlServerSecurityAlertPolicyResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.MySql
             _client = client;
         }
 
-        MySqlServerSecurityAlertPolicyResource IOperationSource<MySqlServerSecurityAlertPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        MySqlServerSecurityAlertPolicyResource Core.IOperationSource<MySqlServerSecurityAlertPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = MySqlServerSecurityAlertPolicyData.DeserializeMySqlServerSecurityAlertPolicyData(document.RootElement);
             return new MySqlServerSecurityAlertPolicyResource(_client, data);
         }
 
-        async ValueTask<MySqlServerSecurityAlertPolicyResource> IOperationSource<MySqlServerSecurityAlertPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<MySqlServerSecurityAlertPolicyResource> Core.IOperationSource<MySqlServerSecurityAlertPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = MySqlServerSecurityAlertPolicyData.DeserializeMySqlServerSecurityAlertPolicyData(document.RootElement);

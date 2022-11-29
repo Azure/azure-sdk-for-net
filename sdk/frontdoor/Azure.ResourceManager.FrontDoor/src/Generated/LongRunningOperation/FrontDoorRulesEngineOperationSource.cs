@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.FrontDoor
 {
-    internal class FrontDoorRulesEngineOperationSource : IOperationSource<FrontDoorRulesEngineResource>
+    internal class FrontDoorRulesEngineOperationSource : Core.IOperationSource<FrontDoorRulesEngineResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.FrontDoor
             _client = client;
         }
 
-        FrontDoorRulesEngineResource IOperationSource<FrontDoorRulesEngineResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        FrontDoorRulesEngineResource Core.IOperationSource<FrontDoorRulesEngineResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = FrontDoorRulesEngineData.DeserializeFrontDoorRulesEngineData(document.RootElement);
             return new FrontDoorRulesEngineResource(_client, data);
         }
 
-        async ValueTask<FrontDoorRulesEngineResource> IOperationSource<FrontDoorRulesEngineResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<FrontDoorRulesEngineResource> Core.IOperationSource<FrontDoorRulesEngineResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = FrontDoorRulesEngineData.DeserializeFrontDoorRulesEngineData(document.RootElement);

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
-    internal class ContainerRegistryWebhookOperationSource : IOperationSource<ContainerRegistryWebhookResource>
+    internal class ContainerRegistryWebhookOperationSource : Core.IOperationSource<ContainerRegistryWebhookResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ContainerRegistry
             _client = client;
         }
 
-        ContainerRegistryWebhookResource IOperationSource<ContainerRegistryWebhookResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ContainerRegistryWebhookResource Core.IOperationSource<ContainerRegistryWebhookResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ContainerRegistryWebhookData.DeserializeContainerRegistryWebhookData(document.RootElement);
             return new ContainerRegistryWebhookResource(_client, data);
         }
 
-        async ValueTask<ContainerRegistryWebhookResource> IOperationSource<ContainerRegistryWebhookResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ContainerRegistryWebhookResource> Core.IOperationSource<ContainerRegistryWebhookResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ContainerRegistryWebhookData.DeserializeContainerRegistryWebhookData(document.RootElement);

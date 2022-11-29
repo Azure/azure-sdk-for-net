@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class ManagedInstanceAzureADOnlyAuthenticationOperationSource : IOperationSource<ManagedInstanceAzureADOnlyAuthenticationResource>
+    internal class ManagedInstanceAzureADOnlyAuthenticationOperationSource : Core.IOperationSource<ManagedInstanceAzureADOnlyAuthenticationResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        ManagedInstanceAzureADOnlyAuthenticationResource IOperationSource<ManagedInstanceAzureADOnlyAuthenticationResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ManagedInstanceAzureADOnlyAuthenticationResource Core.IOperationSource<ManagedInstanceAzureADOnlyAuthenticationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ManagedInstanceAzureADOnlyAuthenticationData.DeserializeManagedInstanceAzureADOnlyAuthenticationData(document.RootElement);
             return new ManagedInstanceAzureADOnlyAuthenticationResource(_client, data);
         }
 
-        async ValueTask<ManagedInstanceAzureADOnlyAuthenticationResource> IOperationSource<ManagedInstanceAzureADOnlyAuthenticationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ManagedInstanceAzureADOnlyAuthenticationResource> Core.IOperationSource<ManagedInstanceAzureADOnlyAuthenticationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ManagedInstanceAzureADOnlyAuthenticationData.DeserializeManagedInstanceAzureADOnlyAuthenticationData(document.RootElement);

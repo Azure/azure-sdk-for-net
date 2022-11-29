@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Grafana
 {
-    internal class GrafanaPrivateEndpointConnectionOperationSource : IOperationSource<GrafanaPrivateEndpointConnectionResource>
+    internal class GrafanaPrivateEndpointConnectionOperationSource : Core.IOperationSource<GrafanaPrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Grafana
             _client = client;
         }
 
-        GrafanaPrivateEndpointConnectionResource IOperationSource<GrafanaPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        GrafanaPrivateEndpointConnectionResource Core.IOperationSource<GrafanaPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = GrafanaPrivateEndpointConnectionData.DeserializeGrafanaPrivateEndpointConnectionData(document.RootElement);
             return new GrafanaPrivateEndpointConnectionResource(_client, data);
         }
 
-        async ValueTask<GrafanaPrivateEndpointConnectionResource> IOperationSource<GrafanaPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<GrafanaPrivateEndpointConnectionResource> Core.IOperationSource<GrafanaPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = GrafanaPrivateEndpointConnectionData.DeserializeGrafanaPrivateEndpointConnectionData(document.RootElement);

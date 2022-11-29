@@ -14,15 +14,15 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    internal class NotificationStatusOperationSource : IOperationSource<NotificationStatus>
+    internal class NotificationStatusOperationSource : Core.IOperationSource<NotificationStatus>
     {
-        NotificationStatus IOperationSource<NotificationStatus>.CreateResult(Response response, CancellationToken cancellationToken)
+        NotificationStatus Core.IOperationSource<NotificationStatus>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return NotificationStatus.DeserializeNotificationStatus(document.RootElement);
         }
 
-        async ValueTask<NotificationStatus> IOperationSource<NotificationStatus>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NotificationStatus> Core.IOperationSource<NotificationStatus>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return NotificationStatus.DeserializeNotificationStatus(document.RootElement);

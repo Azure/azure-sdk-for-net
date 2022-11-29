@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Synapse
 {
-    internal class RestorePointOperationSource : IOperationSource<RestorePointResource>
+    internal class RestorePointOperationSource : Core.IOperationSource<RestorePointResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Synapse
             _client = client;
         }
 
-        RestorePointResource IOperationSource<RestorePointResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        RestorePointResource Core.IOperationSource<RestorePointResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = RestorePointData.DeserializeRestorePointData(document.RootElement);
             return new RestorePointResource(_client, data);
         }
 
-        async ValueTask<RestorePointResource> IOperationSource<RestorePointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<RestorePointResource> Core.IOperationSource<RestorePointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = RestorePointData.DeserializeRestorePointData(document.RootElement);

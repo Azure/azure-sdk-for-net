@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    internal class ConnectedEnvironmentOperationSource : IOperationSource<ConnectedEnvironmentResource>
+    internal class ConnectedEnvironmentOperationSource : Core.IOperationSource<ConnectedEnvironmentResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.AppContainers
             _client = client;
         }
 
-        ConnectedEnvironmentResource IOperationSource<ConnectedEnvironmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ConnectedEnvironmentResource Core.IOperationSource<ConnectedEnvironmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ConnectedEnvironmentData.DeserializeConnectedEnvironmentData(document.RootElement);
             return new ConnectedEnvironmentResource(_client, data);
         }
 
-        async ValueTask<ConnectedEnvironmentResource> IOperationSource<ConnectedEnvironmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ConnectedEnvironmentResource> Core.IOperationSource<ConnectedEnvironmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ConnectedEnvironmentData.DeserializeConnectedEnvironmentData(document.RootElement);

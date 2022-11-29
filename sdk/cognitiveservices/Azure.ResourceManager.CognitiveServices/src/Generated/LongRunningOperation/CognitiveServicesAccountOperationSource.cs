@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
-    internal class CognitiveServicesAccountOperationSource : IOperationSource<CognitiveServicesAccountResource>
+    internal class CognitiveServicesAccountOperationSource : Core.IOperationSource<CognitiveServicesAccountResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.CognitiveServices
             _client = client;
         }
 
-        CognitiveServicesAccountResource IOperationSource<CognitiveServicesAccountResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        CognitiveServicesAccountResource Core.IOperationSource<CognitiveServicesAccountResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CognitiveServicesAccountData.DeserializeCognitiveServicesAccountData(document.RootElement);
             return new CognitiveServicesAccountResource(_client, data);
         }
 
-        async ValueTask<CognitiveServicesAccountResource> IOperationSource<CognitiveServicesAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CognitiveServicesAccountResource> Core.IOperationSource<CognitiveServicesAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CognitiveServicesAccountData.DeserializeCognitiveServicesAccountData(document.RootElement);

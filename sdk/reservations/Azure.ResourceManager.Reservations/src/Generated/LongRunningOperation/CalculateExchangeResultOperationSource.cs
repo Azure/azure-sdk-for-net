@@ -14,15 +14,15 @@ using Azure.ResourceManager.Reservations.Models;
 
 namespace Azure.ResourceManager.Reservations
 {
-    internal class CalculateExchangeResultOperationSource : IOperationSource<CalculateExchangeResult>
+    internal class CalculateExchangeResultOperationSource : Core.IOperationSource<CalculateExchangeResult>
     {
-        CalculateExchangeResult IOperationSource<CalculateExchangeResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        CalculateExchangeResult Core.IOperationSource<CalculateExchangeResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return CalculateExchangeResult.DeserializeCalculateExchangeResult(document.RootElement);
         }
 
-        async ValueTask<CalculateExchangeResult> IOperationSource<CalculateExchangeResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CalculateExchangeResult> Core.IOperationSource<CalculateExchangeResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return CalculateExchangeResult.DeserializeCalculateExchangeResult(document.RootElement);

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.LoadTesting
 {
-    internal class LoadTestingOperationSource : IOperationSource<LoadTestingResource>
+    internal class LoadTestingOperationSource : Core.IOperationSource<LoadTestingResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.LoadTesting
             _client = client;
         }
 
-        LoadTestingResource IOperationSource<LoadTestingResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        LoadTestingResource Core.IOperationSource<LoadTestingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = LoadTestingData.DeserializeLoadTestingData(document.RootElement);
             return new LoadTestingResource(_client, data);
         }
 
-        async ValueTask<LoadTestingResource> IOperationSource<LoadTestingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<LoadTestingResource> Core.IOperationSource<LoadTestingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = LoadTestingData.DeserializeLoadTestingData(document.RootElement);

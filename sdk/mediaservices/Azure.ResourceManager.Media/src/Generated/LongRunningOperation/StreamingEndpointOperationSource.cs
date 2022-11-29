@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Media
 {
-    internal class StreamingEndpointOperationSource : IOperationSource<StreamingEndpointResource>
+    internal class StreamingEndpointOperationSource : Core.IOperationSource<StreamingEndpointResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Media
             _client = client;
         }
 
-        StreamingEndpointResource IOperationSource<StreamingEndpointResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        StreamingEndpointResource Core.IOperationSource<StreamingEndpointResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = StreamingEndpointData.DeserializeStreamingEndpointData(document.RootElement);
             return new StreamingEndpointResource(_client, data);
         }
 
-        async ValueTask<StreamingEndpointResource> IOperationSource<StreamingEndpointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<StreamingEndpointResource> Core.IOperationSource<StreamingEndpointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = StreamingEndpointData.DeserializeStreamingEndpointData(document.RootElement);

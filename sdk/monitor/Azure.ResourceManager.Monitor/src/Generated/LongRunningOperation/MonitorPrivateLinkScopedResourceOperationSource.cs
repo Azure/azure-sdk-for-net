@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Monitor
 {
-    internal class MonitorPrivateLinkScopedResourceOperationSource : IOperationSource<MonitorPrivateLinkScopedResource>
+    internal class MonitorPrivateLinkScopedResourceOperationSource : Core.IOperationSource<MonitorPrivateLinkScopedResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Monitor
             _client = client;
         }
 
-        MonitorPrivateLinkScopedResource IOperationSource<MonitorPrivateLinkScopedResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        MonitorPrivateLinkScopedResource Core.IOperationSource<MonitorPrivateLinkScopedResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = MonitorPrivateLinkScopedResourceData.DeserializeMonitorPrivateLinkScopedResourceData(document.RootElement);
             return new MonitorPrivateLinkScopedResource(_client, data);
         }
 
-        async ValueTask<MonitorPrivateLinkScopedResource> IOperationSource<MonitorPrivateLinkScopedResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<MonitorPrivateLinkScopedResource> Core.IOperationSource<MonitorPrivateLinkScopedResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = MonitorPrivateLinkScopedResourceData.DeserializeMonitorPrivateLinkScopedResourceData(document.RootElement);

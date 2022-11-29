@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    internal class ManagedEnvironmentOperationSource : IOperationSource<ManagedEnvironmentResource>
+    internal class ManagedEnvironmentOperationSource : Core.IOperationSource<ManagedEnvironmentResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.AppContainers
             _client = client;
         }
 
-        ManagedEnvironmentResource IOperationSource<ManagedEnvironmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ManagedEnvironmentResource Core.IOperationSource<ManagedEnvironmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ManagedEnvironmentData.DeserializeManagedEnvironmentData(document.RootElement);
             return new ManagedEnvironmentResource(_client, data);
         }
 
-        async ValueTask<ManagedEnvironmentResource> IOperationSource<ManagedEnvironmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ManagedEnvironmentResource> Core.IOperationSource<ManagedEnvironmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ManagedEnvironmentData.DeserializeManagedEnvironmentData(document.RootElement);

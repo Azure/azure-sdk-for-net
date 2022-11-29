@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataMigration
 {
-    internal class DatabaseMigrationSqlDBOperationSource : IOperationSource<DatabaseMigrationSqlDBResource>
+    internal class DatabaseMigrationSqlDBOperationSource : Core.IOperationSource<DatabaseMigrationSqlDBResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.DataMigration
             _client = client;
         }
 
-        DatabaseMigrationSqlDBResource IOperationSource<DatabaseMigrationSqlDBResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DatabaseMigrationSqlDBResource Core.IOperationSource<DatabaseMigrationSqlDBResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DatabaseMigrationSqlDBData.DeserializeDatabaseMigrationSqlDBData(document.RootElement);
             return new DatabaseMigrationSqlDBResource(_client, data);
         }
 
-        async ValueTask<DatabaseMigrationSqlDBResource> IOperationSource<DatabaseMigrationSqlDBResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DatabaseMigrationSqlDBResource> Core.IOperationSource<DatabaseMigrationSqlDBResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DatabaseMigrationSqlDBData.DeserializeDatabaseMigrationSqlDBData(document.RootElement);

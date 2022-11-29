@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources
 {
-    internal class ArmDeploymentScriptOperationSource : IOperationSource<ArmDeploymentScriptResource>
+    internal class ArmDeploymentScriptOperationSource : Core.IOperationSource<ArmDeploymentScriptResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Resources
             _client = client;
         }
 
-        ArmDeploymentScriptResource IOperationSource<ArmDeploymentScriptResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ArmDeploymentScriptResource Core.IOperationSource<ArmDeploymentScriptResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ArmDeploymentScriptData.DeserializeArmDeploymentScriptData(document.RootElement);
             return new ArmDeploymentScriptResource(_client, data);
         }
 
-        async ValueTask<ArmDeploymentScriptResource> IOperationSource<ArmDeploymentScriptResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ArmDeploymentScriptResource> Core.IOperationSource<ArmDeploymentScriptResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ArmDeploymentScriptData.DeserializeArmDeploymentScriptData(document.RootElement);

@@ -14,15 +14,15 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class P2SVpnConnectionHealthOperationSource : IOperationSource<P2SVpnConnectionHealth>
+    internal class P2SVpnConnectionHealthOperationSource : Core.IOperationSource<P2SVpnConnectionHealth>
     {
-        P2SVpnConnectionHealth IOperationSource<P2SVpnConnectionHealth>.CreateResult(Response response, CancellationToken cancellationToken)
+        P2SVpnConnectionHealth Core.IOperationSource<P2SVpnConnectionHealth>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return P2SVpnConnectionHealth.DeserializeP2SVpnConnectionHealth(document.RootElement);
         }
 
-        async ValueTask<P2SVpnConnectionHealth> IOperationSource<P2SVpnConnectionHealth>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<P2SVpnConnectionHealth> Core.IOperationSource<P2SVpnConnectionHealth>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return P2SVpnConnectionHealth.DeserializeP2SVpnConnectionHealth(document.RootElement);

@@ -14,15 +14,15 @@ using Azure.ResourceManager.DataProtectionBackup.Models;
 
 namespace Azure.ResourceManager.DataProtectionBackup
 {
-    internal class DataProtectionOperationJobExtendedInfoOperationSource : IOperationSource<DataProtectionOperationJobExtendedInfo>
+    internal class DataProtectionOperationJobExtendedInfoOperationSource : Core.IOperationSource<DataProtectionOperationJobExtendedInfo>
     {
-        DataProtectionOperationJobExtendedInfo IOperationSource<DataProtectionOperationJobExtendedInfo>.CreateResult(Response response, CancellationToken cancellationToken)
+        DataProtectionOperationJobExtendedInfo Core.IOperationSource<DataProtectionOperationJobExtendedInfo>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return DataProtectionOperationJobExtendedInfo.DeserializeDataProtectionOperationJobExtendedInfo(document.RootElement);
         }
 
-        async ValueTask<DataProtectionOperationJobExtendedInfo> IOperationSource<DataProtectionOperationJobExtendedInfo>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DataProtectionOperationJobExtendedInfo> Core.IOperationSource<DataProtectionOperationJobExtendedInfo>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return DataProtectionOperationJobExtendedInfo.DeserializeDataProtectionOperationJobExtendedInfo(document.RootElement);

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    internal class CatalogOperationSource : IOperationSource<CatalogResource>
+    internal class CatalogOperationSource : Core.IOperationSource<CatalogResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.DevCenter
             _client = client;
         }
 
-        CatalogResource IOperationSource<CatalogResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        CatalogResource Core.IOperationSource<CatalogResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CatalogData.DeserializeCatalogData(document.RootElement);
             return new CatalogResource(_client, data);
         }
 
-        async ValueTask<CatalogResource> IOperationSource<CatalogResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CatalogResource> Core.IOperationSource<CatalogResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CatalogData.DeserializeCatalogData(document.RootElement);

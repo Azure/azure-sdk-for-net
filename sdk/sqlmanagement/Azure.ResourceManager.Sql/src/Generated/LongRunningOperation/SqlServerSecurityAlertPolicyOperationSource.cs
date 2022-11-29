@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class SqlServerSecurityAlertPolicyOperationSource : IOperationSource<SqlServerSecurityAlertPolicyResource>
+    internal class SqlServerSecurityAlertPolicyOperationSource : Core.IOperationSource<SqlServerSecurityAlertPolicyResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        SqlServerSecurityAlertPolicyResource IOperationSource<SqlServerSecurityAlertPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SqlServerSecurityAlertPolicyResource Core.IOperationSource<SqlServerSecurityAlertPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SqlServerSecurityAlertPolicyData.DeserializeSqlServerSecurityAlertPolicyData(document.RootElement);
             return new SqlServerSecurityAlertPolicyResource(_client, data);
         }
 
-        async ValueTask<SqlServerSecurityAlertPolicyResource> IOperationSource<SqlServerSecurityAlertPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SqlServerSecurityAlertPolicyResource> Core.IOperationSource<SqlServerSecurityAlertPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SqlServerSecurityAlertPolicyData.DeserializeSqlServerSecurityAlertPolicyData(document.RootElement);

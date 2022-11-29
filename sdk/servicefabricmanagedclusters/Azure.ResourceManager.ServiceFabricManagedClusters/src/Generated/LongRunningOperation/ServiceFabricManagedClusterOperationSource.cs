@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
-    internal class ServiceFabricManagedClusterOperationSource : IOperationSource<ServiceFabricManagedClusterResource>
+    internal class ServiceFabricManagedClusterOperationSource : Core.IOperationSource<ServiceFabricManagedClusterResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             _client = client;
         }
 
-        ServiceFabricManagedClusterResource IOperationSource<ServiceFabricManagedClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ServiceFabricManagedClusterResource Core.IOperationSource<ServiceFabricManagedClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ServiceFabricManagedClusterData.DeserializeServiceFabricManagedClusterData(document.RootElement);
             return new ServiceFabricManagedClusterResource(_client, data);
         }
 
-        async ValueTask<ServiceFabricManagedClusterResource> IOperationSource<ServiceFabricManagedClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ServiceFabricManagedClusterResource> Core.IOperationSource<ServiceFabricManagedClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ServiceFabricManagedClusterData.DeserializeServiceFabricManagedClusterData(document.RootElement);

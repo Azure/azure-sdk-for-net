@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.PostgreSql
 {
-    internal class PostgreSqlPrivateEndpointConnectionOperationSource : IOperationSource<PostgreSqlPrivateEndpointConnectionResource>
+    internal class PostgreSqlPrivateEndpointConnectionOperationSource : Core.IOperationSource<PostgreSqlPrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.PostgreSql
             _client = client;
         }
 
-        PostgreSqlPrivateEndpointConnectionResource IOperationSource<PostgreSqlPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        PostgreSqlPrivateEndpointConnectionResource Core.IOperationSource<PostgreSqlPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = PostgreSqlPrivateEndpointConnectionData.DeserializePostgreSqlPrivateEndpointConnectionData(document.RootElement);
             return new PostgreSqlPrivateEndpointConnectionResource(_client, data);
         }
 
-        async ValueTask<PostgreSqlPrivateEndpointConnectionResource> IOperationSource<PostgreSqlPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PostgreSqlPrivateEndpointConnectionResource> Core.IOperationSource<PostgreSqlPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = PostgreSqlPrivateEndpointConnectionData.DeserializePostgreSqlPrivateEndpointConnectionData(document.RootElement);

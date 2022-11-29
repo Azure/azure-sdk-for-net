@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class ManagedRestorableDroppedDbBackupShortTermRetentionPolicyOperationSource : IOperationSource<ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource>
+    internal class ManagedRestorableDroppedDbBackupShortTermRetentionPolicyOperationSource : Core.IOperationSource<ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource IOperationSource<ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource Core.IOperationSource<ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ManagedBackupShortTermRetentionPolicyData.DeserializeManagedBackupShortTermRetentionPolicyData(document.RootElement);
             return new ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource(_client, data);
         }
 
-        async ValueTask<ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource> IOperationSource<ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource> Core.IOperationSource<ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ManagedBackupShortTermRetentionPolicyData.DeserializeManagedBackupShortTermRetentionPolicyData(document.RootElement);

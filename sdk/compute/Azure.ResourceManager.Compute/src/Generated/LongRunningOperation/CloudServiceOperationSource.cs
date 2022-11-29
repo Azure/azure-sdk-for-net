@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Compute
 {
-    internal class CloudServiceOperationSource : IOperationSource<CloudServiceResource>
+    internal class CloudServiceOperationSource : Core.IOperationSource<CloudServiceResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Compute
             _client = client;
         }
 
-        CloudServiceResource IOperationSource<CloudServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        CloudServiceResource Core.IOperationSource<CloudServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CloudServiceData.DeserializeCloudServiceData(document.RootElement);
             return new CloudServiceResource(_client, data);
         }
 
-        async ValueTask<CloudServiceResource> IOperationSource<CloudServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CloudServiceResource> Core.IOperationSource<CloudServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CloudServiceData.DeserializeCloudServiceData(document.RootElement);

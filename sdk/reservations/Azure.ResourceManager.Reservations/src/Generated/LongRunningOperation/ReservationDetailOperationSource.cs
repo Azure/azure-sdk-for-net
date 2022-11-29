@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Reservations
 {
-    internal class ReservationDetailOperationSource : IOperationSource<ReservationDetailResource>
+    internal class ReservationDetailOperationSource : Core.IOperationSource<ReservationDetailResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Reservations
             _client = client;
         }
 
-        ReservationDetailResource IOperationSource<ReservationDetailResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ReservationDetailResource Core.IOperationSource<ReservationDetailResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ReservationDetailData.DeserializeReservationDetailData(document.RootElement);
             return new ReservationDetailResource(_client, data);
         }
 
-        async ValueTask<ReservationDetailResource> IOperationSource<ReservationDetailResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ReservationDetailResource> Core.IOperationSource<ReservationDetailResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ReservationDetailData.DeserializeReservationDetailData(document.RootElement);

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class ExtendedServerBlobAuditingPolicyOperationSource : IOperationSource<ExtendedServerBlobAuditingPolicyResource>
+    internal class ExtendedServerBlobAuditingPolicyOperationSource : Core.IOperationSource<ExtendedServerBlobAuditingPolicyResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        ExtendedServerBlobAuditingPolicyResource IOperationSource<ExtendedServerBlobAuditingPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ExtendedServerBlobAuditingPolicyResource Core.IOperationSource<ExtendedServerBlobAuditingPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ExtendedServerBlobAuditingPolicyData.DeserializeExtendedServerBlobAuditingPolicyData(document.RootElement);
             return new ExtendedServerBlobAuditingPolicyResource(_client, data);
         }
 
-        async ValueTask<ExtendedServerBlobAuditingPolicyResource> IOperationSource<ExtendedServerBlobAuditingPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ExtendedServerBlobAuditingPolicyResource> Core.IOperationSource<ExtendedServerBlobAuditingPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ExtendedServerBlobAuditingPolicyData.DeserializeExtendedServerBlobAuditingPolicyData(document.RootElement);

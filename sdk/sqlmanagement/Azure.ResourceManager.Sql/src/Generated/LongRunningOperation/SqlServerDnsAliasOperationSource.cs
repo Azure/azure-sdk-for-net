@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class SqlServerDnsAliasOperationSource : IOperationSource<SqlServerDnsAliasResource>
+    internal class SqlServerDnsAliasOperationSource : Core.IOperationSource<SqlServerDnsAliasResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        SqlServerDnsAliasResource IOperationSource<SqlServerDnsAliasResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SqlServerDnsAliasResource Core.IOperationSource<SqlServerDnsAliasResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SqlServerDnsAliasData.DeserializeSqlServerDnsAliasData(document.RootElement);
             return new SqlServerDnsAliasResource(_client, data);
         }
 
-        async ValueTask<SqlServerDnsAliasResource> IOperationSource<SqlServerDnsAliasResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SqlServerDnsAliasResource> Core.IOperationSource<SqlServerDnsAliasResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SqlServerDnsAliasData.DeserializeSqlServerDnsAliasData(document.RootElement);

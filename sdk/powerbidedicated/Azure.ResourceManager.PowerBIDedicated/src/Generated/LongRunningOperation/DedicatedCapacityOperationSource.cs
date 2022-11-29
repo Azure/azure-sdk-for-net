@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.PowerBIDedicated
 {
-    internal class DedicatedCapacityOperationSource : IOperationSource<DedicatedCapacityResource>
+    internal class DedicatedCapacityOperationSource : Core.IOperationSource<DedicatedCapacityResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.PowerBIDedicated
             _client = client;
         }
 
-        DedicatedCapacityResource IOperationSource<DedicatedCapacityResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DedicatedCapacityResource Core.IOperationSource<DedicatedCapacityResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DedicatedCapacityData.DeserializeDedicatedCapacityData(document.RootElement);
             return new DedicatedCapacityResource(_client, data);
         }
 
-        async ValueTask<DedicatedCapacityResource> IOperationSource<DedicatedCapacityResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DedicatedCapacityResource> Core.IOperationSource<DedicatedCapacityResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DedicatedCapacityData.DeserializeDedicatedCapacityData(document.RootElement);

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MySql
 {
-    internal class MySqlPrivateEndpointConnectionOperationSource : IOperationSource<MySqlPrivateEndpointConnectionResource>
+    internal class MySqlPrivateEndpointConnectionOperationSource : Core.IOperationSource<MySqlPrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.MySql
             _client = client;
         }
 
-        MySqlPrivateEndpointConnectionResource IOperationSource<MySqlPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        MySqlPrivateEndpointConnectionResource Core.IOperationSource<MySqlPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = MySqlPrivateEndpointConnectionData.DeserializeMySqlPrivateEndpointConnectionData(document.RootElement);
             return new MySqlPrivateEndpointConnectionResource(_client, data);
         }
 
-        async ValueTask<MySqlPrivateEndpointConnectionResource> IOperationSource<MySqlPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<MySqlPrivateEndpointConnectionResource> Core.IOperationSource<MySqlPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = MySqlPrivateEndpointConnectionData.DeserializeMySqlPrivateEndpointConnectionData(document.RootElement);

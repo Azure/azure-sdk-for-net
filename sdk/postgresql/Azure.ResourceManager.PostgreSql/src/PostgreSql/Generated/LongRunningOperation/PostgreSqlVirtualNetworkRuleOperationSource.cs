@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.PostgreSql
 {
-    internal class PostgreSqlVirtualNetworkRuleOperationSource : IOperationSource<PostgreSqlVirtualNetworkRuleResource>
+    internal class PostgreSqlVirtualNetworkRuleOperationSource : Core.IOperationSource<PostgreSqlVirtualNetworkRuleResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.PostgreSql
             _client = client;
         }
 
-        PostgreSqlVirtualNetworkRuleResource IOperationSource<PostgreSqlVirtualNetworkRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        PostgreSqlVirtualNetworkRuleResource Core.IOperationSource<PostgreSqlVirtualNetworkRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = PostgreSqlVirtualNetworkRuleData.DeserializePostgreSqlVirtualNetworkRuleData(document.RootElement);
             return new PostgreSqlVirtualNetworkRuleResource(_client, data);
         }
 
-        async ValueTask<PostgreSqlVirtualNetworkRuleResource> IOperationSource<PostgreSqlVirtualNetworkRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PostgreSqlVirtualNetworkRuleResource> Core.IOperationSource<PostgreSqlVirtualNetworkRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = PostgreSqlVirtualNetworkRuleData.DeserializePostgreSqlVirtualNetworkRuleData(document.RootElement);

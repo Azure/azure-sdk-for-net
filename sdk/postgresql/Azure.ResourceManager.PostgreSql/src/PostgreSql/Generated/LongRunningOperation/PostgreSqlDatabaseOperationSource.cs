@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.PostgreSql
 {
-    internal class PostgreSqlDatabaseOperationSource : IOperationSource<PostgreSqlDatabaseResource>
+    internal class PostgreSqlDatabaseOperationSource : Core.IOperationSource<PostgreSqlDatabaseResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.PostgreSql
             _client = client;
         }
 
-        PostgreSqlDatabaseResource IOperationSource<PostgreSqlDatabaseResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        PostgreSqlDatabaseResource Core.IOperationSource<PostgreSqlDatabaseResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = PostgreSqlDatabaseData.DeserializePostgreSqlDatabaseData(document.RootElement);
             return new PostgreSqlDatabaseResource(_client, data);
         }
 
-        async ValueTask<PostgreSqlDatabaseResource> IOperationSource<PostgreSqlDatabaseResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PostgreSqlDatabaseResource> Core.IOperationSource<PostgreSqlDatabaseResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = PostgreSqlDatabaseData.DeserializePostgreSqlDatabaseData(document.RootElement);

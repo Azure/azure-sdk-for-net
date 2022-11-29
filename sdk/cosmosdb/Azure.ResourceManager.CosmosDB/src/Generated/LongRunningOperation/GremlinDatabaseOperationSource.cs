@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal class GremlinDatabaseOperationSource : IOperationSource<GremlinDatabaseResource>
+    internal class GremlinDatabaseOperationSource : Core.IOperationSource<GremlinDatabaseResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.CosmosDB
             _client = client;
         }
 
-        GremlinDatabaseResource IOperationSource<GremlinDatabaseResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        GremlinDatabaseResource Core.IOperationSource<GremlinDatabaseResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = GremlinDatabaseData.DeserializeGremlinDatabaseData(document.RootElement);
             return new GremlinDatabaseResource(_client, data);
         }
 
-        async ValueTask<GremlinDatabaseResource> IOperationSource<GremlinDatabaseResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<GremlinDatabaseResource> Core.IOperationSource<GremlinDatabaseResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = GremlinDatabaseData.DeserializeGremlinDatabaseData(document.RootElement);

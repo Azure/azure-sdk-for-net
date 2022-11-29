@@ -14,15 +14,15 @@ using Azure.ResourceManager.Hci.Models;
 
 namespace Azure.ResourceManager.Hci
 {
-    internal class ArcIdentityResultOperationSource : IOperationSource<ArcIdentityResult>
+    internal class ArcIdentityResultOperationSource : Core.IOperationSource<ArcIdentityResult>
     {
-        ArcIdentityResult IOperationSource<ArcIdentityResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        ArcIdentityResult Core.IOperationSource<ArcIdentityResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return ArcIdentityResult.DeserializeArcIdentityResult(document.RootElement);
         }
 
-        async ValueTask<ArcIdentityResult> IOperationSource<ArcIdentityResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ArcIdentityResult> Core.IOperationSource<ArcIdentityResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return ArcIdentityResult.DeserializeArcIdentityResult(document.RootElement);

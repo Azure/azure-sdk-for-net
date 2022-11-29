@@ -14,15 +14,15 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
-    internal class VaultHealthDetailsOperationSource : IOperationSource<VaultHealthDetails>
+    internal class VaultHealthDetailsOperationSource : Core.IOperationSource<VaultHealthDetails>
     {
-        VaultHealthDetails IOperationSource<VaultHealthDetails>.CreateResult(Response response, CancellationToken cancellationToken)
+        VaultHealthDetails Core.IOperationSource<VaultHealthDetails>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return VaultHealthDetails.DeserializeVaultHealthDetails(document.RootElement);
         }
 
-        async ValueTask<VaultHealthDetails> IOperationSource<VaultHealthDetails>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VaultHealthDetails> Core.IOperationSource<VaultHealthDetails>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return VaultHealthDetails.DeserializeVaultHealthDetails(document.RootElement);

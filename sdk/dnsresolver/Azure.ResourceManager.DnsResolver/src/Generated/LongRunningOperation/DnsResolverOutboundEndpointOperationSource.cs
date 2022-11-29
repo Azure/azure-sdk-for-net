@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DnsResolver
 {
-    internal class DnsResolverOutboundEndpointOperationSource : IOperationSource<DnsResolverOutboundEndpointResource>
+    internal class DnsResolverOutboundEndpointOperationSource : Core.IOperationSource<DnsResolverOutboundEndpointResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.DnsResolver
             _client = client;
         }
 
-        DnsResolverOutboundEndpointResource IOperationSource<DnsResolverOutboundEndpointResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DnsResolverOutboundEndpointResource Core.IOperationSource<DnsResolverOutboundEndpointResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DnsResolverOutboundEndpointData.DeserializeDnsResolverOutboundEndpointData(document.RootElement);
             return new DnsResolverOutboundEndpointResource(_client, data);
         }
 
-        async ValueTask<DnsResolverOutboundEndpointResource> IOperationSource<DnsResolverOutboundEndpointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DnsResolverOutboundEndpointResource> Core.IOperationSource<DnsResolverOutboundEndpointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DnsResolverOutboundEndpointData.DeserializeDnsResolverOutboundEndpointData(document.RootElement);
