@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Initializes a new instance of MongoDBPrivilegeResourceInfo. </summary>
-        /// <param name="db"> The database name the role is applied. </param>
+        /// <param name="dbName"> The database name the role is applied. </param>
         /// <param name="collection"> The collection name the role is applied. </param>
-        internal MongoDBPrivilegeResourceInfo(string db, string collection)
+        internal MongoDBPrivilegeResourceInfo(string dbName, string collection)
         {
-            DB = db;
+            DBName = dbName;
             Collection = collection;
         }
 
         /// <summary> The database name the role is applied. </summary>
-        public string DB { get; set; }
+        public string DBName { get; set; }
         /// <summary> The collection name the role is applied. </summary>
         public string Collection { get; set; }
     }

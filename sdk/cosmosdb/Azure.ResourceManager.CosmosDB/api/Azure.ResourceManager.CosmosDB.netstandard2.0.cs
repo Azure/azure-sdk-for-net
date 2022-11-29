@@ -2904,12 +2904,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         public MongoDBPrivilegeResourceInfo() { }
         public string Collection { get { throw null; } set { } }
-        public string DB { get { throw null; } set { } }
+        public string DBName { get { throw null; } set { } }
     }
     public partial class MongoDBRole
     {
         public MongoDBRole() { }
-        public string DB { get { throw null; } set { } }
+        public string DBName { get { throw null; } set { } }
         public string Role { get { throw null; } set { } }
     }
     public partial class MongoDBRoleDefinitionCreateOrUpdateContent

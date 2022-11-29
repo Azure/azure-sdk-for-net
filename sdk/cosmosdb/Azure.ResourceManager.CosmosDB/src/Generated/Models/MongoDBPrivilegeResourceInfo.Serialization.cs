@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DB))
+            if (Optional.IsDefined(DBName))
             {
                 writer.WritePropertyName("db");
-                writer.WriteStringValue(DB);
+                writer.WriteStringValue(DBName);
             }
             if (Optional.IsDefined(Collection))
             {
