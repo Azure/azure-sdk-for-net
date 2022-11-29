@@ -27,17 +27,10 @@ directive:
   where: $.parameters.Endpoint
   transform: $.format = "url";
 ```
-### Updates default parameter contentEncoding value from null to gzip in Upload method
+### Updates description parameter for contentEncoding in Upload method
 ``` yaml
 directive:
 - from: swagger-document
   where: $.paths["/dataCollectionRules/{ruleId}/streams/{stream}"].post.parameters[3]
-  transform: $["x-ms-client-default"] = "gzip";
-```
-### Update auto-generated Upload/UploadAsync methods to internal
-``` yaml
-directive:
-- from: swagger-document
-  where: $.paths["/dataCollectionRules/{ruleId}/streams/{stream}"].post
-  transform: $['x-accessibility'] = "internal";
+  transform: $["description"] = "The ContentEncoding of the content. If content is gzipped, put \"gzip\". Default value is null.";
 ```

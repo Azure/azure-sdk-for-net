@@ -14,8 +14,6 @@ namespace Azure.Monitor.Ingestion
 {
     /// <summary> The IngestionUsingDataCollectionRules service client. </summary>
     [CodeGenClient("IngestionUsingDataCollectionRulesClient")]
-    [CodeGenSuppress("Upload", typeof(string), typeof(string), typeof(RequestContent), typeof(string), typeof(RequestContext))]
-    [CodeGenSuppress("UploadAsync", typeof(string), typeof(string), typeof(RequestContent), typeof(string), typeof(RequestContext))]
     public partial class LogsIngestionClient
     {
         /// <summary> Initializes a new instance of LogsIngestionClient for mocking. </summary>
@@ -47,7 +45,7 @@ namespace Azure.Monitor.Ingestion
             public BinaryData LogsData { get; }
         }
 
-        internal HttpMessage CreateUploadRequest(string ruleId, string streamName, RequestContent content, string contentEncoding = "gzip", RequestContext context = null)
+        internal HttpMessage CreateUploadRequest(string ruleId, string streamName, RequestContent content, string contentEncoding = null, RequestContext context = null)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
@@ -66,8 +64,9 @@ namespace Azure.Monitor.Ingestion
             {
                 request.Headers.Add("Content-Encoding", contentEncoding);
             }
-            if (contentEncoding == "gzip")
+            else if (contentEncoding == null)
             {
+                request.Headers.Add("Content-Encoding", "gzip");
                 GZipUtf8JsonRequestContent gzContent = new(content);
                 request.Content = gzContent;
             }
@@ -402,119 +401,6 @@ namespace Azure.Monitor.Ingestion
         {
             exceptions ??= new List<Exception>();
             exceptions.Add(ex);
-        }
-
-        /// <summary> Ingestion API used to directly ingest data using Data Collection Rules. </summary>
-        /// <param name="ruleId"> The immutable Id of the Data Collection Rule resource. </param>
-        /// <param name="streamName"> The streamDeclaration name as defined in the Data Collection Rule. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/>, <paramref name="streamName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> or <paramref name="streamName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call UploadAsync with required parameters and request content.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new LogsIngestionClient(endpoint, credential);
-        ///
-        /// var data = new[] {
-        ///     new {}
-        /// };
-        ///
-        /// Response response = await client.UploadAsync("<ruleId>", "<streamName>", RequestContent.Create(data));
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// This sample shows how to call UploadAsync with all parameters and request content.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new LogsIngestionClient(endpoint, credential);
-        ///
-        /// var data = new[] {
-        ///     new {}
-        /// };
-        ///
-        /// Response response = await client.UploadAsync("<ruleId>", "<streamName>", RequestContent.Create(data), <gzip>);
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
-        /// <remarks> See error response code and error response message for more detail. </remarks>
-        public virtual async Task<Response> UploadAsync(string ruleId, string streamName, RequestContent content, RequestContext context = null)
-        {
-            return await UploadRequestContentAsync(ruleId, streamName, content, true, context).ConfigureAwait(false);
-        }
-
-        /// <summary> Ingestion API used to directly ingest data using Data Collection Rules. </summary>
-        /// <param name="ruleId"> The immutable Id of the Data Collection Rule resource. </param>
-        /// <param name="streamName"> The streamDeclaration name as defined in the Data Collection Rule. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/>, <paramref name="streamName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> or <paramref name="streamName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call Upload with required parameters and request content.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new LogsIngestionClient(endpoint, credential);
-        ///
-        /// var data = new[] {
-        ///     new {}
-        /// };
-        ///
-        /// Response response = client.Upload("<ruleId>", "<streamName>", RequestContent.Create(data));
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// This sample shows how to call Upload with all parameters and request content.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new LogsIngestionClient(endpoint, credential);
-        ///
-        /// var data = new[] {
-        ///     new {}
-        /// };
-        ///
-        /// Response response = client.Upload("<ruleId>", "<streamName>", RequestContent.Create(data), <gzip>);
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
-        /// <remarks> See error response code and error response message for more detail. </remarks>
-        public virtual Response Upload(string ruleId, string streamName, RequestContent content, RequestContext context = null)
-        {
-            return UploadRequestContentAsync(ruleId, streamName, content, false, context).EnsureCompleted();
-        }
-
-        internal virtual async Task<Response> UploadRequestContentAsync(string ruleId, string streamName, RequestContent content, bool async, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
-            Argument.AssertNotNullOrEmpty(streamName, nameof(streamName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("LogsIngestionClient.Upload");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateUploadRequest(ruleId, streamName, content, "gzip", context);
-                if (async)
-                {
-                    return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                }
-                else
-                {
-                    return _pipeline.ProcessMessage(message, context);
-                }
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
         }
     }
 }
