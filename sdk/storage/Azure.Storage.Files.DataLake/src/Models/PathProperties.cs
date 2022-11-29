@@ -184,6 +184,11 @@ namespace Azure.Storage.Files.DataLake.Models
         public string EncryptionScope { get; internal set; }
 
         /// <summary>
+        /// Encryption context for this path.  Only applicable for files.
+        /// </summary>
+        public string EncryptionContext { get; internal set; }
+
+        /// <summary>
         /// If this path represents a directory.
         /// </summary>
         public bool IsDirectory

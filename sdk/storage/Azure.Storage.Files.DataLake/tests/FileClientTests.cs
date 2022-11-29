@@ -692,8 +692,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await file.CreateAsync(options);
 
-            // Assert
-            await file.GetPropertiesAsync();
+            // Assert.  We are also going to test GetProperties(), Read(), and GetPaths() with this test.
+            Response<PathProperties> pathProperties = await file.GetPropertiesAsync();
+            Assert.AreEqual(encryptionContext, pathProperties.Value.EncryptionContext);
         }
 
         [RecordedTest]
@@ -759,6 +760,29 @@ namespace Azure.Storage.Files.DataLake.Tests
             Response<PathProperties> response = await file.GetPropertiesAsync();
             Assert.IsTrue(response.Value.IsServerEncrypted);
             Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2021_04_10)]
+        public async Task CreateIfNotExists_EncryptionContext()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
+
+            string encryptionContext = "encryptionContext";
+            DataLakePathCreateOptions options = new DataLakePathCreateOptions
+            {
+                EncryptionContext = encryptionContext
+            };
+
+            // Act
+            await file.CreateIfNotExistsAsync(options);
+
+            // Assert
+            Response<PathProperties> pathProperties = await file.GetPropertiesAsync();
+            Assert.AreEqual(encryptionContext, pathProperties.Value.EncryptionContext);
         }
 
         [RecordedTest]
