@@ -3,8 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading;
-using Azure.AI.TextAnalytics.Models;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
