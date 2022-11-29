@@ -263,6 +263,5 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
                 this.Result = blobData;
             }
         }
-
     }
 }
