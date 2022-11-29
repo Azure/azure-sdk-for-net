@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public bool? ForceCmkForQuery { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.DateTimeOffset? ModifiedOn { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.OperationalInsights.Models.PrivateLinkScopedResourceInfo> PrivateLinkScopedResources { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPrivateLinkScopedResourceInfo> PrivateLinkScopedResources { get { throw null; } }
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceEntityStatus? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPublicNetworkAccessType? PublicNetworkAccessForIngestion { get { throw null; } set { } }
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPublicNetworkAccessType? PublicNetworkAccessForQuery { get { throw null; } set { } }
@@ -908,6 +908,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public string LocalizedValue { get { throw null; } }
         public string Value { get { throw null; } }
     }
+    public partial class OperationalInsightsPrivateLinkScopedResourceInfo
+    {
+        internal OperationalInsightsPrivateLinkScopedResourceInfo() { }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
+        public string ScopeId { get { throw null; } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct OperationalInsightsPublicNetworkAccessType : System.IEquatable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPublicNetworkAccessType>
     {
@@ -1179,7 +1185,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public bool? ForceCmkForQuery { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.DateTimeOffset? ModifiedOn { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.OperationalInsights.Models.PrivateLinkScopedResourceInfo> PrivateLinkScopedResources { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPrivateLinkScopedResourceInfo> PrivateLinkScopedResources { get { throw null; } }
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceEntityStatus? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPublicNetworkAccessType? PublicNetworkAccessForIngestion { get { throw null; } set { } }
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPublicNetworkAccessType? PublicNetworkAccessForQuery { get { throw null; } set { } }
@@ -1266,12 +1272,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSkuName (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSkuName left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSkuName right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class PrivateLinkScopedResourceInfo
-    {
-        internal PrivateLinkScopedResourceInfo() { }
-        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
-        public string ScopeId { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RetentionInDaysAsDefaultState : System.IEquatable<Azure.ResourceManager.OperationalInsights.Models.RetentionInDaysAsDefaultState>

@@ -106,7 +106,7 @@ rename-mapping:
   WorkspaceFeatures.disableLocalAuth: IsLocalAuthDisabled
   WorkspaceFeatures.enableDataExport: IsDataExportEnabled
   WorkspaceFeatures.enableLogAccessUsingOnlyResourcePermissions: IsLogAccessUsingOnlyResourcePermissionsEnabled
-  PrivateLinkScopedResource: PrivateLinkScopedResourceInfo
+  PrivateLinkScopedResource: OperationalInsightsPrivateLinkScopedResourceInfo
   LogAnalyticsQueryPack.properties.timeCreated: CreatedOn
   LogAnalyticsQueryPack.properties.timeModified: ModifiedOn
   LogAnalyticsQueryPackQuery.properties.id: ApplicationId|uuid

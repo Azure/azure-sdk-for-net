@@ -10,17 +10,17 @@ using Azure.Core;
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     /// <summary> The private link scope resource reference. </summary>
-    public partial class PrivateLinkScopedResourceInfo
+    public partial class OperationalInsightsPrivateLinkScopedResourceInfo
     {
-        /// <summary> Initializes a new instance of PrivateLinkScopedResourceInfo. </summary>
-        internal PrivateLinkScopedResourceInfo()
+        /// <summary> Initializes a new instance of OperationalInsightsPrivateLinkScopedResourceInfo. </summary>
+        internal OperationalInsightsPrivateLinkScopedResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkScopedResourceInfo. </summary>
+        /// <summary> Initializes a new instance of OperationalInsightsPrivateLinkScopedResourceInfo. </summary>
         /// <param name="resourceId"> The full resource Id of the private link scope resource. </param>
         /// <param name="scopeId"> The private link scope unique Identifier. </param>
-        internal PrivateLinkScopedResourceInfo(ResourceIdentifier resourceId, string scopeId)
+        internal OperationalInsightsPrivateLinkScopedResourceInfo(ResourceIdentifier resourceId, string scopeId)
         {
             ResourceId = resourceId;
             ScopeId = scopeId;

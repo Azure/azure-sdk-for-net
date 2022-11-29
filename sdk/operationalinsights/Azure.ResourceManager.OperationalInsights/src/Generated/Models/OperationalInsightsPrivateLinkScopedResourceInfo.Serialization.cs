@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    public partial class PrivateLinkScopedResourceInfo
+    public partial class OperationalInsightsPrivateLinkScopedResourceInfo
     {
-        internal static PrivateLinkScopedResourceInfo DeserializePrivateLinkScopedResourceInfo(JsonElement element)
+        internal static OperationalInsightsPrivateLinkScopedResourceInfo DeserializeOperationalInsightsPrivateLinkScopedResourceInfo(JsonElement element)
         {
             Optional<ResourceIdentifier> resourceId = default;
             Optional<string> scopeId = default;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     continue;
                 }
             }
-            return new PrivateLinkScopedResourceInfo(resourceId.Value, scopeId.Value);
+            return new OperationalInsightsPrivateLinkScopedResourceInfo(resourceId.Value, scopeId.Value);
         }
     }
 }
