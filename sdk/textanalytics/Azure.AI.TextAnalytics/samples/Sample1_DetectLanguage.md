@@ -202,8 +202,6 @@ Console.WriteLine($"  Invalid document count: {documentsLanguage.Statistics.Inva
 Console.WriteLine($"  Transaction count: {documentsLanguage.Statistics.TransactionCount}");
 ```
 
-Note that the detected language script is currently only included in the response when using model version 2022-04-10-preview.
-
 See the [README][README] of the Text Analytics client library for more information, including useful links and instructions.
 
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md

@@ -242,8 +242,6 @@ Console.WriteLine($"  Transaction count: {entitiesInDocuments.Statistics.Transac
 Console.WriteLine();
 ```
 
-Note that entity resolutions are currently only included in the response when using model version 2022-10-01-preview.
-
 See the [README][README] of the Text Analytics client library for more information, including useful links and instructions.
 
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md

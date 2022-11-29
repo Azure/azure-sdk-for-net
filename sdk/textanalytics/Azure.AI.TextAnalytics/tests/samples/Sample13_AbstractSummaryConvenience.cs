@@ -53,20 +53,7 @@ namespace Azure.AI.TextAnalytics.Samples
             // Start the text analysis operation.
             AbstractSummaryOperation operation = client.StartAbstractSummary(documentBatch);
 
-            // Wait for completion with manual polling.
-            TimeSpan pollingInterval = new(1000);
-
-            while (true)
-            {
-                Console.WriteLine($"Status: {operation.Status}");
-                operation.UpdateStatus();
-                if (operation.HasCompleted)
-                {
-                    break;
-                }
-
-                Thread.Sleep(pollingInterval);
-            }
+            operation.WaitForCompletion();
 
             Console.WriteLine($"The operation has completed.");
             Console.WriteLine();

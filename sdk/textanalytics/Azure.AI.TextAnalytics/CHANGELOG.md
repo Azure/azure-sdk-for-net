@@ -39,7 +39,7 @@
 ### Bugs Fixed
 
 ### Other Changes
-The client now defaults to targetting service API version `2022-10-01-preview`.
+The client now defaults to targeting service API version `2022-10-01-preview`.
 
 ## 5.2.0 (2022-09-08)
 

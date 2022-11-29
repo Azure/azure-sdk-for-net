@@ -13,7 +13,7 @@ TextAnalyticsClient client = new(new Uri(endpoint), new AzureKeyCredential(apiKe
 The values of the `endpoint` and `apiKey` variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
 
 ## Perform text analysis on healthcare documents
-To analyze healthcare entities in multiple healthcare documents, call `StartAnalyzeHealthcareEntities` on the `TextAnalyticsClient` by passing the documents as an `IEnumerable<string>` parameter. This returns an `AnalyzeHealthcareEntitiesOperation`, which is a long-running operation that can be used to poll the service until the operation has completed and the results of the extractive summarization are available.
+To analyze healthcare entities in multiple healthcare documents, call `StartAnalyzeHealthcareEntities` on the `TextAnalyticsClient` by passing the documents as an `IEnumerable<string>` parameter. This returns an `AnalyzeHealthcareEntitiesOperation`, which is a long-running operation that can be used to poll the service until the operation has completed and the results of the text analysis are available.
 
 ```C# Snippet:TextAnalyticsAnalyzeHealthcareEntitiesConvenienceAsync
 // Get the documents.
