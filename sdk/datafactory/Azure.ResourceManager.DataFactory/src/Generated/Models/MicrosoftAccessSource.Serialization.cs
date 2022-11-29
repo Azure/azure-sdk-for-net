@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    query = JsonSerializer.Deserialize<DataFactoryExpression<string>>(property.Value.ToString());
+                    query = JsonSerializer.Deserialize<DataFactoryExpression<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("additionalColumns"))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    additionalColumns = JsonSerializer.Deserialize<DataFactoryExpression<IList<AdditionalColumns>>>(property.Value.ToString());
+                    additionalColumns = JsonSerializer.Deserialize<DataFactoryExpression<IList<AdditionalColumns>>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"))

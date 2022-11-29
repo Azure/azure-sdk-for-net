@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    maxConcurrentConnections = JsonSerializer.Deserialize<DataFactoryExpression<int>>(property.Value.ToString());
+                    maxConcurrentConnections = JsonSerializer.Deserialize<DataFactoryExpression<int>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("disableMetricsCollection"))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    disableMetricsCollection = JsonSerializer.Deserialize<DataFactoryExpression<bool>>(property.Value.ToString());
+                    disableMetricsCollection = JsonSerializer.Deserialize<DataFactoryExpression<bool>>(property.Value.GetRawText());
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

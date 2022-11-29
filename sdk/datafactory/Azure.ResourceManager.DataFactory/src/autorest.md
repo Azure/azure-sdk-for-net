@@ -315,6 +315,8 @@ directive:
       $.Dataset.properties.structure['x-ms-format-element-type'] = 'DatasetDataElement';
       $.Dataset.properties.schema['x-ms-format'] = 'dfe-list-generic';
       $.Dataset.properties.schema['x-ms-format-element-type'] = 'DatasetSchemaDataElement';
+      $.DatasetDataElement.properties.name['x-ms-format'] = 'dfe-string';
+      $.DatasetDataElement.properties.type['x-ms-format'] = 'dfe-string';
       $.DatasetLocation.properties.folderPath['x-ms-format'] = 'dfe-string';
       $.DatasetLocation.properties.fileName['x-ms-format'] = 'dfe-string';
       $.AzureBlobDatasetTypeProperties.properties.folderPath['x-ms-format'] = 'dfe-string';

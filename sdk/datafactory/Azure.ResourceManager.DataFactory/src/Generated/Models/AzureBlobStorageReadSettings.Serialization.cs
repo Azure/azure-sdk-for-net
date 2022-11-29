@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    recursive = JsonSerializer.Deserialize<DataFactoryExpression<bool>>(property.Value.ToString());
+                    recursive = JsonSerializer.Deserialize<DataFactoryExpression<bool>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("wildcardFolderPath"))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    wildcardFolderPath = JsonSerializer.Deserialize<DataFactoryExpression<string>>(property.Value.ToString());
+                    wildcardFolderPath = JsonSerializer.Deserialize<DataFactoryExpression<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("wildcardFileName"))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    wildcardFileName = JsonSerializer.Deserialize<DataFactoryExpression<string>>(property.Value.ToString());
+                    wildcardFileName = JsonSerializer.Deserialize<DataFactoryExpression<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("prefix"))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    prefix = JsonSerializer.Deserialize<DataFactoryExpression<string>>(property.Value.ToString());
+                    prefix = JsonSerializer.Deserialize<DataFactoryExpression<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("fileListPath"))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    partitionRootPath = JsonSerializer.Deserialize<DataFactoryExpression<string>>(property.Value.ToString());
+                    partitionRootPath = JsonSerializer.Deserialize<DataFactoryExpression<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("deleteFilesAfterCompletion"))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    modifiedDatetimeStart = JsonSerializer.Deserialize<DataFactoryExpression<DateTimeOffset>>(property.Value.ToString());
+                    modifiedDatetimeStart = JsonSerializer.Deserialize<DataFactoryExpression<DateTimeOffset>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("modifiedDatetimeEnd"))
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    modifiedDatetimeEnd = JsonSerializer.Deserialize<DataFactoryExpression<DateTimeOffset>>(property.Value.ToString());
+                    modifiedDatetimeEnd = JsonSerializer.Deserialize<DataFactoryExpression<DateTimeOffset>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    maxConcurrentConnections = JsonSerializer.Deserialize<DataFactoryExpression<int>>(property.Value.ToString());
+                    maxConcurrentConnections = JsonSerializer.Deserialize<DataFactoryExpression<int>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("disableMetricsCollection"))
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    disableMetricsCollection = JsonSerializer.Deserialize<DataFactoryExpression<bool>>(property.Value.ToString());
+                    disableMetricsCollection = JsonSerializer.Deserialize<DataFactoryExpression<bool>>(property.Value.GetRawText());
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

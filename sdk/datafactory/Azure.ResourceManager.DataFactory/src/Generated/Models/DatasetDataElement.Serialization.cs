@@ -9,6 +9,7 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -21,28 +22,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ColumnName))
             {
                 writer.WritePropertyName("name");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ColumnName);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ColumnName.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, ColumnName);
             }
             if (Optional.IsDefined(ColumnType))
             {
                 writer.WritePropertyName("type");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ColumnType);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ColumnType.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, ColumnType);
             }
             writer.WriteEndObject();
         }
 
         internal static DatasetDataElement DeserializeDatasetDataElement(JsonElement element)
         {
-            Optional<BinaryData> name = default;
-            Optional<BinaryData> type = default;
+            Optional<DataFactoryExpression<string>> name = default;
+            Optional<DataFactoryExpression<string>> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -52,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    name = BinaryData.FromString(property.Value.GetRawText());
+                    name = JsonSerializer.Deserialize<DataFactoryExpression<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -62,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = BinaryData.FromString(property.Value.GetRawText());
+                    type = JsonSerializer.Deserialize<DataFactoryExpression<string>>(property.Value.GetRawText());
                     continue;
                 }
             }

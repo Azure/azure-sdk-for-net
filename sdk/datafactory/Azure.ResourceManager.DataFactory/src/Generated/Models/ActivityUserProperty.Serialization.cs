@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("value"))
                 {
-                    value = JsonSerializer.Deserialize<DataFactoryExpression<string>>(property.Value.ToString());
+                    value = JsonSerializer.Deserialize<DataFactoryExpression<string>>(property.Value.GetRawText());
                     continue;
                 }
             }

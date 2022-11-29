@@ -833,12 +833,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         public AzureBlobDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public Azure.ResourceManager.DataFactory.Models.DatasetCompression Compression { get { throw null; } set { } }
-        public System.BinaryData FileName { get { throw null; } set { } }
-        public System.BinaryData FolderPath { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<string> FileName { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<string> FolderPath { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.DatasetStorageFormat Format { get { throw null; } set { } }
-        public System.BinaryData ModifiedDatetimeEnd { get { throw null; } set { } }
-        public System.BinaryData ModifiedDatetimeStart { get { throw null; } set { } }
-        public System.BinaryData TableRootLocation { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<System.DateTimeOffset> ModifiedDatetimeEnd { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<System.DateTimeOffset> ModifiedDatetimeStart { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<string> TableRootLocation { get { throw null; } set { } }
     }
     public partial class AzureBlobEventsTrigger : Azure.ResourceManager.DataFactory.Models.MultiplePipelineTrigger
     {
@@ -2076,6 +2076,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData DatasetCompressionType { get { throw null; } set { } }
         public System.BinaryData Level { get { throw null; } set { } }
     }
+    public partial class DatasetDataElement
+    {
+        public DatasetDataElement() { }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<string> ColumnName { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<string> ColumnType { get { throw null; } set { } }
+    }
     public partial class DatasetJsonFormat : Azure.ResourceManager.DataFactory.Models.DatasetStorageFormat
     {
         public DatasetJsonFormat() { }
@@ -2089,8 +2095,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         public DatasetLocation() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
-        public System.BinaryData FileName { get { throw null; } set { } }
-        public System.BinaryData FolderPath { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<string> FileName { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<string> FolderPath { get { throw null; } set { } }
     }
     public partial class DatasetOrcFormat : Azure.ResourceManager.DataFactory.Models.DatasetStorageFormat
     {
@@ -2123,6 +2129,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static implicit operator Azure.ResourceManager.DataFactory.Models.DatasetReferenceType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataFactory.Models.DatasetReferenceType left, Azure.ResourceManager.DataFactory.Models.DatasetReferenceType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class DatasetSchemaDataElement
+    {
+        public DatasetSchemaDataElement() { }
+        public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
+        public System.BinaryData SchemaColumnName { get { throw null; } set { } }
+        public System.BinaryData SchemaColumnType { get { throw null; } set { } }
     }
     public partial class DatasetStorageFormat
     {
@@ -2745,8 +2758,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         public string FolderName { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference LinkedServiceName { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataFactory.Models.EntityParameterSpecification> Parameters { get { throw null; } }
-        public System.BinaryData Schema { get { throw null; } set { } }
-        public System.BinaryData Structure { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.DatasetSchemaDataElement>> Schema { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryExpression<System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.DatasetDataElement>> Structure { get { throw null; } set { } }
     }
     public enum FactoryDayOfWeek
     {

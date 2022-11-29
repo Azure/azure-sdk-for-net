@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    folderPath = JsonSerializer.Deserialize<DataFactoryExpression<string>>(property.Value.ToString());
+                    folderPath = JsonSerializer.Deserialize<DataFactoryExpression<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("fileName"))
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    fileName = JsonSerializer.Deserialize<DataFactoryExpression<string>>(property.Value.ToString());
+                    fileName = JsonSerializer.Deserialize<DataFactoryExpression<string>>(property.Value.GetRawText());
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

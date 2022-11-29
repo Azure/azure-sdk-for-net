@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    structure = JsonSerializer.Deserialize<DataFactoryExpression<IList<DatasetDataElement>>>(property.Value.ToString());
+                    structure = JsonSerializer.Deserialize<DataFactoryExpression<IList<DatasetDataElement>>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("schema"))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    schema = JsonSerializer.Deserialize<DataFactoryExpression<IList<DatasetSchemaDataElement>>>(property.Value.ToString());
+                    schema = JsonSerializer.Deserialize<DataFactoryExpression<IList<DatasetSchemaDataElement>>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("linkedServiceName"))
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            folderPath = JsonSerializer.Deserialize<DataFactoryExpression<string>>(property0.Value.ToString());
+                            folderPath = JsonSerializer.Deserialize<DataFactoryExpression<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("tableRootLocation"))
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            tableRootLocation = JsonSerializer.Deserialize<DataFactoryExpression<string>>(property0.Value.ToString());
+                            tableRootLocation = JsonSerializer.Deserialize<DataFactoryExpression<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("fileName"))
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            fileName = JsonSerializer.Deserialize<DataFactoryExpression<string>>(property0.Value.ToString());
+                            fileName = JsonSerializer.Deserialize<DataFactoryExpression<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("modifiedDatetimeStart"))
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            modifiedDatetimeStart = JsonSerializer.Deserialize<DataFactoryExpression<DateTimeOffset>>(property0.Value.ToString());
+                            modifiedDatetimeStart = JsonSerializer.Deserialize<DataFactoryExpression<DateTimeOffset>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("modifiedDatetimeEnd"))
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            modifiedDatetimeEnd = JsonSerializer.Deserialize<DataFactoryExpression<DateTimeOffset>>(property0.Value.ToString());
+                            modifiedDatetimeEnd = JsonSerializer.Deserialize<DataFactoryExpression<DateTimeOffset>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("format"))

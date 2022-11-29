@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    timeout = JsonSerializer.Deserialize<DataFactoryExpression<TimeSpan>>(property.Value.ToString());
+                    timeout = JsonSerializer.Deserialize<DataFactoryExpression<TimeSpan>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("retry"))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    retry = JsonSerializer.Deserialize<DataFactoryExpression<int>>(property.Value.ToString());
+                    retry = JsonSerializer.Deserialize<DataFactoryExpression<int>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("retryIntervalInSeconds"))

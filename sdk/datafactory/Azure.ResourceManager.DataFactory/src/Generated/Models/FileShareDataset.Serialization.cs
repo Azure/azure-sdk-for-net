@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    structure = JsonSerializer.Deserialize<DataFactoryExpression<IList<DatasetDataElement>>>(property.Value.ToString());
+                    structure = JsonSerializer.Deserialize<DataFactoryExpression<IList<DatasetDataElement>>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("schema"))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    schema = JsonSerializer.Deserialize<DataFactoryExpression<IList<DatasetSchemaDataElement>>>(property.Value.ToString());
+                    schema = JsonSerializer.Deserialize<DataFactoryExpression<IList<DatasetSchemaDataElement>>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("linkedServiceName"))
