@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -19,14 +20,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <exception cref="ArgumentNullException"> <paramref name="vhdPrefix"/> or <paramref name="destinationContainerName"/> is null. </exception>
         public VirtualMachineCaptureContent(string vhdPrefix, string destinationContainerName, bool overwriteVhds)
         {
-            if (vhdPrefix == null)
-            {
-                throw new ArgumentNullException(nameof(vhdPrefix));
-            }
-            if (destinationContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(destinationContainerName));
-            }
+            Argument.AssertNotNull(vhdPrefix, nameof(vhdPrefix));
+            Argument.AssertNotNull(destinationContainerName, nameof(destinationContainerName));
 
             VhdPrefix = vhdPrefix;
             DestinationContainerName = destinationContainerName;

@@ -31,16 +31,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     case "UniformInt64Range": return UniformInt64RangePartitionScheme.DeserializeUniformInt64RangePartitionScheme(element);
                 }
             }
-            PartitionScheme partitionScheme = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("partitionScheme"))
-                {
-                    partitionScheme = new PartitionScheme(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownManagedServicePartitionScheme(partitionScheme);
+            return UnknownPartition.DeserializeUnknownPartition(element);
         }
     }
 }

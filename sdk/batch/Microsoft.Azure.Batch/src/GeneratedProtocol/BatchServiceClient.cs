@@ -262,7 +262,7 @@ namespace Microsoft.Azure.Batch.Protocol
             ComputeNode = new ComputeNodeOperations(this);
             ComputeNodeExtension = new ComputeNodeExtensionOperations(this);
             BaseUri = "{batchUrl}";
-            ApiVersion = "2022-01-01.15.0";
+            ApiVersion = "2022-10-01.16.0";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

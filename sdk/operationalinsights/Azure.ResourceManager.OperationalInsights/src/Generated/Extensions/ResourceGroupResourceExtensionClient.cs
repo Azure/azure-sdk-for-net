@@ -54,18 +54,18 @@ namespace Azure.ResourceManager.OperationalInsights
             return GetCachedClient(Client => new LogAnalyticsQueryPackCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ClusterResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ClusterResources and their operations over a ClusterResource. </returns>
-        public virtual ClusterCollection GetClusters()
+        /// <summary> Gets a collection of OperationalInsightsClusterResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of OperationalInsightsClusterResources and their operations over a OperationalInsightsClusterResource. </returns>
+        public virtual OperationalInsightsClusterCollection GetOperationalInsightsClusters()
         {
-            return GetCachedClient(Client => new ClusterCollection(Client, Id));
+            return GetCachedClient(Client => new OperationalInsightsClusterCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of WorkspaceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of WorkspaceResources and their operations over a WorkspaceResource. </returns>
-        public virtual WorkspaceCollection GetWorkspaces()
+        /// <summary> Gets a collection of OperationalInsightsWorkspaceResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of OperationalInsightsWorkspaceResources and their operations over a OperationalInsightsWorkspaceResource. </returns>
+        public virtual OperationalInsightsWorkspaceCollection GetOperationalInsightsWorkspaces()
         {
-            return GetCachedClient(Client => new WorkspaceCollection(Client, Id));
+            return GetCachedClient(Client => new OperationalInsightsWorkspaceCollection(Client, Id));
         }
 
         /// <summary>
@@ -120,17 +120,17 @@ namespace Azure.ResourceManager.OperationalInsights
         /// Operation Id: DeletedWorkspaces_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WorkspaceResource> GetWorkspacesByDeletedWorkspaceAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="OperationalInsightsWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<OperationalInsightsWorkspaceResource> GetDeletedWorkspacesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<WorkspaceResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<OperationalInsightsWorkspaceResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = DeletedWorkspacesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetWorkspacesByDeletedWorkspace");
+                using var scope = DeletedWorkspacesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetDeletedWorkspaces");
                 scope.Start();
                 try
                 {
                     var response = await DeletedWorkspacesRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkspaceResource(Client, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new OperationalInsightsWorkspaceResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -147,17 +147,17 @@ namespace Azure.ResourceManager.OperationalInsights
         /// Operation Id: DeletedWorkspaces_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WorkspaceResource> GetWorkspacesByDeletedWorkspace(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="OperationalInsightsWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<OperationalInsightsWorkspaceResource> GetDeletedWorkspaces(CancellationToken cancellationToken = default)
         {
-            Page<WorkspaceResource> FirstPageFunc(int? pageSizeHint)
+            Page<OperationalInsightsWorkspaceResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = DeletedWorkspacesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetWorkspacesByDeletedWorkspace");
+                using var scope = DeletedWorkspacesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetDeletedWorkspaces");
                 scope.Start();
                 try
                 {
                     var response = DeletedWorkspacesRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkspaceResource(Client, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new OperationalInsightsWorkspaceResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

@@ -1,0 +1,13 @@
+name: MQ Improvements Tracker
+description: Use this template to track improvements.
+title: "[MQ][Issue]"
+labels: ["MQ", "Client"]
+assignees:
+  - pallavit
+body:
+- type: textarea
+  id: description
+  attributes:
+    label: Information
+  validations:
+    required: true

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
@@ -28,6 +29,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
         internal static string ComputeDigest(Stream stream)
         {
+            Debug.Assert(stream.CanSeek, "Should only be called on seekable streams.");
+
             using (SHA256 sha256 = SHA256.Create())
             {
                 var position = stream.Position;
@@ -38,7 +41,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 {
                     stream.Position = 0;
                     var hashValue = sha256.ComputeHash(stream);
-                    digest = "sha256:" + PrintByteArray(hashValue);
+                    digest = FormatDigest(hashValue);
                 }
                 catch (IOException e)
                 {
@@ -59,14 +62,18 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             }
         }
 
-        // Display the byte array in a readable format.
-        private static string PrintByteArray(byte[] array)
+        internal static string FormatDigest(byte[] hash)
+        {
+            return $"sha256:{BytesToString(hash)}";
+        }
+
+        private static string BytesToString(byte[] bytes)
         {
             var builder = new StringBuilder();
-            for (int i = 0; i < array.Length; i++)
+            for (int i = 0; i < bytes.Length; i++)
             {
 #pragma warning disable CA1305 // Specify IFormatProvider
-                builder.AppendFormat($"{array[i]:X2}");
+                builder.AppendFormat("{0:X2}", bytes[i]);
 #pragma warning restore CA1305 // Specify IFormatProvider
             }
 #pragma warning disable CA1304 // Specify CultureInfo

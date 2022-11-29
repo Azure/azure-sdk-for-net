@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of AdaptiveNetworkHardeningData. </summary>
         public AdaptiveNetworkHardeningData()
         {
-            Rules = new ChangeTrackingList<Rule>();
+            Rules = new ChangeTrackingList<RecommendedSecurityRule>();
             EffectiveNetworkSecurityGroups = new ChangeTrackingList<EffectiveNetworkSecurityGroups>();
         }
 
@@ -29,19 +29,19 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="rules"> The security rules which are recommended to be effective on the VM. </param>
-        /// <param name="rulesCalculationOn"> The UTC time on which the rules were calculated. </param>
+        /// <param name="rulesCalculatedOn"> The UTC time on which the rules were calculated. </param>
         /// <param name="effectiveNetworkSecurityGroups"> The Network Security Groups effective on the network interfaces of the protected resource. </param>
-        internal AdaptiveNetworkHardeningData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<Rule> rules, DateTimeOffset? rulesCalculationOn, IList<EffectiveNetworkSecurityGroups> effectiveNetworkSecurityGroups) : base(id, name, resourceType, systemData)
+        internal AdaptiveNetworkHardeningData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<RecommendedSecurityRule> rules, DateTimeOffset? rulesCalculatedOn, IList<EffectiveNetworkSecurityGroups> effectiveNetworkSecurityGroups) : base(id, name, resourceType, systemData)
         {
             Rules = rules;
-            RulesCalculationOn = rulesCalculationOn;
+            RulesCalculatedOn = rulesCalculatedOn;
             EffectiveNetworkSecurityGroups = effectiveNetworkSecurityGroups;
         }
 
         /// <summary> The security rules which are recommended to be effective on the VM. </summary>
-        public IList<Rule> Rules { get; }
+        public IList<RecommendedSecurityRule> Rules { get; }
         /// <summary> The UTC time on which the rules were calculated. </summary>
-        public DateTimeOffset? RulesCalculationOn { get; set; }
+        public DateTimeOffset? RulesCalculatedOn { get; set; }
         /// <summary> The Network Security Groups effective on the network interfaces of the protected resource. </summary>
         public IList<EffectiveNetworkSecurityGroups> EffectiveNetworkSecurityGroups { get; }
     }

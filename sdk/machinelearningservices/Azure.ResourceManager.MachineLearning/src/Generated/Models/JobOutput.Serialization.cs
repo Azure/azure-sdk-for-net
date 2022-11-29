@@ -38,35 +38,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "CustomModel": return CustomModelJobOutput.DeserializeCustomModelJobOutput(element);
-                    case "MLFlowModel": return MLFlowModelJobOutput.DeserializeMLFlowModelJobOutput(element);
-                    case "MLTable": return MLTableJobOutput.DeserializeMLTableJobOutput(element);
-                    case "TritonModel": return TritonModelJobOutput.DeserializeTritonModelJobOutput(element);
-                    case "UriFile": return UriFileJobOutput.DeserializeUriFileJobOutput(element);
-                    case "UriFolder": return UriFolderJobOutput.DeserializeUriFolderJobOutput(element);
+                    case "custom_model": return CustomModelJobOutput.DeserializeCustomModelJobOutput(element);
+                    case "mlflow_model": return MLFlowModelJobOutput.DeserializeMLFlowModelJobOutput(element);
+                    case "mltable": return MLTableJobOutput.DeserializeMLTableJobOutput(element);
+                    case "triton_model": return TritonModelJobOutput.DeserializeTritonModelJobOutput(element);
+                    case "uri_file": return UriFileJobOutput.DeserializeUriFileJobOutput(element);
+                    case "uri_folder": return UriFolderJobOutput.DeserializeUriFolderJobOutput(element);
                 }
             }
-            Optional<string> description = default;
-            JobOutputType jobOutputType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("description"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        description = null;
-                        continue;
-                    }
-                    description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("jobOutputType"))
-                {
-                    jobOutputType = new JobOutputType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownJobOutput(description.Value, jobOutputType);
+            return UnknownJobOutput.DeserializeUnknownJobOutput(element);
         }
     }
 }

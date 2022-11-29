@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <exception cref="ArgumentNullException"> <paramref name="notificationEndpoints"/> is null. </exception>
         public ArmApplicationNotificationPolicy(IEnumerable<ArmApplicationNotificationEndpoint> notificationEndpoints)
         {
-            if (notificationEndpoints == null)
-            {
-                throw new ArgumentNullException(nameof(notificationEndpoints));
-            }
+            Argument.AssertNotNull(notificationEndpoints, nameof(notificationEndpoints));
 
             NotificationEndpoints = notificationEndpoints.ToList();
         }

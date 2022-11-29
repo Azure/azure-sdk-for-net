@@ -8,7 +8,8 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/loadtestservice/
+    - sdk/loadtestservice/ci.yml
+    - sdk/loadtestservice/Azure.Developer.LoadTesting
 
 pr:
   branches:
@@ -19,11 +20,13 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/loadtestservice/
+    - sdk/loadtestservice/ci.yml
+    - sdk/loadtestservice/Azure.Developer.LoadTesting
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
+    SDKType: client
     ServiceDirectory: loadtestservice
     ArtifactName: packages
     Artifacts:

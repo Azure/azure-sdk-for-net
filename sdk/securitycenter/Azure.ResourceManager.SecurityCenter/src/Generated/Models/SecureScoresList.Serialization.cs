@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static SecureScoresList DeserializeSecureScoresList(JsonElement element)
         {
-            Optional<IReadOnlyList<SecureScoreItemData>> value = default;
+            Optional<IReadOnlyList<SecureScoreData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SecureScoreItemData> array = new List<SecureScoreItemData>();
+                    List<SecureScoreData> array = new List<SecureScoreData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecureScoreItemData.DeserializeSecureScoreItemData(item));
+                        array.Add(SecureScoreData.DeserializeSecureScoreData(item));
                     }
                     value = array;
                     continue;

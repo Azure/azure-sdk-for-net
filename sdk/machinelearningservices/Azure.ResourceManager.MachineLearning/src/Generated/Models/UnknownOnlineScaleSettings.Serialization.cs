@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static UnknownOnlineScaleSettings DeserializeUnknownOnlineScaleSettings(JsonElement element)
         {
-            ScaleType scaleType = default;
+            ScaleType scaleType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scaleType"))

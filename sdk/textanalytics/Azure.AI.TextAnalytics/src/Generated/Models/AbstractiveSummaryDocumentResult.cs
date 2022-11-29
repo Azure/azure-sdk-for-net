@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.AI.TextAnalytics;
+using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -20,20 +21,11 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="summaries"> A list of abstractive summaries. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="warnings"/> or <paramref name="summaries"/> is null. </exception>
-        public AbstractiveSummaryDocumentResult(string id, IEnumerable<DocumentWarning> warnings, IEnumerable<AbstractiveSummary> summaries) : base(id, warnings)
+        public AbstractiveSummaryDocumentResult(string id, IEnumerable<DocumentWarning> warnings, IEnumerable<AbstractiveSummaryInternal> summaries) : base(id, warnings)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (warnings == null)
-            {
-                throw new ArgumentNullException(nameof(warnings));
-            }
-            if (summaries == null)
-            {
-                throw new ArgumentNullException(nameof(summaries));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(warnings, nameof(warnings));
+            Argument.AssertNotNull(summaries, nameof(summaries));
 
             Summaries = summaries.ToList();
         }
@@ -43,12 +35,12 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
         /// <param name="summaries"> A list of abstractive summaries. </param>
-        internal AbstractiveSummaryDocumentResult(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, IList<AbstractiveSummary> summaries) : base(id, warnings, statistics)
+        internal AbstractiveSummaryDocumentResult(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, IList<AbstractiveSummaryInternal> summaries) : base(id, warnings, statistics)
         {
             Summaries = summaries;
         }
 
         /// <summary> A list of abstractive summaries. </summary>
-        public IList<AbstractiveSummary> Summaries { get; }
+        public IList<AbstractiveSummaryInternal> Summaries { get; }
     }
 }

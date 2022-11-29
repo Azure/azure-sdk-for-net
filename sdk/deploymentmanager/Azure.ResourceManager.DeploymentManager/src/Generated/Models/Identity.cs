@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DeploymentManager.Models
 {
@@ -20,14 +21,8 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         /// <exception cref="ArgumentNullException"> <paramref name="identityType"/> or <paramref name="identityIds"/> is null. </exception>
         public Identity(string identityType, IEnumerable<string> identityIds)
         {
-            if (identityType == null)
-            {
-                throw new ArgumentNullException(nameof(identityType));
-            }
-            if (identityIds == null)
-            {
-                throw new ArgumentNullException(nameof(identityIds));
-            }
+            Argument.AssertNotNull(identityType, nameof(identityType));
+            Argument.AssertNotNull(identityIds, nameof(identityIds));
 
             IdentityType = identityType;
             IdentityIds = identityIds.ToList();

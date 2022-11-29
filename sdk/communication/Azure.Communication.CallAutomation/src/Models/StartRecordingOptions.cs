@@ -18,6 +18,7 @@ namespace Azure.Communication.CallAutomation
         public StartRecordingOptions(CallLocator callLocator)
         {
             CallLocator = callLocator ?? throw new ArgumentNullException(nameof(callLocator));
+            RepeatabilityHeaders = new RepeatabilityHeaders();
         }
 
         /// <summary>
@@ -46,6 +47,11 @@ namespace Azure.Communication.CallAutomation
         public RecordingFormat RecordingFormat { get; set; }
 
         /// <summary>
+        /// Repeatability Headers.
+        /// </summary>
+        public RepeatabilityHeaders RepeatabilityHeaders { get; set; }
+
+        /// <summary>
         /// The sequential order in which audio channels are assigned to participants in the unmixed recording.
         /// When 'recordingChannelType' is set to 'unmixed' and `audioChannelParticipantOrdering is not specified,
         /// the audio channel to participant mapping will be automatically assigned based on the order in which participant
@@ -53,5 +59,8 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         public IList<CommunicationIdentifier> AudioChannelParticipantOrdering { get; } =
             new List<CommunicationIdentifier>();
+
+        /// <summary> Recording storage mode. `External` enables bring your own storage. </summary>
+        public RecordingStorageType? RecordingStorageType { get; set; }
     }
 }

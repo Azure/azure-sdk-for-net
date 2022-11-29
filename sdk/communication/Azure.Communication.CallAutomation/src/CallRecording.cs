@@ -53,7 +53,8 @@ namespace Azure.Communication.CallAutomation
         /// <param name="cancellationToken">The cancellation token.</param>
         public virtual Response<RecordingStateResult> StartRecording(StartRecordingOptions options, CancellationToken cancellationToken = default)
         {
-            if (options == null) throw new ArgumentNullException(nameof(options));
+            if (options == null)
+                throw new ArgumentNullException(nameof(options));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecording)}.{nameof(StartRecording)}");
             scope.Start();
@@ -64,7 +65,8 @@ namespace Azure.Communication.CallAutomation
                     RecordingStateCallbackUri = options.RecordingStateCallbackEndpoint?.AbsoluteUri,
                     RecordingChannelType = options.RecordingChannel,
                     RecordingContentType = options.RecordingContent,
-                    RecordingFormatType = options.RecordingFormat
+                    RecordingFormatType = options.RecordingFormat,
+                    RecordingStorageType = options.RecordingStorageType
                 };
 
                 if (options.AudioChannelParticipantOrdering != null && options.AudioChannelParticipantOrdering.Any())
@@ -75,7 +77,11 @@ namespace Azure.Communication.CallAutomation
                     }
                 };
 
-                return ContentRestClient.Recording(request, cancellationToken: cancellationToken);
+                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
+                return ContentRestClient.Recording(request,
+                    options.RepeatabilityHeaders?.RepeatabilityRequestId,
+                    options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
+                    cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
@@ -91,7 +97,8 @@ namespace Azure.Communication.CallAutomation
         /// <param name="cancellationToken">The cancellation token.</param>
         public virtual async Task<Response<RecordingStateResult>> StartRecordingAsync(StartRecordingOptions options, CancellationToken cancellationToken = default)
         {
-            if (options == null) throw new ArgumentNullException(nameof(options));
+            if (options == null)
+                throw new ArgumentNullException(nameof(options));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecording)}.{nameof(StartRecording)}");
             scope.Start();
@@ -102,7 +109,8 @@ namespace Azure.Communication.CallAutomation
                     RecordingStateCallbackUri = options.RecordingStateCallbackEndpoint?.AbsoluteUri,
                     RecordingChannelType = options.RecordingChannel,
                     RecordingContentType = options.RecordingContent,
-                    RecordingFormatType = options.RecordingFormat
+                    RecordingFormatType = options.RecordingFormat,
+                    RecordingStorageType = options.RecordingStorageType
                 };
 
                 if (options.AudioChannelParticipantOrdering != null && options.AudioChannelParticipantOrdering.Any())
@@ -113,7 +121,11 @@ namespace Azure.Communication.CallAutomation
                     }
                 };
 
-                return await ContentRestClient.RecordingAsync(request, cancellationToken: cancellationToken).ConfigureAwait(false);
+                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
+                return await ContentRestClient.RecordingAsync(request,
+                    options.RepeatabilityHeaders?.RepeatabilityRequestId,
+                    options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

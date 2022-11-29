@@ -20,7 +20,7 @@ namespace Azure.Developer.LoadTesting
         private static readonly string[] AuthorizationScopes = new string[] { "https://cnt-prod.loadtesting.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly string _endpoint;
+        private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
@@ -34,6 +34,32 @@ namespace Azure.Developer.LoadTesting
         {
         }
 
+        /// <summary> Initializes a new instance of LoadTestAdministrationClient. </summary>
+        /// <param name="endpoint"> URL to perform data plane API operations on the resource. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public LoadTestAdministrationClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AzureLoadTestingClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of LoadTestAdministrationClient. </summary>
+        /// <param name="endpoint"> URL to perform data plane API operations on the resource. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public LoadTestAdministrationClient(Uri endpoint, TokenCredential credential, AzureLoadTestingClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            options ??= new AzureLoadTestingClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+            _tokenCredential = credential;
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
+        }
+
         /// <summary> Associate an App Component (Azure resource) to a test or test run. </summary>
         /// <param name="name"> Unique name of the App Component, must be a valid URL character ^[a-z0-9_-]*$. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -42,92 +68,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call CreateOrUpdateAppComponentsAsync with required parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// var data = new {
-        ///     value = new {
-        ///         key = new {
-        ///             resourceId = "<resourceId>",
-        ///             resourceName = "<resourceName>",
-        ///             resourceType = "<resourceType>",
-        ///         },
-        ///     },
-        /// };
-        /// 
-        /// Response response = await client.CreateOrUpdateAppComponentsAsync("<name>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceType").ToString());
-        /// ]]></code>
-        /// This sample shows how to call CreateOrUpdateAppComponentsAsync with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// var data = new {
-        ///     testId = "<testId>",
-        ///     testRunId = "<testRunId>",
-        ///     value = new {
-        ///         key = new {
-        ///             resourceId = "<resourceId>",
-        ///             resourceName = "<resourceName>",
-        ///             resourceType = "<resourceType>",
-        ///             displayName = "<displayName>",
-        ///             kind = "<kind>",
-        ///         },
-        ///     },
-        /// };
-        /// 
-        /// Response response = await client.CreateOrUpdateAppComponentsAsync("<name>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("resourceId").ToString());
-        /// Console.WriteLine(result.GetProperty("testId").ToString());
-        /// Console.WriteLine(result.GetProperty("testRunId").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceType").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("displayName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceGroup").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("subscriptionId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("kind").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>AppComponentsMap</c>:
-        /// <code>{
-        ///   resourceId: string, # Optional. Azure Load Testing resource Id
-        ///   testId: string, # Optional. [Required, if testRunId is not given] Load test unique identifier
-        ///   testRunId: string, # Optional. [Required if testId is not given] Load test run unique identifier
-        ///   name: string, # Optional. AppComponent name
-        ///   value: Dictionary&lt;string, AppComponent&gt;, # Required. AppComponents Map { resource id (Fully qualified resource Id e.g subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}) : resource object } 
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>AppComponentsMap</c>:
-        /// <code>{
-        ///   resourceId: string, # Optional. Azure Load Testing resource Id
-        ///   testId: string, # Optional. [Required, if testRunId is not given] Load test unique identifier
-        ///   testRunId: string, # Optional. [Required if testId is not given] Load test run unique identifier
-        ///   name: string, # Optional. AppComponent name
-        ///   value: Dictionary&lt;string, AppComponent&gt;, # Required. AppComponents Map { resource id (Fully qualified resource Id e.g subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}) : resource object } 
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='CreateOrUpdateAppComponentsAsync(String,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAppComponentsAsync(string name, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -155,92 +96,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call CreateOrUpdateAppComponents with required parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// var data = new {
-        ///     value = new {
-        ///         key = new {
-        ///             resourceId = "<resourceId>",
-        ///             resourceName = "<resourceName>",
-        ///             resourceType = "<resourceType>",
-        ///         },
-        ///     },
-        /// };
-        /// 
-        /// Response response = client.CreateOrUpdateAppComponents("<name>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceType").ToString());
-        /// ]]></code>
-        /// This sample shows how to call CreateOrUpdateAppComponents with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// var data = new {
-        ///     testId = "<testId>",
-        ///     testRunId = "<testRunId>",
-        ///     value = new {
-        ///         key = new {
-        ///             resourceId = "<resourceId>",
-        ///             resourceName = "<resourceName>",
-        ///             resourceType = "<resourceType>",
-        ///             displayName = "<displayName>",
-        ///             kind = "<kind>",
-        ///         },
-        ///     },
-        /// };
-        /// 
-        /// Response response = client.CreateOrUpdateAppComponents("<name>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("resourceId").ToString());
-        /// Console.WriteLine(result.GetProperty("testId").ToString());
-        /// Console.WriteLine(result.GetProperty("testRunId").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceType").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("displayName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceGroup").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("subscriptionId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("kind").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>AppComponentsMap</c>:
-        /// <code>{
-        ///   resourceId: string, # Optional. Azure Load Testing resource Id
-        ///   testId: string, # Optional. [Required, if testRunId is not given] Load test unique identifier
-        ///   testRunId: string, # Optional. [Required if testId is not given] Load test run unique identifier
-        ///   name: string, # Optional. AppComponent name
-        ///   value: Dictionary&lt;string, AppComponent&gt;, # Required. AppComponents Map { resource id (Fully qualified resource Id e.g subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}) : resource object } 
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>AppComponentsMap</c>:
-        /// <code>{
-        ///   resourceId: string, # Optional. Azure Load Testing resource Id
-        ///   testId: string, # Optional. [Required, if testRunId is not given] Load test unique identifier
-        ///   testRunId: string, # Optional. [Required if testId is not given] Load test run unique identifier
-        ///   name: string, # Optional. AppComponent name
-        ///   value: Dictionary&lt;string, AppComponent&gt;, # Required. AppComponents Map { resource id (Fully qualified resource Id e.g subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}) : resource object } 
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='CreateOrUpdateAppComponents(String,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdateAppComponents(string name, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -267,16 +123,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call DeleteAppComponentAsync with required parameters.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = await client.DeleteAppComponentAsync("<name>");
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='DeleteAppComponentAsync(String,RequestContext)']/*" />
         public virtual async Task<Response> DeleteAppComponentAsync(string name, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -302,16 +149,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call DeleteAppComponent with required parameters.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = client.DeleteAppComponent("<name>");
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='DeleteAppComponent(String,RequestContext)']/*" />
         public virtual Response DeleteAppComponent(string name, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -337,44 +175,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetAppComponentByNameAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = await client.GetAppComponentByNameAsync("<name>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("resourceId").ToString());
-        /// Console.WriteLine(result.GetProperty("testId").ToString());
-        /// Console.WriteLine(result.GetProperty("testRunId").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceType").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("displayName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceGroup").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("subscriptionId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("kind").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>AppComponentsMap</c>:
-        /// <code>{
-        ///   resourceId: string, # Optional. Azure Load Testing resource Id
-        ///   testId: string, # Optional. [Required, if testRunId is not given] Load test unique identifier
-        ///   testRunId: string, # Optional. [Required if testId is not given] Load test run unique identifier
-        ///   name: string, # Optional. AppComponent name
-        ///   value: Dictionary&lt;string, AppComponent&gt;, # Required. AppComponents Map { resource id (Fully qualified resource Id e.g subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}) : resource object } 
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetAppComponentByNameAsync(String,RequestContext)']/*" />
         public virtual async Task<Response> GetAppComponentByNameAsync(string name, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -400,44 +201,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetAppComponentByName with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = client.GetAppComponentByName("<name>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("resourceId").ToString());
-        /// Console.WriteLine(result.GetProperty("testId").ToString());
-        /// Console.WriteLine(result.GetProperty("testRunId").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceType").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("displayName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceGroup").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("subscriptionId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("kind").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>AppComponentsMap</c>:
-        /// <code>{
-        ///   resourceId: string, # Optional. Azure Load Testing resource Id
-        ///   testId: string, # Optional. [Required, if testRunId is not given] Load test unique identifier
-        ///   testRunId: string, # Optional. [Required if testId is not given] Load test run unique identifier
-        ///   name: string, # Optional. AppComponent name
-        ///   value: Dictionary&lt;string, AppComponent&gt;, # Required. AppComponents Map { resource id (Fully qualified resource Id e.g subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}) : resource object } 
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetAppComponentByName(String,RequestContext)']/*" />
         public virtual Response GetAppComponentByName(string name, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -462,56 +226,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetAppComponentAsync and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = await client.GetAppComponentAsync();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceType").ToString());
-        /// ]]></code>
-        /// This sample shows how to call GetAppComponentAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = await client.GetAppComponentAsync("<testRunId>", "<testId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("resourceId").ToString());
-        /// Console.WriteLine(result.GetProperty("testId").ToString());
-        /// Console.WriteLine(result.GetProperty("testRunId").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceType").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("displayName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceGroup").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("subscriptionId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("kind").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>AppComponentsMap</c>:
-        /// <code>{
-        ///   resourceId: string, # Optional. Azure Load Testing resource Id
-        ///   testId: string, # Optional. [Required, if testRunId is not given] Load test unique identifier
-        ///   testRunId: string, # Optional. [Required if testId is not given] Load test run unique identifier
-        ///   name: string, # Optional. AppComponent name
-        ///   value: Dictionary&lt;string, AppComponent&gt;, # Required. AppComponents Map { resource id (Fully qualified resource Id e.g subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}) : resource object } 
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetAppComponentAsync(String,String,RequestContext)']/*" />
         public virtual async Task<Response> GetAppComponentAsync(string testRunId = null, string testId = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetAppComponent");
@@ -534,56 +249,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetAppComponent and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = client.GetAppComponent();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceType").ToString());
-        /// ]]></code>
-        /// This sample shows how to call GetAppComponent with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = client.GetAppComponent("<testRunId>", "<testId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("resourceId").ToString());
-        /// Console.WriteLine(result.GetProperty("testId").ToString());
-        /// Console.WriteLine(result.GetProperty("testRunId").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceType").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("displayName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceGroup").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("subscriptionId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("kind").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>AppComponentsMap</c>:
-        /// <code>{
-        ///   resourceId: string, # Optional. Azure Load Testing resource Id
-        ///   testId: string, # Optional. [Required, if testRunId is not given] Load test unique identifier
-        ///   testRunId: string, # Optional. [Required if testId is not given] Load test run unique identifier
-        ///   name: string, # Optional. AppComponent name
-        ///   value: Dictionary&lt;string, AppComponent&gt;, # Required. AppComponents Map { resource id (Fully qualified resource Id e.g subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}) : resource object } 
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetAppComponent(String,String,RequestContext)']/*" />
         public virtual Response GetAppComponent(string testRunId = null, string testId = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetAppComponent");
@@ -608,86 +274,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call CreateOrUpdateServerMetricsConfigAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = await client.CreateOrUpdateServerMetricsConfigAsync("<name>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call CreateOrUpdateServerMetricsConfigAsync with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// var data = new {
-        ///     testId = "<testId>",
-        ///     testRunId = "<testRunId>",
-        ///     metrics = new {
-        ///         key = new {
-        ///             resourceId = "<resourceId>",
-        ///             metricnamespace = "<metricnamespace>",
-        ///             displayDescription = "<displayDescription>",
-        ///             name = new {
-        ///                 value = "<value>",
-        ///                 localizedValue = "<localizedValue>",
-        ///             },
-        ///             aggregation = "<aggregation>",
-        ///             unit = "<unit>",
-        ///             resourceType = "<resourceType>",
-        ///         },
-        ///     },
-        /// };
-        /// 
-        /// Response response = await client.CreateOrUpdateServerMetricsConfigAsync("<name>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("testId").ToString());
-        /// Console.WriteLine(result.GetProperty("testRunId").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("resourceId").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("metricnamespace").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("displayDescription").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("name").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("name").GetProperty("localizedValue").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("aggregation").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("resourceType").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>ServerMetricsModel</c>:
-        /// <code>{
-        ///   name: string, # Optional. Server metrics config name.
-        ///   testId: string, # Optional. [Required, if testRunId is not given] Load test unique identifier
-        ///   testRunId: string, # Optional. [Required, if testId is not given] Load test run unique identifier
-        ///   metrics: Dictionary&lt;string, ResourceMetricModel&gt;, # Optional. Metrics map {metric id : metrics object} (Refer : https://docs.microsoft.com/en-us/rest/api/monitor/metric-definitions/list#metricdefinition for metric id).
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>ServerMetricsModel</c>:
-        /// <code>{
-        ///   name: string, # Optional. Server metrics config name.
-        ///   testId: string, # Optional. [Required, if testRunId is not given] Load test unique identifier
-        ///   testRunId: string, # Optional. [Required, if testId is not given] Load test run unique identifier
-        ///   metrics: Dictionary&lt;string, ResourceMetricModel&gt;, # Optional. Metrics map {metric id : metrics object} (Refer : https://docs.microsoft.com/en-us/rest/api/monitor/metric-definitions/list#metricdefinition for metric id).
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='CreateOrUpdateServerMetricsConfigAsync(String,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateServerMetricsConfigAsync(string name, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -715,86 +302,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call CreateOrUpdateServerMetricsConfig with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = client.CreateOrUpdateServerMetricsConfig("<name>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call CreateOrUpdateServerMetricsConfig with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// var data = new {
-        ///     testId = "<testId>",
-        ///     testRunId = "<testRunId>",
-        ///     metrics = new {
-        ///         key = new {
-        ///             resourceId = "<resourceId>",
-        ///             metricnamespace = "<metricnamespace>",
-        ///             displayDescription = "<displayDescription>",
-        ///             name = new {
-        ///                 value = "<value>",
-        ///                 localizedValue = "<localizedValue>",
-        ///             },
-        ///             aggregation = "<aggregation>",
-        ///             unit = "<unit>",
-        ///             resourceType = "<resourceType>",
-        ///         },
-        ///     },
-        /// };
-        /// 
-        /// Response response = client.CreateOrUpdateServerMetricsConfig("<name>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("testId").ToString());
-        /// Console.WriteLine(result.GetProperty("testRunId").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("resourceId").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("metricnamespace").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("displayDescription").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("name").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("name").GetProperty("localizedValue").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("aggregation").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("resourceType").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>ServerMetricsModel</c>:
-        /// <code>{
-        ///   name: string, # Optional. Server metrics config name.
-        ///   testId: string, # Optional. [Required, if testRunId is not given] Load test unique identifier
-        ///   testRunId: string, # Optional. [Required, if testId is not given] Load test run unique identifier
-        ///   metrics: Dictionary&lt;string, ResourceMetricModel&gt;, # Optional. Metrics map {metric id : metrics object} (Refer : https://docs.microsoft.com/en-us/rest/api/monitor/metric-definitions/list#metricdefinition for metric id).
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>ServerMetricsModel</c>:
-        /// <code>{
-        ///   name: string, # Optional. Server metrics config name.
-        ///   testId: string, # Optional. [Required, if testRunId is not given] Load test unique identifier
-        ///   testRunId: string, # Optional. [Required, if testId is not given] Load test run unique identifier
-        ///   metrics: Dictionary&lt;string, ResourceMetricModel&gt;, # Optional. Metrics map {metric id : metrics object} (Refer : https://docs.microsoft.com/en-us/rest/api/monitor/metric-definitions/list#metricdefinition for metric id).
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='CreateOrUpdateServerMetricsConfig(String,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdateServerMetricsConfig(string name, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -821,44 +329,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetServerMetricsByNameAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = await client.GetServerMetricsByNameAsync("<name>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("testId").ToString());
-        /// Console.WriteLine(result.GetProperty("testRunId").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("resourceId").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("metricnamespace").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("displayDescription").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("name").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("name").GetProperty("localizedValue").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("aggregation").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("resourceType").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>ServerMetricsModel</c>:
-        /// <code>{
-        ///   name: string, # Optional. Server metrics config name.
-        ///   testId: string, # Optional. [Required, if testRunId is not given] Load test unique identifier
-        ///   testRunId: string, # Optional. [Required, if testId is not given] Load test run unique identifier
-        ///   metrics: Dictionary&lt;string, ResourceMetricModel&gt;, # Optional. Metrics map {metric id : metrics object} (Refer : https://docs.microsoft.com/en-us/rest/api/monitor/metric-definitions/list#metricdefinition for metric id).
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetServerMetricsByNameAsync(String,RequestContext)']/*" />
         public virtual async Task<Response> GetServerMetricsByNameAsync(string name, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -884,44 +355,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetServerMetricsByName with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = client.GetServerMetricsByName("<name>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("testId").ToString());
-        /// Console.WriteLine(result.GetProperty("testRunId").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("resourceId").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("metricnamespace").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("displayDescription").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("name").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("name").GetProperty("localizedValue").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("aggregation").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("resourceType").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>ServerMetricsModel</c>:
-        /// <code>{
-        ///   name: string, # Optional. Server metrics config name.
-        ///   testId: string, # Optional. [Required, if testRunId is not given] Load test unique identifier
-        ///   testRunId: string, # Optional. [Required, if testId is not given] Load test run unique identifier
-        ///   metrics: Dictionary&lt;string, ResourceMetricModel&gt;, # Optional. Metrics map {metric id : metrics object} (Refer : https://docs.microsoft.com/en-us/rest/api/monitor/metric-definitions/list#metricdefinition for metric id).
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetServerMetricsByName(String,RequestContext)']/*" />
         public virtual Response GetServerMetricsByName(string name, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -947,16 +381,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call DeleteServerMetricsAsync with required parameters.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = await client.DeleteServerMetricsAsync("<name>");
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='DeleteServerMetricsAsync(String,RequestContext)']/*" />
         public virtual async Task<Response> DeleteServerMetricsAsync(string name, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -982,16 +407,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call DeleteServerMetrics with required parameters.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = client.DeleteServerMetrics("<name>");
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='DeleteServerMetrics(String,RequestContext)']/*" />
         public virtual Response DeleteServerMetrics(string name, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -1016,54 +432,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetServerMetricsAsync and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = await client.GetServerMetricsAsync();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call GetServerMetricsAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = await client.GetServerMetricsAsync("<testRunId>", "<testId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("testId").ToString());
-        /// Console.WriteLine(result.GetProperty("testRunId").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("resourceId").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("metricnamespace").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("displayDescription").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("name").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("name").GetProperty("localizedValue").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("aggregation").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("resourceType").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>ServerMetricsModel</c>:
-        /// <code>{
-        ///   name: string, # Optional. Server metrics config name.
-        ///   testId: string, # Optional. [Required, if testRunId is not given] Load test unique identifier
-        ///   testRunId: string, # Optional. [Required, if testId is not given] Load test run unique identifier
-        ///   metrics: Dictionary&lt;string, ResourceMetricModel&gt;, # Optional. Metrics map {metric id : metrics object} (Refer : https://docs.microsoft.com/en-us/rest/api/monitor/metric-definitions/list#metricdefinition for metric id).
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetServerMetricsAsync(String,String,RequestContext)']/*" />
         public virtual async Task<Response> GetServerMetricsAsync(string testRunId = null, string testId = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetServerMetrics");
@@ -1086,54 +455,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetServerMetrics and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = client.GetServerMetrics();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call GetServerMetrics with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = client.GetServerMetrics("<testRunId>", "<testId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("testId").ToString());
-        /// Console.WriteLine(result.GetProperty("testRunId").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("resourceId").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("metricnamespace").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("displayDescription").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("name").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("name").GetProperty("localizedValue").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("aggregation").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("resourceType").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>ServerMetricsModel</c>:
-        /// <code>{
-        ///   name: string, # Optional. Server metrics config name.
-        ///   testId: string, # Optional. [Required, if testRunId is not given] Load test unique identifier
-        ///   testRunId: string, # Optional. [Required, if testId is not given] Load test run unique identifier
-        ///   metrics: Dictionary&lt;string, ResourceMetricModel&gt;, # Optional. Metrics map {metric id : metrics object} (Refer : https://docs.microsoft.com/en-us/rest/api/monitor/metric-definitions/list#metricdefinition for metric id).
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetServerMetrics(String,String,RequestContext)']/*" />
         public virtual Response GetServerMetrics(string testRunId = null, string testId = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetServerMetrics");
@@ -1154,35 +476,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetServerDefaultMetricsAsync and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = await client.GetServerDefaultMetricsAsync();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("defaultMetrics").GetProperty("<test>")[0].GetProperty("metricnamespace").ToString());
-        /// Console.WriteLine(result.GetProperty("defaultMetrics").GetProperty("<test>")[0].GetProperty("aggregation").ToString());
-        /// Console.WriteLine(result.GetProperty("defaultMetrics").GetProperty("<test>")[0].GetProperty("name").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("defaultMetrics").GetProperty("<test>")[0].GetProperty("name").GetProperty("localizedValue").ToString());
-        /// Console.WriteLine(result.GetProperty("defaultMetrics").GetProperty("<test>")[0].GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("defaultMetrics").GetProperty("<test>")[0].GetProperty("displayDescription").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>DefaultServerMetricsConfigListModel</c>:
-        /// <code>{
-        ///   defaultMetrics: Dictionary&lt;string, DefaultServerMetricsConfigModel[]&gt;, # Optional. Default metrics map {resourceType : list of metrics config} (Refer for metrics structure: https://docs.microsoft.com/en-us/rest/api/monitor/metric-definitions/list#metricdefinition)
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetServerDefaultMetricsAsync(RequestContext)']/*" />
         public virtual async Task<Response> GetServerDefaultMetricsAsync(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetServerDefaultMetrics");
@@ -1203,35 +497,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetServerDefaultMetrics and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = client.GetServerDefaultMetrics();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("defaultMetrics").GetProperty("<test>")[0].GetProperty("metricnamespace").ToString());
-        /// Console.WriteLine(result.GetProperty("defaultMetrics").GetProperty("<test>")[0].GetProperty("aggregation").ToString());
-        /// Console.WriteLine(result.GetProperty("defaultMetrics").GetProperty("<test>")[0].GetProperty("name").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("defaultMetrics").GetProperty("<test>")[0].GetProperty("name").GetProperty("localizedValue").ToString());
-        /// Console.WriteLine(result.GetProperty("defaultMetrics").GetProperty("<test>")[0].GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("defaultMetrics").GetProperty("<test>")[0].GetProperty("displayDescription").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>DefaultServerMetricsConfigListModel</c>:
-        /// <code>{
-        ///   defaultMetrics: Dictionary&lt;string, DefaultServerMetricsConfigModel[]&gt;, # Optional. Default metrics map {resourceType : list of metrics config} (Refer for metrics structure: https://docs.microsoft.com/en-us/rest/api/monitor/metric-definitions/list#metricdefinition)
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetServerDefaultMetrics(RequestContext)']/*" />
         public virtual Response GetServerDefaultMetrics(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetServerDefaultMetrics");
@@ -1252,30 +518,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetSupportedResourceTypesAsync and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = await client.GetSupportedResourceTypesAsync();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("value")[0].ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>SupportedResourceType</c>:
-        /// <code>{
-        ///   value: [string], # Optional.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetSupportedResourceTypesAsync(RequestContext)']/*" />
         public virtual async Task<Response> GetSupportedResourceTypesAsync(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetSupportedResourceTypes");
@@ -1296,30 +539,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetSupportedResourceTypes and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = client.GetSupportedResourceTypes();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("value")[0].ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>SupportedResourceType</c>:
-        /// <code>{
-        ///   value: [string], # Optional.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetSupportedResourceTypes(RequestContext)']/*" />
         public virtual Response GetSupportedResourceTypes(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetSupportedResourceTypes");
@@ -1344,202 +564,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call CreateOrUpdateTestAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = await client.CreateOrUpdateTestAsync("<testId>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call CreateOrUpdateTestAsync with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// var data = new {
-        ///     description = "<description>",
-        ///     displayName = "<displayName>",
-        ///     loadTestConfig = new {
-        ///         engineInstances = 1234,
-        ///         splitAllCSVs = true,
-        ///     },
-        ///     passFailCriteria = new {
-        ///         passFailMetrics = new {
-        ///             key = new {
-        ///                 clientmetric = "<clientmetric>",
-        ///                 aggregate = "<aggregate>",
-        ///                 condition = "<condition>",
-        ///                 requestName = "<requestName>",
-        ///                 value = 123.45d,
-        ///                 action = "<action>",
-        ///             },
-        ///         },
-        ///     },
-        ///     secrets = new {
-        ///         key = new {
-        ///             value = "<value>",
-        ///             type = "<type>",
-        ///         },
-        ///     },
-        ///     environmentVariables = new {
-        ///         key = "<String>",
-        ///     },
-        ///     subnetId = "<subnetId>",
-        ///     keyvaultReferenceIdentityType = "<keyvaultReferenceIdentityType>",
-        ///     keyvaultReferenceIdentityId = "<keyvaultReferenceIdentityId>",
-        /// };
-        /// 
-        /// Response response = await client.CreateOrUpdateTestAsync("<testId>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("testId").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("displayName").ToString());
-        /// Console.WriteLine(result.GetProperty("resourceId").ToString());
-        /// Console.WriteLine(result.GetProperty("loadTestConfig").GetProperty("engineInstances").ToString());
-        /// Console.WriteLine(result.GetProperty("loadTestConfig").GetProperty("splitAllCSVs").ToString());
-        /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientmetric").ToString());
-        /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("aggregate").ToString());
-        /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("condition").ToString());
-        /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("requestName").ToString());
-        /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("action").ToString());
-        /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("actualValue").ToString());
-        /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("result").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
-        /// Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configUrl").GetProperty("url").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configUrl").GetProperty("fileId").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configUrl").GetProperty("filename").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configUrl").GetProperty("fileType").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configUrl").GetProperty("expireTime").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configUrl").GetProperty("validationStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptUrl").GetProperty("url").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptUrl").GetProperty("fileId").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptUrl").GetProperty("filename").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptUrl").GetProperty("fileType").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptUrl").GetProperty("expireTime").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptUrl").GetProperty("validationStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropUrl").GetProperty("url").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropUrl").GetProperty("fileId").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropUrl").GetProperty("filename").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropUrl").GetProperty("fileType").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropUrl").GetProperty("expireTime").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropUrl").GetProperty("validationStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileurl").GetProperty("url").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileurl").GetProperty("fileId").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileurl").GetProperty("filename").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileurl").GetProperty("fileType").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileurl").GetProperty("expireTime").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileurl").GetProperty("validationStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalUrls")[0].GetProperty("url").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalUrls")[0].GetProperty("fileId").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalUrls")[0].GetProperty("filename").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalUrls")[0].GetProperty("fileType").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalUrls")[0].GetProperty("expireTime").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalUrls")[0].GetProperty("validationStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("secrets").GetProperty("<test>").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("secrets").GetProperty("<test>").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("environmentVariables").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("subnetId").ToString());
-        /// Console.WriteLine(result.GetProperty("keyvaultReferenceIdentityType").ToString());
-        /// Console.WriteLine(result.GetProperty("keyvaultReferenceIdentityId").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>TestModel</c>:
-        /// <code>{
-        ///   testId: string, # Optional. Unique test name as identifier.
-        ///   description: string, # Optional. The test description.
-        ///   displayName: string, # Optional. Display name of a test.
-        ///   resourceId: string, # Optional. Fully qualified resource Id e.g /subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}.
-        ///   loadTestConfig: {
-        ///     engineInstances: number, # Optional. The number of engine instances to execute load test. Supported values are in range of 1-45. Required for creating a new test.
-        ///     splitAllCSVs: boolean, # Optional. Whether all the input CSV files should be split evenly across all engines.
-        ///   }, # Optional. The load test configuration.
-        ///   passFailCriteria: {
-        ///     passFailMetrics: Dictionary&lt;string, PassFailMetric&gt;, # Optional. Map of id and pass fail metrics { id  : pass fail metrics }.
-        ///   }, # Optional. Pass fail criteria for a test.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. The created DateTime(ISO 8601 literal format) of the test model.
-        ///   createdBy: string, # Optional. The user that created the test model.
-        ///   lastModifiedDateTime: string (ISO 8601 Format), # Optional. The last Modified DateTime(ISO 8601 literal format) of the test model.
-        ///   lastModifiedBy: string, # Optional. The user that last modified the test model.
-        ///   inputArtifacts: {
-        ///     configUrl: {
-        ///       url: string, # Optional. File URL.
-        ///       fileId: string, # Optional. File unique identifier.
-        ///       filename: string, # Optional. Name of the file.
-        ///       fileType: &quot;0&quot; | &quot;1&quot; | &quot;2&quot;, # Optional. Integer representation of the file type (0 = JMX_FILE, 1 = USER_PROPERTIES, 2 = ADDITIONAL_ARTIFACTS)
-        ///       expireTime: string (ISO 8601 Format), # Optional. Expiry time of the file
-        ///       validationStatus: string, # Optional. Validation status of the file
-        ///     }, # Optional. FileUrl Model.
-        ///     testScriptUrl: FileUrl, # Optional. FileUrl Model.
-        ///     userPropUrl: FileUrl, # Optional. FileUrl Model.
-        ///     inputArtifactsZipFileurl: FileUrl, # Optional. FileUrl Model.
-        ///     additionalUrls: [FileUrl], # Optional. The input artifacts file { name : url } map for the test run.
-        ///   }, # Optional. The input artifacts for the test.
-        ///   secrets: Dictionary&lt;string, SecretMetadata&gt;, # Optional. Secrets can be stored in an Azure Key Vault or any other secret store. If the secret is stored in an Azure Key Vault, the value should be the secret identifier and the type should be AKV_SECRET_URI. If the secret is stored elsewhere, the secret value should be provided directly and the type should be SECRET_VALUE.
-        ///   environmentVariables: Dictionary&lt;string, string&gt;, # Optional. Environment variables which are defined as a set of &lt;name,value&gt; pairs.
-        ///   subnetId: string, # Optional. Subnet ID on which the load test instances should run.
-        ///   keyvaultReferenceIdentityType: string, # Optional. Type of the managed identity referencing the Key vault.
-        ///   keyvaultReferenceIdentityId: string, # Optional. Resource Id of the managed identity referencing the Key vault.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>TestModel</c>:
-        /// <code>{
-        ///   testId: string, # Optional. Unique test name as identifier.
-        ///   description: string, # Optional. The test description.
-        ///   displayName: string, # Optional. Display name of a test.
-        ///   resourceId: string, # Optional. Fully qualified resource Id e.g /subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}.
-        ///   loadTestConfig: {
-        ///     engineInstances: number, # Optional. The number of engine instances to execute load test. Supported values are in range of 1-45. Required for creating a new test.
-        ///     splitAllCSVs: boolean, # Optional. Whether all the input CSV files should be split evenly across all engines.
-        ///   }, # Optional. The load test configuration.
-        ///   passFailCriteria: {
-        ///     passFailMetrics: Dictionary&lt;string, PassFailMetric&gt;, # Optional. Map of id and pass fail metrics { id  : pass fail metrics }.
-        ///   }, # Optional. Pass fail criteria for a test.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. The created DateTime(ISO 8601 literal format) of the test model.
-        ///   createdBy: string, # Optional. The user that created the test model.
-        ///   lastModifiedDateTime: string (ISO 8601 Format), # Optional. The last Modified DateTime(ISO 8601 literal format) of the test model.
-        ///   lastModifiedBy: string, # Optional. The user that last modified the test model.
-        ///   inputArtifacts: {
-        ///     configUrl: {
-        ///       url: string, # Optional. File URL.
-        ///       fileId: string, # Optional. File unique identifier.
-        ///       filename: string, # Optional. Name of the file.
-        ///       fileType: &quot;0&quot; | &quot;1&quot; | &quot;2&quot;, # Optional. Integer representation of the file type (0 = JMX_FILE, 1 = USER_PROPERTIES, 2 = ADDITIONAL_ARTIFACTS)
-        ///       expireTime: string (ISO 8601 Format), # Optional. Expiry time of the file
-        ///       validationStatus: string, # Optional. Validation status of the file
-        ///     }, # Optional. FileUrl Model.
-        ///     testScriptUrl: FileUrl, # Optional. FileUrl Model.
-        ///     userPropUrl: FileUrl, # Optional. FileUrl Model.
-        ///     inputArtifactsZipFileurl: FileUrl, # Optional. FileUrl Model.
-        ///     additionalUrls: [FileUrl], # Optional. The input artifacts file { name : url } map for the test run.
-        ///   }, # Optional. The input artifacts for the test.
-        ///   secrets: Dictionary&lt;string, SecretMetadata&gt;, # Optional. Secrets can be stored in an Azure Key Vault or any other secret store. If the secret is stored in an Azure Key Vault, the value should be the secret identifier and the type should be AKV_SECRET_URI. If the secret is stored elsewhere, the secret value should be provided directly and the type should be SECRET_VALUE.
-        ///   environmentVariables: Dictionary&lt;string, string&gt;, # Optional. Environment variables which are defined as a set of &lt;name,value&gt; pairs.
-        ///   subnetId: string, # Optional. Subnet ID on which the load test instances should run.
-        ///   keyvaultReferenceIdentityType: string, # Optional. Type of the managed identity referencing the Key vault.
-        ///   keyvaultReferenceIdentityId: string, # Optional. Resource Id of the managed identity referencing the Key vault.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='CreateOrUpdateTestAsync(String,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateTestAsync(string testId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
@@ -1567,202 +592,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call CreateOrUpdateTest with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = client.CreateOrUpdateTest("<testId>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call CreateOrUpdateTest with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// var data = new {
-        ///     description = "<description>",
-        ///     displayName = "<displayName>",
-        ///     loadTestConfig = new {
-        ///         engineInstances = 1234,
-        ///         splitAllCSVs = true,
-        ///     },
-        ///     passFailCriteria = new {
-        ///         passFailMetrics = new {
-        ///             key = new {
-        ///                 clientmetric = "<clientmetric>",
-        ///                 aggregate = "<aggregate>",
-        ///                 condition = "<condition>",
-        ///                 requestName = "<requestName>",
-        ///                 value = 123.45d,
-        ///                 action = "<action>",
-        ///             },
-        ///         },
-        ///     },
-        ///     secrets = new {
-        ///         key = new {
-        ///             value = "<value>",
-        ///             type = "<type>",
-        ///         },
-        ///     },
-        ///     environmentVariables = new {
-        ///         key = "<String>",
-        ///     },
-        ///     subnetId = "<subnetId>",
-        ///     keyvaultReferenceIdentityType = "<keyvaultReferenceIdentityType>",
-        ///     keyvaultReferenceIdentityId = "<keyvaultReferenceIdentityId>",
-        /// };
-        /// 
-        /// Response response = client.CreateOrUpdateTest("<testId>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("testId").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("displayName").ToString());
-        /// Console.WriteLine(result.GetProperty("resourceId").ToString());
-        /// Console.WriteLine(result.GetProperty("loadTestConfig").GetProperty("engineInstances").ToString());
-        /// Console.WriteLine(result.GetProperty("loadTestConfig").GetProperty("splitAllCSVs").ToString());
-        /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientmetric").ToString());
-        /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("aggregate").ToString());
-        /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("condition").ToString());
-        /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("requestName").ToString());
-        /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("action").ToString());
-        /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("actualValue").ToString());
-        /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("result").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
-        /// Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configUrl").GetProperty("url").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configUrl").GetProperty("fileId").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configUrl").GetProperty("filename").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configUrl").GetProperty("fileType").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configUrl").GetProperty("expireTime").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configUrl").GetProperty("validationStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptUrl").GetProperty("url").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptUrl").GetProperty("fileId").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptUrl").GetProperty("filename").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptUrl").GetProperty("fileType").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptUrl").GetProperty("expireTime").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptUrl").GetProperty("validationStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropUrl").GetProperty("url").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropUrl").GetProperty("fileId").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropUrl").GetProperty("filename").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropUrl").GetProperty("fileType").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropUrl").GetProperty("expireTime").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropUrl").GetProperty("validationStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileurl").GetProperty("url").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileurl").GetProperty("fileId").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileurl").GetProperty("filename").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileurl").GetProperty("fileType").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileurl").GetProperty("expireTime").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileurl").GetProperty("validationStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalUrls")[0].GetProperty("url").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalUrls")[0].GetProperty("fileId").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalUrls")[0].GetProperty("filename").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalUrls")[0].GetProperty("fileType").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalUrls")[0].GetProperty("expireTime").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalUrls")[0].GetProperty("validationStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("secrets").GetProperty("<test>").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("secrets").GetProperty("<test>").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("environmentVariables").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("subnetId").ToString());
-        /// Console.WriteLine(result.GetProperty("keyvaultReferenceIdentityType").ToString());
-        /// Console.WriteLine(result.GetProperty("keyvaultReferenceIdentityId").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>TestModel</c>:
-        /// <code>{
-        ///   testId: string, # Optional. Unique test name as identifier.
-        ///   description: string, # Optional. The test description.
-        ///   displayName: string, # Optional. Display name of a test.
-        ///   resourceId: string, # Optional. Fully qualified resource Id e.g /subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}.
-        ///   loadTestConfig: {
-        ///     engineInstances: number, # Optional. The number of engine instances to execute load test. Supported values are in range of 1-45. Required for creating a new test.
-        ///     splitAllCSVs: boolean, # Optional. Whether all the input CSV files should be split evenly across all engines.
-        ///   }, # Optional. The load test configuration.
-        ///   passFailCriteria: {
-        ///     passFailMetrics: Dictionary&lt;string, PassFailMetric&gt;, # Optional. Map of id and pass fail metrics { id  : pass fail metrics }.
-        ///   }, # Optional. Pass fail criteria for a test.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. The created DateTime(ISO 8601 literal format) of the test model.
-        ///   createdBy: string, # Optional. The user that created the test model.
-        ///   lastModifiedDateTime: string (ISO 8601 Format), # Optional. The last Modified DateTime(ISO 8601 literal format) of the test model.
-        ///   lastModifiedBy: string, # Optional. The user that last modified the test model.
-        ///   inputArtifacts: {
-        ///     configUrl: {
-        ///       url: string, # Optional. File URL.
-        ///       fileId: string, # Optional. File unique identifier.
-        ///       filename: string, # Optional. Name of the file.
-        ///       fileType: &quot;0&quot; | &quot;1&quot; | &quot;2&quot;, # Optional. Integer representation of the file type (0 = JMX_FILE, 1 = USER_PROPERTIES, 2 = ADDITIONAL_ARTIFACTS)
-        ///       expireTime: string (ISO 8601 Format), # Optional. Expiry time of the file
-        ///       validationStatus: string, # Optional. Validation status of the file
-        ///     }, # Optional. FileUrl Model.
-        ///     testScriptUrl: FileUrl, # Optional. FileUrl Model.
-        ///     userPropUrl: FileUrl, # Optional. FileUrl Model.
-        ///     inputArtifactsZipFileurl: FileUrl, # Optional. FileUrl Model.
-        ///     additionalUrls: [FileUrl], # Optional. The input artifacts file { name : url } map for the test run.
-        ///   }, # Optional. The input artifacts for the test.
-        ///   secrets: Dictionary&lt;string, SecretMetadata&gt;, # Optional. Secrets can be stored in an Azure Key Vault or any other secret store. If the secret is stored in an Azure Key Vault, the value should be the secret identifier and the type should be AKV_SECRET_URI. If the secret is stored elsewhere, the secret value should be provided directly and the type should be SECRET_VALUE.
-        ///   environmentVariables: Dictionary&lt;string, string&gt;, # Optional. Environment variables which are defined as a set of &lt;name,value&gt; pairs.
-        ///   subnetId: string, # Optional. Subnet ID on which the load test instances should run.
-        ///   keyvaultReferenceIdentityType: string, # Optional. Type of the managed identity referencing the Key vault.
-        ///   keyvaultReferenceIdentityId: string, # Optional. Resource Id of the managed identity referencing the Key vault.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>TestModel</c>:
-        /// <code>{
-        ///   testId: string, # Optional. Unique test name as identifier.
-        ///   description: string, # Optional. The test description.
-        ///   displayName: string, # Optional. Display name of a test.
-        ///   resourceId: string, # Optional. Fully qualified resource Id e.g /subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}.
-        ///   loadTestConfig: {
-        ///     engineInstances: number, # Optional. The number of engine instances to execute load test. Supported values are in range of 1-45. Required for creating a new test.
-        ///     splitAllCSVs: boolean, # Optional. Whether all the input CSV files should be split evenly across all engines.
-        ///   }, # Optional. The load test configuration.
-        ///   passFailCriteria: {
-        ///     passFailMetrics: Dictionary&lt;string, PassFailMetric&gt;, # Optional. Map of id and pass fail metrics { id  : pass fail metrics }.
-        ///   }, # Optional. Pass fail criteria for a test.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. The created DateTime(ISO 8601 literal format) of the test model.
-        ///   createdBy: string, # Optional. The user that created the test model.
-        ///   lastModifiedDateTime: string (ISO 8601 Format), # Optional. The last Modified DateTime(ISO 8601 literal format) of the test model.
-        ///   lastModifiedBy: string, # Optional. The user that last modified the test model.
-        ///   inputArtifacts: {
-        ///     configUrl: {
-        ///       url: string, # Optional. File URL.
-        ///       fileId: string, # Optional. File unique identifier.
-        ///       filename: string, # Optional. Name of the file.
-        ///       fileType: &quot;0&quot; | &quot;1&quot; | &quot;2&quot;, # Optional. Integer representation of the file type (0 = JMX_FILE, 1 = USER_PROPERTIES, 2 = ADDITIONAL_ARTIFACTS)
-        ///       expireTime: string (ISO 8601 Format), # Optional. Expiry time of the file
-        ///       validationStatus: string, # Optional. Validation status of the file
-        ///     }, # Optional. FileUrl Model.
-        ///     testScriptUrl: FileUrl, # Optional. FileUrl Model.
-        ///     userPropUrl: FileUrl, # Optional. FileUrl Model.
-        ///     inputArtifactsZipFileurl: FileUrl, # Optional. FileUrl Model.
-        ///     additionalUrls: [FileUrl], # Optional. The input artifacts file { name : url } map for the test run.
-        ///   }, # Optional. The input artifacts for the test.
-        ///   secrets: Dictionary&lt;string, SecretMetadata&gt;, # Optional. Secrets can be stored in an Azure Key Vault or any other secret store. If the secret is stored in an Azure Key Vault, the value should be the secret identifier and the type should be AKV_SECRET_URI. If the secret is stored elsewhere, the secret value should be provided directly and the type should be SECRET_VALUE.
-        ///   environmentVariables: Dictionary&lt;string, string&gt;, # Optional. Environment variables which are defined as a set of &lt;name,value&gt; pairs.
-        ///   subnetId: string, # Optional. Subnet ID on which the load test instances should run.
-        ///   keyvaultReferenceIdentityType: string, # Optional. Type of the managed identity referencing the Key vault.
-        ///   keyvaultReferenceIdentityId: string, # Optional. Resource Id of the managed identity referencing the Key vault.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='CreateOrUpdateTest(String,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdateTest(string testId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
@@ -1789,16 +619,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call DeleteLoadTestAsync with required parameters.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = await client.DeleteLoadTestAsync("<testId>");
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='DeleteLoadTestAsync(String,RequestContext)']/*" />
         public virtual async Task<Response> DeleteLoadTestAsync(string testId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
@@ -1824,16 +645,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call DeleteLoadTest with required parameters.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = client.DeleteLoadTest("<testId>");
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='DeleteLoadTest(String,RequestContext)']/*" />
         public virtual Response DeleteLoadTest(string testId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
@@ -1859,116 +671,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetLoadTestAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = await client.GetLoadTestAsync("<testId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("testId").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("displayName").ToString());
-        /// Console.WriteLine(result.GetProperty("resourceId").ToString());
-        /// Console.WriteLine(result.GetProperty("loadTestConfig").GetProperty("engineInstances").ToString());
-        /// Console.WriteLine(result.GetProperty("loadTestConfig").GetProperty("splitAllCSVs").ToString());
-        /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientmetric").ToString());
-        /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("aggregate").ToString());
-        /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("condition").ToString());
-        /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("requestName").ToString());
-        /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("action").ToString());
-        /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("actualValue").ToString());
-        /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("result").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
-        /// Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configUrl").GetProperty("url").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configUrl").GetProperty("fileId").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configUrl").GetProperty("filename").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configUrl").GetProperty("fileType").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configUrl").GetProperty("expireTime").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configUrl").GetProperty("validationStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptUrl").GetProperty("url").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptUrl").GetProperty("fileId").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptUrl").GetProperty("filename").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptUrl").GetProperty("fileType").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptUrl").GetProperty("expireTime").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptUrl").GetProperty("validationStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropUrl").GetProperty("url").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropUrl").GetProperty("fileId").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropUrl").GetProperty("filename").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropUrl").GetProperty("fileType").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropUrl").GetProperty("expireTime").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropUrl").GetProperty("validationStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileurl").GetProperty("url").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileurl").GetProperty("fileId").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileurl").GetProperty("filename").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileurl").GetProperty("fileType").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileurl").GetProperty("expireTime").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileurl").GetProperty("validationStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalUrls")[0].GetProperty("url").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalUrls")[0].GetProperty("fileId").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalUrls")[0].GetProperty("filename").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalUrls")[0].GetProperty("fileType").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalUrls")[0].GetProperty("expireTime").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalUrls")[0].GetProperty("validationStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("secrets").GetProperty("<test>").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("secrets").GetProperty("<test>").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("environmentVariables").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("subnetId").ToString());
-        /// Console.WriteLine(result.GetProperty("keyvaultReferenceIdentityType").ToString());
-        /// Console.WriteLine(result.GetProperty("keyvaultReferenceIdentityId").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>TestModel</c>:
-        /// <code>{
-        ///   testId: string, # Optional. Unique test name as identifier.
-        ///   description: string, # Optional. The test description.
-        ///   displayName: string, # Optional. Display name of a test.
-        ///   resourceId: string, # Optional. Fully qualified resource Id e.g /subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}.
-        ///   loadTestConfig: {
-        ///     engineInstances: number, # Optional. The number of engine instances to execute load test. Supported values are in range of 1-45. Required for creating a new test.
-        ///     splitAllCSVs: boolean, # Optional. Whether all the input CSV files should be split evenly across all engines.
-        ///   }, # Optional. The load test configuration.
-        ///   passFailCriteria: {
-        ///     passFailMetrics: Dictionary&lt;string, PassFailMetric&gt;, # Optional. Map of id and pass fail metrics { id  : pass fail metrics }.
-        ///   }, # Optional. Pass fail criteria for a test.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. The created DateTime(ISO 8601 literal format) of the test model.
-        ///   createdBy: string, # Optional. The user that created the test model.
-        ///   lastModifiedDateTime: string (ISO 8601 Format), # Optional. The last Modified DateTime(ISO 8601 literal format) of the test model.
-        ///   lastModifiedBy: string, # Optional. The user that last modified the test model.
-        ///   inputArtifacts: {
-        ///     configUrl: {
-        ///       url: string, # Optional. File URL.
-        ///       fileId: string, # Optional. File unique identifier.
-        ///       filename: string, # Optional. Name of the file.
-        ///       fileType: &quot;0&quot; | &quot;1&quot; | &quot;2&quot;, # Optional. Integer representation of the file type (0 = JMX_FILE, 1 = USER_PROPERTIES, 2 = ADDITIONAL_ARTIFACTS)
-        ///       expireTime: string (ISO 8601 Format), # Optional. Expiry time of the file
-        ///       validationStatus: string, # Optional. Validation status of the file
-        ///     }, # Optional. FileUrl Model.
-        ///     testScriptUrl: FileUrl, # Optional. FileUrl Model.
-        ///     userPropUrl: FileUrl, # Optional. FileUrl Model.
-        ///     inputArtifactsZipFileurl: FileUrl, # Optional. FileUrl Model.
-        ///     additionalUrls: [FileUrl], # Optional. The input artifacts file { name : url } map for the test run.
-        ///   }, # Optional. The input artifacts for the test.
-        ///   secrets: Dictionary&lt;string, SecretMetadata&gt;, # Optional. Secrets can be stored in an Azure Key Vault or any other secret store. If the secret is stored in an Azure Key Vault, the value should be the secret identifier and the type should be AKV_SECRET_URI. If the secret is stored elsewhere, the secret value should be provided directly and the type should be SECRET_VALUE.
-        ///   environmentVariables: Dictionary&lt;string, string&gt;, # Optional. Environment variables which are defined as a set of &lt;name,value&gt; pairs.
-        ///   subnetId: string, # Optional. Subnet ID on which the load test instances should run.
-        ///   keyvaultReferenceIdentityType: string, # Optional. Type of the managed identity referencing the Key vault.
-        ///   keyvaultReferenceIdentityId: string, # Optional. Resource Id of the managed identity referencing the Key vault.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetLoadTestAsync(String,RequestContext)']/*" />
         public virtual async Task<Response> GetLoadTestAsync(string testId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
@@ -1994,116 +697,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetLoadTest with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = client.GetLoadTest("<testId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("testId").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("displayName").ToString());
-        /// Console.WriteLine(result.GetProperty("resourceId").ToString());
-        /// Console.WriteLine(result.GetProperty("loadTestConfig").GetProperty("engineInstances").ToString());
-        /// Console.WriteLine(result.GetProperty("loadTestConfig").GetProperty("splitAllCSVs").ToString());
-        /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientmetric").ToString());
-        /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("aggregate").ToString());
-        /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("condition").ToString());
-        /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("requestName").ToString());
-        /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("action").ToString());
-        /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("actualValue").ToString());
-        /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("result").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
-        /// Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configUrl").GetProperty("url").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configUrl").GetProperty("fileId").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configUrl").GetProperty("filename").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configUrl").GetProperty("fileType").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configUrl").GetProperty("expireTime").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configUrl").GetProperty("validationStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptUrl").GetProperty("url").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptUrl").GetProperty("fileId").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptUrl").GetProperty("filename").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptUrl").GetProperty("fileType").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptUrl").GetProperty("expireTime").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptUrl").GetProperty("validationStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropUrl").GetProperty("url").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropUrl").GetProperty("fileId").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropUrl").GetProperty("filename").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropUrl").GetProperty("fileType").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropUrl").GetProperty("expireTime").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropUrl").GetProperty("validationStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileurl").GetProperty("url").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileurl").GetProperty("fileId").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileurl").GetProperty("filename").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileurl").GetProperty("fileType").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileurl").GetProperty("expireTime").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileurl").GetProperty("validationStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalUrls")[0].GetProperty("url").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalUrls")[0].GetProperty("fileId").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalUrls")[0].GetProperty("filename").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalUrls")[0].GetProperty("fileType").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalUrls")[0].GetProperty("expireTime").ToString());
-        /// Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalUrls")[0].GetProperty("validationStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("secrets").GetProperty("<test>").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("secrets").GetProperty("<test>").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("environmentVariables").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("subnetId").ToString());
-        /// Console.WriteLine(result.GetProperty("keyvaultReferenceIdentityType").ToString());
-        /// Console.WriteLine(result.GetProperty("keyvaultReferenceIdentityId").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>TestModel</c>:
-        /// <code>{
-        ///   testId: string, # Optional. Unique test name as identifier.
-        ///   description: string, # Optional. The test description.
-        ///   displayName: string, # Optional. Display name of a test.
-        ///   resourceId: string, # Optional. Fully qualified resource Id e.g /subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}.
-        ///   loadTestConfig: {
-        ///     engineInstances: number, # Optional. The number of engine instances to execute load test. Supported values are in range of 1-45. Required for creating a new test.
-        ///     splitAllCSVs: boolean, # Optional. Whether all the input CSV files should be split evenly across all engines.
-        ///   }, # Optional. The load test configuration.
-        ///   passFailCriteria: {
-        ///     passFailMetrics: Dictionary&lt;string, PassFailMetric&gt;, # Optional. Map of id and pass fail metrics { id  : pass fail metrics }.
-        ///   }, # Optional. Pass fail criteria for a test.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. The created DateTime(ISO 8601 literal format) of the test model.
-        ///   createdBy: string, # Optional. The user that created the test model.
-        ///   lastModifiedDateTime: string (ISO 8601 Format), # Optional. The last Modified DateTime(ISO 8601 literal format) of the test model.
-        ///   lastModifiedBy: string, # Optional. The user that last modified the test model.
-        ///   inputArtifacts: {
-        ///     configUrl: {
-        ///       url: string, # Optional. File URL.
-        ///       fileId: string, # Optional. File unique identifier.
-        ///       filename: string, # Optional. Name of the file.
-        ///       fileType: &quot;0&quot; | &quot;1&quot; | &quot;2&quot;, # Optional. Integer representation of the file type (0 = JMX_FILE, 1 = USER_PROPERTIES, 2 = ADDITIONAL_ARTIFACTS)
-        ///       expireTime: string (ISO 8601 Format), # Optional. Expiry time of the file
-        ///       validationStatus: string, # Optional. Validation status of the file
-        ///     }, # Optional. FileUrl Model.
-        ///     testScriptUrl: FileUrl, # Optional. FileUrl Model.
-        ///     userPropUrl: FileUrl, # Optional. FileUrl Model.
-        ///     inputArtifactsZipFileurl: FileUrl, # Optional. FileUrl Model.
-        ///     additionalUrls: [FileUrl], # Optional. The input artifacts file { name : url } map for the test run.
-        ///   }, # Optional. The input artifacts for the test.
-        ///   secrets: Dictionary&lt;string, SecretMetadata&gt;, # Optional. Secrets can be stored in an Azure Key Vault or any other secret store. If the secret is stored in an Azure Key Vault, the value should be the secret identifier and the type should be AKV_SECRET_URI. If the secret is stored elsewhere, the secret value should be provided directly and the type should be SECRET_VALUE.
-        ///   environmentVariables: Dictionary&lt;string, string&gt;, # Optional. Environment variables which are defined as a set of &lt;name,value&gt; pairs.
-        ///   subnetId: string, # Optional. Subnet ID on which the load test instances should run.
-        ///   keyvaultReferenceIdentityType: string, # Optional. Type of the managed identity referencing the Key vault.
-        ///   keyvaultReferenceIdentityId: string, # Optional. Resource Id of the managed identity referencing the Key vault.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetLoadTest(String,RequestContext)']/*" />
         public virtual Response GetLoadTest(string testId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
@@ -2132,132 +726,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetLoadTestSearchesAsync and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = await client.GetLoadTestSearchesAsync();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("value")[0].ToString());
-        /// ]]></code>
-        /// This sample shows how to call GetLoadTestSearchesAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = await client.GetLoadTestSearchesAsync("<orderBy>", "<search>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, "<continuationToken>", 1234);
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("testId").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("displayName").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("resourceId").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("loadTestConfig").GetProperty("engineInstances").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("loadTestConfig").GetProperty("splitAllCSVs").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientmetric").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("aggregate").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("condition").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("requestName").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("action").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("actualValue").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("result").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("createdBy").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("lastModifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("lastModifiedBy").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("configUrl").GetProperty("url").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("configUrl").GetProperty("fileId").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("configUrl").GetProperty("filename").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("configUrl").GetProperty("fileType").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("configUrl").GetProperty("expireTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("configUrl").GetProperty("validationStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("testScriptUrl").GetProperty("url").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("testScriptUrl").GetProperty("fileId").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("testScriptUrl").GetProperty("filename").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("testScriptUrl").GetProperty("fileType").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("testScriptUrl").GetProperty("expireTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("testScriptUrl").GetProperty("validationStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("userPropUrl").GetProperty("url").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("userPropUrl").GetProperty("fileId").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("userPropUrl").GetProperty("filename").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("userPropUrl").GetProperty("fileType").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("userPropUrl").GetProperty("expireTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("userPropUrl").GetProperty("validationStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileurl").GetProperty("url").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileurl").GetProperty("fileId").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileurl").GetProperty("filename").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileurl").GetProperty("fileType").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileurl").GetProperty("expireTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileurl").GetProperty("validationStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("additionalUrls")[0].GetProperty("url").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("additionalUrls")[0].GetProperty("fileId").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("additionalUrls")[0].GetProperty("filename").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("additionalUrls")[0].GetProperty("fileType").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("additionalUrls")[0].GetProperty("expireTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("additionalUrls")[0].GetProperty("validationStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("secrets").GetProperty("<test>").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("secrets").GetProperty("<test>").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("environmentVariables").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("subnetId").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("keyvaultReferenceIdentityType").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("keyvaultReferenceIdentityId").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>TestModelResourceList</c>:
-        /// <code>{
-        ///   value: [
-        ///     {
-        ///       testId: string, # Optional. Unique test name as identifier.
-        ///       description: string, # Optional. The test description.
-        ///       displayName: string, # Optional. Display name of a test.
-        ///       resourceId: string, # Optional. Fully qualified resource Id e.g /subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}.
-        ///       loadTestConfig: {
-        ///         engineInstances: number, # Optional. The number of engine instances to execute load test. Supported values are in range of 1-45. Required for creating a new test.
-        ///         splitAllCSVs: boolean, # Optional. Whether all the input CSV files should be split evenly across all engines.
-        ///       }, # Optional. The load test configuration.
-        ///       passFailCriteria: {
-        ///         passFailMetrics: Dictionary&lt;string, PassFailMetric&gt;, # Optional. Map of id and pass fail metrics { id  : pass fail metrics }.
-        ///       }, # Optional. Pass fail criteria for a test.
-        ///       createdDateTime: string (ISO 8601 Format), # Optional. The created DateTime(ISO 8601 literal format) of the test model.
-        ///       createdBy: string, # Optional. The user that created the test model.
-        ///       lastModifiedDateTime: string (ISO 8601 Format), # Optional. The last Modified DateTime(ISO 8601 literal format) of the test model.
-        ///       lastModifiedBy: string, # Optional. The user that last modified the test model.
-        ///       inputArtifacts: {
-        ///         configUrl: {
-        ///           url: string, # Optional. File URL.
-        ///           fileId: string, # Optional. File unique identifier.
-        ///           filename: string, # Optional. Name of the file.
-        ///           fileType: &quot;0&quot; | &quot;1&quot; | &quot;2&quot;, # Optional. Integer representation of the file type (0 = JMX_FILE, 1 = USER_PROPERTIES, 2 = ADDITIONAL_ARTIFACTS)
-        ///           expireTime: string (ISO 8601 Format), # Optional. Expiry time of the file
-        ///           validationStatus: string, # Optional. Validation status of the file
-        ///         }, # Optional. FileUrl Model.
-        ///         testScriptUrl: FileUrl, # Optional. FileUrl Model.
-        ///         userPropUrl: FileUrl, # Optional. FileUrl Model.
-        ///         inputArtifactsZipFileurl: FileUrl, # Optional. FileUrl Model.
-        ///         additionalUrls: [FileUrl], # Optional. The input artifacts file { name : url } map for the test run.
-        ///       }, # Optional. The input artifacts for the test.
-        ///       secrets: Dictionary&lt;string, SecretMetadata&gt;, # Optional. Secrets can be stored in an Azure Key Vault or any other secret store. If the secret is stored in an Azure Key Vault, the value should be the secret identifier and the type should be AKV_SECRET_URI. If the secret is stored elsewhere, the secret value should be provided directly and the type should be SECRET_VALUE.
-        ///       environmentVariables: Dictionary&lt;string, string&gt;, # Optional. Environment variables which are defined as a set of &lt;name,value&gt; pairs.
-        ///       subnetId: string, # Optional. Subnet ID on which the load test instances should run.
-        ///       keyvaultReferenceIdentityType: string, # Optional. Type of the managed identity referencing the Key vault.
-        ///       keyvaultReferenceIdentityId: string, # Optional. Resource Id of the managed identity referencing the Key vault.
-        ///     }
-        ///   ], # Required. List of Resources
-        ///   nextLink: string, # Optional. Link for the next list of resources in case of paginated results, if applicable
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetLoadTestSearchesAsync(String,String,DateTimeOffset,DateTimeOffset,String,Int32,RequestContext)']/*" />
         public virtual async Task<Response> GetLoadTestSearchesAsync(string orderBy = null, string search = null, DateTimeOffset? lastUpdatedStartTime = null, DateTimeOffset? lastUpdatedEndTime = null, string continuationToken = null, int? maxPageSize = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetLoadTestSearches");
@@ -2284,132 +753,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetLoadTestSearches and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = client.GetLoadTestSearches();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("value")[0].ToString());
-        /// ]]></code>
-        /// This sample shows how to call GetLoadTestSearches with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = client.GetLoadTestSearches("<orderBy>", "<search>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, "<continuationToken>", 1234);
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("testId").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("displayName").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("resourceId").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("loadTestConfig").GetProperty("engineInstances").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("loadTestConfig").GetProperty("splitAllCSVs").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientmetric").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("aggregate").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("condition").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("requestName").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("action").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("actualValue").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("result").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("createdBy").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("lastModifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("lastModifiedBy").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("configUrl").GetProperty("url").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("configUrl").GetProperty("fileId").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("configUrl").GetProperty("filename").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("configUrl").GetProperty("fileType").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("configUrl").GetProperty("expireTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("configUrl").GetProperty("validationStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("testScriptUrl").GetProperty("url").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("testScriptUrl").GetProperty("fileId").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("testScriptUrl").GetProperty("filename").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("testScriptUrl").GetProperty("fileType").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("testScriptUrl").GetProperty("expireTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("testScriptUrl").GetProperty("validationStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("userPropUrl").GetProperty("url").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("userPropUrl").GetProperty("fileId").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("userPropUrl").GetProperty("filename").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("userPropUrl").GetProperty("fileType").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("userPropUrl").GetProperty("expireTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("userPropUrl").GetProperty("validationStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileurl").GetProperty("url").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileurl").GetProperty("fileId").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileurl").GetProperty("filename").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileurl").GetProperty("fileType").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileurl").GetProperty("expireTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileurl").GetProperty("validationStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("additionalUrls")[0].GetProperty("url").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("additionalUrls")[0].GetProperty("fileId").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("additionalUrls")[0].GetProperty("filename").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("additionalUrls")[0].GetProperty("fileType").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("additionalUrls")[0].GetProperty("expireTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("inputArtifacts").GetProperty("additionalUrls")[0].GetProperty("validationStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("secrets").GetProperty("<test>").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("secrets").GetProperty("<test>").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("environmentVariables").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("subnetId").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("keyvaultReferenceIdentityType").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("keyvaultReferenceIdentityId").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>TestModelResourceList</c>:
-        /// <code>{
-        ///   value: [
-        ///     {
-        ///       testId: string, # Optional. Unique test name as identifier.
-        ///       description: string, # Optional. The test description.
-        ///       displayName: string, # Optional. Display name of a test.
-        ///       resourceId: string, # Optional. Fully qualified resource Id e.g /subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}.
-        ///       loadTestConfig: {
-        ///         engineInstances: number, # Optional. The number of engine instances to execute load test. Supported values are in range of 1-45. Required for creating a new test.
-        ///         splitAllCSVs: boolean, # Optional. Whether all the input CSV files should be split evenly across all engines.
-        ///       }, # Optional. The load test configuration.
-        ///       passFailCriteria: {
-        ///         passFailMetrics: Dictionary&lt;string, PassFailMetric&gt;, # Optional. Map of id and pass fail metrics { id  : pass fail metrics }.
-        ///       }, # Optional. Pass fail criteria for a test.
-        ///       createdDateTime: string (ISO 8601 Format), # Optional. The created DateTime(ISO 8601 literal format) of the test model.
-        ///       createdBy: string, # Optional. The user that created the test model.
-        ///       lastModifiedDateTime: string (ISO 8601 Format), # Optional. The last Modified DateTime(ISO 8601 literal format) of the test model.
-        ///       lastModifiedBy: string, # Optional. The user that last modified the test model.
-        ///       inputArtifacts: {
-        ///         configUrl: {
-        ///           url: string, # Optional. File URL.
-        ///           fileId: string, # Optional. File unique identifier.
-        ///           filename: string, # Optional. Name of the file.
-        ///           fileType: &quot;0&quot; | &quot;1&quot; | &quot;2&quot;, # Optional. Integer representation of the file type (0 = JMX_FILE, 1 = USER_PROPERTIES, 2 = ADDITIONAL_ARTIFACTS)
-        ///           expireTime: string (ISO 8601 Format), # Optional. Expiry time of the file
-        ///           validationStatus: string, # Optional. Validation status of the file
-        ///         }, # Optional. FileUrl Model.
-        ///         testScriptUrl: FileUrl, # Optional. FileUrl Model.
-        ///         userPropUrl: FileUrl, # Optional. FileUrl Model.
-        ///         inputArtifactsZipFileurl: FileUrl, # Optional. FileUrl Model.
-        ///         additionalUrls: [FileUrl], # Optional. The input artifacts file { name : url } map for the test run.
-        ///       }, # Optional. The input artifacts for the test.
-        ///       secrets: Dictionary&lt;string, SecretMetadata&gt;, # Optional. Secrets can be stored in an Azure Key Vault or any other secret store. If the secret is stored in an Azure Key Vault, the value should be the secret identifier and the type should be AKV_SECRET_URI. If the secret is stored elsewhere, the secret value should be provided directly and the type should be SECRET_VALUE.
-        ///       environmentVariables: Dictionary&lt;string, string&gt;, # Optional. Environment variables which are defined as a set of &lt;name,value&gt; pairs.
-        ///       subnetId: string, # Optional. Subnet ID on which the load test instances should run.
-        ///       keyvaultReferenceIdentityType: string, # Optional. Type of the managed identity referencing the Key vault.
-        ///       keyvaultReferenceIdentityId: string, # Optional. Resource Id of the managed identity referencing the Key vault.
-        ///     }
-        ///   ], # Required. List of Resources
-        ///   nextLink: string, # Optional. Link for the next list of resources in case of paginated results, if applicable
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetLoadTestSearches(String,String,DateTimeOffset,DateTimeOffset,String,Int32,RequestContext)']/*" />
         public virtual Response GetLoadTestSearches(string orderBy = null, string search = null, DateTimeOffset? lastUpdatedStartTime = null, DateTimeOffset? lastUpdatedEndTime = null, string continuationToken = null, int? maxPageSize = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetLoadTestSearches");
@@ -2436,54 +780,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call UploadTestFileAsync with required parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// var data = File.OpenRead("<filePath>");
-        /// 
-        /// Response response = await client.UploadTestFileAsync("<testId>", "<fileId>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call UploadTestFileAsync with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// var data = File.OpenRead("<filePath>");
-        /// 
-        /// Response response = await client.UploadTestFileAsync("<testId>", "<fileId>", RequestContent.Create(data), 1234);
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("url").ToString());
-        /// Console.WriteLine(result.GetProperty("fileId").ToString());
-        /// Console.WriteLine(result.GetProperty("filename").ToString());
-        /// Console.WriteLine(result.GetProperty("fileType").ToString());
-        /// Console.WriteLine(result.GetProperty("expireTime").ToString());
-        /// Console.WriteLine(result.GetProperty("validationStatus").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>FileUrl</c>:
-        /// <code>{
-        ///   url: string, # Optional. File URL.
-        ///   fileId: string, # Optional. File unique identifier.
-        ///   filename: string, # Optional. Name of the file.
-        ///   fileType: &quot;0&quot; | &quot;1&quot; | &quot;2&quot;, # Optional. Integer representation of the file type (0 = JMX_FILE, 1 = USER_PROPERTIES, 2 = ADDITIONAL_ARTIFACTS)
-        ///   expireTime: string (ISO 8601 Format), # Optional. Expiry time of the file
-        ///   validationStatus: string, # Optional. Validation status of the file
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='UploadTestFileAsync(String,String,RequestContent,Int32,RequestContext)']/*" />
         public virtual async Task<Response> UploadTestFileAsync(string testId, string fileId, RequestContent content, int? fileType = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
@@ -2514,54 +811,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call UploadTestFile with required parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// var data = File.OpenRead("<filePath>");
-        /// 
-        /// Response response = client.UploadTestFile("<testId>", "<fileId>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call UploadTestFile with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// var data = File.OpenRead("<filePath>");
-        /// 
-        /// Response response = client.UploadTestFile("<testId>", "<fileId>", RequestContent.Create(data), 1234);
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("url").ToString());
-        /// Console.WriteLine(result.GetProperty("fileId").ToString());
-        /// Console.WriteLine(result.GetProperty("filename").ToString());
-        /// Console.WriteLine(result.GetProperty("fileType").ToString());
-        /// Console.WriteLine(result.GetProperty("expireTime").ToString());
-        /// Console.WriteLine(result.GetProperty("validationStatus").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>FileUrl</c>:
-        /// <code>{
-        ///   url: string, # Optional. File URL.
-        ///   fileId: string, # Optional. File unique identifier.
-        ///   filename: string, # Optional. Name of the file.
-        ///   fileType: &quot;0&quot; | &quot;1&quot; | &quot;2&quot;, # Optional. Integer representation of the file type (0 = JMX_FILE, 1 = USER_PROPERTIES, 2 = ADDITIONAL_ARTIFACTS)
-        ///   expireTime: string (ISO 8601 Format), # Optional. Expiry time of the file
-        ///   validationStatus: string, # Optional. Validation status of the file
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='UploadTestFile(String,String,RequestContent,Int32,RequestContext)']/*" />
         public virtual Response UploadTestFile(string testId, string fileId, RequestContent content, int? fileType = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
@@ -2590,40 +840,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetTestFileAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = await client.GetTestFileAsync("<testId>", "<fileId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("url").ToString());
-        /// Console.WriteLine(result.GetProperty("fileId").ToString());
-        /// Console.WriteLine(result.GetProperty("filename").ToString());
-        /// Console.WriteLine(result.GetProperty("fileType").ToString());
-        /// Console.WriteLine(result.GetProperty("expireTime").ToString());
-        /// Console.WriteLine(result.GetProperty("validationStatus").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>FileUrl</c>:
-        /// <code>{
-        ///   url: string, # Optional. File URL.
-        ///   fileId: string, # Optional. File unique identifier.
-        ///   filename: string, # Optional. Name of the file.
-        ///   fileType: &quot;0&quot; | &quot;1&quot; | &quot;2&quot;, # Optional. Integer representation of the file type (0 = JMX_FILE, 1 = USER_PROPERTIES, 2 = ADDITIONAL_ARTIFACTS)
-        ///   expireTime: string (ISO 8601 Format), # Optional. Expiry time of the file
-        ///   validationStatus: string, # Optional. Validation status of the file
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestFileAsync(String,String,RequestContext)']/*" />
         public virtual async Task<Response> GetTestFileAsync(string testId, string fileId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
@@ -2651,40 +868,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetTestFile with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = client.GetTestFile("<testId>", "<fileId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("url").ToString());
-        /// Console.WriteLine(result.GetProperty("fileId").ToString());
-        /// Console.WriteLine(result.GetProperty("filename").ToString());
-        /// Console.WriteLine(result.GetProperty("fileType").ToString());
-        /// Console.WriteLine(result.GetProperty("expireTime").ToString());
-        /// Console.WriteLine(result.GetProperty("validationStatus").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>FileUrl</c>:
-        /// <code>{
-        ///   url: string, # Optional. File URL.
-        ///   fileId: string, # Optional. File unique identifier.
-        ///   filename: string, # Optional. Name of the file.
-        ///   fileType: &quot;0&quot; | &quot;1&quot; | &quot;2&quot;, # Optional. Integer representation of the file type (0 = JMX_FILE, 1 = USER_PROPERTIES, 2 = ADDITIONAL_ARTIFACTS)
-        ///   expireTime: string (ISO 8601 Format), # Optional. Expiry time of the file
-        ///   validationStatus: string, # Optional. Validation status of the file
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestFile(String,String,RequestContext)']/*" />
         public virtual Response GetTestFile(string testId, string fileId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
@@ -2712,16 +896,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call DeleteTestFileAsync with required parameters.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = await client.DeleteTestFileAsync("<testId>", "<fileId>");
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='DeleteTestFileAsync(String,String,RequestContext)']/*" />
         public virtual async Task<Response> DeleteTestFileAsync(string testId, string fileId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
@@ -2749,16 +924,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call DeleteTestFile with required parameters.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = client.DeleteTestFile("<testId>", "<fileId>");
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='DeleteTestFile(String,String,RequestContext)']/*" />
         public virtual Response DeleteTestFile(string testId, string fileId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
@@ -2786,56 +952,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetAllTestFilesAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = await client.GetAllTestFilesAsync("<testId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("value")[0].ToString());
-        /// ]]></code>
-        /// This sample shows how to call GetAllTestFilesAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = await client.GetAllTestFilesAsync("<testId>", "<continuationToken>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("url").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("fileId").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("filename").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("fileType").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("expireTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("validationStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>FileUrlList</c>:
-        /// <code>{
-        ///   value: [
-        ///     {
-        ///       url: string, # Optional. File URL.
-        ///       fileId: string, # Optional. File unique identifier.
-        ///       filename: string, # Optional. Name of the file.
-        ///       fileType: &quot;0&quot; | &quot;1&quot; | &quot;2&quot;, # Optional. Integer representation of the file type (0 = JMX_FILE, 1 = USER_PROPERTIES, 2 = ADDITIONAL_ARTIFACTS)
-        ///       expireTime: string (ISO 8601 Format), # Optional. Expiry time of the file
-        ///       validationStatus: string, # Optional. Validation status of the file
-        ///     }
-        ///   ], # Required. List of file URLs.
-        ///   nextLink: string, # Optional. Link for the next list of file URLs, if applicable
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetAllTestFilesAsync(String,String,RequestContext)']/*" />
         public virtual async Task<Response> GetAllTestFilesAsync(string testId, string continuationToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
@@ -2862,56 +979,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetAllTestFiles with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = client.GetAllTestFiles("<testId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("value")[0].ToString());
-        /// ]]></code>
-        /// This sample shows how to call GetAllTestFiles with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = client.GetAllTestFiles("<testId>", "<continuationToken>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("url").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("fileId").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("filename").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("fileType").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("expireTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("validationStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>FileUrlList</c>:
-        /// <code>{
-        ///   value: [
-        ///     {
-        ///       url: string, # Optional. File URL.
-        ///       fileId: string, # Optional. File unique identifier.
-        ///       filename: string, # Optional. Name of the file.
-        ///       fileType: &quot;0&quot; | &quot;1&quot; | &quot;2&quot;, # Optional. Integer representation of the file type (0 = JMX_FILE, 1 = USER_PROPERTIES, 2 = ADDITIONAL_ARTIFACTS)
-        ///       expireTime: string (ISO 8601 Format), # Optional. Expiry time of the file
-        ///       validationStatus: string, # Optional. Validation status of the file
-        ///     }
-        ///   ], # Required. List of file URLs.
-        ///   nextLink: string, # Optional. Link for the next list of file URLs, if applicable
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetAllTestFiles(String,String,RequestContext)']/*" />
         public virtual Response GetAllTestFiles(string testId, string continuationToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
@@ -2937,7 +1005,7 @@ namespace Azure.Developer.LoadTesting
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/appcomponents/", false);
             uri.AppendPath(name, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -2955,7 +1023,7 @@ namespace Azure.Developer.LoadTesting
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/appcomponents/", false);
             uri.AppendPath(name, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -2971,7 +1039,7 @@ namespace Azure.Developer.LoadTesting
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/appcomponents/", false);
             uri.AppendPath(name, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -2987,7 +1055,7 @@ namespace Azure.Developer.LoadTesting
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/appcomponents", false);
             if (testRunId != null)
             {
@@ -3010,7 +1078,7 @@ namespace Azure.Developer.LoadTesting
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/serverMetricsConfig/", false);
             uri.AppendPath(name, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -3028,7 +1096,7 @@ namespace Azure.Developer.LoadTesting
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/serverMetricsConfig/", false);
             uri.AppendPath(name, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -3044,7 +1112,7 @@ namespace Azure.Developer.LoadTesting
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/serverMetricsConfig/", false);
             uri.AppendPath(name, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -3060,7 +1128,7 @@ namespace Azure.Developer.LoadTesting
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/serverMetricsConfig", false);
             if (testRunId != null)
             {
@@ -3083,7 +1151,7 @@ namespace Azure.Developer.LoadTesting
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/serverMetricsConfig/default", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -3098,7 +1166,7 @@ namespace Azure.Developer.LoadTesting
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/serverMetricsConfig/supportedResourceTypes", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -3113,7 +1181,7 @@ namespace Azure.Developer.LoadTesting
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/loadtests/", false);
             uri.AppendPath(testId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -3131,7 +1199,7 @@ namespace Azure.Developer.LoadTesting
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/loadtests/", false);
             uri.AppendPath(testId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -3147,7 +1215,7 @@ namespace Azure.Developer.LoadTesting
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/loadtests/", false);
             uri.AppendPath(testId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -3163,7 +1231,7 @@ namespace Azure.Developer.LoadTesting
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/loadtests/sortAndFilter", false);
             if (orderBy != null)
             {
@@ -3202,7 +1270,7 @@ namespace Azure.Developer.LoadTesting
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/loadtests/", false);
             uri.AppendPath(testId, true);
             uri.AppendPath("/files/", false);
@@ -3226,7 +1294,7 @@ namespace Azure.Developer.LoadTesting
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/loadtests/", false);
             uri.AppendPath(testId, true);
             uri.AppendPath("/files/", false);
@@ -3244,7 +1312,7 @@ namespace Azure.Developer.LoadTesting
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/loadtests/", false);
             uri.AppendPath(testId, true);
             uri.AppendPath("/files/", false);
@@ -3262,7 +1330,7 @@ namespace Azure.Developer.LoadTesting
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/loadtests/", false);
             uri.AppendPath(testId, true);
             uri.AppendPath("/files", false);

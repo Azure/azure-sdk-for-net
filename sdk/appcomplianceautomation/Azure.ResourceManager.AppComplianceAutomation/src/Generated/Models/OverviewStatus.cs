@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         }
 
         /// <summary> Initializes a new instance of OverviewStatus. </summary>
-        /// <param name="passed"> The count of all passed full automation control. </param>
-        /// <param name="failed"> The count of all failed full automation control. </param>
-        /// <param name="manual"> The count of all manual control. </param>
-        internal OverviewStatus(int? passed, int? failed, int? manual)
+        /// <param name="passedCount"> The count of all passed full automation control. </param>
+        /// <param name="failedCount"> The count of all failed full automation control. </param>
+        /// <param name="manualCount"> The count of all manual control. </param>
+        internal OverviewStatus(int? passedCount, int? failedCount, int? manualCount)
         {
-            Passed = passed;
-            Failed = failed;
-            Manual = manual;
+            PassedCount = passedCount;
+            FailedCount = failedCount;
+            ManualCount = manualCount;
         }
 
         /// <summary> The count of all passed full automation control. </summary>
-        public int? Passed { get; }
+        public int? PassedCount { get; }
         /// <summary> The count of all failed full automation control. </summary>
-        public int? Failed { get; }
+        public int? FailedCount { get; }
         /// <summary> The count of all manual control. </summary>
-        public int? Manual { get; }
+        public int? ManualCount { get; }
     }
 }

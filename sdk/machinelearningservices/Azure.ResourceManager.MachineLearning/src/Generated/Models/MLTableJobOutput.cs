@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of MLTableJobOutput. </summary>
         public MLTableJobOutput()
         {
-            JobOutputType = JobOutputType.MLTable;
+            JobOutputType = JobOutputType.Mltable;
         }
 
         /// <summary> Initializes a new instance of MLTableJobOutput. </summary>

@@ -5,12 +5,7 @@
 
 #nullable disable
 
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppComplianceAutomation
@@ -18,9 +13,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation
     /// <summary> A class to add extension methods to TenantResource. </summary>
     internal partial class TenantResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _operationResultsClientDiagnostics;
-        private OperationResultsRestOperations _operationResultsRestClient;
-
         /// <summary> Initializes a new instance of the <see cref="TenantResourceExtensionClient"/> class for mocking. </summary>
         protected TenantResourceExtensionClient()
         {
@@ -33,9 +25,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         {
         }
 
-        private ClientDiagnostics OperationResultsClientDiagnostics => _operationResultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppComplianceAutomation", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private OperationResultsRestOperations OperationResultsRestClient => _operationResultsRestClient ??= new OperationResultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
@@ -47,60 +36,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         public virtual ReportResourceCollection GetReportResources()
         {
             return GetCachedClient(Client => new ReportResourceCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Query the ongoing operation status.
-        /// Request Path: /providers/Microsoft.AppComplianceAutomation/operationResults/{operationId}
-        /// Operation Id: OperationResults_Get
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> GetOperationResultAsync(WaitUntil waitUntil, string operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = OperationResultsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetOperationResult");
-            scope.Start();
-            try
-            {
-                var response = await OperationResultsRestClient.GetAsync(operationId, cancellationToken).ConfigureAwait(false);
-                var operation = new AppComplianceAutomationArmOperation(OperationResultsClientDiagnostics, Pipeline, OperationResultsRestClient.CreateGetRequest(operationId).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Query the ongoing operation status.
-        /// Request Path: /providers/Microsoft.AppComplianceAutomation/operationResults/{operationId}
-        /// Operation Id: OperationResults_Get
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation GetOperationResult(WaitUntil waitUntil, string operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = OperationResultsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetOperationResult");
-            scope.Start();
-            try
-            {
-                var response = OperationResultsRestClient.Get(operationId, cancellationToken);
-                var operation = new AppComplianceAutomationArmOperation(OperationResultsClientDiagnostics, Pipeline, OperationResultsRestClient.CreateGetRequest(operationId).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
     }
 }

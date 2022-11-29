@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static ApplicationsList DeserializeApplicationsList(JsonElement element)
         {
-            Optional<IReadOnlyList<ApplicationData>> value = default;
+            Optional<IReadOnlyList<SecurityApplicationData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ApplicationData> array = new List<ApplicationData>();
+                    List<SecurityApplicationData> array = new List<SecurityApplicationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationData.DeserializeApplicationData(item));
+                        array.Add(SecurityApplicationData.DeserializeSecurityApplicationData(item));
                     }
                     value = array;
                     continue;

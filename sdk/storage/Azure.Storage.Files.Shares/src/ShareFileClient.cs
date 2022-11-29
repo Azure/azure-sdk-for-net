@@ -2245,18 +2245,22 @@ namespace Azure.Storage.Files.Shares
                         var readDestStream = new MemoryStream((int)initialResponse.Value.ContentLength);
                         if (async)
                         {
-                            await stream.CopyToAsync(readDestStream).ConfigureAwait(false);
+#if NET6_0_OR_GREATER
+                            await initialResponse.Value.Content.CopyToAsync(readDestStream, cancellationToken).ConfigureAwait(false);
+#else
+                            await initialResponse.Value.Content.CopyToAsync(readDestStream).ConfigureAwait(false);
+#endif
                         }
                         else
                         {
-                            stream.CopyTo(readDestStream);
+                            initialResponse.Value.Content.CopyTo(readDestStream);
                         }
                         readDestStream.Position = 0;
 
                         ContentHasher.AssertResponseHashMatch(readDestStream, validationOptions.ChecksumAlgorithm, initialResponse.GetRawResponse());
 
                         // we've consumed the network stream to hash it; return buffered stream to the user
-                        stream = readDestStream;
+                        initialResponse.Value.Content = readDestStream;
                     }
 
                     return initialResponse;

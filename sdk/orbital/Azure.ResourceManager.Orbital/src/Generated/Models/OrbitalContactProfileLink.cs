@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Orbital.Models
 {
@@ -22,14 +23,8 @@ namespace Azure.ResourceManager.Orbital.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="channels"/> is null. </exception>
         public OrbitalContactProfileLink(string name, OrbitalLinkPolarization polarization, OrbitalLinkDirection direction, IEnumerable<OrbitalContactProfileLinkChannel> channels)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (channels == null)
-            {
-                throw new ArgumentNullException(nameof(channels));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(channels, nameof(channels));
 
             Name = name;
             Polarization = polarization;

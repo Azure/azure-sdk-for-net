@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static UnknownAuthCredentials DeserializeUnknownAuthCredentials(JsonElement element)
         {
-            string objectType = default;
+            string objectType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("objectType"))

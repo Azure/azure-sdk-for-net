@@ -3,8 +3,6 @@
 
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Azure.SignalR;
 using Microsoft.Azure.SignalR.Management;
@@ -51,25 +49,23 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 
         private IInternalServiceHubContextStore CreateHubContextStore(string connectionStringKey)
         {
-            var services = new ServiceCollection()
-                .Configure<ServiceManagerOptions>(o =>
-                {
-                    o.ServiceTransportType = _options.ServiceTransportType;
-                    o.ServiceEndpoints = _options.ServiceEndpoints?.ToArray();
-                    o.UseJsonObjectSerializer(_options.JsonObjectSerializer);
-                })
-                .SetupOptions<ServiceManagerOptions, OptionsSetup>(new OptionsSetup(_configuration, _azureComponentFactory, connectionStringKey))
-                .AddSignalRServiceManager()
-                .AddSingleton(sp => (ServiceManager)sp.GetService<IServiceManager>())
-                .AddSingleton(_loggerFactory)
-                .AddSingleton<IInternalServiceHubContextStore, ServiceHubContextStore>();
-            if (_router != null)
-            {
-                services.AddSingleton(_router);
-            }
-            services.AddSingleton(services.ToList() as IReadOnlyCollection<ServiceDescriptor>);
-            return services.BuildServiceProvider()
-               .GetRequiredService<IInternalServiceHubContextStore>();
+            var serviceManagerOptionsSetup = new OptionsSetup(_configuration, _azureComponentFactory, connectionStringKey, _options);
+            var serviceManger = new ServiceManagerBuilder()
+                // Does the actual configuration
+                .WithOptions(serviceManagerOptionsSetup.Configure)
+                .WithLoggerFactory(_loggerFactory)
+                .WithRouter(_router ?? new EndpointRouterDecorator())
+                // Serves as a reload token provider only
+                .WithConfiguration(new EmptyConfiguration(_configuration))
+                .BuildServiceManager();
+            return new ServiceCollection()
+                .AddSingleton(serviceManger)
+                .AddOptions()
+                .AddSingleton<IConfigureOptions<SignatureValidationOptions>>(new SignatureValidationOptionsSetup(serviceManagerOptionsSetup.Configure))
+                .AddSingleton<IOptionsChangeTokenSource<SignatureValidationOptions>>(new ConfigurationChangeTokenSource<SignatureValidationOptions>(_configuration))
+                .AddSingleton<ServiceHubContextStore>()
+                .BuildServiceProvider()
+                .GetRequiredService<ServiceHubContextStore>();
         }
 
         public async ValueTask DisposeAsync()

@@ -53,9 +53,13 @@ namespace Azure.AI.TextAnalytics.Tests
             "heart failure"
         };
 
+        private static readonly Dictionary<string, List<string>> s_expectedBatchOutput = new()
+        {
+            { "0", s_document1ExpectedEntitiesOutput },
+            { "1", s_document2ExpectedEntitiesOutput },
+        };
+
         [RecordedTest]
-        // TODO: Temporarily setting max version to V2022-05-01 since V2022-10-01-preview does not support AAD yet (https://github.com/Azure/azure-sdk-for-net/issues/31854).
-        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
         public async Task AnalyzeHealthcareEntitiesWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
@@ -234,22 +238,15 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task AnalyzeHealthcareEntitiesWithLanguageTest()
         {
             TextAnalyticsClient client = GetClient();
-
+            Dictionary<string, List<string>> expectedOutput = s_expectedBatchOutput;
             AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchConvenienceDocuments, "en");
 
             await operation.WaitForCompletionAsync();
 
             ValidateOperationProperties(operation);
 
-            //Take the first page
+            // Take the first page.
             AnalyzeHealthcareEntitiesResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
-
-            var expectedOutput = new Dictionary<string, List<string>>()
-            {
-                { "0", s_document1ExpectedEntitiesOutput },
-                { "1", s_document2ExpectedEntitiesOutput },
-            };
-
             ValidateBatchDocumentsResult(resultCollection, expectedOutput);
         }
 
@@ -287,22 +284,15 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task AnalyzeHealthcareEntitiesBatchConvenienceTest()
         {
             TextAnalyticsClient client = GetClient();
-
+            Dictionary<string, List<string>> expectedOutput = s_expectedBatchOutput;
             AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchConvenienceDocuments);
 
             await operation.WaitForCompletionAsync();
 
             ValidateOperationProperties(operation);
 
-            //Take the first page
+            // Take the first page.
             AnalyzeHealthcareEntitiesResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
-
-            var expectedOutput = new Dictionary<string, List<string>>()
-            {
-                { "0", s_document1ExpectedEntitiesOutput },
-                { "1", s_document2ExpectedEntitiesOutput },
-            };
-
             ValidateBatchDocumentsResult(resultCollection, expectedOutput);
         }
 
@@ -310,11 +300,14 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task AnalyzeHealthcareEntitiesBatchConvenienceWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
+            Dictionary<string, List<string>> expectedOutput = s_expectedBatchOutput;
+            AnalyzeHealthcareEntitiesOptions options = new AnalyzeHealthcareEntitiesOptions();
 
-            AnalyzeHealthcareEntitiesOptions options = new AnalyzeHealthcareEntitiesOptions()
+            // TODO: https://github.com/Azure/azure-sdk-for-net/issues/31978.
+            if (ServiceVersion is not TextAnalyticsClientOptions.ServiceVersion.V3_1)
             {
-                IncludeStatistics = true
-            };
+                options.IncludeStatistics = true;
+            }
 
             AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchConvenienceDocuments, "en", options);
 
@@ -322,15 +315,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
             ValidateOperationProperties(operation);
 
-            //Take the first page
+            // Take the first page.
             AnalyzeHealthcareEntitiesResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
-
-            var expectedOutput = new Dictionary<string, List<string>>()
-            {
-                { "0", s_document1ExpectedEntitiesOutput },
-                { "1", s_document2ExpectedEntitiesOutput },
-            };
-
             ValidateBatchDocumentsResult(resultCollection, expectedOutput, true);
         }
 
@@ -362,10 +348,13 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             TextAnalyticsClient client = GetClient();
 
-            AnalyzeHealthcareEntitiesOptions options = new AnalyzeHealthcareEntitiesOptions()
+            AnalyzeHealthcareEntitiesOptions options = new AnalyzeHealthcareEntitiesOptions();
+
+            // TODO: https://github.com/Azure/azure-sdk-for-net/issues/31978.
+            if (ServiceVersion is not TextAnalyticsClientOptions.ServiceVersion.V3_1)
             {
-                IncludeStatistics = true
-            };
+                options.IncludeStatistics = true;
+            }
 
             AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments, options);
 
@@ -507,7 +496,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 FhirVersion = WellKnownFhirVersion.V4_0_1,
             }));
 
-            Assert.AreEqual("AnalyzeHealthcareEntitiesOptions.FhirVersion is not available in API version 2022-05-01. Use service API version 2022-10-01-preview or newer.", ex.Message);
+            Assert.That(ex.Message.EndsWith("Use service API version 2022-10-01-preview or newer."));
         }
 
         [RecordedTest]
@@ -523,7 +512,32 @@ namespace Azure.AI.TextAnalytics.Tests
                 DocumentType = HealthcareDocumentType.DischargeSummary
             }));
 
-            Assert.AreEqual("AnalyzeHealthcareEntitiesOptions.DocumentType is not available in API version 2022-05-01. Use service API version 2022-10-01-preview or newer.", ex.Message);
+            Assert.That(ex.Message.EndsWith("Use service API version 2022-10-01-preview or newer."));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
+        public async Task AnalyzeOperationAnalyzeHealthcareEntitiesWithAutoDetectedLanguageTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            List<string> documents = s_batchConvenienceDocuments;
+            Dictionary<string, List<string>> expectedOutput = s_expectedBatchOutput;
+            TextAnalyticsActions actions = new()
+            {
+                AnalyzeHealthcareEntitiesActions = new List<AnalyzeHealthcareEntitiesAction>() { new AnalyzeHealthcareEntitiesAction() },
+                DisplayName = "AnalyzeHealthcareEntitiesWithAutoDetectedLanguage",
+            };
+
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, actions, "auto");
+            await operation.WaitForCompletionAsync();
+
+            // Take the first page.
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            IReadOnlyCollection<AnalyzeHealthcareEntitiesActionResult> actionResults = resultCollection.AnalyzeHealthcareEntitiesResults;
+            Assert.IsNotNull(actionResults);
+
+            AnalyzeHealthcareEntitiesResultCollection results = actionResults.FirstOrDefault().DocumentsResults;
+            ValidateBatchDocumentsResult(results, expectedOutput, isLanguageAutoDetected: true);
         }
 
         private void ValidateInDocumenResult(IReadOnlyCollection<HealthcareEntity> entities, List<string> minimumExpectedOutput)
@@ -544,44 +558,65 @@ namespace Azure.AI.TextAnalytics.Tests
             }
         }
 
-        private void ValidateBatchDocumentsResult(AnalyzeHealthcareEntitiesResultCollection results, Dictionary<string, List<string>> minimumExpectedOutput, bool includeStatistics = default)
+        private void ValidateBatchDocumentsResult(
+            AnalyzeHealthcareEntitiesResultCollection results,
+            Dictionary<string, List<string>> minimumExpectedOutput,
+            bool includeStatistics = default,
+            bool isLanguageAutoDetected = default)
         {
             Assert.That(results.ModelVersion, Is.Not.Null.And.Not.Empty);
 
-            if (includeStatistics)
+            // TODO: https://github.com/Azure/azure-sdk-for-net/issues/31978.
+            if (ServiceVersion is not TextAnalyticsClientOptions.ServiceVersion.V3_1)
             {
-                Assert.IsNotNull(results.Statistics);
-                Assert.Greater(results.Statistics.DocumentCount, 0);
-                Assert.Greater(results.Statistics.TransactionCount, 0);
-                Assert.GreaterOrEqual(results.Statistics.InvalidDocumentCount, 0);
-                Assert.GreaterOrEqual(results.Statistics.ValidDocumentCount, 0);
-            }
-            else
-                Assert.IsNull(results.Statistics);
-
-            foreach (AnalyzeHealthcareEntitiesResult entitiesInDocument in results)
-            {
-                Assert.That(entitiesInDocument.Id, Is.Not.Null.And.Not.Empty);
-
-                Assert.False(entitiesInDocument.HasError);
-
-                //Even though statistics are not asked for, TA 5.0.0 shipped with Statistics default always present.
-                Assert.IsNotNull(entitiesInDocument.Statistics);
-
                 if (includeStatistics)
                 {
-                    Assert.GreaterOrEqual(entitiesInDocument.Statistics.CharacterCount, 0);
-                    Assert.Greater(entitiesInDocument.Statistics.TransactionCount, 0);
+                    Assert.IsNotNull(results.Statistics);
+                    Assert.Greater(results.Statistics.DocumentCount, 0);
+                    Assert.Greater(results.Statistics.TransactionCount, 0);
+                    Assert.GreaterOrEqual(results.Statistics.InvalidDocumentCount, 0);
+                    Assert.GreaterOrEqual(results.Statistics.ValidDocumentCount, 0);
+                }
+                else
+                    Assert.IsNull(results.Statistics);
+            }
+
+            foreach (AnalyzeHealthcareEntitiesResult result in results)
+            {
+                Assert.That(result.Id, Is.Not.Null.And.Not.Empty);
+
+                Assert.False(result.HasError);
+
+                //Even though statistics are not asked for, TA 5.0.0 shipped with Statistics default always present.
+                Assert.IsNotNull(result.Statistics);
+
+                // TODO: https://github.com/Azure/azure-sdk-for-net/issues/31978.
+                if (ServiceVersion is not (TextAnalyticsClientOptions.ServiceVersion.V2022_05_01 or TextAnalyticsClientOptions.ServiceVersion.V3_1))
+                {
+                    if (includeStatistics)
+                    {
+                        Assert.GreaterOrEqual(result.Statistics.CharacterCount, 0);
+                        Assert.Greater(result.Statistics.TransactionCount, 0);
+                    }
+                    else
+                    {
+                        Assert.AreEqual(0, result.Statistics.CharacterCount);
+                        Assert.AreEqual(0, result.Statistics.TransactionCount);
+                    }
+                }
+
+                if (isLanguageAutoDetected)
+                {
+                    Assert.That(result.DetectedLanguage, Is.Not.Null.And.Not.Empty);
                 }
                 else
                 {
-                    Assert.AreEqual(0, entitiesInDocument.Statistics.CharacterCount);
-                    Assert.AreEqual(0, entitiesInDocument.Statistics.TransactionCount);
+                    Assert.IsNull(result.DetectedLanguage);
                 }
 
-                Assert.IsNotNull(entitiesInDocument.Warnings);
-                Assert.IsNotNull(entitiesInDocument.EntityRelations);
-                ValidateInDocumenResult(entitiesInDocument.Entities, minimumExpectedOutput[entitiesInDocument.Id]);
+                Assert.IsNotNull(result.Warnings);
+                Assert.IsNotNull(result.EntityRelations);
+                ValidateInDocumenResult(result.Entities, minimumExpectedOutput[result.Id]);
             }
         }
 

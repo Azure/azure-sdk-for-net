@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of BatchDeploymentProperties. </summary>
         /// <param name="codeConfiguration"> Code configuration for the endpoint deployment. </param>
         /// <param name="description"> Description of the endpoint deployment. </param>
-        /// <param name="environmentId"> ARM resource ID of the environment specification for the endpoint deployment. </param>
+        /// <param name="environmentId"> ARM resource ID or AssetId of the environment specification for the endpoint deployment. </param>
         /// <param name="environmentVariables"> Environment variables configuration for the deployment. </param>
         /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
         /// <param name="compute"> Compute target for batch inference operation. </param>
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Retry Settings for the batch inference operation.
         /// If not provided, will default to the defaults defined in BatchRetrySettings.
         /// </param>
-        internal BatchDeploymentProperties(CodeConfiguration codeConfiguration, string description, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, string> properties, string compute, int? errorThreshold, BatchLoggingLevel? loggingLevel, int? maxConcurrencyPerInstance, long? miniBatchSize, AssetReferenceBase model, BatchOutputAction? outputAction, string outputFileName, DeploymentProvisioningState? provisioningState, ResourceConfiguration resources, BatchRetrySettings retrySettings) : base(codeConfiguration, description, environmentId, environmentVariables, properties)
+        internal BatchDeploymentProperties(CodeConfiguration codeConfiguration, string description, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, string> properties, string compute, int? errorThreshold, BatchLoggingLevel? loggingLevel, int? maxConcurrencyPerInstance, long? miniBatchSize, AssetReferenceBase model, BatchOutputAction? outputAction, string outputFileName, DeploymentProvisioningState? provisioningState, DeploymentResourceConfiguration resources, BatchRetrySettings retrySettings) : base(codeConfiguration, description, environmentId, environmentVariables, properties)
         {
             Compute = compute;
             ErrorThreshold = errorThreshold;
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Indicates compute configuration for the job.
         /// If not provided, will default to the defaults defined in ResourceConfiguration.
         /// </summary>
-        public ResourceConfiguration Resources { get; set; }
+        public DeploymentResourceConfiguration Resources { get; set; }
         /// <summary>
         /// Retry Settings for the batch inference operation.
         /// If not provided, will default to the defaults defined in BatchRetrySettings.

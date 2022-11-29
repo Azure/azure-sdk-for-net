@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static UnknownComputeSecrets DeserializeUnknownComputeSecrets(JsonElement element)
         {
-            ComputeType computeType = default;
+            ComputeType computeType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("computeType"))

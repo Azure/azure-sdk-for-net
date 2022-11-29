@@ -17,6 +17,7 @@ namespace Azure.Communication.CallAutomation
         public RemoveParticipantsOptions(IEnumerable<CommunicationIdentifier> participantsToRemove)
         {
             ParticipantsToRemove = (IReadOnlyList<CommunicationIdentifier>)participantsToRemove;
+            RepeatabilityHeaders = new RepeatabilityHeaders();
         }
 
         /// <summary>

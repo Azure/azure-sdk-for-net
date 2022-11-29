@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="diskUri"/> is null. </exception>
         public A2AProtectionIntentDiskInputDetails(Uri diskUri)
         {
-            if (diskUri == null)
-            {
-                throw new ArgumentNullException(nameof(diskUri));
-            }
+            Argument.AssertNotNull(diskUri, nameof(diskUri));
 
             DiskUri = diskUri;
         }
