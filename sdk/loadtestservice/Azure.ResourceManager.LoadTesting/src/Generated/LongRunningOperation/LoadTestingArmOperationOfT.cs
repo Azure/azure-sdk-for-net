@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.LoadTesting
             _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, response, "LoadTestingArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
         }
 
-        internal LoadTestServiceArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string id)
+        internal LoadTestingArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string id)
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, id, out string finalResponse);
-            _operation = OperationInternal<T>.Create(source, clientDiagnostics, nextLinkOperation, finalResponse, "LoadTestServiceArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
+            _operation = OperationInternal<T>.Create(source, clientDiagnostics, nextLinkOperation, finalResponse, "LoadTestingArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
         }
 
         /// <inheritdoc />
