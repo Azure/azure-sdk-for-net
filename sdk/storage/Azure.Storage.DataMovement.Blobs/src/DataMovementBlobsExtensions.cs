@@ -1,9 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-using System;
-using Azure.Storage.DataMovement.Blobs.Models;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.DataMovement;
 using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement.Blobs
