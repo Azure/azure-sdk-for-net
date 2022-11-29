@@ -27,7 +27,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
         [SetUp]
         public void TestSetup()
         {
-            client = InstrumentClient(new ContainerRegistryBlobClient(_url, GetCredential(), "<repository>", new ContainerRegistryClientOptions()
+            client = InstrumentClient(new ContainerRegistryBlobClient(_url, "<repository>", GetCredential(), new ContainerRegistryClientOptions()
             {
                 Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
             }));
@@ -39,11 +39,11 @@ namespace Azure.Containers.ContainerRegistry.Tests
         [Test]
         public void ConstructorValidatesArguments()
         {
-            Assert.That(() => new ContainerRegistryBlobClient(null, GetCredential(), "<repo>"), Throws.InstanceOf<ArgumentNullException>(), "The constructor should validate the url.");
+            Assert.That(() => new ContainerRegistryBlobClient(null, "<repo>", GetCredential() ), Throws.InstanceOf<ArgumentNullException>(), "The constructor should validate the url.");
 
-            Assert.That(() => new ContainerRegistryBlobClient(_url, credential: null, "<repo>"), Throws.InstanceOf<ArgumentNullException>(), "The constructor should not accept a null credential.");
+            Assert.That(() => new ContainerRegistryBlobClient(_url, "<repo>", credential: null), Throws.InstanceOf<ArgumentNullException>(), "The constructor should not accept a null credential.");
 
-            Assert.That(() => new ContainerRegistryBlobClient(_url, GetCredential(), null), Throws.InstanceOf<ArgumentNullException>(), "The constructor should not accept null repository.");
+            Assert.That(() => new ContainerRegistryBlobClient(_url, null, GetCredential()), Throws.InstanceOf<ArgumentNullException>(), "The constructor should not accept null repository.");
         }
 
         /// <summary>

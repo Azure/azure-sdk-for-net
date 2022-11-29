@@ -82,8 +82,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             return InstrumentClient(new ContainerRegistryBlobClient(
                     new Uri(endpoint),
-                    TestEnvironment.Credential,
                     repository,
+                    TestEnvironment.Credential,
                     InstrumentClientOptions(new ContainerRegistryClientOptions()
                     {
                         Audience = audience
@@ -183,7 +183,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 environment);
 
             var managementClient = new ContainerRegistryManagementClient(
-                new Uri (environment.ResourceManagerEndpoint),
+                new Uri(environment.ResourceManagerEndpoint),
                 credential.WithDefaultSubscription(TestEnvironment.SubscriptionId));
             managementClient.SubscriptionId = TestEnvironment.SubscriptionId;
 
