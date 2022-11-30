@@ -60,11 +60,7 @@ namespace Azure.Monitor.Ingestion
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            if (contentEncoding != null)
-            {
-                request.Headers.Add("Content-Encoding", contentEncoding);
-            }
-            else if (contentEncoding == null)
+            if (contentEncoding == null)
             {
                 request.Headers.Add("Content-Encoding", "gzip");
                 GZipUtf8JsonRequestContent gzContent = new(content);
@@ -72,6 +68,7 @@ namespace Azure.Monitor.Ingestion
             }
             else
             {
+                request.Headers.Add("Content-Encoding", contentEncoding);
                 request.Content = content;
             }
             return message;
