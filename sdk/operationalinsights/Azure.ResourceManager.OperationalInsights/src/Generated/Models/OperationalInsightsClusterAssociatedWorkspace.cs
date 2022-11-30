@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="workspaceId"> The id of the assigned workspace. </param>
         /// <param name="workspaceName"> The name id the assigned workspace. </param>
         /// <param name="resourceId"> The ResourceId id the assigned workspace. </param>
-        /// <param name="associateOn"> The time of workspace association. </param>
-        internal OperationalInsightsClusterAssociatedWorkspace(Guid? workspaceId, string workspaceName, ResourceIdentifier resourceId, DateTimeOffset? associateOn)
+        /// <param name="associatedOn"> The time of workspace association. </param>
+        internal OperationalInsightsClusterAssociatedWorkspace(Guid? workspaceId, string workspaceName, ResourceIdentifier resourceId, DateTimeOffset? associatedOn)
         {
             WorkspaceId = workspaceId;
             WorkspaceName = workspaceName;
             ResourceId = resourceId;
-            AssociateOn = associateOn;
+            AssociatedOn = associatedOn;
         }
 
         /// <summary> The id of the assigned workspace. </summary>
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> The ResourceId id the assigned workspace. </summary>
         public ResourceIdentifier ResourceId { get; }
         /// <summary> The time of workspace association. </summary>
-        public DateTimeOffset? AssociateOn { get; }
+        public DateTimeOffset? AssociatedOn { get; }
     }
 }

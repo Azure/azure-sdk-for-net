@@ -91,7 +91,7 @@ rename-mapping:
   Cluster.properties.lastModifiedDate: -|date-time-rfc1123
   DataExport.properties.createdDate: -|date-time-rfc1123
   DataExport.properties.lastModifiedDate: -|date-time-rfc1123
-  AssociatedWorkspace.associateDate: -|date-time-rfc1123
+  AssociatedWorkspace.associateDate: AssociatedOn|date-time-rfc1123
   AssociatedWorkspace.workspaceId: -|uuid
   Workspace.properties.createdDate: -|date-time
   Workspace.properties.modifiedDate: -|date-time
@@ -103,10 +103,10 @@ rename-mapping:
   CapacityReservationProperties.lastSkuUpdate: LastSkuUpdatedOn
   WorkspaceSku.lastSkuUpdate: LastSkuUpdatedOn
   IntelligencePack.enabled: IsEnabled
-  WorkspaceFeatures.DisableLocalAuth: IsLocalAuthDisabled
+  WorkspaceFeatures.disableLocalAuth: IsLocalAuthDisabled
   WorkspaceFeatures.enableDataExport: IsDataExportEnabled
   WorkspaceFeatures.enableLogAccessUsingOnlyResourcePermissions: IsLogAccessUsingOnlyResourcePermissionsEnabled
-  PrivateLinkScopedResource: PrivateLinkScopedResourceInfo
+  PrivateLinkScopedResource: OperationalInsightsPrivateLinkScopedResourceInfo
   LogAnalyticsQueryPack.properties.timeCreated: CreatedOn
   LogAnalyticsQueryPack.properties.timeModified: ModifiedOn
   LogAnalyticsQueryPackQuery.properties.id: ApplicationId|uuid
@@ -145,9 +145,11 @@ rename-mapping:
   WorkspacePurgeResponse.operationId: -|uuid
   WorkspacePurgeBody: OperationalInsightsWorkspacePurgeContent
   WorkspacePurgeBodyFilters: OperationalInsightsWorkspacePurgeFilter
+  Capacity: OperationalInsightsClusterCapacity
+  CapacityReservationLevel: OperationalInsightsWorkspaceCapacityReservationLevel
 
-request-path-to-resource-name:
-  /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/linkedStorageAccounts/{dataSourceType}: OperationalInsightsLinkedStorageAccounts
+keep-plural-resource-data:
+  - OperationalInsightsLinkedStorageAccounts
 
 override-operation-name:
   WorkspacePurge_GetPurgeStatus: GetPurgeStatus
@@ -165,18 +167,6 @@ directive:
       delete $.SystemData;
       delete $.IdentityType;
       $.AzureResourceProperties.properties.systemData['$ref'] = '../../../../../common-types/resource-management/v2/types.json#/definitions/systemData';
-  # Codegen can't handle integer enum properly, should be fixed before GA
-  - from: Workspaces.json
-    where: $.definitions
-    transform: >
-      delete $.WorkspaceSku.properties.capacityReservationLevel['enum'];
-      delete $.WorkspaceSku.properties.capacityReservationLevel['x-ms-enum'];
-  # Codegen can't handle integter enum properly, should be fixed before GA
-  - from: Clusters.json
-    where: $.definitions
-    transform: >
-      delete $.ClusterSku.properties.capacity['enum'];
-      delete $.ClusterSku.properties.capacity['x-ms-enum'];
   # The `type` is reserved name
   - from: Tables.json
     where: $.definitions
@@ -185,7 +175,7 @@ directive:
   - from: DataExports.json
     where: $.definitions
     transform: >
-      $.Destination.properties.type['x-ms-enum'].name = 'OperationalInsightsDataExportsDestinationType';
+      $.Destination.properties.type['x-ms-enum'].name = 'OperationalInsightsDataExportDestinationType';
       $.Destination.properties.type['x-ms-client-name'] = 'DestinationType';
   - from: LinkedStorageAccounts.json
     where: $.definitions
