@@ -18,7 +18,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
         {
             Environment.SetEnvironmentVariable("REGISTRY_ENDPOINT", TestEnvironment.Endpoint);
 
-            #region Snippet:ContainerRegistry_Tests_Samples_UploadArtifactAsync
+            #region Snippet:ContainerRegistry_Samples_CreateBlobClient
 
             // Get the service endpoint from the environment
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
@@ -31,6 +31,10 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             {
                 Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
             });
+
+            #endregion
+
+            #region Snippet:ContainerRegistry_Samples_UploadArtifactAsync
 
             // Create a manifest to list files in this artifact
             OciManifest manifest = new()
@@ -74,8 +78,6 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
         {
             Environment.SetEnvironmentVariable("REGISTRY_ENDPOINT", TestEnvironment.Endpoint);
 
-            #region Snippet:ContainerRegistry_Tests_Samples_DownloadArtifactAsync
-
             // Get the service endpoint from the environment
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
@@ -89,6 +91,8 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             {
                 Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
             });
+
+            #region Snippet:ContainerRegistry_Samples_DownloadArtifactAsync
 
             // Download the manifest to obtain the list of files in the artifact
             var manifestResult = await client.DownloadManifestAsync(new DownloadManifestOptions(tag));
