@@ -31,11 +31,6 @@ namespace Azure.Messaging.WebPubSub.Clients
         private const string RecoverConnectionIdQuery = "awps_connection_id";
         private const string RecoverReconnectionTokenQuery = "awps_reconnection_token";
 
-        // Some exposed properties for testing
-        internal IWebSocketClientFactory WebSocketClientFactory { get; set; }
-        internal TimeSpan RecoverDelay { get; set; } = TimeSpan.FromSeconds(1);
-        internal ulong CurrentSequenceId => _sequenceId.Current;
-
         private static readonly UnboundedChannelOptions s_unboundedChannelOptions = new UnboundedChannelOptions
         {
             SingleReader = true,
@@ -54,13 +49,13 @@ namespace Azure.Messaging.WebPubSub.Clients
         private readonly Channel<ServerDataMessage> _serverDataChannel = Channel.CreateUnbounded<ServerDataMessage>(s_unboundedChannelOptions);
         private readonly Task _processingServerDataMessageTask;
         private readonly Task _processingGroupDataMessageTask;
-        private ulong _nextAckId;
 
         private readonly object _ackIdLock = new();
         private readonly object _stopLock = new();
 #pragma warning disable CA2213 // Disposable fields should be disposed
         private readonly SemaphoreSlim _connectionLock = new SemaphoreSlim(1);
 #pragma warning restore CA2213 // Disposable fields should be disposed
+        private ulong _nextAckId;
 
         // Fields per start stop
         private Task _stoppingTask;
@@ -88,6 +83,11 @@ namespace Azure.Messaging.WebPubSub.Clients
         /// The connection ID of the client. The ID is assigned when the client connects.
         /// </summary>
         public string ConnectionId { get; }
+
+        // Some exposed properties for testing
+        internal IWebSocketClientFactory WebSocketClientFactory { get; set; }
+        internal TimeSpan RecoverDelay { get; set; } = TimeSpan.FromSeconds(1);
+        internal ulong CurrentSequenceId => _sequenceId.Current;
 
         /// <summary>
         /// Initializes a Web PubSub client.
@@ -591,7 +591,7 @@ namespace Azure.Messaging.WebPubSub.Clients
         {
             _clientState.ChangeState(WebPubSubClientState.Disconnected);
 
-            SafeInvkeDisconnectedAsync(new WebPubSubDisconnectedEventArgs(_connectionId, disconnectedMessage)).FireAndForget();
+            SafeInvokeDisconnectedAsync(new WebPubSubDisconnectedEventArgs(_connectionId, disconnectedMessage)).FireAndForget();
 
             if (_options.AutoReconnect)
             {
@@ -616,18 +616,18 @@ namespace Azure.Messaging.WebPubSub.Clients
                     }
                     catch (Exception ex)
                     {
-                        SafeInvkeRestoreGroupFailedAsync(new WebPubSubRejoinGroupFailedEventArgs(name, ex, token)).FireAndForget();
+                        SafeInvokeRestoreGroupFailedAsync(new WebPubSubRejoinGroupFailedEventArgs(name, ex, token)).FireAndForget();
                     }
                 }
             }
-            SafeInvkeConnectedAsync(new WebPubSubConnectedEventArgs(connectedMessage, token)).FireAndForget();
+            SafeInvokeConnectedAsync(new WebPubSubConnectedEventArgs(connectedMessage, token)).FireAndForget();
         }
 
         private void HandleClientStopped()
         {
             _clientState.ChangeState(WebPubSubClientState.Stopped);
 
-            SafeInvkeStoppedAsync(new WebPubSubStoppedEventArgs(default)).FireAndForget();
+            SafeInvokeStoppedAsync(new WebPubSubStoppedEventArgs(default)).FireAndForget();
         }
 
         private async Task SafeInvokeGroupMessageReceivedAsync(WebPubSubGroupMessageEventArgs eventArgs)
@@ -654,7 +654,7 @@ namespace Azure.Messaging.WebPubSub.Clients
             }
         }
 
-        private async Task SafeInvkeConnectedAsync(WebPubSubConnectedEventArgs eventArgs)
+        private async Task SafeInvokeConnectedAsync(WebPubSubConnectedEventArgs eventArgs)
         {
             try
             {
@@ -667,7 +667,7 @@ namespace Azure.Messaging.WebPubSub.Clients
             }
         }
 
-        private async Task SafeInvkeDisconnectedAsync(WebPubSubDisconnectedEventArgs eventArgs)
+        private async Task SafeInvokeDisconnectedAsync(WebPubSubDisconnectedEventArgs eventArgs)
         {
             try
             {
@@ -680,7 +680,7 @@ namespace Azure.Messaging.WebPubSub.Clients
             }
         }
 
-        private async Task SafeInvkeStoppedAsync(WebPubSubStoppedEventArgs eventArgs)
+        private async Task SafeInvokeStoppedAsync(WebPubSubStoppedEventArgs eventArgs)
         {
             try
             {
@@ -692,7 +692,7 @@ namespace Azure.Messaging.WebPubSub.Clients
             }
         }
 
-        private async Task SafeInvkeRestoreGroupFailedAsync(WebPubSubRejoinGroupFailedEventArgs eventArgs)
+        private async Task SafeInvokeRestoreGroupFailedAsync(WebPubSubRejoinGroupFailedEventArgs eventArgs)
         {
             try
             {
