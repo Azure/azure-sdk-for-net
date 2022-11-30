@@ -5,12 +5,12 @@
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "293",
+        "Content-Length": "292",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-765d309043a1d84faae2c74267c08bbe-afa7439fc027ecc0-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221118.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "0b217010683b11f8778bfb7692707a90",
+        "traceparent": "00-c4e4dc7c8070313263bb17f8c6c4e26f-616d073c3deba956-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221129.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "5d4cbae43bffc526e0fedf75834a06e3",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -18,7 +18,7 @@
           "documents": [
             {
               "id": "0",
-              "text": "The WHO is issuing a warning about Monkey Pox.",
+              "text": "The WHO is issuing a warning about monkeypox.",
               "language": "en"
             },
             {
@@ -40,15 +40,15 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "c7d5b671-5385-4dbe-a5d5-0f1eb1e0f0fd",
-        "Content-Length": "786",
+        "apim-request-id": "d18505cf-68ba-489e-bf8a-9df1f337db24",
+        "Content-Length": "785",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=0,CognitiveServices.TextAnalytics.TextRecords=2",
-        "Date": "Sat, 19 Nov 2022 02:17:42 GMT",
+        "Date": "Wed, 30 Nov 2022 00:43:34 GMT",
         "Set-Cookie": ".AspNetCore.Mvc.CookieTempDataProvider=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; samesite=lax; httponly",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "403",
+        "x-envoy-upstream-service-time": "371",
         "x-ms-region": "West US 2"
       },
       "ResponseBody": {
@@ -66,23 +66,23 @@
               "classifications": [
                 {
                   "category": "Health",
-                  "confidenceScore": 0.88
-                },
-                {
-                  "category": "Music",
-                  "confidenceScore": 0.04
+                  "confidenceScore": 0.8
                 },
                 {
                   "category": "Sports",
-                  "confidenceScore": 0.04
+                  "confidenceScore": 0.07
+                },
+                {
+                  "category": "Music",
+                  "confidenceScore": 0.07
                 },
                 {
                   "category": "Politics",
-                  "confidenceScore": 0.03
+                  "confidenceScore": 0.06
                 }
               ],
               "statistics": {
-                "charactersCount": 46,
+                "charactersCount": 45,
                 "transactionsCount": 1
               },
               "warnings": []
@@ -121,7 +121,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1237857892",
+    "RandomSeed": "1877494986",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
     "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
   }

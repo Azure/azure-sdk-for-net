@@ -19,7 +19,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         private const string ClassifyDocument0 =
-            "The WHO is issuing a warning about Monkey Pox.";
+            "The WHO is issuing a warning about monkeypox.";
 
         private const string ClassifyDocument1 =
             "Mo Salah plays in Liverpool FC in England.";

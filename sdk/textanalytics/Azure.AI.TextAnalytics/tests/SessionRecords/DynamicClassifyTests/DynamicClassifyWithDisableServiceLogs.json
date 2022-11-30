@@ -8,61 +8,9 @@
         "Content-Length": "231",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-d48f753e8a6cf1a5a4bec7dd5171ffc3-cbe1f877368ee3e4-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221118.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "d425c12d34ecb3de16d5d4ea874af29e",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": {
-        "analysisInput": {
-          "documents": [
-            {
-              "id": "0",
-              "text": "Mo Salah plays in Liverpool FC in England.",
-              "language": "en"
-            }
-          ]
-        },
-        "parameters": {
-          "categories": [
-            "Health",
-            "Politics",
-            "Music",
-            "Sports"
-          ],
-          "loggingOptOut": true
-        },
-        "kind": "DynamicClassification"
-      },
-      "StatusCode": 500,
-      "ResponseHeaders": {
-        "apim-request-id": "c695116c-7bcc-4ac4-81ab-942f7dafed22",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 19 Nov 2022 02:05:30 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "15",
-        "x-ms-region": "West US 2"
-      },
-      "ResponseBody": {
-        "error": {
-          "code": "InternalServerError",
-          "message": "Processing failed unexpectedly. Please try again later."
-        }
-      }
-    },
-    {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-10-01-preview\u0026showStats=false",
-      "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Content-Length": "231",
-        "Content-Type": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-d48f753e8a6cf1a5a4bec7dd5171ffc3-cbe1f877368ee3e4-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221118.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "d425c12d34ecb3de16d5d4ea874af29e",
+        "traceparent": "00-a213492a7cfcf48e8acf1ac095eb8b95-59f19cc2861fc2d0-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221129.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "28c5c590c24a361e379177f89327b811",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -88,15 +36,15 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "bd9ac6af-c848-42eb-a3b0-62a2e4a0444b",
+        "apim-request-id": "f547c304-dd21-423e-ad58-45aa73f9fcbf",
         "Content-Length": "336",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=0,CognitiveServices.TextAnalytics.TextRecords=1",
-        "Date": "Sat, 19 Nov 2022 02:05:31 GMT",
+        "Date": "Wed, 30 Nov 2022 00:38:12 GMT",
         "Set-Cookie": ".AspNetCore.Mvc.CookieTempDataProvider=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; samesite=lax; httponly",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "176",
+        "x-envoy-upstream-service-time": "172",
         "x-ms-region": "West US 2"
       },
       "ResponseBody": {
@@ -133,7 +81,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1746519575",
+    "RandomSeed": "305663292",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
     "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
   }

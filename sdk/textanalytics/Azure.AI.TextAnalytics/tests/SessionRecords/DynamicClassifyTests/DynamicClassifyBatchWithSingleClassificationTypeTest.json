@@ -5,12 +5,12 @@
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "323",
+        "Content-Length": "322",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-d3b6aa485f6574f714ec956234d17099-1625d7b2a57237d2-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221118.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "d41157dbd9367a322ad1c51c25278845",
+        "traceparent": "00-78199bd9b43188f2292a2b0648202fa6-4054e68819664707-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221129.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "6626f34bdd81a8e48c82979c78a8f718",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -18,64 +18,7 @@
           "documents": [
             {
               "id": "0",
-              "text": "The WHO is issuing a warning about Monkey Pox.",
-              "language": "en"
-            },
-            {
-              "id": "1",
-              "text": "Mo Salah plays in Liverpool FC in England.",
-              "language": "en"
-            }
-          ]
-        },
-        "parameters": {
-          "classificationType": "Single",
-          "categories": [
-            "Health",
-            "Politics",
-            "Music",
-            "Sports"
-          ]
-        },
-        "kind": "DynamicClassification"
-      },
-      "StatusCode": 500,
-      "ResponseHeaders": {
-        "apim-request-id": "f9d3bf4c-e6da-4d51-9539-a349862faf01",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 19 Nov 2022 02:05:28 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "50",
-        "x-ms-region": "West US 2"
-      },
-      "ResponseBody": {
-        "error": {
-          "code": "InternalServerError",
-          "message": "Processing failed unexpectedly. Please try again later."
-        }
-      }
-    },
-    {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-10-01-preview\u0026showStats=false",
-      "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Content-Length": "323",
-        "Content-Type": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-d3b6aa485f6574f714ec956234d17099-1625d7b2a57237d2-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221118.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "d41157dbd9367a322ad1c51c25278845",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": {
-        "analysisInput": {
-          "documents": [
-            {
-              "id": "0",
-              "text": "The WHO is issuing a warning about Monkey Pox.",
+              "text": "The WHO is issuing a warning about monkeypox.",
               "language": "en"
             },
             {
@@ -98,15 +41,15 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "7b3afbd1-e23a-4fb1-8d5c-2b6f64ce1fe7",
-        "Content-Length": "293",
+        "apim-request-id": "02fc4a18-b158-4962-994e-38fd643171f6",
+        "Content-Length": "292",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=0,CognitiveServices.TextAnalytics.TextRecords=2",
-        "Date": "Sat, 19 Nov 2022 02:05:29 GMT",
+        "Date": "Wed, 30 Nov 2022 00:38:10 GMT",
         "Set-Cookie": ".AspNetCore.Mvc.CookieTempDataProvider=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; samesite=lax; httponly",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "387",
+        "x-envoy-upstream-service-time": "386",
         "x-ms-region": "West US 2"
       },
       "ResponseBody": {
@@ -118,7 +61,7 @@
               "classifications": [
                 {
                   "category": "Health",
-                  "confidenceScore": 0.88
+                  "confidenceScore": 0.8
                 }
               ],
               "warnings": []
@@ -141,7 +84,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "438359087",
+    "RandomSeed": "1427020081",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
     "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
   }

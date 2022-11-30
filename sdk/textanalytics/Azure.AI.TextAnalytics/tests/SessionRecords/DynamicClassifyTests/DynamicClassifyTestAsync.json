@@ -8,9 +8,9 @@
         "Content-Length": "210",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-6220a502b144c381f5ae8022a715179a-f4fcd8f370b6134b-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221118.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "a5a152e5b4b03a2aab2aa96a3db2d9cd",
+        "traceparent": "00-2926908aee910c167dc21462ff8d3d6d-a6a6865ca3b11544-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221129.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "030fc9ab3674abc5b5a21cf04ef8b392",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -35,15 +35,15 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "bf332099-56b3-4a55-9710-c8d2c6c7674d",
+        "apim-request-id": "09b7f78e-5aa3-4452-98da-606435a3ad18",
         "Content-Length": "336",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=0,CognitiveServices.TextAnalytics.TextRecords=1",
-        "Date": "Sat, 19 Nov 2022 02:17:21 GMT",
+        "Date": "Wed, 30 Nov 2022 00:38:36 GMT",
         "Set-Cookie": ".AspNetCore.Mvc.CookieTempDataProvider=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; samesite=lax; httponly",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "94",
+        "x-envoy-upstream-service-time": "170",
         "x-ms-region": "West US 2"
       },
       "ResponseBody": {
@@ -80,7 +80,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1799174586",
+    "RandomSeed": "1118488042",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
     "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
   }
