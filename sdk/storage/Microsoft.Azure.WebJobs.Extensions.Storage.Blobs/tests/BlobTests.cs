@@ -10,6 +10,7 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Queues;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Extensions.Azure;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using NUnit.Framework;
 
@@ -119,16 +120,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             // Arrange
             var program = new BindToParameterBindingData();
             IHost host = new HostBuilder()
+                .ConfigureAppConfiguration(cb =>
+                {
+                    cb.AddInMemoryCollection(new Dictionary<string, string>()
+                    {
+                        { "ConnectionStrings:AzureWebJobsStorage", AzuriteNUnitFixture.Instance.GetAzureAccount().ConnectionString }
+                    });
+                })
                 .ConfigureDefaultTestHost<BindToParameterBindingData>(program, builder =>
                 {
                     builder.AddAzureStorageBlobs()
                     .UseStorageServices(blobServiceClient, queueServiceClient);
                 })
-                .ConfigureAppConfiguration(cb => cb.AddInMemoryCollection(
-                        new Dictionary<string, string>() {
-                        { "ConnectionStrings:AzureWebJobsStorage", AzuriteNUnitFixture.Instance.GetAzureAccount().ConnectionString }
-                        }
-                    ))
                 .Build();
 
             var jobHost = host.GetJobHost<BindToParameterBindingData>();
@@ -157,16 +160,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             // Arrange
             var program = new BindToParameterBindingDataArray();
             IHost host = new HostBuilder()
+                .ConfigureAppConfiguration(cb =>
+                {
+                    cb.AddInMemoryCollection(new Dictionary<string, string>()
+                    {
+                        { "ConnectionStrings:AzureWebJobsStorage", AzuriteNUnitFixture.Instance.GetAzureAccount().ConnectionString }
+                    });
+                })
                 .ConfigureDefaultTestHost<BindToParameterBindingDataArray>(program, builder =>
                 {
                     builder.AddAzureStorageBlobs()
                     .UseStorageServices(blobServiceClient, queueServiceClient);
                 })
-                .ConfigureAppConfiguration(cb => cb.AddInMemoryCollection(
-                        new Dictionary<string, string>() {
-                        { "ConnectionStrings:AzureWebJobsStorage", AzuriteNUnitFixture.Instance.GetAzureAccount().ConnectionString }
-                        }
-                    ))
                 .Build();
 
             var jobHost = host.GetJobHost<BindToParameterBindingDataArray>();
