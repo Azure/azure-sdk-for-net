@@ -26,15 +26,22 @@
   - Added the following classes: `AgeResolution`, `AreaResolution`, `BaseResolution`, `BooleanResolution`, `CurrencyResolution`, `DateTimeResolution`, `InformationResolution`, `LengthResolution`, `NumberResolution`, `NumericRangeResolution`, `OrdinalResolution`, `SpeedResolution`, `TemperatureResolution`, `TemporalSpanResolution` `VolumeResolution`, and `WeightResolution`.
   - Added the following enums: `AgeUnit`, `AreaUnit`, `DateTimeSubKind`, `InformationUnit`,`LengthUnit`, `NumberKind`, `RangeKind`, `RelativeTo`, `SpeedUnit`, `TemperatureUnit`,`TemporalModifier`, `VolumeUnit`, and `WeightUnit`.
 - Added support for automatic language detection.
+  - Added the `AbstractSummaryOptions.AutoDetectionDefaultLanguage` property.
   - Added the `AbstractSummaryResult.DetectedLanguage` property.
+  - Added the `AnalyzeActionsOptions.AutoDetectionDefaultLanguage` property.
+  - Added the `AnalyzeHealthcareEntitiesOptions.AutoDetectionDefaultLanguage` property.
   - Added the `AnalyzeHealthcareEntitiesResult.DetectedLanguage` property.
   - Added the `AnalyzeSentimentResult.DetectedLanguage` property.
   - Added the `ClassifyDocumentResult.DetectedLanguage` property.
   - Added the `ExtractKeyPhrasesResult.DetectedLanguage` property.
+  - Added the `ExtractSummaryOptions.AutoDetectionDefaultLanguage` property.
   - Added the `ExtractSummaryResult.DetectedLanguage` property.
+  - Added the `MultiLabelClassifyOptions.AutoDetectionDefaultLanguage` property.
+  - Added the `RecognizeCustomEntitiesOptions.AutoDetectionDefaultLanguage` property.
   - Added the `RecognizeEntitiesResult.DetectedLanguage` property.
   - Added the `RecognizeLinkedEntitiesResult.DetectedLanguage` property.
   - Added the `RecognizePiiEntitiesResult.DetectedLanguage` property.
+  - Added the `SingleLabelClassifyOptions.AutoDetectionDefaultLanguage` property.
 - Added support for script detection.
   - Added the `DetectedLanguage.Script` property.
   - Added the `ScriptKind` enum.

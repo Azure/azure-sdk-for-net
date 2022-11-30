@@ -47,6 +47,7 @@ namespace Azure.AI.TextAnalytics
     public partial class AbstractSummaryOptions : Azure.AI.TextAnalytics.TextAnalyticsRequestOptions
     {
         public AbstractSummaryOptions() { }
+        public string AutoDetectionDefaultLanguage { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public int? MaxSentenceCount { get { throw null; } set { } }
     }
@@ -121,6 +122,7 @@ namespace Azure.AI.TextAnalytics
     public partial class AnalyzeActionsOptions
     {
         public AnalyzeActionsOptions() { }
+        public string AutoDetectionDefaultLanguage { get { throw null; } set { } }
         public bool? IncludeStatistics { get { throw null; } set { } }
     }
     public partial class AnalyzeActionsResult
@@ -180,6 +182,7 @@ namespace Azure.AI.TextAnalytics
     public partial class AnalyzeHealthcareEntitiesOptions : Azure.AI.TextAnalytics.TextAnalyticsRequestOptions
     {
         public AnalyzeHealthcareEntitiesOptions() { }
+        public string AutoDetectionDefaultLanguage { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public Azure.AI.TextAnalytics.HealthcareDocumentType? DocumentType { get { throw null; } set { } }
         public Azure.AI.TextAnalytics.WellKnownFhirVersion? FhirVersion { get { throw null; } set { } }
@@ -575,6 +578,7 @@ namespace Azure.AI.TextAnalytics
     public partial class ExtractSummaryOptions : Azure.AI.TextAnalytics.TextAnalyticsRequestOptions
     {
         public ExtractSummaryOptions() { }
+        public string AutoDetectionDefaultLanguage { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public int? MaxSentenceCount { get { throw null; } set { } }
         public Azure.AI.TextAnalytics.SummarySentencesOrder? OrderBy { get { throw null; } set { } }
@@ -859,6 +863,7 @@ namespace Azure.AI.TextAnalytics
     public partial class MultiLabelClassifyOptions
     {
         public MultiLabelClassifyOptions() { }
+        public string AutoDetectionDefaultLanguage { get { throw null; } set { } }
         public bool? DisableServiceLogs { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public bool? IncludeStatistics { get { throw null; } set { } }
@@ -1183,6 +1188,7 @@ namespace Azure.AI.TextAnalytics
     public partial class RecognizeCustomEntitiesOptions
     {
         public RecognizeCustomEntitiesOptions() { }
+        public string AutoDetectionDefaultLanguage { get { throw null; } set { } }
         public bool? DisableServiceLogs { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public bool? IncludeStatistics { get { throw null; } set { } }
@@ -1356,6 +1362,7 @@ namespace Azure.AI.TextAnalytics
     public partial class SingleLabelClassifyOptions
     {
         public SingleLabelClassifyOptions() { }
+        public string AutoDetectionDefaultLanguage { get { throw null; } set { } }
         public bool? DisableServiceLogs { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public bool? IncludeStatistics { get { throw null; } set { } }

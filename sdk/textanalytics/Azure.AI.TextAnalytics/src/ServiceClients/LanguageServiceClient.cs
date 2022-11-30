@@ -717,6 +717,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 AnalyzeTextJobsInput input = new(multiLanguageInput, new List<AnalyzeTextLROTask>() { CreateCustomEntitiesTask(projectName, deploymentName, options) })
                 {
                     DisplayName = options.DisplayName,
+                    DefaultLanguage = options.AutoDetectionDefaultLanguage
                 };
 
                 var response = _languageRestClient.AnalyzeBatchSubmitJob(input, cancellationToken);
@@ -746,6 +747,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 AnalyzeTextJobsInput input = new(multiLanguageInput, new List<AnalyzeTextLROTask>() { CreateCustomEntitiesTask(projectName, deploymentName, options) })
                 {
                     DisplayName = options.DisplayName,
+                    DefaultLanguage = options.AutoDetectionDefaultLanguage
                 };
 
                 var response = await _languageRestClient.AnalyzeBatchSubmitJobAsync(input, cancellationToken).ConfigureAwait(false);
@@ -1389,7 +1391,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             };
         }
 
-        private AnalyzeHealthcareEntitiesOperation StartAnalyzeHealthcareEntities(MultiLanguageAnalysisInput batchInput, AnalyzeHealthcareEntitiesOptions options, CancellationToken cancellationToken = default)
+        private AnalyzeHealthcareEntitiesOperation StartAnalyzeHealthcareEntities(MultiLanguageAnalysisInput multiLanguageInput, AnalyzeHealthcareEntitiesOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new();
 
@@ -1398,16 +1400,17 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
             try
             {
-                AnalyzeTextJobsInput input = new(batchInput, new List<AnalyzeTextLROTask>() { CreateHealthcareTask(options) } )
+                AnalyzeTextJobsInput input = new(multiLanguageInput, new List<AnalyzeTextLROTask>() { CreateHealthcareTask(options) } )
                 {
                     DisplayName = options.DisplayName,
+                    DefaultLanguage = options.AutoDetectionDefaultLanguage
                 };
 
                 var response = _languageRestClient.AnalyzeBatchSubmitJob(input, cancellationToken);
 
                 string location = response.Headers.OperationLocation;
 
-                IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
+                IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(multiLanguageInput.Documents);
 
                 return new AnalyzeHealthcareEntitiesOperation(this, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
             }
@@ -1418,7 +1421,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             }
         }
 
-        private async Task<AnalyzeHealthcareEntitiesOperation> StartAnalyzeHealthcareEntitiesAsync(MultiLanguageAnalysisInput batchInput, AnalyzeHealthcareEntitiesOptions options, CancellationToken cancellationToken = default)
+        private async Task<AnalyzeHealthcareEntitiesOperation> StartAnalyzeHealthcareEntitiesAsync(MultiLanguageAnalysisInput multiLanguageInput, AnalyzeHealthcareEntitiesOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new();
 
@@ -1427,16 +1430,17 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
             try
             {
-                AnalyzeTextJobsInput input = new(batchInput, new List<AnalyzeTextLROTask>() { CreateHealthcareTask(options) })
+                AnalyzeTextJobsInput input = new(multiLanguageInput, new List<AnalyzeTextLROTask>() { CreateHealthcareTask(options) })
                 {
                     DisplayName = options.DisplayName,
+                    DefaultLanguage = options.AutoDetectionDefaultLanguage
                 };
 
                 var response = await _languageRestClient.AnalyzeBatchSubmitJobAsync(input, cancellationToken).ConfigureAwait(false);
 
                 string location = response.Headers.OperationLocation;
 
-                IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
+                IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(multiLanguageInput.Documents);
 
                 return new AnalyzeHealthcareEntitiesOperation(this, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
             }
@@ -1724,7 +1728,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             }
         }
 
-        private AnalyzeActionsOperation StartAnalyzeActions(MultiLanguageAnalysisInput batchInput, TextAnalyticsActions actions, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default)
+        private AnalyzeActionsOperation StartAnalyzeActions(MultiLanguageAnalysisInput multiLanguageInput, TextAnalyticsActions actions, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default)
         {
             options ??= new();
 
@@ -1733,13 +1737,17 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
             try
             {
-                AnalyzeTextJobsInput input = new(batchInput, CreateTasks(actions)) { DisplayName = actions.DisplayName };
+                AnalyzeTextJobsInput input = new(multiLanguageInput, CreateTasks(actions))
+                {
+                    DisplayName = actions.DisplayName,
+                    DefaultLanguage = options.AutoDetectionDefaultLanguage
+                };
 
                 var response = _languageRestClient.AnalyzeBatchSubmitJob(input, cancellationToken);
 
                 string location = response.Headers.OperationLocation;
 
-                IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
+                IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(multiLanguageInput.Documents);
 
                 return new AnalyzeActionsOperation(this, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
             }
@@ -1750,7 +1758,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             }
         }
 
-        private async Task<AnalyzeActionsOperation> StartAnalyzeActionsAsync(MultiLanguageAnalysisInput batchInput, TextAnalyticsActions actions, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default)
+        private async Task<AnalyzeActionsOperation> StartAnalyzeActionsAsync(MultiLanguageAnalysisInput multiLanguageInput, TextAnalyticsActions actions, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default)
         {
             options ??= new();
 
@@ -1759,13 +1767,17 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
             try
             {
-                AnalyzeTextJobsInput input = new(batchInput, CreateTasks(actions)) { DisplayName = actions.DisplayName };
+                AnalyzeTextJobsInput input = new(multiLanguageInput, CreateTasks(actions))
+                {
+                    DisplayName = actions.DisplayName,
+                    DefaultLanguage = options.AutoDetectionDefaultLanguage
+                };
 
                 var response = await _languageRestClient.AnalyzeBatchSubmitJobAsync(input, cancellationToken).ConfigureAwait(false);
 
                 string location = response.Headers.OperationLocation;
 
-                IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
+                IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(multiLanguageInput.Documents);
 
                 return new AnalyzeActionsOperation(this, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
             }
@@ -1941,6 +1953,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 AnalyzeTextJobsInput input = new(multiLanguageInput, new List<AnalyzeTextLROTask>() { CreateCustomSingleLabelClassificationTask(projectName, deploymentName, options) })
                 {
                     DisplayName = options.DisplayName,
+                    DefaultLanguage = options.AutoDetectionDefaultLanguage
                 };
 
                 var response = _languageRestClient.AnalyzeBatchSubmitJob(input, cancellationToken);
@@ -1970,6 +1983,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 AnalyzeTextJobsInput input = new(multiLanguageInput, new List<AnalyzeTextLROTask>() { CreateCustomSingleLabelClassificationTask(projectName, deploymentName, options) })
                 {
                     DisplayName = options.DisplayName,
+                    DefaultLanguage = options.AutoDetectionDefaultLanguage
                 };
 
                 var response = await _languageRestClient.AnalyzeBatchSubmitJobAsync(input, cancellationToken).ConfigureAwait(false);
@@ -2046,6 +2060,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 AnalyzeTextJobsInput input = new(multiLanguageInput, new List<AnalyzeTextLROTask>() { CreateCustomMultiLabelClassificationTask(projectName, deploymentName, options) })
                 {
                     DisplayName = options.DisplayName,
+                    DefaultLanguage = options.AutoDetectionDefaultLanguage
                 };
 
                 var response = _languageRestClient.AnalyzeBatchSubmitJob(input, cancellationToken);
@@ -2075,6 +2090,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 AnalyzeTextJobsInput input = new(multiLanguageInput, new List<AnalyzeTextLROTask>() { CreateCustomMultiLabelClassificationTask(projectName, deploymentName, options) })
                 {
                     DisplayName = options.DisplayName,
+                    DefaultLanguage = options.AutoDetectionDefaultLanguage
                 };
 
                 var response = await _languageRestClient.AnalyzeBatchSubmitJobAsync(input, cancellationToken).ConfigureAwait(false);
@@ -2407,6 +2423,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 AnalyzeTextJobsInput input = new(multiLanguageInput, new List<AnalyzeTextLROTask>() { CreateExtractiveSummarizationTask(options) })
                 {
                     DisplayName = options.DisplayName,
+                    DefaultLanguage = options.AutoDetectionDefaultLanguage
                 };
 
                 var response = _languageRestClient.AnalyzeBatchSubmitJob(input, cancellationToken);
@@ -2434,6 +2451,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 AnalyzeTextJobsInput input = new(multiLanguageInput, new List<AnalyzeTextLROTask>() { CreateExtractiveSummarizationTask(options) })
                 {
                     DisplayName = options.DisplayName,
+                    DefaultLanguage = options.AutoDetectionDefaultLanguage
                 };
 
                 var response = await _languageRestClient.AnalyzeBatchSubmitJobAsync(input, cancellationToken).ConfigureAwait(false);
@@ -2510,6 +2528,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 AnalyzeTextJobsInput input = new(multiLanguageInput, new List<AnalyzeTextLROTask>() { CreateAbstractiveSummarizationTask(options) })
                 {
                     DisplayName = options.DisplayName,
+                    DefaultLanguage = options.AutoDetectionDefaultLanguage
                 };
 
                 var response = _languageRestClient.AnalyzeBatchSubmitJob(input, cancellationToken);
@@ -2537,6 +2556,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 AnalyzeTextJobsInput input = new(multiLanguageInput, new List<AnalyzeTextLROTask>() { CreateAbstractiveSummarizationTask(options) })
                 {
                     DisplayName = options.DisplayName,
+                    DefaultLanguage = options.AutoDetectionDefaultLanguage
                 };
 
                 var response = await _languageRestClient.AnalyzeBatchSubmitJobAsync(input, cancellationToken).ConfigureAwait(false);

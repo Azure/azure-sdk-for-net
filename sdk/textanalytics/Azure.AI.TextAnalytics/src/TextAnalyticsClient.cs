@@ -730,8 +730,17 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-05-01 and newer.</exception>
-        public virtual RecognizeCustomEntitiesOperation StartRecognizeCustomEntities(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, RecognizeCustomEntitiesOptions options = default, CancellationToken cancellationToken = default) =>
-            _serviceClient.StartRecognizeCustomEntities(documents, projectName, deploymentName, language, options, cancellationToken);
+        public virtual RecognizeCustomEntitiesOperation StartRecognizeCustomEntities(
+            IEnumerable<string> documents,
+            string projectName,
+            string deploymentName,
+            string language = default,
+            RecognizeCustomEntitiesOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            options?.CheckSupported(ServiceVersion);
+            return _serviceClient.StartRecognizeCustomEntities(documents, projectName, deploymentName, language, options, cancellationToken);
+        }
 
         /// <summary>
         /// Runs a predictive model to identify a collection of custom named entities
@@ -758,8 +767,16 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-05-01 and newer.</exception>
-        public virtual RecognizeCustomEntitiesOperation StartRecognizeCustomEntities(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, RecognizeCustomEntitiesOptions options = default, CancellationToken cancellationToken = default) =>
-            _serviceClient.StartRecognizeCustomEntities(documents, projectName, deploymentName, options, cancellationToken);
+        public virtual RecognizeCustomEntitiesOperation StartRecognizeCustomEntities(
+            IEnumerable<TextDocumentInput> documents,
+            string projectName,
+            string deploymentName,
+            RecognizeCustomEntitiesOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            options?.CheckSupported(ServiceVersion);
+            return _serviceClient.StartRecognizeCustomEntities(documents, projectName, deploymentName, options, cancellationToken);
+        }
 
         /// <summary>
         /// Runs a predictive model to identify a collection of custom named entities
@@ -791,8 +808,17 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-05-01 and newer.</exception>
-        public virtual async Task<RecognizeCustomEntitiesOperation> StartRecognizeCustomEntitiesAsync(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, RecognizeCustomEntitiesOptions options = default, CancellationToken cancellationToken = default) =>
-            await _serviceClient.StartRecognizeCustomEntitiesAsync(documents, projectName, deploymentName, language, options, cancellationToken).ConfigureAwait(false);
+        public virtual async Task<RecognizeCustomEntitiesOperation> StartRecognizeCustomEntitiesAsync(
+            IEnumerable<string> documents,
+            string projectName,
+            string deploymentName,
+            string language = default,
+            RecognizeCustomEntitiesOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            options?.CheckSupported(ServiceVersion);
+            return await _serviceClient.StartRecognizeCustomEntitiesAsync(documents, projectName, deploymentName, language, options, cancellationToken).ConfigureAwait(false);
+        }
 
         /// <summary>
         /// Runs a predictive model to identify a collection of custom named entities
@@ -819,8 +845,16 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-05-01 and newer.</exception>
-        public virtual async Task<RecognizeCustomEntitiesOperation> StartRecognizeCustomEntitiesAsync(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, RecognizeCustomEntitiesOptions options = default, CancellationToken cancellationToken = default) =>
-            await _serviceClient.StartRecognizeCustomEntitiesAsync(documents, projectName, deploymentName, options, cancellationToken).ConfigureAwait(false);
+        public virtual async Task<RecognizeCustomEntitiesOperation> StartRecognizeCustomEntitiesAsync(
+            IEnumerable<TextDocumentInput> documents,
+            string projectName,
+            string deploymentName,
+            RecognizeCustomEntitiesOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            options?.CheckSupported(ServiceVersion);
+            return await _serviceClient.StartRecognizeCustomEntitiesAsync(documents, projectName, deploymentName, options, cancellationToken).ConfigureAwait(false);
+        }
 
         #endregion
 
@@ -1697,8 +1731,11 @@ namespace Azure.AI.TextAnalytics
             TextAnalyticsActions actions,
             string language = default,
             AnalyzeActionsOptions options = default,
-            CancellationToken cancellationToken = default) =>
-            await _serviceClient.StartAnalyzeActionsAsync(documents, actions, language, options, cancellationToken).ConfigureAwait(false);
+            CancellationToken cancellationToken = default)
+        {
+            options?.CheckSupported(ServiceVersion);
+            return await _serviceClient.StartAnalyzeActionsAsync(documents, actions, language, options, cancellationToken).ConfigureAwait(false);
+        }
 
         /// <summary>
         /// Performs one or more text analysis actions on a set of documents. The list of supported actions includes:
@@ -1741,8 +1778,11 @@ namespace Azure.AI.TextAnalytics
             TextAnalyticsActions actions,
             string language = default,
             AnalyzeActionsOptions options = default,
-            CancellationToken cancellationToken = default) =>
-            _serviceClient.StartAnalyzeActions(documents, actions, language, options, cancellationToken);
+            CancellationToken cancellationToken = default)
+        {
+            options?.CheckSupported(ServiceVersion);
+            return _serviceClient.StartAnalyzeActions(documents, actions, language, options, cancellationToken);
+        }
 
         /// <summary>
         /// Performs one or more text analysis actions on a set of documents. The list of supported actions includes:
@@ -1783,8 +1823,11 @@ namespace Azure.AI.TextAnalytics
             IEnumerable<TextDocumentInput> documents,
             TextAnalyticsActions actions,
             AnalyzeActionsOptions options = default,
-            CancellationToken cancellationToken = default) =>
-            _serviceClient.StartAnalyzeActions(documents, actions, options, cancellationToken);
+            CancellationToken cancellationToken = default)
+        {
+            options?.CheckSupported(ServiceVersion);
+            return _serviceClient.StartAnalyzeActions(documents, actions, options, cancellationToken);
+        }
 
         /// <summary>
         /// Performs one or more text analysis actions on a set of documents. The list of supported actions includes:
@@ -1825,8 +1868,11 @@ namespace Azure.AI.TextAnalytics
             IEnumerable<TextDocumentInput> documents,
             TextAnalyticsActions actions,
             AnalyzeActionsOptions options = default,
-            CancellationToken cancellationToken = default) =>
-            await _serviceClient.StartAnalyzeActionsAsync(documents, actions, options, cancellationToken).ConfigureAwait(false);
+            CancellationToken cancellationToken = default)
+        {
+            options?.CheckSupported(ServiceVersion);
+            return await _serviceClient.StartAnalyzeActionsAsync(documents, actions, options, cancellationToken).ConfigureAwait(false);
+        }
 
         #endregion
 
@@ -1864,8 +1910,17 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-05-01 and newer.</exception>
-        public virtual ClassifyDocumentOperation StartSingleLabelClassify(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, SingleLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
-            _serviceClient.StartSingleLabelClassify(documents, projectName, deploymentName, language, options, cancellationToken);
+        public virtual ClassifyDocumentOperation StartSingleLabelClassify(
+            IEnumerable<string> documents,
+            string projectName,
+            string deploymentName,
+            string language = default,
+            SingleLabelClassifyOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            options?.CheckSupported(ServiceVersion);
+            return _serviceClient.StartSingleLabelClassify(documents, projectName, deploymentName, language, options, cancellationToken);
+        }
 
         /// <summary>
         /// Runs a predictive model to identify a classify each document with a single label
@@ -1894,8 +1949,16 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-05-01 and newer.</exception>
-        public virtual ClassifyDocumentOperation StartSingleLabelClassify(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, SingleLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
-            _serviceClient.StartSingleLabelClassify(documents, projectName, deploymentName, options, cancellationToken);
+        public virtual ClassifyDocumentOperation StartSingleLabelClassify(
+            IEnumerable<TextDocumentInput> documents,
+            string projectName,
+            string deploymentName,
+            SingleLabelClassifyOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            options?.CheckSupported(ServiceVersion);
+            return _serviceClient.StartSingleLabelClassify(documents, projectName, deploymentName, options, cancellationToken);
+        }
 
         /// <summary>
         /// Runs a predictive model to identify a classify each document with a single label
@@ -1929,8 +1992,17 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-05-01 and newer.</exception>
-        public virtual async Task<ClassifyDocumentOperation> StartSingleLabelClassifyAsync(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, SingleLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
-            await _serviceClient.StartSingleLabelClassifyAsync(documents, projectName, deploymentName, language, options, cancellationToken).ConfigureAwait(false);
+        public virtual async Task<ClassifyDocumentOperation> StartSingleLabelClassifyAsync(
+            IEnumerable<string> documents,
+            string projectName,
+            string deploymentName,
+            string language = default,
+            SingleLabelClassifyOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            options?.CheckSupported(ServiceVersion);
+            return await _serviceClient.StartSingleLabelClassifyAsync(documents, projectName, deploymentName, language, options, cancellationToken).ConfigureAwait(false);
+        }
 
         /// <summary>
         /// Runs a predictive model to identify a classify each document with a single label
@@ -1959,8 +2031,16 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-05-01 and newer.</exception>
-        public virtual async Task<ClassifyDocumentOperation> StartSingleLabelClassifyAsync(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, SingleLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
-            await _serviceClient.StartSingleLabelClassifyAsync(documents, projectName, deploymentName, options, cancellationToken).ConfigureAwait(false);
+        public virtual async Task<ClassifyDocumentOperation> StartSingleLabelClassifyAsync(
+            IEnumerable<TextDocumentInput> documents,
+            string projectName,
+            string deploymentName,
+            SingleLabelClassifyOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            options?.CheckSupported(ServiceVersion);
+            return await _serviceClient.StartSingleLabelClassifyAsync(documents, projectName, deploymentName, options, cancellationToken).ConfigureAwait(false);
+        }
 
         #endregion
 
@@ -1998,8 +2078,17 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-05-01 and newer.</exception>
-        public virtual ClassifyDocumentOperation StartMultiLabelClassify(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
-            _serviceClient.StartMultiLabelClassify(documents, projectName, deploymentName, language, options, cancellationToken);
+        public virtual ClassifyDocumentOperation StartMultiLabelClassify(
+            IEnumerable<string> documents,
+            string projectName,
+            string deploymentName,
+            string language = default,
+            MultiLabelClassifyOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            options?.CheckSupported(ServiceVersion);
+            return _serviceClient.StartMultiLabelClassify(documents, projectName, deploymentName, language, options, cancellationToken);
+        }
 
         /// <summary>
         /// Runs a predictive model to identify a classify each document with multiple labels
@@ -2028,8 +2117,16 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-05-01 and newer.</exception>
-        public virtual ClassifyDocumentOperation StartMultiLabelClassify(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
-            _serviceClient.StartMultiLabelClassify(documents, projectName, deploymentName, options, cancellationToken);
+        public virtual ClassifyDocumentOperation StartMultiLabelClassify(
+            IEnumerable<TextDocumentInput> documents,
+            string projectName,
+            string deploymentName,
+            MultiLabelClassifyOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            options?.CheckSupported(ServiceVersion);
+            return _serviceClient.StartMultiLabelClassify(documents, projectName, deploymentName, options, cancellationToken);
+        }
 
         /// <summary>
         /// Runs a predictive model to identify a classify each document with multiple labels
@@ -2063,8 +2160,17 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-05-01 and newer.</exception>
-        public virtual async Task<ClassifyDocumentOperation> StartMultiLabelClassifyAsync(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
-            await _serviceClient.StartMultiLabelClassifyAsync(documents, projectName, deploymentName, language, options, cancellationToken).ConfigureAwait(false);
+        public virtual async Task<ClassifyDocumentOperation> StartMultiLabelClassifyAsync(
+            IEnumerable<string> documents,
+            string projectName,
+            string deploymentName,
+            string language = default,
+            MultiLabelClassifyOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            options?.CheckSupported(ServiceVersion);
+            return await _serviceClient.StartMultiLabelClassifyAsync(documents, projectName, deploymentName, language, options, cancellationToken).ConfigureAwait(false);
+        }
 
         /// <summary>
         /// Runs a predictive model to identify a classify each document with multiple labels
@@ -2093,8 +2199,16 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-05-01 and newer.</exception>
-        public virtual async Task<ClassifyDocumentOperation> StartMultiLabelClassifyAsync(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
-            await _serviceClient.StartMultiLabelClassifyAsync(documents, projectName, deploymentName, options, cancellationToken).ConfigureAwait(false);
+        public virtual async Task<ClassifyDocumentOperation> StartMultiLabelClassifyAsync(
+            IEnumerable<TextDocumentInput> documents,
+            string projectName,
+            string deploymentName,
+            MultiLabelClassifyOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            options?.CheckSupported(ServiceVersion);
+            return await _serviceClient.StartMultiLabelClassifyAsync(documents, projectName, deploymentName, options, cancellationToken).ConfigureAwait(false);
+        }
 
         #endregion
 
