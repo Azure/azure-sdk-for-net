@@ -18,7 +18,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 {
     public class BlobTriggerTests
     {
-        private const string ConnectionName = "AzureWebJobsStorage";
+        private const string ConnectionName = "DefaultEndpointsProtocol";
         private const string ContainerName = "container-blobtriggertests";
         private const string BlobName = "blob";
         private const string BlobPath = ContainerName + "/" + BlobName;
@@ -169,7 +169,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             Assert.True(blobData.TryGetValue("ContainerName", out var resultContainerName));
             Assert.True(blobData.TryGetValue("BlobName", out var resultBlobName));
 
-            Assert.AreEqual(ConnectionName, resultConnection);
+            Assert.True(resultConnection.contains(ConnectionName));
             Assert.AreEqual(ContainerName, resultContainerName);
             Assert.AreEqual(BlobName, resultBlobName);
         }
