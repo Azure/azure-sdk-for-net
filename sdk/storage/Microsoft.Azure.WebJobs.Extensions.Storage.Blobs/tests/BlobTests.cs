@@ -18,7 +18,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
     public class BlobTests
     {
         private const string TriggerQueueName = "input-blobtests";
-        private const string ConnectionName = "AzureWebJobsStorage";
+        private const string ConnectionName = "DefaultEndpointsProtocol";
         private const string ContainerName = "container-blobtests";
         private const string BlobName = "blob";
         private const string BlobPath = ContainerName + "/" + BlobName;
@@ -122,7 +122,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
                 .ConfigureDefaultTestHost<BindToParameterBindingData>(program, builder =>
                 {
                     builder.AddAzureStorageBlobs()
-                    .UseStorageServices(blobServiceClient, queueServiceClient);
+                    .UseStorageServices(blobServiceClient, queueServiceClient)
+                    .AddEnvironmentVariables();
                 })
                 .Build();
 
@@ -141,7 +142,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             Assert.True(blobData.TryGetValue("ContainerName", out var resultContainerName));
             Assert.True(blobData.TryGetValue("BlobName", out var resultBlobName));
 
-            Assert.AreEqual(ConnectionName, resultConnection);
+            Assert.True(resultConnection.Contains(ConnectionName));
             Assert.AreEqual(ContainerName, resultContainerName);
             Assert.AreEqual(BlobName, resultBlobName);
         }
@@ -155,7 +156,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
                 .ConfigureDefaultTestHost<BindToParameterBindingDataArray>(program, builder =>
                 {
                     builder.AddAzureStorageBlobs()
-                    .UseStorageServices(blobServiceClient, queueServiceClient);
+                    .UseStorageServices(blobServiceClient, queueServiceClient)
+                    .AddEnvironmentVariables();
                 })
                 .Build();
 
@@ -176,7 +178,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
                 Assert.True(blobData.TryGetValue("ContainerName", out var resultContainerName));
                 Assert.True(blobData.TryGetValue("BlobName", out var resultBlobName));
 
-                Assert.AreEqual(ConnectionName, resultConnection);
+                Assert.True(resultConnection.Contains(ConnectionName));
                 Assert.AreEqual(ContainerName, resultContainerName);
                 Assert.AreEqual(BlobName, resultBlobName);
             }
