@@ -27,7 +27,7 @@ namespace Azure.Monitor.Ingestion
         internal static int SingleUploadThreshold = 1000000;
 
         // For test purposes only
-        // If Compression wants to be turned off (hard to generate 1 Mb data) set Compression to gzip to indicate that data has already been "gzipped"
+        // If Compression wants to be turned off (hard to generate 1 Mb data gzipped) set Compression to gzip - this will not compress the input
         internal static string Compression;
 
         // If no concurrency count is provided for a parallel upload, default to 5 workers.
