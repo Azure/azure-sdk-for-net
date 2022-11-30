@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Media.Models
         {
             Optional<string> label = default;
             Optional<string> policyName = default;
-            Optional<IList<TrackSelection>> tracks = default;
+            Optional<IList<MediaTrackSelection>> tracks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("label"))
@@ -63,10 +63,10 @@ namespace Azure.ResourceManager.Media.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<TrackSelection> array = new List<TrackSelection>();
+                    List<MediaTrackSelection> array = new List<MediaTrackSelection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TrackSelection.DeserializeTrackSelection(item));
+                        array.Add(MediaTrackSelection.DeserializeMediaTrackSelection(item));
                     }
                     tracks = array;
                     continue;

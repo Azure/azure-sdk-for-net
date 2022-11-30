@@ -1116,7 +1116,7 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken = default) =>
             AppendBlockInternal(
                 content,
-                options?.TransferValidationOptions,
+                options?.TransferValidation,
                 options?.Conditions,
                 options?.ProgressHandler,
                 false, // async
@@ -1159,7 +1159,7 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken = default) =>
             await AppendBlockInternal(
                 content,
-                options?.TransferValidationOptions,
+                options?.TransferValidation,
                 options?.Conditions,
                 options?.ProgressHandler,
                 true, // async
@@ -1181,7 +1181,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Stream"/> containing the content of the block to
         /// append.
         /// </param>
-        /// <param name="validationOptionsOverride">
+        /// <param name="transferValidationOverride">
         /// Validation options for content verification.
         /// </param>
         /// <param name="conditions">
@@ -1207,13 +1207,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         internal async Task<Response<BlobAppendInfo>> AppendBlockInternal(
             Stream content,
-            UploadTransferValidationOptions validationOptionsOverride,
+            UploadTransferValidationOptions transferValidationOverride,
             AppendBlobRequestConditions conditions,
             IProgress<long> progressHandler,
             bool async,
             CancellationToken cancellationToken)
         {
-            UploadTransferValidationOptions validationOptions = validationOptionsOverride ?? ClientConfiguration.UploadTransferValidationOptions;
+            UploadTransferValidationOptions validationOptions = transferValidationOverride ?? ClientConfiguration.TransferValidation.Upload;
 
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(AppendBlobClient)))
             {
@@ -1251,8 +1251,8 @@ namespace Azure.Storage.Blobs.Specialized
                         response = await AppendBlobRestClient.AppendBlockAsync(
                             contentLength: (content.Length - content.Position),
                             body: content,
-                            transactionalContentCrc64: hashResult?.StorageCrc64,
-                            transactionalContentMD5: hashResult?.MD5,
+                            transactionalContentCrc64: hashResult?.StorageCrc64AsArray,
+                            transactionalContentMD5: hashResult?.MD5AsArray,
                             leaseId: conditions?.LeaseId,
                             maxSize: conditions?.IfMaxSizeLessThanOrEqual,
                             appendPosition: conditions?.IfAppendPositionEqual,
@@ -1273,8 +1273,8 @@ namespace Azure.Storage.Blobs.Specialized
                         response = AppendBlobRestClient.AppendBlock(
                             contentLength: (content.Length - content.Position),
                             body: content,
-                            transactionalContentCrc64: hashResult?.StorageCrc64,
-                            transactionalContentMD5: hashResult?.MD5,
+                            transactionalContentCrc64: hashResult?.StorageCrc64AsArray,
+                            transactionalContentMD5: hashResult?.MD5AsArray,
                             leaseId: conditions?.LeaseId,
                             maxSize: conditions?.IfMaxSizeLessThanOrEqual,
                             appendPosition: conditions?.IfAppendPositionEqual,
@@ -2041,7 +2041,7 @@ namespace Azure.Storage.Blobs.Specialized
                     position: position,
                     conditions: conditions,
                     progressHandler: options?.ProgressHandler,
-                    options?.TransferValidationOptions
+                    options?.TransferValidation
                     );
             }
             catch (Exception ex)

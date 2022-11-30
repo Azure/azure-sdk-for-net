@@ -64,10 +64,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="data"> The payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dataCollectionRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionRuleName"/> is null. </exception>
-        public virtual async Task<ArmOperation<DataCollectionRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dataCollectionRuleName, DataCollectionRuleData data = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionRuleName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<DataCollectionRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dataCollectionRuleName, DataCollectionRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataCollectionRuleName, nameof(dataCollectionRuleName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataCollectionRuleClientDiagnostics.CreateScope("DataCollectionRuleCollection.CreateOrUpdate");
             scope.Start();
@@ -96,10 +97,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="data"> The payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dataCollectionRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionRuleName"/> is null. </exception>
-        public virtual ArmOperation<DataCollectionRuleResource> CreateOrUpdate(WaitUntil waitUntil, string dataCollectionRuleName, DataCollectionRuleData data = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionRuleName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<DataCollectionRuleResource> CreateOrUpdate(WaitUntil waitUntil, string dataCollectionRuleName, DataCollectionRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataCollectionRuleName, nameof(dataCollectionRuleName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataCollectionRuleClientDiagnostics.CreateScope("DataCollectionRuleCollection.CreateOrUpdate");
             scope.Start();

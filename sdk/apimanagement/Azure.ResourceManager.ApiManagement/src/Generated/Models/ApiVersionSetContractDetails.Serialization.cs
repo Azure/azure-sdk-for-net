@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> description = default;
-            Optional<ApiVersionSetContractDetailsVersioningScheme> versioningScheme = default;
+            Optional<VersioningScheme> versioningScheme = default;
             Optional<string> versionQueryName = default;
             Optional<string> versionHeaderName = default;
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    versioningScheme = new ApiVersionSetContractDetailsVersioningScheme(property.Value.GetString());
+                    versioningScheme = new VersioningScheme(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("versionQueryName"))

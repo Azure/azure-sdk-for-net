@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SubscriptionCollection>> ListAsync(string subscriptionId, string resourceGroupName, string serviceName, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SubscriptionListResult>> ListAsync(string subscriptionId, string resourceGroupName, string serviceName, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -92,9 +92,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        SubscriptionCollection value = default;
+                        SubscriptionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SubscriptionCollection.DeserializeSubscriptionCollection(document.RootElement);
+                        value = SubscriptionListResult.DeserializeSubscriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SubscriptionCollection> List(string subscriptionId, string resourceGroupName, string serviceName, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public Response<SubscriptionListResult> List(string subscriptionId, string resourceGroupName, string serviceName, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -124,9 +124,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        SubscriptionCollection value = default;
+                        SubscriptionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SubscriptionCollection.DeserializeSubscriptionCollection(document.RootElement);
+                        value = SubscriptionListResult.DeserializeSubscriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string sid, ServiceSubscriptionCreateOrUpdateContent content, bool? notify, string ifMatch, AppType? appType)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string sid, ApiManagementSubscriptionCreateOrUpdateContent content, bool? notify, ETag? ifMatch, AppType? appType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.ApiManagement
             request.Uri = uri;
             if (ifMatch != null)
             {
-                request.Headers.Add("If-Match", ifMatch);
+                request.Headers.Add("If-Match", ifMatch.Value);
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="sid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="sid"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SubscriptionContractData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string sid, ServiceSubscriptionCreateOrUpdateContent content, bool? notify = null, string ifMatch = null, AppType? appType = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SubscriptionContractData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string sid, ApiManagementSubscriptionCreateOrUpdateContent content, bool? notify = null, ETag? ifMatch = null, AppType? appType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="sid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="sid"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SubscriptionContractData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, string sid, ServiceSubscriptionCreateOrUpdateContent content, bool? notify = null, string ifMatch = null, AppType? appType = null, CancellationToken cancellationToken = default)
+        public Response<SubscriptionContractData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, string sid, ApiManagementSubscriptionCreateOrUpdateContent content, bool? notify = null, ETag? ifMatch = null, AppType? appType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string sid, string ifMatch, ServiceSubscriptionPatch patch, bool? notify, AppType? appType)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string sid, ETag ifMatch, ApiManagementSubscriptionPatch patch, bool? notify, AppType? appType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -460,9 +460,9 @@ namespace Azure.ResourceManager.ApiManagement
             request.Headers.Add("If-Match", ifMatch);
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(patch);
-            request.Content = content0;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(patch);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -481,15 +481,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// </param>
         /// <param name="appType"> Determines the type of application which send the create user request. Default is legacy publisher portal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="sid"/>, <paramref name="ifMatch"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="sid"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="sid"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SubscriptionContractData>> UpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string sid, string ifMatch, ServiceSubscriptionPatch patch, bool? notify = null, AppType? appType = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SubscriptionContractData>> UpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string sid, ETag ifMatch, ApiManagementSubscriptionPatch patch, bool? notify = null, AppType? appType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(sid, nameof(sid));
-            Argument.AssertNotNull(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, serviceName, sid, ifMatch, patch, notify, appType);
@@ -522,15 +521,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// </param>
         /// <param name="appType"> Determines the type of application which send the create user request. Default is legacy publisher portal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="sid"/>, <paramref name="ifMatch"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="sid"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="sid"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SubscriptionContractData> Update(string subscriptionId, string resourceGroupName, string serviceName, string sid, string ifMatch, ServiceSubscriptionPatch patch, bool? notify = null, AppType? appType = null, CancellationToken cancellationToken = default)
+        public Response<SubscriptionContractData> Update(string subscriptionId, string resourceGroupName, string serviceName, string sid, ETag ifMatch, ApiManagementSubscriptionPatch patch, bool? notify = null, AppType? appType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(sid, nameof(sid));
-            Argument.AssertNotNull(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, serviceName, sid, ifMatch, patch, notify, appType);
@@ -549,7 +547,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string serviceName, string sid, string ifMatch)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string serviceName, string sid, ETag ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -579,15 +577,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="sid"> Subscription entity Identifier. The entity represents the association between a user and a product in API Management. </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="sid"/> or <paramref name="ifMatch"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="sid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="sid"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string serviceName, string sid, string ifMatch, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string serviceName, string sid, ETag ifMatch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(sid, nameof(sid));
-            Argument.AssertNotNull(ifMatch, nameof(ifMatch));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, serviceName, sid, ifMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -608,15 +605,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="sid"> Subscription entity Identifier. The entity represents the association between a user and a product in API Management. </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="sid"/> or <paramref name="ifMatch"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="sid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="sid"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string serviceName, string sid, string ifMatch, CancellationToken cancellationToken = default)
+        public Response Delete(string subscriptionId, string resourceGroupName, string serviceName, string sid, ETag ifMatch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(sid, nameof(sid));
-            Argument.AssertNotNull(ifMatch, nameof(ifMatch));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, serviceName, sid, ifMatch);
             _pipeline.Send(message, cancellationToken);
@@ -890,7 +886,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SubscriptionCollection>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SubscriptionListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -903,9 +899,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        SubscriptionCollection value = default;
+                        SubscriptionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SubscriptionCollection.DeserializeSubscriptionCollection(document.RootElement);
+                        value = SubscriptionListResult.DeserializeSubscriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -924,7 +920,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SubscriptionCollection> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public Response<SubscriptionListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -937,9 +933,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        SubscriptionCollection value = default;
+                        SubscriptionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SubscriptionCollection.DeserializeSubscriptionCollection(document.RootElement);
+                        value = SubscriptionListResult.DeserializeSubscriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

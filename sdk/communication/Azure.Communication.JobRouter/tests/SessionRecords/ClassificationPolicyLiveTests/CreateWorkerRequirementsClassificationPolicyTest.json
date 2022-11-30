@@ -1,0 +1,114 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://rsarkar-sdktest.int.communication.azure.net/routing/classificationPolicies/0F-CE-45-EA-FE-68-C4-46-03-8F-EB-94-E9-A2-13-92-CB?api-version=2022-07-18-preview",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "175",
+        "Content-Type": "application/merge-patch\u002Bjson",
+        "traceparent": "00-d55b7d69bc370044bc6f3526d550839c-cf42564c37dbac4c-00",
+        "User-Agent": "azsdk-net-Communication.JobRouter/1.0.0-alpha.20220722.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "14dd6a22076da35bb76994c17e8e20b4",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Sat, 23 Jul 2022 04:15:48 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "name": "Priority-ClassificationPolicy",
+        "queueSelectors": [],
+        "workerSelectors": [
+          {
+            "labelSelector": {
+              "key": "department",
+              "labelOperator": "equal",
+              "value": "sales"
+            },
+            "kind": "static"
+          }
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-04-07-preview1, 2021-10-20-preview2, 2022-07-18-preview",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 23 Jul 2022 04:15:49 GMT",
+        "ETag": "\u00224a01f864-0000-0700-0000-62db75f50000\u0022",
+        "Last-Modified": "Sat, 23 Jul 2022 04:15:49 GMT",
+        "Request-Context": "appId=",
+        "trace-id": "d55b7d69bc370044bc6f3526d550839c",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "09HXbYgAAAAAXuSugmFR2QJhUtqa4LkJUWVZSMzExMDAwMTE1MDA5AGNjOTI3NThkLTA1ZjctNGFkNi1hYTVlLTBmYTk3MThkODk4NQ==",
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": {
+        "id": "0F-CE-45-EA-FE-68-C4-46-03-8F-EB-94-E9-A2-13-92-CB",
+        "name": "Priority-ClassificationPolicy",
+        "queueSelectors": [],
+        "workerSelectors": [
+          {
+            "kind": "static",
+            "labelSelector": {
+              "expedite": false,
+              "state": "active",
+              "key": "department",
+              "labelOperator": "equal",
+              "value": "sales"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://rsarkar-sdktest.int.communication.azure.net/routing/classificationPolicies/0F-CE-45-EA-FE-68-C4-46-03-8F-EB-94-E9-A2-13-92-CB?api-version=2022-07-18-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-99614eff5a312a4092e01080aee21c0b-6b3c4611dcb5ce4e-00",
+        "User-Agent": "azsdk-net-Communication.JobRouter/1.0.0-alpha.20220722.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "a681b4d46f1db94685bc76484303923c",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Sat, 23 Jul 2022 04:15:49 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-04-07-preview1, 2021-10-20-preview2, 2022-07-18-preview",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 23 Jul 2022 04:15:49 GMT",
+        "ETag": "\u00224a01f864-0000-0700-0000-62db75f50000\u0022",
+        "Last-Modified": "Sat, 23 Jul 2022 04:15:49 GMT",
+        "Request-Context": "appId=",
+        "trace-id": "99614eff5a312a4092e01080aee21c0b",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "09XXbYgAAAADZEpvDbTgTTYY0pbS68/6PWVZSMzExMDAwMTE1MDA5AGNjOTI3NThkLTA1ZjctNGFkNi1hYTVlLTBmYTk3MThkODk4NQ==",
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": {
+        "id": "0F-CE-45-EA-FE-68-C4-46-03-8F-EB-94-E9-A2-13-92-CB",
+        "name": "Priority-ClassificationPolicy",
+        "queueSelectors": [],
+        "workerSelectors": [
+          {
+            "kind": "static",
+            "labelSelector": {
+              "expedite": false,
+              "state": "active",
+              "key": "department",
+              "labelOperator": "equal",
+              "value": "sales"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://rsarkar-sdktest.int.communication.azure.net/;accesskey=Kg==",
+    "id-prefix": "sdk-Qn5HTXUDokSrk2AIDEVrBg-",
+    "RandomSeed": "8218601"
+  }
+}

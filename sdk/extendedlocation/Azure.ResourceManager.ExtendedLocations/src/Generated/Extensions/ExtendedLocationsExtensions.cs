@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
-using Azure.ResourceManager.ExtendedLocations.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ExtendedLocations
@@ -19,41 +18,6 @@ namespace Azure.ResourceManager.ExtendedLocations
     /// <summary> A class to add extension methods to Azure.ResourceManager.ExtendedLocations. </summary>
     public static partial class ExtendedLocationsExtensions
     {
-        private static TenantResourceExtensionClient GetExtensionClient(TenantResource tenantResource)
-        {
-            return tenantResource.GetCachedClient((client) =>
-            {
-                return new TenantResourceExtensionClient(client, tenantResource.Id);
-            }
-            );
-        }
-
-        /// <summary>
-        /// Lists all available Custom Locations operations.
-        /// Request Path: /providers/Microsoft.ExtendedLocation/operations
-        /// Operation Id: CustomLocations_ListOperations
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CustomLocationOperation" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CustomLocationOperation> GetOperationsCustomLocationsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(tenantResource).GetOperationsCustomLocationsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all available Custom Locations operations.
-        /// Request Path: /providers/Microsoft.ExtendedLocation/operations
-        /// Operation Id: CustomLocations_ListOperations
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CustomLocationOperation" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CustomLocationOperation> GetOperationsCustomLocations(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(tenantResource).GetOperationsCustomLocations(cancellationToken);
-        }
-
         private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
         {
             return subscriptionResource.GetCachedClient((client) =>

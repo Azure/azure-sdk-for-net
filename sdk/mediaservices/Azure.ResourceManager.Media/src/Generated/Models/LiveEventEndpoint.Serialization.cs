@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Media.Models
         internal static LiveEventEndpoint DeserializeLiveEventEndpoint(JsonElement element)
         {
             Optional<string> protocol = default;
-            Optional<Uri> url = default;
+            Optional<Uri> uri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("protocol"))
@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        url = null;
+                        uri = null;
                         continue;
                     }
-                    url = new Uri(property.Value.GetString());
+                    uri = new Uri(property.Value.GetString());
                     continue;
                 }
             }
-            return new LiveEventEndpoint(protocol.Value, url.Value);
+            return new LiveEventEndpoint(protocol.Value, uri.Value);
         }
     }
 }

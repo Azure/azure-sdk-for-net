@@ -113,6 +113,43 @@ namespace Azure.Messaging.EventGrid.Tests
             }
         }
 
+        [Test]
+        public async Task DoesNotSetTraceParentExtensionWhenTracingIsDisabled()
+        {
+            MockTransport mockTransport = CreateMockTransport();
+
+            var options = new EventGridPublisherClientOptions
+            {
+                Transport = mockTransport
+            };
+
+            options.Diagnostics.IsDistributedTracingEnabled = false;
+
+            EventGridPublisherClient client =
+               new EventGridPublisherClient(
+                   new Uri("http://localHost"),
+                   new AzureKeyCredential("fakeKey"),
+                   options);
+
+            using ClientDiagnosticListener diagnosticListener = new ClientDiagnosticListener(s => s.StartsWith("Azure."), asyncLocal: true);
+
+            // simulating some other activity already being started before doing operations with the client
+            var activity = new Activity("ParentEvent");
+            activity.SetW3CFormat();
+            activity.Start();
+
+            CloudEvent cloudEvent = new CloudEvent(
+                "record",
+                "Microsoft.MockPublisher.TestEvent",
+                JsonDocument.Parse("{\"property1\": \"abc\",  \"property2\": 123}").RootElement);
+
+            await client.SendEventAsync(cloudEvent);
+            activity.Stop();
+
+            Assert.False(cloudEvent.ExtensionAttributes.ContainsKey("traceparent"));
+            Assert.False(cloudEvent.ExtensionAttributes.ContainsKey("tracestate"));
+        }
+
         private static MockTransport CreateMockTransport()
         {
             return new MockTransport((request) =>

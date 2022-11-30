@@ -7,26 +7,21 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Sap Business Warehouse Open Hub Destination Table properties. </summary>
-    public partial class SapOpenHubTableDataset : Dataset
+    public partial class SapOpenHubTableDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of SapOpenHubTableDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="openHubDestinationName"> The name of the Open Hub Destination with destination type as Database Table. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="openHubDestinationName"/> is null. </exception>
-        public SapOpenHubTableDataset(LinkedServiceReference linkedServiceName, BinaryData openHubDestinationName) : base(linkedServiceName)
+        public SapOpenHubTableDataset(FactoryLinkedServiceReference linkedServiceName, BinaryData openHubDestinationName) : base(linkedServiceName)
         {
-            if (linkedServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(linkedServiceName));
-            }
-            if (openHubDestinationName == null)
-            {
-                throw new ArgumentNullException(nameof(openHubDestinationName));
-            }
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+            Argument.AssertNotNull(openHubDestinationName, nameof(openHubDestinationName));
 
             OpenHubDestinationName = openHubDestinationName;
             DatasetType = "SapOpenHubTable";
@@ -45,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="openHubDestinationName"> The name of the Open Hub Destination with destination type as Database Table. Type: string (or Expression with resultType string). </param>
         /// <param name="excludeLastRequest"> Whether to exclude the records of the last request. The default value is true. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="baseRequestId"> The ID of request for delta loading. Once it is set, only data with requestId larger than the value of this property will be retrieved. The default value is 0. Type: integer (or Expression with resultType integer ). </param>
-        internal SapOpenHubTableDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData openHubDestinationName, BinaryData excludeLastRequest, BinaryData baseRequestId) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal SapOpenHubTableDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData openHubDestinationName, BinaryData excludeLastRequest, BinaryData baseRequestId) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             OpenHubDestinationName = openHubDestinationName;
             ExcludeLastRequest = excludeLastRequest;
@@ -53,11 +48,98 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "SapOpenHubTable";
         }
 
-        /// <summary> The name of the Open Hub Destination with destination type as Database Table. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The name of the Open Hub Destination with destination type as Database Table. Type: string (or Expression with resultType string).
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public BinaryData OpenHubDestinationName { get; set; }
-        /// <summary> Whether to exclude the records of the last request. The default value is true. Type: boolean (or Expression with resultType boolean). </summary>
+        /// <summary>
+        /// Whether to exclude the records of the last request. The default value is true. Type: boolean (or Expression with resultType boolean).
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public BinaryData ExcludeLastRequest { get; set; }
-        /// <summary> The ID of request for delta loading. Once it is set, only data with requestId larger than the value of this property will be retrieved. The default value is 0. Type: integer (or Expression with resultType integer ). </summary>
+        /// <summary>
+        /// The ID of request for delta loading. Once it is set, only data with requestId larger than the value of this property will be retrieved. The default value is 0. Type: integer (or Expression with resultType integer ).
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public BinaryData BaseRequestId { get; set; }
     }
 }

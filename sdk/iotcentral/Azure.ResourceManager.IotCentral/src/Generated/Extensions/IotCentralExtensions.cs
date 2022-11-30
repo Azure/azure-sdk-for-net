@@ -60,14 +60,14 @@ namespace Azure.ResourceManager.IotCentral
         /// Operation Id: Apps_CheckNameAvailability
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="operationInputs"> Set the name parameter in the OperationInputs structure to the name of the IoT Central application to check. </param>
+        /// <param name="content"> Set the name parameter in the OperationInputs structure to the name of the IoT Central application to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationInputs"/> is null. </exception>
-        public static async Task<Response<AppAvailabilityInfo>> CheckNameAvailabilityAppAsync(this SubscriptionResource subscriptionResource, OperationInputs operationInputs, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<IotCentralAppNameAvailabilityResponse>> CheckIotCentralAppNameAvailabilityAsync(this SubscriptionResource subscriptionResource, IotCentralAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(operationInputs, nameof(operationInputs));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).CheckNameAvailabilityAppAsync(operationInputs, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckIotCentralAppNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -76,14 +76,14 @@ namespace Azure.ResourceManager.IotCentral
         /// Operation Id: Apps_CheckNameAvailability
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="operationInputs"> Set the name parameter in the OperationInputs structure to the name of the IoT Central application to check. </param>
+        /// <param name="content"> Set the name parameter in the OperationInputs structure to the name of the IoT Central application to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationInputs"/> is null. </exception>
-        public static Response<AppAvailabilityInfo> CheckNameAvailabilityApp(this SubscriptionResource subscriptionResource, OperationInputs operationInputs, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<IotCentralAppNameAvailabilityResponse> CheckIotCentralAppNameAvailability(this SubscriptionResource subscriptionResource, IotCentralAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(operationInputs, nameof(operationInputs));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).CheckNameAvailabilityApp(operationInputs, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckIotCentralAppNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -92,14 +92,14 @@ namespace Azure.ResourceManager.IotCentral
         /// Operation Id: Apps_CheckSubdomainAvailability
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="operationInputs"> Set the name parameter in the OperationInputs structure to the subdomain of the IoT Central application to check. </param>
+        /// <param name="content"> Set the name parameter in the OperationInputs structure to the subdomain of the IoT Central application to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationInputs"/> is null. </exception>
-        public static async Task<Response<AppAvailabilityInfo>> CheckSubdomainAvailabilityAppAsync(this SubscriptionResource subscriptionResource, OperationInputs operationInputs, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<IotCentralAppNameAvailabilityResponse>> CheckIotCentralAppSubdomainAvailabilityAsync(this SubscriptionResource subscriptionResource, IotCentralAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(operationInputs, nameof(operationInputs));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).CheckSubdomainAvailabilityAppAsync(operationInputs, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckIotCentralAppSubdomainAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.IotCentral
         /// Operation Id: Apps_CheckSubdomainAvailability
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="operationInputs"> Set the name parameter in the OperationInputs structure to the subdomain of the IoT Central application to check. </param>
+        /// <param name="content"> Set the name parameter in the OperationInputs structure to the subdomain of the IoT Central application to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationInputs"/> is null. </exception>
-        public static Response<AppAvailabilityInfo> CheckSubdomainAvailabilityApp(this SubscriptionResource subscriptionResource, OperationInputs operationInputs, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<IotCentralAppNameAvailabilityResponse> CheckIotCentralAppSubdomainAvailability(this SubscriptionResource subscriptionResource, IotCentralAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(operationInputs, nameof(operationInputs));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).CheckSubdomainAvailabilityApp(operationInputs, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckIotCentralAppSubdomainAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -125,8 +125,8 @@ namespace Azure.ResourceManager.IotCentral
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppTemplate" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AppTemplate> GetTemplatesAppsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="IotCentralAppTemplate" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<IotCentralAppTemplate> GetTemplatesAppsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetTemplatesAppsAsync(cancellationToken);
         }
@@ -138,8 +138,8 @@ namespace Azure.ResourceManager.IotCentral
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppTemplate" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AppTemplate> GetTemplatesApps(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IotCentralAppTemplate" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<IotCentralAppTemplate> GetTemplatesApps(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetTemplatesApps(cancellationToken);
         }

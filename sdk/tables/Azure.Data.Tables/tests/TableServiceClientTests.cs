@@ -29,7 +29,7 @@ namespace Azure.Data.Tables.Tests
         /// The table endpoint.
         /// </summary>
         private static readonly Uri _url = new Uri($"https://someaccount.table.core.windows.net");
-
+        private const string signature = "sv=2019-12-12&ss=t&srt=s&sp=rwdlacu&se=2020-08-28T23:45:30Z&st=2020-08-26T15:45:30Z&spr=https&sig=mySig&tn=someTableName";
         private static readonly Uri _urlWithTableName = new Uri($"https://someaccount.table.core.windows.net/{TableName}");
         private static readonly Uri _devUrlWIthTableName = new Uri($"https://10.0.0.1:10002/{AccountName}/{TableName}/");
         private readonly Uri _urlHttp = new Uri($"http://someaccount.table.core.windows.net");
@@ -207,7 +207,7 @@ namespace Azure.Data.Tables.Tests
             yield return new object[] { $"AccountName={AccountName};AccountKey={Secret};EndpointSuffix=core.windows.net", AccountName };
             yield return new object[] { $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret}", AccountName };
             yield return new object[] { $"AccountName={AccountName};AccountKey={Secret}", AccountName };
-            yield return new object[] { "DefaultEndpointsProtocol=http;AccountName=localhost;AccountKey=C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==;TableEndpoint=http://localhost:8902/;", "localhost"};
+            yield return new object[] { "DefaultEndpointsProtocol=http;AccountName=localhost;AccountKey=C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==;TableEndpoint=http://localhost:8902/;", "localhost" };
         }
 
         [Test]
@@ -272,6 +272,28 @@ namespace Azure.Data.Tables.Tests
             ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.CreateTableAsync(TableName));
 
             Assert.That(ex.Message, Does.Contain("The configured endpoint Uri appears to contain the table name"));
+        }
+
+        private static IEnumerable<object[]> TableServiceClientsAllCtors()
+        {
+            var sharedKeyCred = new TableSharedKeyCredential(AccountName, Secret);
+            var tokenCred = new MockCredential();
+            var connString = $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.core.windows.net/;";
+            var sasCred = new AzureSasCredential(signature);
+            var fromTableServiceClient = new TableServiceClient(_url, sharedKeyCred).GetTableClient(TableName);
+
+            yield return new object[] { new TableServiceClient(connString) };
+            yield return new object[] { new TableServiceClient(_url, sharedKeyCred) };
+            yield return new object[] { new TableServiceClient(_url, tokenCred) };
+            yield return new object[] { new TableServiceClient(_url, sasCred) };
+            yield return new object[] { new TableServiceClient(new Uri($"{_url}?{signature}")) };
+        }
+
+        [TestCaseSource(nameof(TableServiceClientsAllCtors))]
+        public void UriPropertyIsPopulated(TableServiceClient client)
+        {
+            Assert.AreEqual(_url.AbsoluteUri, client.Uri.AbsoluteUri);
+            Assert.That(client.Uri.AbsoluteUri, Does.Not.Contain(signature));
         }
 
         private static MockTransport TableAlreadyExistsTransport() =>

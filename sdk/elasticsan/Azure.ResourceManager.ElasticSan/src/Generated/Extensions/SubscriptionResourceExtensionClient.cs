@@ -13,12 +13,15 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ElasticSan.Models;
 
 namespace Azure.ResourceManager.ElasticSan
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
+        private ClientDiagnostics _skusClientDiagnostics;
+        private SkusRestOperations _skusRestClient;
         private ClientDiagnostics _elasticSanClientDiagnostics;
         private ElasticSansRestOperations _elasticSanRestClient;
 
@@ -34,6 +37,8 @@ namespace Azure.ResourceManager.ElasticSan
         {
         }
 
+        private ClientDiagnostics SkusClientDiagnostics => _skusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ElasticSan", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private SkusRestOperations SkusRestClient => _skusRestClient ??= new SkusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics ElasticSanClientDiagnostics => _elasticSanClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ElasticSan", ElasticSanResource.ResourceType.Namespace, Diagnostics);
         private ElasticSansRestOperations ElasticSanRestClient => _elasticSanRestClient ??= new ElasticSansRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ElasticSanResource.ResourceType));
 
@@ -41,6 +46,62 @@ namespace Azure.ResourceManager.ElasticSan
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
+        }
+
+        /// <summary>
+        /// List all the available Skus in the region and information related to them
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ElasticSan/skus
+        /// Operation Id: Skus_List
+        /// </summary>
+        /// <param name="filter"> Specify $filter=&apos;location eq &lt;location&gt;&apos; to filter on location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ElasticSanSkuInformation" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ElasticSanSkuInformation> GetSkusAsync(string filter = null, CancellationToken cancellationToken = default)
+        {
+            async Task<Page<ElasticSanSkuInformation>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = SkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSkus");
+                scope.Start();
+                try
+                {
+                    var response = await SkusRestClient.ListAsync(Id.SubscriptionId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary>
+        /// List all the available Skus in the region and information related to them
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ElasticSan/skus
+        /// Operation Id: Skus_List
+        /// </summary>
+        /// <param name="filter"> Specify $filter=&apos;location eq &lt;location&gt;&apos; to filter on location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ElasticSanSkuInformation" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ElasticSanSkuInformation> GetSkus(string filter = null, CancellationToken cancellationToken = default)
+        {
+            Page<ElasticSanSkuInformation> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = SkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSkus");
+                scope.Start();
+                try
+                {
+                    var response = SkusRestClient.List(Id.SubscriptionId, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
         /// <summary>

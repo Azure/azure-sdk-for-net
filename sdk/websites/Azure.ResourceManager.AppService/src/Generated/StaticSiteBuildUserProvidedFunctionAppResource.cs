@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService
     /// A Class representing a StaticSiteBuildUserProvidedFunctionApp along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StaticSiteBuildUserProvidedFunctionAppResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetStaticSiteBuildUserProvidedFunctionAppResource method.
-    /// Otherwise you can get one from its parent resource <see cref="StaticSiteBuildARMResource" /> using the GetStaticSiteBuildUserProvidedFunctionApp method.
+    /// Otherwise you can get one from its parent resource <see cref="StaticSiteBuildResource" /> using the GetStaticSiteBuildUserProvidedFunctionApp method.
     /// </summary>
     public partial class StaticSiteBuildUserProvidedFunctionAppResource : ArmResource
     {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppService
 
         private readonly ClientDiagnostics _staticSiteBuildUserProvidedFunctionAppStaticSitesClientDiagnostics;
         private readonly StaticSitesRestOperations _staticSiteBuildUserProvidedFunctionAppStaticSitesRestClient;
-        private readonly StaticSiteUserProvidedFunctionAppARMResourceData _data;
+        private readonly StaticSiteUserProvidedFunctionAppData _data;
 
         /// <summary> Initializes a new instance of the <see cref="StaticSiteBuildUserProvidedFunctionAppResource"/> class for mocking. </summary>
         protected StaticSiteBuildUserProvidedFunctionAppResource()
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of the <see cref = "StaticSiteBuildUserProvidedFunctionAppResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal StaticSiteBuildUserProvidedFunctionAppResource(ArmClient client, StaticSiteUserProvidedFunctionAppARMResourceData data) : this(client, data.Id)
+        internal StaticSiteBuildUserProvidedFunctionAppResource(ArmClient client, StaticSiteUserProvidedFunctionAppData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual StaticSiteUserProvidedFunctionAppARMResourceData Data
+        public virtual StaticSiteUserProvidedFunctionAppData Data
         {
             get
             {
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="isForced"> Specify &lt;code&gt;true&lt;/code&gt; to force the update of the auth configuration on the function app even if an AzureStaticWebApps provider is already configured on the function app. The default is &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<StaticSiteBuildUserProvidedFunctionAppResource>> UpdateAsync(WaitUntil waitUntil, StaticSiteUserProvidedFunctionAppARMResourceData data, bool? isForced = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<StaticSiteBuildUserProvidedFunctionAppResource>> UpdateAsync(WaitUntil waitUntil, StaticSiteUserProvidedFunctionAppData data, bool? isForced = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="isForced"> Specify &lt;code&gt;true&lt;/code&gt; to force the update of the auth configuration on the function app even if an AzureStaticWebApps provider is already configured on the function app. The default is &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<StaticSiteBuildUserProvidedFunctionAppResource> Update(WaitUntil waitUntil, StaticSiteUserProvidedFunctionAppARMResourceData data, bool? isForced = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<StaticSiteBuildUserProvidedFunctionAppResource> Update(WaitUntil waitUntil, StaticSiteUserProvidedFunctionAppData data, bool? isForced = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 

@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<string> serviceBusNamespace = default;
             Optional<string> sharedAccessPolicyName = default;
             Optional<string> sharedAccessPolicyKey = default;
-            Optional<AuthenticationMode> authenticationMode = default;
+            Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
             Optional<string> topicName = default;
             Optional<IList<string>> propertyColumns = default;
             Optional<IDictionary<string, string>> systemPropertyColumns = default;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            authenticationMode = new AuthenticationMode(property0.Value.GetString());
+                            authenticationMode = new StreamAnalyticsAuthenticationMode(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("topicName"))

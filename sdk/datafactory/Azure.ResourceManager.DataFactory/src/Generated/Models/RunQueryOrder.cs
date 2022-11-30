@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string ASCValue = "ASC";
+        private const string AscValue = "ASC";
         private const string DescValue = "DESC";
 
         /// <summary> ASC. </summary>
-        public static RunQueryOrder ASC { get; } = new RunQueryOrder(ASCValue);
+        public static RunQueryOrder Asc { get; } = new RunQueryOrder(AscValue);
         /// <summary> DESC. </summary>
         public static RunQueryOrder Desc { get; } = new RunQueryOrder(DescValue);
         /// <summary> Determines if two <see cref="RunQueryOrder"/> values are the same. </summary>

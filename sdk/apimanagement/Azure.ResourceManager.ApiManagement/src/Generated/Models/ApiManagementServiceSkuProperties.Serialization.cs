@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static ApiManagementServiceSkuProperties DeserializeApiManagementServiceSkuProperties(JsonElement element)
         {
-            SkuType name = default;
+            ApiManagementServiceSkuType name = default;
             int capacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    name = new SkuType(property.Value.GetString());
+                    name = new ApiManagementServiceSkuType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("capacity"))

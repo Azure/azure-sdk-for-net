@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of DataWarehouseUserActivitiesListResult. </summary>
         internal DataWarehouseUserActivitiesListResult()
         {
-            Value = new ChangeTrackingList<DataWarehouseUserActivitiesData>();
+            Value = new ChangeTrackingList<DataWarehouseUserActivityData>();
         }
 
         /// <summary> Initializes a new instance of DataWarehouseUserActivitiesListResult. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal DataWarehouseUserActivitiesListResult(IReadOnlyList<DataWarehouseUserActivitiesData> value, string nextLink)
+        internal DataWarehouseUserActivitiesListResult(IReadOnlyList<DataWarehouseUserActivityData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Array of results. </summary>
-        public IReadOnlyList<DataWarehouseUserActivitiesData> Value { get; }
+        public IReadOnlyList<DataWarehouseUserActivityData> Value { get; }
         /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }

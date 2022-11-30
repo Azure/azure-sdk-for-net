@@ -20,16 +20,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="name"> Variable name. </param>
         /// <param name="description"> Variable description. </param>
         /// <param name="dataType"> Variable type. </param>
-        /// <param name="sensitive"> Whether variable is sensitive. </param>
+        /// <param name="isSensitive"> Whether variable is sensitive. </param>
         /// <param name="value"> Variable value. </param>
         /// <param name="sensitiveValue"> Variable sensitive value. </param>
-        internal SsisVariable(long? id, string name, string description, string dataType, bool? sensitive, string value, string sensitiveValue)
+        internal SsisVariable(long? id, string name, string description, string dataType, bool? isSensitive, string value, string sensitiveValue)
         {
             Id = id;
             Name = name;
             Description = description;
             DataType = dataType;
-            Sensitive = sensitive;
+            IsSensitive = isSensitive;
             Value = value;
             SensitiveValue = sensitiveValue;
         }
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Variable type. </summary>
         public string DataType { get; }
         /// <summary> Whether variable is sensitive. </summary>
-        public bool? Sensitive { get; }
+        public bool? IsSensitive { get; }
         /// <summary> Variable value. </summary>
         public string Value { get; }
         /// <summary> Variable sensitive value. </summary>

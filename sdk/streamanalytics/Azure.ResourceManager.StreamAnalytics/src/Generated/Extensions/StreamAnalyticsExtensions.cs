@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SubscriptionQuota> GetQuotasSubscriptionsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="StreamAnalyticsSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<StreamAnalyticsSubscriptionQuota> GetQuotasSubscriptionsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetQuotasSubscriptionsAsync(location, cancellationToken);
         }
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SubscriptionQuota> GetQuotasSubscriptions(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="StreamAnalyticsSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<StreamAnalyticsSubscriptionQuota> GetQuotasSubscriptions(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetQuotasSubscriptions(location, cancellationToken);
         }
@@ -92,14 +92,14 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
-        /// <param name="content"> The query testing object that defines the input, output, and transformation for the query testing. </param>
+        /// <param name="testQuery"> The query testing object that defines the input, output, and transformation for the query testing. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<ArmOperation<QueryTestingResult>> TestQuerySubscriptionAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, TestQueryContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="testQuery"/> is null. </exception>
+        public static async Task<ArmOperation<StreamAnalyticsQueryTestingResult>> TestQuerySubscriptionAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, StreamAnalyticsTestQuery testQuery, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(testQuery, nameof(testQuery));
 
-            return await GetExtensionClient(subscriptionResource).TestQuerySubscriptionAsync(waitUntil, location, content, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).TestQuerySubscriptionAsync(waitUntil, location, testQuery, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
-        /// <param name="content"> The query testing object that defines the input, output, and transformation for the query testing. </param>
+        /// <param name="testQuery"> The query testing object that defines the input, output, and transformation for the query testing. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static ArmOperation<QueryTestingResult> TestQuerySubscription(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, TestQueryContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="testQuery"/> is null. </exception>
+        public static ArmOperation<StreamAnalyticsQueryTestingResult> TestQuerySubscription(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, StreamAnalyticsTestQuery testQuery, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(testQuery, nameof(testQuery));
 
-            return GetExtensionClient(subscriptionResource).TestQuerySubscription(waitUntil, location, content, cancellationToken);
+            return GetExtensionClient(subscriptionResource).TestQuerySubscription(waitUntil, location, testQuery, cancellationToken);
         }
 
         /// <summary>
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="compileQuery"> The query compilation object which defines the input, output, and transformation for the query compilation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="compileQuery"/> is null. </exception>
-        public static async Task<Response<QueryCompilationResult>> CompileQuerySubscriptionAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CompileQuery compileQuery, CancellationToken cancellationToken = default)
+        public static async Task<Response<StreamAnalyticsQueryCompilationResult>> CompileQuerySubscriptionAsync(this SubscriptionResource subscriptionResource, AzureLocation location, StreamAnalyticsCompileQuery compileQuery, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(compileQuery, nameof(compileQuery));
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="compileQuery"> The query compilation object which defines the input, output, and transformation for the query compilation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="compileQuery"/> is null. </exception>
-        public static Response<QueryCompilationResult> CompileQuerySubscription(this SubscriptionResource subscriptionResource, AzureLocation location, CompileQuery compileQuery, CancellationToken cancellationToken = default)
+        public static Response<StreamAnalyticsQueryCompilationResult> CompileQuerySubscription(this SubscriptionResource subscriptionResource, AzureLocation location, StreamAnalyticsCompileQuery compileQuery, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(compileQuery, nameof(compileQuery));
 
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="content"> Defines the necessary parameters for sampling the Stream Analytics input data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<ArmOperation<SampleInputResult>> SampleInputSubscriptionAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, SampleContent content, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<StreamAnalyticsSampleInputResult>> SampleInputSubscriptionAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, StreamAnalyticsSampleInputContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="content"> Defines the necessary parameters for sampling the Stream Analytics input data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static ArmOperation<SampleInputResult> SampleInputSubscription(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, SampleContent content, CancellationToken cancellationToken = default)
+        public static ArmOperation<StreamAnalyticsSampleInputResult> SampleInputSubscription(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, StreamAnalyticsSampleInputContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="content"> Defines the necessary parameters for testing the Stream Analytics input. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<ArmOperation<TestDatasourceResult>> TestInputSubscriptionAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, TestInputContent content, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<StreamAnalyticsTestDatasourceResult>> TestInputSubscriptionAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, StreamAnalyticsTestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="content"> Defines the necessary parameters for testing the Stream Analytics input. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static ArmOperation<TestDatasourceResult> TestInputSubscription(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, TestInputContent content, CancellationToken cancellationToken = default)
+        public static ArmOperation<StreamAnalyticsTestDatasourceResult> TestInputSubscription(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, StreamAnalyticsTestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -234,14 +234,14 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
-        /// <param name="content"> Defines the necessary parameters for testing the Stream Analytics output. </param>
+        /// <param name="testOutput"> Defines the necessary parameters for testing the Stream Analytics output. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<ArmOperation<TestDatasourceResult>> TestOutputSubscriptionAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, TestOutputContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="testOutput"/> is null. </exception>
+        public static async Task<ArmOperation<StreamAnalyticsTestDatasourceResult>> TestOutputSubscriptionAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, StreamAnalyticsTestOutput testOutput, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(testOutput, nameof(testOutput));
 
-            return await GetExtensionClient(subscriptionResource).TestOutputSubscriptionAsync(waitUntil, location, content, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).TestOutputSubscriptionAsync(waitUntil, location, testOutput, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -252,14 +252,14 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
-        /// <param name="content"> Defines the necessary parameters for testing the Stream Analytics output. </param>
+        /// <param name="testOutput"> Defines the necessary parameters for testing the Stream Analytics output. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static ArmOperation<TestDatasourceResult> TestOutputSubscription(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, TestOutputContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="testOutput"/> is null. </exception>
+        public static ArmOperation<StreamAnalyticsTestDatasourceResult> TestOutputSubscription(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, StreamAnalyticsTestOutput testOutput, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(testOutput, nameof(testOutput));
 
-            return GetExtensionClient(subscriptionResource).TestOutputSubscription(waitUntil, location, content, cancellationToken);
+            return GetExtensionClient(subscriptionResource).TestOutputSubscription(waitUntil, location, testOutput, cancellationToken);
         }
 
         /// <summary>

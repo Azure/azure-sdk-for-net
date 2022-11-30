@@ -19,6 +19,16 @@ namespace Azure.ResourceManager.Monitor
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(RequiredZoneNames))
+            {
+                writer.WritePropertyName("requiredZoneNames");
+                writer.WriteStartArray();
+                foreach (var item in RequiredZoneNames)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -31,6 +41,7 @@ namespace Azure.ResourceManager.Monitor
             Optional<SystemData> systemData = default;
             Optional<string> groupId = default;
             Optional<IReadOnlyList<string>> requiredMembers = default;
+            Optional<IList<string>> requiredZoneNames = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -87,11 +98,26 @@ namespace Azure.ResourceManager.Monitor
                             requiredMembers = array;
                             continue;
                         }
+                        if (property0.NameEquals("requiredZoneNames"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            requiredZoneNames = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new MonitorPrivateLinkResourceData(id, name, type, systemData.Value, groupId.Value, Optional.ToList(requiredMembers));
+            return new MonitorPrivateLinkResourceData(id, name, type, systemData.Value, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
         }
     }
 }

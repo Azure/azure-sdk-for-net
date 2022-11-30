@@ -48,10 +48,9 @@ namespace Azure.Messaging.EventHubs.Producer
     ///   </list>
     ///
     ///   <para>
-    ///     The <see cref="EventHubProducerClient" /> is safe to cache and use for the lifetime of an application, and that is best practice when the application
-    ///     publishes events regularly or semi-regularly.  The producer holds responsibility for efficient resource management, working to keep resource usage low during
-    ///     periods of inactivity and manage health during periods of higher use.  Calling either the <see cref="CloseAsync" /> or <see cref="DisposeAsync" />
-    ///     method as the application is shutting down will ensure that network resources and other unmanaged objects are properly cleaned up.
+    ///     The <see cref="EventHubProducerClient" /> is safe to cache and use for the lifetime of an application, which is the best practice when the application
+    ///     publishes events regularly or semi-regularly.  The producer is responsible for ensuring efficient network, CPU, and memory use.  Calling either
+    ///     <see cref="CloseAsync" /> or <see cref="DisposeAsync" /> as the application is shutting down will ensure that network resources and other unmanaged objects are properly cleaned up.
     ///   </para>
     /// </remarks>
     ///

@@ -15,6 +15,14 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+request-path-to-resource-name:
+    /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}: RelayNamespaceAuthorizationRule
+    /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules/{authorizationRuleName}: RelayHybridConnectionAuthorizationRule
+    /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}/authorizationRules/{authorizationRuleName}: WcfRelayAuthorizationRule
+
+override-operation-name:
+  Namespaces_CheckNameAvailability: CheckRelayNamespaceNameAvailability
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'etag': 'etag'
@@ -46,4 +54,32 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+rename-mapping:
+  AuthorizationRule: RelayAuthorizationRule
+  AccessRights: RelayAccessRight
+  HybridConnection.properties.requiresClientAuthorization: IsClientAuthorizationRequired
+  AccessKeys: RelayAccessKeys
+  RegenerateAccessKeyParameters: RelayRegenerateAccessKeyContent
+  NetworkRuleSet: RelayNetworkRuleSet
+  DefaultAction: RelayNetworkRuleSetDefaultAction
+  NetworkRuleIPAction: RelayNetworkRuleIPAction
+  PublicNetworkAccess: RelayPublicNetworkAccess
+  ConnectionState: RelayPrivateLinkServiceConnectionState
+  PrivateLinkConnectionStatus: RelayPrivateLinkConnectionStatus
+  EndPointProvisioningState: RelayPrivateEndpointConnectionProvisioningState
+  WcfRelay.properties.requiresClientAuthorization: IsClientAuthorizationRequired
+  WcfRelay.properties.requiresTransportSecurity: IsTransportSecurityRequired
+  Relaytype: RelayType
+  CheckNameAvailability: RelayNameAvailabilityContent
+  CheckNameAvailabilityResult: RelayNameAvailabilityResult
+  CheckNameAvailabilityResult.nameAvailable: IsNameAvailable
+  UnavailableReason: RelayNameUnavailableReason
+  KeyType: RelayAccessKeyType
+  HybridConnection: RelayHybridConnection
+
+directive:
+  from: NetworkRuleSets.json
+  where: $.definitions
+  transform: >
+    $.NWRuleSetIpRules['x-ms-client-name'] = 'RelayNetworkRuleSetIPRule';
 ```

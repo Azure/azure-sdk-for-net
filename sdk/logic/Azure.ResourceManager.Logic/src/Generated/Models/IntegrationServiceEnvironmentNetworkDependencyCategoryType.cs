@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.Logic.Models
         private const string AzureStorageValue = "AzureStorage";
         private const string AzureManagementValue = "AzureManagement";
         private const string AzureActiveDirectoryValue = "AzureActiveDirectory";
-        private const string SSLCertificateVerificationValue = "SSLCertificateVerification";
+        private const string SslCertificateVerificationValue = "SSLCertificateVerification";
         private const string DiagnosticLogsAndMetricsValue = "DiagnosticLogsAndMetrics";
         private const string IntegrationServiceEnvironmentConnectorsValue = "IntegrationServiceEnvironmentConnectors";
         private const string RedisCacheValue = "RedisCache";
         private const string AccessEndpointsValue = "AccessEndpoints";
         private const string RecoveryServiceValue = "RecoveryService";
-        private const string SQLValue = "SQL";
+        private const string SqlValue = "SQL";
         private const string RegionalServiceValue = "RegionalService";
 
         /// <summary> NotSpecified. </summary>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> AzureActiveDirectory. </summary>
         public static IntegrationServiceEnvironmentNetworkDependencyCategoryType AzureActiveDirectory { get; } = new IntegrationServiceEnvironmentNetworkDependencyCategoryType(AzureActiveDirectoryValue);
         /// <summary> SSLCertificateVerification. </summary>
-        public static IntegrationServiceEnvironmentNetworkDependencyCategoryType SSLCertificateVerification { get; } = new IntegrationServiceEnvironmentNetworkDependencyCategoryType(SSLCertificateVerificationValue);
+        public static IntegrationServiceEnvironmentNetworkDependencyCategoryType SslCertificateVerification { get; } = new IntegrationServiceEnvironmentNetworkDependencyCategoryType(SslCertificateVerificationValue);
         /// <summary> DiagnosticLogsAndMetrics. </summary>
         public static IntegrationServiceEnvironmentNetworkDependencyCategoryType DiagnosticLogsAndMetrics { get; } = new IntegrationServiceEnvironmentNetworkDependencyCategoryType(DiagnosticLogsAndMetricsValue);
         /// <summary> IntegrationServiceEnvironmentConnectors. </summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> RecoveryService. </summary>
         public static IntegrationServiceEnvironmentNetworkDependencyCategoryType RecoveryService { get; } = new IntegrationServiceEnvironmentNetworkDependencyCategoryType(RecoveryServiceValue);
         /// <summary> SQL. </summary>
-        public static IntegrationServiceEnvironmentNetworkDependencyCategoryType SQL { get; } = new IntegrationServiceEnvironmentNetworkDependencyCategoryType(SQLValue);
+        public static IntegrationServiceEnvironmentNetworkDependencyCategoryType Sql { get; } = new IntegrationServiceEnvironmentNetworkDependencyCategoryType(SqlValue);
         /// <summary> RegionalService. </summary>
         public static IntegrationServiceEnvironmentNetworkDependencyCategoryType RegionalService { get; } = new IntegrationServiceEnvironmentNetworkDependencyCategoryType(RegionalServiceValue);
         /// <summary> Determines if two <see cref="IntegrationServiceEnvironmentNetworkDependencyCategoryType"/> values are the same. </summary>

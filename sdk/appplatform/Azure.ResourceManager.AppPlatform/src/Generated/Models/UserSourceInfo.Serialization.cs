@@ -39,22 +39,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     case "UploadedUserSourceInfo": return UploadedUserSourceInfo.DeserializeUploadedUserSourceInfo(element);
                 }
             }
-            string type = default;
-            Optional<string> version = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("version"))
-                {
-                    version = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UserSourceInfo(type, version.Value);
+            return UnknownUserSourceInfo.DeserializeUnknownUserSourceInfo(element);
         }
     }
 }

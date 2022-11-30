@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static ManagedPrivateEndpointListResponse DeserializeManagedPrivateEndpointListResponse(JsonElement element)
         {
-            IReadOnlyList<ManagedPrivateEndpointResourceData> value = default;
+            IReadOnlyList<FactoryPrivateEndpointData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<ManagedPrivateEndpointResourceData> array = new List<ManagedPrivateEndpointResourceData>();
+                    List<FactoryPrivateEndpointData> array = new List<FactoryPrivateEndpointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedPrivateEndpointResourceData.DeserializeManagedPrivateEndpointResourceData(item));
+                        array.Add(FactoryPrivateEndpointData.DeserializeFactoryPrivateEndpointData(item));
                     }
                     value = array;
                     continue;

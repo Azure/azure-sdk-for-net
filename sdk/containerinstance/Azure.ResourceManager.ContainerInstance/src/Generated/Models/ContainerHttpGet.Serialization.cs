@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         {
             Optional<string> path = default;
             int port = default;
-            Optional<Scheme> scheme = default;
-            Optional<IList<HttpHeader>> httpHeaders = default;
+            Optional<ContainerHttpGetScheme> scheme = default;
+            Optional<IList<ContainerHttpHeader>> httpHeaders = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("path"))
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    scheme = new Scheme(property.Value.GetString());
+                    scheme = new ContainerHttpGetScheme(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("httpHeaders"))
@@ -76,10 +76,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<HttpHeader> array = new List<HttpHeader>();
+                    List<ContainerHttpHeader> array = new List<ContainerHttpHeader>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HttpHeader.DeserializeHttpHeader(item));
+                        array.Add(ContainerHttpHeader.DeserializeContainerHttpHeader(item));
                     }
                     httpHeaders = array;
                     continue;

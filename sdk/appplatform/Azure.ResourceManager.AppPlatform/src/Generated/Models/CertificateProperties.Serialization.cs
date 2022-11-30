@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -31,68 +30,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     case "KeyVaultCertificate": return KeyVaultCertificateProperties.DeserializeKeyVaultCertificateProperties(element);
                 }
             }
-            string type = default;
-            Optional<string> thumbprint = default;
-            Optional<string> issuer = default;
-            Optional<string> issuedDate = default;
-            Optional<string> expirationDate = default;
-            Optional<string> activateDate = default;
-            Optional<string> subjectName = default;
-            Optional<IReadOnlyList<string>> dnsNames = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("thumbprint"))
-                {
-                    thumbprint = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("issuer"))
-                {
-                    issuer = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("issuedDate"))
-                {
-                    issuedDate = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("expirationDate"))
-                {
-                    expirationDate = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("activateDate"))
-                {
-                    activateDate = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("subjectName"))
-                {
-                    subjectName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("dnsNames"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    dnsNames = array;
-                    continue;
-                }
-            }
-            return new CertificateProperties(type, thumbprint.Value, issuer.Value, issuedDate.Value, expirationDate.Value, activateDate.Value, subjectName.Value, Optional.ToList(dnsNames));
+            return UnknownCertificateProperties.DeserializeUnknownCertificateProperties(element);
         }
     }
 }

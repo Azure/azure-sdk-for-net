@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -19,6 +20,11 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 writer.WritePropertyName("fhirVersion");
                 writer.WriteStringValue(FhirVersion.Value.ToString());
+            }
+            if (Optional.IsDefined(DocumentType))
+            {
+                writer.WritePropertyName("documentType");
+                writer.WriteStringValue(DocumentType.Value.ToString());
             }
             if (Optional.IsDefined(StringIndexType))
             {
@@ -40,7 +46,8 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static HealthcareTaskParameters DeserializeHealthcareTaskParameters(JsonElement element)
         {
-            Optional<FhirVersion> fhirVersion = default;
+            Optional<WellKnownFhirVersion> fhirVersion = default;
+            Optional<HealthcareDocumentType> documentType = default;
             Optional<StringIndexType> stringIndexType = default;
             Optional<string> modelVersion = default;
             Optional<bool> loggingOptOut = default;
@@ -53,7 +60,17 @@ namespace Azure.AI.TextAnalytics.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    fhirVersion = new FhirVersion(property.Value.GetString());
+                    fhirVersion = new WellKnownFhirVersion(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("documentType"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    documentType = new HealthcareDocumentType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("stringIndexType"))
@@ -82,7 +99,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new HealthcareTaskParameters(Optional.ToNullable(loggingOptOut), modelVersion.Value, Optional.ToNullable(fhirVersion), Optional.ToNullable(stringIndexType));
+            return new HealthcareTaskParameters(Optional.ToNullable(loggingOptOut), modelVersion.Value, Optional.ToNullable(fhirVersion), Optional.ToNullable(documentType), Optional.ToNullable(stringIndexType));
         }
     }
 }

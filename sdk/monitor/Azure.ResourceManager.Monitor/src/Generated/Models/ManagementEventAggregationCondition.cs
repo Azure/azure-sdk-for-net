@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="operator"> the condition operator. </param>
         /// <param name="threshold"> The threshold value that activates the alert. </param>
         /// <param name="windowSize"> the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. If specified then it must be between 5 minutes and 1 day. </param>
-        internal ManagementEventAggregationCondition(ConditionOperator? @operator, double? threshold, TimeSpan? windowSize)
+        internal ManagementEventAggregationCondition(MonitorConditionOperator? @operator, double? threshold, TimeSpan? windowSize)
         {
             Operator = @operator;
             Threshold = threshold;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> the condition operator. </summary>
-        public ConditionOperator? Operator { get; set; }
+        public MonitorConditionOperator? Operator { get; set; }
         /// <summary> The threshold value that activates the alert. </summary>
         public double? Threshold { get; set; }
         /// <summary> the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. If specified then it must be between 5 minutes and 1 day. </summary>

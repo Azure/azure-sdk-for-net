@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -18,12 +19,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of ManagedPrivateEndpointListResponse. </summary>
         /// <param name="value"> List of managed private endpoints. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ManagedPrivateEndpointListResponse(IEnumerable<ManagedPrivateEndpointResourceData> value)
+        internal ManagedPrivateEndpointListResponse(IEnumerable<FactoryPrivateEndpointData> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
@@ -31,14 +29,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of ManagedPrivateEndpointListResponse. </summary>
         /// <param name="value"> List of managed private endpoints. </param>
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
-        internal ManagedPrivateEndpointListResponse(IReadOnlyList<ManagedPrivateEndpointResourceData> value, string nextLink)
+        internal ManagedPrivateEndpointListResponse(IReadOnlyList<FactoryPrivateEndpointData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of managed private endpoints. </summary>
-        public IReadOnlyList<ManagedPrivateEndpointResourceData> Value { get; }
+        public IReadOnlyList<FactoryPrivateEndpointData> Value { get; }
         /// <summary> The link to the next page of results, if any remaining results exist. </summary>
         public string NextLink { get; }
     }

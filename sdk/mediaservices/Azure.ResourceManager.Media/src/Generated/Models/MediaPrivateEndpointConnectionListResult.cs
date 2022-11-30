@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of MediaPrivateEndpointConnectionListResult. </summary>
         internal MediaPrivateEndpointConnectionListResult()
         {
-            Value = new ChangeTrackingList<MediaPrivateEndpointConnectionData>();
+            Value = new ChangeTrackingList<MediaServicesPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of MediaPrivateEndpointConnectionListResult. </summary>
         /// <param name="value"> Array of private endpoint connections. </param>
-        internal MediaPrivateEndpointConnectionListResult(IReadOnlyList<MediaPrivateEndpointConnectionData> value)
+        internal MediaPrivateEndpointConnectionListResult(IReadOnlyList<MediaServicesPrivateEndpointConnectionData> value)
         {
             Value = value;
         }
 
         /// <summary> Array of private endpoint connections. </summary>
-        public IReadOnlyList<MediaPrivateEndpointConnectionData> Value { get; }
+        public IReadOnlyList<MediaServicesPrivateEndpointConnectionData> Value { get; }
     }
 }

@@ -11,19 +11,16 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    /// <summary> Model summary. </summary>
+    /// <summary> Document model summary. </summary>
     public partial class DocumentModelSummary
     {
         /// <summary> Initializes a new instance of DocumentModelSummary. </summary>
-        /// <param name="modelId"> Unique model name. </param>
-        /// <param name="createdOn"> Date and time (UTC) when the model was created. </param>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="createdOn"> Date and time (UTC) when the document model was created. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         internal DocumentModelSummary(string modelId, DateTimeOffset createdOn)
         {
-            if (modelId == null)
-            {
-                throw new ArgumentNullException(nameof(modelId));
-            }
+            Argument.AssertNotNull(modelId, nameof(modelId));
 
             ModelId = modelId;
             CreatedOn = createdOn;
@@ -31,11 +28,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         }
 
         /// <summary> Initializes a new instance of DocumentModelSummary. </summary>
-        /// <param name="modelId"> Unique model name. </param>
-        /// <param name="description"> Model description. </param>
-        /// <param name="createdOn"> Date and time (UTC) when the model was created. </param>
-        /// <param name="apiVersion"> API version used to create this model. </param>
-        /// <param name="tags"> List of key-value tag attributes associated with the model. </param>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="description"> Document model description. </param>
+        /// <param name="createdOn"> Date and time (UTC) when the document model was created. </param>
+        /// <param name="apiVersion"> API version used to create this document model. </param>
+        /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
         internal DocumentModelSummary(string modelId, string description, DateTimeOffset createdOn, string apiVersion, IReadOnlyDictionary<string, string> tags)
         {
             ModelId = modelId;
@@ -45,9 +42,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Tags = tags;
         }
 
-        /// <summary> Unique model name. </summary>
+        /// <summary> Unique document model name. </summary>
         public string ModelId { get; }
-        /// <summary> Model description. </summary>
+        /// <summary> Document model description. </summary>
         public string Description { get; }
+        /// <summary> List of key-value tag attributes associated with the document model. </summary>
+        public IReadOnlyDictionary<string, string> Tags { get; }
     }
 }

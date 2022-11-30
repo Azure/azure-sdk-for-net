@@ -9,7 +9,7 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 Install the Azure Cognitive Services management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.CognitiveServices --prerelease
+dotnet add package Azure.ResourceManager.CognitiveServices
 ```
 
 ### Prerequisites

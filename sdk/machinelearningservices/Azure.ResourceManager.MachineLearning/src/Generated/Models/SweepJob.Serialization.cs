@@ -49,15 +49,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(Limits))
             {
-                if (Limits != null)
-                {
-                    writer.WritePropertyName("limits");
-                    writer.WriteObjectValue(Limits);
-                }
-                else
-                {
-                    writer.WriteNull("limits");
-                }
+                writer.WritePropertyName("limits");
+                writer.WriteObjectValue(Limits);
             }
             writer.WritePropertyName("objective");
             writer.WriteObjectValue(Objective);
@@ -89,6 +82,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 #endif
             writer.WritePropertyName("trial");
             writer.WriteObjectValue(Trial);
+            if (Optional.IsDefined(ComponentId))
+            {
+                if (ComponentId != null)
+                {
+                    writer.WritePropertyName("componentId");
+                    writer.WriteStringValue(ComponentId);
+                }
+                else
+                {
+                    writer.WriteNull("componentId");
+                }
+            }
             if (Optional.IsDefined(ComputeId))
             {
                 if (ComputeId != null)
@@ -115,15 +120,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(ExperimentName))
             {
-                if (ExperimentName != null)
-                {
-                    writer.WritePropertyName("experimentName");
-                    writer.WriteStringValue(ExperimentName);
-                }
-                else
-                {
-                    writer.WriteNull("experimentName");
-                }
+                writer.WritePropertyName("experimentName");
+                writer.WriteStringValue(ExperimentName);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -144,18 +142,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("jobType");
             writer.WriteStringValue(JobType.ToString());
-            if (Optional.IsDefined(Schedule))
-            {
-                if (Schedule != null)
-                {
-                    writer.WritePropertyName("schedule");
-                    writer.WriteObjectValue(Schedule);
-                }
-                else
-                {
-                    writer.WriteNull("schedule");
-                }
-            }
             if (Optional.IsCollectionDefined(Services))
             {
                 if (Services != null)
@@ -235,13 +221,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             SamplingAlgorithm samplingAlgorithm = default;
             BinaryData searchSpace = default;
             TrialComponent trial = default;
+            Optional<string> componentId = default;
             Optional<string> computeId = default;
             Optional<string> displayName = default;
             Optional<string> experimentName = default;
             Optional<IdentityConfiguration> identity = default;
             Optional<bool> isArchived = default;
             JobType jobType = default;
-            Optional<ScheduleBase> schedule = default;
             Optional<IDictionary<string, JobService>> services = default;
             Optional<JobStatus> status = default;
             Optional<string> description = default;
@@ -285,7 +271,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        limits = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     limits = SweepJobLimits.DeserializeSweepJobLimits(property.Value);
@@ -333,6 +319,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     trial = TrialComponent.DeserializeTrialComponent(property.Value);
                     continue;
                 }
+                if (property.NameEquals("componentId"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        componentId = null;
+                        continue;
+                    }
+                    componentId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("computeId"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -355,11 +351,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("experimentName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        experimentName = null;
-                        continue;
-                    }
                     experimentName = property.Value.GetString();
                     continue;
                 }
@@ -386,16 +377,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (property.NameEquals("jobType"))
                 {
                     jobType = new JobType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("schedule"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        schedule = null;
-                        continue;
-                    }
-                    schedule = ScheduleBase.DeserializeScheduleBase(property.Value);
                     continue;
                 }
                 if (property.NameEquals("services"))
@@ -485,7 +466,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new SweepJob(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), computeId.Value, displayName.Value, experimentName.Value, identity.Value, Optional.ToNullable(isArchived), jobType, schedule.Value, Optional.ToDictionary(services), Optional.ToNullable(status), earlyTermination.Value, Optional.ToDictionary(inputs), limits.Value, objective, Optional.ToDictionary(outputs), samplingAlgorithm, searchSpace, trial);
+            return new SweepJob(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), componentId.Value, computeId.Value, displayName.Value, experimentName.Value, identity.Value, Optional.ToNullable(isArchived), jobType, Optional.ToDictionary(services), Optional.ToNullable(status), earlyTermination.Value, Optional.ToDictionary(inputs), limits.Value, objective, Optional.ToDictionary(outputs), samplingAlgorithm, searchSpace, trial);
         }
     }
 }

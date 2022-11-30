@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.Automation.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -38,12 +40,14 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <param name="type">The type of the resource.</param>
         /// <param name="privateEndpoint">Private endpoint which the connection
         /// belongs to.</param>
+        /// <param name="groupIds">Gets the groupIds.</param>
         /// <param name="privateLinkServiceConnectionState">Connection State of
         /// the Private Endpoint Connection.</param>
-        public PrivateEndpointConnection(string id = default(string), string name = default(string), string type = default(string), PrivateEndpointProperty privateEndpoint = default(PrivateEndpointProperty), PrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState = default(PrivateLinkServiceConnectionStateProperty))
+        public PrivateEndpointConnection(string id = default(string), string name = default(string), string type = default(string), PrivateEndpointProperty privateEndpoint = default(PrivateEndpointProperty), IList<string> groupIds = default(IList<string>), PrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState = default(PrivateLinkServiceConnectionStateProperty))
             : base(id, name, type)
         {
             PrivateEndpoint = privateEndpoint;
+            GroupIds = groupIds;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
             CustomInit();
         }
@@ -58,6 +62,12 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateEndpoint")]
         public PrivateEndpointProperty PrivateEndpoint { get; set; }
+
+        /// <summary>
+        /// Gets the groupIds.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.groupIds")]
+        public IList<string> GroupIds { get; set; }
 
         /// <summary>
         /// Gets or sets connection State of the Private Endpoint Connection.

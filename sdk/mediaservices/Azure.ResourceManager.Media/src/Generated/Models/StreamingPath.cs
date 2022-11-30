@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of StreamingPath. </summary>
         /// <param name="streamingProtocol"> Streaming protocol. </param>
         /// <param name="encryptionScheme"> Encryption scheme. </param>
-        internal StreamingPath(StreamingPolicyStreamingProtocol streamingProtocol, EncryptionScheme encryptionScheme)
+        internal StreamingPath(StreamingPolicyStreamingProtocol streamingProtocol, StreamingPathEncryptionScheme encryptionScheme)
         {
             StreamingProtocol = streamingProtocol;
             EncryptionScheme = encryptionScheme;
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="streamingProtocol"> Streaming protocol. </param>
         /// <param name="encryptionScheme"> Encryption scheme. </param>
         /// <param name="paths"> Streaming paths for each protocol and encryptionScheme pair. </param>
-        internal StreamingPath(StreamingPolicyStreamingProtocol streamingProtocol, EncryptionScheme encryptionScheme, IReadOnlyList<string> paths)
+        internal StreamingPath(StreamingPolicyStreamingProtocol streamingProtocol, StreamingPathEncryptionScheme encryptionScheme, IReadOnlyList<string> paths)
         {
             StreamingProtocol = streamingProtocol;
             EncryptionScheme = encryptionScheme;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Streaming protocol. </summary>
         public StreamingPolicyStreamingProtocol StreamingProtocol { get; }
         /// <summary> Encryption scheme. </summary>
-        public EncryptionScheme EncryptionScheme { get; }
+        public StreamingPathEncryptionScheme EncryptionScheme { get; }
         /// <summary> Streaming paths for each protocol and encryptionScheme pair. </summary>
         public IReadOnlyList<string> Paths { get; }
     }

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="createdOn"> DateTime when role assignment schedule was created. </param>
         /// <param name="updatedOn"> DateTime when role assignment schedule was modified. </param>
         /// <param name="expandedProperties"> Additional properties of principal, scope and role definition. </param>
-        internal RoleAssignmentScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, string principalId, PrincipalType? principalType, ResourceIdentifier roleAssignmentScheduleRequestId, string linkedRoleEligibilityScheduleId, AssignmentType? assignmentType, MemberType? memberType, RoleAssignmentScheduleStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, string condition, string conditionVersion, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, ExpandedProperties expandedProperties) : base(id, name, resourceType, systemData)
+        internal RoleAssignmentScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, RoleManagementPrincipalType? principalType, ResourceIdentifier roleAssignmentScheduleRequestId, ResourceIdentifier linkedRoleEligibilityScheduleId, RoleAssignmentScheduleAssignmentType? assignmentType, RoleManagementScheduleMemberType? memberType, RoleManagementScheduleStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, string condition, string conditionVersion, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, RoleManagementExpandedProperties expandedProperties) : base(id, name, resourceType, systemData)
         {
             Scope = scope;
             RoleDefinitionId = roleDefinitionId;
@@ -66,19 +66,19 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> The role definition ID. </summary>
         public ResourceIdentifier RoleDefinitionId { get; }
         /// <summary> The principal ID. </summary>
-        public string PrincipalId { get; }
+        public Guid? PrincipalId { get; }
         /// <summary> The principal type of the assigned principal ID. </summary>
-        public PrincipalType? PrincipalType { get; }
+        public RoleManagementPrincipalType? PrincipalType { get; }
         /// <summary> The id of roleAssignmentScheduleRequest used to create this roleAssignmentSchedule. </summary>
         public ResourceIdentifier RoleAssignmentScheduleRequestId { get; }
         /// <summary> The id of roleEligibilitySchedule used to activated this roleAssignmentSchedule. </summary>
-        public string LinkedRoleEligibilityScheduleId { get; }
+        public ResourceIdentifier LinkedRoleEligibilityScheduleId { get; }
         /// <summary> Assignment type of the role assignment schedule. </summary>
-        public AssignmentType? AssignmentType { get; }
+        public RoleAssignmentScheduleAssignmentType? AssignmentType { get; }
         /// <summary> Membership type of the role assignment schedule. </summary>
-        public MemberType? MemberType { get; }
+        public RoleManagementScheduleMemberType? MemberType { get; }
         /// <summary> The status of the role assignment schedule. </summary>
-        public RoleAssignmentScheduleStatus? Status { get; }
+        public RoleManagementScheduleStatus? Status { get; }
         /// <summary> Start DateTime when role assignment schedule. </summary>
         public DateTimeOffset? StartOn { get; }
         /// <summary> End DateTime when role assignment schedule. </summary>
@@ -92,6 +92,6 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> DateTime when role assignment schedule was modified. </summary>
         public DateTimeOffset? UpdatedOn { get; }
         /// <summary> Additional properties of principal, scope and role definition. </summary>
-        public ExpandedProperties ExpandedProperties { get; }
+        public RoleManagementExpandedProperties ExpandedProperties { get; }
     }
 }

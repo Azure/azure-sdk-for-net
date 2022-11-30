@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             string type = default;
             Optional<string> description = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
-            Optional<IList<UserProperty>> userProperties = default;
+            Optional<IList<ActivityUserProperty>> userProperties = default;
             Optional<string> variableName = default;
             Optional<BinaryData> value = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -125,10 +125,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<UserProperty> array = new List<UserProperty>();
+                    List<ActivityUserProperty> array = new List<ActivityUserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UserProperty.DeserializeUserProperty(item));
+                        array.Add(ActivityUserProperty.DeserializeActivityUserProperty(item));
                     }
                     userProperties = array;
                     continue;

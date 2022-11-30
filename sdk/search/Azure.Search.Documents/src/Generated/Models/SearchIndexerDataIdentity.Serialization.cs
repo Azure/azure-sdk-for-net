@@ -5,9 +5,9 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -27,11 +27,11 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Azure.Search.SearchIndexerDataNoneIdentity": return SearchIndexerDataNoneIdentity.DeserializeSearchIndexerDataNoneIdentity(element);
-                    case "#Microsoft.Azure.Search.SearchIndexerDataUserAssignedIdentity": return SearchIndexerDataUserAssignedIdentity.DeserializeSearchIndexerDataUserAssignedIdentity(element);
+                    case "#Microsoft.Azure.Search.DataNoneIdentity": return SearchIndexerDataNoneIdentity.DeserializeSearchIndexerDataNoneIdentity(element);
+                    case "#Microsoft.Azure.Search.DataUserAssignedIdentity": return SearchIndexerDataUserAssignedIdentity.DeserializeSearchIndexerDataUserAssignedIdentity(element);
                 }
             }
-            throw new NotSupportedException("Deserialization of abstract type 'global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataIdentity' not supported.");
+            return UnknownSearchIndexerDataIdentity.DeserializeUnknownSearchIndexerDataIdentity(element);
         }
     }
 }

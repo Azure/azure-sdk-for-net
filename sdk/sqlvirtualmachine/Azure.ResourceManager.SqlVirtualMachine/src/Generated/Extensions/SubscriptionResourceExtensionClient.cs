@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _sqlVirtualMachineGroupClientDiagnostics;
-        private SqlVirtualMachineGroupsRestOperations _sqlVirtualMachineGroupRestClient;
-        private ClientDiagnostics _sqlVirtualMachineClientDiagnostics;
-        private SqlVirtualMachinesRestOperations _sqlVirtualMachineRestClient;
+        private ClientDiagnostics _sqlVmGroupSqlVmGroupsClientDiagnostics;
+        private SqlVirtualMachineGroupsRestOperations _sqlVmGroupSqlVmGroupsRestClient;
+        private ClientDiagnostics _sqlVmSqlVirtualMachinesClientDiagnostics;
+        private SqlVirtualMachinesRestOperations _sqlVmSqlVirtualMachinesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         {
         }
 
-        private ClientDiagnostics SqlVirtualMachineGroupClientDiagnostics => _sqlVirtualMachineGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SqlVirtualMachine", SqlVirtualMachineGroupResource.ResourceType.Namespace, Diagnostics);
-        private SqlVirtualMachineGroupsRestOperations SqlVirtualMachineGroupRestClient => _sqlVirtualMachineGroupRestClient ??= new SqlVirtualMachineGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SqlVirtualMachineGroupResource.ResourceType));
-        private ClientDiagnostics SqlVirtualMachineClientDiagnostics => _sqlVirtualMachineClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SqlVirtualMachine", SqlVirtualMachineResource.ResourceType.Namespace, Diagnostics);
-        private SqlVirtualMachinesRestOperations SqlVirtualMachineRestClient => _sqlVirtualMachineRestClient ??= new SqlVirtualMachinesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SqlVirtualMachineResource.ResourceType));
+        private ClientDiagnostics SqlVmGroupSqlVirtualMachineGroupsClientDiagnostics => _sqlVmGroupSqlVmGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SqlVirtualMachine", SqlVmGroupResource.ResourceType.Namespace, Diagnostics);
+        private SqlVirtualMachineGroupsRestOperations SqlVmGroupSqlVirtualMachineGroupsRestClient => _sqlVmGroupSqlVmGroupsRestClient ??= new SqlVirtualMachineGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SqlVmGroupResource.ResourceType));
+        private ClientDiagnostics SqlVmSqlVirtualMachinesClientDiagnostics => _sqlVmSqlVirtualMachinesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SqlVirtualMachine", SqlVmResource.ResourceType.Namespace, Diagnostics);
+        private SqlVirtualMachinesRestOperations SqlVmSqlVirtualMachinesRestClient => _sqlVmSqlVirtualMachinesRestClient ??= new SqlVirtualMachinesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SqlVmResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -53,17 +53,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// Operation Id: SqlVirtualMachineGroups_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlVirtualMachineGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SqlVirtualMachineGroupResource> GetSqlVirtualMachineGroupsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SqlVmGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SqlVmGroupResource> GetSqlVmGroupsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SqlVirtualMachineGroupResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SqlVmGroupResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = SqlVirtualMachineGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSqlVirtualMachineGroups");
+                using var scope = SqlVmGroupSqlVirtualMachineGroupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSqlVmGroups");
                 scope.Start();
                 try
                 {
-                    var response = await SqlVirtualMachineGroupRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlVirtualMachineGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await SqlVmGroupSqlVirtualMachineGroupsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlVmGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -71,14 +71,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                     throw;
                 }
             }
-            async Task<Page<SqlVirtualMachineGroupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SqlVmGroupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = SqlVirtualMachineGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSqlVirtualMachineGroups");
+                using var scope = SqlVmGroupSqlVirtualMachineGroupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSqlVmGroups");
                 scope.Start();
                 try
                 {
-                    var response = await SqlVirtualMachineGroupRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlVirtualMachineGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await SqlVmGroupSqlVirtualMachineGroupsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlVmGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -95,17 +95,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// Operation Id: SqlVirtualMachineGroups_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlVirtualMachineGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SqlVirtualMachineGroupResource> GetSqlVirtualMachineGroups(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SqlVmGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SqlVmGroupResource> GetSqlVmGroups(CancellationToken cancellationToken = default)
         {
-            Page<SqlVirtualMachineGroupResource> FirstPageFunc(int? pageSizeHint)
+            Page<SqlVmGroupResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = SqlVirtualMachineGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSqlVirtualMachineGroups");
+                using var scope = SqlVmGroupSqlVirtualMachineGroupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSqlVmGroups");
                 scope.Start();
                 try
                 {
-                    var response = SqlVirtualMachineGroupRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlVirtualMachineGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = SqlVmGroupSqlVirtualMachineGroupsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlVmGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -113,14 +113,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                     throw;
                 }
             }
-            Page<SqlVirtualMachineGroupResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SqlVmGroupResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = SqlVirtualMachineGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSqlVirtualMachineGroups");
+                using var scope = SqlVmGroupSqlVirtualMachineGroupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSqlVmGroups");
                 scope.Start();
                 try
                 {
-                    var response = SqlVirtualMachineGroupRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlVirtualMachineGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = SqlVmGroupSqlVirtualMachineGroupsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlVmGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -137,17 +137,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// Operation Id: SqlVirtualMachines_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlVirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SqlVirtualMachineResource> GetSqlVirtualMachinesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SqlVmResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SqlVmResource> GetSqlVmsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SqlVirtualMachineResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SqlVmResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = SqlVirtualMachineClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSqlVirtualMachines");
+                using var scope = SqlVmSqlVirtualMachinesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSqlVms");
                 scope.Start();
                 try
                 {
-                    var response = await SqlVirtualMachineRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlVirtualMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await SqlVmSqlVirtualMachinesRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlVmResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -155,14 +155,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                     throw;
                 }
             }
-            async Task<Page<SqlVirtualMachineResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SqlVmResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = SqlVirtualMachineClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSqlVirtualMachines");
+                using var scope = SqlVmSqlVirtualMachinesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSqlVms");
                 scope.Start();
                 try
                 {
-                    var response = await SqlVirtualMachineRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlVirtualMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await SqlVmSqlVirtualMachinesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlVmResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -179,17 +179,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// Operation Id: SqlVirtualMachines_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlVirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SqlVirtualMachineResource> GetSqlVirtualMachines(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SqlVmResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SqlVmResource> GetSqlVms(CancellationToken cancellationToken = default)
         {
-            Page<SqlVirtualMachineResource> FirstPageFunc(int? pageSizeHint)
+            Page<SqlVmResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = SqlVirtualMachineClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSqlVirtualMachines");
+                using var scope = SqlVmSqlVirtualMachinesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSqlVms");
                 scope.Start();
                 try
                 {
-                    var response = SqlVirtualMachineRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlVirtualMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = SqlVmSqlVirtualMachinesRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlVmResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -197,14 +197,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                     throw;
                 }
             }
-            Page<SqlVirtualMachineResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SqlVmResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = SqlVirtualMachineClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSqlVirtualMachines");
+                using var scope = SqlVmSqlVirtualMachinesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSqlVms");
                 scope.Start();
                 try
                 {
-                    var response = SqlVirtualMachineRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlVirtualMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = SqlVmSqlVirtualMachinesRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlVmResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

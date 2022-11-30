@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Specification for a Kubernetes Environment to use for this resource. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="id"> Resource ID of the Kubernetes Environment. </param>
         /// <param name="name"> Name of the Kubernetes Environment. </param>
         /// <param name="resourceType"> Resource type of the Kubernetes Environment. </param>
-        internal KubeEnvironmentProfile(string id, string name, string resourceType)
+        internal KubeEnvironmentProfile(ResourceIdentifier id, string name, ResourceType? resourceType)
         {
             Id = id;
             Name = name;
@@ -27,10 +29,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Resource ID of the Kubernetes Environment. </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
         /// <summary> Name of the Kubernetes Environment. </summary>
         public string Name { get; }
         /// <summary> Resource type of the Kubernetes Environment. </summary>
-        public string ResourceType { get; }
+        public ResourceType? ResourceType { get; }
     }
 }

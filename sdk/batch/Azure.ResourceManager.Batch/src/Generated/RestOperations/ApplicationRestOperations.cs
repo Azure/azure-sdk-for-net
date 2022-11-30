@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.Batch
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-06-01";
+            _apiVersion = apiVersion ?? "2022-10-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string accountName, string applicationName, ApplicationData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string accountName, string applicationName, BatchApplicationData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -55,13 +55,10 @@ namespace Azure.ResourceManager.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (data != null)
-            {
-                request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(data);
-                request.Content = content;
-            }
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -73,14 +70,15 @@ namespace Azure.ResourceManager.Batch
         /// <param name="applicationName"> The name of the application. This must be unique within the account. </param>
         /// <param name="data"> The parameters for the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="applicationName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="applicationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApplicationData>> CreateAsync(string subscriptionId, string resourceGroupName, string accountName, string applicationName, ApplicationData data = null, CancellationToken cancellationToken = default)
+        public async Task<Response<BatchApplicationData>> CreateAsync(string subscriptionId, string resourceGroupName, string accountName, string applicationName, BatchApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, accountName, applicationName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -88,9 +86,9 @@ namespace Azure.ResourceManager.Batch
             {
                 case 200:
                     {
-                        ApplicationData value = default;
+                        BatchApplicationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApplicationData.DeserializeApplicationData(document.RootElement);
+                        value = BatchApplicationData.DeserializeBatchApplicationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -105,14 +103,15 @@ namespace Azure.ResourceManager.Batch
         /// <param name="applicationName"> The name of the application. This must be unique within the account. </param>
         /// <param name="data"> The parameters for the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="applicationName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="applicationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApplicationData> Create(string subscriptionId, string resourceGroupName, string accountName, string applicationName, ApplicationData data = null, CancellationToken cancellationToken = default)
+        public Response<BatchApplicationData> Create(string subscriptionId, string resourceGroupName, string accountName, string applicationName, BatchApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, accountName, applicationName, data);
             _pipeline.Send(message, cancellationToken);
@@ -120,9 +119,9 @@ namespace Azure.ResourceManager.Batch
             {
                 case 200:
                     {
-                        ApplicationData value = default;
+                        BatchApplicationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApplicationData.DeserializeApplicationData(document.RootElement);
+                        value = BatchApplicationData.DeserializeBatchApplicationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -236,7 +235,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="applicationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApplicationData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string applicationName, CancellationToken cancellationToken = default)
+        public async Task<Response<BatchApplicationData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string applicationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -249,13 +248,13 @@ namespace Azure.ResourceManager.Batch
             {
                 case 200:
                     {
-                        ApplicationData value = default;
+                        BatchApplicationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApplicationData.DeserializeApplicationData(document.RootElement);
+                        value = BatchApplicationData.DeserializeBatchApplicationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ApplicationData)null, message.Response);
+                    return Response.FromValue((BatchApplicationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -269,7 +268,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="applicationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApplicationData> Get(string subscriptionId, string resourceGroupName, string accountName, string applicationName, CancellationToken cancellationToken = default)
+        public Response<BatchApplicationData> Get(string subscriptionId, string resourceGroupName, string accountName, string applicationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -282,19 +281,19 @@ namespace Azure.ResourceManager.Batch
             {
                 case 200:
                     {
-                        ApplicationData value = default;
+                        BatchApplicationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApplicationData.DeserializeApplicationData(document.RootElement);
+                        value = BatchApplicationData.DeserializeBatchApplicationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ApplicationData)null, message.Response);
+                    return Response.FromValue((BatchApplicationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string applicationName, ApplicationData data)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string applicationName, BatchApplicationData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -329,7 +328,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="applicationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApplicationData>> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string applicationName, ApplicationData data, CancellationToken cancellationToken = default)
+        public async Task<Response<BatchApplicationData>> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string applicationName, BatchApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -343,9 +342,9 @@ namespace Azure.ResourceManager.Batch
             {
                 case 200:
                     {
-                        ApplicationData value = default;
+                        BatchApplicationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApplicationData.DeserializeApplicationData(document.RootElement);
+                        value = BatchApplicationData.DeserializeBatchApplicationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -362,7 +361,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="applicationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApplicationData> Update(string subscriptionId, string resourceGroupName, string accountName, string applicationName, ApplicationData data, CancellationToken cancellationToken = default)
+        public Response<BatchApplicationData> Update(string subscriptionId, string resourceGroupName, string accountName, string applicationName, BatchApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -376,9 +375,9 @@ namespace Azure.ResourceManager.Batch
             {
                 case 200:
                     {
-                        ApplicationData value = default;
+                        BatchApplicationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApplicationData.DeserializeApplicationData(document.RootElement);
+                        value = BatchApplicationData.DeserializeBatchApplicationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

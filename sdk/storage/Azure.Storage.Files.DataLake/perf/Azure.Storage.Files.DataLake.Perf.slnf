@@ -1,0 +1,13 @@
+{
+  "solution": {
+    "path": "..\\..\\Azure.Storage.sln",
+    "projects": [
+      "..\\..\\common\\Perf\\Azure.Test.Perf\\Azure.Test.Perf.csproj",
+      "..\\core\\Azure.Core.TestFramework\\src\\Azure.Core.TestFramework.csproj",
+      "Azure.Storage.Common\\src\\Azure.Storage.Common.csproj",
+      "Azure.Storage.Blobs\\src\\Azure.Storage.Blobs.csproj",
+      "Azure.Storage.Files.DataLake\\src\\Azure.Storage.Files.DataLake.csproj",
+      "Azure.Storage.Files.DataLake\\perf\\Azure.Storage.Files.DataLake.Perf\\Azure.Storage.Files.DataLake.Perf.csproj"
+    ]
+  }
+}

@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The Key to be used to generate token for user. </summary>
-        public KeyType? KeyType { get; set; }
+        public TokenGenerationUsedKeyType? KeyType { get; set; }
         /// <summary>
         /// The Expiry time of the Token. Maximum token expiry time is set to 30 days. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
         /// 
         /// </summary>
-        public DateTimeOffset? Expiry { get; set; }
+        public DateTimeOffset? ExpireOn { get; set; }
     }
 }

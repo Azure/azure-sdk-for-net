@@ -12,10 +12,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// Please note <see cref="JobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="CustomModelJobOutput"/>, <see cref="MLFlowModelJobOutput"/>, <see cref="MLTableJobOutput"/>, <see cref="TritonModelJobOutput"/>, <see cref="UriFileJobOutput"/> and <see cref="UriFolderJobOutput"/>.
     /// </summary>
-    public partial class JobOutput
+    public abstract partial class JobOutput
     {
         /// <summary> Initializes a new instance of JobOutput. </summary>
-        public JobOutput()
+        protected JobOutput()
         {
         }
 

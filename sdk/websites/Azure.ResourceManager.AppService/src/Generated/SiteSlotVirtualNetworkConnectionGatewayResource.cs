@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppService
 
         private readonly ClientDiagnostics _siteSlotVirtualNetworkConnectionGatewayWebAppsClientDiagnostics;
         private readonly WebAppsRestOperations _siteSlotVirtualNetworkConnectionGatewayWebAppsRestClient;
-        private readonly VnetGatewayData _data;
+        private readonly AppServiceVirtualNetworkGatewayData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SiteSlotVirtualNetworkConnectionGatewayResource"/> class for mocking. </summary>
         protected SiteSlotVirtualNetworkConnectionGatewayResource()
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of the <see cref = "SiteSlotVirtualNetworkConnectionGatewayResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SiteSlotVirtualNetworkConnectionGatewayResource(ArmClient client, VnetGatewayData data) : this(client, data.Id)
+        internal SiteSlotVirtualNetworkConnectionGatewayResource(ArmClient client, AppServiceVirtualNetworkGatewayData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual VnetGatewayData Data
+        public virtual AppServiceVirtualNetworkGatewayData Data
         {
             get
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> The properties to update this gateway with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<SiteSlotVirtualNetworkConnectionGatewayResource>> UpdateAsync(VnetGatewayData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSlotVirtualNetworkConnectionGatewayResource>> UpdateAsync(AppServiceVirtualNetworkGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> The properties to update this gateway with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<SiteSlotVirtualNetworkConnectionGatewayResource> Update(VnetGatewayData data, CancellationToken cancellationToken = default)
+        public virtual Response<SiteSlotVirtualNetworkConnectionGatewayResource> Update(AppServiceVirtualNetworkGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 

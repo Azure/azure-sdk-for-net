@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("vendor");
                 writer.WriteStringValue(Vendor);
             }
-            if (Optional.IsDefined(PromoCodeRequired))
+            if (Optional.IsDefined(IsPromoCodeRequired))
             {
                 writer.WritePropertyName("promoCodeRequired");
-                writer.WriteBooleanValue(PromoCodeRequired.Value);
+                writer.WriteBooleanValue(IsPromoCodeRequired.Value);
             }
             if (Optional.IsDefined(Quota))
             {

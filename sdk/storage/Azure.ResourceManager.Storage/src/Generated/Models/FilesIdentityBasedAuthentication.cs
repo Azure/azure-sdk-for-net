@@ -11,15 +11,15 @@ namespace Azure.ResourceManager.Storage.Models
     public partial class FilesIdentityBasedAuthentication
     {
         /// <summary> Initializes a new instance of FilesIdentityBasedAuthentication. </summary>
-        /// <param name="directoryServiceOptions"> Indicates the directory service used. </param>
+        /// <param name="directoryServiceOptions"> Indicates the directory service used. Note that this enum may be extended in the future. </param>
         public FilesIdentityBasedAuthentication(DirectoryServiceOption directoryServiceOptions)
         {
             DirectoryServiceOptions = directoryServiceOptions;
         }
 
         /// <summary> Initializes a new instance of FilesIdentityBasedAuthentication. </summary>
-        /// <param name="directoryServiceOptions"> Indicates the directory service used. </param>
-        /// <param name="activeDirectoryProperties"> Required if choose AD. </param>
+        /// <param name="directoryServiceOptions"> Indicates the directory service used. Note that this enum may be extended in the future. </param>
+        /// <param name="activeDirectoryProperties"> Required if directoryServiceOptions are AD, optional if they are AADKERB. </param>
         /// <param name="defaultSharePermission"> Default share permission for users using Kerberos authentication if RBAC role is not assigned. </param>
         internal FilesIdentityBasedAuthentication(DirectoryServiceOption directoryServiceOptions, StorageActiveDirectoryProperties activeDirectoryProperties, DefaultSharePermission? defaultSharePermission)
         {
@@ -28,9 +28,9 @@ namespace Azure.ResourceManager.Storage.Models
             DefaultSharePermission = defaultSharePermission;
         }
 
-        /// <summary> Indicates the directory service used. </summary>
+        /// <summary> Indicates the directory service used. Note that this enum may be extended in the future. </summary>
         public DirectoryServiceOption DirectoryServiceOptions { get; set; }
-        /// <summary> Required if choose AD. </summary>
+        /// <summary> Required if directoryServiceOptions are AD, optional if they are AADKERB. </summary>
         public StorageActiveDirectoryProperties ActiveDirectoryProperties { get; set; }
         /// <summary> Default share permission for users using Kerberos authentication if RBAC role is not assigned. </summary>
         public DefaultSharePermission? DefaultSharePermission { get; set; }

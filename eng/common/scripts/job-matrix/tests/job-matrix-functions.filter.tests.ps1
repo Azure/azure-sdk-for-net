@@ -6,7 +6,7 @@ BeforeAll {
     $matrixConfig = @"
 {
     "matrix": {
-        "operatingSystem": [ "windows-2019", "ubuntu-18.04", "macOS-10.15" ],
+        "operatingSystem": [ "windows-2019", "ubuntu-18.04", "macos-11" ],
         "framework": [ "net461", "netcoreapp2.1" ],
         "additionalArguments": [ "", "mode=test" ]
     }

@@ -21,13 +21,13 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="keyName"> Name of the key. </param>
         /// <param name="value"> Base 64-encoded value of the key. </param>
         /// <param name="permissions"> Permissions for the key -- read-only or full permissions. </param>
-        /// <param name="creationOn"> Creation time of the key, in round trip date format. </param>
-        internal StorageAccountKey(string keyName, string value, StorageAccountKeyPermission? permissions, DateTimeOffset? creationOn)
+        /// <param name="createdOn"> Creation time of the key, in round trip date format. </param>
+        internal StorageAccountKey(string keyName, string value, StorageAccountKeyPermission? permissions, DateTimeOffset? createdOn)
         {
             KeyName = keyName;
             Value = value;
             Permissions = permissions;
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
         }
 
         /// <summary> Name of the key. </summary>
@@ -37,6 +37,6 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Permissions for the key -- read-only or full permissions. </summary>
         public StorageAccountKeyPermission? Permissions { get; }
         /// <summary> Creation time of the key, in round trip date format. </summary>
-        public DateTimeOffset? CreationOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
     }
 }

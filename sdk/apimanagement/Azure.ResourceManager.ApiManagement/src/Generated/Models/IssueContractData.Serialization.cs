@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<DateTimeOffset> createdDate = default;
-            Optional<State> state = default;
-            Optional<string> apiId = default;
+            Optional<IssueState> state = default;
+            Optional<ResourceIdentifier> apiId = default;
             Optional<string> title = default;
             Optional<string> description = default;
-            Optional<string> userId = default;
+            Optional<ResourceIdentifier> userId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -119,12 +119,17 @@ namespace Azure.ResourceManager.ApiManagement
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            state = new State(property0.Value.GetString());
+                            state = new IssueState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("apiId"))
                         {
-                            apiId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            apiId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("title"))
@@ -139,7 +144,12 @@ namespace Azure.ResourceManager.ApiManagement
                         }
                         if (property0.NameEquals("userId"))
                         {
-                            userId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            userId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                     }

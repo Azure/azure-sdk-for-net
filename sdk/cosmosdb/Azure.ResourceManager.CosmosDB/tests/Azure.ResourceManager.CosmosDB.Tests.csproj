@@ -2,6 +2,6 @@
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.ResourceManager.CosmosDB.csproj" />
-    <ProjectReference Include="..\..\..\network\Azure.ResourceManager.Network\src\Azure.ResourceManager.Network.csproj" />
+    <PackageReference Include="Azure.ResourceManager.Network" />
   </ItemGroup>
 </Project>

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             var SiteInput = ResourceDataHelper.GetBasicSiteData(DefaultLocation);
             var lro = await resourceGroup.GetWebSites().CreateOrUpdateAsync(WaitUntil.Completed, SiteName, SiteInput);
             var Site = lro.Value;
-            var lroSiteSlot = await Site.GetSiteSlots().CreateOrUpdateAsync(WaitUntil.Completed, SiteSlotName, SiteInput);
+            var lroSiteSlot = await Site.GetWebSiteSlots().CreateOrUpdateAsync(WaitUntil.Completed, SiteSlotName, SiteInput);
             var siteSlot = lroSiteSlot.Value;
             return siteSlot.GetWebSiteSlotConfig();
         }

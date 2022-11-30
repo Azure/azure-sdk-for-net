@@ -3,9 +3,7 @@
 
 using System;
 using Microsoft.Identity.Client;
-#if (NETFRAMEWORK)
-using Microsoft.Identity.Client.Desktop;
-#endif
+using Microsoft.Identity.Client.Broker;
 
 namespace Azure.Identity.BrokeredAuthentication
 {
@@ -34,11 +32,7 @@ namespace Azure.Identity.BrokeredAuthentication
 
         private void AddBroker(PublicClientApplicationBuilder builder)
         {
-#if (NETFRAMEWORK)
-            builder.WithWindowsBroker();
-#else
-            builder.WithBroker();
-#endif
+            builder.WithBrokerPreview();
         }
     }
 }

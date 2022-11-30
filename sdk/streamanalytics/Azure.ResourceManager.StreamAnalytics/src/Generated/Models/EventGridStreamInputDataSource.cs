@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> Initializes a new instance of EventGridStreamInputDataSource. </summary>
         public EventGridStreamInputDataSource()
         {
-            StorageAccounts = new ChangeTrackingList<StorageAccount>();
+            StorageAccounts = new ChangeTrackingList<StreamAnalyticsStorageAccount>();
             EventTypes = new ChangeTrackingList<string>();
             StreamInputDataSourceType = "Microsoft.EventGrid/EventSubscriptions";
         }
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="schema"> Indicates the Event Grid schema type. </param>
         /// <param name="storageAccounts"> A list of one or more Azure Storage accounts. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="eventTypes"> List of Event Types that are supported by the Event Grid adapter. </param>
-        internal EventGridStreamInputDataSource(string streamInputDataSourceType, EventHubV2StreamInputDataSource subscriber, EventGridEventSchemaType? schema, IList<StorageAccount> storageAccounts, IList<string> eventTypes) : base(streamInputDataSourceType)
+        internal EventGridStreamInputDataSource(string streamInputDataSourceType, EventHubV2StreamInputDataSource subscriber, EventGridEventSchemaType? schema, IList<StreamAnalyticsStorageAccount> storageAccounts, IList<string> eventTypes) : base(streamInputDataSourceType)
         {
             Subscriber = subscriber;
             Schema = schema;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> Indicates the Event Grid schema type. </summary>
         public EventGridEventSchemaType? Schema { get; set; }
         /// <summary> A list of one or more Azure Storage accounts. Required on PUT (CreateOrReplace) requests. </summary>
-        public IList<StorageAccount> StorageAccounts { get; }
+        public IList<StreamAnalyticsStorageAccount> StorageAccounts { get; }
         /// <summary> List of Event Types that are supported by the Event Grid adapter. </summary>
         public IList<string> EventTypes { get; }
     }

@@ -31,18 +31,18 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of SqlVirtualMachineGroupResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of SqlVirtualMachineGroupResources and their operations over a SqlVirtualMachineGroupResource. </returns>
-        public virtual SqlVirtualMachineGroupCollection GetSqlVirtualMachineGroups()
+        /// <summary> Gets a collection of SqlVmGroupResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of SqlVmGroupResources and their operations over a SqlVmGroupResource. </returns>
+        public virtual SqlVmGroupCollection GetSqlVmGroups()
         {
-            return GetCachedClient(Client => new SqlVirtualMachineGroupCollection(Client, Id));
+            return GetCachedClient(Client => new SqlVmGroupCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of SqlVirtualMachineResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of SqlVirtualMachineResources and their operations over a SqlVirtualMachineResource. </returns>
-        public virtual SqlVirtualMachineCollection GetSqlVirtualMachines()
+        /// <summary> Gets a collection of SqlVmResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of SqlVmResources and their operations over a SqlVmResource. </returns>
+        public virtual SqlVmCollection GetSqlVms()
         {
-            return GetCachedClient(Client => new SqlVirtualMachineCollection(Client, Id));
+            return GetCachedClient(Client => new SqlVmCollection(Client, Id));
         }
     }
 }

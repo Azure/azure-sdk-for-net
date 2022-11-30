@@ -38,36 +38,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "CustomModel": return CustomModelJobInput.DeserializeCustomModelJobInput(element);
-                    case "Literal": return LiteralJobInput.DeserializeLiteralJobInput(element);
-                    case "MLFlowModel": return MLFlowModelJobInput.DeserializeMLFlowModelJobInput(element);
-                    case "MLTable": return MLTableJobInput.DeserializeMLTableJobInput(element);
-                    case "TritonModel": return TritonModelJobInput.DeserializeTritonModelJobInput(element);
-                    case "UriFile": return UriFileJobInput.DeserializeUriFileJobInput(element);
-                    case "UriFolder": return UriFolderJobInput.DeserializeUriFolderJobInput(element);
+                    case "custom_model": return CustomModelJobInput.DeserializeCustomModelJobInput(element);
+                    case "literal": return LiteralJobInput.DeserializeLiteralJobInput(element);
+                    case "mlflow_model": return MLFlowModelJobInput.DeserializeMLFlowModelJobInput(element);
+                    case "mltable": return MLTableJobInput.DeserializeMLTableJobInput(element);
+                    case "triton_model": return TritonModelJobInput.DeserializeTritonModelJobInput(element);
+                    case "uri_file": return UriFileJobInput.DeserializeUriFileJobInput(element);
+                    case "uri_folder": return UriFolderJobInput.DeserializeUriFolderJobInput(element);
                 }
             }
-            Optional<string> description = default;
-            JobInputType jobInputType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("description"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        description = null;
-                        continue;
-                    }
-                    description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("jobInputType"))
-                {
-                    jobInputType = new JobInputType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new JobInput(description.Value, jobInputType);
+            return UnknownJobInput.DeserializeUnknownJobInput(element);
         }
     }
 }

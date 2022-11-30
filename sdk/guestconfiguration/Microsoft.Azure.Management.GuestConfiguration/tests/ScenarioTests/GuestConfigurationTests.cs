@@ -158,7 +158,7 @@ namespace GuestConfiguration.Tests.ScenarioTests
                     Assert.NotNull(gcAssignmentReportsRetrieved);
                     Assert.True(gcAssignmentReportsRetrieved.Value.Count >= 0);
                 }
-            }  
+            } 
         }
 
         [Fact]
@@ -241,5 +241,4 @@ namespace GuestConfiguration.Tests.ScenarioTests
         }
     }
 }
-
 

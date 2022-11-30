@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Batch.Models
     {
         internal static ListPoolsResult DeserializeListPoolsResult(JsonElement element)
         {
-            Optional<IReadOnlyList<PoolData>> value = default;
+            Optional<IReadOnlyList<BatchAccountPoolData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Batch.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PoolData> array = new List<PoolData>();
+                    List<BatchAccountPoolData> array = new List<BatchAccountPoolData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PoolData.DeserializePoolData(item));
+                        array.Add(BatchAccountPoolData.DeserializeBatchAccountPoolData(item));
                     }
                     value = array;
                     continue;

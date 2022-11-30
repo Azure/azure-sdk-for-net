@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.AppService.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(InternalLoadBalancerEnabled))
+            if (Optional.IsDefined(IsInternalLoadBalancerEnabled))
             {
                 writer.WritePropertyName("internalLoadBalancerEnabled");
-                writer.WriteBooleanValue(InternalLoadBalancerEnabled.Value);
+                writer.WriteBooleanValue(IsInternalLoadBalancerEnabled.Value);
             }
             if (Optional.IsDefined(StaticIP))
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> staticIP = default;
             Optional<ArcConfiguration> arcConfiguration = default;
             Optional<AppLogsConfiguration> appLogsConfiguration = default;
-            Optional<string> aksResourceId = default;
+            Optional<ResourceIdentifier> aksResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -165,7 +165,12 @@ namespace Azure.ResourceManager.AppService.Models
                         }
                         if (property0.NameEquals("aksResourceID"))
                         {
-                            aksResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            aksResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                     }

@@ -16,18 +16,18 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of WindowsGmsaProfile. </summary>
-        /// <param name="enabled"> Specifies whether to enable Windows gMSA in the managed cluster. </param>
+        /// <param name="isEnabled"> Specifies whether to enable Windows gMSA in the managed cluster. </param>
         /// <param name="dnsServer"> Specifies the DNS server for Windows gMSA. &lt;br&gt;&lt;br&gt; Set it to empty if you have configured the DNS server in the vnet which is used to create the managed cluster. </param>
         /// <param name="rootDomainName"> Specifies the root domain name for Windows gMSA. &lt;br&gt;&lt;br&gt; Set it to empty if you have configured the DNS server in the vnet which is used to create the managed cluster. </param>
-        internal WindowsGmsaProfile(bool? enabled, string dnsServer, string rootDomainName)
+        internal WindowsGmsaProfile(bool? isEnabled, string dnsServer, string rootDomainName)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             DnsServer = dnsServer;
             RootDomainName = rootDomainName;
         }
 
         /// <summary> Specifies whether to enable Windows gMSA in the managed cluster. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary> Specifies the DNS server for Windows gMSA. &lt;br&gt;&lt;br&gt; Set it to empty if you have configured the DNS server in the vnet which is used to create the managed cluster. </summary>
         public string DnsServer { get; set; }
         /// <summary> Specifies the root domain name for Windows gMSA. &lt;br&gt;&lt;br&gt; Set it to empty if you have configured the DNS server in the vnet which is used to create the managed cluster. </summary>

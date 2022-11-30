@@ -1,0 +1,51 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://ads-dev-eastus-pv.purview.azure.com/share/sentShares/ft-testShare-3/acceptedSentShares/d5d52fdb-6aef-45a2-9271-3aa1becfceb3?api-version=2021-09-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Connection": "keep-alive",
+        "traceparent": "00-39a9c12ac5110b469e47c48b23ac579d-2f97d3493db7d94b-00",
+        "User-Agent": "azsdk-net-Analytics.Share/1.0.3-alpha.20220714.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "6e6a2ae4d2c2d9d82bf7952810ce204b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "629",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 14 Jul 2022 19:42:48 GMT",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "f01d3672-5c25-4491-899c-22979a587293"
+      },
+      "ResponseBody": {
+        "properties": {
+          "receivedShareStatus": "Active",
+          "createdAt": "2022-05-10T04:12:09.4129417Z",
+          "sharedAt": "2022-05-10T04:11:53.7611996Z",
+          "expirationDate": null,
+          "receiverName": "Faisal Al Tell",
+          "receiverEmail": "faisalaltell@microsoft.com",
+          "receiverTenantName": "Microsoft",
+          "senderName": "Faisal Al Tell",
+          "senderEmail": "faisalaltell@microsoft.com",
+          "senderTenantName": "Microsoft",
+          "receiverTargetObjectId": "a2a34c49-8875-403a-ac27-66f313eb31ca"
+        },
+        "shareKind": "InPlace",
+        "id": "/sentShares/ft-testShare-3/acceptedSentShares/d5d52fdb-6aef-45a2-9271-3aa1becfceb3",
+        "name": "d5d52fdb-6aef-45a2-9271-3aa1becfceb3",
+        "type": "sentShares/acceptedSentShares"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": null,
+    "PURVIEW_SHARE_URL": "https://ads-dev-eastus-pv.purview.azure.com/share",
+    "RandomSeed": "1043523321"
+  }
+}

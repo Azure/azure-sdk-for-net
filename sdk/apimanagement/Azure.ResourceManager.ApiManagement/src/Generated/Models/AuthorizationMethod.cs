@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> TRACE. </summary>
         Trace,
         /// <summary> GET. </summary>
-        GET,
+        Get,
         /// <summary> POST. </summary>
         Post,
         /// <summary> PUT. </summary>
-        PUT,
+        Put,
         /// <summary> PATCH. </summary>
         Patch,
         /// <summary> DELETE. </summary>

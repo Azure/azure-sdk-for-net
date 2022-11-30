@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService
     /// A Class representing a SiteSlotDeployment along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteSlotDeploymentResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetSiteSlotDeploymentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SiteSlotResource" /> using the GetSiteSlotDeployment method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteSlotResource" /> using the GetSiteSlotDeployment method.
     /// </summary>
     public partial class SiteSlotDeploymentResource : ArmResource
     {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppService
 
         private readonly ClientDiagnostics _siteSlotDeploymentWebAppsClientDiagnostics;
         private readonly WebAppsRestOperations _siteSlotDeploymentWebAppsRestClient;
-        private readonly DeploymentData _data;
+        private readonly WebAppDeploymentData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SiteSlotDeploymentResource"/> class for mocking. </summary>
         protected SiteSlotDeploymentResource()
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of the <see cref = "SiteSlotDeploymentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SiteSlotDeploymentResource(ArmClient client, DeploymentData data) : this(client, data.Id)
+        internal SiteSlotDeploymentResource(ArmClient client, WebAppDeploymentData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual DeploymentData Data
+        public virtual WebAppDeploymentData Data
         {
             get
             {
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> Deployment details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SiteSlotDeploymentResource>> UpdateAsync(WaitUntil waitUntil, DeploymentData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SiteSlotDeploymentResource>> UpdateAsync(WaitUntil waitUntil, WebAppDeploymentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> Deployment details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SiteSlotDeploymentResource> Update(WaitUntil waitUntil, DeploymentData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SiteSlotDeploymentResource> Update(WaitUntil waitUntil, WebAppDeploymentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 

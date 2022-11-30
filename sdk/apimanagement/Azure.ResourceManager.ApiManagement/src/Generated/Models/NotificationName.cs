@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string RequestPublisherNotificationMessageValue = "RequestPublisherNotificationMessage";
         private const string PurchasePublisherNotificationMessageValue = "PurchasePublisherNotificationMessage";
         private const string NewApplicationNotificationMessageValue = "NewApplicationNotificationMessage";
-        private const string BCCValue = "BCC";
+        private const string BccValue = "BCC";
         private const string NewIssuePublisherNotificationMessageValue = "NewIssuePublisherNotificationMessage";
         private const string AccountClosedPublisherValue = "AccountClosedPublisher";
         private const string QuotaLimitApproachingPublisherNotificationMessageValue = "QuotaLimitApproachingPublisherNotificationMessage";
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> The following email recipients and users will receive email notifications when new applications are submitted to the application gallery. </summary>
         public static NotificationName NewApplicationNotificationMessage { get; } = new NotificationName(NewApplicationNotificationMessageValue);
         /// <summary> The following recipients will receive blind carbon copies of all emails sent to developers. </summary>
-        public static NotificationName BCC { get; } = new NotificationName(BCCValue);
+        public static NotificationName Bcc { get; } = new NotificationName(BccValue);
         /// <summary> The following email recipients and users will receive email notifications when a new issue or comment is submitted on the developer portal. </summary>
         public static NotificationName NewIssuePublisherNotificationMessage { get; } = new NotificationName(NewIssuePublisherNotificationMessageValue);
         /// <summary> The following email recipients and users will receive email notifications when developer closes his account. </summary>

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="keyVault"> The key vault reference. </param>
         /// <param name="keyName"> Gets the key name in the Key Vault. </param>
         /// <param name="keyVersion"> Gets the version of the key specified in the keyName property. </param>
-        internal IntegrationServiceEnvironmenEncryptionKeyReference(ResourceReference keyVault, string keyName, string keyVersion)
+        internal IntegrationServiceEnvironmenEncryptionKeyReference(LogicResourceReference keyVault, string keyName, string keyVersion)
         {
             KeyVault = keyVault;
             KeyName = keyName;
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> The key vault reference. </summary>
-        public ResourceReference KeyVault { get; set; }
+        public LogicResourceReference KeyVault { get; set; }
         /// <summary> Gets the key name in the Key Vault. </summary>
         public string KeyName { get; set; }
         /// <summary> Gets the version of the key specified in the keyName property. </summary>

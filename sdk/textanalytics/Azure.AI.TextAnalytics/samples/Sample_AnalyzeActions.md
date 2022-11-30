@@ -12,14 +12,14 @@ This sample demonstrates how to run multiple actions in one or more documents. A
 
 ## Creating a `TextAnalyticsClient`
 
-To create a new `TextAnalyticsClient` to run analyze operation for a document, you need a Cognitive Services or Language service endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a Text Analytics API key credential by creating an `AzureKeyCredential` object, that if needed, will allow you to update the API key without creating a new client. See [README][README] for links and instructions.
+To create a new `TextAnalyticsClient` to run analyze operation for a document, you need a Cognitive Services or Language service endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a Language service API key credential by creating an `AzureKeyCredential` object, that if needed, will allow you to update the API key without creating a new client. See [README][README] for links and instructions.
 
 You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
 
 ```C# Snippet:CreateTextAnalyticsClient
 string endpoint = "<endpoint>";
 string apiKey = "<apiKey>";
-var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+TextAnalyticsClient client = new(new Uri(endpoint), new AzureKeyCredential(apiKey));
 ```
 
 ## Running multiple actions in multiple documents
@@ -111,13 +111,6 @@ To run multiple actions in multiple documents, call `StartAnalyzeActionsAsync` o
     }
 }
 ```
-
-To see the full example source files, see:
-
-* [Synchronously StartAnalyzeActions ](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_AnalyzeOperation.cs)
-* [Asynchronously StartAnalyzeActions ](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_AnalyzeOperationAsync.cs)
-* [Synchronously StartAnalyzeActions Convenience ](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_AnalyzeOperationConvenience.cs)
-* [Asynchronously StartAnalyzeActions Convenience](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_AnalyzeOperationConvenienceAsync.cs)
 
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/README.md

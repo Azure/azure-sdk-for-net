@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -26,7 +27,11 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(ResponseCustomData))
             {
                 writer.WritePropertyName("responseCustomData");
-                writer.WriteStringValue(ResponseCustomData);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ResponseCustomData);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ResponseCustomData.ToString()).RootElement);
+#endif
             }
             writer.WritePropertyName("@odata.type");
             writer.WriteStringValue(OdataType);
@@ -36,7 +41,7 @@ namespace Azure.ResourceManager.Media.Models
         internal static ContentKeyPolicyPlayReadyConfiguration DeserializeContentKeyPolicyPlayReadyConfiguration(JsonElement element)
         {
             IList<ContentKeyPolicyPlayReadyLicense> licenses = default;
-            Optional<string> responseCustomData = default;
+            Optional<BinaryData> responseCustomData = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -52,7 +57,12 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 if (property.NameEquals("responseCustomData"))
                 {
-                    responseCustomData = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    responseCustomData = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))

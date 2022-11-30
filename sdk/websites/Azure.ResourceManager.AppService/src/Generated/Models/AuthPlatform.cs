@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of AuthPlatform. </summary>
-        /// <param name="enabled"> &lt;code&gt;true&lt;/code&gt; if the Authentication / Authorization feature is enabled for the current app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isEnabled"> &lt;code&gt;true&lt;/code&gt; if the Authentication / Authorization feature is enabled for the current app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="runtimeVersion">
         /// The RuntimeVersion of the Authentication / Authorization feature in use for the current app.
         /// The setting in this value can control the behavior of certain features in the Authentication / Authorization module.
@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.AppService.Models
         /// The path of the config file containing auth settings if they come from a file.
         /// If the path is relative, base will the site&apos;s root directory.
         /// </param>
-        internal AuthPlatform(bool? enabled, string runtimeVersion, string configFilePath)
+        internal AuthPlatform(bool? isEnabled, string runtimeVersion, string configFilePath)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             RuntimeVersion = runtimeVersion;
             ConfigFilePath = configFilePath;
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the Authentication / Authorization feature is enabled for the current app; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary>
         /// The RuntimeVersion of the Authentication / Authorization feature in use for the current app.
         /// The setting in this value can control the behavior of certain features in the Authentication / Authorization module.

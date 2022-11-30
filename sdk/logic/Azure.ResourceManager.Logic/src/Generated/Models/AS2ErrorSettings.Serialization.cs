@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WritePropertyName("suspendDuplicateMessage");
             writer.WriteBooleanValue(SuspendDuplicateMessage);
             writer.WritePropertyName("resendIfMDNNotReceived");
-            writer.WriteBooleanValue(ResendIfMDNNotReceived);
+            writer.WriteBooleanValue(ResendIfMdnNotReceived);
             writer.WriteEndObject();
         }
 
         internal static AS2ErrorSettings DeserializeAS2ErrorSettings(JsonElement element)
         {
             bool suspendDuplicateMessage = default;
-            bool resendIfMDNNotReceived = default;
+            bool resendIfMdnNotReceived = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("suspendDuplicateMessage"))
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 if (property.NameEquals("resendIfMDNNotReceived"))
                 {
-                    resendIfMDNNotReceived = property.Value.GetBoolean();
+                    resendIfMdnNotReceived = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new AS2ErrorSettings(suspendDuplicateMessage, resendIfMDNNotReceived);
+            return new AS2ErrorSettings(suspendDuplicateMessage, resendIfMdnNotReceived);
         }
     }
 }

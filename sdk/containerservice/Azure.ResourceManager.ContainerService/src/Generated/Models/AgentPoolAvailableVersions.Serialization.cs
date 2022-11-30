@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem>> agentPoolVersions = default;
+            Optional<IReadOnlyList<AgentPoolAvailableVersion>> agentPoolVersions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -64,10 +64,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem> array = new List<AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem>();
+                            List<AgentPoolAvailableVersion> array = new List<AgentPoolAvailableVersion>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem.DeserializeAgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem(item));
+                                array.Add(AgentPoolAvailableVersion.DeserializeAgentPoolAvailableVersion(item));
                             }
                             agentPoolVersions = array;
                             continue;

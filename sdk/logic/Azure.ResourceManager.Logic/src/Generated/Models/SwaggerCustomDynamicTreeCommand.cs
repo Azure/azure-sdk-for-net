@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Initializes a new instance of SwaggerCustomDynamicTreeCommand. </summary>
         public SwaggerCustomDynamicTreeCommand()
         {
-            Parameters = new ChangeTrackingDictionary<string, SwaggerCustomDynamicTreeParameter>();
+            Parameters = new ChangeTrackingDictionary<string, SwaggerCustomDynamicTreeParameterInfo>();
         }
 
         /// <summary> Initializes a new instance of SwaggerCustomDynamicTreeCommand. </summary>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="itemIsParent"> The path to an item property which defines the display name of the item. </param>
         /// <param name="selectableFilter"> The path to an item property which defines the display name of the item. </param>
         /// <param name="parameters"> Dictionary of &lt;SwaggerCustomDynamicTreeParameter&gt;. </param>
-        internal SwaggerCustomDynamicTreeCommand(string operationId, string itemsPath, string itemValuePath, string itemTitlePath, string itemFullTitlePath, string itemIsParent, string selectableFilter, IDictionary<string, SwaggerCustomDynamicTreeParameter> parameters)
+        internal SwaggerCustomDynamicTreeCommand(string operationId, string itemsPath, string itemValuePath, string itemTitlePath, string itemFullTitlePath, string itemIsParent, string selectableFilter, IDictionary<string, SwaggerCustomDynamicTreeParameterInfo> parameters)
         {
             OperationId = operationId;
             ItemsPath = itemsPath;
@@ -55,6 +55,6 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> The path to an item property which defines the display name of the item. </summary>
         public string SelectableFilter { get; set; }
         /// <summary> Dictionary of &lt;SwaggerCustomDynamicTreeParameter&gt;. </summary>
-        public IDictionary<string, SwaggerCustomDynamicTreeParameter> Parameters { get; }
+        public IDictionary<string, SwaggerCustomDynamicTreeParameterInfo> Parameters { get; }
     }
 }

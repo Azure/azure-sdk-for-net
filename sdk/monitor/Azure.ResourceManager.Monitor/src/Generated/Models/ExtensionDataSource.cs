@@ -22,12 +22,9 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
         public ExtensionDataSource(string extensionName)
         {
-            if (extensionName == null)
-            {
-                throw new ArgumentNullException(nameof(extensionName));
-            }
+            Argument.AssertNotNull(extensionName, nameof(extensionName));
 
-            Streams = new ChangeTrackingList<KnownExtensionDataSourceStream>();
+            Streams = new ChangeTrackingList<ExtensionDataSourceStream>();
             ExtensionName = extensionName;
             InputDataSources = new ChangeTrackingList<string>();
         }
@@ -44,7 +41,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// A friendly name for the data source. 
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
         /// </param>
-        internal ExtensionDataSource(IList<KnownExtensionDataSourceStream> streams, string extensionName, BinaryData extensionSettings, IList<string> inputDataSources, string name)
+        internal ExtensionDataSource(IList<ExtensionDataSourceStream> streams, string extensionName, BinaryData extensionSettings, IList<string> inputDataSources, string name)
         {
             Streams = streams;
             ExtensionName = extensionName;
@@ -57,10 +54,39 @@ namespace Azure.ResourceManager.Monitor.Models
         /// List of streams that this data source will be sent to.
         /// A stream indicates what schema will be used for this data and usually what table in Log Analytics the data will be sent to.
         /// </summary>
-        public IList<KnownExtensionDataSourceStream> Streams { get; }
+        public IList<ExtensionDataSourceStream> Streams { get; }
         /// <summary> The name of the VM extension. </summary>
         public string ExtensionName { get; set; }
-        /// <summary> The extension settings. The format is specific for particular extension. </summary>
+        /// <summary>
+        /// The extension settings. The format is specific for particular extension.
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public BinaryData ExtensionSettings { get; set; }
         /// <summary> The list of data sources this extension needs data from. </summary>
         public IList<string> InputDataSources { get; }

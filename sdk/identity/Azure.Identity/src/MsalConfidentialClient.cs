@@ -7,16 +7,19 @@ using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Identity.Client;
+using Microsoft.Identity.Client.Extensibility;
 
 namespace Azure.Identity
 {
     internal class MsalConfidentialClient : MsalClientBase<IConfidentialClientApplication>
     {
+        private const string s_instanceMetadata = "{\"tenant_discovery_endpoint\":\"https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration\",\"api-version\":\"1.1\",\"metadata\":[{\"preferred_network\":\"login.microsoftonline.com\",\"preferred_cache\":\"login.windows.net\",\"aliases\":[\"login.microsoftonline.com\",\"login.windows.net\",\"login.microsoft.com\",\"sts.windows.net\"]}]}";
         internal readonly string _clientSecret;
         internal readonly bool _includeX5CClaimHeader;
         internal readonly IX509Certificate2Provider _certificateProvider;
         private readonly Func<string> _assertionCallback;
         private readonly Func<CancellationToken, Task<string>> _asyncAssertionCallback;
+        private readonly Func<AppTokenProviderParameters, Task<AppTokenProviderResult>> _appTokenProviderCallback;
 
         internal string RedirectUrl { get; }
 
@@ -52,14 +55,31 @@ namespace Azure.Identity
             _asyncAssertionCallback = assertionCallback;
         }
 
+        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, Func<AppTokenProviderParameters, Task<AppTokenProviderResult>> appTokenProviderCallback, TokenCredentialOptions options)
+            : base(pipeline, tenantId, clientId, options)
+        {
+            _appTokenProviderCallback = appTokenProviderCallback;
+        }
+
         internal string RegionalAuthority { get; } = EnvironmentVariables.AzureRegionalAuthorityName;
 
         protected override async ValueTask<IConfidentialClientApplication> CreateClientAsync(bool async, CancellationToken cancellationToken)
         {
             ConfidentialClientApplicationBuilder confClientBuilder = ConfidentialClientApplicationBuilder.Create(ClientId)
-                .WithAuthority(Pipeline.AuthorityHost.AbsoluteUri, TenantId)
                 .WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline.HttpPipeline))
                 .WithLogging(LogMsal, enablePiiLogging: IsPiiLoggingEnabled);
+
+            //special case for using appTokenProviderCallback, authority validation and instance metadata discovery should be disabled since we're not calling the STS
+            if (_appTokenProviderCallback != null)
+            {
+                confClientBuilder.WithAppTokenProvider(_appTokenProviderCallback)
+                    .WithAuthority(Pipeline.AuthorityHost.AbsoluteUri, TenantId, false)
+                    .WithInstanceDiscoveryMetadata(s_instanceMetadata);
+            }
+            else
+            {
+                confClientBuilder.WithAuthority(Pipeline.AuthorityHost.AbsoluteUri, TenantId);
+            }
 
             if (_clientSecret != null)
             {

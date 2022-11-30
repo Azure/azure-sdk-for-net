@@ -134,13 +134,13 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static WebActivity DeserializeWebActivity(JsonElement element)
         {
-            Optional<LinkedServiceReference> linkedServiceName = default;
+            Optional<FactoryLinkedServiceReference> linkedServiceName = default;
             Optional<ActivityPolicy> policy = default;
             string name = default;
             string type = default;
             Optional<string> description = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
-            Optional<IList<UserProperty>> userProperties = default;
+            Optional<IList<ActivityUserProperty>> userProperties = default;
             WebActivityMethod method = default;
             BinaryData url = default;
             Optional<BinaryData> headers = default;
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<WebActivityAuthentication> authentication = default;
             Optional<bool> disableCertValidation = default;
             Optional<IList<DatasetReference>> datasets = default;
-            Optional<IList<LinkedServiceReference>> linkedServices = default;
+            Optional<IList<FactoryLinkedServiceReference>> linkedServices = default;
             Optional<IntegrationRuntimeReference> connectVia = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    linkedServiceName = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
+                    linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policy"))
@@ -211,10 +211,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<UserProperty> array = new List<UserProperty>();
+                    List<ActivityUserProperty> array = new List<ActivityUserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UserProperty.DeserializeUserProperty(item));
+                        array.Add(ActivityUserProperty.DeserializeActivityUserProperty(item));
                     }
                     userProperties = array;
                     continue;
@@ -300,10 +300,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<LinkedServiceReference> array = new List<LinkedServiceReference>();
+                            List<FactoryLinkedServiceReference> array = new List<FactoryLinkedServiceReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LinkedServiceReference.DeserializeLinkedServiceReference(item));
+                                array.Add(FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(item));
                             }
                             linkedServices = array;
                             continue;

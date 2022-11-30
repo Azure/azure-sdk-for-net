@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.Batch
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-06-01";
+            _apiVersion = apiVersion ?? "2022-10-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateGetQuotasRequest(string subscriptionId, string locationName)
+        internal HttpMessage CreateGetQuotasRequest(string subscriptionId, AzureLocation locationName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -60,12 +60,11 @@ namespace Azure.ResourceManager.Batch
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="locationName"> The region for which to retrieve Batch service quotas. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="locationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BatchLocationQuota>> GetQuotasAsync(string subscriptionId, string locationName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<BatchLocationQuota>> GetQuotasAsync(string subscriptionId, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
             using var message = CreateGetQuotasRequest(subscriptionId, locationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -87,12 +86,11 @@ namespace Azure.ResourceManager.Batch
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="locationName"> The region for which to retrieve Batch service quotas. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="locationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BatchLocationQuota> GetQuotas(string subscriptionId, string locationName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<BatchLocationQuota> GetQuotas(string subscriptionId, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
             using var message = CreateGetQuotasRequest(subscriptionId, locationName);
             _pipeline.Send(message, cancellationToken);
@@ -110,7 +108,7 @@ namespace Azure.ResourceManager.Batch
             }
         }
 
-        internal HttpMessage CreateListSupportedVirtualMachineSkusRequest(string subscriptionId, string locationName, int? maxresults, string filter)
+        internal HttpMessage CreateListSupportedVirtualMachineSkusRequest(string subscriptionId, AzureLocation locationName, int? maxresults, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -143,12 +141,11 @@ namespace Azure.ResourceManager.Batch
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are &quot;familyName&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="locationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SupportedSkusResult>> ListSupportedVirtualMachineSkusAsync(string subscriptionId, string locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SupportedSkusResult>> ListSupportedVirtualMachineSkusAsync(string subscriptionId, AzureLocation locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
             using var message = CreateListSupportedVirtualMachineSkusRequest(subscriptionId, locationName, maxresults, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -172,12 +169,11 @@ namespace Azure.ResourceManager.Batch
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are &quot;familyName&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="locationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SupportedSkusResult> ListSupportedVirtualMachineSkus(string subscriptionId, string locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SupportedSkusResult> ListSupportedVirtualMachineSkus(string subscriptionId, AzureLocation locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
             using var message = CreateListSupportedVirtualMachineSkusRequest(subscriptionId, locationName, maxresults, filter);
             _pipeline.Send(message, cancellationToken);
@@ -195,7 +191,7 @@ namespace Azure.ResourceManager.Batch
             }
         }
 
-        internal HttpMessage CreateListSupportedCloudServiceSkusRequest(string subscriptionId, string locationName, int? maxresults, string filter)
+        internal HttpMessage CreateListSupportedCloudServiceSkusRequest(string subscriptionId, AzureLocation locationName, int? maxresults, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -228,12 +224,11 @@ namespace Azure.ResourceManager.Batch
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are &quot;familyName&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="locationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SupportedSkusResult>> ListSupportedCloudServiceSkusAsync(string subscriptionId, string locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SupportedSkusResult>> ListSupportedCloudServiceSkusAsync(string subscriptionId, AzureLocation locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
             using var message = CreateListSupportedCloudServiceSkusRequest(subscriptionId, locationName, maxresults, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -257,12 +252,11 @@ namespace Azure.ResourceManager.Batch
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are &quot;familyName&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="locationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SupportedSkusResult> ListSupportedCloudServiceSkus(string subscriptionId, string locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SupportedSkusResult> ListSupportedCloudServiceSkus(string subscriptionId, AzureLocation locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
             using var message = CreateListSupportedCloudServiceSkusRequest(subscriptionId, locationName, maxresults, filter);
             _pipeline.Send(message, cancellationToken);
@@ -280,7 +274,7 @@ namespace Azure.ResourceManager.Batch
             }
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, string locationName, CheckNameAvailabilityContent content)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, AzureLocation locationName, BatchNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -308,12 +302,11 @@ namespace Azure.ResourceManager.Batch
         /// <param name="locationName"> The desired region for the name check. </param>
         /// <param name="content"> Properties needed to check the availability of a name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, string locationName, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<BatchNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, AzureLocation locationName, BatchNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCheckNameAvailabilityRequest(subscriptionId, locationName, content);
@@ -322,9 +315,9 @@ namespace Azure.ResourceManager.Batch
             {
                 case 200:
                     {
-                        CheckNameAvailabilityResult value = default;
+                        BatchNameAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CheckNameAvailabilityResult.DeserializeCheckNameAvailabilityResult(document.RootElement);
+                        value = BatchNameAvailabilityResult.DeserializeBatchNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -337,12 +330,11 @@ namespace Azure.ResourceManager.Batch
         /// <param name="locationName"> The desired region for the name check. </param>
         /// <param name="content"> Properties needed to check the availability of a name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CheckNameAvailabilityResult> CheckNameAvailability(string subscriptionId, string locationName, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<BatchNameAvailabilityResult> CheckNameAvailability(string subscriptionId, AzureLocation locationName, BatchNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCheckNameAvailabilityRequest(subscriptionId, locationName, content);
@@ -351,9 +343,9 @@ namespace Azure.ResourceManager.Batch
             {
                 case 200:
                     {
-                        CheckNameAvailabilityResult value = default;
+                        BatchNameAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CheckNameAvailabilityResult.DeserializeCheckNameAvailabilityResult(document.RootElement);
+                        value = BatchNameAvailabilityResult.DeserializeBatchNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -361,7 +353,7 @@ namespace Azure.ResourceManager.Batch
             }
         }
 
-        internal HttpMessage CreateListSupportedVirtualMachineSkusNextPageRequest(string nextLink, string subscriptionId, string locationName, int? maxresults, string filter)
+        internal HttpMessage CreateListSupportedVirtualMachineSkusNextPageRequest(string nextLink, string subscriptionId, AzureLocation locationName, int? maxresults, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -382,13 +374,12 @@ namespace Azure.ResourceManager.Batch
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are &quot;familyName&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="locationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SupportedSkusResult>> ListSupportedVirtualMachineSkusNextPageAsync(string nextLink, string subscriptionId, string locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SupportedSkusResult>> ListSupportedVirtualMachineSkusNextPageAsync(string nextLink, string subscriptionId, AzureLocation locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
             using var message = CreateListSupportedVirtualMachineSkusNextPageRequest(nextLink, subscriptionId, locationName, maxresults, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -413,13 +404,12 @@ namespace Azure.ResourceManager.Batch
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are &quot;familyName&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="locationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SupportedSkusResult> ListSupportedVirtualMachineSkusNextPage(string nextLink, string subscriptionId, string locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SupportedSkusResult> ListSupportedVirtualMachineSkusNextPage(string nextLink, string subscriptionId, AzureLocation locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
             using var message = CreateListSupportedVirtualMachineSkusNextPageRequest(nextLink, subscriptionId, locationName, maxresults, filter);
             _pipeline.Send(message, cancellationToken);
@@ -437,7 +427,7 @@ namespace Azure.ResourceManager.Batch
             }
         }
 
-        internal HttpMessage CreateListSupportedCloudServiceSkusNextPageRequest(string nextLink, string subscriptionId, string locationName, int? maxresults, string filter)
+        internal HttpMessage CreateListSupportedCloudServiceSkusNextPageRequest(string nextLink, string subscriptionId, AzureLocation locationName, int? maxresults, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -458,13 +448,12 @@ namespace Azure.ResourceManager.Batch
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are &quot;familyName&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="locationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SupportedSkusResult>> ListSupportedCloudServiceSkusNextPageAsync(string nextLink, string subscriptionId, string locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SupportedSkusResult>> ListSupportedCloudServiceSkusNextPageAsync(string nextLink, string subscriptionId, AzureLocation locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
             using var message = CreateListSupportedCloudServiceSkusNextPageRequest(nextLink, subscriptionId, locationName, maxresults, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -489,13 +478,12 @@ namespace Azure.ResourceManager.Batch
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are &quot;familyName&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="locationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SupportedSkusResult> ListSupportedCloudServiceSkusNextPage(string nextLink, string subscriptionId, string locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SupportedSkusResult> ListSupportedCloudServiceSkusNextPage(string nextLink, string subscriptionId, AzureLocation locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
             using var message = CreateListSupportedCloudServiceSkusNextPageRequest(nextLink, subscriptionId, locationName, maxresults, filter);
             _pipeline.Send(message, cancellationToken);

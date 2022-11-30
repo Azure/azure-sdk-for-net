@@ -33,6 +33,10 @@ az extension show -n azure-devops *> $null
 if (!$?){
   Write-Host 'Installing azure-devops extension'
   az extension add --name azure-devops
+} else {
+  # Force update the extension to the latest version if it was already installed
+  # this is needed to ensure we have the authentication issue fixed from earlier versions
+  az extension update -n azure-devops *> $null
 }
 
 . (Join-Path $PSScriptRoot SemVer.ps1)

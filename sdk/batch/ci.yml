@@ -9,6 +9,8 @@ trigger:
   paths:
     include:
     - sdk/batch/
+    exclude:
+    - sdk/batch/Azure.ResourceManager.Batch/
 
 pr:
   branches:
@@ -20,7 +22,8 @@ pr:
   paths:
     include:
     - sdk/batch/
-    - sdk/resourcemanager/
+    exclude:
+    - sdk/batch/Azure.ResourceManager.Batch/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -34,5 +37,3 @@ extends:
       safeName: MicrosoftAzureBatchFileStaging
     - name: Microsoft.Azure.Batch.Conventions.Files
       safeName: MicrosoftAzureBatchConventionsFiles
-    - name: Azure.ResourceManager.Batch
-      safeName: AzureResourceManagerBatch

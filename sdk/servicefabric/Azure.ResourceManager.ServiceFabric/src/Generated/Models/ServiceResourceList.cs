@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <summary> Initializes a new instance of ServiceResourceList. </summary>
         internal ServiceResourceList()
         {
-            Value = new ChangeTrackingList<ServiceResourceData>();
+            Value = new ChangeTrackingList<ServiceFabricServiceData>();
         }
 
         /// <summary> Initializes a new instance of ServiceResourceList. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> URL to get the next set of service list results if there are any. </param>
-        internal ServiceResourceList(IReadOnlyList<ServiceResourceData> value, string nextLink)
+        internal ServiceResourceList(IReadOnlyList<ServiceFabricServiceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Gets the value. </summary>
-        public IReadOnlyList<ServiceResourceData> Value { get; }
+        public IReadOnlyList<ServiceFabricServiceData> Value { get; }
         /// <summary> URL to get the next set of service list results if there are any. </summary>
         public string NextLink { get; }
     }

@@ -19,19 +19,20 @@ namespace Azure.Messaging.ServiceBus
     /// </summary>
     internal class ReceiverManager
     {
-        internal virtual ServiceBusReceiver Receiver { get; set; }
+        internal virtual ServiceBusReceiver Receiver { get; private set; }
 
         protected readonly ServiceBusProcessor Processor;
         protected readonly TimeSpan? _maxReceiveWaitTime;
         private readonly ServiceBusReceiverOptions _receiverOptions;
         protected readonly ServiceBusProcessorOptions ProcessorOptions;
-        protected readonly EntityScopeFactory _scopeFactory;
+        private readonly EntityScopeFactory _scopeFactory;
 
         protected bool AutoRenewLock => ProcessorOptions.MaxAutoLockRenewalDuration > TimeSpan.Zero;
 
         public ReceiverManager(
             ServiceBusProcessor processor,
-            EntityScopeFactory scopeFactory)
+            EntityScopeFactory scopeFactory,
+            bool isSession)
         {
             Processor = processor;
             ProcessorOptions = processor.Options;
@@ -41,21 +42,24 @@ namespace Azure.Messaging.ServiceBus
                 PrefetchCount = ProcessorOptions.PrefetchCount,
                 // Pass None for subqueue since the subqueue has already
                 // been taken into account when computing the EntityPath of the processor.
-                SubQueue = SubQueue.None
+                SubQueue = SubQueue.None,
+                Identifier = $"{processor.Identifier}-Receiver"
             };
             _maxReceiveWaitTime = ProcessorOptions.MaxReceiveWaitTime;
-            Receiver = new ServiceBusReceiver(
-                connection: Processor.Connection,
-                entityPath: Processor.EntityPath,
-                isSessionEntity: false,
-                isProcessor: true,
-                options: _receiverOptions);
+            if (!isSession)
+            {
+                Receiver = new ServiceBusReceiver(
+                    connection: Processor.Connection,
+                    entityPath: Processor.EntityPath,
+                    isSessionEntity: false,
+                    isProcessor: true,
+                    options: _receiverOptions);
+            }
+
             _scopeFactory = scopeFactory;
         }
 
-        public virtual async Task CloseReceiverIfNeeded(
-            CancellationToken cancellationToken,
-            bool forceClose = false)
+        public virtual async Task CloseReceiverIfNeeded(CancellationToken cancellationToken)
         {
             var capturedReceiver = Receiver;
             if (capturedReceiver != null)
@@ -111,16 +115,20 @@ namespace Azure.Messaging.ServiceBus
                         errorSource,
                         Processor.FullyQualifiedNamespace,
                         Processor.EntityPath,
+                        Processor.Identifier,
                         cancellationToken))
                     .ConfigureAwait(false);
             }
         }
 
+        public virtual Task CancelAsync() => Task.CompletedTask;
+
         protected async Task ProcessOneMessageWithinScopeAsync(ServiceBusReceivedMessage message, string activityName, CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _scopeFactory.CreateScope(activityName, DiagnosticScope.ActivityKind.Consumer);
-            scope.SetMessageData(message);
+            scope.SetMessageAsParent(message);
             scope.Start();
+
             try
             {
                 await ProcessOneMessage(
@@ -188,6 +196,7 @@ namespace Azure.Messaging.ServiceBus
                             errorSource,
                             Processor.FullyQualifiedNamespace,
                             Processor.EntityPath,
+                            Processor.Identifier,
                             cancellationToken))
                     .ConfigureAwait(false);
 
@@ -220,6 +229,7 @@ namespace Azure.Messaging.ServiceBus
                                         ServiceBusErrorSource.Abandon,
                                         Processor.FullyQualifiedNamespace,
                                         Processor.EntityPath,
+                                        Processor.Identifier,
                                         cancellationToken))
                                 .ConfigureAwait(false);
                         }
@@ -250,6 +260,7 @@ namespace Azure.Messaging.ServiceBus
             new ProcessMessageEventArgs(
             message,
             this,
+            Processor.Identifier,
             cancellationToken);
 
         protected virtual async Task OnMessageHandler(EventArgs args) =>
@@ -330,6 +341,7 @@ namespace Azure.Messaging.ServiceBus
                         ServiceBusErrorSource.RenewLock,
                         Processor.FullyQualifiedNamespace,
                         Processor.EntityPath,
+                        Processor.Identifier,
                         cancellationToken)).ConfigureAwait(false);
             }
         }

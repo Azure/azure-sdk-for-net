@@ -113,7 +113,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         /// method.
         /// </summary>
         [Test]
-        public void StartAnalyzeDocumentArgumentValidation()
+        public void AnalyzeDocumentArgumentValidation()
         {
             var client = CreateInstrumentedClient();
 
@@ -130,7 +130,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         /// method.
         /// </summary>
         [Test]
-        public void StartAnalyzeDocumentRespectsTheCancellationToken()
+        public void AnalyzeDocumentRespectsTheCancellationToken()
         {
             var client = CreateInstrumentedClient();
             var options = new AnalyzeDocumentOptions();
@@ -147,7 +147,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         /// method.
         /// </summary>
         [Test]
-        public void StartAnalyzeDocumentFromUriArgumentValidation()
+        public void AnalyzeDocumentFromUriArgumentValidation()
         {
             var client = CreateInstrumentedClient();
 
@@ -164,7 +164,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         /// method.
         /// </summary>
         [Test]
-        public void StartAnalyzeDocumentFromUriRespectsTheCancellationToken()
+        public void AnalyzeDocumentFromUriRespectsTheCancellationToken()
         {
             var client = CreateInstrumentedClient();
             var options = new AnalyzeDocumentOptions();

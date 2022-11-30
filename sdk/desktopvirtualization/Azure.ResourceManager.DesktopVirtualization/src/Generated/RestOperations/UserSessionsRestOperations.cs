@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             }
         }
 
-        internal HttpMessage CreateSendMessageRequest(string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, string userSessionId, SendMessage sendMessage)
+        internal HttpMessage CreateSendMessageRequest(string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, string userSessionId, UserSessionMessage sendMessage)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/>, <paramref name="sessionHostName"/> or <paramref name="userSessionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/>, <paramref name="sessionHostName"/> or <paramref name="userSessionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> SendMessageAsync(string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, string userSessionId, SendMessage sendMessage = null, CancellationToken cancellationToken = default)
+        public async Task<Response> SendMessageAsync(string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, string userSessionId, UserSessionMessage sendMessage = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/>, <paramref name="sessionHostName"/> or <paramref name="userSessionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/>, <paramref name="sessionHostName"/> or <paramref name="userSessionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response SendMessage(string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, string userSessionId, SendMessage sendMessage = null, CancellationToken cancellationToken = default)
+        public Response SendMessage(string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, string userSessionId, UserSessionMessage sendMessage = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

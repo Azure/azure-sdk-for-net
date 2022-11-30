@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of StreamingPolicyContentKeys. </summary>
         /// <param name="defaultKey"> Default content key for an encryption scheme. </param>
         /// <param name="keyToTrackMappings"> Representing tracks needs separate content key. </param>
-        internal StreamingPolicyContentKeys(DefaultKey defaultKey, IList<StreamingPolicyContentKey> keyToTrackMappings)
+        internal StreamingPolicyContentKeys(EncryptionSchemeDefaultKey defaultKey, IList<StreamingPolicyContentKey> keyToTrackMappings)
         {
             DefaultKey = defaultKey;
             KeyToTrackMappings = keyToTrackMappings;
         }
 
         /// <summary> Default content key for an encryption scheme. </summary>
-        public DefaultKey DefaultKey { get; set; }
+        public EncryptionSchemeDefaultKey DefaultKey { get; set; }
         /// <summary> Representing tracks needs separate content key. </summary>
         public IList<StreamingPolicyContentKey> KeyToTrackMappings { get; }
     }

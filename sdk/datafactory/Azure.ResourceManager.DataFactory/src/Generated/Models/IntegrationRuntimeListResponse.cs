@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -18,12 +19,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of IntegrationRuntimeListResponse. </summary>
         /// <param name="value"> List of integration runtimes. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal IntegrationRuntimeListResponse(IEnumerable<IntegrationRuntimeResourceData> value)
+        internal IntegrationRuntimeListResponse(IEnumerable<FactoryIntegrationRuntimeData> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
@@ -31,14 +29,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of IntegrationRuntimeListResponse. </summary>
         /// <param name="value"> List of integration runtimes. </param>
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
-        internal IntegrationRuntimeListResponse(IReadOnlyList<IntegrationRuntimeResourceData> value, string nextLink)
+        internal IntegrationRuntimeListResponse(IReadOnlyList<FactoryIntegrationRuntimeData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of integration runtimes. </summary>
-        public IReadOnlyList<IntegrationRuntimeResourceData> Value { get; }
+        public IReadOnlyList<FactoryIntegrationRuntimeData> Value { get; }
         /// <summary> The link to the next page of results, if any remaining results exist. </summary>
         public string NextLink { get; }
     }

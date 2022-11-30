@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.Relay
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of NamespaceWcfRelayAuthorizationRuleResources in the WcfRelay. </summary>
-        /// <returns> An object representing collection of NamespaceWcfRelayAuthorizationRuleResources and their operations over a NamespaceWcfRelayAuthorizationRuleResource. </returns>
-        public virtual NamespaceWcfRelayAuthorizationRuleCollection GetNamespaceWcfRelayAuthorizationRules()
+        /// <summary> Gets a collection of WcfRelayAuthorizationRuleResources in the WcfRelay. </summary>
+        /// <returns> An object representing collection of WcfRelayAuthorizationRuleResources and their operations over a WcfRelayAuthorizationRuleResource. </returns>
+        public virtual WcfRelayAuthorizationRuleCollection GetWcfRelayAuthorizationRules()
         {
-            return GetCachedClient(Client => new NamespaceWcfRelayAuthorizationRuleCollection(Client, Id));
+            return GetCachedClient(Client => new WcfRelayAuthorizationRuleCollection(Client, Id));
         }
 
         /// <summary>
@@ -103,9 +103,9 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<NamespaceWcfRelayAuthorizationRuleResource>> GetNamespaceWcfRelayAuthorizationRuleAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WcfRelayAuthorizationRuleResource>> GetWcfRelayAuthorizationRuleAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            return await GetNamespaceWcfRelayAuthorizationRules().GetAsync(authorizationRuleName, cancellationToken).ConfigureAwait(false);
+            return await GetWcfRelayAuthorizationRules().GetAsync(authorizationRuleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -118,9 +118,9 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<NamespaceWcfRelayAuthorizationRuleResource> GetNamespaceWcfRelayAuthorizationRule(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<WcfRelayAuthorizationRuleResource> GetWcfRelayAuthorizationRule(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            return GetNamespaceWcfRelayAuthorizationRules().Get(authorizationRuleName, cancellationToken);
+            return GetWcfRelayAuthorizationRules().Get(authorizationRuleName, cancellationToken);
         }
 
         /// <summary>

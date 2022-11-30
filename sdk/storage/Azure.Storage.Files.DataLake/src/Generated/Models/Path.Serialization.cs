@@ -17,7 +17,6 @@ namespace Azure.Storage.Files.DataLake.Models
         {
             Optional<string> name = default;
             Optional<DateTimeOffset> lastModified = default;
-            Optional<string> eTag = default;
             Optional<string> owner = default;
             Optional<string> group = default;
             Optional<string> permissions = default;
@@ -26,6 +25,7 @@ namespace Azure.Storage.Files.DataLake.Models
             Optional<string> expiryTime = default;
             Optional<string> contentLength = default;
             Optional<string> isDirectory = default;
+            Optional<string> etag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -41,11 +41,6 @@ namespace Azure.Storage.Files.DataLake.Models
                         continue;
                     }
                     lastModified = property.Value.GetDateTimeOffset("R");
-                    continue;
-                }
-                if (property.NameEquals("eTag"))
-                {
-                    eTag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("owner"))
@@ -88,8 +83,13 @@ namespace Azure.Storage.Files.DataLake.Models
                     isDirectory = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("etag"))
+                {
+                    etag = property.Value.GetString();
+                    continue;
+                }
             }
-            return new Path(name.Value, Optional.ToNullable(lastModified), eTag.Value, owner.Value, group.Value, permissions.Value, encryptionScope.Value, creationTime.Value, expiryTime.Value, contentLength.Value, isDirectory.Value);
+            return new Path(name.Value, Optional.ToNullable(lastModified), owner.Value, group.Value, permissions.Value, encryptionScope.Value, creationTime.Value, expiryTime.Value, contentLength.Value, isDirectory.Value, etag.Value);
         }
     }
 }

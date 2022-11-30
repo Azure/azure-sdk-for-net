@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.CertificateCollection>> ListAsync(string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AppCertificateListResult>> ListAsync(string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -74,9 +74,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        Models.CertificateCollection value = default;
+                        AppCertificateListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.CertificateCollection.DeserializeCertificateCollection(document.RootElement);
+                        value = AppCertificateListResult.DeserializeAppCertificateListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.CertificateCollection> List(string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
+        public Response<AppCertificateListResult> List(string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -100,9 +100,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        Models.CertificateCollection value = default;
+                        AppCertificateListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.CertificateCollection.DeserializeCertificateCollection(document.RootElement);
+                        value = AppCertificateListResult.DeserializeAppCertificateListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.CertificateCollection>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<AppCertificateListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -146,9 +146,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        Models.CertificateCollection value = default;
+                        AppCertificateListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.CertificateCollection.DeserializeCertificateCollection(document.RootElement);
+                        value = AppCertificateListResult.DeserializeAppCertificateListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.CertificateCollection> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<AppCertificateListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -173,9 +173,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        Models.CertificateCollection value = default;
+                        AppCertificateListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.CertificateCollection.DeserializeCertificateCollection(document.RootElement);
+                        value = AppCertificateListResult.DeserializeAppCertificateListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CertificateData>> GetAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<AppCertificateData>> GetAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -222,13 +222,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        CertificateData value = default;
+                        AppCertificateData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CertificateData.DeserializeCertificateData(document.RootElement);
+                        value = AppCertificateData.DeserializeAppCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((CertificateData)null, message.Response);
+                    return Response.FromValue((AppCertificateData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CertificateData> Get(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<AppCertificateData> Get(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -253,19 +253,19 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        CertificateData value = default;
+                        AppCertificateData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CertificateData.DeserializeCertificateData(document.RootElement);
+                        value = AppCertificateData.DeserializeAppCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((CertificateData)null, message.Response);
+                    return Response.FromValue((AppCertificateData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string name, CertificateData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string name, AppCertificateData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CertificateData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string name, CertificateData data, CancellationToken cancellationToken = default)
+        public async Task<Response<AppCertificateData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string name, AppCertificateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -310,9 +310,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        CertificateData value = default;
+                        AppCertificateData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CertificateData.DeserializeCertificateData(document.RootElement);
+                        value = AppCertificateData.DeserializeAppCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CertificateData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string name, CertificateData data, CancellationToken cancellationToken = default)
+        public Response<AppCertificateData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string name, AppCertificateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -341,9 +341,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        CertificateData value = default;
+                        AppCertificateData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CertificateData.DeserializeCertificateData(document.RootElement);
+                        value = AppCertificateData.DeserializeAppCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string name, CertificatePatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string name, AppCertificatePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CertificateData>> UpdateAsync(string subscriptionId, string resourceGroupName, string name, CertificatePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<AppCertificateData>> UpdateAsync(string subscriptionId, string resourceGroupName, string name, AppCertificatePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -466,9 +466,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        CertificateData value = default;
+                        AppCertificateData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CertificateData.DeserializeCertificateData(document.RootElement);
+                        value = AppCertificateData.DeserializeAppCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CertificateData> Update(string subscriptionId, string resourceGroupName, string name, CertificatePatch patch, CancellationToken cancellationToken = default)
+        public Response<AppCertificateData> Update(string subscriptionId, string resourceGroupName, string name, AppCertificatePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -497,9 +497,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        CertificateData value = default;
+                        AppCertificateData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CertificateData.DeserializeCertificateData(document.RootElement);
+                        value = AppCertificateData.DeserializeAppCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.CertificateCollection>> ListNextPageAsync(string nextLink, string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AppCertificateListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -539,9 +539,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        Models.CertificateCollection value = default;
+                        AppCertificateListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.CertificateCollection.DeserializeCertificateCollection(document.RootElement);
+                        value = AppCertificateListResult.DeserializeAppCertificateListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.CertificateCollection> ListNextPage(string nextLink, string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
+        public Response<AppCertificateListResult> ListNextPage(string nextLink, string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -567,9 +567,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        Models.CertificateCollection value = default;
+                        AppCertificateListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.CertificateCollection.DeserializeCertificateCollection(document.RootElement);
+                        value = AppCertificateListResult.DeserializeAppCertificateListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.CertificateCollection>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<AppCertificateListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -610,9 +610,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        Models.CertificateCollection value = default;
+                        AppCertificateListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.CertificateCollection.DeserializeCertificateCollection(document.RootElement);
+                        value = AppCertificateListResult.DeserializeAppCertificateListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -627,7 +627,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.CertificateCollection> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<AppCertificateListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -639,9 +639,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        Models.CertificateCollection value = default;
+                        AppCertificateListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.CertificateCollection.DeserializeCertificateCollection(document.RootElement);
+                        value = AppCertificateListResult.DeserializeAppCertificateListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

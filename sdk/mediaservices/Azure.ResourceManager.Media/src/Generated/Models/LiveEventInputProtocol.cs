@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Media.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string FragmentedMP4Value = "FragmentedMP4";
+        private const string FragmentedMp4Value = "FragmentedMP4";
         private const string RtmpValue = "RTMP";
 
         /// <summary> Smooth Streaming input will be sent by the contribution encoder to the live event. </summary>
-        public static LiveEventInputProtocol FragmentedMP4 { get; } = new LiveEventInputProtocol(FragmentedMP4Value);
+        public static LiveEventInputProtocol FragmentedMp4 { get; } = new LiveEventInputProtocol(FragmentedMp4Value);
         /// <summary> RTMP input will be sent by the contribution encoder to the live event. </summary>
         public static LiveEventInputProtocol Rtmp { get; } = new LiveEventInputProtocol(RtmpValue);
         /// <summary> Determines if two <see cref="LiveEventInputProtocol"/> values are the same. </summary>

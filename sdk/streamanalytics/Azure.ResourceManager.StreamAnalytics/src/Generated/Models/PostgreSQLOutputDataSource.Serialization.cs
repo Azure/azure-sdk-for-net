@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<string> table = default;
             Optional<string> user = default;
             Optional<string> password = default;
-            Optional<float> maxWriterCount = default;
-            Optional<AuthenticationMode> authenticationMode = default;
+            Optional<int> maxWriterCount = default;
+            Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            maxWriterCount = property0.Value.GetSingle();
+                            maxWriterCount = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("authenticationMode"))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            authenticationMode = new AuthenticationMode(property0.Value.GetString());
+                            authenticationMode = new StreamAnalyticsAuthenticationMode(property0.Value.GetString());
                             continue;
                         }
                     }

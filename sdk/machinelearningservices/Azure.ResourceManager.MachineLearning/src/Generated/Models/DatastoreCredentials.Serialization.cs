@@ -28,23 +28,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     case "AccountKey": return AccountKeyDatastoreCredentials.DeserializeAccountKeyDatastoreCredentials(element);
                     case "Certificate": return CertificateDatastoreCredentials.DeserializeCertificateDatastoreCredentials(element);
-                    case "KerberosKeytab": return KerberosKeytabCredentials.DeserializeKerberosKeytabCredentials(element);
-                    case "KerberosPassword": return KerberosPasswordCredentials.DeserializeKerberosPasswordCredentials(element);
                     case "None": return NoneDatastoreCredentials.DeserializeNoneDatastoreCredentials(element);
                     case "Sas": return SasDatastoreCredentials.DeserializeSasDatastoreCredentials(element);
                     case "ServicePrincipal": return ServicePrincipalDatastoreCredentials.DeserializeServicePrincipalDatastoreCredentials(element);
                 }
             }
-            CredentialsType credentialsType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("credentialsType"))
-                {
-                    credentialsType = new CredentialsType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new DatastoreCredentials(credentialsType);
+            return UnknownDatastoreCredentials.DeserializeUnknownDatastoreCredentials(element);
         }
     }
 }

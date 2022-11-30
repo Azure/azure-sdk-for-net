@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <exception cref="ArgumentNullException"> <paramref name="keyId"/> or <paramref name="keySourceParameters"/> is null. </exception>
         public UriSigningKey(string keyId, KeyVaultSigningKey keySourceParameters)
         {
-            if (keyId == null)
-            {
-                throw new ArgumentNullException(nameof(keyId));
-            }
-            if (keySourceParameters == null)
-            {
-                throw new ArgumentNullException(nameof(keySourceParameters));
-            }
+            Argument.AssertNotNull(keyId, nameof(keyId));
+            Argument.AssertNotNull(keySourceParameters, nameof(keySourceParameters));
 
             KeyId = keyId;
             KeySourceParameters = keySourceParameters;

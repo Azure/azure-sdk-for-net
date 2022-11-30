@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of StorageProfile. </summary>
         public StorageProfile()
         {
-            Storageaccounts = new ChangeTrackingList<StorageAccount>();
+            StorageAccounts = new ChangeTrackingList<HDInsightStorageAccountInfo>();
         }
 
         /// <summary> Initializes a new instance of StorageProfile. </summary>
-        /// <param name="storageaccounts"> The list of storage accounts in the cluster. </param>
-        internal StorageProfile(IList<StorageAccount> storageaccounts)
+        /// <param name="storageAccounts"> The list of storage accounts in the cluster. </param>
+        internal StorageProfile(IList<HDInsightStorageAccountInfo> storageAccounts)
         {
-            Storageaccounts = storageaccounts;
+            StorageAccounts = storageAccounts;
         }
 
         /// <summary> The list of storage accounts in the cluster. </summary>
-        public IList<StorageAccount> Storageaccounts { get; }
+        public IList<HDInsightStorageAccountInfo> StorageAccounts { get; }
     }
 }

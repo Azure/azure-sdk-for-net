@@ -595,10 +595,10 @@ namespace Azure.AI.TextAnalytics.Tests
 
         #endregion Analyze sentiment
 
-        #region Extract summary
+        #region Multi Label Classify
 
         [Test]
-        public async Task AnalyzeOperationExtractSummaryWithDisableServiceLogs()
+        public async Task AnalyzeOperationMultiLabelClassifyWithDisableServiceLogs()
         {
             var mockResponse = new MockResponse(202);
             mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15?api-version=myVersion"));
@@ -611,51 +611,14 @@ namespace Azure.AI.TextAnalytics.Tests
                 "Elon Musk is the CEO of SpaceX and Tesla."
             };
 
-            var actions = new ExtractSummaryAction()
+            var actions = new MultiLabelClassifyAction(FakeProjectName, FakeDeploymentName)
             {
                 DisableServiceLogs = true
             };
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
-                ExtractSummaryActions = new List<ExtractSummaryAction>() { actions },
-            };
-
-            await client.StartAnalyzeActionsAsync(documents, batchActions);
-
-            var contentString = GetString(mockTransport.Requests.Single().Content);
-            string logging = contentString.Substring(contentString.IndexOf("loggingOptOut"), 19);
-
-            var expectedContent = "loggingOptOut\":true";
-            Assert.AreEqual(expectedContent, logging);
-        }
-
-        #endregion Extract summary
-
-        #region Multi Category Classify
-
-        [Test]
-        public async Task AnalyzeOperationMultiCategoryClassifyWithDisableServiceLogs()
-        {
-            var mockResponse = new MockResponse(202);
-            mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15?api-version=myVersion"));
-
-            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
-            var client = CreateTestClient(mockTransport);
-
-            var documents = new List<string>
-            {
-                "Elon Musk is the CEO of SpaceX and Tesla."
-            };
-
-            var actions = new MultiCategoryClassifyAction(FakeProjectName, FakeDeploymentName)
-            {
-                DisableServiceLogs = true
-            };
-
-            TextAnalyticsActions batchActions = new TextAnalyticsActions()
-            {
-                MultiCategoryClassifyActions = new List<MultiCategoryClassifyAction>() { actions },
+                MultiLabelClassifyActions = new List<MultiLabelClassifyAction>() { actions },
             };
 
             await client.StartAnalyzeActionsAsync(documents, batchActions);
@@ -668,10 +631,10 @@ namespace Azure.AI.TextAnalytics.Tests
         }
         #endregion
 
-        #region Single Category Classify
+        #region Single Label Classify
 
         [Test]
-        public async Task AnalyzeOperationSingleCategoryClassifyWithDisableServiceLogs()
+        public async Task AnalyzeOperationLabelCategoryClassifyWithDisableServiceLogs()
         {
             var mockResponse = new MockResponse(202);
             mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15?api-version=myVersion"));
@@ -684,14 +647,14 @@ namespace Azure.AI.TextAnalytics.Tests
                 "Elon Musk is the CEO of SpaceX and Tesla."
             };
 
-            var actions = new SingleCategoryClassifyAction(FakeProjectName, FakeDeploymentName)
+            var actions = new SingleLabelClassifyAction(FakeProjectName, FakeDeploymentName)
             {
                 DisableServiceLogs = true
             };
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
-                SingleCategoryClassifyActions = new List<SingleCategoryClassifyAction>() { actions },
+                SingleLabelClassifyActions = new List<SingleLabelClassifyAction>() { actions },
             };
 
             await client.StartAnalyzeActionsAsync(documents, batchActions);

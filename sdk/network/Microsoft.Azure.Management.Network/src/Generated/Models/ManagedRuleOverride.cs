@@ -32,12 +32,16 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="ruleId">Identifier for the managed rule.</param>
         /// <param name="state">The state of the managed rule. Defaults to
-        /// Disabled if not specified. Possible values include:
-        /// 'Disabled'</param>
-        public ManagedRuleOverride(string ruleId, string state = default(string))
+        /// Disabled if not specified. Possible values include: 'Disabled',
+        /// 'Enabled'</param>
+        /// <param name="action">Describes the override action to be applied
+        /// when rule matches. Possible values include: 'AnomalyScoring',
+        /// 'Allow', 'Block', 'Log'</param>
+        public ManagedRuleOverride(string ruleId, string state = default(string), string action = default(string))
         {
             RuleId = ruleId;
             State = state;
+            Action = action;
             CustomInit();
         }
 
@@ -54,10 +58,18 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets the state of the managed rule. Defaults to Disabled if
-        /// not specified. Possible values include: 'Disabled'
+        /// not specified. Possible values include: 'Disabled', 'Enabled'
         /// </summary>
         [JsonProperty(PropertyName = "state")]
         public string State { get; set; }
+
+        /// <summary>
+        /// Gets or sets describes the override action to be applied when rule
+        /// matches. Possible values include: 'AnomalyScoring', 'Allow',
+        /// 'Block', 'Log'
+        /// </summary>
+        [JsonProperty(PropertyName = "action")]
+        public string Action { get; set; }
 
         /// <summary>
         /// Validate the object.

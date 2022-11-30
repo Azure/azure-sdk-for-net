@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of ApiManagementSku. </summary>
         internal ApiManagementSku()
         {
-            Locations = new ChangeTrackingList<string>();
+            Locations = new ChangeTrackingList<AzureLocation>();
             LocationInfo = new ChangeTrackingList<ApiManagementSkuLocationInfo>();
             ApiVersions = new ChangeTrackingList<string>();
             Costs = new ChangeTrackingList<ApiManagementSkuCosts>();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="costs"> Metadata for retrieving price info. </param>
         /// <param name="capabilities"> A name value pair to describe the capability. </param>
         /// <param name="restrictions"> The restrictions because of which SKU cannot be used. This is empty if there are no restrictions. </param>
-        internal ApiManagementSku(string resourceType, string name, string tier, string size, string family, string kind, ApiManagementSkuCapacity capacity, IReadOnlyList<string> locations, IReadOnlyList<ApiManagementSkuLocationInfo> locationInfo, IReadOnlyList<string> apiVersions, IReadOnlyList<ApiManagementSkuCosts> costs, IReadOnlyList<ApiManagementSkuCapabilities> capabilities, IReadOnlyList<ApiManagementSkuRestrictions> restrictions)
+        internal ApiManagementSku(string resourceType, string name, string tier, string size, string family, string kind, ApiManagementSkuCapacity capacity, IReadOnlyList<AzureLocation> locations, IReadOnlyList<ApiManagementSkuLocationInfo> locationInfo, IReadOnlyList<string> apiVersions, IReadOnlyList<ApiManagementSkuCosts> costs, IReadOnlyList<ApiManagementSkuCapabilities> capabilities, IReadOnlyList<ApiManagementSkuRestrictions> restrictions)
         {
             ResourceType = resourceType;
             Name = name;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Specifies the number of virtual machines in the scale set. </summary>
         public ApiManagementSkuCapacity Capacity { get; }
         /// <summary> The set of locations that the SKU is available. </summary>
-        public IReadOnlyList<string> Locations { get; }
+        public IReadOnlyList<AzureLocation> Locations { get; }
         /// <summary> A list of locations and availability zones in those locations where the SKU is available. </summary>
         public IReadOnlyList<ApiManagementSkuLocationInfo> LocationInfo { get; }
         /// <summary> The api versions that support this SKU. </summary>

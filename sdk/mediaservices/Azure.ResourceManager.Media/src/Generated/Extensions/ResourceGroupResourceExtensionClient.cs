@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.Media
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of MediaserviceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of MediaserviceResources and their operations over a MediaserviceResource. </returns>
-        public virtual MediaserviceCollection GetMediaservices()
+        /// <summary> Gets a collection of MediaServicesAccountResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of MediaServicesAccountResources and their operations over a MediaServicesAccountResource. </returns>
+        public virtual MediaServicesAccountCollection GetMediaServicesAccounts()
         {
-            return GetCachedClient(Client => new MediaserviceCollection(Client, Id));
+            return GetCachedClient(Client => new MediaServicesAccountCollection(Client, Id));
         }
     }
 }

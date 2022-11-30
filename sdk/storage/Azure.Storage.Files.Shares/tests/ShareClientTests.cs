@@ -665,6 +665,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_02_12)]
+        [Category("NonVirtualized")]
         public async Task GetPropertiesAsync_Premium()
         {
             await using DisposingShare test = await GetTestShareAsync(SharesClientBuilder.GetServiceClient_PremiumFile());

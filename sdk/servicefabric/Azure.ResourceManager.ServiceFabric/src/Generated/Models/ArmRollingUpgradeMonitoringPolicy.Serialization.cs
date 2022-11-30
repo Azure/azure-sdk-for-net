@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             if (Optional.IsDefined(HealthCheckRetryTimeout))
             {
                 writer.WritePropertyName("healthCheckRetryTimeout");
-                writer.WriteStringValue(HealthCheckRetryTimeout);
+                writer.WriteStringValue(HealthCheckRetryTimeout.Value, "c");
             }
             if (Optional.IsDefined(UpgradeTimeout))
             {
                 writer.WritePropertyName("upgradeTimeout");
-                writer.WriteStringValue(UpgradeTimeout);
+                writer.WriteStringValue(UpgradeTimeout.Value, "c");
             }
             if (Optional.IsDefined(UpgradeDomainTimeout))
             {
                 writer.WritePropertyName("upgradeDomainTimeout");
-                writer.WriteStringValue(UpgradeDomainTimeout);
+                writer.WriteStringValue(UpgradeDomainTimeout.Value, "c");
             }
             writer.WriteEndObject();
         }
@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             Optional<ArmUpgradeFailureAction> failureAction = default;
             Optional<TimeSpan> healthCheckWaitDuration = default;
             Optional<TimeSpan> healthCheckStableDuration = default;
-            Optional<string> healthCheckRetryTimeout = default;
-            Optional<string> upgradeTimeout = default;
-            Optional<string> upgradeDomainTimeout = default;
+            Optional<TimeSpan> healthCheckRetryTimeout = default;
+            Optional<TimeSpan> upgradeTimeout = default;
+            Optional<TimeSpan> upgradeDomainTimeout = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("failureAction"))
@@ -91,21 +91,36 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 if (property.NameEquals("healthCheckRetryTimeout"))
                 {
-                    healthCheckRetryTimeout = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    healthCheckRetryTimeout = property.Value.GetTimeSpan("c");
                     continue;
                 }
                 if (property.NameEquals("upgradeTimeout"))
                 {
-                    upgradeTimeout = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    upgradeTimeout = property.Value.GetTimeSpan("c");
                     continue;
                 }
                 if (property.NameEquals("upgradeDomainTimeout"))
                 {
-                    upgradeDomainTimeout = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    upgradeDomainTimeout = property.Value.GetTimeSpan("c");
                     continue;
                 }
             }
-            return new ArmRollingUpgradeMonitoringPolicy(Optional.ToNullable(failureAction), Optional.ToNullable(healthCheckWaitDuration), Optional.ToNullable(healthCheckStableDuration), healthCheckRetryTimeout.Value, upgradeTimeout.Value, upgradeDomainTimeout.Value);
+            return new ArmRollingUpgradeMonitoringPolicy(Optional.ToNullable(failureAction), Optional.ToNullable(healthCheckWaitDuration), Optional.ToNullable(healthCheckStableDuration), Optional.ToNullable(healthCheckRetryTimeout), Optional.ToNullable(upgradeTimeout), Optional.ToNullable(upgradeDomainTimeout));
         }
     }
 }

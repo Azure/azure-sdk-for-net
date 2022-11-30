@@ -76,6 +76,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("sheetName");
                 writer.WriteObjectValue(SheetName);
             }
+            if (Optional.IsDefined(SheetIndex))
+            {
+                writer.WritePropertyName("sheetIndex");
+                writer.WriteObjectValue(SheetIndex);
+            }
             if (Optional.IsDefined(Range))
             {
                 writer.WritePropertyName("range");
@@ -117,6 +122,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<DatasetFolder> folder = default;
             Optional<DatasetLocation> location = default;
             Optional<object> sheetName = default;
+            Optional<object> sheetIndex = default;
             Optional<object> range = default;
             Optional<object> firstRowAsHeader = default;
             Optional<DatasetCompression> compression = default;
@@ -229,6 +235,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             sheetName = property0.Value.GetObject();
                             continue;
                         }
+                        if (property0.NameEquals("sheetIndex"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            sheetIndex = property0.Value.GetObject();
+                            continue;
+                        }
                         if (property0.NameEquals("range"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -275,7 +291,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ExcelDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, location.Value, sheetName.Value, range.Value, firstRowAsHeader.Value, compression.Value, nullValue.Value);
+            return new ExcelDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, location.Value, sheetName.Value, sheetIndex.Value, range.Value, firstRowAsHeader.Value, compression.Value, nullValue.Value);
         }
 
         internal partial class ExcelDatasetConverter : JsonConverter<ExcelDataset>

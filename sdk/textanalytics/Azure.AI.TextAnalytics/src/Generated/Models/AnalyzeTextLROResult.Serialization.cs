@@ -37,6 +37,7 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "AbstractiveSummarizationLROResults": return AbstractiveSummarizationLROResult.DeserializeAbstractiveSummarizationLROResult(element);
                     case "CustomEntityRecognitionLROResults": return CustomEntityRecognitionLROResult.DeserializeCustomEntityRecognitionLROResult(element);
                     case "CustomMultiLabelClassificationLROResults": return CustomMultiLabelClassificationLROResult.DeserializeCustomMultiLabelClassificationLROResult(element);
                     case "CustomSingleLabelClassificationLROResults": return CustomSingleLabelClassificationLROResult.DeserializeCustomSingleLabelClassificationLROResult(element);

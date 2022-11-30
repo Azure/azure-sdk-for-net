@@ -1,0 +1,56 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://ads-dev-eastus-pv.purview.azure.com/share/sentShares/sample-Share/sentShareInvitations/invitation-to-fabrikam?api-version=2021-09-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "83",
+        "Content-Type": "application/json",
+        "traceparent": "00-94d686aa3d4304511b5fa06721dec354-e14064c1276b0d6b-00",
+        "User-Agent": "azsdk-net-Analytics.Purview.Share/1.0.3-alpha.20220802.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "df455a6be264472a10173e5b6bb2a5d9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "invitationKind": "User",
+        "properties": {
+          "targetEmail": "yamanwahsheh@microsoft.com"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Length": "479",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 02 Aug 2022 22:32:02 GMT",
+        "Location": "/sentShares/sample-Share/sentShareInvitations/invitation-to-fabrikam/invitation-to-fabrikam",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "c71ab492-3834-4702-9b76-7be7206acc6b"
+      },
+      "ResponseBody": {
+        "properties": {
+          "targetEmail": "yamanwahsheh@microsoft.com",
+          "sentAt": "2022-08-02T22:32:02.6436301Z",
+          "invitationStatus": "Pending",
+          "invitationId": "c8f84d7e-4f00-4469-b279-d7a78dcd66f2",
+          "senderName": "SyMS",
+          "senderTenantName": "Microsoft",
+          "senderEmail": null,
+          "provisioningState": "Succeeded",
+          "shareKind": "InPlace"
+        },
+        "invitationKind": "User",
+        "id": "/sentShares/sample-Share/sentShareInvitations/invitation-to-fabrikam",
+        "name": "invitation-to-fabrikam",
+        "type": "sentShares/sentShareInvitations"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": null,
+    "PURVIEW_SHARE_URL": "https://ads-dev-eastus-pv.purview.azure.com/share",
+    "RandomSeed": "1809864611"
+  }
+}

@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-04-01-preview\u0026showStats=false",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-10-01-preview\u0026showStats=false",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "221",
+        "Content-Length": "193",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-fbc3f04810de8044892507e59b3f7a4f-4c3dde153378d64c-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220501.1 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "29f76756c2b5f8de142568e0421c484b",
+        "traceparent": "00-828207dcd5ceec0938f8a6eceaee36ae-734454384fbc9e64-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221129.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "072c5c7c5c1fde5c678e54d48ceb3f0a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -24,21 +24,22 @@
           ]
         },
         "parameters": {
-          "stringIndexType": "Utf16CodeUnit",
-          "modelVersion": "2020-02-01"
+          "stringIndexType": "Utf16CodeUnit"
         },
         "kind": "EntityRecognition"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "846c10b0-d49f-467f-8011-e23281bd9f5e",
+        "apim-request-id": "c76f98f2-0fcd-4f15-a707-cd8ccdd473ff",
         "Content-Length": "519",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1,CognitiveServices.TextAnalytics.TextRecords=1",
-        "Date": "Sun, 01 May 2022 21:07:55 GMT",
+        "Date": "Wed, 30 Nov 2022 03:44:51 GMT",
+        "Set-Cookie": ".AspNetCore.Mvc.CookieTempDataProvider=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; samesite=lax; httponly",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "93"
+        "x-envoy-upstream-service-time": "31",
+        "x-ms-region": "West US 2"
       },
       "ResponseBody": {
         "kind": "EntityRecognitionResults",
@@ -52,14 +53,14 @@
                   "category": "Person",
                   "offset": 0,
                   "length": 10,
-                  "confidenceScore": 0.6
+                  "confidenceScore": 1.0
                 },
                 {
                   "text": "Microsoft",
                   "category": "Organization",
                   "offset": 13,
                   "length": 9,
-                  "confidenceScore": 0.85
+                  "confidenceScore": 0.99
                 },
                 {
                   "text": "New Mexico",
@@ -67,7 +68,7 @@
                   "subcategory": "GPE",
                   "offset": 25,
                   "length": 10,
-                  "confidenceScore": 0.56
+                  "confidenceScore": 0.96
                 },
                 {
                   "text": "127.0.0.1",
@@ -81,13 +82,13 @@
             }
           ],
           "errors": [],
-          "modelVersion": "2020-02-01"
+          "modelVersion": "2021-06-01"
         }
       }
     }
   ],
   "Variables": {
-    "RandomSeed": "862901860",
+    "RandomSeed": "1262912110",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
     "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
   }

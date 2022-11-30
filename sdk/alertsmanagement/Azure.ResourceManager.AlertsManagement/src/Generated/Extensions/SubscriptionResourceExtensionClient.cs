@@ -164,9 +164,9 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="timeRange"> Filter by time range by below listed values. Default value is 1 day. </param>
         /// <param name="customTimeRange"> Filter by custom time range in the format &lt;start-time&gt;/&lt;end-time&gt;  where time is in (ISO-8601 format)&apos;. Permissible values is within 30 days from  query time. Either timeRange or customTimeRange could be used but not both. Default is none. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ServiceAlertsSummary>> GetSummaryAlertAsync(AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount = null, string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorService? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, AlertState? alertState = null, string alertRule = null, TimeRangeFilter? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceAlertSummary>> GetServiceAlertSummaryAsync(AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount = null, string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorServiceSourceForAlert? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, ServiceAlertState? alertState = null, string alertRule = null, TimeRangeFilter? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default)
         {
-            using var scope = ServiceAlertAlertsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSummaryAlert");
+            using var scope = ServiceAlertAlertsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetServiceAlertSummary");
             scope.Start();
             try
             {
@@ -198,9 +198,9 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="timeRange"> Filter by time range by below listed values. Default value is 1 day. </param>
         /// <param name="customTimeRange"> Filter by custom time range in the format &lt;start-time&gt;/&lt;end-time&gt;  where time is in (ISO-8601 format)&apos;. Permissible values is within 30 days from  query time. Either timeRange or customTimeRange could be used but not both. Default is none. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ServiceAlertsSummary> GetSummaryAlert(AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount = null, string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorService? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, AlertState? alertState = null, string alertRule = null, TimeRangeFilter? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceAlertSummary> GetServiceAlertSummary(AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount = null, string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorServiceSourceForAlert? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, ServiceAlertState? alertState = null, string alertRule = null, TimeRangeFilter? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default)
         {
-            using var scope = ServiceAlertAlertsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSummaryAlert");
+            using var scope = ServiceAlertAlertsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetServiceAlertSummary");
             scope.Start();
             try
             {

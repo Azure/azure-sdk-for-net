@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.StreamAnalytics.Models;
 
 namespace Azure.ResourceManager.StreamAnalytics
@@ -23,19 +24,19 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="properties">
         /// The properties that are associated with a function.
-        /// Please note <see cref="FunctionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="StreamingJobFunctionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AggregateFunctionProperties"/> and <see cref="ScalarFunctionProperties"/>.
         /// </param>
-        internal StreamingJobFunctionData(string id, string name, string resourceType, FunctionProperties properties) : base(id, name, resourceType)
+        internal StreamingJobFunctionData(ResourceIdentifier id, string name, ResourceType? resourceType, StreamingJobFunctionProperties properties) : base(id, name, resourceType)
         {
             Properties = properties;
         }
 
         /// <summary>
         /// The properties that are associated with a function.
-        /// Please note <see cref="FunctionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="StreamingJobFunctionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AggregateFunctionProperties"/> and <see cref="ScalarFunctionProperties"/>.
         /// </summary>
-        public FunctionProperties Properties { get; set; }
+        public StreamingJobFunctionProperties Properties { get; set; }
     }
 }

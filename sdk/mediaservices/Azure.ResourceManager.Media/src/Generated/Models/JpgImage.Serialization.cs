@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<string> step = default;
             Optional<string> range = default;
             Optional<TimeSpan> keyFrameInterval = default;
-            Optional<StretchMode> stretchMode = default;
+            Optional<InputVideoStretchMode> stretchMode = default;
             Optional<VideoSyncMode> syncMode = default;
             string odataType = default;
             Optional<string> label = default;
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Media.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    stretchMode = new StretchMode(property.Value.GetString());
+                    stretchMode = new InputVideoStretchMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("syncMode"))

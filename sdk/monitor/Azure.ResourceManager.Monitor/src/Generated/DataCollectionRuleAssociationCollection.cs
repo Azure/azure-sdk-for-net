@@ -53,10 +53,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="data"> The payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="associationName"/> is null. </exception>
-        public virtual async Task<ArmOperation<DataCollectionRuleAssociationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string associationName, DataCollectionRuleAssociationData data = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="associationName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<DataCollectionRuleAssociationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string associationName, DataCollectionRuleAssociationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataCollectionRuleAssociationClientDiagnostics.CreateScope("DataCollectionRuleAssociationCollection.CreateOrUpdate");
             scope.Start();
@@ -85,10 +86,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="data"> The payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="associationName"/> is null. </exception>
-        public virtual ArmOperation<DataCollectionRuleAssociationResource> CreateOrUpdate(WaitUntil waitUntil, string associationName, DataCollectionRuleAssociationData data = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="associationName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<DataCollectionRuleAssociationResource> CreateOrUpdate(WaitUntil waitUntil, string associationName, DataCollectionRuleAssociationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataCollectionRuleAssociationClientDiagnostics.CreateScope("DataCollectionRuleAssociationCollection.CreateOrUpdate");
             scope.Start();

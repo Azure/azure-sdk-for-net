@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NotificationHubs
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCheckAvailabilityRequest(string subscriptionId, CheckAvailabilityParameters checkAvailabilityParameters)
+        internal HttpMessage CreateCheckAvailabilityRequest(string subscriptionId, NotificationHubAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -51,33 +51,33 @@ namespace Azure.ResourceManager.NotificationHubs
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(checkAvailabilityParameters);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Checks the availability of the given service namespace across all Azure subscriptions. This is useful because the domain name is created based on the service namespace name. </summary>
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="checkAvailabilityParameters"> The namespace name. </param>
+        /// <param name="content"> The namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="checkAvailabilityParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CheckAvailabilityResult>> CheckAvailabilityAsync(string subscriptionId, CheckAvailabilityParameters checkAvailabilityParameters, CancellationToken cancellationToken = default)
+        public async Task<Response<NotificationHubAvailabilityResult>> CheckAvailabilityAsync(string subscriptionId, NotificationHubAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(checkAvailabilityParameters, nameof(checkAvailabilityParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckAvailabilityRequest(subscriptionId, checkAvailabilityParameters);
+            using var message = CreateCheckAvailabilityRequest(subscriptionId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CheckAvailabilityResult value = default;
+                        NotificationHubAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CheckAvailabilityResult.DeserializeCheckAvailabilityResult(document.RootElement);
+                        value = NotificationHubAvailabilityResult.DeserializeNotificationHubAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -87,24 +87,24 @@ namespace Azure.ResourceManager.NotificationHubs
 
         /// <summary> Checks the availability of the given service namespace across all Azure subscriptions. This is useful because the domain name is created based on the service namespace name. </summary>
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="checkAvailabilityParameters"> The namespace name. </param>
+        /// <param name="content"> The namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="checkAvailabilityParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CheckAvailabilityResult> CheckAvailability(string subscriptionId, CheckAvailabilityParameters checkAvailabilityParameters, CancellationToken cancellationToken = default)
+        public Response<NotificationHubAvailabilityResult> CheckAvailability(string subscriptionId, NotificationHubAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(checkAvailabilityParameters, nameof(checkAvailabilityParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckAvailabilityRequest(subscriptionId, checkAvailabilityParameters);
+            using var message = CreateCheckAvailabilityRequest(subscriptionId, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CheckAvailabilityResult value = default;
+                        NotificationHubAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CheckAvailabilityResult.DeserializeCheckAvailabilityResult(document.RootElement);
+                        value = NotificationHubAvailabilityResult.DeserializeNotificationHubAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.NotificationHubs
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string namespaceName, NamespaceResourceCreateOrUpdateContent content)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string namespaceName, NotificationHubNamespaceCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NamespaceResourceData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string namespaceName, NamespaceResourceCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<NotificationHubNamespaceData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string namespaceName, NotificationHubNamespaceCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -158,9 +158,9 @@ namespace Azure.ResourceManager.NotificationHubs
                 case 200:
                 case 201:
                     {
-                        NamespaceResourceData value = default;
+                        NotificationHubNamespaceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NamespaceResourceData.DeserializeNamespaceResourceData(document.RootElement);
+                        value = NotificationHubNamespaceData.DeserializeNotificationHubNamespaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NamespaceResourceData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string namespaceName, NamespaceResourceCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public Response<NotificationHubNamespaceData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string namespaceName, NotificationHubNamespaceCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -190,9 +190,9 @@ namespace Azure.ResourceManager.NotificationHubs
                 case 200:
                 case 201:
                     {
-                        NamespaceResourceData value = default;
+                        NotificationHubNamespaceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NamespaceResourceData.DeserializeNamespaceResourceData(document.RootElement);
+                        value = NotificationHubNamespaceData.DeserializeNotificationHubNamespaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.NotificationHubs
             }
         }
 
-        internal HttpMessage CreatePatchRequest(string subscriptionId, string resourceGroupName, string namespaceName, NamespaceResourcePatch patch)
+        internal HttpMessage CreatePatchRequest(string subscriptionId, string resourceGroupName, string namespaceName, NotificationHubNamespacePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -217,9 +217,9 @@ namespace Azure.ResourceManager.NotificationHubs
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(patch);
-            request.Content = content0;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(patch);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NamespaceResourceData>> PatchAsync(string subscriptionId, string resourceGroupName, string namespaceName, NamespaceResourcePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<NotificationHubNamespaceData>> PatchAsync(string subscriptionId, string resourceGroupName, string namespaceName, NotificationHubNamespacePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -245,9 +245,9 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 case 200:
                     {
-                        NamespaceResourceData value = default;
+                        NotificationHubNamespaceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NamespaceResourceData.DeserializeNamespaceResourceData(document.RootElement);
+                        value = NotificationHubNamespaceData.DeserializeNotificationHubNamespaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NamespaceResourceData> Patch(string subscriptionId, string resourceGroupName, string namespaceName, NamespaceResourcePatch patch, CancellationToken cancellationToken = default)
+        public Response<NotificationHubNamespaceData> Patch(string subscriptionId, string resourceGroupName, string namespaceName, NotificationHubNamespacePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -276,9 +276,9 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 case 200:
                     {
-                        NamespaceResourceData value = default;
+                        NotificationHubNamespaceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NamespaceResourceData.DeserializeNamespaceResourceData(document.RootElement);
+                        value = NotificationHubNamespaceData.DeserializeNotificationHubNamespaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NamespaceResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<NotificationHubNamespaceData>> GetAsync(string subscriptionId, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -396,13 +396,13 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 case 200:
                     {
-                        NamespaceResourceData value = default;
+                        NotificationHubNamespaceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NamespaceResourceData.DeserializeNamespaceResourceData(document.RootElement);
+                        value = NotificationHubNamespaceData.DeserializeNotificationHubNamespaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((NamespaceResourceData)null, message.Response);
+                    return Response.FromValue((NotificationHubNamespaceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NamespaceResourceData> Get(string subscriptionId, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
+        public Response<NotificationHubNamespaceData> Get(string subscriptionId, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -427,19 +427,19 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 case 200:
                     {
-                        NamespaceResourceData value = default;
+                        NotificationHubNamespaceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NamespaceResourceData.DeserializeNamespaceResourceData(document.RootElement);
+                        value = NotificationHubNamespaceData.DeserializeNotificationHubNamespaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((NamespaceResourceData)null, message.Response);
+                    return Response.FromValue((NotificationHubNamespaceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateAuthorizationRuleRequest(string subscriptionId, string resourceGroupName, string namespaceName, string authorizationRuleName, SharedAccessAuthorizationRuleCreateOrUpdateParameters sharedAccessAuthorizationRuleCreateOrUpdateParameters)
+        internal HttpMessage CreateCreateOrUpdateAuthorizationRuleRequest(string subscriptionId, string resourceGroupName, string namespaceName, string authorizationRuleName, SharedAccessAuthorizationRuleCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.NotificationHubs
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(sharedAccessAuthorizationRuleCreateOrUpdateParameters);
+            content0.JsonWriter.WriteObjectValue(content);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -470,27 +470,27 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="authorizationRuleName"> Authorization Rule Name. </param>
-        /// <param name="sharedAccessAuthorizationRuleCreateOrUpdateParameters"> The shared access authorization rule. </param>
+        /// <param name="content"> The shared access authorization rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="authorizationRuleName"/> or <paramref name="sharedAccessAuthorizationRuleCreateOrUpdateParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="authorizationRuleName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SharedAccessAuthorizationRuleResourceData>> CreateOrUpdateAuthorizationRuleAsync(string subscriptionId, string resourceGroupName, string namespaceName, string authorizationRuleName, SharedAccessAuthorizationRuleCreateOrUpdateParameters sharedAccessAuthorizationRuleCreateOrUpdateParameters, CancellationToken cancellationToken = default)
+        public async Task<Response<NotificationHubAuthorizationRuleData>> CreateOrUpdateAuthorizationRuleAsync(string subscriptionId, string resourceGroupName, string namespaceName, string authorizationRuleName, SharedAccessAuthorizationRuleCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
-            Argument.AssertNotNull(sharedAccessAuthorizationRuleCreateOrUpdateParameters, nameof(sharedAccessAuthorizationRuleCreateOrUpdateParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateOrUpdateAuthorizationRuleRequest(subscriptionId, resourceGroupName, namespaceName, authorizationRuleName, sharedAccessAuthorizationRuleCreateOrUpdateParameters);
+            using var message = CreateCreateOrUpdateAuthorizationRuleRequest(subscriptionId, resourceGroupName, namespaceName, authorizationRuleName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SharedAccessAuthorizationRuleResourceData value = default;
+                        NotificationHubAuthorizationRuleData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SharedAccessAuthorizationRuleResourceData.DeserializeSharedAccessAuthorizationRuleResourceData(document.RootElement);
+                        value = NotificationHubAuthorizationRuleData.DeserializeNotificationHubAuthorizationRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -503,27 +503,27 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="authorizationRuleName"> Authorization Rule Name. </param>
-        /// <param name="sharedAccessAuthorizationRuleCreateOrUpdateParameters"> The shared access authorization rule. </param>
+        /// <param name="content"> The shared access authorization rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="authorizationRuleName"/> or <paramref name="sharedAccessAuthorizationRuleCreateOrUpdateParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="authorizationRuleName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SharedAccessAuthorizationRuleResourceData> CreateOrUpdateAuthorizationRule(string subscriptionId, string resourceGroupName, string namespaceName, string authorizationRuleName, SharedAccessAuthorizationRuleCreateOrUpdateParameters sharedAccessAuthorizationRuleCreateOrUpdateParameters, CancellationToken cancellationToken = default)
+        public Response<NotificationHubAuthorizationRuleData> CreateOrUpdateAuthorizationRule(string subscriptionId, string resourceGroupName, string namespaceName, string authorizationRuleName, SharedAccessAuthorizationRuleCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
-            Argument.AssertNotNull(sharedAccessAuthorizationRuleCreateOrUpdateParameters, nameof(sharedAccessAuthorizationRuleCreateOrUpdateParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateOrUpdateAuthorizationRuleRequest(subscriptionId, resourceGroupName, namespaceName, authorizationRuleName, sharedAccessAuthorizationRuleCreateOrUpdateParameters);
+            using var message = CreateCreateOrUpdateAuthorizationRuleRequest(subscriptionId, resourceGroupName, namespaceName, authorizationRuleName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SharedAccessAuthorizationRuleResourceData value = default;
+                        NotificationHubAuthorizationRuleData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SharedAccessAuthorizationRuleResourceData.DeserializeSharedAccessAuthorizationRuleResourceData(document.RootElement);
+                        value = NotificationHubAuthorizationRuleData.DeserializeNotificationHubAuthorizationRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="authorizationRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SharedAccessAuthorizationRuleResourceData>> GetAuthorizationRuleAsync(string subscriptionId, string resourceGroupName, string namespaceName, string authorizationRuleName, CancellationToken cancellationToken = default)
+        public async Task<Response<NotificationHubAuthorizationRuleData>> GetAuthorizationRuleAsync(string subscriptionId, string resourceGroupName, string namespaceName, string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -649,13 +649,13 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 case 200:
                     {
-                        SharedAccessAuthorizationRuleResourceData value = default;
+                        NotificationHubAuthorizationRuleData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SharedAccessAuthorizationRuleResourceData.DeserializeSharedAccessAuthorizationRuleResourceData(document.RootElement);
+                        value = NotificationHubAuthorizationRuleData.DeserializeNotificationHubAuthorizationRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SharedAccessAuthorizationRuleResourceData)null, message.Response);
+                    return Response.FromValue((NotificationHubAuthorizationRuleData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -669,7 +669,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="authorizationRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SharedAccessAuthorizationRuleResourceData> GetAuthorizationRule(string subscriptionId, string resourceGroupName, string namespaceName, string authorizationRuleName, CancellationToken cancellationToken = default)
+        public Response<NotificationHubAuthorizationRuleData> GetAuthorizationRule(string subscriptionId, string resourceGroupName, string namespaceName, string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -682,13 +682,13 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 case 200:
                     {
-                        SharedAccessAuthorizationRuleResourceData value = default;
+                        NotificationHubAuthorizationRuleData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SharedAccessAuthorizationRuleResourceData.DeserializeSharedAccessAuthorizationRuleResourceData(document.RootElement);
+                        value = NotificationHubAuthorizationRuleData.DeserializeNotificationHubAuthorizationRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SharedAccessAuthorizationRuleResourceData)null, message.Response);
+                    return Response.FromValue((NotificationHubAuthorizationRuleData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -719,7 +719,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NamespaceListResult>> ListAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<NotificationHubNamespaceListResult>> ListAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -730,9 +730,9 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 case 200:
                     {
-                        NamespaceListResult value = default;
+                        NotificationHubNamespaceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NamespaceListResult.DeserializeNamespaceListResult(document.RootElement);
+                        value = NotificationHubNamespaceListResult.DeserializeNotificationHubNamespaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -746,7 +746,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NamespaceListResult> List(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<NotificationHubNamespaceListResult> List(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -757,9 +757,9 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 case 200:
                     {
-                        NamespaceListResult value = default;
+                        NotificationHubNamespaceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NamespaceListResult.DeserializeNamespaceListResult(document.RootElement);
+                        value = NotificationHubNamespaceListResult.DeserializeNotificationHubNamespaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -789,7 +789,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NamespaceListResult>> ListAllAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<NotificationHubNamespaceListResult>> ListAllAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -799,9 +799,9 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 case 200:
                     {
-                        NamespaceListResult value = default;
+                        NotificationHubNamespaceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NamespaceListResult.DeserializeNamespaceListResult(document.RootElement);
+                        value = NotificationHubNamespaceListResult.DeserializeNotificationHubNamespaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -814,7 +814,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NamespaceListResult> ListAll(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<NotificationHubNamespaceListResult> ListAll(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -824,9 +824,9 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 case 200:
                     {
-                        NamespaceListResult value = default;
+                        NotificationHubNamespaceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NamespaceListResult.DeserializeNamespaceListResult(document.RootElement);
+                        value = NotificationHubNamespaceListResult.DeserializeNotificationHubNamespaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -944,7 +944,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="authorizationRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ResourceListKeys>> ListKeysAsync(string subscriptionId, string resourceGroupName, string namespaceName, string authorizationRuleName, CancellationToken cancellationToken = default)
+        public async Task<Response<NotificationHubResourceKeys>> ListKeysAsync(string subscriptionId, string resourceGroupName, string namespaceName, string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -957,9 +957,9 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 case 200:
                     {
-                        ResourceListKeys value = default;
+                        NotificationHubResourceKeys value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ResourceListKeys.DeserializeResourceListKeys(document.RootElement);
+                        value = NotificationHubResourceKeys.DeserializeNotificationHubResourceKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -975,7 +975,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="authorizationRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ResourceListKeys> ListKeys(string subscriptionId, string resourceGroupName, string namespaceName, string authorizationRuleName, CancellationToken cancellationToken = default)
+        public Response<NotificationHubResourceKeys> ListKeys(string subscriptionId, string resourceGroupName, string namespaceName, string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -988,9 +988,9 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 case 200:
                     {
-                        ResourceListKeys value = default;
+                        NotificationHubResourceKeys value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ResourceListKeys.DeserializeResourceListKeys(document.RootElement);
+                        value = NotificationHubResourceKeys.DeserializeNotificationHubResourceKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -998,7 +998,7 @@ namespace Azure.ResourceManager.NotificationHubs
             }
         }
 
-        internal HttpMessage CreateRegenerateKeysRequest(string subscriptionId, string resourceGroupName, string namespaceName, string authorizationRuleName, PolicykeyResource policykeyResource)
+        internal HttpMessage CreateRegenerateKeysRequest(string subscriptionId, string resourceGroupName, string namespaceName, string authorizationRuleName, NotificationHubPolicyKey notificationHubPolicyKey)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1018,9 +1018,9 @@ namespace Azure.ResourceManager.NotificationHubs
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(policykeyResource);
-            request.Content = content0;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(notificationHubPolicyKey);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -1030,27 +1030,27 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="authorizationRuleName"> The connection string of the namespace for the specified authorizationRule. </param>
-        /// <param name="policykeyResource"> Parameters supplied to regenerate the Namespace Authorization Rule Key. </param>
+        /// <param name="notificationHubPolicyKey"> Parameters supplied to regenerate the Namespace Authorization Rule Key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="authorizationRuleName"/> or <paramref name="policykeyResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="authorizationRuleName"/> or <paramref name="notificationHubPolicyKey"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ResourceListKeys>> RegenerateKeysAsync(string subscriptionId, string resourceGroupName, string namespaceName, string authorizationRuleName, PolicykeyResource policykeyResource, CancellationToken cancellationToken = default)
+        public async Task<Response<NotificationHubResourceKeys>> RegenerateKeysAsync(string subscriptionId, string resourceGroupName, string namespaceName, string authorizationRuleName, NotificationHubPolicyKey notificationHubPolicyKey, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
-            Argument.AssertNotNull(policykeyResource, nameof(policykeyResource));
+            Argument.AssertNotNull(notificationHubPolicyKey, nameof(notificationHubPolicyKey));
 
-            using var message = CreateRegenerateKeysRequest(subscriptionId, resourceGroupName, namespaceName, authorizationRuleName, policykeyResource);
+            using var message = CreateRegenerateKeysRequest(subscriptionId, resourceGroupName, namespaceName, authorizationRuleName, notificationHubPolicyKey);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ResourceListKeys value = default;
+                        NotificationHubResourceKeys value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ResourceListKeys.DeserializeResourceListKeys(document.RootElement);
+                        value = NotificationHubResourceKeys.DeserializeNotificationHubResourceKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1063,27 +1063,27 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="authorizationRuleName"> The connection string of the namespace for the specified authorizationRule. </param>
-        /// <param name="policykeyResource"> Parameters supplied to regenerate the Namespace Authorization Rule Key. </param>
+        /// <param name="notificationHubPolicyKey"> Parameters supplied to regenerate the Namespace Authorization Rule Key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="authorizationRuleName"/> or <paramref name="policykeyResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="authorizationRuleName"/> or <paramref name="notificationHubPolicyKey"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ResourceListKeys> RegenerateKeys(string subscriptionId, string resourceGroupName, string namespaceName, string authorizationRuleName, PolicykeyResource policykeyResource, CancellationToken cancellationToken = default)
+        public Response<NotificationHubResourceKeys> RegenerateKeys(string subscriptionId, string resourceGroupName, string namespaceName, string authorizationRuleName, NotificationHubPolicyKey notificationHubPolicyKey, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
-            Argument.AssertNotNull(policykeyResource, nameof(policykeyResource));
+            Argument.AssertNotNull(notificationHubPolicyKey, nameof(notificationHubPolicyKey));
 
-            using var message = CreateRegenerateKeysRequest(subscriptionId, resourceGroupName, namespaceName, authorizationRuleName, policykeyResource);
+            using var message = CreateRegenerateKeysRequest(subscriptionId, resourceGroupName, namespaceName, authorizationRuleName, notificationHubPolicyKey);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ResourceListKeys value = default;
+                        NotificationHubResourceKeys value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ResourceListKeys.DeserializeResourceListKeys(document.RootElement);
+                        value = NotificationHubResourceKeys.DeserializeNotificationHubResourceKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1112,7 +1112,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NamespaceListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<NotificationHubNamespaceListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1124,9 +1124,9 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 case 200:
                     {
-                        NamespaceListResult value = default;
+                        NotificationHubNamespaceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NamespaceListResult.DeserializeNamespaceListResult(document.RootElement);
+                        value = NotificationHubNamespaceListResult.DeserializeNotificationHubNamespaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1141,7 +1141,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NamespaceListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<NotificationHubNamespaceListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1153,9 +1153,9 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 case 200:
                     {
-                        NamespaceListResult value = default;
+                        NotificationHubNamespaceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NamespaceListResult.DeserializeNamespaceListResult(document.RootElement);
+                        value = NotificationHubNamespaceListResult.DeserializeNotificationHubNamespaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1183,7 +1183,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NamespaceListResult>> ListAllNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<NotificationHubNamespaceListResult>> ListAllNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1194,9 +1194,9 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 case 200:
                     {
-                        NamespaceListResult value = default;
+                        NotificationHubNamespaceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NamespaceListResult.DeserializeNamespaceListResult(document.RootElement);
+                        value = NotificationHubNamespaceListResult.DeserializeNotificationHubNamespaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1210,7 +1210,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NamespaceListResult> ListAllNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<NotificationHubNamespaceListResult> ListAllNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1221,9 +1221,9 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 case 200:
                     {
-                        NamespaceListResult value = default;
+                        NotificationHubNamespaceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NamespaceListResult.DeserializeNamespaceListResult(document.RootElement);
+                        value = NotificationHubNamespaceListResult.DeserializeNotificationHubNamespaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

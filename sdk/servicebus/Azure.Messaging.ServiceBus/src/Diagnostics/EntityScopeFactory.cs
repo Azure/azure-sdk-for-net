@@ -4,6 +4,8 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using Azure.Core.Pipeline;
+using Microsoft.Azure.Amqp;
+using Microsoft.Azure.Amqp.Framing;
 
 namespace Azure.Messaging.ServiceBus.Diagnostics
 {
@@ -72,6 +74,28 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             id = null;
 
             if (properties.TryGetValue(DiagnosticProperty.DiagnosticIdAttribute, out var objectId) && objectId is string stringId)
+            {
+                id = stringId;
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        ///   Extracts a diagnostic id from a message's properties.
+        /// </summary>
+        ///
+        /// <param name="properties">The properties holding the diagnostic id.</param>
+        /// <param name="id">The value of the diagnostics identifier assigned to the event. </param>
+        ///
+        /// <returns><c>true</c> if the event was contained the diagnostic id; otherwise, <c>false</c>.</returns>
+        ///
+        public static bool TryExtractDiagnosticId(PropertiesMap properties, out string id)
+        {
+            id = null;
+
+            if (properties.TryGetValue<string>(DiagnosticProperty.DiagnosticIdAttribute, out string stringId))
             {
                 id = stringId;
                 return true;

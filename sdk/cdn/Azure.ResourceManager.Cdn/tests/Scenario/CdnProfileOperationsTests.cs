@@ -30,10 +30,12 @@ namespace Azure.ResourceManager.Cdn.Tests
             Assert.AreEqual(404, ex.Status);
         }
 
-        [TestCase]
-        [RecordedTest]
-        public async Task Update()
+        //TODO: [TestCase(null)] Need to be able to re-record this case
+        [TestCase(true)]
+        //TODO: [TestCase(false)] Need to be able to re-record this case
+        public async Task Update(bool? useTagResource)
         {
+            SetTagResourceUsage(Client, useTagResource);
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string cdnProfileName = Recording.GenerateAssetName("profile-");

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Batch
         private ClientDiagnostics LocationClientDiagnostics => _locationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Batch", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private LocationRestOperations LocationRestClient => _locationRestClient ??= new LocationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
-        private string GetApiVersionOrNull(Core.ResourceType resourceType)
+        private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
@@ -139,9 +139,9 @@ namespace Azure.ResourceManager.Batch
         /// </summary>
         /// <param name="locationName"> The region for which to retrieve Batch service quotas. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BatchLocationQuota>> GetQuotasLocationAsync(string locationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BatchLocationQuota>> GetBatchQuotasAsync(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            using var scope = LocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQuotasLocation");
+            using var scope = LocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBatchQuotas");
             scope.Start();
             try
             {
@@ -162,9 +162,9 @@ namespace Azure.ResourceManager.Batch
         /// </summary>
         /// <param name="locationName"> The region for which to retrieve Batch service quotas. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BatchLocationQuota> GetQuotasLocation(string locationName, CancellationToken cancellationToken = default)
+        public virtual Response<BatchLocationQuota> GetBatchQuotas(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            using var scope = LocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQuotasLocation");
+            using var scope = LocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBatchQuotas");
             scope.Start();
             try
             {
@@ -187,12 +187,12 @@ namespace Azure.ResourceManager.Batch
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are &quot;familyName&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SupportedSku" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SupportedSku> GetSupportedVirtualMachineSkusLocationsAsync(string locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="BatchSupportedSku" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BatchSupportedSku> GetBatchSupportedVirtualMachineSkusAsync(AzureLocation locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SupportedSku>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<BatchSupportedSku>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = LocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSupportedVirtualMachineSkusLocations");
+                using var scope = LocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBatchSupportedVirtualMachineSkus");
                 scope.Start();
                 try
                 {
@@ -205,9 +205,9 @@ namespace Azure.ResourceManager.Batch
                     throw;
                 }
             }
-            async Task<Page<SupportedSku>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<BatchSupportedSku>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = LocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSupportedVirtualMachineSkusLocations");
+                using var scope = LocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBatchSupportedVirtualMachineSkus");
                 scope.Start();
                 try
                 {
@@ -232,12 +232,12 @@ namespace Azure.ResourceManager.Batch
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are &quot;familyName&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SupportedSku" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SupportedSku> GetSupportedVirtualMachineSkusLocations(string locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BatchSupportedSku" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BatchSupportedSku> GetBatchSupportedVirtualMachineSkus(AzureLocation locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<SupportedSku> FirstPageFunc(int? pageSizeHint)
+            Page<BatchSupportedSku> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = LocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSupportedVirtualMachineSkusLocations");
+                using var scope = LocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBatchSupportedVirtualMachineSkus");
                 scope.Start();
                 try
                 {
@@ -250,9 +250,9 @@ namespace Azure.ResourceManager.Batch
                     throw;
                 }
             }
-            Page<SupportedSku> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<BatchSupportedSku> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = LocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSupportedVirtualMachineSkusLocations");
+                using var scope = LocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBatchSupportedVirtualMachineSkus");
                 scope.Start();
                 try
                 {
@@ -277,12 +277,12 @@ namespace Azure.ResourceManager.Batch
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are &quot;familyName&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SupportedSku" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SupportedSku> GetSupportedCloudServiceSkusLocationsAsync(string locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="BatchSupportedSku" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BatchSupportedSku> GetBatchSupportedCloudServiceSkusAsync(AzureLocation locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SupportedSku>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<BatchSupportedSku>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = LocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSupportedCloudServiceSkusLocations");
+                using var scope = LocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBatchSupportedCloudServiceSkus");
                 scope.Start();
                 try
                 {
@@ -295,9 +295,9 @@ namespace Azure.ResourceManager.Batch
                     throw;
                 }
             }
-            async Task<Page<SupportedSku>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<BatchSupportedSku>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = LocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSupportedCloudServiceSkusLocations");
+                using var scope = LocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBatchSupportedCloudServiceSkus");
                 scope.Start();
                 try
                 {
@@ -322,12 +322,12 @@ namespace Azure.ResourceManager.Batch
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are &quot;familyName&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SupportedSku" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SupportedSku> GetSupportedCloudServiceSkusLocations(string locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BatchSupportedSku" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BatchSupportedSku> GetBatchSupportedCloudServiceSkus(AzureLocation locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<SupportedSku> FirstPageFunc(int? pageSizeHint)
+            Page<BatchSupportedSku> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = LocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSupportedCloudServiceSkusLocations");
+                using var scope = LocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBatchSupportedCloudServiceSkus");
                 scope.Start();
                 try
                 {
@@ -340,9 +340,9 @@ namespace Azure.ResourceManager.Batch
                     throw;
                 }
             }
-            Page<SupportedSku> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<BatchSupportedSku> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = LocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSupportedCloudServiceSkusLocations");
+                using var scope = LocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBatchSupportedCloudServiceSkus");
                 scope.Start();
                 try
                 {
@@ -366,9 +366,9 @@ namespace Azure.ResourceManager.Batch
         /// <param name="locationName"> The desired region for the name check. </param>
         /// <param name="content"> Properties needed to check the availability of a name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityLocationAsync(string locationName, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BatchNameAvailabilityResult>> CheckBatchNameAvailabilityAsync(AzureLocation locationName, BatchNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = LocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityLocation");
+            using var scope = LocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckBatchNameAvailability");
             scope.Start();
             try
             {
@@ -390,9 +390,9 @@ namespace Azure.ResourceManager.Batch
         /// <param name="locationName"> The desired region for the name check. </param>
         /// <param name="content"> Properties needed to check the availability of a name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckNameAvailabilityResult> CheckNameAvailabilityLocation(string locationName, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<BatchNameAvailabilityResult> CheckBatchNameAvailability(AzureLocation locationName, BatchNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = LocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityLocation");
+            using var scope = LocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckBatchNameAvailability");
             scope.Start();
             try
             {

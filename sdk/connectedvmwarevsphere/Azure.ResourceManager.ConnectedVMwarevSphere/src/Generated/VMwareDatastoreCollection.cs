@@ -64,10 +64,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="datastoreName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> is null. </exception>
-        public virtual async Task<ArmOperation<VMwareDatastoreResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string datastoreName, VMwareDatastoreData data = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<VMwareDatastoreResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string datastoreName, VMwareDatastoreData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(datastoreName, nameof(datastoreName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _vMwareDatastoreDatastoresClientDiagnostics.CreateScope("VMwareDatastoreCollection.CreateOrUpdate");
             scope.Start();
@@ -96,10 +97,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="datastoreName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> is null. </exception>
-        public virtual ArmOperation<VMwareDatastoreResource> CreateOrUpdate(WaitUntil waitUntil, string datastoreName, VMwareDatastoreData data = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<VMwareDatastoreResource> CreateOrUpdate(WaitUntil waitUntil, string datastoreName, VMwareDatastoreData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(datastoreName, nameof(datastoreName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _vMwareDatastoreDatastoresClientDiagnostics.CreateScope("VMwareDatastoreCollection.CreateOrUpdate");
             scope.Start();

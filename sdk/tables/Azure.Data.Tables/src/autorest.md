@@ -16,6 +16,10 @@ generation1-convenience-client: true
 include-csproj: disable
 modelerfour:
   seal-single-value-enum-by-default: true
+protocol-method-list:
+  - Table_Delete
+  - Table_QueryEntityWithPartitionAndRowKey
+  - Table_Create
 ```
 
 ### Add nullable annotations

@@ -5,50 +5,24 @@
 
 #nullable disable
 
-using System;
-using System.ComponentModel;
-
 namespace Azure.Communication.MediaComposition
 {
-    /// <summary> State of the composition stream. </summary>
-    public readonly partial struct CompositionStreamState : IEquatable<CompositionStreamState>
+    /// <summary> Provides the state of the media composition. </summary>
+    public partial class CompositionStreamState
     {
-        private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="CompositionStreamState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CompositionStreamState(string value)
+        /// <summary> Initializes a new instance of CompositionStreamState. </summary>
+        public CompositionStreamState()
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string NotStartedValue = "notStarted";
-        private const string RunningValue = "running";
-        private const string StoppedValue = "stopped";
+        /// <summary> Initializes a new instance of CompositionStreamState. </summary>
+        /// <param name="status"> State of the composition stream. </param>
+        internal CompositionStreamState(StreamStatus? status)
+        {
+            Status = status;
+        }
 
-        /// <summary> notStarted. </summary>
-        public static CompositionStreamState NotStarted { get; } = new CompositionStreamState(NotStartedValue);
-        /// <summary> running. </summary>
-        public static CompositionStreamState Running { get; } = new CompositionStreamState(RunningValue);
-        /// <summary> stopped. </summary>
-        public static CompositionStreamState Stopped { get; } = new CompositionStreamState(StoppedValue);
-        /// <summary> Determines if two <see cref="CompositionStreamState"/> values are the same. </summary>
-        public static bool operator ==(CompositionStreamState left, CompositionStreamState right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="CompositionStreamState"/> values are not the same. </summary>
-        public static bool operator !=(CompositionStreamState left, CompositionStreamState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CompositionStreamState"/>. </summary>
-        public static implicit operator CompositionStreamState(string value) => new CompositionStreamState(value);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is CompositionStreamState other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(CompositionStreamState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
-        /// <inheritdoc />
-        public override string ToString() => _value;
+        /// <summary> State of the composition stream. </summary>
+        public StreamStatus? Status { get; set; }
     }
 }

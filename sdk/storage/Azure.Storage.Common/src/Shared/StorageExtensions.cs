@@ -9,14 +9,16 @@ namespace Azure.Storage.Shared
 {
     internal static class StorageExtensions
     {
-        public static string EscapePath(this string path)
+        /// <param name="path">Path to operate on.</param>
+        /// <param name="trimOuterSlashes">Whether to perform backwards-compatible trimming.</param>
+        public static string EscapePath(this string path, bool trimOuterSlashes = true)
         {
             if (path == null)
             {
                 return null;
             }
 
-            path = path.Trim('/');
+            path = trimOuterSlashes ? path.Trim('/') : path;
             string[] split = path.Split('/');
 
             for (int i = 0; i < split.Length; i++)
@@ -27,14 +29,16 @@ namespace Azure.Storage.Shared
             return string.Join("/", split);
         }
 
-        public static string UnescapePath(this string path)
+        /// <param name="path">Path to operate on.</param>
+        /// <param name="trimOuterSlashes">Whether to perform backwards-compatible trimming.</param>
+        public static string UnescapePath(this string path, bool trimOuterSlashes = true)
         {
             if (path == null)
             {
                 return null;
             }
 
-            path = path.Trim('/');
+            path = trimOuterSlashes ? path.Trim('/') : path;
             string[] split = path.Split('/');
 
             for (int i = 0; i < split.Length; i++)

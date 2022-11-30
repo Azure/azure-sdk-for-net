@@ -7,21 +7,19 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The SAP BW cube dataset. </summary>
-    public partial class SapBwCubeDataset : Dataset
+    public partial class SapBwCubeDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of SapBwCubeDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public SapBwCubeDataset(LinkedServiceReference linkedServiceName) : base(linkedServiceName)
+        public SapBwCubeDataset(FactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
         {
-            if (linkedServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(linkedServiceName));
-            }
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
 
             DatasetType = "SapBwCube";
         }
@@ -36,7 +34,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal SapBwCubeDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal SapBwCubeDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             DatasetType = datasetType ?? "SapBwCube";
         }

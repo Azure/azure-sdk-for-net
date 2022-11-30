@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         internal static ApiContactInformation DeserializeApiContactInformation(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<Uri> url = default;
+            Optional<Uri> uri = default;
             Optional<string> email = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        url = null;
+                        uri = null;
                         continue;
                     }
-                    url = new Uri(property.Value.GetString());
+                    uri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("email"))
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new ApiContactInformation(name.Value, url.Value, email.Value);
+            return new ApiContactInformation(name.Value, uri.Value, email.Value);
         }
     }
 }

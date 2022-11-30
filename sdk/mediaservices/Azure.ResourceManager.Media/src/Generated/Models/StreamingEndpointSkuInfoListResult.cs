@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of StreamingEndpointSkuInfoListResult. </summary>
         internal StreamingEndpointSkuInfoListResult()
         {
-            Value = new ChangeTrackingList<ArmStreamingEndpointSkuInfo>();
+            Value = new ChangeTrackingList<StreamingEndpointSkuInfo>();
         }
 
         /// <summary> Initializes a new instance of StreamingEndpointSkuInfoListResult. </summary>
         /// <param name="value"> The result of the List StreamingEndpoint skus. </param>
-        internal StreamingEndpointSkuInfoListResult(IReadOnlyList<ArmStreamingEndpointSkuInfo> value)
+        internal StreamingEndpointSkuInfoListResult(IReadOnlyList<StreamingEndpointSkuInfo> value)
         {
             Value = value;
         }
 
         /// <summary> The result of the List StreamingEndpoint skus. </summary>
-        public IReadOnlyList<ArmStreamingEndpointSkuInfo> Value { get; }
+        public IReadOnlyList<StreamingEndpointSkuInfo> Value { get; }
     }
 }

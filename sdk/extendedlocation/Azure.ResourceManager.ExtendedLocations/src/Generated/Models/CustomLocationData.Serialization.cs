@@ -84,18 +84,18 @@ namespace Azure.ResourceManager.ExtendedLocations
 
         internal static CustomLocationData DeserializeCustomLocationData(JsonElement element)
         {
-            Optional<SystemAssignedServiceIdentity> identity = default;
+            Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<CustomLocationPropertiesAuthentication> authentication = default;
-            Optional<IList<string>> clusterExtensionIds = default;
+            Optional<CustomLocationAuthentication> authentication = default;
+            Optional<IList<ResourceIdentifier>> clusterExtensionIds = default;
             Optional<string> displayName = default;
-            Optional<string> hostResourceId = default;
-            Optional<HostType> hostType = default;
+            Optional<ResourceIdentifier> hostResourceId = default;
+            Optional<CustomLocationHostType> hostType = default;
             Optional<string> @namespace = default;
             Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<SystemAssignedServiceIdentity>(property.Value.ToString());
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            authentication = CustomLocationPropertiesAuthentication.DeserializeCustomLocationPropertiesAuthentication(property0.Value);
+                            authentication = CustomLocationAuthentication.DeserializeCustomLocationAuthentication(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("clusterExtensionIds"))
@@ -181,10 +181,10 @@ namespace Azure.ResourceManager.ExtendedLocations
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<string> array = new List<string>();
+                            List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                array.Add(new ResourceIdentifier(item.GetString()));
                             }
                             clusterExtensionIds = array;
                             continue;
@@ -196,7 +196,12 @@ namespace Azure.ResourceManager.ExtendedLocations
                         }
                         if (property0.NameEquals("hostResourceId"))
                         {
-                            hostResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            hostResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("hostType"))
@@ -206,7 +211,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            hostType = new HostType(property0.Value.GetString());
+                            hostType = new CustomLocationHostType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("namespace"))

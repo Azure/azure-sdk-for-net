@@ -12,20 +12,6 @@ namespace Azure.AI.TextAnalytics
     [CodeGenModel("HealthcareAssertion")]
     public partial class HealthcareEntityAssertion
     {
-        /// MAke constructor internal
-        /// <summary> Initializes a new instance of HealthcareEntityAssertion. </summary>
-        internal HealthcareEntityAssertion()
-        {
-        }
-
-        /// Remove setters from properties
-        /// <summary> Describes any conditionality on the entity. </summary>
-        public EntityConditionality? Conditionality { get; }
-        /// <summary> Describes the entities certainty and polarity. </summary>
-        public EntityCertainty? Certainty { get; }
-        /// <summary> Describes if the entity is the subject of the text or if it describes someone else. </summary>
-        public EntityAssociation? Association { get; }
-
         /// <summary>
         /// Returns a string that contains the values for the
         /// <see cref="HealthcareEntityAssertion"/> object.
@@ -34,5 +20,18 @@ namespace Azure.AI.TextAnalytics
         {
             return $"{nameof(Association)}:'{Association}', {nameof(Certainty)}:'{Certainty}', {nameof(Conditionality)}:'{Conditionality}'";
         }
+
+        /// <summary> Initializes a new instance of HealthcareEntityAssertion. </summary>
+        internal HealthcareEntityAssertion()
+        {
+            // See https://github.com/Azure/azure-sdk-for-net/issues/28323 for why this constructor and the following properties were redefined.
+        }
+
+        /// <summary> Describes any conditionality on the entity. </summary>
+        public EntityConditionality? Conditionality { get; }
+        /// <summary> Describes the entities certainty and polarity. </summary>
+        public EntityCertainty? Certainty { get; }
+        /// <summary> Describes if the entity is the subject of the text or if it describes someone else. </summary>
+        public EntityAssociation? Association { get; }
     }
 }

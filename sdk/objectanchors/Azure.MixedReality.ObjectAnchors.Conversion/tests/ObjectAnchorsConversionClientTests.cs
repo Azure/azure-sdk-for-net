@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
+using Azure.MixedReality.Authentication;
 using Moq;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
@@ -53,6 +55,74 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
             };
 
         [Test]
+        public void Constructor()
+        {
+            // Arrange
+            Guid accountId = Guid.Parse("00000000-0000-0000-0000-000000000001");
+            string accountDomain = "my.domain.com";
+            AccessToken token = new AccessToken("dummykey", new DateTimeOffset(new DateTime(3000, 1, 1)));
+            AzureKeyCredential keyCredential = new AzureKeyCredential("MyAccessKey");
+            ObjectAnchorsConversionClientOptions options = new ObjectAnchorsConversionClientOptions();
+            TokenCredential credential = new StaticAccessTokenCredential(token);
+
+            // Act
+            ObjectAnchorsConversionClient client = new ObjectAnchorsConversionClient(accountId, accountDomain, keyCredential);
+
+            // Assert
+            Assert.AreEqual(accountId, client.AccountId);
+            Assert.AreEqual(accountDomain, client.AccountDomain);
+            Assert.NotNull(client.SupportedAssetFileTypes);
+
+            // Act and assert
+
+            // new(Guid accountId, string accountDomain, AzureKeyCredential keyCredential)
+            AssertArgumentException<ArgumentException>(nameof(accountId),
+                () => new ObjectAnchorsConversionClient(default, accountDomain, keyCredential));
+            AssertArgumentException<ArgumentNullException>(nameof(accountDomain),
+                () => new ObjectAnchorsConversionClient(accountId, null!, keyCredential));
+            AssertArgumentException<ArgumentException>(nameof(accountDomain),
+                () => new ObjectAnchorsConversionClient(accountId, string.Empty, keyCredential));
+            AssertArgumentException<ArgumentException>(nameof(accountDomain),
+                () => new ObjectAnchorsConversionClient(accountId, " ", keyCredential));
+            AssertArgumentException<ArgumentNullException>(nameof(keyCredential),
+                () => new ObjectAnchorsConversionClient(accountId, accountDomain, null!));
+
+            // new(Guid accountId, string accountDomain, AzureKeyCredential keyCredential, ObjectAnchorsConversionClientOptions options)
+            AssertArgumentException<ArgumentException>(nameof(accountId),
+                () => new ObjectAnchorsConversionClient(default, accountDomain, keyCredential, options));
+            AssertArgumentException<ArgumentNullException>(nameof(accountDomain),
+                () => new ObjectAnchorsConversionClient(accountId, null!, keyCredential, options));
+            AssertArgumentException<ArgumentException>(nameof(accountDomain),
+                () => new ObjectAnchorsConversionClient(accountId, string.Empty, keyCredential, options));
+            AssertArgumentException<ArgumentException>(nameof(accountDomain),
+                () => new ObjectAnchorsConversionClient(accountId, " ", keyCredential, options));
+            AssertArgumentException<ArgumentNullException>(nameof(keyCredential),
+                () => new ObjectAnchorsConversionClient(accountId, accountDomain, (AzureKeyCredential)null!, options));
+
+            // new(Guid accountId, string accountDomain, AccessToken token, ObjectAnchorsConversionClientOptions options = null)
+            AssertArgumentException<ArgumentException>(nameof(accountId),
+                () => new ObjectAnchorsConversionClient(default, accountDomain, token, options));
+            AssertArgumentException<ArgumentNullException>(nameof(accountDomain),
+                () => new ObjectAnchorsConversionClient(accountId, null!, token, options));
+            AssertArgumentException<ArgumentException>(nameof(accountDomain),
+                () => new ObjectAnchorsConversionClient(accountId, string.Empty, token, options));
+            AssertArgumentException<ArgumentException>(nameof(accountDomain),
+                () => new ObjectAnchorsConversionClient(accountId, " ", token, options));
+
+            // new(Guid accountId, string accountDomain, TokenCredential credential, ObjectAnchorsConversionClientOptions options = null)
+            AssertArgumentException<ArgumentException>(nameof(accountId),
+                () => new ObjectAnchorsConversionClient(default, accountDomain, credential, options));
+            AssertArgumentException<ArgumentNullException>(nameof(accountDomain),
+                () => new ObjectAnchorsConversionClient(accountId, null!, credential, options));
+            AssertArgumentException<ArgumentException>(nameof(accountDomain),
+                () => new ObjectAnchorsConversionClient(accountId, string.Empty, credential, options));
+            AssertArgumentException<ArgumentException>(nameof(accountDomain),
+                () => new ObjectAnchorsConversionClient(accountId, " ", credential, options));
+            AssertArgumentException<ArgumentNullException>(nameof(credential),
+                () => new ObjectAnchorsConversionClient(accountId, accountDomain, (TokenCredential)null!, options));
+        }
+
+        [Test]
         [TestCaseSource(nameof(BadClientArgumentsTestData))]
         public void BadClientArguments(Guid accountId, string accountDomain, AccessToken credential, bool shouldSucceed)
         {
@@ -77,7 +147,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
             try
             {
                 ObjectAnchorsConversionClient client = new ObjectAnchorsConversionClient(Guid.NewGuid(), "eastus2.azure.com", new AccessToken("dummykey", new DateTimeOffset(new DateTime(3000, 1, 1))));
-                await client.StartAssetConversionAsync(new AssetConversionOptions(new Uri(anyWorkingUriString), new AssetFileType(".exe"), new AssetConversionConfiguration(new System.Numerics.Vector3(0, 0, 1), 1)));
+                await client.StartAssetConversionAsync(new AssetConversionOptions(new Uri(anyWorkingUriString), new AssetFileType(".exe"), new AssetConversionConfiguration(new System.Numerics.Vector3(0, 0, 1), 1, false)));
             }
             catch (AssetFileTypeNotSupportedException)
             {
@@ -89,6 +159,13 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
             }
 
             Assert.True(exceptedWithUnsupportedFileType);
+        }
+
+        private static void AssertArgumentException<TException>(string argumentName, TestDelegate code)
+            where TException : ArgumentException
+        {
+            TException exception = Assert.Throws<TException>(code);
+            Assert.AreEqual(argumentName, exception.ParamName);
         }
     }
 }

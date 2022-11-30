@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -24,19 +25,19 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="codeVersion"> The Service Fabric runtime version of the cluster. </param>
-        /// <param name="supportExpiryUtc"> The date of expiry of support of the version. </param>
+        /// <param name="supportExpireOn"> The date of expiry of support of the version. </param>
         /// <param name="environment"> Indicates if this version is for Windows or Linux operating system. </param>
-        internal ClusterCodeVersionsResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string codeVersion, string supportExpiryUtc, ClusterEnvironment? environment) : base(id, name, resourceType, systemData)
+        internal ClusterCodeVersionsResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string codeVersion, DateTimeOffset? supportExpireOn, ClusterEnvironment? environment) : base(id, name, resourceType, systemData)
         {
             CodeVersion = codeVersion;
-            SupportExpiryUtc = supportExpiryUtc;
+            SupportExpireOn = supportExpireOn;
             Environment = environment;
         }
 
         /// <summary> The Service Fabric runtime version of the cluster. </summary>
         public string CodeVersion { get; }
         /// <summary> The date of expiry of support of the version. </summary>
-        public string SupportExpiryUtc { get; }
+        public DateTimeOffset? SupportExpireOn { get; }
         /// <summary> Indicates if this version is for Windows or Linux operating system. </summary>
         public ClusterEnvironment? Environment { get; }
     }

@@ -12,10 +12,10 @@ namespace Azure.ResourceManager.Media.Models
     /// Please note <see cref="ClipTime"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AbsoluteClipTime"/> and <see cref="UtcClipTime"/>.
     /// </summary>
-    public partial class ClipTime
+    public abstract partial class ClipTime
     {
         /// <summary> Initializes a new instance of ClipTime. </summary>
-        public ClipTime()
+        protected ClipTime()
         {
         }
 

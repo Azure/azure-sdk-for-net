@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-ef7e2cd89d67aa46ab7312978eaadac5-6af0d386e3d9f749-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "e8f2e09cde9aa9dee81ceffdeea88aed",
+        "traceparent": "00-edc7876f05b2785808cd90ee67fd4549-ea446af5cd411925-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0-alpha.20220622.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "bc4815427c1805c6c15bff9b8b7797cd",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,15 +17,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "747",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 23 Jun 2022 05:12:04 GMT",
+        "Date": "Wed, 22 Jun 2022 17:04:02 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "4c865dc0-c834-496c-8f71-657df7380f46",
-        "x-ms-ratelimit-remaining-subscription-reads": "11702",
-        "x-ms-request-id": "4c865dc0-c834-496c-8f71-657df7380f46",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T051205Z:4c865dc0-c834-496c-8f71-657df7380f46"
+        "x-ms-correlation-request-id": "19363c30-d37f-4f7a-80f8-868485ea1e42",
+        "x-ms-ratelimit-remaining-subscription-reads": "11900",
+        "x-ms-request-id": "19363c30-d37f-4f7a-80f8-868485ea1e42",
+        "x-ms-routing-request-id": "WESTUS2:20220622T170402Z:19363c30-d37f-4f7a-80f8-868485ea1e42"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
@@ -56,16 +56,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/rg752?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/rg7876?api-version=2021-04-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "22",
+        "Content-Length": "32",
         "Content-Type": "application/json",
-        "traceparent": "00-3c8d2cd752c9a6438f577ea76f9f336a-ea70ce95de668447-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "94223220a789d56ffc125f1153eee422",
+        "traceparent": "00-af8acc3977468dfc552ca8d7019d4605-76730b6b07ad5059-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0-alpha.20220622.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "5c6dfdd9a7da9f15a3727a78ae923fed",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -74,73 +74,1372 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "208",
+        "Content-Length": "220",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 23 Jun 2022 05:12:06 GMT",
+        "Date": "Wed, 22 Jun 2022 17:04:03 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "973eb28d-13d3-450c-b535-f72082b6c89f",
-        "x-ms-ratelimit-remaining-subscription-writes": "1171",
-        "x-ms-request-id": "973eb28d-13d3-450c-b535-f72082b6c89f",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T051206Z:973eb28d-13d3-450c-b535-f72082b6c89f"
+        "x-ms-correlation-request-id": "0d47ec53-0034-47eb-b4f6-937517aa211c",
+        "x-ms-ratelimit-remaining-subscription-writes": "1127",
+        "x-ms-request-id": "0d47ec53-0034-47eb-b4f6-937517aa211c",
+        "x-ms-routing-request-id": "WESTUS2:20220622T170403Z:0d47ec53-0034-47eb-b4f6-937517aa211c"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/rg752",
-        "name": "rg752",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/rg7876",
+        "name": "rg7876",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "westus2",
+        "tags": {},
         "properties": {
           "provisioningState": "Succeeded"
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/rg752/providers/Microsoft.Resources/tags/default?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Resources?api-version=2021-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-a680eb88e62c5d42ba1b65d3f575c4e6-ede3ba9476de2e45-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "6edb866a55a7c816af38f2cb4cd130ea",
+        "traceparent": "00-23608f4ec32247271b2f77e59f0c9eff-b26386a392b75c6a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0-alpha.20220622.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "5ea46c3e192eb99a1c07f8d5fc748a97",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "191",
+        "Content-Length": "17987",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 23 Jun 2022 05:12:06 GMT",
+        "Date": "Wed, 22 Jun 2022 17:04:03 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "5af83fad-31c8-409b-92be-6b6b21b00a54",
-        "x-ms-ratelimit-remaining-subscription-reads": "11701",
-        "x-ms-request-id": "5af83fad-31c8-409b-92be-6b6b21b00a54",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T051207Z:5af83fad-31c8-409b-92be-6b6b21b00a54"
+        "x-ms-correlation-request-id": "c5d5a693-7bf7-440f-98c7-45fea452e6eb",
+        "x-ms-ratelimit-remaining-subscription-reads": "11899",
+        "x-ms-request-id": "c5d5a693-7bf7-440f-98c7-45fea452e6eb",
+        "x-ms-routing-request-id": "WESTUS2:20220622T170403Z:c5d5a693-7bf7-440f-98c7-45fea452e6eb"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/rg752/providers/Microsoft.Resources/tags/default",
-        "name": "default",
-        "type": "Microsoft.Resources/tags",
-        "properties": {}
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Resources",
+        "namespace": "Microsoft.Resources",
+        "authorizations": [
+          {
+            "applicationId": "3b990c8b-9607-4c2a-8b04-1d41985facca"
+          },
+          {
+            "applicationId": "94946920-7f9c-4956-93c0-2fcf94608102"
+          }
+        ],
+        "resourceTypes": [
+          {
+            "resourceType": "tenants",
+            "locations": [],
+            "apiVersions": [
+              "2020-01-01",
+              "2019-09-01",
+              "2019-05-01",
+              "2019-04-01",
+              "2019-03-01",
+              "2018-11-01",
+              "2018-09-01",
+              "2018-08-01",
+              "2018-07-01",
+              "2018-05-01",
+              "2018-02-01",
+              "2018-01-01",
+              "2017-08-01",
+              "2017-06-01",
+              "2017-05-10",
+              "2017-05-01",
+              "2017-03-01",
+              "2016-09-01",
+              "2016-07-01",
+              "2016-06-01",
+              "2016-02-01",
+              "2015-11-01",
+              "2015-01-01",
+              "2014-04-01-preview"
+            ],
+            "apiProfiles": [
+              {
+                "profileVersion": "2018-06-01-profile",
+                "apiVersion": "2016-06-01"
+              },
+              {
+                "profileVersion": "2019-03-01-hybrid",
+                "apiVersion": "2016-06-01"
+              }
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "locations",
+            "locations": [],
+            "apiVersions": [
+              "2019-09-01",
+              "2019-05-01",
+              "2019-04-01",
+              "2019-03-01",
+              "2018-11-01",
+              "2018-09-01",
+              "2018-08-01",
+              "2018-07-01",
+              "2018-05-01",
+              "2018-02-01",
+              "2018-01-01",
+              "2017-08-01",
+              "2017-06-01",
+              "2017-05-10",
+              "2017-05-01",
+              "2017-03-01",
+              "2016-09-01",
+              "2016-07-01",
+              "2016-06-01",
+              "2016-02-01",
+              "2015-11-01",
+              "2015-01-01",
+              "2014-04-01-preview"
+            ],
+            "apiProfiles": [
+              {
+                "profileVersion": "2018-06-01-profile",
+                "apiVersion": "2016-06-01"
+              },
+              {
+                "profileVersion": "2019-03-01-hybrid",
+                "apiVersion": "2018-05-01"
+              }
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "operationresults",
+            "locations": [],
+            "apiVersions": [
+              "2019-09-01",
+              "2019-05-01",
+              "2019-04-01",
+              "2019-03-01",
+              "2018-11-01",
+              "2018-09-01",
+              "2018-08-01",
+              "2018-07-01",
+              "2018-05-01",
+              "2018-02-01",
+              "2018-01-01",
+              "2017-08-01",
+              "2017-06-01",
+              "2017-05-10",
+              "2017-05-01",
+              "2017-03-01",
+              "2016-09-01",
+              "2016-07-01",
+              "2016-06-01",
+              "2016-02-01",
+              "2015-11-01",
+              "2015-01-01",
+              "2014-04-01-preview"
+            ],
+            "apiProfiles": [
+              {
+                "profileVersion": "2018-06-01-profile",
+                "apiVersion": "2016-06-01"
+              }
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "notifyResourceJobs",
+            "locations": [],
+            "apiVersions": [
+              "2019-09-01",
+              "2019-05-01",
+              "2019-04-01",
+              "2019-03-01",
+              "2018-11-01",
+              "2018-09-01",
+              "2018-08-01",
+              "2018-07-01",
+              "2018-05-01",
+              "2018-02-01"
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "tags",
+            "locations": [],
+            "apiVersions": [
+              "2019-10-01",
+              "2019-05-01",
+              "2019-04-01",
+              "2019-03-01",
+              "2018-11-01"
+            ],
+            "capabilities": "SupportsExtension"
+          },
+          {
+            "resourceType": "tagnamespaces",
+            "locations": [],
+            "apiVersions": [
+              "2021-09-01-preview"
+            ],
+            "capabilities": "SupportsExtension"
+          },
+          {
+            "resourceType": "tagnamespaces/tagnames",
+            "locations": [],
+            "apiVersions": [
+              "2021-09-01-preview"
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "tagnamespaces/tags",
+            "locations": [],
+            "apiVersions": [
+              "2021-09-01-preview"
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "tagnamespaces/cancelOperation",
+            "locations": [],
+            "apiVersions": [
+              "2021-09-01-preview"
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "tagNamespaceOperationResults",
+            "locations": [],
+            "apiVersions": [
+              "2021-09-01-preview"
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "checkPolicyCompliance",
+            "locations": [],
+            "apiVersions": [
+              "2019-05-01",
+              "2019-04-01",
+              "2019-03-01",
+              "2018-11-01",
+              "2018-09-01",
+              "2018-08-01",
+              "2018-07-01",
+              "2018-05-01",
+              "2018-02-01",
+              "2018-01-01",
+              "2017-08-01",
+              "2017-06-01",
+              "2017-05-10",
+              "2017-05-01",
+              "2017-03-01",
+              "2016-09-01",
+              "2016-07-01",
+              "2016-06-01",
+              "2016-02-01",
+              "2015-11-01",
+              "2015-01-01",
+              "2014-04-01-preview"
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "providers",
+            "locations": [],
+            "apiVersions": [
+              "2019-05-01",
+              "2019-04-01",
+              "2019-03-01",
+              "2018-11-01",
+              "2018-09-01",
+              "2018-08-01",
+              "2018-07-01",
+              "2018-05-01",
+              "2018-02-01",
+              "2018-01-01",
+              "2017-08-01",
+              "2017-06-01",
+              "2017-05-10",
+              "2017-05-01",
+              "2017-03-01",
+              "2016-09-01",
+              "2016-07-01",
+              "2016-06-01",
+              "2016-02-01",
+              "2015-11-01",
+              "2015-01-01",
+              "2014-04-01-preview"
+            ],
+            "apiProfiles": [
+              {
+                "profileVersion": "2018-06-01-profile",
+                "apiVersion": "2016-06-01"
+              },
+              {
+                "profileVersion": "2019-03-01-hybrid",
+                "apiVersion": "2018-05-01"
+              }
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "checkresourcename",
+            "locations": [],
+            "apiVersions": [
+              "2019-05-01",
+              "2019-04-01",
+              "2019-03-01",
+              "2018-11-01",
+              "2018-09-01",
+              "2018-08-01",
+              "2018-07-01",
+              "2018-05-01",
+              "2018-02-01",
+              "2018-01-01",
+              "2017-08-01",
+              "2017-06-01",
+              "2017-05-10",
+              "2017-05-01",
+              "2017-03-01",
+              "2016-09-01",
+              "2016-07-01",
+              "2016-06-01",
+              "2016-02-01",
+              "2015-11-01",
+              "2015-01-01",
+              "2014-04-01-preview"
+            ],
+            "apiProfiles": [
+              {
+                "profileVersion": "2018-06-01-profile",
+                "apiVersion": "2016-06-01"
+              }
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "calculateTemplateHash",
+            "locations": [],
+            "apiVersions": [
+              "2019-09-01",
+              "2019-05-01",
+              "2019-04-01",
+              "2019-03-01",
+              "2018-11-01",
+              "2018-09-01",
+              "2018-08-01",
+              "2018-07-01",
+              "2018-05-01",
+              "2018-02-01",
+              "2018-01-01",
+              "2017-08-01",
+              "2017-06-01",
+              "2017-05-10",
+              "2017-05-01",
+              "2017-03-01",
+              "2016-09-01",
+              "2016-07-01",
+              "2016-06-01",
+              "2016-02-01",
+              "2015-11-01",
+              "2015-01-01",
+              "2014-04-01-preview"
+            ],
+            "apiProfiles": [
+              {
+                "profileVersion": "2018-06-01-profile",
+                "apiVersion": "2016-06-01"
+              }
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "resources",
+            "locations": [],
+            "apiVersions": [
+              "2019-09-01",
+              "2019-05-01",
+              "2019-04-01",
+              "2019-03-01",
+              "2018-11-01",
+              "2018-09-01",
+              "2018-08-01",
+              "2018-07-01",
+              "2018-05-01",
+              "2018-02-01",
+              "2018-01-01",
+              "2017-08-01",
+              "2017-06-01",
+              "2017-05-10",
+              "2017-05-01",
+              "2017-03-01",
+              "2016-09-01",
+              "2016-07-01",
+              "2016-06-01",
+              "2016-02-01",
+              "2015-11-01",
+              "2015-01-01",
+              "2014-04-01-preview"
+            ],
+            "apiProfiles": [
+              {
+                "profileVersion": "2018-06-01-profile",
+                "apiVersion": "2016-06-01"
+              },
+              {
+                "profileVersion": "2019-03-01-hybrid",
+                "apiVersion": "2018-05-01"
+              }
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "subscriptions",
+            "locations": [],
+            "apiVersions": [
+              "2019-10-01",
+              "2019-09-01",
+              "2019-05-01",
+              "2019-04-01",
+              "2019-03-01",
+              "2018-11-01",
+              "2018-09-01",
+              "2018-08-01",
+              "2018-07-01",
+              "2018-05-01",
+              "2018-02-01",
+              "2018-01-01",
+              "2017-08-01",
+              "2017-06-01",
+              "2017-05-10",
+              "2017-05-01",
+              "2017-03-01",
+              "2016-09-01",
+              "2016-07-01",
+              "2016-06-01",
+              "2016-02-01",
+              "2015-11-01",
+              "2015-01-01",
+              "2014-04-01-preview"
+            ],
+            "apiProfiles": [
+              {
+                "profileVersion": "2018-06-01-profile",
+                "apiVersion": "2016-06-01"
+              },
+              {
+                "profileVersion": "2019-03-01-hybrid",
+                "apiVersion": "2016-06-01"
+              }
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "subscriptions/resources",
+            "locations": [],
+            "apiVersions": [
+              "2019-09-01",
+              "2019-05-01",
+              "2019-04-01",
+              "2019-03-01",
+              "2018-11-01",
+              "2018-09-01",
+              "2018-08-01",
+              "2018-07-01",
+              "2018-05-01",
+              "2018-02-01",
+              "2018-01-01",
+              "2017-08-01",
+              "2017-06-01",
+              "2017-05-10",
+              "2017-05-01",
+              "2017-03-01",
+              "2016-09-01",
+              "2016-07-01",
+              "2016-06-01",
+              "2016-02-01",
+              "2015-11-01",
+              "2015-01-01",
+              "2014-04-01-preview"
+            ],
+            "apiProfiles": [
+              {
+                "profileVersion": "2018-06-01-profile",
+                "apiVersion": "2016-06-01"
+              },
+              {
+                "profileVersion": "2019-03-01-hybrid",
+                "apiVersion": "2018-05-01"
+              }
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "subscriptions/providers",
+            "locations": [],
+            "apiVersions": [
+              "2019-05-01",
+              "2019-04-01",
+              "2019-03-01",
+              "2018-11-01",
+              "2018-09-01",
+              "2018-08-01",
+              "2018-07-01",
+              "2018-05-01",
+              "2018-02-01",
+              "2018-01-01",
+              "2017-08-01",
+              "2017-06-01",
+              "2017-05-10",
+              "2017-05-01",
+              "2017-03-01",
+              "2016-09-01",
+              "2016-07-01",
+              "2016-06-01",
+              "2016-02-01",
+              "2015-11-01",
+              "2015-01-01",
+              "2014-04-01-preview"
+            ],
+            "apiProfiles": [
+              {
+                "profileVersion": "2018-06-01-profile",
+                "apiVersion": "2016-06-01"
+              },
+              {
+                "profileVersion": "2019-03-01-hybrid",
+                "apiVersion": "2018-05-01"
+              }
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "subscriptions/operationresults",
+            "locations": [],
+            "apiVersions": [
+              "2019-05-01",
+              "2019-04-01",
+              "2019-03-01",
+              "2018-11-01",
+              "2018-09-01",
+              "2018-08-01",
+              "2018-07-01",
+              "2018-05-01",
+              "2018-02-01",
+              "2018-01-01",
+              "2017-08-01",
+              "2017-06-01",
+              "2017-05-10",
+              "2017-05-01",
+              "2017-03-01",
+              "2016-09-01",
+              "2016-07-01",
+              "2016-06-01",
+              "2016-02-01",
+              "2015-11-01",
+              "2015-01-01",
+              "2014-04-01-preview"
+            ],
+            "apiProfiles": [
+              {
+                "profileVersion": "2018-06-01-profile",
+                "apiVersion": "2016-06-01"
+              },
+              {
+                "profileVersion": "2019-03-01-hybrid",
+                "apiVersion": "2018-05-01"
+              }
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "resourceGroups",
+            "locations": [
+              "Central US",
+              "East Asia",
+              "Southeast Asia",
+              "East US",
+              "East US 2",
+              "West US",
+              "West US 2",
+              "North Central US",
+              "South Central US",
+              "West Central US",
+              "North Europe",
+              "West Europe",
+              "Japan East",
+              "Japan West",
+              "Brazil South",
+              "Australia Southeast",
+              "Australia East",
+              "West India",
+              "South India",
+              "Central India",
+              "Canada Central",
+              "Canada East",
+              "UK South",
+              "UK West",
+              "Korea Central",
+              "Korea South",
+              "France Central",
+              "South Africa North",
+              "UAE North",
+              "Australia Central",
+              "Switzerland North",
+              "Germany West Central",
+              "Norway East",
+              "Jio India West",
+              "West US 3",
+              "Sweden Central"
+            ],
+            "apiVersions": [
+              "2019-05-01",
+              "2019-04-01",
+              "2019-03-01",
+              "2018-11-01",
+              "2018-09-01",
+              "2018-08-01",
+              "2018-07-01",
+              "2018-05-01",
+              "2018-02-01",
+              "2018-01-01",
+              "2017-08-01",
+              "2017-06-01",
+              "2017-05-10",
+              "2017-05-01",
+              "2017-03-01",
+              "2016-09-01",
+              "2016-07-01",
+              "2016-06-01",
+              "2016-02-01",
+              "2015-11-01",
+              "2015-01-01",
+              "2014-04-01-preview"
+            ],
+            "apiProfiles": [
+              {
+                "profileVersion": "2018-06-01-profile",
+                "apiVersion": "2016-06-01"
+              },
+              {
+                "profileVersion": "2019-03-01-hybrid",
+                "apiVersion": "2018-05-01"
+              }
+            ],
+            "capabilities": "SupportsLocation"
+          },
+          {
+            "resourceType": "subscriptions/resourceGroups",
+            "locations": [
+              "Central US",
+              "East Asia",
+              "Southeast Asia",
+              "East US",
+              "East US 2",
+              "West US",
+              "West US 2",
+              "North Central US",
+              "South Central US",
+              "West Central US",
+              "North Europe",
+              "West Europe",
+              "Japan East",
+              "Japan West",
+              "Brazil South",
+              "Australia Southeast",
+              "Australia East",
+              "West India",
+              "South India",
+              "Central India",
+              "Canada Central",
+              "Canada East",
+              "UK South",
+              "UK West",
+              "Korea Central",
+              "Korea South",
+              "France Central",
+              "South Africa North",
+              "UAE North",
+              "Australia Central",
+              "Switzerland North",
+              "Germany West Central",
+              "Norway East",
+              "Jio India West",
+              "West US 3",
+              "Sweden Central"
+            ],
+            "apiVersions": [
+              "2019-05-01",
+              "2019-04-01",
+              "2019-03-01",
+              "2018-11-01",
+              "2018-09-01",
+              "2018-08-01",
+              "2018-07-01",
+              "2018-05-01",
+              "2018-02-01",
+              "2018-01-01",
+              "2017-08-01",
+              "2017-06-01",
+              "2017-05-10",
+              "2017-05-01",
+              "2017-03-01",
+              "2016-09-01",
+              "2016-07-01",
+              "2016-06-01",
+              "2016-02-01",
+              "2015-11-01",
+              "2015-01-01",
+              "2014-04-01-preview"
+            ],
+            "apiProfiles": [
+              {
+                "profileVersion": "2018-06-01-profile",
+                "apiVersion": "2016-06-01"
+              },
+              {
+                "profileVersion": "2019-03-01-hybrid",
+                "apiVersion": "2018-05-01"
+              }
+            ],
+            "capabilities": "SupportsTags, SupportsLocation"
+          },
+          {
+            "resourceType": "subscriptions/resourcegroups/resources",
+            "locations": [],
+            "apiVersions": [
+              "2019-05-01",
+              "2019-04-01",
+              "2019-03-01",
+              "2018-11-01",
+              "2018-09-01",
+              "2018-08-01",
+              "2018-07-01",
+              "2018-05-01",
+              "2018-02-01",
+              "2018-01-01",
+              "2017-08-01",
+              "2017-06-01",
+              "2017-05-10",
+              "2017-05-01",
+              "2017-03-01",
+              "2016-09-01",
+              "2016-07-01",
+              "2016-06-01",
+              "2016-02-01",
+              "2015-11-01",
+              "2015-01-01",
+              "2014-04-01-preview"
+            ],
+            "apiProfiles": [
+              {
+                "profileVersion": "2018-06-01-profile",
+                "apiVersion": "2016-06-01"
+              },
+              {
+                "profileVersion": "2019-03-01-hybrid",
+                "apiVersion": "2018-05-01"
+              }
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "subscriptions/locations",
+            "locations": [],
+            "apiVersions": [
+              "2019-05-01",
+              "2019-04-01",
+              "2019-03-01",
+              "2018-11-01",
+              "2018-09-01",
+              "2018-08-01",
+              "2018-07-01",
+              "2018-05-01",
+              "2018-02-01",
+              "2018-01-01",
+              "2017-08-01",
+              "2017-06-01",
+              "2017-05-10",
+              "2017-05-01",
+              "2017-03-01",
+              "2016-09-01",
+              "2016-07-01",
+              "2016-06-01",
+              "2016-02-01",
+              "2015-11-01",
+              "2015-01-01",
+              "2014-04-01-preview"
+            ],
+            "apiProfiles": [
+              {
+                "profileVersion": "2018-06-01-profile",
+                "apiVersion": "2016-06-01"
+              },
+              {
+                "profileVersion": "2019-03-01-hybrid",
+                "apiVersion": "2016-06-01"
+              }
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "subscriptions/tagnames",
+            "locations": [],
+            "apiVersions": [
+              "2019-05-01",
+              "2019-04-01",
+              "2019-03-01",
+              "2018-11-01",
+              "2018-09-01",
+              "2018-08-01",
+              "2018-07-01",
+              "2018-05-01",
+              "2018-02-01",
+              "2018-01-01",
+              "2017-08-01",
+              "2017-06-01",
+              "2017-05-10",
+              "2017-05-01",
+              "2017-03-01",
+              "2016-09-01",
+              "2016-07-01",
+              "2016-06-01",
+              "2016-02-01",
+              "2015-11-01",
+              "2015-01-01",
+              "2014-04-01-preview"
+            ],
+            "apiProfiles": [
+              {
+                "profileVersion": "2018-06-01-profile",
+                "apiVersion": "2016-06-01"
+              },
+              {
+                "profileVersion": "2019-03-01-hybrid",
+                "apiVersion": "2018-05-01"
+              }
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "subscriptions/tagNames/tagValues",
+            "locations": [],
+            "apiVersions": [
+              "2019-05-01",
+              "2019-04-01",
+              "2019-03-01",
+              "2018-11-01",
+              "2018-09-01",
+              "2018-08-01",
+              "2018-07-01",
+              "2018-05-01",
+              "2018-02-01",
+              "2018-01-01",
+              "2017-08-01",
+              "2017-06-01",
+              "2017-05-10",
+              "2017-05-01",
+              "2017-03-01",
+              "2016-09-01",
+              "2016-07-01",
+              "2016-06-01",
+              "2016-02-01",
+              "2015-11-01",
+              "2015-01-01",
+              "2014-04-01-preview"
+            ],
+            "apiProfiles": [
+              {
+                "profileVersion": "2018-06-01-profile",
+                "apiVersion": "2016-06-01"
+              },
+              {
+                "profileVersion": "2019-03-01-hybrid",
+                "apiVersion": "2018-05-01"
+              }
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "deployments",
+            "locations": [],
+            "apiVersions": [
+              "2021-04-01",
+              "2021-01-01",
+              "2020-10-01",
+              "2020-06-01",
+              "2019-09-01",
+              "2019-08-01",
+              "2019-05-01",
+              "2019-04-01",
+              "2019-03-01",
+              "2018-11-01",
+              "2018-09-01",
+              "2018-08-01",
+              "2018-07-01",
+              "2018-05-01",
+              "2018-02-01",
+              "2018-01-01",
+              "2017-08-01",
+              "2017-06-01",
+              "2017-05-10",
+              "2017-05-01",
+              "2017-03-01",
+              "2016-09-01",
+              "2016-07-01",
+              "2016-06-01",
+              "2016-02-01",
+              "2015-11-01",
+              "2015-01-01",
+              "2014-04-01-preview"
+            ],
+            "apiProfiles": [
+              {
+                "profileVersion": "2018-06-01-profile",
+                "apiVersion": "2016-06-01"
+              },
+              {
+                "profileVersion": "2019-03-01-hybrid",
+                "apiVersion": "2018-05-01"
+              }
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "deployments/operations",
+            "locations": [],
+            "apiVersions": [
+              "2021-04-01",
+              "2021-01-01",
+              "2020-10-01",
+              "2020-06-01",
+              "2019-09-01",
+              "2019-05-01",
+              "2019-04-01",
+              "2019-03-01",
+              "2018-11-01",
+              "2018-09-01",
+              "2018-08-01",
+              "2018-07-01",
+              "2018-05-01",
+              "2018-02-01",
+              "2018-01-01",
+              "2017-08-01",
+              "2017-06-01",
+              "2017-05-10",
+              "2017-05-01",
+              "2017-03-01",
+              "2016-09-01",
+              "2016-07-01",
+              "2016-06-01",
+              "2016-02-01",
+              "2015-11-01",
+              "2015-01-01",
+              "2014-04-01-preview"
+            ],
+            "apiProfiles": [
+              {
+                "profileVersion": "2018-06-01-profile",
+                "apiVersion": "2016-06-01"
+              },
+              {
+                "profileVersion": "2019-03-01-hybrid",
+                "apiVersion": "2018-05-01"
+              }
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "links",
+            "locations": [],
+            "apiVersions": [
+              "2019-05-01",
+              "2019-04-01",
+              "2019-03-01",
+              "2018-11-01",
+              "2018-09-01",
+              "2018-08-01",
+              "2018-07-01",
+              "2018-05-01",
+              "2018-02-01",
+              "2018-01-01",
+              "2017-08-01",
+              "2017-06-01",
+              "2017-05-10",
+              "2017-05-01",
+              "2017-03-01",
+              "2016-09-01",
+              "2016-07-01",
+              "2016-06-01",
+              "2016-02-01",
+              "2015-11-01",
+              "2015-01-01",
+              "2014-04-01-preview"
+            ],
+            "apiProfiles": [
+              {
+                "profileVersion": "2018-06-01-profile",
+                "apiVersion": "2016-06-01"
+              },
+              {
+                "profileVersion": "2019-03-01-hybrid",
+                "apiVersion": "2018-05-01"
+              }
+            ],
+            "capabilities": "SupportsExtension"
+          },
+          {
+            "resourceType": "operations",
+            "locations": [],
+            "apiVersions": [
+              "2015-01-01"
+            ],
+            "apiProfiles": [
+              {
+                "profileVersion": "2018-06-01-profile",
+                "apiVersion": "2015-01-01"
+              }
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "bulkDelete",
+            "locations": [],
+            "apiVersions": [
+              "2019-05-01",
+              "2019-04-01",
+              "2019-03-01",
+              "2018-11-01",
+              "2018-09-01",
+              "2018-08-01",
+              "2018-07-01",
+              "2018-05-01",
+              "2018-02-01",
+              "2018-01-01",
+              "2017-08-01",
+              "2017-06-01",
+              "2017-05-10",
+              "2017-05-01",
+              "2017-03-01",
+              "2016-09-01",
+              "2016-07-01",
+              "2016-06-01",
+              "2016-02-01",
+              "2015-11-01",
+              "2015-01-01",
+              "2014-04-01-preview"
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "deploymentScripts",
+            "locations": [
+              "East Asia",
+              "Southeast Asia",
+              "Australia East",
+              "Australia Southeast",
+              "Brazil South",
+              "Canada Central",
+              "Canada East",
+              "Switzerland North",
+              "Germany West Central",
+              "East US 2",
+              "East US",
+              "Central US",
+              "North Central US",
+              "France Central",
+              "UK South",
+              "UK West",
+              "Central India",
+              "South India",
+              "Jio India West",
+              "Japan East",
+              "Japan West",
+              "Korea Central",
+              "North Europe",
+              "Norway East",
+              "UAE North",
+              "West Central US",
+              "West Europe",
+              "West US 2",
+              "West US",
+              "South Central US",
+              "West US 3",
+              "South Africa North"
+            ],
+            "apiVersions": [
+              "2020-10-01",
+              "2019-10-01-preview"
+            ],
+            "capabilities": "SupportsTags, SupportsLocation"
+          },
+          {
+            "resourceType": "deploymentScripts/logs",
+            "locations": [
+              "East Asia",
+              "Southeast Asia",
+              "Australia East",
+              "Australia Southeast",
+              "Brazil South",
+              "Canada Central",
+              "Canada East",
+              "Switzerland North",
+              "Germany West Central",
+              "East US 2",
+              "East US",
+              "Central US",
+              "North Central US",
+              "France Central",
+              "UK South",
+              "UK West",
+              "Central India",
+              "South India",
+              "Jio India West",
+              "Japan East",
+              "Japan West",
+              "Korea Central",
+              "North Europe",
+              "Norway East",
+              "UAE North",
+              "West Central US",
+              "West Europe",
+              "West US 2",
+              "West US",
+              "South Central US",
+              "West US 3",
+              "South Africa North"
+            ],
+            "apiVersions": [
+              "2020-10-01",
+              "2019-10-01-preview"
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "locations/deploymentScriptOperationResults",
+            "locations": [
+              "East Asia",
+              "Southeast Asia",
+              "Australia East",
+              "Australia Southeast",
+              "Brazil South",
+              "Canada Central",
+              "Canada East",
+              "Switzerland North",
+              "Germany West Central",
+              "East US 2",
+              "East US",
+              "Central US",
+              "North Central US",
+              "France Central",
+              "UK South",
+              "UK West",
+              "Central India",
+              "South India",
+              "Jio India West",
+              "Japan East",
+              "Japan West",
+              "Korea Central",
+              "North Europe",
+              "Norway East",
+              "UAE North",
+              "West Central US",
+              "West Europe",
+              "West US 2",
+              "West US",
+              "South Central US",
+              "West US 3",
+              "South Africa North"
+            ],
+            "apiVersions": [
+              "2020-10-01",
+              "2019-10-01-preview"
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "templateSpecs",
+            "locations": [
+              "East Asia",
+              "Southeast Asia",
+              "Australia East",
+              "Australia Central",
+              "Australia Central 2",
+              "Australia Southeast",
+              "Brazil South",
+              "Canada Central",
+              "Canada East",
+              "Switzerland North",
+              "Germany West Central",
+              "East US 2",
+              "East US",
+              "Central US",
+              "North Central US",
+              "France Central",
+              "UK South",
+              "UK West",
+              "Central India",
+              "West India",
+              "Jio India West",
+              "South India",
+              "Japan East",
+              "Japan West",
+              "Korea Central",
+              "Korea South",
+              "North Europe",
+              "Norway East",
+              "Sweden Central",
+              "UAE North",
+              "West Central US",
+              "West Europe",
+              "West US 2",
+              "West US",
+              "West US 3",
+              "South Central US",
+              "South Africa North"
+            ],
+            "apiVersions": [
+              "2022-02-01",
+              "2021-05-01",
+              "2021-03-01-preview",
+              "2019-06-01-preview"
+            ],
+            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
+          },
+          {
+            "resourceType": "templateSpecs/versions",
+            "locations": [
+              "East Asia",
+              "Southeast Asia",
+              "Australia East",
+              "Australia Central",
+              "Australia Central 2",
+              "Australia Southeast",
+              "Brazil South",
+              "Canada Central",
+              "Canada East",
+              "Switzerland North",
+              "Germany West Central",
+              "East US 2",
+              "East US",
+              "Central US",
+              "North Central US",
+              "France Central",
+              "UK South",
+              "UK West",
+              "Central India",
+              "West India",
+              "Jio India West",
+              "South India",
+              "Japan East",
+              "Japan West",
+              "Korea Central",
+              "Korea South",
+              "North Europe",
+              "Norway East",
+              "Sweden Central",
+              "UAE North",
+              "West Central US",
+              "West Europe",
+              "West US 2",
+              "West US",
+              "West US 3",
+              "South Central US",
+              "South Africa North"
+            ],
+            "apiVersions": [
+              "2022-02-01",
+              "2021-05-01",
+              "2021-03-01-preview",
+              "2019-06-01-preview"
+            ],
+            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
+          },
+          {
+            "resourceType": "builtInTemplateSpecs",
+            "locations": [],
+            "apiVersions": [
+              "2022-02-01"
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "builtInTemplateSpecs/versions",
+            "locations": [],
+            "apiVersions": [
+              "2022-02-01"
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "changes",
+            "locations": [],
+            "apiVersions": [
+              "2022-05-01",
+              "2022-03-01-preview"
+            ],
+            "capabilities": "SupportsExtension"
+          }
+        ],
+        "registrationState": "Registered",
+        "registrationPolicy": "RegistrationFree"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/rg752/providers/Microsoft.Resources/tags/default?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/rg7876/providers/Microsoft.Resources/tags/default?api-version=2021-04-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-23608f4ec32247271b2f77e59f0c9eff-992fc79c1dde740a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0-alpha.20220622.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "d040cab0b8946e67331d74094b8c12c8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "201",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 22 Jun 2022 17:04:03 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "21450b22-d07f-4b6e-9d83-85fb9123cbb6",
+        "x-ms-ratelimit-remaining-subscription-reads": "11898",
+        "x-ms-request-id": "21450b22-d07f-4b6e-9d83-85fb9123cbb6",
+        "x-ms-routing-request-id": "WESTUS2:20220622T170403Z:21450b22-d07f-4b6e-9d83-85fb9123cbb6"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/rg7876/providers/Microsoft.Resources/tags/default",
+        "name": "default",
+        "type": "Microsoft.Resources/tags",
+        "properties": {
+          "tags": {}
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/rg7876/providers/Microsoft.Resources/tags/default?api-version=2021-04-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "41",
         "Content-Type": "application/json",
-        "traceparent": "00-a680eb88e62c5d42ba1b65d3f575c4e6-a5439114d3b5774d-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "4108566e5e89391282139dcc7e98952d",
+        "traceparent": "00-23608f4ec32247271b2f77e59f0c9eff-595b8fb4155610a4-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0-alpha.20220622.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "0a4cadbf6ef3bfc063b43fd3ae3fa22f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -153,20 +1452,20 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "215",
+        "Content-Length": "216",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 23 Jun 2022 05:12:07 GMT",
+        "Date": "Wed, 22 Jun 2022 17:04:03 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "d779987d-cab7-4d17-b07c-8e66fa582a2f",
-        "x-ms-ratelimit-remaining-subscription-writes": "1170",
-        "x-ms-request-id": "d779987d-cab7-4d17-b07c-8e66fa582a2f",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T051207Z:d779987d-cab7-4d17-b07c-8e66fa582a2f"
+        "x-ms-correlation-request-id": "92673e95-2adb-44b4-b2db-d6897e46125d",
+        "x-ms-ratelimit-remaining-subscription-writes": "1126",
+        "x-ms-request-id": "92673e95-2adb-44b4-b2db-d6897e46125d",
+        "x-ms-routing-request-id": "WESTUS2:20220622T170403Z:92673e95-2adb-44b4-b2db-d6897e46125d"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/rg752/providers/Microsoft.Resources/tags/default",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/rg7876/providers/Microsoft.Resources/tags/default",
         "name": "default",
         "type": "Microsoft.Resources/tags",
         "properties": {
@@ -177,35 +1476,35 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/rg752?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/rg7876?api-version=2021-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-a680eb88e62c5d42ba1b65d3f575c4e6-4920c2c8bca00049-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "2283da0a7faeca401b59e451b4a4892b",
+        "traceparent": "00-23608f4ec32247271b2f77e59f0c9eff-59d67863f184085a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0-alpha.20220622.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "e3c8e3e86f51865905362b10a5906e8f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "233",
+        "Content-Length": "235",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 23 Jun 2022 05:12:07 GMT",
+        "Date": "Wed, 22 Jun 2022 17:04:03 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "2f2251e2-4935-466e-90ae-fe63ad0917e2",
-        "x-ms-ratelimit-remaining-subscription-reads": "11700",
-        "x-ms-request-id": "2f2251e2-4935-466e-90ae-fe63ad0917e2",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T051208Z:2f2251e2-4935-466e-90ae-fe63ad0917e2"
+        "x-ms-correlation-request-id": "0cab4d40-30b8-4287-8591-d74bbc2debba",
+        "x-ms-ratelimit-remaining-subscription-reads": "11897",
+        "x-ms-request-id": "0cab4d40-30b8-4287-8591-d74bbc2debba",
+        "x-ms-routing-request-id": "WESTUS2:20220622T170403Z:0cab4d40-30b8-4287-8591-d74bbc2debba"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/rg752",
-        "name": "rg752",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/rg7876",
+        "name": "rg7876",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "westus2",
         "tags": {
@@ -217,34 +1516,34 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/rg752/providers/Microsoft.Resources/tags/default?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/rg7876/providers/Microsoft.Resources/tags/default?api-version=2021-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-7f7a8cac2d704146a4bb775eddfab8d4-b5cf92759847f84c-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "fca275e1a3e60b9973a2eb94b84a4917",
+        "traceparent": "00-e36b170e2ec74c0e17e2581cb0aab05c-4ddf803d176b3681-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0-alpha.20220622.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "4f1630f47f2741a40a816de07894bff3",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "215",
+        "Content-Length": "216",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 23 Jun 2022 05:12:07 GMT",
+        "Date": "Wed, 22 Jun 2022 17:04:03 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "bd097a96-0e54-4f3c-b22f-8f56c68ea02c",
-        "x-ms-ratelimit-remaining-subscription-reads": "11699",
-        "x-ms-request-id": "bd097a96-0e54-4f3c-b22f-8f56c68ea02c",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T051208Z:bd097a96-0e54-4f3c-b22f-8f56c68ea02c"
+        "x-ms-correlation-request-id": "12cd653a-7ce8-4a53-be4d-df5b94f05edf",
+        "x-ms-ratelimit-remaining-subscription-reads": "11896",
+        "x-ms-request-id": "12cd653a-7ce8-4a53-be4d-df5b94f05edf",
+        "x-ms-routing-request-id": "WESTUS2:20220622T170403Z:12cd653a-7ce8-4a53-be4d-df5b94f05edf"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/rg752/providers/Microsoft.Resources/tags/default",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/rg7876/providers/Microsoft.Resources/tags/default",
         "name": "default",
         "type": "Microsoft.Resources/tags",
         "properties": {
@@ -255,16 +1554,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/rg752/providers/Microsoft.Resources/tags/default?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/rg7876/providers/Microsoft.Resources/tags/default?api-version=2021-04-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "57",
         "Content-Type": "application/json",
-        "traceparent": "00-7f7a8cac2d704146a4bb775eddfab8d4-6df28f170e9e8b41-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "71c0c5a20e4dee3b163d252f7ac184de",
+        "traceparent": "00-e36b170e2ec74c0e17e2581cb0aab05c-85f515c341433db6-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0-alpha.20220622.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "6721457a2fc34f7754c605bc43af1ad2",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -278,20 +1577,20 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "231",
+        "Content-Length": "232",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 23 Jun 2022 05:12:08 GMT",
+        "Date": "Wed, 22 Jun 2022 17:04:03 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "ba629de7-987e-4763-8b88-9f5430f2298b",
-        "x-ms-ratelimit-remaining-subscription-writes": "1169",
-        "x-ms-request-id": "ba629de7-987e-4763-8b88-9f5430f2298b",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T051208Z:ba629de7-987e-4763-8b88-9f5430f2298b"
+        "x-ms-correlation-request-id": "4355568a-c930-4ca7-a93c-918ff3e66a15",
+        "x-ms-ratelimit-remaining-subscription-writes": "1125",
+        "x-ms-request-id": "4355568a-c930-4ca7-a93c-918ff3e66a15",
+        "x-ms-routing-request-id": "WESTUS2:20220622T170403Z:4355568a-c930-4ca7-a93c-918ff3e66a15"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/rg752/providers/Microsoft.Resources/tags/default",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/rg7876/providers/Microsoft.Resources/tags/default",
         "name": "default",
         "type": "Microsoft.Resources/tags",
         "properties": {
@@ -303,35 +1602,35 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/rg752?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/rg7876?api-version=2021-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-7f7a8cac2d704146a4bb775eddfab8d4-362b9ef89fdb7d4c-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "09ea718a98f567464077ae0c94ac12d1",
+        "traceparent": "00-e36b170e2ec74c0e17e2581cb0aab05c-95cf54d46dac5f33-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0-alpha.20220622.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "7edeaf46532968073f87d9d002780e71",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "249",
+        "Content-Length": "251",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 23 Jun 2022 05:12:08 GMT",
+        "Date": "Wed, 22 Jun 2022 17:04:03 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "2a6b0594-500d-4ad0-80d4-88e0c4cca7f0",
-        "x-ms-ratelimit-remaining-subscription-reads": "11698",
-        "x-ms-request-id": "2a6b0594-500d-4ad0-80d4-88e0c4cca7f0",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T051208Z:2a6b0594-500d-4ad0-80d4-88e0c4cca7f0"
+        "x-ms-correlation-request-id": "ef3c9f68-1db9-4a32-a31e-1fbb1dbc2ce1",
+        "x-ms-ratelimit-remaining-subscription-reads": "11895",
+        "x-ms-request-id": "ef3c9f68-1db9-4a32-a31e-1fbb1dbc2ce1",
+        "x-ms-routing-request-id": "WESTUS2:20220622T170403Z:ef3c9f68-1db9-4a32-a31e-1fbb1dbc2ce1"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/rg752",
-        "name": "rg752",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/rg7876",
+        "name": "rg7876",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "westus2",
         "tags": {
@@ -344,34 +1643,34 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/rg752/providers/Microsoft.Resources/tags/default?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/rg7876/providers/Microsoft.Resources/tags/default?api-version=2021-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-d64a0326b834f34d9e1f5ae99a5f3441-73f3c5b3fcffef43-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "efaecd0f17e3d3de39b4e6a97d6a91b2",
+        "traceparent": "00-1b97e79cae6abfe5d8bb8bd6a4103291-c1b4640bf8c8af1d-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0-alpha.20220622.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "5f963777066fc5ccb8c6fa617ae7fe5a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "231",
+        "Content-Length": "232",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 23 Jun 2022 05:12:08 GMT",
+        "Date": "Wed, 22 Jun 2022 17:04:03 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "9d7886bd-896f-46f4-919f-6bcb3619a0e3",
-        "x-ms-ratelimit-remaining-subscription-reads": "11697",
-        "x-ms-request-id": "9d7886bd-896f-46f4-919f-6bcb3619a0e3",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T051208Z:9d7886bd-896f-46f4-919f-6bcb3619a0e3"
+        "x-ms-correlation-request-id": "f760b024-a051-4c1d-a388-0f672de5723f",
+        "x-ms-ratelimit-remaining-subscription-reads": "11894",
+        "x-ms-request-id": "f760b024-a051-4c1d-a388-0f672de5723f",
+        "x-ms-routing-request-id": "WESTUS2:20220622T170403Z:f760b024-a051-4c1d-a388-0f672de5723f"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/rg752/providers/Microsoft.Resources/tags/default",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/rg7876/providers/Microsoft.Resources/tags/default",
         "name": "default",
         "type": "Microsoft.Resources/tags",
         "properties": {
@@ -383,16 +1682,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/rg752/providers/Microsoft.Resources/tags/default?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/rg7876/providers/Microsoft.Resources/tags/default?api-version=2021-04-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "41",
         "Content-Type": "application/json",
-        "traceparent": "00-d64a0326b834f34d9e1f5ae99a5f3441-002a7a10e6044948-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "46090c1d40600a217e5930d55f2f596a",
+        "traceparent": "00-1b97e79cae6abfe5d8bb8bd6a4103291-8ef030aec6caf7e3-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0-alpha.20220622.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "c89a9a6640b527ca3db8283c55a74ddc",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -405,20 +1704,20 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "215",
+        "Content-Length": "216",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 23 Jun 2022 05:12:08 GMT",
+        "Date": "Wed, 22 Jun 2022 17:04:03 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "b0dac304-6067-4f1f-88ee-76e0dd115421",
-        "x-ms-ratelimit-remaining-subscription-writes": "1168",
-        "x-ms-request-id": "b0dac304-6067-4f1f-88ee-76e0dd115421",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T051209Z:b0dac304-6067-4f1f-88ee-76e0dd115421"
+        "x-ms-correlation-request-id": "b51f65df-2e4f-4de8-976c-18b913500b18",
+        "x-ms-ratelimit-remaining-subscription-writes": "1124",
+        "x-ms-request-id": "b51f65df-2e4f-4de8-976c-18b913500b18",
+        "x-ms-routing-request-id": "WESTUS2:20220622T170404Z:b51f65df-2e4f-4de8-976c-18b913500b18"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/rg752/providers/Microsoft.Resources/tags/default",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/rg7876/providers/Microsoft.Resources/tags/default",
         "name": "default",
         "type": "Microsoft.Resources/tags",
         "properties": {
@@ -429,35 +1728,35 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/rg752?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/rg7876?api-version=2021-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-d64a0326b834f34d9e1f5ae99a5f3441-008c5bad0a8a174e-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "ac1f542a951273fa9316cf41b19dead6",
+        "traceparent": "00-1b97e79cae6abfe5d8bb8bd6a4103291-f8b0cc3ecd4fc330-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0-alpha.20220622.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "0b4494b7ba193f63e318c66258a6ee57",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "233",
+        "Content-Length": "235",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 23 Jun 2022 05:12:08 GMT",
+        "Date": "Wed, 22 Jun 2022 17:04:03 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "f7f65b45-0712-4457-9faa-0e345f85b664",
-        "x-ms-ratelimit-remaining-subscription-reads": "11696",
-        "x-ms-request-id": "f7f65b45-0712-4457-9faa-0e345f85b664",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T051209Z:f7f65b45-0712-4457-9faa-0e345f85b664"
+        "x-ms-correlation-request-id": "e64a4453-50ec-4ac0-a702-e8a4ce38279a",
+        "x-ms-ratelimit-remaining-subscription-reads": "11893",
+        "x-ms-request-id": "e64a4453-50ec-4ac0-a702-e8a4ce38279a",
+        "x-ms-routing-request-id": "WESTUS2:20220622T170404Z:e64a4453-50ec-4ac0-a702-e8a4ce38279a"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/rg752",
-        "name": "rg752",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/rg7876",
+        "name": "rg7876",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "westus2",
         "tags": {
@@ -470,8 +1769,8 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1582707736",
-    "RESOURCE_MANAGER_URL": "https://management.azure.com/",
+    "RandomSeed": "2079588961",
+    "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
 }

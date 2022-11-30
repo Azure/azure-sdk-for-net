@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.FluidRelay.Models
     {
         /// <summary> Initializes a new instance of RegenerateKeyContent. </summary>
         /// <param name="keyName"> The key to regenerate. </param>
-        public RegenerateKeyContent(KeyName keyName)
+        public RegenerateKeyContent(FluidRelayKeyName keyName)
         {
             KeyName = keyName;
         }
 
         /// <summary> The key to regenerate. </summary>
-        public KeyName KeyName { get; }
+        public FluidRelayKeyName KeyName { get; }
     }
 }

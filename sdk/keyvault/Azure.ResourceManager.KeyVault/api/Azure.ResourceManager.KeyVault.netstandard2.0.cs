@@ -132,16 +132,28 @@ namespace Azure.ResourceManager.KeyVault
         protected KeyVaultPrivateEndpointConnectionResource() { }
         public virtual Azure.ResourceManager.KeyVault.KeyVaultPrivateEndpointConnectionData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual Azure.Response<Azure.ResourceManager.KeyVault.KeyVaultPrivateEndpointConnectionResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.KeyVaultPrivateEndpointConnectionResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string privateEndpointConnectionName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.KeyVault.KeyVaultPrivateEndpointConnectionResource> Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.KeyVault.KeyVaultPrivateEndpointConnectionResource>> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.KeyVault.KeyVaultPrivateEndpointConnectionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.KeyVaultPrivateEndpointConnectionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual Azure.Response<Azure.ResourceManager.KeyVault.KeyVaultPrivateEndpointConnectionResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.KeyVaultPrivateEndpointConnectionResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual Azure.Response<Azure.ResourceManager.KeyVault.KeyVaultPrivateEndpointConnectionResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.KeyVaultPrivateEndpointConnectionResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.KeyVault.KeyVaultPrivateEndpointConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.KeyVault.KeyVaultPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.KeyVault.KeyVaultPrivateEndpointConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.KeyVault.KeyVaultPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -275,6 +287,8 @@ namespace Azure.ResourceManager.KeyVault.Models
     public partial class DeletedKeyVaultProperties
     {
         internal DeletedKeyVaultProperties() { }
+        public System.DateTimeOffset? DeletedOn { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.DateTimeOffset? DeletionOn { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public bool? PurgeProtectionEnabled { get { throw null; } }
@@ -285,6 +299,8 @@ namespace Azure.ResourceManager.KeyVault.Models
     public partial class DeletedManagedHsmProperties
     {
         internal DeletedManagedHsmProperties() { }
+        public System.DateTimeOffset? DeletedOn { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.DateTimeOffset? DeletionOn { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.Core.ResourceIdentifier ManagedHsmId { get { throw null; } }

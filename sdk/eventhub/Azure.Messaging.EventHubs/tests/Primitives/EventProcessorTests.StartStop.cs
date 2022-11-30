@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -12,6 +13,7 @@ using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
 using Azure.Messaging.EventHubs.Primitives;
+using Azure.Messaging.EventHubs.Processor;
 using Moq;
 using Moq.Protected;
 using NUnit.Framework;
@@ -582,6 +584,201 @@ namespace Azure.Messaging.EventHubs.Tests
             // subject of this test.
 
             await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token).IgnoreExceptions();
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessor{TPartition}" />
+        ///   background processing loop.
+        /// </summary>
+        ///
+        [Test]
+        public async Task StartProcessingWarnsWhenConfiguredIntervalsAreTooClose()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var loadBalancingIntervalSeconds = 30;
+            var ownershipIntervalSeconds = (loadBalancingIntervalSeconds * 2) - 1;
+            var partitionIds = new[] { "0" };
+            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromSeconds(loadBalancingIntervalSeconds), PartitionOwnershipExpirationInterval = TimeSpan.FromSeconds(ownershipIntervalSeconds) };
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var mockLogger = new Mock<EventHubsEventSource>();
+            var mockLoadBalancer = new Mock<PartitionLoadBalancer>();
+            var mockConnection = new Mock<EventHubConnection>();
+            var mockConsumer = new Mock<TransportConsumer>();
+            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), options, mockLoadBalancer.Object) { CallBase = true };
+
+            mockLoadBalancer
+                .SetupGet(lb => lb.OwnedPartitionIds)
+                .Returns(partitionIds);
+
+            mockLoadBalancer
+                .SetupGet(lb => lb.OwnedPartitionCount)
+                .Returns(partitionIds.Length);
+
+            mockLoadBalancer
+                .Setup(lb => lb.RunLoadBalancingAsync(partitionIds, It.IsAny<CancellationToken>()))
+                .Returns(new ValueTask<EventProcessorPartitionOwnership>(default(EventProcessorPartitionOwnership)));
+
+            mockConnection
+                .Setup(conn => conn.GetPartitionIdsAsync(It.IsAny<EventHubsRetryPolicy>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(partitionIds);
+
+            mockConsumer
+                .Setup(consumer => consumer.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new List<EventData>(0));
+
+            mockProcessor.Object.Logger = mockLogger.Object;
+
+            mockProcessor
+                .Setup(processor => processor.CreateConnection())
+                .Returns(mockConnection.Object);
+
+            mockProcessor
+                .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>()))
+                .Returns(mockConsumer.Object);
+
+            mockProcessor
+                .Setup(processor => processor.ValidateProcessingPreconditions(It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
+
+            mockProcessor
+                .Protected()
+                .Setup<Task<EventProcessorCheckpoint>>("GetCheckpointAsync",
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Returns(Task.FromResult(default(EventProcessorCheckpoint)));
+
+            mockProcessor
+                .Protected()
+                .Setup<Task>("OnProcessingErrorAsync",
+                    ItExpr.IsAny<Exception>(),
+                    ItExpr.IsAny<EventProcessorPartition>(),
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Callback(() => completionSource.TrySetResult(true));
+
+            await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
+            Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor should have started.");
+
+            await completionSource.Task.AwaitWithCancellation(cancellationSource.Token);
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            // Verify that the warning was logged and surfaced to the error handler.
+
+            mockLogger
+                .Verify(log => log.ProcessorLoadBalancingIntervalsTooCloseWarning(
+                    mockProcessor.Object.Identifier,
+                    mockProcessor.Object.EventHubName,
+                    loadBalancingIntervalSeconds,
+                    ownershipIntervalSeconds),
+            Times.Once);
+
+            mockProcessor
+                .Protected()
+                .Verify("OnProcessingErrorAsync", Times.Once(),
+                    ItExpr.Is<Exception>(ex => ((ex is EventHubsException) && (ex.Message.Contains(nameof(EventProcessorOptions.LoadBalancingUpdateInterval))) && (ex.Message.Contains(nameof(EventProcessorOptions.PartitionOwnershipExpirationInterval))))),
+                    ItExpr.IsAny<EventProcessorPartition>(),
+                    ItExpr.Is<string>(op => op == Resources.OperationLoadBalancing),
+                    ItExpr.IsAny<CancellationToken>());
+
+            await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token).IgnoreExceptions();
+            cancellationSource.Cancel();
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessor{TPartition}" />
+        ///   background processing loop.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(60)]
+        [TestCase(120)]
+        [TestCase(240)]
+        public async Task StartProcessingDoesNotWarnForAppropriateIntervals(double ownershipIntervalSeconds)
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var loadBalancingIntervalSeconds = 30;
+            var partitionIds = new[] { "0" };
+            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromSeconds(loadBalancingIntervalSeconds), PartitionOwnershipExpirationInterval = TimeSpan.FromSeconds(ownershipIntervalSeconds) };
+            var mockLogger = new Mock<EventHubsEventSource>();
+            var mockLoadBalancer = new Mock<PartitionLoadBalancer>();
+            var mockConnection = new Mock<EventHubConnection>();
+            var mockConsumer = new Mock<TransportConsumer>();
+            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), options, mockLoadBalancer.Object) { CallBase = true };
+
+            mockLoadBalancer
+                .SetupGet(lb => lb.OwnedPartitionIds)
+                .Returns(partitionIds);
+
+            mockLoadBalancer
+                .SetupGet(lb => lb.OwnedPartitionCount)
+                .Returns(partitionIds.Length);
+
+            mockLoadBalancer
+                .Setup(lb => lb.RunLoadBalancingAsync(partitionIds, It.IsAny<CancellationToken>()))
+                .Returns(new ValueTask<EventProcessorPartitionOwnership>(default(EventProcessorPartitionOwnership)));
+
+            mockConnection
+                .Setup(conn => conn.GetPartitionIdsAsync(It.IsAny<EventHubsRetryPolicy>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(partitionIds);
+
+            mockConsumer
+                .Setup(consumer => consumer.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new List<EventData>(0));
+
+            mockProcessor.Object.Logger = mockLogger.Object;
+
+            mockProcessor
+                .Setup(processor => processor.CreateConnection())
+                .Returns(mockConnection.Object);
+
+            mockProcessor
+                .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>()))
+                .Returns(mockConsumer.Object);
+
+            mockProcessor
+                .Setup(processor => processor.ValidateProcessingPreconditions(It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
+
+            mockProcessor
+                .Protected()
+                .Setup<Task<EventProcessorCheckpoint>>("GetCheckpointAsync",
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Returns(Task.FromResult(default(EventProcessorCheckpoint)));
+
+            await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
+            Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor should have started.");
+
+            // Wait for a small delay to give the handler time to be pinged, if needed.  Since we're testing the absence of an
+            // error, there's no risk of false positive if this interval is too short.
+
+            await Task.Delay(500);
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            // Verify that the warning was logged and surfaced to the error handler.
+
+            mockLogger
+                .Verify(log => log.ProcessorLoadBalancingIntervalsTooCloseWarning(
+                    mockProcessor.Object.Identifier,
+                    mockProcessor.Object.EventHubName,
+                    loadBalancingIntervalSeconds,
+                    ownershipIntervalSeconds),
+            Times.Never);
+
+            mockProcessor
+                .Protected()
+                .Verify("OnProcessingErrorAsync", Times.Never(),
+                    ItExpr.Is<Exception>(ex => ((ex is EventHubsException) && (ex.Message.Contains(nameof(EventProcessorOptions.LoadBalancingUpdateInterval))) && (ex.Message.Contains(nameof(EventProcessorOptions.PartitionOwnershipExpirationInterval))))),
+                    ItExpr.IsAny<EventProcessorPartition>(),
+                    ItExpr.Is<string>(op => op == Resources.OperationLoadBalancing),
+                    ItExpr.IsAny<CancellationToken>());
+
+            await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token).IgnoreExceptions();
+            cancellationSource.Cancel();
         }
 
         /// <summary>

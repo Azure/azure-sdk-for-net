@@ -10,51 +10,13 @@
 
 namespace Microsoft.Azure.Management.ServiceBus.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for FilterType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum FilterType
+    public static class FilterType
     {
-        [EnumMember(Value = "SqlFilter")]
-        SqlFilter,
-        [EnumMember(Value = "CorrelationFilter")]
-        CorrelationFilter
-    }
-    internal static class FilterTypeEnumExtension
-    {
-        internal static string ToSerializedValue(this FilterType? value)
-        {
-            return value == null ? null : ((FilterType)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this FilterType value)
-        {
-            switch( value )
-            {
-                case FilterType.SqlFilter:
-                    return "SqlFilter";
-                case FilterType.CorrelationFilter:
-                    return "CorrelationFilter";
-            }
-            return null;
-        }
-
-        internal static FilterType? ParseFilterType(this string value)
-        {
-            switch( value )
-            {
-                case "SqlFilter":
-                    return FilterType.SqlFilter;
-                case "CorrelationFilter":
-                    return FilterType.CorrelationFilter;
-            }
-            return null;
-        }
+        public const string SqlFilter = "SqlFilter";
+        public const string CorrelationFilter = "CorrelationFilter";
     }
 }

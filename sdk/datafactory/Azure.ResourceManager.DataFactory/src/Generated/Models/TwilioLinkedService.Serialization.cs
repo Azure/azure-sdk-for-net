@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             string type = default;
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
+            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
             BinaryData userName = default;
-            SecretBase password = default;
+            FactorySecretBaseDefinition password = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -117,10 +117,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, ParameterSpecification> dictionary = new Dictionary<string, ParameterSpecification>();
+                    Dictionary<string, EntityParameterSpecification> dictionary = new Dictionary<string, EntityParameterSpecification>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ParameterSpecification.DeserializeParameterSpecification(property0.Value));
+                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value));
                     }
                     parameters = dictionary;
                     continue;
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("password"))
                         {
-                            password = SecretBase.DeserializeSecretBase(property0.Value);
+                            password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                     }

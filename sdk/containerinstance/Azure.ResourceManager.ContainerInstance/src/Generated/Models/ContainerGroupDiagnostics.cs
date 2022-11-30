@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <summary> Initializes a new instance of ContainerGroupDiagnostics. </summary>
         /// <param name="logAnalytics"> Container group log analytics information. </param>
-        internal ContainerGroupDiagnostics(LogAnalytics logAnalytics)
+        internal ContainerGroupDiagnostics(ContainerGroupLogAnalytics logAnalytics)
         {
             LogAnalytics = logAnalytics;
         }
 
         /// <summary> Container group log analytics information. </summary>
-        public LogAnalytics LogAnalytics { get; set; }
+        public ContainerGroupLogAnalytics LogAnalytics { get; set; }
     }
 }

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static WindowsEventLogDataSource DeserializeWindowsEventLogDataSource(JsonElement element)
         {
-            Optional<IList<KnownWindowsEventLogDataSourceStream>> streams = default;
+            Optional<IList<WindowsEventLogDataSourceStream>> streams = default;
             Optional<IList<string>> xPathQueries = default;
             Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
@@ -58,10 +58,10 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<KnownWindowsEventLogDataSourceStream> array = new List<KnownWindowsEventLogDataSourceStream>();
+                    List<WindowsEventLogDataSourceStream> array = new List<WindowsEventLogDataSourceStream>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new KnownWindowsEventLogDataSourceStream(item.GetString()));
+                        array.Add(new WindowsEventLogDataSourceStream(item.GetString()));
                     }
                     streams = array;
                     continue;

@@ -8,10 +8,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> Base class for topology processor nodes. </summary>
+    /// <summary>
+    /// Base class for topology processor nodes.
+    /// Please note <see cref="ProcessorNodeBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="CognitiveServicesVisionProcessor"/>, <see cref="ExtensionProcessorBase"/>, <see cref="GrpcExtension"/>, <see cref="HttpExtension"/>, <see cref="LineCrossingProcessor"/>, <see cref="MotionDetectionProcessor"/>, <see cref="ObjectTrackingProcessor"/> and <see cref="SignalGateProcessor"/>.
+    /// </summary>
     public partial class ProcessorNodeBase
     {
         /// <summary> Initializes a new instance of ProcessorNodeBase. </summary>
@@ -20,14 +25,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="inputs"/> is null. </exception>
         public ProcessorNodeBase(string name, IEnumerable<NodeInput> inputs)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (inputs == null)
-            {
-                throw new ArgumentNullException(nameof(inputs));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(inputs, nameof(inputs));
 
             Name = name;
             Inputs = inputs.ToList();

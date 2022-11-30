@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/:analyze-conversations?api-version=2022-05-15-preview",
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/:analyze-conversations?api-version=2022-10-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "236",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20220628.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "85f4b71187b87e1b5634168260e9757c",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221019.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "063377a8ba8e96bf2cefebf368f49b96",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -29,17 +29,17 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "6249df19-fb1d-4012-af3b-d9897660c7d4",
+        "apim-request-id": "7cc160dd-a11d-4ad5-aaa1-c7311aecee27",
         "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.Language.OrchestrationWorkflow.Prediction=1",
-        "Date": "Wed, 29 Jun 2022 00:01:16 GMT",
+        "Date": "Thu, 20 Oct 2022 17:18:35 GMT",
         "Pragma": "no-cache",
-        "request-id": "6249df19-fb1d-4012-af3b-d9897660c7d4",
+        "request-id": "7cc160dd-a11d-4ad5-aaa1-c7311aecee27",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "783"
+        "x-envoy-upstream-service-time": "265"
       },
       "ResponseBody": {
         "kind": "ConversationResult",
@@ -123,6 +123,6 @@
     "CONVERSATIONS_KEY": "Sanitized",
     "CONVERSATIONS_WORKFLOW_DEPLOYMENT_NAME": "production",
     "CONVERSATIONS_WORKFLOW_PROJECT_NAME": "OrchestrationScriptDeployed",
-    "RandomSeed": "1909991329"
+    "RandomSeed": "586164390"
   }
 }

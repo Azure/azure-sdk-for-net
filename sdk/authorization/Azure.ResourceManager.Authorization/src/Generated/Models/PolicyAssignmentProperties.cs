@@ -5,10 +5,14 @@
 
 #nullable disable
 
+using System;
+using Azure.Core;
+using Azure.ResourceManager.Models;
+
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary> Expanded info of resource scope, role definition and policy. </summary>
-    public partial class PolicyAssignmentProperties
+    public partial class PolicyAssignmentProperties : ResourceData
     {
         /// <summary> Initializes a new instance of PolicyAssignmentProperties. </summary>
         internal PolicyAssignmentProperties()
@@ -16,21 +20,49 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Initializes a new instance of PolicyAssignmentProperties. </summary>
-        /// <param name="scope"> Details of the resource scope. </param>
-        /// <param name="roleDefinition"> Details of role definition. </param>
-        /// <param name="policy"> Details of the policy. </param>
-        internal PolicyAssignmentProperties(PolicyAssignmentPropertiesScope scope, PolicyAssignmentPropertiesRoleDefinition roleDefinition, PolicyAssignmentPropertiesPolicy policy)
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="policyId"> Id of the policy. </param>
+        /// <param name="lastModifiedBy"> The name of the entity last modified it. </param>
+        /// <param name="lastModifiedOn"> The last modified date time. </param>
+        /// <param name="roleDefinitionId"> Id of the role definition. </param>
+        /// <param name="roleDefinitionDisplayName"> Display name of the role definition. </param>
+        /// <param name="roleType"> The role type. </param>
+        /// <param name="scopeId"> Scope id of the resource. </param>
+        /// <param name="scopeDisplayName"> Display name of the resource. </param>
+        /// <param name="scopeType"> Type of the scope. </param>
+        internal PolicyAssignmentProperties(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier policyId, RoleManagementPrincipal lastModifiedBy, DateTimeOffset? lastModifiedOn, ResourceIdentifier roleDefinitionId, string roleDefinitionDisplayName, AuthorizationRoleType? roleType, ResourceIdentifier scopeId, string scopeDisplayName, RoleManagementScopeType? scopeType) : base(id, name, resourceType, systemData)
         {
-            Scope = scope;
-            RoleDefinition = roleDefinition;
-            Policy = policy;
+            PolicyId = policyId;
+            LastModifiedBy = lastModifiedBy;
+            LastModifiedOn = lastModifiedOn;
+            RoleDefinitionId = roleDefinitionId;
+            RoleDefinitionDisplayName = roleDefinitionDisplayName;
+            RoleType = roleType;
+            ScopeId = scopeId;
+            ScopeDisplayName = scopeDisplayName;
+            ScopeType = scopeType;
         }
 
-        /// <summary> Details of the resource scope. </summary>
-        public PolicyAssignmentPropertiesScope Scope { get; }
-        /// <summary> Details of role definition. </summary>
-        public PolicyAssignmentPropertiesRoleDefinition RoleDefinition { get; }
-        /// <summary> Details of the policy. </summary>
-        public PolicyAssignmentPropertiesPolicy Policy { get; }
+        /// <summary> Id of the policy. </summary>
+        public ResourceIdentifier PolicyId { get; }
+        /// <summary> The name of the entity last modified it. </summary>
+        public RoleManagementPrincipal LastModifiedBy { get; }
+        /// <summary> The last modified date time. </summary>
+        public DateTimeOffset? LastModifiedOn { get; }
+        /// <summary> Id of the role definition. </summary>
+        public ResourceIdentifier RoleDefinitionId { get; }
+        /// <summary> Display name of the role definition. </summary>
+        public string RoleDefinitionDisplayName { get; }
+        /// <summary> The role type. </summary>
+        public AuthorizationRoleType? RoleType { get; }
+        /// <summary> Scope id of the resource. </summary>
+        public ResourceIdentifier ScopeId { get; }
+        /// <summary> Display name of the resource. </summary>
+        public string ScopeDisplayName { get; }
+        /// <summary> Type of the scope. </summary>
+        public RoleManagementScopeType? ScopeType { get; }
     }
 }

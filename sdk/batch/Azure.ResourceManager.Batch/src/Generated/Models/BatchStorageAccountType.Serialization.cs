@@ -13,15 +13,15 @@ namespace Azure.ResourceManager.Batch.Models
     {
         public static string ToSerialString(this BatchStorageAccountType value) => value switch
         {
-            BatchStorageAccountType.StandardLRS => "Standard_LRS",
-            BatchStorageAccountType.PremiumLRS => "Premium_LRS",
+            BatchStorageAccountType.StandardLrs => "Standard_LRS",
+            BatchStorageAccountType.PremiumLrs => "Premium_LRS",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchStorageAccountType value.")
         };
 
         public static BatchStorageAccountType ToBatchStorageAccountType(this string value)
         {
-            if (string.Equals(value, "Standard_LRS", StringComparison.InvariantCultureIgnoreCase)) return BatchStorageAccountType.StandardLRS;
-            if (string.Equals(value, "Premium_LRS", StringComparison.InvariantCultureIgnoreCase)) return BatchStorageAccountType.PremiumLRS;
+            if (string.Equals(value, "Standard_LRS", StringComparison.InvariantCultureIgnoreCase)) return BatchStorageAccountType.StandardLrs;
+            if (string.Equals(value, "Premium_LRS", StringComparison.InvariantCultureIgnoreCase)) return BatchStorageAccountType.PremiumLrs;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchStorageAccountType value.");
         }
     }

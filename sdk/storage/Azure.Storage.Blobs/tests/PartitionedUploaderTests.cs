@@ -302,7 +302,7 @@ namespace Azure.Storage.Blobs.Test
                     InitialTransferSize = blockSize, // known stream length means we need to specify this to force paritioned upload
                     MaximumConcurrency = 1 // concurrency=1 puts us into upload from sequence
                 },
-                validationOptions: default,
+                transferValidation: default,
                 arrayPool: testPool);
             Response<BlobContentInfo> info = await InvokeUploadAsync(uploader, content);
 

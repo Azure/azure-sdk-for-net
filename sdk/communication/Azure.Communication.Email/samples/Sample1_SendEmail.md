@@ -107,7 +107,7 @@ var emailMessage = new EmailMessage(
     emailRecipients);
 
 var filePath = "<path to your file>";
-var attachmentName = "<name of your attachment>"
+var attachmentName = "<name of your attachment>";
 EmailAttachmentType attachmentType = EmailAttachmentType.Txt;
 
 // Convert the file content into a Base64 string

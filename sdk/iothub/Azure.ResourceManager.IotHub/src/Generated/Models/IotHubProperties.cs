@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public IotHubProperties()
         {
             AuthorizationPolicies = new ChangeTrackingList<SharedAccessSignatureAuthorizationRule>();
-            AllowedFqdnList = new ChangeTrackingList<string>();
+            AllowedFqdns = new ChangeTrackingList<string>();
             IPFilterRules = new ChangeTrackingList<IotHubIPFilterRule>();
             PrivateEndpointConnections = new ChangeTrackingList<IotHubPrivateEndpointConnectionData>();
             EventHubEndpoints = new ChangeTrackingDictionary<string, EventHubCompatibleEndpointProperties>();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="disableDeviceSas"> If true, all device(including Edge devices but excluding modules) scoped SAS keys cannot be used for authentication. </param>
         /// <param name="disableModuleSas"> If true, all module scoped SAS keys cannot be used for authentication. </param>
         /// <param name="restrictOutboundNetworkAccess"> If true, egress from IotHub will be restricted to only the allowed FQDNs that are configured via allowedFqdnList. </param>
-        /// <param name="allowedFqdnList"> List of allowed FQDNs(Fully Qualified Domain Name) for egress from Iot Hub. </param>
+        /// <param name="allowedFqdns"> List of allowed FQDNs(Fully Qualified Domain Name) for egress from Iot Hub. </param>
         /// <param name="publicNetworkAccess"> Whether requests from Public Network are allowed. </param>
         /// <param name="ipFilterRules"> The IP filter rules. </param>
         /// <param name="networkRuleSets"> Network Rule Set Properties of IotHub. </param>
@@ -52,14 +52,14 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="features"> The capabilities and features enabled for the IoT hub. </param>
         /// <param name="locations"> Primary and secondary location for iot hub. </param>
         /// <param name="enableDataResidency"> This property when set to true, will enable data residency, thus, disabling disaster recovery. </param>
-        internal IotHubProperties(IList<SharedAccessSignatureAuthorizationRule> authorizationPolicies, bool? disableLocalAuth, bool? disableDeviceSas, bool? disableModuleSas, bool? restrictOutboundNetworkAccess, IList<string> allowedFqdnList, IotHubPublicNetworkAccess? publicNetworkAccess, IList<IotHubIPFilterRule> ipFilterRules, IotHubNetworkRuleSetProperties networkRuleSets, string minTlsVersion, IList<IotHubPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, string state, string hostName, IDictionary<string, EventHubCompatibleEndpointProperties> eventHubEndpoints, IotHubRoutingProperties routing, IDictionary<string, IotHubStorageEndpointProperties> storageEndpoints, IDictionary<string, MessagingEndpointProperties> messagingEndpoints, bool? enableFileUploadNotifications, CloudToDeviceProperties cloudToDevice, string comments, IotHubCapability? features, IReadOnlyList<IotHubLocationDescription> locations, bool? enableDataResidency)
+        internal IotHubProperties(IList<SharedAccessSignatureAuthorizationRule> authorizationPolicies, bool? disableLocalAuth, bool? disableDeviceSas, bool? disableModuleSas, bool? restrictOutboundNetworkAccess, IList<string> allowedFqdns, IotHubPublicNetworkAccess? publicNetworkAccess, IList<IotHubIPFilterRule> ipFilterRules, IotHubNetworkRuleSetProperties networkRuleSets, string minTlsVersion, IList<IotHubPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, string state, string hostName, IDictionary<string, EventHubCompatibleEndpointProperties> eventHubEndpoints, IotHubRoutingProperties routing, IDictionary<string, IotHubStorageEndpointProperties> storageEndpoints, IDictionary<string, MessagingEndpointProperties> messagingEndpoints, bool? enableFileUploadNotifications, CloudToDeviceProperties cloudToDevice, string comments, IotHubCapability? features, IReadOnlyList<IotHubLocationDescription> locations, bool? enableDataResidency)
         {
             AuthorizationPolicies = authorizationPolicies;
             DisableLocalAuth = disableLocalAuth;
             DisableDeviceSas = disableDeviceSas;
             DisableModuleSas = disableModuleSas;
             RestrictOutboundNetworkAccess = restrictOutboundNetworkAccess;
-            AllowedFqdnList = allowedFqdnList;
+            AllowedFqdns = allowedFqdns;
             PublicNetworkAccess = publicNetworkAccess;
             IPFilterRules = ipFilterRules;
             NetworkRuleSets = networkRuleSets;
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> If true, egress from IotHub will be restricted to only the allowed FQDNs that are configured via allowedFqdnList. </summary>
         public bool? RestrictOutboundNetworkAccess { get; set; }
         /// <summary> List of allowed FQDNs(Fully Qualified Domain Name) for egress from Iot Hub. </summary>
-        public IList<string> AllowedFqdnList { get; }
+        public IList<string> AllowedFqdns { get; }
         /// <summary> Whether requests from Public Network are allowed. </summary>
         public IotHubPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> The IP filter rules. </summary>

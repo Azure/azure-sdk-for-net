@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.Media.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SceneChangeDetection))
+            if (Optional.IsDefined(UseSceneChangeDetection))
             {
                 writer.WritePropertyName("sceneChangeDetection");
-                writer.WriteBooleanValue(SceneChangeDetection.Value);
+                writer.WriteBooleanValue(UseSceneChangeDetection.Value);
             }
             if (Optional.IsDefined(Complexity))
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<H265Complexity> complexity = default;
             Optional<IList<H265Layer>> layers = default;
             Optional<TimeSpan> keyFrameInterval = default;
-            Optional<StretchMode> stretchMode = default;
+            Optional<InputVideoStretchMode> stretchMode = default;
             Optional<VideoSyncMode> syncMode = default;
             string odataType = default;
             Optional<string> label = default;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Media.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    stretchMode = new StretchMode(property.Value.GetString());
+                    stretchMode = new InputVideoStretchMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("syncMode"))

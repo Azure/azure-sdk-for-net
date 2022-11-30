@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="versioningScheme"> An value that determines where the API Version identifier will be located in a HTTP request. </param>
         /// <param name="versionQueryName"> Name of query parameter that indicates the API Version if versioningScheme is set to `query`. </param>
         /// <param name="versionHeaderName"> Name of HTTP header parameter that indicates the API Version if versioningScheme is set to `header`. </param>
-        internal ApiVersionSetContractDetails(string id, string name, string description, ApiVersionSetContractDetailsVersioningScheme? versioningScheme, string versionQueryName, string versionHeaderName)
+        internal ApiVersionSetContractDetails(string id, string name, string description, VersioningScheme? versioningScheme, string versionQueryName, string versionHeaderName)
         {
             Id = id;
             Name = name;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Description of API Version Set. </summary>
         public string Description { get; set; }
         /// <summary> An value that determines where the API Version identifier will be located in a HTTP request. </summary>
-        public ApiVersionSetContractDetailsVersioningScheme? VersioningScheme { get; set; }
+        public VersioningScheme? VersioningScheme { get; set; }
         /// <summary> Name of query parameter that indicates the API Version if versioningScheme is set to `query`. </summary>
         public string VersionQueryName { get; set; }
         /// <summary> Name of HTTP header parameter that indicates the API Version if versioningScheme is set to `header`. </summary>

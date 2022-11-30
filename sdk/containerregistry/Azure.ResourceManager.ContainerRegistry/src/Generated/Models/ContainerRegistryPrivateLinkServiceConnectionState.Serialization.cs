@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryPrivateLinkServiceConnectionState DeserializeContainerRegistryPrivateLinkServiceConnectionState(JsonElement element)
         {
-            Optional<ConnectionStatus> status = default;
+            Optional<ContainerRegistryPrivateLinkServiceConnectionStatus> status = default;
             Optional<string> description = default;
-            Optional<ActionsRequired> actionsRequired = default;
+            Optional<ActionsRequiredForPrivateLinkServiceConsumer> actionsRequired = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new ConnectionStatus(property.Value.GetString());
+                    status = new ContainerRegistryPrivateLinkServiceConnectionStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("description"))
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    actionsRequired = new ActionsRequired(property.Value.GetString());
+                    actionsRequired = new ActionsRequiredForPrivateLinkServiceConsumer(property.Value.GetString());
                     continue;
                 }
             }

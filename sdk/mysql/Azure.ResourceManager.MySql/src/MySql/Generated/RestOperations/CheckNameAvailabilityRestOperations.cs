@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MySql
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateExecuteRequest(string subscriptionId, NameAvailabilityContent content)
+        internal HttpMessage CreateExecuteRequest(string subscriptionId, MySqlNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MySql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NameAvailability>> ExecuteAsync(string subscriptionId, NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<MySqlNameAvailabilityResult>> ExecuteAsync(string subscriptionId, MySqlNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -75,9 +75,9 @@ namespace Azure.ResourceManager.MySql
             {
                 case 200:
                     {
-                        NameAvailability value = default;
+                        MySqlNameAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NameAvailability.DeserializeNameAvailability(document.RootElement);
+                        value = MySqlNameAvailabilityResult.DeserializeMySqlNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.MySql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NameAvailability> Execute(string subscriptionId, NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public Response<MySqlNameAvailabilityResult> Execute(string subscriptionId, MySqlNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.MySql
             {
                 case 200:
                     {
-                        NameAvailability value = default;
+                        MySqlNameAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NameAvailability.DeserializeNameAvailability(document.RootElement);
+                        value = MySqlNameAvailabilityResult.DeserializeMySqlNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

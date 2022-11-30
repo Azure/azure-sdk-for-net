@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static StagingSettings DeserializeStagingSettings(JsonElement element)
         {
-            LinkedServiceReference linkedServiceName = default;
+            FactoryLinkedServiceReference linkedServiceName = default;
             Optional<BinaryData> path = default;
             Optional<BinaryData> enableCompression = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (property.NameEquals("linkedServiceName"))
                 {
-                    linkedServiceName = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
+                    linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("path"))

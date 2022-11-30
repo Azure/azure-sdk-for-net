@@ -8,6 +8,7 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Test.Shared;
+using NUnit.Framework;
 
 namespace Azure.Storage.Files.DataLake.Tests
 {
@@ -30,13 +31,13 @@ namespace Azure.Storage.Files.DataLake.Tests
         protected override async Task<IDisposingContainer<DataLakeFileSystemClient>> GetDisposingContainerAsync(
             DataLakeServiceClient service = null,
             string containerName = null,
-            UploadTransferValidationOptions uploadTransferValidationOptions = default,
-            DownloadTransferValidationOptions downloadTransferValidationOptions = default)
+            StorageChecksumAlgorithm uploadAlgorithm = StorageChecksumAlgorithm.None,
+            StorageChecksumAlgorithm downloadAlgorithm = StorageChecksumAlgorithm.None)
         {
             var disposingFileSystem = await ClientBuilder.GetNewFileSystem(service: service, fileSystemName: containerName);
 
-            disposingFileSystem.FileSystem.ClientConfiguration.UploadTransferValidationOptions = uploadTransferValidationOptions;
-            disposingFileSystem.FileSystem.ClientConfiguration.DownloadTransferValidationOptions = downloadTransferValidationOptions;
+            disposingFileSystem.FileSystem.ClientConfiguration.TransferValidation.Upload.ChecksumAlgorithm = uploadAlgorithm;
+            disposingFileSystem.FileSystem.ClientConfiguration.TransferValidation.Download.ChecksumAlgorithm = downloadAlgorithm;
 
             return disposingFileSystem;
         }
@@ -46,13 +47,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             int resourceLength = default,
             bool createResource = default,
             string resourceName = null,
-            UploadTransferValidationOptions uploadTransferValidationOptions = default,
-            DownloadTransferValidationOptions downloadTransferValidationOptions = default,
+            StorageChecksumAlgorithm uploadAlgorithm = StorageChecksumAlgorithm.None,
+            StorageChecksumAlgorithm downloadAlgorithm = StorageChecksumAlgorithm.None,
             DataLakeClientOptions options = null)
         {
             options ??= ClientBuilder.GetOptions();
-            options.UploadTransferValidationOptions = uploadTransferValidationOptions;
-            options.DownloadTransferValidationOptions = downloadTransferValidationOptions;
+            options.TransferValidation.Upload.ChecksumAlgorithm = uploadAlgorithm;
+            options.TransferValidation.Download.ChecksumAlgorithm = downloadAlgorithm;
 
             container = InstrumentClient(new DataLakeFileSystemClient(container.Uri, Tenants.GetNewHnsSharedKeyCredentials(), options));
             var file = InstrumentClient(container.GetRootDirectoryClient().GetFileClient(resourceName ?? GetNewResourceName()));
@@ -67,7 +68,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             return await client.AppendAsync(source, 0, new DataLakeFileAppendOptions
             {
-                TransferValidationOptions = hashingOptions
+                TransferValidation = hashingOptions
             });
         }
 
@@ -75,7 +76,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             var response = await client.ReadAsync(new DataLakeFileReadOptions
             {
-                TransferValidationOptions = hashingOptions,
+                TransferValidation = hashingOptions,
                 Range = range
             });
 
@@ -87,7 +88,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             await client.UploadAsync(source, new DataLakeFileUploadOptions
             {
-                TransferValidationOptions = hashingOptions,
+                TransferValidation = hashingOptions,
                 TransferOptions = transferOptions
             });
         }
@@ -96,7 +97,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             await client.ReadToAsync(destination, new DataLakeFileReadToOptions
             {
-                TransferValidationOptions = hashingOptions,
+                TransferValidation = hashingOptions,
                 TransferOptions = transferOptions
             });
         }
@@ -105,7 +106,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             return await client.OpenWriteAsync(true, new DataLakeFileOpenWriteOptions
             {
-                TransferValidationOptions = hashingOptions,
+                TransferValidation = hashingOptions,
                 BufferSize = internalBufferSize
             });
         }
@@ -114,7 +115,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             return await client.OpenReadAsync(new DataLakeOpenReadOptions(false)
             {
-                TransferValidationOptions = hashingOptions,
+                TransferValidation = hashingOptions,
                 BufferSize = internalBufferSize
             });
         }
@@ -128,6 +129,14 @@ namespace Azure.Storage.Files.DataLake.Tests
         protected override bool ParallelUploadIsChecksumExpected(Request request)
         {
             return request.Uri.Query.Contains("action=append");
+        }
+
+        [Test]
+        public override void TestAutoResolve()
+        {
+            Assert.AreEqual(
+                StorageChecksumAlgorithm.StorageCrc64,
+                TransferValidationOptionsExtensions.ResolveAuto(StorageChecksumAlgorithm.Auto));
         }
     }
 }

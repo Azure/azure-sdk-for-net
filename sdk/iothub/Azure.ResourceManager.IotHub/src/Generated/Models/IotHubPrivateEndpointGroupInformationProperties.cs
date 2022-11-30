@@ -17,18 +17,18 @@ namespace Azure.ResourceManager.IotHub.Models
         internal IotHubPrivateEndpointGroupInformationProperties()
         {
             RequiredMembers = new ChangeTrackingList<string>();
-            RequiredZoneNames = new ChangeTrackingList<string>();
+            RequiredDnsZoneNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of IotHubPrivateEndpointGroupInformationProperties. </summary>
         /// <param name="groupId"> The group id. </param>
         /// <param name="requiredMembers"> The required members for a specific group id. </param>
-        /// <param name="requiredZoneNames"> The required DNS zones for a specific group id. </param>
-        internal IotHubPrivateEndpointGroupInformationProperties(string groupId, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredZoneNames)
+        /// <param name="requiredDnsZoneNames"> The required DNS zones for a specific group id. </param>
+        internal IotHubPrivateEndpointGroupInformationProperties(string groupId, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredDnsZoneNames)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;
-            RequiredZoneNames = requiredZoneNames;
+            RequiredDnsZoneNames = requiredDnsZoneNames;
         }
 
         /// <summary> The group id. </summary>
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> The required members for a specific group id. </summary>
         public IReadOnlyList<string> RequiredMembers { get; }
         /// <summary> The required DNS zones for a specific group id. </summary>
-        public IReadOnlyList<string> RequiredZoneNames { get; }
+        public IReadOnlyList<string> RequiredDnsZoneNames { get; }
     }
 }

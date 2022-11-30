@@ -16,6 +16,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Configuration for HTTP or HTTPS requests. </summary>
-        public ConnectivityCheckRequestProtocolConfigurationHttpConfiguration HttpConfiguration { get; set; }
+        public ConnectivityCheckRequestHttpConfiguration HttpConfiguration { get; set; }
     }
 }

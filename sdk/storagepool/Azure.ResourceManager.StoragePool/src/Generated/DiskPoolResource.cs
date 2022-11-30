@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.StoragePool
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of IscsiTargetResources in the DiskPool. </summary>
-        /// <returns> An object representing collection of IscsiTargetResources and their operations over a IscsiTargetResource. </returns>
-        public virtual IscsiTargetCollection GetIscsiTargets()
+        /// <summary> Gets a collection of DiskPoolIscsiTargetResources in the DiskPool. </summary>
+        /// <returns> An object representing collection of DiskPoolIscsiTargetResources and their operations over a DiskPoolIscsiTargetResource. </returns>
+        public virtual DiskPoolIscsiTargetCollection GetDiskPoolIscsiTargets()
         {
-            return GetCachedClient(Client => new IscsiTargetCollection(Client, Id));
+            return GetCachedClient(Client => new DiskPoolIscsiTargetCollection(Client, Id));
         }
 
         /// <summary>
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.StoragePool
         /// <exception cref="ArgumentException"> <paramref name="iscsiTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="iscsiTargetName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<IscsiTargetResource>> GetIscsiTargetAsync(string iscsiTargetName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiskPoolIscsiTargetResource>> GetDiskPoolIscsiTargetAsync(string iscsiTargetName, CancellationToken cancellationToken = default)
         {
-            return await GetIscsiTargets().GetAsync(iscsiTargetName, cancellationToken).ConfigureAwait(false);
+            return await GetDiskPoolIscsiTargets().GetAsync(iscsiTargetName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -121,9 +121,9 @@ namespace Azure.ResourceManager.StoragePool
         /// <exception cref="ArgumentException"> <paramref name="iscsiTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="iscsiTargetName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<IscsiTargetResource> GetIscsiTarget(string iscsiTargetName, CancellationToken cancellationToken = default)
+        public virtual Response<DiskPoolIscsiTargetResource> GetDiskPoolIscsiTarget(string iscsiTargetName, CancellationToken cancellationToken = default)
         {
-            return GetIscsiTargets().Get(iscsiTargetName, cancellationToken);
+            return GetDiskPoolIscsiTargets().Get(iscsiTargetName, cancellationToken);
         }
 
         /// <summary>
@@ -292,10 +292,10 @@ namespace Azure.ResourceManager.StoragePool
         /// Operation Id: DiskPools_ListOutboundNetworkDependenciesEndpoints
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OutboundEnvironmentEndpoint" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpointsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="StoragePoolOutboundEnvironment" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<StoragePoolOutboundEnvironment> GetOutboundNetworkDependenciesEndpointsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<OutboundEnvironmentEndpoint>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<StoragePoolOutboundEnvironment>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolResource.GetOutboundNetworkDependenciesEndpoints");
                 scope.Start();
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.StoragePool
                     throw;
                 }
             }
-            async Task<Page<OutboundEnvironmentEndpoint>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<StoragePoolOutboundEnvironment>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolResource.GetOutboundNetworkDependenciesEndpoints");
                 scope.Start();
@@ -334,10 +334,10 @@ namespace Azure.ResourceManager.StoragePool
         /// Operation Id: DiskPools_ListOutboundNetworkDependenciesEndpoints
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OutboundEnvironmentEndpoint" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpoints(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="StoragePoolOutboundEnvironment" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<StoragePoolOutboundEnvironment> GetOutboundNetworkDependenciesEndpoints(CancellationToken cancellationToken = default)
         {
-            Page<OutboundEnvironmentEndpoint> FirstPageFunc(int? pageSizeHint)
+            Page<StoragePoolOutboundEnvironment> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolResource.GetOutboundNetworkDependenciesEndpoints");
                 scope.Start();
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.StoragePool
                     throw;
                 }
             }
-            Page<OutboundEnvironmentEndpoint> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<StoragePoolOutboundEnvironment> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolResource.GetOutboundNetworkDependenciesEndpoints");
                 scope.Start();
@@ -544,11 +544,26 @@ namespace Azure.ResourceManager.StoragePool
             scope.Start();
             try
             {
-                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.TagValues[key] = value;
-                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _diskPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DiskPoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                {
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues[key] = value;
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _diskPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new DiskPoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new DiskPoolPatch();
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags[key] = value;
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
@@ -575,11 +590,26 @@ namespace Azure.ResourceManager.StoragePool
             scope.Start();
             try
             {
-                var originalTags = GetTagResource().Get(cancellationToken);
-                originalTags.Value.Data.TagValues[key] = value;
-                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _diskPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new DiskPoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (CanUseTagResource(cancellationToken: cancellationToken))
+                {
+                    var originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues[key] = value;
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _diskPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new DiskPoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new DiskPoolPatch();
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags[key] = value;
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
@@ -604,12 +634,23 @@ namespace Azure.ResourceManager.StoragePool
             scope.Start();
             try
             {
-                await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _diskPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DiskPoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                {
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _diskPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new DiskPoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new DiskPoolPatch();
+                    patch.Tags.ReplaceWith(tags);
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
@@ -634,12 +675,23 @@ namespace Azure.ResourceManager.StoragePool
             scope.Start();
             try
             {
-                GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                var originalTags = GetTagResource().Get(cancellationToken);
-                originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _diskPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new DiskPoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (CanUseTagResource(cancellationToken: cancellationToken))
+                {
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
+                    var originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _diskPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new DiskPoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new DiskPoolPatch();
+                    patch.Tags.ReplaceWith(tags);
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
@@ -664,11 +716,26 @@ namespace Azure.ResourceManager.StoragePool
             scope.Start();
             try
             {
-                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.TagValues.Remove(key);
-                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _diskPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DiskPoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                {
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues.Remove(key);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _diskPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new DiskPoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new DiskPoolPatch();
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags.Remove(key);
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
@@ -693,11 +760,26 @@ namespace Azure.ResourceManager.StoragePool
             scope.Start();
             try
             {
-                var originalTags = GetTagResource().Get(cancellationToken);
-                originalTags.Value.Data.TagValues.Remove(key);
-                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _diskPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new DiskPoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (CanUseTagResource(cancellationToken: cancellationToken))
+                {
+                    var originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues.Remove(key);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _diskPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new DiskPoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new DiskPoolPatch();
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags.Remove(key);
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {

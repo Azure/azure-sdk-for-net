@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using Azure.Core;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
@@ -13,25 +16,44 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// Please note <see cref="AutoMLVertical"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="Classification"/>, <see cref="Forecasting"/>, <see cref="ImageClassification"/>, <see cref="ImageClassificationMultilabel"/>, <see cref="ImageInstanceSegmentation"/>, <see cref="ImageObjectDetection"/>, <see cref="Regression"/>, <see cref="TextClassification"/>, <see cref="TextClassificationMultilabel"/> and <see cref="TextNer"/>.
     /// </summary>
-    public partial class AutoMLVertical
+    public abstract partial class AutoMLVertical
     {
         /// <summary> Initializes a new instance of AutoMLVertical. </summary>
-        public AutoMLVertical()
+        /// <param name="trainingData"> [Required] Training data input. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="trainingData"/> is null. </exception>
+        protected AutoMLVertical(MLTableJobInput trainingData)
         {
+            Argument.AssertNotNull(trainingData, nameof(trainingData));
+
+            TrainingData = trainingData;
         }
 
         /// <summary> Initializes a new instance of AutoMLVertical. </summary>
         /// <param name="logVerbosity"> Log verbosity for the job. </param>
+        /// <param name="targetColumnName">
+        /// Target column name: This is prediction values column.
+        /// Also known as label column name in context of classification tasks.
+        /// </param>
         /// <param name="taskType"> [Required] Task type for AutoMLJob. </param>
-        internal AutoMLVertical(LogVerbosity? logVerbosity, TaskType taskType)
+        /// <param name="trainingData"> [Required] Training data input. </param>
+        internal AutoMLVertical(LogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MLTableJobInput trainingData)
         {
             LogVerbosity = logVerbosity;
+            TargetColumnName = targetColumnName;
             TaskType = taskType;
+            TrainingData = trainingData;
         }
 
         /// <summary> Log verbosity for the job. </summary>
         public LogVerbosity? LogVerbosity { get; set; }
+        /// <summary>
+        /// Target column name: This is prediction values column.
+        /// Also known as label column name in context of classification tasks.
+        /// </summary>
+        public string TargetColumnName { get; set; }
         /// <summary> [Required] Task type for AutoMLJob. </summary>
         internal TaskType TaskType { get; set; }
+        /// <summary> [Required] Training data input. </summary>
+        public MLTableJobInput TrainingData { get; set; }
     }
 }

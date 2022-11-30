@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Initializes a new instance of TermsOfServiceProperties. </summary>
         /// <param name="text"> A terms of service text. </param>
-        /// <param name="enabled"> Display terms of service during a sign-up process. </param>
-        /// <param name="consentRequired"> Ask user for consent to the terms of service. </param>
-        internal TermsOfServiceProperties(string text, bool? enabled, bool? consentRequired)
+        /// <param name="isDisplayEnabled"> Display terms of service during a sign-up process. </param>
+        /// <param name="isConsentRequired"> Ask user for consent to the terms of service. </param>
+        internal TermsOfServiceProperties(string text, bool? isDisplayEnabled, bool? isConsentRequired)
         {
             Text = text;
-            Enabled = enabled;
-            ConsentRequired = consentRequired;
+            IsDisplayEnabled = isDisplayEnabled;
+            IsConsentRequired = isConsentRequired;
         }
 
         /// <summary> A terms of service text. </summary>
         public string Text { get; set; }
         /// <summary> Display terms of service during a sign-up process. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsDisplayEnabled { get; set; }
         /// <summary> Ask user for consent to the terms of service. </summary>
-        public bool? ConsentRequired { get; set; }
+        public bool? IsConsentRequired { get; set; }
     }
 }

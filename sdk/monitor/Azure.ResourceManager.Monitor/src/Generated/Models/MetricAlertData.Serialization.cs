@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.Monitor
             if (Optional.IsDefined(TargetResourceType))
             {
                 writer.WritePropertyName("targetResourceType");
-                writer.WriteStringValue(TargetResourceType);
+                writer.WriteStringValue(TargetResourceType.Value);
             }
             if (Optional.IsDefined(TargetResourceRegion))
             {
                 writer.WritePropertyName("targetResourceRegion");
-                writer.WriteStringValue(TargetResourceRegion);
+                writer.WriteStringValue(TargetResourceRegion.Value);
             }
             if (Criteria != null)
             {
@@ -73,10 +73,10 @@ namespace Azure.ResourceManager.Monitor
             {
                 writer.WriteNull("criteria");
             }
-            if (Optional.IsDefined(IsAutoMitigate))
+            if (Optional.IsDefined(IsAutoMitigateEnabled))
             {
                 writer.WritePropertyName("autoMitigate");
-                writer.WriteBooleanValue(IsAutoMitigate.Value);
+                writer.WriteBooleanValue(IsAutoMitigateEnabled.Value);
             }
             if (Optional.IsCollectionDefined(Actions))
             {
@@ -106,8 +106,8 @@ namespace Azure.ResourceManager.Monitor
             IList<string> scopes = default;
             TimeSpan evaluationFrequency = default;
             TimeSpan windowSize = default;
-            Optional<string> targetResourceType = default;
-            Optional<string> targetResourceRegion = default;
+            Optional<ResourceType> targetResourceType = default;
+            Optional<AzureLocation> targetResourceRegion = default;
             MetricAlertCriteria criteria = default;
             Optional<bool> autoMitigate = default;
             Optional<IList<MetricAlertAction>> actions = default;
@@ -206,12 +206,22 @@ namespace Azure.ResourceManager.Monitor
                         }
                         if (property0.NameEquals("targetResourceType"))
                         {
-                            targetResourceType = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            targetResourceType = new ResourceType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("targetResourceRegion"))
                         {
-                            targetResourceRegion = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            targetResourceRegion = new AzureLocation(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("criteria"))
@@ -273,7 +283,7 @@ namespace Azure.ResourceManager.Monitor
                     continue;
                 }
             }
-            return new MetricAlertData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, severity, enabled, scopes, evaluationFrequency, windowSize, targetResourceType.Value, targetResourceRegion.Value, criteria, Optional.ToNullable(autoMitigate), Optional.ToList(actions), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(isMigrated));
+            return new MetricAlertData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, severity, enabled, scopes, evaluationFrequency, windowSize, Optional.ToNullable(targetResourceType), Optional.ToNullable(targetResourceRegion), criteria, Optional.ToNullable(autoMitigate), Optional.ToList(actions), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(isMigrated));
         }
     }
 }

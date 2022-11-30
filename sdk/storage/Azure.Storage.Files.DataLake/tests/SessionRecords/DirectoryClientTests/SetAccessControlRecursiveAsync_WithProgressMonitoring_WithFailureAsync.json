@@ -538,7 +538,7 @@
       "ResponseBody": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><UserDelegationKey><SignedOid>c4f48289-bb84-4086-b250-6f94a8f64cee</SignedOid><SignedTid>72f988bf-86f1-41af-91ab-2d7cd011db47</SignedTid><SignedStart>2021-02-19T19:07:02Z</SignedStart><SignedExpiry>2021-02-19T20:07:02Z</SignedExpiry><SignedService>b</SignedService><SignedVersion>2020-06-12</SignedVersion><Value>wWwHHh9Qr3loZ2PLyIhpU60pcpaMMoQPhO0uTu7yO2E=</Value></UserDelegationKey>"
     },
     {
-      "RequestUri": "https://seannse.dfs.core.windows.net/test-filesystem-b415b0c6-e3bf-f42c-0a53-d161c21195ec/test-directory-5f9d05d7-5663-b055-952a-e782130dc1d1?skoid=c4f48289-bb84-4086-b250-6f94a8f64cee&sktid=72f988bf-86f1-41af-91ab-2d7cd011db47&skt=2021-02-19T19%3A07%3A02Z&ske=2021-02-19T20%3A07%3A02Z&sks=b&skv=2020-06-12&sv=2021-08-06&st=2021-02-19T18%3A07%3A02Z&se=2021-02-19T20%3A07%3A02Z&sr=c&sp=racwdlmeop&suoid=438b1c99-97d8-a0ad-896f-ace96eabbc09&sig=Sanitized&action=setAccessControlRecursive&mode=set",
+      "RequestUri": "https://seannse.dfs.core.windows.net/test-filesystem-b415b0c6-e3bf-f42c-0a53-d161c21195ec/test-directory-5f9d05d7-5663-b055-952a-e782130dc1d1?skoid=c4f48289-bb84-4086-b250-6f94a8f64cee&sktid=72f988bf-86f1-41af-91ab-2d7cd011db47&skt=2021-02-19T19%3A07%3A02Z&ske=2021-02-19T20%3A07%3A02Z&sks=b&skv=2020-06-12&sv=2021-12-02&st=2021-02-19T18%3A07%3A02Z&se=2021-02-19T20%3A07%3A02Z&sr=c&sp=racwdlmeop&suoid=438b1c99-97d8-a0ad-896f-ace96eabbc09&sig=Sanitized&action=setAccessControlRecursive&mode=set",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",

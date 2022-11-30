@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string TCPValue = "TCP";
+        private const string TcpValue = "TCP";
         private const string HttpValue = "HTTP";
         private const string HttpsValue = "HTTPS";
 
         /// <summary> TCP. </summary>
-        public static ConnectivityCheckProtocol TCP { get; } = new ConnectivityCheckProtocol(TCPValue);
+        public static ConnectivityCheckProtocol Tcp { get; } = new ConnectivityCheckProtocol(TcpValue);
         /// <summary> HTTP. </summary>
         public static ConnectivityCheckProtocol Http { get; } = new ConnectivityCheckProtocol(HttpValue);
         /// <summary> HTTPS. </summary>

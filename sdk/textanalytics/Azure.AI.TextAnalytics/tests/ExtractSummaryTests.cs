@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,15 +10,13 @@ using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
-    [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2)]
+    [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
     public class ExtractSummaryTests : TextAnalyticsClientLiveTestBase
     {
         public ExtractSummaryTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
             : base(isAsync, serviceVersion)
         {
         }
-
-        private const int ExtractSummaryMaxSentenceCount = 5;
 
         private const string ExtractSummaryDocument1 =
             "No roads or rails connect the 39,000 people dispersed across Nunavut, a territory in northeastern Canada that spans three time zones and features fjord-cut isles that stretch into the Arctic Circle off the west coast of Greenland. About 80% of the population is of Inuit descent with cultural ties to the land that date back more than 4,000 years."
@@ -39,7 +38,7 @@ namespace Azure.AI.TextAnalytics.Tests
             + " Covering that ground led to improvements in Microsoft’s business offering now known as Azure Virtual Desktop. This offering continues to experience accelerated growth among customers who need full customization and control over their operating environment and have the resources for dedicated IT staff to support the system, Manchester noted. Windows 365 is for the approximate 80% of the marketplace that lacks the need for full customization or the resources for dedicated IT."
             + " To lead the development of Windows 365, Manchester leaned into his Arcadia mindset."
             + " “When we built this team, we brought in a couple of leaders who had experience with virtualization, but for the most part we brought in people who had experience with Windows and experience with consumer experiences because that was the bar we wanted to set,” he said."
-            + "  Soon after this bar was set, and the first batch of hires made – a handful of experts in virtualization and user experience – COVID-19 hit and changed the world."
+            + " Soon after this bar was set, and the first batch of hires made – a handful of experts in virtualization and user experience – COVID-19 hit and changed the world."
             + " “We hired everybody else during the pandemic,” Manchester said. “They were remote. They were living all over the U.S., Australia, Europe and China. Many of them have never set foot in the office. And as soon as we got far enough along with the development, we moved those people to use the service. People who never used virtualization before, had no expectations – their bar was the experience they had on their laptop – and we basically used Windows 365 to build Windows 365.”"
             + " As the team used the service and encountered bugs in the system, they worked through and solved them on their way to creating a unique category of virtualization, the Cloud PC."
             + " “We’re giving you Windows from the cloud,” Manchester said.";
@@ -74,27 +73,25 @@ namespace Azure.AI.TextAnalytics.Tests
             }
         };
 
+        private const int DefaultSummaryMaxSentenceCount = 3;
+
+        private const int ExtractSummaryMaxSentenceCount = 5;
+
         [RecordedTest]
-        public async Task ExtractSummaryWithDisableServiceLogs()
+        public async Task ExtractSummaryWithAADTest()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useTokenCredential: true);
 
-            TextAnalyticsActions batchActions = new TextAnalyticsActions()
-            {
-                ExtractSummaryActions = new List<ExtractSummaryAction>() { new ExtractSummaryAction() { DisableServiceLogs = true } }
-            };
-
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_extractSummaryBatchConvenienceDocuments, batchActions);
-
+            ExtractSummaryOperation operation = await client.StartExtractSummaryAsync(s_extractSummaryBatchDocuments);
             await operation.WaitForCompletionAsync();
+            ValidateOperationProperties(operation);
 
-            // Take the first page
-            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            List<ExtractSummaryResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
+            Assert.AreEqual(1, resultInPages.Count);
 
-            IReadOnlyCollection<ExtractSummaryActionResult> extractSummaryActionsResults = resultCollection.ExtractSummaryResults;
-
-            Assert.IsNotNull(extractSummaryActionsResults);
-            Assert.AreEqual(2, extractSummaryActionsResults.FirstOrDefault().DocumentsResults.Count);
+            // Take the first page.
+            ExtractSummaryResultCollection resultCollection = resultInPages.FirstOrDefault();
+            ValidateSummaryBatchResult(resultCollection, SummarySentencesOrder.Offset);
         }
 
         [RecordedTest]
@@ -102,29 +99,22 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             TextAnalyticsClient client = GetClient();
 
-            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            ExtractSummaryOptions options = new ExtractSummaryOptions()
             {
-                ExtractSummaryActions = new List<ExtractSummaryAction>()
-                {
-                    new ExtractSummaryAction()
-                    {
-                        MaxSentenceCount = ExtractSummaryMaxSentenceCount,
-                        OrderBy = SummarySentencesOrder.Rank
-                    }
-                }
+                MaxSentenceCount = ExtractSummaryMaxSentenceCount,
+                OrderBy = SummarySentencesOrder.Rank
             };
 
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_extractSummaryBatchDocuments, batchActions);
-
+            ExtractSummaryOperation operation = await client.StartExtractSummaryAsync(s_extractSummaryBatchDocuments, options);
             await operation.WaitForCompletionAsync();
+            ValidateOperationProperties(operation);
 
-            // Take the first page
-            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            List<ExtractSummaryResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
+            Assert.AreEqual(1, resultInPages.Count);
 
-            IReadOnlyCollection<ExtractSummaryActionResult> summaryActionsResults = resultCollection.ExtractSummaryResults;
-            ExtractSummaryResultCollection summaryDocumentsResults = summaryActionsResults.FirstOrDefault().DocumentsResults;
-
-            ValidateSummaryBatchResult(summaryDocumentsResults, SummarySentencesOrder.Rank);
+            // Take the first page.
+            ExtractSummaryResultCollection resultCollection = resultInPages.FirstOrDefault();
+            ValidateSummaryBatchResult(resultCollection, SummarySentencesOrder.Rank, ExtractSummaryMaxSentenceCount);
         }
 
         [RecordedTest]
@@ -137,28 +127,19 @@ namespace Azure.AI.TextAnalytics.Tests
                 "Subject is taking 100mg of ibuprofen twice daily",
                 "",
             };
-            TextAnalyticsActions batchActions = new TextAnalyticsActions()
-            {
-                ExtractSummaryActions = new List<ExtractSummaryAction>()
-                {
-                    new ExtractSummaryAction()
-                }
-            };
 
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, batchActions, "en");
+            ExtractSummaryOperation operation = await client.StartExtractSummaryAsync(documents, "en");
             await operation.WaitForCompletionAsync();
+            ValidateOperationProperties(operation);
 
-            // Take the first page
-            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            List<ExtractSummaryResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
+            Assert.AreEqual(1, resultInPages.Count);
 
-            List<ExtractSummaryActionResult> summaryActions = resultCollection.ExtractSummaryResults.ToList();
-
-            Assert.AreEqual(1, summaryActions.Count);
-
-            ExtractSummaryResultCollection documentsResults = summaryActions[0].DocumentsResults;
-            Assert.IsFalse(documentsResults[0].HasError);
-            Assert.IsTrue(documentsResults[1].HasError);
-            Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, documentsResults[1].Error.ErrorCode.ToString());
+            // Take the first page.
+            ExtractSummaryResultCollection resultCollection = resultInPages.FirstOrDefault();
+            Assert.IsFalse(resultCollection[0].HasError);
+            Assert.IsTrue(resultCollection[1].HasError);
+            Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, resultCollection[1].Error.ErrorCode.ToString());
         }
 
         [RecordedTest]
@@ -166,25 +147,16 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             TextAnalyticsClient client = GetClient();
 
-            TextAnalyticsActions batchActions = new TextAnalyticsActions()
-            {
-                ExtractSummaryActions = new List<ExtractSummaryAction>()
-                {
-                    new ExtractSummaryAction() { MaxSentenceCount = ExtractSummaryMaxSentenceCount }
-                }
-            };
-
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_extractSummaryBatchConvenienceDocuments, batchActions);
-
+            ExtractSummaryOperation operation = await client.StartExtractSummaryAsync(s_extractSummaryBatchConvenienceDocuments);
             await operation.WaitForCompletionAsync();
+            ValidateOperationProperties(operation);
 
-            // Take the first page
-            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            List<ExtractSummaryResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
+            Assert.AreEqual(1, resultInPages.Count);
 
-            IReadOnlyCollection<ExtractSummaryActionResult> summaryActionsResults = resultCollection.ExtractSummaryResults;
-            ExtractSummaryResultCollection summaryDocumentsResults = summaryActionsResults.FirstOrDefault().DocumentsResults;
-
-            ValidateSummaryBatchResult(summaryDocumentsResults);
+            // Take the first page.
+            ExtractSummaryResultCollection resultCollection = resultInPages.FirstOrDefault();
+            ValidateSummaryBatchResult(resultCollection, SummarySentencesOrder.Offset);
         }
 
         [RecordedTest]
@@ -192,30 +164,22 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             TextAnalyticsClient client = GetClient();
 
-            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            ExtractSummaryOptions options = new ExtractSummaryOptions()
             {
-                ExtractSummaryActions = new List<ExtractSummaryAction>()
-                {
-                    new ExtractSummaryAction() { MaxSentenceCount = ExtractSummaryMaxSentenceCount }
-                }
+                MaxSentenceCount = ExtractSummaryMaxSentenceCount,
+                IncludeStatistics = true,
             };
 
-            AnalyzeActionsOptions options = new AnalyzeActionsOptions()
-            {
-                IncludeStatistics = true
-            };
-
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_extractSummaryBatchConvenienceDocuments, batchActions, "en", options);
-
+            ExtractSummaryOperation operation = await client.StartExtractSummaryAsync(s_extractSummaryBatchConvenienceDocuments, "en", options);
             await operation.WaitForCompletionAsync();
+            ValidateOperationProperties(operation);
 
-            // Take the first page
-            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            List<ExtractSummaryResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
+            Assert.AreEqual(1, resultInPages.Count);
 
-            IReadOnlyCollection<ExtractSummaryActionResult> summaryActionsResults = resultCollection.ExtractSummaryResults;
-            ExtractSummaryResultCollection summaryDocumentsResults = summaryActionsResults.FirstOrDefault().DocumentsResults;
-
-            ValidateSummaryBatchResult(summaryDocumentsResults, includeStatistics: true);
+            // Take the first page.
+            ExtractSummaryResultCollection resultCollection = resultInPages.FirstOrDefault();
+            ValidateSummaryBatchResult(resultCollection, SummarySentencesOrder.Offset, ExtractSummaryMaxSentenceCount, true);
         }
 
         [RecordedTest]
@@ -223,25 +187,16 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             TextAnalyticsClient client = GetClient();
 
-            TextAnalyticsActions batchActions = new TextAnalyticsActions()
-            {
-                ExtractSummaryActions = new List<ExtractSummaryAction>()
-                {
-                    new ExtractSummaryAction() { MaxSentenceCount = ExtractSummaryMaxSentenceCount }
-                }
-            };
-
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_extractSummaryBatchDocuments, batchActions);
-
+            ExtractSummaryOperation operation = await client.StartExtractSummaryAsync(s_extractSummaryBatchDocuments);
             await operation.WaitForCompletionAsync();
+            ValidateOperationProperties(operation);
 
-            // Take the first page
-            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            List<ExtractSummaryResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
+            Assert.AreEqual(1, resultInPages.Count);
 
-            IReadOnlyCollection<ExtractSummaryActionResult> summaryActionsResults = resultCollection.ExtractSummaryResults;
-            ExtractSummaryResultCollection summaryDocumentsResults = summaryActionsResults.FirstOrDefault().DocumentsResults;
-
-            ValidateSummaryBatchResult(summaryDocumentsResults);
+            // Take the first page.
+            ExtractSummaryResultCollection resultCollection = resultInPages.FirstOrDefault();
+            ValidateSummaryBatchResult(resultCollection, SummarySentencesOrder.Offset);
         }
 
         [RecordedTest]
@@ -249,86 +204,101 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             TextAnalyticsClient client = GetClient();
 
-            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            ExtractSummaryOptions options = new ExtractSummaryOptions()
             {
-                ExtractSummaryActions = new List<ExtractSummaryAction>()
-                {
-                    new ExtractSummaryAction() { MaxSentenceCount = ExtractSummaryMaxSentenceCount }
-                }
+                MaxSentenceCount = ExtractSummaryMaxSentenceCount,
+                IncludeStatistics = true,
             };
 
-            AnalyzeActionsOptions options = new AnalyzeActionsOptions()
-            {
-                IncludeStatistics = true
-            };
-
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_extractSummaryBatchDocuments, batchActions, options);
-
+            ExtractSummaryOperation operation = await client.StartExtractSummaryAsync(s_extractSummaryBatchDocuments, options);
             await operation.WaitForCompletionAsync();
+            ValidateOperationProperties(operation);
 
-            // Take the first page
-            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            List<ExtractSummaryResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
+            Assert.AreEqual(1, resultInPages.Count);
 
-            IReadOnlyCollection<ExtractSummaryActionResult> summaryActionsResults = resultCollection.ExtractSummaryResults;
-            ExtractSummaryResultCollection summaryDocumentsResults = summaryActionsResults.FirstOrDefault().DocumentsResults;
-
-            ValidateSummaryBatchResult(summaryDocumentsResults, includeStatistics: true);
+            // Take the first page.
+            ExtractSummaryResultCollection resultCollection = resultInPages.FirstOrDefault();
+            ValidateSummaryBatchResult(resultCollection, SummarySentencesOrder.Offset, ExtractSummaryMaxSentenceCount, true);
         }
 
         [RecordedTest]
-        public async Task ExtractSummaryWithMultipleActions()
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32759")]
+        public async Task ExtractSummaryBatchConvenienceWithAutoDetectedLanguageTest()
         {
             TextAnalyticsClient client = GetClient();
+            ExtractSummaryOptions options = new() { AutoDetectionDefaultLanguage = "en" };
 
-            TextAnalyticsActions batchActions = new TextAnalyticsActions()
-            {
-                ExtractSummaryActions = new List<ExtractSummaryAction>()
-                {
-                    new ExtractSummaryAction()
-                    {
-                        DisableServiceLogs = true,
-                        ActionName = "ExtractSummaryWithDisabledServiceLogs"
-                    },
-                    new ExtractSummaryAction()
-                    {
-                        ActionName = "ExtractSummary"
-                    }
-                }
-            };
-
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_extractSummaryBatchDocuments, batchActions);
-
+            ExtractSummaryOperation operation = await client.StartExtractSummaryAsync(s_extractSummaryBatchConvenienceDocuments, "auto", options);
             await operation.WaitForCompletionAsync();
+            ValidateOperationProperties(operation);
 
-            // Take the first page
-            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            List<ExtractSummaryResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
+            Assert.AreEqual(1, resultInPages.Count);
 
-            IReadOnlyCollection<ExtractSummaryActionResult> ExtractSummaryActionsResults = resultCollection.ExtractSummaryResults;
-
-            Assert.IsNotNull(ExtractSummaryActionsResults);
-
-            IList<string> expected = new List<string> { "ExtractSummary", "ExtractSummaryWithDisabledServiceLogs" };
-            CollectionAssert.AreEquivalent(expected, ExtractSummaryActionsResults.Select(result => result.ActionName));
+            // Take the first page.
+            ExtractSummaryResultCollection resultCollection = resultInPages.FirstOrDefault();
+            ValidateSummaryBatchResult(resultCollection, SummarySentencesOrder.Offset, isLanguageAutoDetected: true);
         }
 
-        private void ValidateSummaryDocumentResult(SummarySentenceCollection sentences, SummarySentencesOrder expectedOrder)
+        [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32759")]
+        public async Task AnalyzeOperationExtractSummaryWithAutoDetectedLanguageTest()
         {
-            Assert.IsNotNull(sentences.Warnings);
-            Assert.LessOrEqual(sentences.Count, ExtractSummaryMaxSentenceCount);
+            TextAnalyticsClient client = GetClient();
+            List<string> documents = s_extractSummaryBatchConvenienceDocuments;
+            TextAnalyticsActions actions = new()
+            {
+                ExtractSummaryActions = new List<ExtractSummaryAction>() { new ExtractSummaryAction() },
+                DisplayName = "ExtractSummaryWithAutoDetectedLanguage",
+            };
+
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, actions, "auto");
+            await operation.WaitForCompletionAsync();
+
+            // Take the first page.
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            IReadOnlyCollection<ExtractSummaryActionResult> actionResults = resultCollection.ExtractSummaryResults;
+            Assert.IsNotNull(actionResults);
+
+            ExtractSummaryResultCollection results = actionResults.FirstOrDefault().DocumentsResults;
+            ValidateSummaryBatchResult(results, SummarySentencesOrder.Offset, isLanguageAutoDetected: true);
+        }
+
+        private void ValidateOperationProperties(ExtractSummaryOperation operation)
+        {
+            Assert.AreNotEqual(new DateTimeOffset(), operation.CreatedOn);
+            // TODO: Re-enable this check (https://github.com/Azure/azure-sdk-for-net/issues/31855).
+            // Assert.AreNotEqual(new DateTimeOffset(), operation.LastModified);
+
+            if (operation.ExpiresOn.HasValue)
+            {
+                Assert.AreNotEqual(new DateTimeOffset(), operation.ExpiresOn.Value);
+            }
+        }
+
+        private void ValidateSummaryDocumentResult(
+            IReadOnlyCollection<SummarySentence> sentences,
+            int maxSentenceCount,
+            SummarySentencesOrder expectedOrder)
+        {
+            Assert.LessOrEqual(sentences.Count, maxSentenceCount);
 
             for (int i = 0; i < sentences.Count; i++)
             {
-                SummarySentence sentence = sentences[i];
+                SummarySentence sentence = sentences.ElementAt(i);
+                string originalDocument = s_extractSummaryBatchConvenienceDocuments.Where(document => document.Contains(sentence.Text)).FirstOrDefault();
 
-                Assert.True(s_extractSummaryBatchConvenienceDocuments.Any(document => document.Contains(sentence.Text)));
+                Assert.False(string.IsNullOrEmpty(originalDocument));
                 Assert.GreaterOrEqual(sentence.Offset, 0);
                 Assert.GreaterOrEqual(sentence.RankScore, 0.0);
                 Assert.LessOrEqual(sentence.RankScore, 1.0);
                 Assert.AreEqual(sentence.Text.Length, sentence.Length);
+                Assert.AreEqual(originalDocument.Substring(sentence.Offset, sentence.Length), sentence.Text);
 
                 if (i > 0)
                 {
-                    SummarySentence previousSentence = sentences[i - 1];
+                    SummarySentence previousSentence = sentences.ElementAt(i - 1);
 
                     if (expectedOrder == SummarySentencesOrder.Offset)
                     {
@@ -342,7 +312,12 @@ namespace Azure.AI.TextAnalytics.Tests
             }
         }
 
-        private void ValidateSummaryBatchResult(ExtractSummaryResultCollection results, SummarySentencesOrder expectedOrder = SummarySentencesOrder.Offset, bool includeStatistics = false)
+        private void ValidateSummaryBatchResult(
+            ExtractSummaryResultCollection results,
+            SummarySentencesOrder expectedOrder,
+            int maxSentenceCount = DefaultSummaryMaxSentenceCount,
+            bool includeStatistics = default,
+            bool isLanguageAutoDetected = default)
         {
             Assert.That(results.ModelVersion, Is.Not.Null.And.Not.Empty);
 
@@ -363,6 +338,7 @@ namespace Azure.AI.TextAnalytics.Tests
             {
                 Assert.That(result.Id, Is.Not.Null.And.Not.Empty);
                 Assert.False(result.HasError);
+                Assert.IsNotNull(result.Warnings);
 
                 if (includeStatistics)
                 {
@@ -375,7 +351,22 @@ namespace Azure.AI.TextAnalytics.Tests
                     Assert.AreEqual(0, result.Statistics.TransactionCount);
                 }
 
-                ValidateSummaryDocumentResult(result.Sentences, expectedOrder);
+                if (isLanguageAutoDetected)
+                {
+                    Assert.IsNotNull(result.DetectedLanguage);
+                    Assert.That(result.DetectedLanguage.Value.Name, Is.Not.Null.And.Not.Empty);
+                    Assert.That(result.DetectedLanguage.Value.Iso6391Name, Is.Not.Null.And.Not.Empty);
+                    Assert.GreaterOrEqual(result.DetectedLanguage.Value.ConfidenceScore, 0.0);
+                    Assert.LessOrEqual(result.DetectedLanguage.Value.ConfidenceScore, 1.0);
+                    Assert.IsNotNull(result.DetectedLanguage.Value.Warnings);
+                    Assert.IsEmpty(result.DetectedLanguage.Value.Warnings);
+                }
+                else
+                {
+                    Assert.IsNull(result.DetectedLanguage);
+                }
+
+                ValidateSummaryDocumentResult(result.Sentences, maxSentenceCount, expectedOrder);
             }
         }
     }

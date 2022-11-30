@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             string name = default;
             string @namespace = default;
             Optional<string> bindingSelector = default;
-            UserAssignedIdentity identity = default;
+            ContainerServiceUserAssignedIdentity identity = default;
             Optional<ManagedClusterPodIdentityProvisioningState> provisioningState = default;
             Optional<ManagedClusterPodIdentityProvisioningInfo> provisioningInfo = default;
             foreach (var property in element.EnumerateObject())
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (property.NameEquals("identity"))
                 {
-                    identity = UserAssignedIdentity.DeserializeUserAssignedIdentity(property.Value);
+                    identity = ContainerServiceUserAssignedIdentity.DeserializeContainerServiceUserAssignedIdentity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"))

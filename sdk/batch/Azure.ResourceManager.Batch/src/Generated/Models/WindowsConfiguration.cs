@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <summary> Initializes a new instance of WindowsConfiguration. </summary>
-        /// <param name="enableAutomaticUpdates"> If omitted, the default value is true. </param>
-        internal WindowsConfiguration(bool? enableAutomaticUpdates)
+        /// <param name="isAutomaticUpdateEnabled"> If omitted, the default value is true. </param>
+        internal WindowsConfiguration(bool? isAutomaticUpdateEnabled)
         {
-            EnableAutomaticUpdates = enableAutomaticUpdates;
+            IsAutomaticUpdateEnabled = isAutomaticUpdateEnabled;
         }
 
         /// <summary> If omitted, the default value is true. </summary>
-        public bool? EnableAutomaticUpdates { get; set; }
+        public bool? IsAutomaticUpdateEnabled { get; set; }
     }
 }

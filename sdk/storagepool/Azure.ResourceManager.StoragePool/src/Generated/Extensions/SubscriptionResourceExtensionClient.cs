@@ -229,10 +229,10 @@ namespace Azure.ResourceManager.StoragePool
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceSkuInfo" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceSkuInfo> GetResourceSkusAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="StoragePoolSkuInfo" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<StoragePoolSkuInfo> GetResourceSkusAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ResourceSkuInfo>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<StoragePoolSkuInfo>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ResourceSkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceSkus");
                 scope.Start();
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.StoragePool
                     throw;
                 }
             }
-            async Task<Page<ResourceSkuInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<StoragePoolSkuInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = ResourceSkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceSkus");
                 scope.Start();
@@ -272,10 +272,10 @@ namespace Azure.ResourceManager.StoragePool
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceSkuInfo" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceSkuInfo> GetResourceSkus(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="StoragePoolSkuInfo" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<StoragePoolSkuInfo> GetResourceSkus(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Page<ResourceSkuInfo> FirstPageFunc(int? pageSizeHint)
+            Page<StoragePoolSkuInfo> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ResourceSkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceSkus");
                 scope.Start();
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.StoragePool
                     throw;
                 }
             }
-            Page<ResourceSkuInfo> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<StoragePoolSkuInfo> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = ResourceSkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceSkus");
                 scope.Start();

@@ -142,10 +142,10 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Global_GetDeletedWebAppSnapshots
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Snapshot" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Snapshot> GetDeletedWebAppSnapshotsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppSnapshot" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppSnapshot> GetDeletedWebAppSnapshotsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<Snapshot>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AppSnapshot>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _deletedSiteGlobalClientDiagnostics.CreateScope("DeletedSiteResource.GetDeletedWebAppSnapshots");
                 scope.Start();
@@ -169,10 +169,10 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Global_GetDeletedWebAppSnapshots
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Snapshot" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Snapshot> GetDeletedWebAppSnapshots(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppSnapshot" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppSnapshot> GetDeletedWebAppSnapshots(CancellationToken cancellationToken = default)
         {
-            Page<Snapshot> FirstPageFunc(int? pageSizeHint)
+            Page<AppSnapshot> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _deletedSiteGlobalClientDiagnostics.CreateScope("DeletedSiteResource.GetDeletedWebAppSnapshots");
                 scope.Start();

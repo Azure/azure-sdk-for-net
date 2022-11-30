@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         {
             Optional<string> kind = default;
             Optional<string> skuName = default;
-            Optional<HostingModel> hostingModel = default;
+            Optional<ServiceAccountHostingModel> hostingModel = default;
             Optional<string> planType = default;
             Optional<string> tier = default;
             Optional<int> maxCount = default;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    hostingModel = new HostingModel(property.Value.GetString());
+                    hostingModel = new ServiceAccountHostingModel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("planType"))

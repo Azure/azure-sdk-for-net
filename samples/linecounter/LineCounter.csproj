@@ -7,7 +7,7 @@
     <PackageReference Include="Azure.Messaging.EventGrid" Version="4.2.0" />
     <PackageReference Include="Azure.Messaging.EventHubs" Version="5.4.1" />
     <PackageReference Include="Azure.Messaging.EventHubs.Processor" Version="5.4.1" />
-    <PackageReference Include="Azure.Storage.Blobs" Version="12.8.4" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.13.0" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.18.0" />
     <PackageReference Include="Microsoft.Extensions.Azure" Version="1.0.0" />
     <PackageReference Include="System.Text.Encodings.Web" Version="4.7.2" />

@@ -47,9 +47,12 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Tests
             await userAssignedIdentity.DeleteAsync(WaitUntil.Completed);
         }
 
-        [RecordedTest]
-        public async Task AddTag()
+        [TestCase(null)]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task AddTag(bool? useTagResource)
         {
+            SetTagResourceUsage(Client, useTagResource);
             var name = Recording.GenerateAssetName("uai");
             var userAssignedIdentity = await CreateUserAssignedIdentityResource(name);
 
@@ -61,9 +64,12 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Tests
             Assert.AreEqual(value, userAssignedIdentity.Data.Tags[key]);
         }
 
-        [RecordedTest]
-        public async Task SetTags()
+        [TestCase(null)]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task SetTags(bool? useTagResource)
         {
+            SetTagResourceUsage(Client, useTagResource);
             var name = Recording.GenerateAssetName("uai");
             var userAssignedIdentity = await CreateUserAssignedIdentityResource(name);
 
@@ -77,9 +83,12 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Tests
             CollectionAssert.AreEquivalent(tags, userAssignedIdentity.Data.Tags);
         }
 
-        [RecordedTest]
-        public async Task RemoveTag()
+        [TestCase(null)]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task RemoveTag(bool? useTagResource)
         {
+            SetTagResourceUsage(Client, useTagResource);
             var name = Recording.GenerateAssetName("uai");
             var userAssignedIdentity = await CreateUserAssignedIdentityResource(name);
 

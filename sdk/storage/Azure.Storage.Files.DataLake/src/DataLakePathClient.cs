@@ -708,15 +708,15 @@ namespace Azure.Storage.Files.DataLake
                 Uri uri,
                 DataLakeClientConfiguration clientConfiguration)
             {
+                var options = new BlobClientOptions(clientConfiguration.ClientOptions.Version.AsBlobsVersion())
+                {
+                    Diagnostics = { IsDistributedTracingEnabled = clientConfiguration.ClientDiagnostics.IsActivityEnabled },
+                    CustomerProvidedKey = clientConfiguration.CustomerProvidedKey.ToBlobCustomerProvidedKey(),
+                };
+                clientConfiguration.TransferValidation.CopyTo(options.TransferValidation);
                 return BlockBlobClient.CreateClient(
                     uri,
-                    new BlobClientOptions(clientConfiguration.ClientOptions.Version.AsBlobsVersion())
-                    {
-                        Diagnostics = { IsDistributedTracingEnabled = clientConfiguration.ClientDiagnostics.IsActivityEnabled },
-                        CustomerProvidedKey = clientConfiguration.CustomerProvidedKey.ToBlobCustomerProvidedKey(),
-                        UploadTransferValidationOptions = clientConfiguration.UploadTransferValidationOptions,
-                        DownloadTransferValidationOptions = clientConfiguration.DownloadTransferValidationOptions,
-                    },
+                    options,
                     clientConfiguration.Pipeline);
             }
         }

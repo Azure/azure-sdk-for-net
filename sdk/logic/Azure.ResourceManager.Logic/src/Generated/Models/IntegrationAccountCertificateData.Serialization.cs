@@ -51,7 +51,11 @@ namespace Azure.ResourceManager.Logic
             if (Optional.IsDefined(PublicCertificate))
             {
                 writer.WritePropertyName("publicCertificate");
-                writer.WriteStringValue(PublicCertificate);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(PublicCertificate);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(PublicCertificate.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -68,8 +72,8 @@ namespace Azure.ResourceManager.Logic
             Optional<DateTimeOffset> createdTime = default;
             Optional<DateTimeOffset> changedTime = default;
             Optional<BinaryData> metadata = default;
-            Optional<KeyVaultKeyReference> key = default;
-            Optional<string> publicCertificate = default;
+            Optional<IntegrationAccountKeyVaultKeyReference> key = default;
+            Optional<BinaryData> publicCertificate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -163,12 +167,17 @@ namespace Azure.ResourceManager.Logic
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            key = KeyVaultKeyReference.DeserializeKeyVaultKeyReference(property0.Value);
+                            key = IntegrationAccountKeyVaultKeyReference.DeserializeIntegrationAccountKeyVaultKeyReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("publicCertificate"))
                         {
-                            publicCertificate = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            publicCertificate = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                     }

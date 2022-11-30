@@ -1,0 +1,23 @@
+{
+    "dryRun": false,
+    "specFolder": "../azure-rest-api-specs",
+    "headSha": "98dc0989df3a17a1c0ec6dec034e6938e7d65127",
+    "headRef": "refs/pull/3146/merge",
+    "repoHttpsUrl": "https://github.com/openapi-env-test/azure-rest-api-specs",
+    "trigger": "pullRequest",
+    "changedFiles": [
+        "specification/deviceupdate/data-plane/readme.md",
+        "specification/deviceupdate/data-plane/readme.python.md",
+        "specification/deviceupdate/data-plane/readme.typescript.md"
+    ],
+    "relatedReadmeMdFiles": [
+        "specification/deviceupdate/data-plane/readme.md"
+    ],
+    "installInstructionInput": {
+        "isPublic": false,
+        "downloadUrlPrefix": "https://openapihub.test.azure-devex-tools.com/api/sdk-dl-pub?p=openapi-env-test/3146/azure-sdk-for-net-track2/",
+        "downloadCommandTemplate": "curl -L \"{URL}\" -o {FILENAME}",
+        "trigger": "pullRequest"
+    },
+    "autorestConfig": "# azure-sdk-for-net-track2\r\n``` yaml\r\noutput-folder: sdk/deviceupdate/Azure.IoT.DeviceUpdate\r\nrequire:\r\n - specification/deviceupdate/data-plane/readme.md\r\n```"
+}

@@ -29,16 +29,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     case "StorageAccount": return StorageAccount.DeserializeStorageAccount(element);
                 }
             }
-            StorageType storageType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("storageType"))
-                {
-                    storageType = new StorageType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new StorageProperties(storageType);
+            return UnknownStorageProperties.DeserializeUnknownStorageProperties(element);
         }
     }
 }

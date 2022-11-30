@@ -20,12 +20,9 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="kubernetesVersion"> The Kubernetes version (major.minor.patch). </param>
         /// <param name="osType"> The operating system type. The default is Linux. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="kubernetesVersion"/> is null. </exception>
-        internal AgentPoolUpgradeProfileData(string kubernetesVersion, OSType osType)
+        internal AgentPoolUpgradeProfileData(string kubernetesVersion, ContainerServiceOSType osType)
         {
-            if (kubernetesVersion == null)
-            {
-                throw new ArgumentNullException(nameof(kubernetesVersion));
-            }
+            Argument.AssertNotNull(kubernetesVersion, nameof(kubernetesVersion));
 
             KubernetesVersion = kubernetesVersion;
             OSType = osType;
@@ -41,7 +38,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="osType"> The operating system type. The default is Linux. </param>
         /// <param name="upgrades"> List of orchestrator types and versions available for upgrade. </param>
         /// <param name="latestNodeImageVersion"> The latest AKS supported node image version. </param>
-        internal AgentPoolUpgradeProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kubernetesVersion, OSType osType, IReadOnlyList<AgentPoolUpgradeProfilePropertiesUpgradesItem> upgrades, string latestNodeImageVersion) : base(id, name, resourceType, systemData)
+        internal AgentPoolUpgradeProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kubernetesVersion, ContainerServiceOSType osType, IReadOnlyList<AgentPoolUpgradeProfilePropertiesUpgradesItem> upgrades, string latestNodeImageVersion) : base(id, name, resourceType, systemData)
         {
             KubernetesVersion = kubernetesVersion;
             OSType = osType;
@@ -52,7 +49,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <summary> The Kubernetes version (major.minor.patch). </summary>
         public string KubernetesVersion { get; }
         /// <summary> The operating system type. The default is Linux. </summary>
-        public OSType OSType { get; }
+        public ContainerServiceOSType OSType { get; }
         /// <summary> List of orchestrator types and versions available for upgrade. </summary>
         public IReadOnlyList<AgentPoolUpgradeProfilePropertiesUpgradesItem> Upgrades { get; }
         /// <summary> The latest AKS supported node image version. </summary>

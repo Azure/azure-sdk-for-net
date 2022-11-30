@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
-        internal AssociationContract(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal AssociationContract(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AssociationEntityProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
         }
 
         /// <summary> Provisioning state. </summary>
-        public ProvisioningState? ProvisioningState { get; set; }
+        public AssociationEntityProvisioningState? ProvisioningState { get; set; }
     }
 }

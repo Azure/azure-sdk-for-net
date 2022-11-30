@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> or <paramref name="containerName"/> is null. </exception>
         public IotHubStorageEndpointProperties(string connectionString, string containerName)
         {
-            if (connectionString == null)
-            {
-                throw new ArgumentNullException(nameof(connectionString));
-            }
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
+            Argument.AssertNotNull(connectionString, nameof(connectionString));
+            Argument.AssertNotNull(containerName, nameof(containerName));
 
             ConnectionString = connectionString;
             ContainerName = containerName;
@@ -57,7 +52,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> Managed identity properties of storage endpoint for file upload. </summary>
         internal ManagedIdentity Identity { get; set; }
         /// <summary> The user assigned identity. </summary>
-        public string UserAssignedIdentity
+        public ResourceIdentifier UserAssignedIdentity
         {
             get => Identity is null ? default : Identity.UserAssignedIdentity;
             set

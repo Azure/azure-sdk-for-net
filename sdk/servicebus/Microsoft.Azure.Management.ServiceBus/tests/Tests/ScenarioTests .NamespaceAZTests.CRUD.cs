@@ -82,7 +82,7 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.NotNull(getAllNamespacesResponse);
                 Assert.True(getAllNamespacesResponse.Count() >= 1);
 
-                if (!getAllNamespacesResponse.ToList().Contains(getNamespaceResponse))
+                if (getAllNamespacesResponse.ToList().Find(item => item.Name == getNamespaceResponse.Name).Equals(null))
                 {
                     getAllNamespacesResponse = ServiceBusManagementClient.Namespaces.ListNext(getAllNamespacesResponse.NextPageLink);
                 }

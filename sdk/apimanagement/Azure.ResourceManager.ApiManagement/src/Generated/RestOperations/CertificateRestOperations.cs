@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CertificateCollection>> ListByServiceAsync(string subscriptionId, string resourceGroupName, string serviceName, string filter = null, int? top = null, int? skip = null, bool? isKeyVaultRefreshFailed = null, CancellationToken cancellationToken = default)
+        public async Task<Response<CertificateListResult>> ListByServiceAsync(string subscriptionId, string resourceGroupName, string serviceName, string filter = null, int? top = null, int? skip = null, bool? isKeyVaultRefreshFailed = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        CertificateCollection value = default;
+                        CertificateListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CertificateCollection.DeserializeCertificateCollection(document.RootElement);
+                        value = CertificateListResult.DeserializeCertificateListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CertificateCollection> ListByService(string subscriptionId, string resourceGroupName, string serviceName, string filter = null, int? top = null, int? skip = null, bool? isKeyVaultRefreshFailed = null, CancellationToken cancellationToken = default)
+        public Response<CertificateListResult> ListByService(string subscriptionId, string resourceGroupName, string serviceName, string filter = null, int? top = null, int? skip = null, bool? isKeyVaultRefreshFailed = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -130,9 +130,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        CertificateCollection value = default;
+                        CertificateListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CertificateCollection.DeserializeCertificateCollection(document.RootElement);
+                        value = CertificateListResult.DeserializeCertificateListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="certificateId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="certificateId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CertificateContractData>> GetAsync(string subscriptionId, string resourceGroupName, string serviceName, string certificateId, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiManagementCertificateData>> GetAsync(string subscriptionId, string resourceGroupName, string serviceName, string certificateId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -273,13 +273,13 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        CertificateContractData value = default;
+                        ApiManagementCertificateData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CertificateContractData.DeserializeCertificateContractData(document.RootElement);
+                        value = ApiManagementCertificateData.DeserializeApiManagementCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((CertificateContractData)null, message.Response);
+                    return Response.FromValue((ApiManagementCertificateData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="certificateId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="certificateId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CertificateContractData> Get(string subscriptionId, string resourceGroupName, string serviceName, string certificateId, CancellationToken cancellationToken = default)
+        public Response<ApiManagementCertificateData> Get(string subscriptionId, string resourceGroupName, string serviceName, string certificateId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -306,19 +306,19 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        CertificateContractData value = default;
+                        ApiManagementCertificateData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CertificateContractData.DeserializeCertificateContractData(document.RootElement);
+                        value = ApiManagementCertificateData.DeserializeApiManagementCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((CertificateContractData)null, message.Response);
+                    return Response.FromValue((ApiManagementCertificateData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string certificateId, CertificateContractCreateOrUpdateContent content, string ifMatch)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string certificateId, ApiManagementCertificateCreateOrUpdateContent content, ETag? ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.ApiManagement
             request.Uri = uri;
             if (ifMatch != null)
             {
-                request.Headers.Add("If-Match", ifMatch);
+                request.Headers.Add("If-Match", ifMatch.Value);
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="certificateId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="certificateId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CertificateContractData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string certificateId, CertificateContractCreateOrUpdateContent content, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiManagementCertificateData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string certificateId, ApiManagementCertificateCreateOrUpdateContent content, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -373,9 +373,9 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                 case 201:
                     {
-                        CertificateContractData value = default;
+                        ApiManagementCertificateData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CertificateContractData.DeserializeCertificateContractData(document.RootElement);
+                        value = ApiManagementCertificateData.DeserializeApiManagementCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="certificateId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="certificateId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CertificateContractData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, string certificateId, CertificateContractCreateOrUpdateContent content, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response<ApiManagementCertificateData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, string certificateId, ApiManagementCertificateCreateOrUpdateContent content, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -408,9 +408,9 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                 case 201:
                     {
-                        CertificateContractData value = default;
+                        ApiManagementCertificateData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CertificateContractData.DeserializeCertificateContractData(document.RootElement);
+                        value = ApiManagementCertificateData.DeserializeApiManagementCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string serviceName, string certificateId, string ifMatch)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string serviceName, string certificateId, ETag ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -448,15 +448,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="certificateId"> Identifier of the certificate entity. Must be unique in the current API Management service instance. </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="certificateId"/> or <paramref name="ifMatch"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="certificateId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="certificateId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string serviceName, string certificateId, string ifMatch, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string serviceName, string certificateId, ETag ifMatch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(certificateId, nameof(certificateId));
-            Argument.AssertNotNull(ifMatch, nameof(ifMatch));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, serviceName, certificateId, ifMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -477,15 +476,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="certificateId"> Identifier of the certificate entity. Must be unique in the current API Management service instance. </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="certificateId"/> or <paramref name="ifMatch"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="certificateId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="certificateId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string serviceName, string certificateId, string ifMatch, CancellationToken cancellationToken = default)
+        public Response Delete(string subscriptionId, string resourceGroupName, string serviceName, string certificateId, ETag ifMatch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(certificateId, nameof(certificateId));
-            Argument.AssertNotNull(ifMatch, nameof(ifMatch));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, serviceName, certificateId, ifMatch);
             _pipeline.Send(message, cancellationToken);
@@ -530,7 +528,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="certificateId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="certificateId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CertificateContractData>> RefreshSecretAsync(string subscriptionId, string resourceGroupName, string serviceName, string certificateId, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiManagementCertificateData>> RefreshSecretAsync(string subscriptionId, string resourceGroupName, string serviceName, string certificateId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -543,9 +541,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        CertificateContractData value = default;
+                        ApiManagementCertificateData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CertificateContractData.DeserializeCertificateContractData(document.RootElement);
+                        value = ApiManagementCertificateData.DeserializeApiManagementCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -561,7 +559,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="certificateId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="certificateId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CertificateContractData> RefreshSecret(string subscriptionId, string resourceGroupName, string serviceName, string certificateId, CancellationToken cancellationToken = default)
+        public Response<ApiManagementCertificateData> RefreshSecret(string subscriptionId, string resourceGroupName, string serviceName, string certificateId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -574,9 +572,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        CertificateContractData value = default;
+                        ApiManagementCertificateData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CertificateContractData.DeserializeCertificateContractData(document.RootElement);
+                        value = ApiManagementCertificateData.DeserializeApiManagementCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -610,7 +608,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CertificateCollection>> ListByServiceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter = null, int? top = null, int? skip = null, bool? isKeyVaultRefreshFailed = null, CancellationToken cancellationToken = default)
+        public async Task<Response<CertificateListResult>> ListByServiceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter = null, int? top = null, int? skip = null, bool? isKeyVaultRefreshFailed = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -623,9 +621,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        CertificateCollection value = default;
+                        CertificateListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CertificateCollection.DeserializeCertificateCollection(document.RootElement);
+                        value = CertificateListResult.DeserializeCertificateListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -645,7 +643,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CertificateCollection> ListByServiceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter = null, int? top = null, int? skip = null, bool? isKeyVaultRefreshFailed = null, CancellationToken cancellationToken = default)
+        public Response<CertificateListResult> ListByServiceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter = null, int? top = null, int? skip = null, bool? isKeyVaultRefreshFailed = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -658,9 +656,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        CertificateCollection value = default;
+                        CertificateListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CertificateCollection.DeserializeCertificateCollection(document.RootElement);
+                        value = CertificateListResult.DeserializeCertificateListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

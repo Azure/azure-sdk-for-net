@@ -6,21 +6,19 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Transformation for data flow source. </summary>
-    public partial class DataFlowSource : Transformation
+    public partial class DataFlowSource : DataFlowTransformation
     {
         /// <summary> Initializes a new instance of DataFlowSource. </summary>
         /// <param name="name"> Transformation name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public DataFlowSource(string name) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
         }
 
         /// <summary> Initializes a new instance of DataFlowSource. </summary>
@@ -30,12 +28,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="linkedService"> Linked service reference. </param>
         /// <param name="flowlet"> Flowlet Reference. </param>
         /// <param name="schemaLinkedService"> Schema linked service reference. </param>
-        internal DataFlowSource(string name, string description, DatasetReference dataset, LinkedServiceReference linkedService, DataFlowReference flowlet, LinkedServiceReference schemaLinkedService) : base(name, description, dataset, linkedService, flowlet)
+        internal DataFlowSource(string name, string description, DatasetReference dataset, FactoryLinkedServiceReference linkedService, DataFlowReference flowlet, FactoryLinkedServiceReference schemaLinkedService) : base(name, description, dataset, linkedService, flowlet)
         {
             SchemaLinkedService = schemaLinkedService;
         }
 
         /// <summary> Schema linked service reference. </summary>
-        public LinkedServiceReference SchemaLinkedService { get; set; }
+        public FactoryLinkedServiceReference SchemaLinkedService { get; set; }
     }
 }

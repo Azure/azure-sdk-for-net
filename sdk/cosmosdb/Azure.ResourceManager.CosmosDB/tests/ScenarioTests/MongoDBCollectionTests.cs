@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.True(ifExists);
 
             // NOT WORKING API
-            //ThroughputSettingsData throughtput = await collection.GetMongoDBCollectionThroughputAsync();
+            //ThroughputSettingData throughtput = await collection.GetMongoDBCollectionThroughputAsync();
             MongoDBCollectionResource collection2 = await MongoDBCollectionCollection.GetAsync(_collectionName);
             Assert.AreEqual(_collectionName, collection2.Data.Resource.CollectionName);
             //Assert.AreEqual(TestThroughput1, collection2.Data.Options.Throughput);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             MongoDBCollectionThroughputSettingResource throughput = await collection.GetMongoDBCollectionThroughputSetting().GetAsync();
             AssertManualThroughput(throughput.Data);
 
-            ThroughputSettingsData throughputData = (await throughput.MigrateMongoDBCollectionToAutoscaleAsync(WaitUntil.Completed)).Value.Data;
+            ThroughputSettingData throughputData = (await throughput.MigrateMongoDBCollectionToAutoscaleAsync(WaitUntil.Completed)).Value.Data;
             AssertAutoscale(throughputData);
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             MongoDBCollectionThroughputSettingResource throughput = await collection.GetMongoDBCollectionThroughputSetting().GetAsync();
             AssertAutoscale(throughput.Data);
 
-            ThroughputSettingsData throughputData = (await throughput.MigrateMongoDBCollectionToManualThroughputAsync(WaitUntil.Completed)).Value.Data;
+            ThroughputSettingData throughputData = (await throughput.MigrateMongoDBCollectionToManualThroughputAsync(WaitUntil.Completed)).Value.Data;
             AssertManualThroughput(throughputData);
         }
 

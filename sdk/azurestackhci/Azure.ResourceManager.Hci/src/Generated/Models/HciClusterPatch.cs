@@ -29,6 +29,6 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Tenant id of cluster AAD identity. </summary>
         public Guid? AadTenantId { get; set; }
         /// <summary> Desired properties of the cluster. </summary>
-        public ClusterDesiredProperties DesiredProperties { get; set; }
+        public HciClusterDesiredProperties DesiredProperties { get; set; }
     }
 }

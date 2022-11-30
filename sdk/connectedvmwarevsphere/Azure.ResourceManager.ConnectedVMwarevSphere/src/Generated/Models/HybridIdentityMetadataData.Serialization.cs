@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             Optional<SystemData> systemData = default;
             Optional<string> vmId = default;
             Optional<string> publicKey = default;
-            Optional<SystemAssignedServiceIdentity> identity = default;
+            Optional<ManagedServiceIdentity> identity = default;
             Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            identity = JsonSerializer.Deserialize<SystemAssignedServiceIdentity>(property0.Value.ToString());
+                            identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))

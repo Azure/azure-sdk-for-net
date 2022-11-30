@@ -17,4 +17,8 @@
   <ItemGroup>
     <None Include="..\tests.yml" Link="\tests.yml" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SessionRecords\CallMediaLiveTests\" />
+    <Folder Include="SessionRecords\CallConnectionLiveTests\" />
+  </ItemGroup>
 </Project>

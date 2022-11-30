@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.AppConfiguration
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ConfigurationStoreResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ConfigurationStoreResources and their operations over a ConfigurationStoreResource. </returns>
-        public virtual ConfigurationStoreCollection GetConfigurationStores()
+        /// <summary> Gets a collection of AppConfigurationStoreResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of AppConfigurationStoreResources and their operations over a AppConfigurationStoreResource. </returns>
+        public virtual AppConfigurationStoreCollection GetAppConfigurationStores()
         {
-            return GetCachedClient(Client => new ConfigurationStoreCollection(Client, Id));
+            return GetCachedClient(Client => new AppConfigurationStoreCollection(Client, Id));
         }
     }
 }

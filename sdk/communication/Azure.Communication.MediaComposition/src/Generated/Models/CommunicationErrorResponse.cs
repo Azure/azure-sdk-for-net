@@ -6,8 +6,9 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
-namespace Azure.Communication.MediaComposition
+namespace Azure.Communication.MediaComposition.Models
 {
     /// <summary> The Communication Services error. </summary>
     internal partial class CommunicationErrorResponse
@@ -15,17 +16,14 @@ namespace Azure.Communication.MediaComposition
         /// <summary> Initializes a new instance of CommunicationErrorResponse. </summary>
         /// <param name="error"> The Communication Services error. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="error"/> is null. </exception>
-        internal CommunicationErrorResponse(CommunicationError error)
+        public CommunicationErrorResponse(CommunicationError error)
         {
-            if (error == null)
-            {
-                throw new ArgumentNullException(nameof(error));
-            }
+            Argument.AssertNotNull(error, nameof(error));
 
             Error = error;
         }
 
         /// <summary> The Communication Services error. </summary>
-        public CommunicationError Error { get; }
+        public CommunicationError Error { get; set; }
     }
 }

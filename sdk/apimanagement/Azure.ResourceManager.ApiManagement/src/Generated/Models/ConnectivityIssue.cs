@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="severity"> The severity of the issue. </param>
         /// <param name="issueType"> The type of issue. </param>
         /// <param name="context"> Provides additional context on the issue. </param>
-        internal ConnectivityIssue(Origin? origin, Severity? severity, IssueType? issueType, IReadOnlyList<IDictionary<string, string>> context)
+        internal ConnectivityIssue(IssueOrigin? origin, IssueSeverity? severity, IssueType? issueType, IReadOnlyList<IDictionary<string, string>> context)
         {
             Origin = origin;
             Severity = severity;
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The origin of the issue. </summary>
-        public Origin? Origin { get; }
+        public IssueOrigin? Origin { get; }
         /// <summary> The severity of the issue. </summary>
-        public Severity? Severity { get; }
+        public IssueSeverity? Severity { get; }
         /// <summary> The type of issue. </summary>
         public IssueType? IssueType { get; }
         /// <summary> Provides additional context on the issue. </summary>

@@ -75,7 +75,7 @@ namespace Azure.Storage.Blobs.Perf.Options
                             return false;
                     }
                 }
-                return new SpecializedBlobClientOptions
+                var result = new SpecializedBlobClientOptions
                 {
                     ClientSideEncryption = TryParseEncryptionVersion(EncryptionVersionString, out ClientSideEncryptionVersion version)
                         ? new ClientSideEncryptionOptions(version)
@@ -85,6 +85,7 @@ namespace Azure.Storage.Blobs.Perf.Options
                         }
                         : default
                 };
+                return result;
             }
         }
 

@@ -46,12 +46,16 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// <param name="storageContainers">The list of storage container
         /// endpoints that IoT hub routes messages to, based on the routing
         /// rules.</param>
-        public RoutingEndpoints(IList<RoutingServiceBusQueueEndpointProperties> serviceBusQueues = default(IList<RoutingServiceBusQueueEndpointProperties>), IList<RoutingServiceBusTopicEndpointProperties> serviceBusTopics = default(IList<RoutingServiceBusTopicEndpointProperties>), IList<RoutingEventHubProperties> eventHubs = default(IList<RoutingEventHubProperties>), IList<RoutingStorageContainerProperties> storageContainers = default(IList<RoutingStorageContainerProperties>))
+        /// <param name="cosmosDBSqlCollections">The list of Cosmos DB
+        /// collection endpoints that IoT hub routes messages to, based on the
+        /// routing rules.</param>
+        public RoutingEndpoints(IList<RoutingServiceBusQueueEndpointProperties> serviceBusQueues = default(IList<RoutingServiceBusQueueEndpointProperties>), IList<RoutingServiceBusTopicEndpointProperties> serviceBusTopics = default(IList<RoutingServiceBusTopicEndpointProperties>), IList<RoutingEventHubProperties> eventHubs = default(IList<RoutingEventHubProperties>), IList<RoutingStorageContainerProperties> storageContainers = default(IList<RoutingStorageContainerProperties>), IList<RoutingCosmosDBSqlApiProperties> cosmosDBSqlCollections = default(IList<RoutingCosmosDBSqlApiProperties>))
         {
             ServiceBusQueues = serviceBusQueues;
             ServiceBusTopics = serviceBusTopics;
             EventHubs = eventHubs;
             StorageContainers = storageContainers;
+            CosmosDBSqlCollections = cosmosDBSqlCollections;
             CustomInit();
         }
 
@@ -88,6 +92,13 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// </summary>
         [JsonProperty(PropertyName = "storageContainers")]
         public IList<RoutingStorageContainerProperties> StorageContainers { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of Cosmos DB collection endpoints that IoT
+        /// hub routes messages to, based on the routing rules.
+        /// </summary>
+        [JsonProperty(PropertyName = "cosmosDBSqlCollections")]
+        public IList<RoutingCosmosDBSqlApiProperties> CosmosDBSqlCollections { get; set; }
 
     }
 }

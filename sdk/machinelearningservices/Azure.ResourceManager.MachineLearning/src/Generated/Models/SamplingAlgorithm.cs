@@ -13,10 +13,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// Please note <see cref="SamplingAlgorithm"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="BayesianSamplingAlgorithm"/>, <see cref="GridSamplingAlgorithm"/> and <see cref="RandomSamplingAlgorithm"/>.
     /// </summary>
-    public partial class SamplingAlgorithm
+    public abstract partial class SamplingAlgorithm
     {
         /// <summary> Initializes a new instance of SamplingAlgorithm. </summary>
-        public SamplingAlgorithm()
+        protected SamplingAlgorithm()
         {
         }
 

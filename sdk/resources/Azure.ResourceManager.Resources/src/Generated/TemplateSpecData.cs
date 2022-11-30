@@ -54,7 +54,36 @@ namespace Azure.ResourceManager.Resources
         public string Description { get; set; }
         /// <summary> Template Spec display name. </summary>
         public string DisplayName { get; set; }
-        /// <summary> The Template Spec metadata. Metadata is an open-ended object and is typically a collection of key-value pairs. </summary>
+        /// <summary>
+        /// The Template Spec metadata. Metadata is an open-ended object and is typically a collection of key-value pairs.
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public BinaryData Metadata { get; set; }
         /// <summary> High-level information about the versions within this Template Spec. The keys are the version names. Only populated if the $expand query parameter is set to &apos;versions&apos;. </summary>
         public IReadOnlyDictionary<string, TemplateSpecVersionInfo> Versions { get; }

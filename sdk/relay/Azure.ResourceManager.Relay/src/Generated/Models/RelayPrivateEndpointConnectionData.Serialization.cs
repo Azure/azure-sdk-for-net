@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.Relay
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<WritableSubResource> privateEndpoint = default;
-            Optional<ConnectionState> privateLinkServiceConnectionState = default;
-            Optional<EndPointProvisioningState> provisioningState = default;
+            Optional<RelayPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            Optional<RelayPrivateEndpointConnectionProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Relay
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            privateLinkServiceConnectionState = ConnectionState.DeserializeConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = RelayPrivateLinkServiceConnectionState.DeserializeRelayPrivateLinkServiceConnectionState(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Relay
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new EndPointProvisioningState(property0.Value.GetString());
+                            provisioningState = new RelayPrivateEndpointConnectionProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }

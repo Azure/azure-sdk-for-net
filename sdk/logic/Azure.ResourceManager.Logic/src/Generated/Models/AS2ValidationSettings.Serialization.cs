@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.Logic.Models
             int interchangeDuplicatesValidityDays = default;
             bool checkCertificateRevocationListOnSend = default;
             bool checkCertificateRevocationListOnReceive = default;
-            EncryptionAlgorithm encryptionAlgorithm = default;
-            Optional<SigningAlgorithm> signingAlgorithm = default;
+            AS2EncryptionAlgorithm encryptionAlgorithm = default;
+            Optional<AS2SigningAlgorithm> signingAlgorithm = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("overrideMessageProperties"))
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 if (property.NameEquals("encryptionAlgorithm"))
                 {
-                    encryptionAlgorithm = new EncryptionAlgorithm(property.Value.GetString());
+                    encryptionAlgorithm = new AS2EncryptionAlgorithm(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("signingAlgorithm"))
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Logic.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    signingAlgorithm = new SigningAlgorithm(property.Value.GetString());
+                    signingAlgorithm = new AS2SigningAlgorithm(property.Value.GetString());
                     continue;
                 }
             }

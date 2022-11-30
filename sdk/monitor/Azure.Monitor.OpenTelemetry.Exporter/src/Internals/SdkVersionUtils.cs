@@ -33,7 +33,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
         }
 
-        private static string GetVersion(Type type)
+        internal static string GetVersion(Type type)
         {
             try
             {

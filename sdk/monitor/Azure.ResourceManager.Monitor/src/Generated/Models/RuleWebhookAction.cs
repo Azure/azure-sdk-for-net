@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Specifies the action to post to service when the rule condition is evaluated. The discriminator is always RuleWebhookAction in this case. </summary>
-    public partial class RuleWebhookAction : RuleAction
+    public partial class RuleWebhookAction : AlertRuleAction
     {
         /// <summary> Initializes a new instance of RuleWebhookAction. </summary>
         public RuleWebhookAction()

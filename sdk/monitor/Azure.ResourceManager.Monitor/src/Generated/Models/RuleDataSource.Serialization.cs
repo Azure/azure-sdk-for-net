@@ -50,45 +50,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     case "Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource": return RuleMetricDataSource.DeserializeRuleMetricDataSource(element);
                 }
             }
-            string odataType = default;
-            Optional<ResourceIdentifier> resourceUri = default;
-            Optional<string> legacyResourceId = default;
-            Optional<string> resourceLocation = default;
-            Optional<string> metricNamespace = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("odata.type"))
-                {
-                    odataType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resourceUri"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    resourceUri = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("legacyResourceId"))
-                {
-                    legacyResourceId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resourceLocation"))
-                {
-                    resourceLocation = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("metricNamespace"))
-                {
-                    metricNamespace = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new RuleDataSource(odataType, resourceUri.Value, legacyResourceId.Value, resourceLocation.Value, metricNamespace.Value);
+            return UnknownRuleDataSource.DeserializeUnknownRuleDataSource(element);
         }
     }
 }

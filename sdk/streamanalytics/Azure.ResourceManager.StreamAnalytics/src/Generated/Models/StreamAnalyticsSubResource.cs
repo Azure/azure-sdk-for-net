@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> The base sub-resource model definition. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
-        internal StreamAnalyticsSubResource(string id, string name, string resourceType)
+        internal StreamAnalyticsSubResource(ResourceIdentifier id, string name, ResourceType? resourceType)
         {
             Id = id;
             Name = name;
@@ -27,10 +29,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Resource Id. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
         /// <summary> Resource name. </summary>
         public string Name { get; set; }
         /// <summary> Resource type. </summary>
-        public string ResourceType { get; }
+        public ResourceType? ResourceType { get; }
     }
 }

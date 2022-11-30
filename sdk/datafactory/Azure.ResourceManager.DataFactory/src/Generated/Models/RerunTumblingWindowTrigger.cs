@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Trigger that schedules pipeline reruns for all fixed time interval windows from a requested start time to requested end time. </summary>
-    public partial class RerunTumblingWindowTrigger : DataFactoryTriggerProperties
+    public partial class RerunTumblingWindowTrigger : FactoryTriggerDefinition
     {
         /// <summary> Initializes a new instance of RerunTumblingWindowTrigger. </summary>
         /// <param name="parentTrigger"> The parent trigger reference. </param>
@@ -21,10 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="parentTrigger"/> is null. </exception>
         public RerunTumblingWindowTrigger(BinaryData parentTrigger, DateTimeOffset requestedStartOn, DateTimeOffset requestedEndOn, int rerunConcurrency)
         {
-            if (parentTrigger == null)
-            {
-                throw new ArgumentNullException(nameof(parentTrigger));
-            }
+            Argument.AssertNotNull(parentTrigger, nameof(parentTrigger));
 
             ParentTrigger = parentTrigger;
             RequestedStartOn = requestedStartOn;
@@ -43,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="requestedStartOn"> The start time for the time period for which restatement is initiated. Only UTC time is currently supported. </param>
         /// <param name="requestedEndOn"> The end time for the time period for which restatement is initiated. Only UTC time is currently supported. </param>
         /// <param name="rerunConcurrency"> The max number of parallel time windows (ready for execution) for which a rerun is triggered. </param>
-        internal RerunTumblingWindowTrigger(string triggerType, string description, TriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData parentTrigger, DateTimeOffset requestedStartOn, DateTimeOffset requestedEndOn, int rerunConcurrency) : base(triggerType, description, runtimeState, annotations, additionalProperties)
+        internal RerunTumblingWindowTrigger(string triggerType, string description, FactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData parentTrigger, DateTimeOffset requestedStartOn, DateTimeOffset requestedEndOn, int rerunConcurrency) : base(triggerType, description, runtimeState, annotations, additionalProperties)
         {
             ParentTrigger = parentTrigger;
             RequestedStartOn = requestedStartOn;
@@ -52,7 +50,36 @@ namespace Azure.ResourceManager.DataFactory.Models
             TriggerType = triggerType ?? "RerunTumblingWindowTrigger";
         }
 
-        /// <summary> The parent trigger reference. </summary>
+        /// <summary>
+        /// The parent trigger reference.
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public BinaryData ParentTrigger { get; set; }
         /// <summary> The start time for the time period for which restatement is initiated. Only UTC time is currently supported. </summary>
         public DateTimeOffset RequestedStartOn { get; set; }

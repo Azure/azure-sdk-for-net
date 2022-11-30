@@ -12,8 +12,9 @@ using NUnit.Framework;
 namespace Azure.Security.KeyVault.Keys.Tests
 {
     [ClientTestFixture(
-        KeyClientOptions.ServiceVersion.V7_2,
-        KeyClientOptions.ServiceVersion.V7_3)]
+        KeyClientOptions.ServiceVersion.V7_4_Preview_1,
+        KeyClientOptions.ServiceVersion.V7_3,
+        KeyClientOptions.ServiceVersion.V7_2)]
     public class ManagedHsmLiveTests : KeyClientLiveTests
     {
         public ManagedHsmLiveTests(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion)
@@ -79,6 +80,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             AssertKeyVaultKeysEqual(keyNoHsm, keyReturned);
         }
 
+        [RecordedTest]
         [TestCase(16)]
         [TestCase(32)]
         [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3)]
@@ -89,7 +91,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3)]
+        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3, Max = KeyClientOptions.ServiceVersion.V7_3)] // TODO: Remove Max once https://github.com/Azure/azure-sdk-for-net/issues/32260 is resolved.
         public async Task ReleaseImportedKey()
         {
             string keyName = Recording.GenerateId();
@@ -114,6 +116,20 @@ namespace Azure.Security.KeyVault.Keys.Tests
             JsonElement keyElement = doc.RootElement.GetProperty("key").GetProperty("key");
             Assert.AreEqual(key.Id, keyElement.GetProperty("kid").GetString());
             Assert.AreEqual(JsonValueKind.String, keyElement.GetProperty("key_hsm").ValueKind);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_4_Preview_1)]
+        public async Task CreateOkpKey()
+        {
+            string keyName = Recording.GenerateId();
+
+            CreateOkpKeyOptions options = new(keyName, hardwareProtected: false);
+            KeyVaultKey key = await Client.CreateOkpKeyAsync(options);
+            RegisterForCleanup(key.Name);
+
+            KeyVaultKey keyReturned = await Client.GetKeyAsync(keyName);
+            AssertKeyVaultKeysEqual(key, keyReturned);
         }
     }
 }

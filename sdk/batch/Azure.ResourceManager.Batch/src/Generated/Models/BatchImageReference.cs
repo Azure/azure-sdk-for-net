@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> A reference to an Azure Virtual Machines Marketplace image or the Azure Image resource of a custom Virtual Machine. To get the list of all imageReferences verified by Azure Batch, see the &apos;List supported node agent SKUs&apos; operation. </summary>
@@ -21,7 +23,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="sku"> For example, 18.04-LTS or 2022-datacenter. </param>
         /// <param name="version"> A value of &apos;latest&apos; can be specified to select the latest version of an image. If omitted, the default is &apos;latest&apos;. </param>
         /// <param name="id"> This property is mutually exclusive with other properties. The Shared Image Gallery image must have replicas in the same region as the Azure Batch account. For information about the firewall settings for the Batch node agent to communicate with the Batch service see https://docs.microsoft.com/en-us/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration. </param>
-        internal BatchImageReference(string publisher, string offer, string sku, string version, string id)
+        internal BatchImageReference(string publisher, string offer, string sku, string version, ResourceIdentifier id)
         {
             Publisher = publisher;
             Offer = offer;
@@ -39,6 +41,6 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> A value of &apos;latest&apos; can be specified to select the latest version of an image. If omitted, the default is &apos;latest&apos;. </summary>
         public string Version { get; set; }
         /// <summary> This property is mutually exclusive with other properties. The Shared Image Gallery image must have replicas in the same region as the Azure Batch account. For information about the firewall settings for the Batch node agent to communicate with the Batch service see https://docs.microsoft.com/en-us/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration. </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
     }
 }

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> A copy activity Azure Databricks Delta Lake source. </summary>
-    public partial class AzureDatabricksDeltaLakeSource : CopySource
+    public partial class AzureDatabricksDeltaLakeSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of AzureDatabricksDeltaLakeSource. </summary>
         public AzureDatabricksDeltaLakeSource()
@@ -35,7 +35,36 @@ namespace Azure.ResourceManager.DataFactory.Models
             CopySourceType = copySourceType ?? "AzureDatabricksDeltaLakeSource";
         }
 
-        /// <summary> Azure Databricks Delta Lake Sql query. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Azure Databricks Delta Lake Sql query. Type: string (or Expression with resultType string).
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public BinaryData Query { get; set; }
         /// <summary> Azure Databricks Delta Lake export settings. </summary>
         public AzureDatabricksDeltaLakeExportCommand ExportSettings { get; set; }

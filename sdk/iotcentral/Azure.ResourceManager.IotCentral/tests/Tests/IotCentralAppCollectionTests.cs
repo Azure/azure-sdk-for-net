@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.IotCentral.Tests
             var appsCollection = rg.GetIotCentralApps();
 
             // Create IoT Central application.
-            var iotCentralAppData = new IotCentralAppData(AzureLocation.WestUS, new AppSkuInfo(AppSku.ST0))
+            var iotCentralAppData = new IotCentralAppData(AzureLocation.WestUS, new IotCentralAppSkuInfo(IotCentralAppSku.ST0))
             {
                 DisplayName = appName,
                 Subdomain = appName,

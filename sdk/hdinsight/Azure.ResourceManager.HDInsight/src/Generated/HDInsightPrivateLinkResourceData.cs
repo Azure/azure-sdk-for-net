@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HDInsight
     public partial class HDInsightPrivateLinkResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of HDInsightPrivateLinkResourceData. </summary>
-        internal HDInsightPrivateLinkResourceData()
+        public HDInsightPrivateLinkResourceData()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
-        internal HDInsightPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredZoneNames) : base(id, name, resourceType, systemData)
+        internal HDInsightPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames) : base(id, name, resourceType, systemData)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.HDInsight
         /// <summary> The private link resource required member names. </summary>
         public IReadOnlyList<string> RequiredMembers { get; }
         /// <summary> The private link resource Private link DNS zone name. </summary>
-        public IReadOnlyList<string> RequiredZoneNames { get; }
+        public IList<string> RequiredZoneNames { get; }
     }
 }

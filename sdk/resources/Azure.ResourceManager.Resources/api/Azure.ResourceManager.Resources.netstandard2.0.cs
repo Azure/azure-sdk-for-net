@@ -1057,7 +1057,9 @@ namespace Azure.ResourceManager.Resources.Models
         public string ContainerInstanceId { get { throw null; } }
         public System.DateTimeOffset? EndOn { get { throw null; } }
         public Azure.ResponseError Error { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.DateTimeOffset? ExpirationOn { get { throw null; } }
+        public System.DateTimeOffset? ExpireOn { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public string StorageAccountId { get { throw null; } }
     }

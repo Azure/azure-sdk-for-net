@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="httpProxy"> The HTTP proxy server endpoint to use. </param>
         /// <param name="httpsProxy"> The HTTPS proxy server endpoint to use. </param>
         /// <param name="noProxy"> The endpoints that should not go through proxy. </param>
-        /// <param name="trustedCa"> Alternative CA cert to use for connecting to proxy servers. </param>
-        internal ManagedClusterHttpProxyConfig(string httpProxy, string httpsProxy, IList<string> noProxy, string trustedCa)
+        /// <param name="trustedCA"> Alternative CA cert to use for connecting to proxy servers. </param>
+        internal ManagedClusterHttpProxyConfig(string httpProxy, string httpsProxy, IList<string> noProxy, string trustedCA)
         {
             HttpProxy = httpProxy;
             HttpsProxy = httpsProxy;
             NoProxy = noProxy;
-            TrustedCa = trustedCa;
+            TrustedCA = trustedCA;
         }
 
         /// <summary> The HTTP proxy server endpoint to use. </summary>
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> The endpoints that should not go through proxy. </summary>
         public IList<string> NoProxy { get; }
         /// <summary> Alternative CA cert to use for connecting to proxy servers. </summary>
-        public string TrustedCa { get; set; }
+        public string TrustedCA { get; set; }
     }
 }

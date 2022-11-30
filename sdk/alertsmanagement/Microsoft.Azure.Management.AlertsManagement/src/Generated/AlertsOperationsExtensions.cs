@@ -288,9 +288,12 @@ namespace Microsoft.Azure.Management.AlertsManagement
             /// New state of the alert. Possible values include: 'New', 'Acknowledged',
             /// 'Closed'
             /// </param>
-            public static Alert ChangeState(this IAlertsOperations operations, string alertId, string newState)
+            /// <param name='comment'>
+            /// reason of change alert state
+            /// </param>
+            public static Alert ChangeState(this IAlertsOperations operations, string alertId, string newState, Comments comment = default(Comments))
             {
-                return operations.ChangeStateAsync(alertId, newState).GetAwaiter().GetResult();
+                return operations.ChangeStateAsync(alertId, newState, comment).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -306,12 +309,15 @@ namespace Microsoft.Azure.Management.AlertsManagement
             /// New state of the alert. Possible values include: 'New', 'Acknowledged',
             /// 'Closed'
             /// </param>
+            /// <param name='comment'>
+            /// reason of change alert state
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Alert> ChangeStateAsync(this IAlertsOperations operations, string alertId, string newState, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Alert> ChangeStateAsync(this IAlertsOperations operations, string alertId, string newState, Comments comment = default(Comments), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ChangeStateWithHttpMessagesAsync(alertId, newState, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ChangeStateWithHttpMessagesAsync(alertId, newState, comment, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

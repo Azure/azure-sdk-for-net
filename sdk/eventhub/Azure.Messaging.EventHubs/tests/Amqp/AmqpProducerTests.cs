@@ -1180,7 +1180,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(null)]
         [TestCase("")]
         [TestCase("someKey")]
-        public async Task SendEnumerableCreatesTheAmqpMessageFromTheEnumerable(string partitonKey)
+        public async Task SendEnumerableCreatesTheAmqpMessageFromTheEnumerable(string partitionKey)
         {
             var amqpMessages = default(IReadOnlyCollection<AmqpMessage>);
             var events = new List<EventData> { new EventData(new byte[] { 0x15 }) };
@@ -1200,13 +1200,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Callback<IReadOnlyCollection<AmqpMessage>, string, CancellationToken>((messages, key, token) => amqpMessages = messages)
                 .Returns(Task.CompletedTask);
 
-            await producer.Object.SendAsync(events, new SendEventOptions { PartitionKey = partitonKey }, CancellationToken.None);
+            await producer.Object.SendAsync(events, new SendEventOptions { PartitionKey = partitionKey }, CancellationToken.None);
 
             Assert.That(amqpMessages, Is.Not.Null, "The AMQP messages should have been set.");
             Assert.That(amqpMessages.Count, Is.EqualTo(events.Count), "An AMQP message should exist for each source event.");
 
-            using var batchMessage = converter.CreateBatchFromEvents(events, partitonKey);
-            using var amqpSourceMessage = converter.CreateBatchFromMessages(amqpMessages);
+            using var batchMessage = converter.CreateBatchFromEvents(events, partitionKey);
+            using var amqpSourceMessage = converter.CreateBatchFromMessages(amqpMessages, partitionKey);
 
             Assert.That(amqpSourceMessage.SerializedMessageSize, Is.EqualTo(batchMessage.SerializedMessageSize), "The serialized size of the messages should match.");
         }
@@ -1556,11 +1556,11 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(null)]
         [TestCase("")]
         [TestCase("someKey")]
-        public async Task SendBatchCreatesTheAmqpMessageFromTheBatch(string partitonKey)
+        public async Task SendBatchCreatesTheAmqpMessageFromTheBatch(string partitionKey)
         {
             var amqpMessages = default(IReadOnlyCollection<AmqpMessage>);
             var expectedMaximumSize = 512;
-            var options = new CreateBatchOptions { PartitionKey = partitonKey };
+            var options = new CreateBatchOptions { PartitionKey = partitionKey };
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
             var converter = new AmqpMessageConverter();
 
@@ -1600,8 +1600,8 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(amqpMessages, Is.Not.Null, "The AMQP messages should have been set.");
             Assert.That(amqpMessages.Count, Is.EqualTo(messages.Count), "An AMQP message should exist for each source event.");
 
-            using var batchMessage = converter.CreateBatchFromMessages(messages, partitonKey);
-            using var amqpSourceMessage = converter.CreateBatchFromMessages(amqpMessages);
+            using var batchMessage = converter.CreateBatchFromMessages(messages, partitionKey);
+            using var amqpSourceMessage = converter.CreateBatchFromMessages(amqpMessages, partitionKey);
 
             Assert.That(amqpSourceMessage.SerializedMessageSize, Is.EqualTo(batchMessage.SerializedMessageSize), "The serialized size of the messages should match.");
         }

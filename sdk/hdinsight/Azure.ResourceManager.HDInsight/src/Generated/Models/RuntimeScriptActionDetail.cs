@@ -21,18 +21,9 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="uri"/> or <paramref name="roles"/> is null. </exception>
         public RuntimeScriptActionDetail(string name, Uri uri, IEnumerable<string> roles) : base(name, uri, roles)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (uri == null)
-            {
-                throw new ArgumentNullException(nameof(uri));
-            }
-            if (roles == null)
-            {
-                throw new ArgumentNullException(nameof(roles));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(uri, nameof(uri));
+            Argument.AssertNotNull(roles, nameof(roles));
 
             ExecutionSummary = new ChangeTrackingList<ScriptActionExecutionSummary>();
         }
@@ -44,17 +35,17 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="roles"> The list of roles where script will be executed. </param>
         /// <param name="applicationName"> The application name of the script action, if any. </param>
         /// <param name="scriptExecutionId"> The execution id of the script action. </param>
-        /// <param name="startTime"> The start time of script action execution. </param>
-        /// <param name="endTime"> The end time of script action execution. </param>
+        /// <param name="startOn"> The start time of script action execution. </param>
+        /// <param name="endOn"> The end time of script action execution. </param>
         /// <param name="status"> The current execution status of the script action. </param>
         /// <param name="operation"> The reason why the script action was executed. </param>
         /// <param name="executionSummary"> The summary of script action execution result. </param>
         /// <param name="debugInformation"> The script action execution debug information. </param>
-        internal RuntimeScriptActionDetail(string name, Uri uri, string parameters, IList<string> roles, string applicationName, long? scriptExecutionId, string startTime, string endTime, string status, string operation, IReadOnlyList<ScriptActionExecutionSummary> executionSummary, string debugInformation) : base(name, uri, parameters, roles, applicationName)
+        internal RuntimeScriptActionDetail(string name, Uri uri, string parameters, IList<string> roles, string applicationName, long? scriptExecutionId, DateTimeOffset? startOn, DateTimeOffset? endOn, string status, string operation, IReadOnlyList<ScriptActionExecutionSummary> executionSummary, string debugInformation) : base(name, uri, parameters, roles, applicationName)
         {
             ScriptExecutionId = scriptExecutionId;
-            StartTime = startTime;
-            EndTime = endTime;
+            StartOn = startOn;
+            EndOn = endOn;
             Status = status;
             Operation = operation;
             ExecutionSummary = executionSummary;
@@ -64,9 +55,9 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> The execution id of the script action. </summary>
         public long? ScriptExecutionId { get; }
         /// <summary> The start time of script action execution. </summary>
-        public string StartTime { get; }
+        public DateTimeOffset? StartOn { get; }
         /// <summary> The end time of script action execution. </summary>
-        public string EndTime { get; }
+        public DateTimeOffset? EndOn { get; }
         /// <summary> The current execution status of the script action. </summary>
         public string Status { get; }
         /// <summary> The reason why the script action was executed. </summary>

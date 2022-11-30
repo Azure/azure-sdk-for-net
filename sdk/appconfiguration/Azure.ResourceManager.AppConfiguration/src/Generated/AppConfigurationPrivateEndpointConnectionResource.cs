@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppConfiguration
     /// A Class representing an AppConfigurationPrivateEndpointConnection along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppConfigurationPrivateEndpointConnectionResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetAppConfigurationPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ConfigurationStoreResource" /> using the GetAppConfigurationPrivateEndpointConnection method.
+    /// Otherwise you can get one from its parent resource <see cref="AppConfigurationStoreResource" /> using the GetAppConfigurationPrivateEndpointConnection method.
     /// </summary>
     public partial class AppConfigurationPrivateEndpointConnectionResource : ArmResource
     {

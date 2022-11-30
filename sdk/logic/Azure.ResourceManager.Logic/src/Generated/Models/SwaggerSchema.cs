@@ -18,49 +18,49 @@ namespace Azure.ResourceManager.Logic.Models
         public SwaggerSchema()
         {
             Properties = new ChangeTrackingDictionary<string, SwaggerSchema>();
-            Required = new ChangeTrackingList<string>();
+            RequiredProperties = new ChangeTrackingList<string>();
             AllOf = new ChangeTrackingList<SwaggerSchema>();
         }
 
         /// <summary> Initializes a new instance of SwaggerSchema. </summary>
-        /// <param name="ref"> The reference. </param>
+        /// <param name="reference"> The reference. </param>
         /// <param name="schemaType"> The type. </param>
         /// <param name="title"> The title. </param>
         /// <param name="items"> The items schema. </param>
         /// <param name="properties"> The object properties. </param>
         /// <param name="additionalProperties"> The additional properties. </param>
-        /// <param name="required"> The object required properties. </param>
+        /// <param name="requiredProperties"> The object required properties. </param>
         /// <param name="maxProperties"> The maximum number of allowed properties. </param>
         /// <param name="minProperties"> The minimum number of allowed properties. </param>
         /// <param name="allOf"> The schemas which must pass validation when this schema is used. </param>
         /// <param name="discriminator"> The discriminator. </param>
-        /// <param name="readOnly"> Indicates whether this property must be present in the a request. </param>
+        /// <param name="isReadOnly"> Indicates whether this property must be present in the a request. </param>
         /// <param name="xml"> The xml representation format for a property. </param>
         /// <param name="externalDocs"> The external documentation. </param>
         /// <param name="example"> The example value. </param>
-        /// <param name="notificationUrlExtension"> Indicates the notification url extension. If this is set, the property&apos;s value should be a callback url for a webhook. </param>
+        /// <param name="isNotificationUrlExtension"> Indicates the notification url extension. If this is set, the property&apos;s value should be a callback url for a webhook. </param>
         /// <param name="dynamicSchemaOld"> The dynamic schema configuration. </param>
         /// <param name="dynamicSchemaNew"> The dynamic schema configuration. </param>
         /// <param name="dynamicListNew"> The dynamic list. </param>
         /// <param name="dynamicTree"> The dynamic values tree configuration. </param>
-        internal SwaggerSchema(string @ref, SwaggerSchemaType? schemaType, string title, SwaggerSchema items, IDictionary<string, SwaggerSchema> properties, BinaryData additionalProperties, IList<string> required, int? maxProperties, int? minProperties, IList<SwaggerSchema> allOf, string discriminator, bool? readOnly, SwaggerXml xml, SwaggerExternalDocumentation externalDocs, BinaryData example, bool? notificationUrlExtension, SwaggerCustomDynamicSchema dynamicSchemaOld, SwaggerCustomDynamicProperties dynamicSchemaNew, SwaggerCustomDynamicList dynamicListNew, SwaggerCustomDynamicTree dynamicTree)
+        internal SwaggerSchema(string reference, SwaggerSchemaType? schemaType, string title, SwaggerSchema items, IDictionary<string, SwaggerSchema> properties, BinaryData additionalProperties, IList<string> requiredProperties, int? maxProperties, int? minProperties, IList<SwaggerSchema> allOf, string discriminator, bool? isReadOnly, SwaggerXml xml, SwaggerExternalDocumentation externalDocs, BinaryData example, bool? isNotificationUrlExtension, SwaggerCustomDynamicSchema dynamicSchemaOld, SwaggerCustomDynamicProperties dynamicSchemaNew, SwaggerCustomDynamicList dynamicListNew, SwaggerCustomDynamicTree dynamicTree)
         {
-            Ref = @ref;
+            Reference = reference;
             SchemaType = schemaType;
             Title = title;
             Items = items;
             Properties = properties;
             AdditionalProperties = additionalProperties;
-            Required = required;
+            RequiredProperties = requiredProperties;
             MaxProperties = maxProperties;
             MinProperties = minProperties;
             AllOf = allOf;
             Discriminator = discriminator;
-            ReadOnly = readOnly;
+            IsReadOnly = isReadOnly;
             Xml = xml;
             ExternalDocs = externalDocs;
             Example = example;
-            NotificationUrlExtension = notificationUrlExtension;
+            IsNotificationUrlExtension = isNotificationUrlExtension;
             DynamicSchemaOld = dynamicSchemaOld;
             DynamicSchemaNew = dynamicSchemaNew;
             DynamicListNew = dynamicListNew;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> The reference. </summary>
-        public string Ref { get; set; }
+        public string Reference { get; set; }
         /// <summary> The type. </summary>
         public SwaggerSchemaType? SchemaType { get; set; }
         /// <summary> The title. </summary>
@@ -77,10 +77,39 @@ namespace Azure.ResourceManager.Logic.Models
         public SwaggerSchema Items { get; set; }
         /// <summary> The object properties. </summary>
         public IDictionary<string, SwaggerSchema> Properties { get; }
-        /// <summary> The additional properties. </summary>
+        /// <summary>
+        /// The additional properties.
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public BinaryData AdditionalProperties { get; set; }
         /// <summary> The object required properties. </summary>
-        public IList<string> Required { get; }
+        public IList<string> RequiredProperties { get; }
         /// <summary> The maximum number of allowed properties. </summary>
         public int? MaxProperties { get; set; }
         /// <summary> The minimum number of allowed properties. </summary>
@@ -90,15 +119,44 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> The discriminator. </summary>
         public string Discriminator { get; set; }
         /// <summary> Indicates whether this property must be present in the a request. </summary>
-        public bool? ReadOnly { get; set; }
+        public bool? IsReadOnly { get; set; }
         /// <summary> The xml representation format for a property. </summary>
         public SwaggerXml Xml { get; set; }
         /// <summary> The external documentation. </summary>
         public SwaggerExternalDocumentation ExternalDocs { get; set; }
-        /// <summary> The example value. </summary>
+        /// <summary>
+        /// The example value.
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public BinaryData Example { get; set; }
         /// <summary> Indicates the notification url extension. If this is set, the property&apos;s value should be a callback url for a webhook. </summary>
-        public bool? NotificationUrlExtension { get; set; }
+        public bool? IsNotificationUrlExtension { get; set; }
         /// <summary> The dynamic schema configuration. </summary>
         public SwaggerCustomDynamicSchema DynamicSchemaOld { get; set; }
         /// <summary> The dynamic schema configuration. </summary>

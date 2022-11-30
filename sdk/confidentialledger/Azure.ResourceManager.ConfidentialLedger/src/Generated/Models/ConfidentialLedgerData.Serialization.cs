@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
 
         internal static ConfidentialLedgerData DeserializeConfidentialLedgerData(JsonElement element)
         {
-            Optional<LedgerProperties> properties = default;
+            Optional<ConfidentialLedgerProperties> properties = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = LedgerProperties.DeserializeLedgerProperties(property.Value);
+                    properties = ConfidentialLedgerProperties.DeserializeConfidentialLedgerProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))

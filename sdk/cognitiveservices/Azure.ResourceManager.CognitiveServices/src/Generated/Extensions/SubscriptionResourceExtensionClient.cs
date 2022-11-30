@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.CognitiveServices
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _accountClientDiagnostics;
-        private AccountsRestOperations _accountRestClient;
-        private ClientDiagnostics _locationResourceGroupDeletedAccountDeletedAccountsClientDiagnostics;
-        private DeletedAccountsRestOperations _locationResourceGroupDeletedAccountDeletedAccountsRestClient;
+        private ClientDiagnostics _cognitiveServicesAccountAccountsClientDiagnostics;
+        private AccountsRestOperations _cognitiveServicesAccountAccountsRestClient;
+        private ClientDiagnostics _cognitiveServicesDeletedAccountDeletedAccountsClientDiagnostics;
+        private DeletedAccountsRestOperations _cognitiveServicesDeletedAccountDeletedAccountsRestClient;
         private ClientDiagnostics _resourceSkusClientDiagnostics;
         private ResourceSkusRestOperations _resourceSkusRestClient;
         private ClientDiagnostics _defaultClientDiagnostics;
@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.CognitiveServices
         {
         }
 
-        private ClientDiagnostics AccountClientDiagnostics => _accountClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", AccountResource.ResourceType.Namespace, Diagnostics);
-        private AccountsRestOperations AccountRestClient => _accountRestClient ??= new AccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AccountResource.ResourceType));
-        private ClientDiagnostics LocationResourceGroupDeletedAccountDeletedAccountsClientDiagnostics => _locationResourceGroupDeletedAccountDeletedAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", LocationResourceGroupDeletedAccountResource.ResourceType.Namespace, Diagnostics);
-        private DeletedAccountsRestOperations LocationResourceGroupDeletedAccountDeletedAccountsRestClient => _locationResourceGroupDeletedAccountDeletedAccountsRestClient ??= new DeletedAccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(LocationResourceGroupDeletedAccountResource.ResourceType));
+        private ClientDiagnostics CognitiveServicesAccountAccountsClientDiagnostics => _cognitiveServicesAccountAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", CognitiveServicesAccountResource.ResourceType.Namespace, Diagnostics);
+        private AccountsRestOperations CognitiveServicesAccountAccountsRestClient => _cognitiveServicesAccountAccountsRestClient ??= new AccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CognitiveServicesAccountResource.ResourceType));
+        private ClientDiagnostics CognitiveServicesDeletedAccountDeletedAccountsClientDiagnostics => _cognitiveServicesDeletedAccountDeletedAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", CognitiveServicesDeletedAccountResource.ResourceType.Namespace, Diagnostics);
+        private DeletedAccountsRestOperations CognitiveServicesDeletedAccountDeletedAccountsRestClient => _cognitiveServicesDeletedAccountDeletedAccountsRestClient ??= new DeletedAccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CognitiveServicesDeletedAccountResource.ResourceType));
         private ClientDiagnostics ResourceSkusClientDiagnostics => _resourceSkusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private ResourceSkusRestOperations ResourceSkusRestClient => _resourceSkusRestClient ??= new ResourceSkusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ProviderConstants.DefaultProviderNamespace, Diagnostics);
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.CognitiveServices
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of LocationResourceGroupDeletedAccountResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of LocationResourceGroupDeletedAccountResources and their operations over a LocationResourceGroupDeletedAccountResource. </returns>
-        public virtual LocationResourceGroupDeletedAccountCollection GetLocationResourceGroupDeletedAccounts()
+        /// <summary> Gets a collection of CognitiveServicesDeletedAccountResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of CognitiveServicesDeletedAccountResources and their operations over a CognitiveServicesDeletedAccountResource. </returns>
+        public virtual CognitiveServicesDeletedAccountCollection GetCognitiveServicesDeletedAccounts()
         {
-            return GetCachedClient(Client => new LocationResourceGroupDeletedAccountCollection(Client, Id));
+            return GetCachedClient(Client => new CognitiveServicesDeletedAccountCollection(Client, Id));
         }
 
         /// <summary>
@@ -73,17 +73,17 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Operation Id: Accounts_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AccountResource> GetAccountsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CognitiveServicesAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CognitiveServicesAccountResource> GetCognitiveServicesAccountsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AccountResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<CognitiveServicesAccountResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = AccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAccounts");
+                using var scope = CognitiveServicesAccountAccountsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCognitiveServicesAccounts");
                 scope.Start();
                 try
                 {
-                    var response = await AccountRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await CognitiveServicesAccountAccountsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new CognitiveServicesAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -91,14 +91,14 @@ namespace Azure.ResourceManager.CognitiveServices
                     throw;
                 }
             }
-            async Task<Page<AccountResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<CognitiveServicesAccountResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = AccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAccounts");
+                using var scope = CognitiveServicesAccountAccountsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCognitiveServicesAccounts");
                 scope.Start();
                 try
                 {
-                    var response = await AccountRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await CognitiveServicesAccountAccountsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new CognitiveServicesAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -115,17 +115,17 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Operation Id: Accounts_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AccountResource> GetAccounts(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CognitiveServicesAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CognitiveServicesAccountResource> GetCognitiveServicesAccounts(CancellationToken cancellationToken = default)
         {
-            Page<AccountResource> FirstPageFunc(int? pageSizeHint)
+            Page<CognitiveServicesAccountResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = AccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAccounts");
+                using var scope = CognitiveServicesAccountAccountsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCognitiveServicesAccounts");
                 scope.Start();
                 try
                 {
-                    var response = AccountRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = CognitiveServicesAccountAccountsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new CognitiveServicesAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -133,14 +133,14 @@ namespace Azure.ResourceManager.CognitiveServices
                     throw;
                 }
             }
-            Page<AccountResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<CognitiveServicesAccountResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = AccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAccounts");
+                using var scope = CognitiveServicesAccountAccountsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCognitiveServicesAccounts");
                 scope.Start();
                 try
                 {
-                    var response = AccountRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = CognitiveServicesAccountAccountsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new CognitiveServicesAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -157,17 +157,17 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Operation Id: DeletedAccounts_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LocationResourceGroupDeletedAccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LocationResourceGroupDeletedAccountResource> GetDeletedAccountsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CognitiveServicesDeletedAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CognitiveServicesDeletedAccountResource> GetDeletedAccountsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<LocationResourceGroupDeletedAccountResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<CognitiveServicesDeletedAccountResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = LocationResourceGroupDeletedAccountDeletedAccountsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDeletedAccounts");
+                using var scope = CognitiveServicesDeletedAccountDeletedAccountsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDeletedAccounts");
                 scope.Start();
                 try
                 {
-                    var response = await LocationResourceGroupDeletedAccountDeletedAccountsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LocationResourceGroupDeletedAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await CognitiveServicesDeletedAccountDeletedAccountsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new CognitiveServicesDeletedAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -175,14 +175,14 @@ namespace Azure.ResourceManager.CognitiveServices
                     throw;
                 }
             }
-            async Task<Page<LocationResourceGroupDeletedAccountResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<CognitiveServicesDeletedAccountResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = LocationResourceGroupDeletedAccountDeletedAccountsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDeletedAccounts");
+                using var scope = CognitiveServicesDeletedAccountDeletedAccountsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDeletedAccounts");
                 scope.Start();
                 try
                 {
-                    var response = await LocationResourceGroupDeletedAccountDeletedAccountsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LocationResourceGroupDeletedAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await CognitiveServicesDeletedAccountDeletedAccountsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new CognitiveServicesDeletedAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -199,17 +199,17 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Operation Id: DeletedAccounts_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LocationResourceGroupDeletedAccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LocationResourceGroupDeletedAccountResource> GetDeletedAccounts(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CognitiveServicesDeletedAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CognitiveServicesDeletedAccountResource> GetDeletedAccounts(CancellationToken cancellationToken = default)
         {
-            Page<LocationResourceGroupDeletedAccountResource> FirstPageFunc(int? pageSizeHint)
+            Page<CognitiveServicesDeletedAccountResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = LocationResourceGroupDeletedAccountDeletedAccountsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDeletedAccounts");
+                using var scope = CognitiveServicesDeletedAccountDeletedAccountsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDeletedAccounts");
                 scope.Start();
                 try
                 {
-                    var response = LocationResourceGroupDeletedAccountDeletedAccountsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LocationResourceGroupDeletedAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = CognitiveServicesDeletedAccountDeletedAccountsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new CognitiveServicesDeletedAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -217,14 +217,14 @@ namespace Azure.ResourceManager.CognitiveServices
                     throw;
                 }
             }
-            Page<LocationResourceGroupDeletedAccountResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<CognitiveServicesDeletedAccountResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = LocationResourceGroupDeletedAccountDeletedAccountsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDeletedAccounts");
+                using var scope = CognitiveServicesDeletedAccountDeletedAccountsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDeletedAccounts");
                 scope.Start();
                 try
                 {
-                    var response = LocationResourceGroupDeletedAccountDeletedAccountsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LocationResourceGroupDeletedAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = CognitiveServicesDeletedAccountDeletedAccountsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new CognitiveServicesDeletedAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -241,10 +241,10 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Operation Id: ResourceSkus_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceSku" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceSku> GetResourceSkusAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AvailableCognitiveServicesSku" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AvailableCognitiveServicesSku> GetResourceSkusAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ResourceSku>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AvailableCognitiveServicesSku>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ResourceSkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceSkus");
                 scope.Start();
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     throw;
                 }
             }
-            async Task<Page<ResourceSku>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AvailableCognitiveServicesSku>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = ResourceSkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceSkus");
                 scope.Start();
@@ -283,10 +283,10 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Operation Id: ResourceSkus_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceSku" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceSku> GetResourceSkus(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AvailableCognitiveServicesSku" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AvailableCognitiveServicesSku> GetResourceSkus(CancellationToken cancellationToken = default)
         {
-            Page<ResourceSku> FirstPageFunc(int? pageSizeHint)
+            Page<AvailableCognitiveServicesSku> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ResourceSkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceSkus");
                 scope.Start();
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     throw;
                 }
             }
-            Page<ResourceSku> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AvailableCognitiveServicesSku> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = ResourceSkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceSkus");
                 scope.Start();
@@ -325,18 +325,18 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Operation Id: CheckSkuAvailability
         /// </summary>
         /// <param name="location"> Resource location. </param>
-        /// <param name="checkSkuAvailabilityParameter"> Check SKU Availability POST body. </param>
+        /// <param name="content"> Check SKU Availability POST body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SkuAvailability" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SkuAvailability> CheckSkuAvailabilityAsync(AzureLocation location, CheckSkuAvailabilityParameter checkSkuAvailabilityParameter, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CognitiveServicesSkuAvailabilityList" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CognitiveServicesSkuAvailabilityList> CheckSkuAvailabilityAsync(AzureLocation location, CognitiveServicesSkuAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SkuAvailability>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<CognitiveServicesSkuAvailabilityList>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckSkuAvailability");
                 scope.Start();
                 try
                 {
-                    var response = await DefaultRestClient.CheckSkuAvailabilityAsync(Id.SubscriptionId, location, checkSkuAvailabilityParameter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await DefaultRestClient.CheckSkuAvailabilityAsync(Id.SubscriptionId, location, content, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -354,18 +354,18 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Operation Id: CheckSkuAvailability
         /// </summary>
         /// <param name="location"> Resource location. </param>
-        /// <param name="checkSkuAvailabilityParameter"> Check SKU Availability POST body. </param>
+        /// <param name="content"> Check SKU Availability POST body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SkuAvailability" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SkuAvailability> CheckSkuAvailability(AzureLocation location, CheckSkuAvailabilityParameter checkSkuAvailabilityParameter, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CognitiveServicesSkuAvailabilityList" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CognitiveServicesSkuAvailabilityList> CheckSkuAvailability(AzureLocation location, CognitiveServicesSkuAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Page<SkuAvailability> FirstPageFunc(int? pageSizeHint)
+            Page<CognitiveServicesSkuAvailabilityList> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckSkuAvailability");
                 scope.Start();
                 try
                 {
-                    var response = DefaultRestClient.CheckSkuAvailability(Id.SubscriptionId, location, checkSkuAvailabilityParameter, cancellationToken: cancellationToken);
+                    var response = DefaultRestClient.CheckSkuAvailability(Id.SubscriptionId, location, content, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -382,15 +382,15 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/checkDomainAvailability
         /// Operation Id: CheckDomainAvailability
         /// </summary>
-        /// <param name="checkDomainAvailabilityParameter"> Check Domain Availability parameter. </param>
+        /// <param name="content"> Check Domain Availability parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DomainAvailability>> CheckDomainAvailabilityAsync(CheckDomainAvailabilityParameter checkDomainAvailabilityParameter, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CognitiveServicesDomainAvailabilityList>> CheckDomainAvailabilityAsync(CognitiveServicesDomainAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckDomainAvailability");
             scope.Start();
             try
             {
-                var response = await DefaultRestClient.CheckDomainAvailabilityAsync(Id.SubscriptionId, checkDomainAvailabilityParameter, cancellationToken).ConfigureAwait(false);
+                var response = await DefaultRestClient.CheckDomainAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -405,15 +405,15 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/checkDomainAvailability
         /// Operation Id: CheckDomainAvailability
         /// </summary>
-        /// <param name="checkDomainAvailabilityParameter"> Check Domain Availability parameter. </param>
+        /// <param name="content"> Check Domain Availability parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DomainAvailability> CheckDomainAvailability(CheckDomainAvailabilityParameter checkDomainAvailabilityParameter, CancellationToken cancellationToken = default)
+        public virtual Response<CognitiveServicesDomainAvailabilityList> CheckDomainAvailability(CognitiveServicesDomainAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckDomainAvailability");
             scope.Start();
             try
             {
-                var response = DefaultRestClient.CheckDomainAvailability(Id.SubscriptionId, checkDomainAvailabilityParameter, cancellationToken);
+                var response = DefaultRestClient.CheckDomainAvailability(Id.SubscriptionId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

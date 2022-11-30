@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ContainerService.Models
     {
         internal static ManagedClusterListResult DeserializeManagedClusterListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ManagedClusterData>> value = default;
+            Optional<IReadOnlyList<ContainerServiceManagedClusterData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ManagedClusterData> array = new List<ManagedClusterData>();
+                    List<ContainerServiceManagedClusterData> array = new List<ContainerServiceManagedClusterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedClusterData.DeserializeManagedClusterData(item));
+                        array.Add(ContainerServiceManagedClusterData.DeserializeContainerServiceManagedClusterData(item));
                     }
                     value = array;
                     continue;

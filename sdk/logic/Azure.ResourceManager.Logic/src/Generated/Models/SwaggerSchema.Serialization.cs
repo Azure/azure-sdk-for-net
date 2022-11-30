@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.Logic.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Ref))
+            if (Optional.IsDefined(Reference))
             {
                 writer.WritePropertyName("ref");
-                writer.WriteStringValue(Ref);
+                writer.WriteStringValue(Reference);
             }
             if (Optional.IsDefined(SchemaType))
             {
@@ -57,11 +57,11 @@ namespace Azure.ResourceManager.Logic.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(AdditionalProperties.ToString()).RootElement);
 #endif
             }
-            if (Optional.IsCollectionDefined(Required))
+            if (Optional.IsCollectionDefined(RequiredProperties))
             {
                 writer.WritePropertyName("required");
                 writer.WriteStartArray();
-                foreach (var item in Required)
+                foreach (var item in RequiredProperties)
                 {
                     writer.WriteStringValue(item);
                 }
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WritePropertyName("discriminator");
                 writer.WriteStringValue(Discriminator);
             }
-            if (Optional.IsDefined(ReadOnly))
+            if (Optional.IsDefined(IsReadOnly))
             {
                 writer.WritePropertyName("readOnly");
-                writer.WriteBooleanValue(ReadOnly.Value);
+                writer.WriteBooleanValue(IsReadOnly.Value);
             }
             if (Optional.IsDefined(Xml))
             {
@@ -116,10 +116,10 @@ namespace Azure.ResourceManager.Logic.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Example.ToString()).RootElement);
 #endif
             }
-            if (Optional.IsDefined(NotificationUrlExtension))
+            if (Optional.IsDefined(IsNotificationUrlExtension))
             {
                 writer.WritePropertyName("notificationUrlExtension");
-                writer.WriteBooleanValue(NotificationUrlExtension.Value);
+                writer.WriteBooleanValue(IsNotificationUrlExtension.Value);
             }
             if (Optional.IsDefined(DynamicSchemaOld))
             {

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
-                writer.WriteObjectValue(Identity);
+                JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsDefined(Sku))
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 writer.WriteStringValue(FriendlyName);
             }
             writer.WritePropertyName("hostPoolArmPath");
-            writer.WriteStringValue(HostPoolArmPath);
+            writer.WriteStringValue(HostPoolId);
             writer.WritePropertyName("applicationGroupType");
             writer.WriteStringValue(ApplicationGroupType.ToString());
             if (Optional.IsDefined(MigrationRequest))
@@ -84,11 +84,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         internal static VirtualApplicationGroupData DeserializeVirtualApplicationGroupData(JsonElement element)
         {
-            Optional<string> managedBy = default;
+            Optional<ResourceIdentifier> managedBy = default;
             Optional<string> kind = default;
             Optional<ETag> etag = default;
-            Optional<ResourceModelWithAllowedPropertySetIdentity> identity = default;
-            Optional<ResourceModelWithAllowedPropertySetSku> sku = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<DesktopVirtualizationSku> sku = default;
             Optional<ArmPlan> plan = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -99,16 +99,21 @@ namespace Azure.ResourceManager.DesktopVirtualization
             Optional<string> objectId = default;
             Optional<string> description = default;
             Optional<string> friendlyName = default;
-            string hostPoolArmPath = default;
-            Optional<string> workspaceArmPath = default;
-            ApplicationGroupType applicationGroupType = default;
-            Optional<MigrationRequestProperties> migrationRequest = default;
-            Optional<bool> cloudPcResource = default;
+            ResourceIdentifier hostPoolArmPath = default;
+            Optional<ResourceIdentifier> workspaceArmPath = default;
+            VirtualApplicationGroupType applicationGroupType = default;
+            Optional<DesktopVirtualizationMigrationProperties> migrationRequest = default;
+            Optional<bool> cloudPCResource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managedBy"))
                 {
-                    managedBy = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    managedBy = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("kind"))
@@ -133,7 +138,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = ResourceModelWithAllowedPropertySetIdentity.DeserializeResourceModelWithAllowedPropertySetIdentity(property.Value);
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("sku"))
@@ -143,7 +148,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = ResourceModelWithAllowedPropertySetSku.DeserializeResourceModelWithAllowedPropertySetSku(property.Value);
+                    sku = DesktopVirtualizationSku.DeserializeDesktopVirtualizationSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("plan"))
@@ -227,17 +232,22 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         }
                         if (property0.NameEquals("hostPoolArmPath"))
                         {
-                            hostPoolArmPath = property0.Value.GetString();
+                            hostPoolArmPath = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("workspaceArmPath"))
                         {
-                            workspaceArmPath = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                workspaceArmPath = null;
+                                continue;
+                            }
+                            workspaceArmPath = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("applicationGroupType"))
                         {
-                            applicationGroupType = new ApplicationGroupType(property0.Value.GetString());
+                            applicationGroupType = new VirtualApplicationGroupType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("migrationRequest"))
@@ -247,7 +257,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            migrationRequest = MigrationRequestProperties.DeserializeMigrationRequestProperties(property0.Value);
+                            migrationRequest = DesktopVirtualizationMigrationProperties.DeserializeDesktopVirtualizationMigrationProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("cloudPcResource"))
@@ -257,14 +267,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            cloudPcResource = property0.Value.GetBoolean();
+                            cloudPCResource = property0.Value.GetBoolean();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new VirtualApplicationGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, objectId.Value, description.Value, friendlyName.Value, hostPoolArmPath, workspaceArmPath.Value, applicationGroupType, migrationRequest.Value, Optional.ToNullable(cloudPcResource), managedBy.Value, kind.Value, Optional.ToNullable(etag), identity.Value, sku.Value, plan);
+            return new VirtualApplicationGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, objectId.Value, description.Value, friendlyName.Value, hostPoolArmPath, workspaceArmPath.Value, applicationGroupType, migrationRequest.Value, Optional.ToNullable(cloudPCResource), managedBy.Value, kind.Value, Optional.ToNullable(etag), identity, sku.Value, plan);
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="resourceTypeName"> The name of the resource type. </param>
         /// <param name="quotaPeriod"> The time period over which the quota usage values are summarized. For example, P1D (per one day), PT1M (per one minute), and PT1S (per one second). This parameter is optional because, for some resources such as compute, the time period is irrelevant. </param>
         /// <param name="properties"> Additional properties for the specified resource provider. </param>
-        internal QuotaProperties(int? limit, int? currentValue, string unit, ResourceName resourceName, ResourceTypeName? resourceTypeName, string quotaPeriod, BinaryData properties)
+        internal QuotaProperties(int? limit, int? currentValue, string unit, ReservationResourceName resourceName, ResourceTypeName? resourceTypeName, string quotaPeriod, BinaryData properties)
         {
             Limit = limit;
             CurrentValue = currentValue;
@@ -43,12 +43,41 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> The limit units, such as **count** and **bytes**. Use the unit field provided in the response of the GET quota operation. </summary>
         public string Unit { get; set; }
         /// <summary> Name of the resource provide by the resource provider. Use this property for quotaRequests resource operations. </summary>
-        public ResourceName ResourceName { get; set; }
+        public ReservationResourceName ResourceName { get; set; }
         /// <summary> The name of the resource type. </summary>
         public ResourceTypeName? ResourceTypeName { get; set; }
         /// <summary> The time period over which the quota usage values are summarized. For example, P1D (per one day), PT1M (per one minute), and PT1S (per one second). This parameter is optional because, for some resources such as compute, the time period is irrelevant. </summary>
         public string QuotaPeriod { get; }
-        /// <summary> Additional properties for the specified resource provider. </summary>
+        /// <summary>
+        /// Additional properties for the specified resource provider.
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public BinaryData Properties { get; set; }
     }
 }

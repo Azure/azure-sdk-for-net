@@ -77,7 +77,8 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
         /// <param name="lastModifiedUserName">User who last modified the
         /// alert, in case of monitor service updates user would be 'system',
         /// otherwise name of the user.</param>
-        public Essentials(string severity = default(string), string signalType = default(string), string alertState = default(string), string monitorCondition = default(string), string targetResource = default(string), string targetResourceName = default(string), string targetResourceGroup = default(string), string targetResourceType = default(string), string monitorService = default(string), string alertRule = default(string), string sourceCreatedId = default(string), string smartGroupId = default(string), string smartGroupingReason = default(string), System.DateTime? startDateTime = default(System.DateTime?), System.DateTime? lastModifiedDateTime = default(System.DateTime?), System.DateTime? monitorConditionResolvedDateTime = default(System.DateTime?), string lastModifiedUserName = default(string))
+        /// <param name="description">Alert description.</param>
+        public Essentials(string severity = default(string), string signalType = default(string), string alertState = default(string), string monitorCondition = default(string), string targetResource = default(string), string targetResourceName = default(string), string targetResourceGroup = default(string), string targetResourceType = default(string), string monitorService = default(string), string alertRule = default(string), string sourceCreatedId = default(string), string smartGroupId = default(string), string smartGroupingReason = default(string), System.DateTime? startDateTime = default(System.DateTime?), System.DateTime? lastModifiedDateTime = default(System.DateTime?), System.DateTime? monitorConditionResolvedDateTime = default(System.DateTime?), string lastModifiedUserName = default(string), ActionStatus actionStatus = default(ActionStatus), string description = default(string))
         {
             Severity = severity;
             SignalType = signalType;
@@ -96,6 +97,8 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
             LastModifiedDateTime = lastModifiedDateTime;
             MonitorConditionResolvedDateTime = monitorConditionResolvedDateTime;
             LastModifiedUserName = lastModifiedUserName;
+            ActionStatus = actionStatus;
+            Description = description;
             CustomInit();
         }
 
@@ -226,6 +229,17 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
         /// </summary>
         [JsonProperty(PropertyName = "lastModifiedUserName")]
         public string LastModifiedUserName { get; private set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "actionStatus")]
+        public ActionStatus ActionStatus { get; set; }
+
+        /// <summary>
+        /// Gets or sets alert description.
+        /// </summary>
+        [JsonProperty(PropertyName = "description")]
+        public string Description { get; set; }
 
     }
 }

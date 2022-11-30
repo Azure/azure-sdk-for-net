@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(SessionId))
             {
                 writer.WritePropertyName("sessionId");
-                writer.WriteStringValue(SessionId);
+                writer.WriteStringValue(SessionId.Value);
             }
             writer.WriteEndObject();
         }

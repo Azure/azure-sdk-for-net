@@ -7,26 +7,21 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The Office365 account. </summary>
-    public partial class Office365Dataset : Dataset
+    public partial class Office365Dataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of Office365Dataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="tableName"> Name of the dataset to extract from Office 365. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="tableName"/> is null. </exception>
-        public Office365Dataset(LinkedServiceReference linkedServiceName, BinaryData tableName) : base(linkedServiceName)
+        public Office365Dataset(FactoryLinkedServiceReference linkedServiceName, BinaryData tableName) : base(linkedServiceName)
         {
-            if (linkedServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(linkedServiceName));
-            }
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+            Argument.AssertNotNull(tableName, nameof(tableName));
 
             TableName = tableName;
             DatasetType = "Office365Table";
@@ -44,16 +39,74 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="tableName"> Name of the dataset to extract from Office 365. Type: string (or Expression with resultType string). </param>
         /// <param name="predicate"> A predicate expression that can be used to filter the specific rows to extract from Office 365. Type: string (or Expression with resultType string). </param>
-        internal Office365Dataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData tableName, BinaryData predicate) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal Office365Dataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData tableName, BinaryData predicate) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             TableName = tableName;
             Predicate = predicate;
             DatasetType = datasetType ?? "Office365Table";
         }
 
-        /// <summary> Name of the dataset to extract from Office 365. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Name of the dataset to extract from Office 365. Type: string (or Expression with resultType string).
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public BinaryData TableName { get; set; }
-        /// <summary> A predicate expression that can be used to filter the specific rows to extract from Office 365. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// A predicate expression that can be used to filter the specific rows to extract from Office 365. Type: string (or Expression with resultType string).
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public BinaryData Predicate { get; set; }
     }
 }

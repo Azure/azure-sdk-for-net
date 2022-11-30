@@ -1,0 +1,201 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-businessCard:analyze?stringIndexType=utf16CodeUnit\u0026api-version=2022-08-31",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "25662",
+        "Content-Type": "application/octet-stream",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-28054acae01cb927eb41dbe6c23e0e19-1226b36623baa7b4-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "ac2811692b6ebe655ccdb450f2fe7973",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "75da50ab-a592-41e2-ad03-b946ee3d0a75",
+        "Content-Length": "0",
+        "Date": "Tue, 16 Aug 2022 05:48:32 GMT",
+        "Operation-Location": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-businessCard/analyzeResults/75da50ab-a592-41e2-ad03-b946ee3d0a75?api-version=2022-08-31",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "73"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-businessCard/analyzeResults/75da50ab-a592-41e2-ad03-b946ee3d0a75?api-version=2022-08-31",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-28054acae01cb927eb41dbe6c23e0e19-af0b868ded987c85-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "0fd68f6ace1e0b6e3d31c69d53f16e9f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "91fc0789-3d69-4b7e-88f7-a638777c7886",
+        "Content-Length": "106",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 16 Aug 2022 05:48:32 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "34"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2022-08-16T05:48:33Z",
+        "lastUpdatedDateTime": "2022-08-16T05:48:33Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-businessCard/analyzeResults/75da50ab-a592-41e2-ad03-b946ee3d0a75?api-version=2022-08-31",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-28054acae01cb927eb41dbe6c23e0e19-d8f0eff441b6d181-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "fbf10e81bc4df15b4b061f9455914338",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "455c54ca-7deb-4b1e-a4d5-f3abe77ba549",
+        "Content-Length": "106",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 16 Aug 2022 05:48:34 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "24"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2022-08-16T05:48:33Z",
+        "lastUpdatedDateTime": "2022-08-16T05:48:33Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-businessCard/analyzeResults/75da50ab-a592-41e2-ad03-b946ee3d0a75?api-version=2022-08-31",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-28054acae01cb927eb41dbe6c23e0e19-d0be63f4d274b2b8-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "ce1422ca71d59b34a21d6f3d64c86a6a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "1839931c-49db-40da-a8b0-6ea59a261eab",
+        "Content-Length": "106",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 16 Aug 2022 05:48:35 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "22"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2022-08-16T05:48:33Z",
+        "lastUpdatedDateTime": "2022-08-16T05:48:33Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-businessCard/analyzeResults/75da50ab-a592-41e2-ad03-b946ee3d0a75?api-version=2022-08-31",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-28054acae01cb927eb41dbe6c23e0e19-58b7c60187f6297c-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "e4cf145f7d0cae2633e4c418aed9b5ab",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "2b57f8de-100e-4908-85f4-521d9421083a",
+        "Content-Length": "106",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 16 Aug 2022 05:48:36 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "20"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2022-08-16T05:48:33Z",
+        "lastUpdatedDateTime": "2022-08-16T05:48:33Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-businessCard/analyzeResults/75da50ab-a592-41e2-ad03-b946ee3d0a75?api-version=2022-08-31",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-28054acae01cb927eb41dbe6c23e0e19-19aa2f9e3a3a6f68-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "31d38eeda0dd0fcada5658304d1e8d82",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "ffca44ed-1b91-4e1c-8cf3-4b6eb60f5ec9",
+        "Content-Length": "409",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 16 Aug 2022 05:48:37 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "137"
+      },
+      "ResponseBody": {
+        "status": "succeeded",
+        "createdDateTime": "2022-08-16T05:48:33Z",
+        "lastUpdatedDateTime": "2022-08-16T05:48:37Z",
+        "analyzeResult": {
+          "apiVersion": "2022-08-31",
+          "modelId": "prebuilt-businessCard",
+          "stringIndexType": "utf16CodeUnit",
+          "content": "",
+          "pages": [
+            {
+              "pageNumber": 1,
+              "angle": 0,
+              "width": 8.5,
+              "height": 11,
+              "unit": "inch",
+              "words": [],
+              "lines": [],
+              "spans": [
+                {
+                  "offset": 0,
+                  "length": 0
+                }
+              ],
+              "kind": "document"
+            }
+          ],
+          "styles": [],
+          "documents": []
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "FORM_RECOGNIZER_API_KEY": "Sanitized",
+    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/",
+    "RandomSeed": "1326635276"
+  }
+}

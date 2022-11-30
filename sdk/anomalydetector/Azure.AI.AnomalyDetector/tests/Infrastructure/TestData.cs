@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using Azure.AI.AnomalyDetector.Models;
+using Azure.AI.AnomalyDetector;
 
 namespace Azure.AI.AnomalyDetector.Tests.Infrastructure
 {

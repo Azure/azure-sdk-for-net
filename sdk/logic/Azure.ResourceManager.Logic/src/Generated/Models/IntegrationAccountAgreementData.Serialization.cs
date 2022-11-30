@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.Logic
             Optional<DateTimeOffset> createdTime = default;
             Optional<DateTimeOffset> changedTime = default;
             Optional<BinaryData> metadata = default;
-            AgreementType agreementType = default;
+            IntegrationAccountAgreementType agreementType = default;
             string hostPartner = default;
             string guestPartner = default;
-            BusinessIdentity hostIdentity = default;
-            BusinessIdentity guestIdentity = default;
-            AgreementContent content = default;
+            IntegrationAccountBusinessIdentity hostIdentity = default;
+            IntegrationAccountBusinessIdentity guestIdentity = default;
+            IntegrationAccountAgreementContent content = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Logic
                         }
                         if (property0.NameEquals("agreementType"))
                         {
-                            agreementType = property0.Value.GetString().ToAgreementType();
+                            agreementType = property0.Value.GetString().ToIntegrationAccountAgreementType();
                             continue;
                         }
                         if (property0.NameEquals("hostPartner"))
@@ -179,17 +179,17 @@ namespace Azure.ResourceManager.Logic
                         }
                         if (property0.NameEquals("hostIdentity"))
                         {
-                            hostIdentity = BusinessIdentity.DeserializeBusinessIdentity(property0.Value);
+                            hostIdentity = IntegrationAccountBusinessIdentity.DeserializeIntegrationAccountBusinessIdentity(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("guestIdentity"))
                         {
-                            guestIdentity = BusinessIdentity.DeserializeBusinessIdentity(property0.Value);
+                            guestIdentity = IntegrationAccountBusinessIdentity.DeserializeIntegrationAccountBusinessIdentity(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("content"))
                         {
-                            content = AgreementContent.DeserializeAgreementContent(property0.Value);
+                            content = IntegrationAccountAgreementContent.DeserializeIntegrationAccountAgreementContent(property0.Value);
                             continue;
                         }
                     }

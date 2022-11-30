@@ -47,8 +47,8 @@ namespace Azure.Storage.Test.Shared
         protected abstract Task<IDisposingContainer<TContainerClient>> GetDisposingContainerAsync(
             TServiceClient service = default,
             string containerName = default,
-            UploadTransferValidationOptions uploadTransferValidationOptions = default,
-            DownloadTransferValidationOptions downloadTransferValidationOptions = default);
+            StorageChecksumAlgorithm uploadAlgorithm = StorageChecksumAlgorithm.None,
+            StorageChecksumAlgorithm downloadAlgorithm = StorageChecksumAlgorithm.None);
 
         /// <summary>
         /// Gets a new service-specific resource client from a given container, e.g. a BlobClient from a
@@ -66,8 +66,8 @@ namespace Azure.Storage.Test.Shared
             int resourceLength = default,
             bool createResource = default,
             string resourceName = default,
-            UploadTransferValidationOptions uploadTransferValidationOptions = default,
-            DownloadTransferValidationOptions downloadTransferValidationOptions = default,
+            StorageChecksumAlgorithm uploadAlgorithm = StorageChecksumAlgorithm.None,
+            StorageChecksumAlgorithm downloadAlgorithm = StorageChecksumAlgorithm.None,
             TClientOptions options = default);
 
         /// <summary>
@@ -75,23 +75,23 @@ namespace Azure.Storage.Test.Shared
         /// </summary>
         /// <param name="client">Client to call upload on.</param>
         /// <param name="source">Data to upload.</param>
-        /// <param name="validationOptions">Validation options to use on upload.</param>
+        /// <param name="transferValidation">Validation options to use on upload.</param>
         protected abstract Task<Response> UploadPartitionAsync(
             TResourceClient client,
             Stream source,
-            UploadTransferValidationOptions validationOptions);
+            UploadTransferValidationOptions transferValidation);
 
         /// <summary>
         /// Calls the 1:1 download method for the given resource client.
         /// </summary>
         /// <param name="client">Client to call the download on.</param>
         /// <param name="destination">Where to send downloaded data.</param>
-        /// <param name="validationOptions">Validation options to use on download.</param>
+        /// <param name="transferValidation">Validation options to use on download.</param>
         /// <param name="range">Range parameter for download, necessary for transactional checksum request to be accepted by service.</param>
         protected abstract Task<Response> DownloadPartitionAsync(
             TResourceClient client,
             Stream destination,
-            DownloadTransferValidationOptions validationOptions,
+            DownloadTransferValidationOptions transferValidation,
             HttpRange range = default);
 
         /// <summary>
@@ -99,12 +99,12 @@ namespace Azure.Storage.Test.Shared
         /// </summary>
         /// <param name="client">Client to call upload on.</param>
         /// <param name="source">Data to upload.</param>
-        /// <param name="validationOptions">Validation options to use on upload.</param>
+        /// <param name="transferValidation">Validation options to use on upload.</param>
         /// <param name="transferOptions">Storage transfer options to use on upload.</param>
         protected abstract Task ParallelUploadAsync(
             TResourceClient client,
             Stream source,
-            UploadTransferValidationOptions validationOptions,
+            UploadTransferValidationOptions transferValidation,
             StorageTransferOptions transferOptions);
 
         /// <summary>
@@ -112,34 +112,34 @@ namespace Azure.Storage.Test.Shared
         /// </summary>
         /// <param name="client">Client to call download on.</param>
         /// <param name="destination">Where to send downloaded data.</param>
-        /// <param name="validationOptions">Validation options to use on download.</param>
+        /// <param name="transferValidation">Validation options to use on download.</param>
         /// <param name="transferOptions">Storage transfer options to use on download.</param>
         protected abstract Task ParallelDownloadAsync(
             TResourceClient client,
             Stream destination,
-            DownloadTransferValidationOptions validationOptions,
+            DownloadTransferValidationOptions transferValidation,
             StorageTransferOptions transferOptions);
 
         /// <summary>
         /// Calls the open write method for the given resource client.
         /// </summary>
         /// <param name="client">Client to call open write on.</param>
-        /// <param name="validationOptions">Validation options to use in the write stream.</param>
+        /// <param name="transferValidation">Validation options to use in the write stream.</param>
         /// <param name="internalBufferSize">Buffer size for the write stream.</param>
         protected abstract Task<Stream> OpenWriteAsync(
             TResourceClient client,
-            UploadTransferValidationOptions validationOptions,
+            UploadTransferValidationOptions transferValidation,
             int internalBufferSize);
 
         /// <summary>
         /// Calls the open read method for the given resource client.
         /// </summary>
         /// <param name="client">Client to call open read on.</param>
-        /// <param name="validationOptions">Validation options to use in the read stream.</param>
+        /// <param name="transferValidation">Validation options to use in the read stream.</param>
         /// <param name="internalBufferSize">Buffer size for the read stream.</param>
         protected abstract Task<Stream> OpenReadAsync(
             TResourceClient client,
-            DownloadTransferValidationOptions validationOptions,
+            DownloadTransferValidationOptions transferValidation,
             int internalBufferSize);
 
         /// <summary>
@@ -189,7 +189,7 @@ namespace Azure.Storage.Test.Shared
         /// The actual checksum value expected to be on the request, if known. Defaults to no specific value expected or checked.
         /// </param>
         /// <returns>An assertion to put into a pipeline policy.</returns>
-        internal static Action<Request> GetRequestChecksumAssertion(ValidationAlgorithm algorithm, Func<Request, bool> isChecksumExpected = default, byte[] expectedChecksum = default)
+        internal static Action<Request> GetRequestChecksumAssertion(StorageChecksumAlgorithm algorithm, Func<Request, bool> isChecksumExpected = default, byte[] expectedChecksum = default)
         {
             // action to assert a request header is as expected
             void AssertChecksum(RequestHeaders headers, string headerName)
@@ -217,14 +217,14 @@ namespace Azure.Storage.Test.Shared
 
                 switch (algorithm.ResolveAuto())
                 {
-                    case ValidationAlgorithm.MD5:
+                    case StorageChecksumAlgorithm.MD5:
                         AssertChecksum(request.Headers, "Content-MD5");
                         break;
-                    case ValidationAlgorithm.StorageCrc64:
+                    case StorageChecksumAlgorithm.StorageCrc64:
                         AssertChecksum(request.Headers, "x-ms-content-crc64");
                         break;
                     default:
-                        throw new Exception($"Bad {nameof(ValidationAlgorithm)} provided to {nameof(GetRequestChecksumAssertion)}.");
+                        throw new Exception($"Bad {nameof(StorageChecksumAlgorithm)} provided to {nameof(GetRequestChecksumAssertion)}.");
                 }
             };
         }
@@ -245,7 +245,7 @@ namespace Azure.Storage.Test.Shared
         /// The actual checksum value expected to be on the response, if known. Defaults to no specific value expected or checked.
         /// </param>
         /// <returns>An assertion to put into a pipeline policy.</returns>
-        internal static Action<Response> GetResponseChecksumAssertion(ValidationAlgorithm algorithm, Func<Response, bool> isChecksumExpected = default, byte[] expectedChecksum = default)
+        internal static Action<Response> GetResponseChecksumAssertion(StorageChecksumAlgorithm algorithm, Func<Response, bool> isChecksumExpected = default, byte[] expectedChecksum = default)
         {
             // action to assert a response header is as expected
             void AssertChecksum(ResponseHeaders headers, string headerName)
@@ -273,14 +273,14 @@ namespace Azure.Storage.Test.Shared
 
                 switch (algorithm.ResolveAuto())
                 {
-                    case ValidationAlgorithm.MD5:
+                    case StorageChecksumAlgorithm.MD5:
                         AssertChecksum(response.Headers, "Content-MD5");
                         break;
-                    case ValidationAlgorithm.StorageCrc64:
+                    case StorageChecksumAlgorithm.StorageCrc64:
                         AssertChecksum(response.Headers, "x-ms-content-crc64");
                         break;
                     default:
-                        throw new Exception($"Bad {nameof(ValidationAlgorithm)} provided to {nameof(GetRequestChecksumAssertion)}.");
+                        throw new Exception($"Bad {nameof(StorageChecksumAlgorithm)} provided to {nameof(GetRequestChecksumAssertion)}.");
                 }
             };
         }
@@ -290,15 +290,15 @@ namespace Azure.Storage.Test.Shared
         /// </summary>
         /// <param name="writeAction">Async action to upload data to service.</param>
         /// <param name="algorithm">Checksum algorithm used.</param>
-        internal static void AssertWriteChecksumMismatch(AsyncTestDelegate writeAction, ValidationAlgorithm algorithm)
+        internal static void AssertWriteChecksumMismatch(AsyncTestDelegate writeAction, StorageChecksumAlgorithm algorithm)
         {
             var exception = ThrowsOrInconclusiveAsync<RequestFailedException>(writeAction);
             switch (algorithm.ResolveAuto())
             {
-                case ValidationAlgorithm.MD5:
+                case StorageChecksumAlgorithm.MD5:
                     Assert.AreEqual("Md5Mismatch", exception.ErrorCode);
                     break;
-                case ValidationAlgorithm.StorageCrc64:
+                case StorageChecksumAlgorithm.StorageCrc64:
                     Assert.AreEqual("Crc64Mismatch", exception.ErrorCode);
                     break;
                 default:
@@ -307,22 +307,22 @@ namespace Azure.Storage.Test.Shared
         }
         #endregion
 
-        public static IEnumerable<ValidationAlgorithm> GetValidationAlgorithms()
+        public static IEnumerable<StorageChecksumAlgorithm> GetValidationAlgorithms()
         {
-            var values = new HashSet<ValidationAlgorithm>(Enum.GetValues(typeof(ValidationAlgorithm)).Cast<ValidationAlgorithm>());
-            values.Remove(ValidationAlgorithm.None);
+            var values = new HashSet<StorageChecksumAlgorithm>(Enum.GetValues(typeof(StorageChecksumAlgorithm)).Cast<StorageChecksumAlgorithm>());
+            values.Remove(StorageChecksumAlgorithm.None);
             return values;
         }
 
-        public static IEnumerable<ValidationAlgorithm> GetValidationAlgorithmsIncludingNone()
+        public static IEnumerable<StorageChecksumAlgorithm> GetValidationAlgorithmsIncludingNone()
         {
-            var values = new HashSet<ValidationAlgorithm>(Enum.GetValues(typeof(ValidationAlgorithm)).Cast<ValidationAlgorithm>());
+            var values = new HashSet<StorageChecksumAlgorithm>(Enum.GetValues(typeof(StorageChecksumAlgorithm)).Cast<StorageChecksumAlgorithm>());
             return values;
         }
 
         #region UploadPartition Tests
         [TestCaseSource("GetValidationAlgorithms")]
-        public virtual async Task UploadPartitionSuccessfulHashComputation(ValidationAlgorithm algorithm)
+        public virtual async Task UploadPartitionSuccessfulHashComputation(StorageChecksumAlgorithm algorithm)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
@@ -331,7 +331,7 @@ namespace Azure.Storage.Test.Shared
             var data = GetRandomBuffer(dataLength);
             var validationOptions = new UploadTransferValidationOptions
             {
-                Algorithm = algorithm
+                ChecksumAlgorithm = algorithm
             };
 
             // make pipeline assertion for checking checksum was present on upload
@@ -357,9 +357,9 @@ namespace Azure.Storage.Test.Shared
         }
 
         [TestCaseSource("GetValidationAlgorithms")]
-        public virtual async Task UploadPartitionUsePrecalculatedHash(ValidationAlgorithm algorithm)
+        public virtual async Task UploadPartitionUsePrecalculatedHash(StorageChecksumAlgorithm algorithm)
         {
-            if (algorithm == ValidationAlgorithm.Auto)
+            if (algorithm == StorageChecksumAlgorithm.Auto)
             {
                 Assert.Inconclusive();
             }
@@ -372,15 +372,15 @@ namespace Azure.Storage.Test.Shared
             // service throws different error for crc only when checksum size in incorrect; we don't want to test that
             var checksumSizeBytes = algorithm.ResolveAuto() switch
             {
-                ValidationAlgorithm.MD5 => 16,
-                ValidationAlgorithm.StorageCrc64 => 8,
+                StorageChecksumAlgorithm.MD5 => 16,
+                StorageChecksumAlgorithm.StorageCrc64 => 8,
                 _ => throw new ArgumentException("Cannot determine hash size for provided algorithm type")
             };
             // checksum needs to be wrong so we detect difference from auto-SDK correct calculation
             var precalculatedChecksum = GetRandomBuffer(checksumSizeBytes);
             var validationOptions = new UploadTransferValidationOptions
             {
-                Algorithm = algorithm,
+                ChecksumAlgorithm = algorithm,
                 PrecalculatedChecksum = precalculatedChecksum
             };
 
@@ -407,7 +407,7 @@ namespace Azure.Storage.Test.Shared
         }
 
         [TestCaseSource("GetValidationAlgorithms")]
-        public virtual async Task UploadPartitionMismatchedHashThrows(ValidationAlgorithm algorithm)
+        public virtual async Task UploadPartitionMismatchedHashThrows(StorageChecksumAlgorithm algorithm)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
@@ -416,7 +416,7 @@ namespace Azure.Storage.Test.Shared
             var data = GetRandomBuffer(dataLength);
             var validationOptions = new UploadTransferValidationOptions
             {
-                Algorithm = algorithm
+                ChecksumAlgorithm = algorithm
             };
 
             // Tamper with stream contents in the pipeline to simulate silent failure in the transit layer
@@ -443,17 +443,13 @@ namespace Azure.Storage.Test.Shared
 
         [Test]
         public virtual async Task UploadPartitionUsesDefaultClientValidationOptions(
-            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm clientAlgorithm)
+            [ValueSource("GetValidationAlgorithms")] StorageChecksumAlgorithm clientAlgorithm)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
             // Arrange
             const int dataLength = Constants.KB;
             var data = GetRandomBuffer(dataLength);
-            var clientValidationOptions = new UploadTransferValidationOptions
-            {
-                Algorithm = clientAlgorithm
-            };
 
             // make pipeline assertion for checking checksum was present on upload
             var checksumPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetRequestChecksumAssertion(clientAlgorithm));
@@ -464,14 +460,14 @@ namespace Azure.Storage.Test.Shared
                 disposingContainer.Container,
                 resourceLength: dataLength,
                 createResource: true,
-                uploadTransferValidationOptions: clientValidationOptions,
+                uploadAlgorithm: clientAlgorithm,
                 options: clientOptions);
 
             // Act
             using (var stream = new MemoryStream(data))
             {
                 checksumPipelineAssertion.CheckRequest = true;
-                await UploadPartitionAsync(client, stream, validationOptions: null);
+                await UploadPartitionAsync(client, stream, transferValidation: null);
             }
 
             // Assert
@@ -481,21 +477,17 @@ namespace Azure.Storage.Test.Shared
         [Test]
         [Combinatorial]
         public virtual async Task UploadPartitionOverwritesDefaultClientValidationOptions(
-            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm clientAlgorithm,
-            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm overrideAlgorithm)
+            [ValueSource("GetValidationAlgorithms")] StorageChecksumAlgorithm clientAlgorithm,
+            [ValueSource("GetValidationAlgorithms")] StorageChecksumAlgorithm overrideAlgorithm)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
             // Arrange
             const int dataLength = Constants.KB;
             var data = GetRandomBuffer(dataLength);
-            var clientValidationOptions = new UploadTransferValidationOptions
-            {
-                Algorithm = clientAlgorithm
-            };
             var overrideValidationOptions = new UploadTransferValidationOptions
             {
-                Algorithm = overrideAlgorithm
+                ChecksumAlgorithm = overrideAlgorithm
             };
 
             // make pipeline assertion for checking checksum was present on upload
@@ -507,7 +499,7 @@ namespace Azure.Storage.Test.Shared
                 disposingContainer.Container,
                 resourceLength: dataLength,
                 createResource: true,
-                uploadTransferValidationOptions: clientValidationOptions,
+                uploadAlgorithm: clientAlgorithm,
                 options: clientOptions);
 
             // Act
@@ -523,20 +515,16 @@ namespace Azure.Storage.Test.Shared
 
         [Test]
         public virtual async Task UploadPartitionDisablesDefaultClientValidationOptions(
-            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm clientAlgorithm)
+            [ValueSource("GetValidationAlgorithms")] StorageChecksumAlgorithm clientAlgorithm)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
             // Arrange
             const int dataLength = Constants.KB;
             var data = GetRandomBuffer(dataLength);
-            var clientValidationOptions = new UploadTransferValidationOptions
-            {
-                Algorithm = clientAlgorithm
-            };
             var overrideValidationOptions = new UploadTransferValidationOptions
             {
-                Algorithm = ValidationAlgorithm.None // disable
+                ChecksumAlgorithm = StorageChecksumAlgorithm.None // disable
             };
 
             // make pipeline assertion for checking checksum was not present on upload
@@ -558,7 +546,7 @@ namespace Azure.Storage.Test.Shared
                 disposingContainer.Container,
                 resourceLength: dataLength,
                 createResource: true,
-                uploadTransferValidationOptions: clientValidationOptions,
+                uploadAlgorithm: clientAlgorithm,
                 options: clientOptions);
 
             // Act
@@ -575,7 +563,7 @@ namespace Azure.Storage.Test.Shared
 
         #region OpenWrite Tests
         [TestCaseSource("GetValidationAlgorithms")]
-        public virtual async Task OpenWriteSuccessfulHashComputation(ValidationAlgorithm algorithm)
+        public virtual async Task OpenWriteSuccessfulHashComputation(StorageChecksumAlgorithm algorithm)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
@@ -587,7 +575,7 @@ namespace Azure.Storage.Test.Shared
             var data = GetRandomBuffer(dataSize);
             var validationOptions = new UploadTransferValidationOptions
             {
-                Algorithm = algorithm
+                ChecksumAlgorithm = algorithm
             };
 
             // make pipeline assertion for checking checksum was present on upload
@@ -615,7 +603,7 @@ namespace Azure.Storage.Test.Shared
         }
 
         [TestCaseSource("GetValidationAlgorithms")]
-        public virtual async Task OpenWriteMismatchedHashThrows(ValidationAlgorithm algorithm)
+        public virtual async Task OpenWriteMismatchedHashThrows(StorageChecksumAlgorithm algorithm)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
@@ -627,7 +615,7 @@ namespace Azure.Storage.Test.Shared
             var data = GetRandomBuffer(dataSize);
             var validationOptions = new UploadTransferValidationOptions
             {
-                Algorithm = algorithm
+                ChecksumAlgorithm = algorithm
             };
 
             // Tamper with stream contents in the pipeline to simulate silent failure in the transit layer
@@ -658,7 +646,7 @@ namespace Azure.Storage.Test.Shared
 
         [Test]
         public virtual async Task OpenWriteUsesDefaultClientValidationOptions(
-            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm clientAlgorithm)
+            [ValueSource("GetValidationAlgorithms")] StorageChecksumAlgorithm clientAlgorithm)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
@@ -667,10 +655,6 @@ namespace Azure.Storage.Test.Shared
             const int streamBufferSize = Constants.KB;
             const int streamWrites = 10;
             var data = GetRandomBuffer(dataLength);
-            var clientValidationOptions = new UploadTransferValidationOptions
-            {
-                Algorithm = clientAlgorithm
-            };
 
             // make pipeline assertion for checking checksum was present on upload
             var checksumPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetRequestChecksumAssertion(clientAlgorithm));
@@ -681,7 +665,7 @@ namespace Azure.Storage.Test.Shared
                 disposingContainer.Container,
                 resourceLength: streamBufferSize * streamWrites,
                 createResource: true,
-                uploadTransferValidationOptions: clientValidationOptions,
+                uploadAlgorithm: clientAlgorithm,
                 options: clientOptions);
 
             // Act
@@ -699,8 +683,8 @@ namespace Azure.Storage.Test.Shared
         [Test]
         [Combinatorial]
         public virtual async Task OpenWriteOverwritesDefaultClientValidationOptions(
-            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm clientAlgorithm,
-            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm overrideAlgorithm)
+            [ValueSource("GetValidationAlgorithms")] StorageChecksumAlgorithm clientAlgorithm,
+            [ValueSource("GetValidationAlgorithms")] StorageChecksumAlgorithm overrideAlgorithm)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
@@ -709,13 +693,9 @@ namespace Azure.Storage.Test.Shared
             const int streamBufferSize = Constants.KB;
             const int streamWrites = 10;
             var data = GetRandomBuffer(dataLength);
-            var clientValidationOptions = new UploadTransferValidationOptions
-            {
-                Algorithm = clientAlgorithm
-            };
             var overrideValidationOptions = new UploadTransferValidationOptions
             {
-                Algorithm = overrideAlgorithm
+                ChecksumAlgorithm = overrideAlgorithm
             };
 
             // make pipeline assertion for checking checksum was present on upload
@@ -727,7 +707,7 @@ namespace Azure.Storage.Test.Shared
                 disposingContainer.Container,
                 resourceLength: streamBufferSize * streamWrites,
                 createResource: true,
-                uploadTransferValidationOptions: clientValidationOptions,
+                uploadAlgorithm: clientAlgorithm,
                 options: clientOptions);
 
             // Act
@@ -744,7 +724,7 @@ namespace Azure.Storage.Test.Shared
 
         [Test]
         public virtual async Task OpenWriteDisablesDefaultClientValidationOptions(
-            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm clientAlgorithm)
+            [ValueSource("GetValidationAlgorithms")] StorageChecksumAlgorithm clientAlgorithm)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
@@ -753,13 +733,9 @@ namespace Azure.Storage.Test.Shared
             const int streamBufferSize = Constants.KB;
             const int streamWrites = 10;
             var data = GetRandomBuffer(dataLength);
-            var clientValidationOptions = new UploadTransferValidationOptions
-            {
-                Algorithm = clientAlgorithm
-            };
             var overrideValidationOptions = new UploadTransferValidationOptions
             {
-                Algorithm = ValidationAlgorithm.None // disable
+                ChecksumAlgorithm = StorageChecksumAlgorithm.None // disable
             };
 
             // make pipeline assertion for checking checksum was not present on upload
@@ -781,7 +757,7 @@ namespace Azure.Storage.Test.Shared
                 disposingContainer.Container,
                 resourceLength: streamBufferSize * streamWrites,
                 createResource: true,
-                uploadTransferValidationOptions: clientValidationOptions,
+                uploadAlgorithm: clientAlgorithm,
                 options: clientOptions);
 
             // Act
@@ -799,7 +775,7 @@ namespace Azure.Storage.Test.Shared
 
         #region Parallel Upload Tests
         [TestCaseSource("GetValidationAlgorithms")]
-        public virtual async Task ParallelUploadSplitSuccessfulHashComputation(ValidationAlgorithm algorithm)
+        public virtual async Task ParallelUploadSplitSuccessfulHashComputation(StorageChecksumAlgorithm algorithm)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
@@ -808,7 +784,7 @@ namespace Azure.Storage.Test.Shared
             var data = GetRandomBuffer(dataLength);
             var validationOptions = new UploadTransferValidationOptions
             {
-                Algorithm = algorithm
+                ChecksumAlgorithm = algorithm
             };
             // force split
             StorageTransferOptions transferOptions = new StorageTransferOptions
@@ -837,7 +813,7 @@ namespace Azure.Storage.Test.Shared
         }
 
         [TestCaseSource("GetValidationAlgorithms")]
-        public virtual async Task ParallelUploadOneShotSuccessfulHashComputation(ValidationAlgorithm algorithm)
+        public virtual async Task ParallelUploadOneShotSuccessfulHashComputation(StorageChecksumAlgorithm algorithm)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
@@ -846,7 +822,7 @@ namespace Azure.Storage.Test.Shared
             var data = GetRandomBuffer(dataLength);
             var validationOptions = new UploadTransferValidationOptions
             {
-                Algorithm = algorithm
+                ChecksumAlgorithm = algorithm
             };
             // force oneshot
             StorageTransferOptions transferOptions = new StorageTransferOptions
@@ -875,7 +851,7 @@ namespace Azure.Storage.Test.Shared
         }
 
         [TestCaseSource("GetValidationAlgorithms")]
-        public virtual async Task PrecalculatedHashNotAccepted(ValidationAlgorithm algorithm)
+        public virtual async Task PrecalculatedHashNotAccepted(StorageChecksumAlgorithm algorithm)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
@@ -884,7 +860,7 @@ namespace Azure.Storage.Test.Shared
             var data = GetRandomBuffer(dataLength);
             var validationOptions = new UploadTransferValidationOptions
             {
-                Algorithm = algorithm,
+                ChecksumAlgorithm = algorithm,
                 PrecalculatedChecksum = GetRandomBuffer(16)
             };
 
@@ -900,7 +876,7 @@ namespace Azure.Storage.Test.Shared
 
         [Test]
         public virtual async Task ParallelUploadUsesDefaultClientValidationOptions(
-            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm clientAlgorithm,
+            [ValueSource("GetValidationAlgorithms")] StorageChecksumAlgorithm clientAlgorithm,
             [Values(true, false)] bool split)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
@@ -908,10 +884,6 @@ namespace Azure.Storage.Test.Shared
             // Arrange
             const int dataLength = Constants.KB;
             var data = GetRandomBuffer(dataLength);
-            var clientValidationOptions = new UploadTransferValidationOptions
-            {
-                Algorithm = clientAlgorithm
-            };
             StorageTransferOptions transferOptions = split
                 ? new StorageTransferOptions
                 {
@@ -934,7 +906,7 @@ namespace Azure.Storage.Test.Shared
                 disposingContainer.Container,
                 resourceLength: dataLength,
                 createResource: true,
-                uploadTransferValidationOptions: clientValidationOptions,
+                uploadAlgorithm: clientAlgorithm,
                 options: clientOptions);
 
             // Act
@@ -951,8 +923,8 @@ namespace Azure.Storage.Test.Shared
         [Test]
         [Combinatorial]
         public virtual async Task ParallelUploadOverwritesDefaultClientValidationOptions(
-            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm clientAlgorithm,
-            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm overrideAlgorithm,
+            [ValueSource("GetValidationAlgorithms")] StorageChecksumAlgorithm clientAlgorithm,
+            [ValueSource("GetValidationAlgorithms")] StorageChecksumAlgorithm overrideAlgorithm,
             [Values(true, false)] bool split)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
@@ -960,13 +932,9 @@ namespace Azure.Storage.Test.Shared
             // Arrange
             const int dataLength = Constants.KB;
             var data = GetRandomBuffer(dataLength);
-            var clientValidationOptions = new UploadTransferValidationOptions
-            {
-                Algorithm = clientAlgorithm
-            };
             var overrideValidationOptions = new UploadTransferValidationOptions
             {
-                Algorithm = overrideAlgorithm
+                ChecksumAlgorithm = overrideAlgorithm
             };
             StorageTransferOptions transferOptions = split
               ? new StorageTransferOptions
@@ -990,7 +958,7 @@ namespace Azure.Storage.Test.Shared
                 disposingContainer.Container,
                 resourceLength: dataLength,
                 createResource: true,
-                uploadTransferValidationOptions: clientValidationOptions,
+                uploadAlgorithm: clientAlgorithm,
                 options: clientOptions);
 
             // Act
@@ -1006,7 +974,7 @@ namespace Azure.Storage.Test.Shared
 
         [Test]
         public virtual async Task ParallelUploadDisablesDefaultClientValidationOptions(
-            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm clientAlgorithm,
+            [ValueSource("GetValidationAlgorithms")] StorageChecksumAlgorithm clientAlgorithm,
             [Values(true, false)] bool split)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
@@ -1014,13 +982,9 @@ namespace Azure.Storage.Test.Shared
             // Arrange
             const int dataLength = Constants.KB;
             var data = GetRandomBuffer(dataLength);
-            var clientValidationOptions = new UploadTransferValidationOptions
-            {
-                Algorithm = clientAlgorithm
-            };
             var overrideValidationOptions = new UploadTransferValidationOptions
             {
-                Algorithm = ValidationAlgorithm.None // disable
+                ChecksumAlgorithm = StorageChecksumAlgorithm.None // disable
             };
             StorageTransferOptions transferOptions = split
               ? new StorageTransferOptions
@@ -1053,7 +1017,7 @@ namespace Azure.Storage.Test.Shared
                 disposingContainer.Container,
                 resourceLength: dataLength,
                 createResource: true,
-                uploadTransferValidationOptions: clientValidationOptions,
+                uploadAlgorithm: clientAlgorithm,
                 options: clientOptions);
 
             // Act
@@ -1071,7 +1035,7 @@ namespace Azure.Storage.Test.Shared
         #region Parallel Download Tests
         [Test, Combinatorial]
         public virtual async Task ParallelDownloadSuccessfulHashVerification(
-            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm algorithm,
+            [ValueSource("GetValidationAlgorithms")] StorageChecksumAlgorithm algorithm,
             [Values(512, 2 * Constants.KB)] int chunkSize)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
@@ -1098,7 +1062,7 @@ namespace Azure.Storage.Test.Shared
                 createResource: false,
                 resourceName: resourceName,
                 options: clientOptions);
-            var validationOptions = new DownloadTransferValidationOptions { Algorithm = algorithm };
+            var validationOptions = new DownloadTransferValidationOptions { ChecksumAlgorithm = algorithm };
             StorageTransferOptions transferOptions = new StorageTransferOptions
             {
                 InitialTransferSize = chunkSize,
@@ -1107,15 +1071,17 @@ namespace Azure.Storage.Test.Shared
 
             // Act
             checksumPipelineAssertion.CheckResponse = true;
-            await ParallelDownloadAsync(client, Stream.Null, validationOptions, transferOptions);
+            var dest = new MemoryStream();
+            await ParallelDownloadAsync(client, dest, validationOptions, transferOptions);
 
             // Assert
             // Assertion was in the pipeline and the SDK not throwing means the checksum was validated
+            Assert.IsTrue(dest.ToArray().SequenceEqual(data));
         }
 
         [Test]
         public virtual async Task ParallelDownloadUsesDefaultClientValidationOptions(
-            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm clientAlgorithm,
+            [ValueSource("GetValidationAlgorithms")] StorageChecksumAlgorithm clientAlgorithm,
             [Values(true, false)] bool split)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
@@ -1132,10 +1098,6 @@ namespace Azure.Storage.Test.Shared
                 resourceName: resourceName);
             await SetupDataAsync(client, new MemoryStream(data));
 
-            var clientValidationOptions = new DownloadTransferValidationOptions
-            {
-                Algorithm = clientAlgorithm
-            };
             StorageTransferOptions transferOptions = split
                 ? new StorageTransferOptions
                 {
@@ -1159,22 +1121,24 @@ namespace Azure.Storage.Test.Shared
                 resourceLength: dataLength,
                 resourceName: resourceName,
                 createResource: false,
-                downloadTransferValidationOptions: clientValidationOptions,
+                downloadAlgorithm: clientAlgorithm,
                 options: clientOptions);
 
             // Act
             checksumPipelineAssertion.CheckResponse = true;
-            await ParallelDownloadAsync(client, Stream.Null, default, transferOptions);
+            var dest = new MemoryStream();
+            await ParallelDownloadAsync(client, dest, default, transferOptions);
 
             // Assert
             // Assertion was in the pipeline and the service returning success means the checksum was correct
+            Assert.IsTrue(dest.ToArray().SequenceEqual(data));
         }
 
         [Test]
         [Combinatorial]
         public virtual async Task ParallelDownloadOverwritesDefaultClientValidationOptions(
-            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm clientAlgorithm,
-            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm overrideAlgorithm,
+            [ValueSource("GetValidationAlgorithms")] StorageChecksumAlgorithm clientAlgorithm,
+            [ValueSource("GetValidationAlgorithms")] StorageChecksumAlgorithm overrideAlgorithm,
             [Values(true, false)] bool split)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
@@ -1191,13 +1155,9 @@ namespace Azure.Storage.Test.Shared
                 resourceName: resourceName);
             await SetupDataAsync(client, new MemoryStream(data));
 
-            var clientValidationOptions = new DownloadTransferValidationOptions
-            {
-                Algorithm = clientAlgorithm
-            };
             var overrideValidationOptions = new DownloadTransferValidationOptions
             {
-                Algorithm = overrideAlgorithm
+                ChecksumAlgorithm = overrideAlgorithm
             };
             StorageTransferOptions transferOptions = split
                 ? new StorageTransferOptions
@@ -1222,20 +1182,22 @@ namespace Azure.Storage.Test.Shared
                 resourceLength: dataLength,
                 resourceName: resourceName,
                 createResource: false,
-                downloadTransferValidationOptions: clientValidationOptions,
+                downloadAlgorithm: clientAlgorithm,
                 options: clientOptions);
 
             // Act
             checksumPipelineAssertion.CheckResponse = true;
-            await ParallelDownloadAsync(client, Stream.Null, overrideValidationOptions, transferOptions);
+            var dest = new MemoryStream();
+            await ParallelDownloadAsync(client, dest, overrideValidationOptions, transferOptions);
 
             // Assert
             // Assertion was in the pipeline and the service returning success means the checksum was correct
+            Assert.IsTrue(dest.ToArray().SequenceEqual(data));
         }
 
         [Test]
         public virtual async Task ParallelDownloadDisablesDefaultClientValidationOptions(
-            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm clientAlgorithm,
+            [ValueSource("GetValidationAlgorithms")] StorageChecksumAlgorithm clientAlgorithm,
             [Values(true, false)] bool split)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
@@ -1252,13 +1214,9 @@ namespace Azure.Storage.Test.Shared
                 resourceName: resourceName);
             await SetupDataAsync(client, new MemoryStream(data));
 
-            var clientValidationOptions = new DownloadTransferValidationOptions
-            {
-                Algorithm = clientAlgorithm
-            };
             var overrideValidationOptions = new DownloadTransferValidationOptions
             {
-                Algorithm = ValidationAlgorithm.None // disable
+                ChecksumAlgorithm = StorageChecksumAlgorithm.None // disable
             };
             StorageTransferOptions transferOptions = split
               ? new StorageTransferOptions
@@ -1292,22 +1250,24 @@ namespace Azure.Storage.Test.Shared
                 resourceLength: dataLength,
                 resourceName: resourceName,
                 createResource: false,
-                downloadTransferValidationOptions: clientValidationOptions,
+                downloadAlgorithm: clientAlgorithm,
                 options: clientOptions);
 
             // Act
             checksumPipelineAssertion.CheckResponse = true;
-            await ParallelDownloadAsync(client, Stream.Null, overrideValidationOptions, transferOptions);
+            var dest = new MemoryStream();
+            await ParallelDownloadAsync(client, dest, overrideValidationOptions, transferOptions);
 
             // Assert
             // Assertion was in the pipeline and the service returning success means the checksum was correct
+            Assert.IsTrue(dest.ToArray().SequenceEqual(data));
         }
         #endregion
 
         #region OpenRead Tests
         [Test, Combinatorial]
         public virtual async Task OpenReadSuccessfulHashVerification(
-            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm algorithm,
+            [ValueSource("GetValidationAlgorithms")] StorageChecksumAlgorithm algorithm,
             [Values(
                 // multiple reads that neatly align
                 Constants.KB,
@@ -1341,19 +1301,21 @@ namespace Azure.Storage.Test.Shared
                 createResource: false,
                 resourceName: resourceName,
                 options: clientOptions);
-            var validationOptions = new DownloadTransferValidationOptions { Algorithm = algorithm };
+            var validationOptions = new DownloadTransferValidationOptions { ChecksumAlgorithm = algorithm };
 
             // Act
             var readStream = await OpenReadAsync(client, validationOptions, bufferSize);
 
             // Assert
             checksumPipelineAssertion.CheckResponse = true;
-            await DoesNotThrowOrInconclusiveAsync(async () => await readStream.CopyToAsync(Stream.Null));
+            var dest = new MemoryStream();
+            await DoesNotThrowOrInconclusiveAsync(async () => await readStream.CopyToAsync(dest));
+            Assert.IsTrue(dest.ToArray().SequenceEqual(data));
         }
 
         [Test]
         public virtual async Task OpenReadUsesDefaultClientValidationOptions(
-            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm clientAlgorithm)
+            [ValueSource("GetValidationAlgorithms")] StorageChecksumAlgorithm clientAlgorithm)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
@@ -1369,11 +1331,6 @@ namespace Azure.Storage.Test.Shared
                 createResource: true,
                 resourceName: resourceName);
             await SetupDataAsync(client, new MemoryStream(data));
-
-            var clientValidationOptions = new DownloadTransferValidationOptions
-            {
-                Algorithm = clientAlgorithm
-            };
 
             // make pipeline assertion for checking checksum was present on download
             var checksumPipelineAssertion = new AssertMessageContentsPolicy(checkResponse: GetResponseChecksumAssertion(
@@ -1386,7 +1343,7 @@ namespace Azure.Storage.Test.Shared
                 resourceLength: dataLength,
                 resourceName: resourceName,
                 createResource: false,
-                downloadTransferValidationOptions: clientValidationOptions,
+                downloadAlgorithm: clientAlgorithm,
                 options: clientOptions);
 
             // Act
@@ -1394,14 +1351,16 @@ namespace Azure.Storage.Test.Shared
 
             // Assert
             checksumPipelineAssertion.CheckResponse = true;
-            await DoesNotThrowOrInconclusiveAsync(async () => await readStream.CopyToAsync(Stream.Null));
+            var dest = new MemoryStream();
+            await DoesNotThrowOrInconclusiveAsync(async () => await readStream.CopyToAsync(dest));
+            Assert.IsTrue(dest.ToArray().SequenceEqual(data));
         }
 
         [Test]
         [Combinatorial]
         public virtual async Task OpenReadOverwritesDefaultClientValidationOptions(
-            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm clientAlgorithm,
-            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm overrideAlgorithm)
+            [ValueSource("GetValidationAlgorithms")] StorageChecksumAlgorithm clientAlgorithm,
+            [ValueSource("GetValidationAlgorithms")] StorageChecksumAlgorithm overrideAlgorithm)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
@@ -1418,13 +1377,9 @@ namespace Azure.Storage.Test.Shared
                 resourceName: resourceName);
             await SetupDataAsync(client, new MemoryStream(data));
 
-            var clientValidationOptions = new DownloadTransferValidationOptions
-            {
-                Algorithm = clientAlgorithm
-            };
             var overrideValidationOptions = new DownloadTransferValidationOptions
             {
-                Algorithm = overrideAlgorithm
+                ChecksumAlgorithm = overrideAlgorithm
             };
 
             // make pipeline assertion for checking checksum was present on upload
@@ -1438,7 +1393,7 @@ namespace Azure.Storage.Test.Shared
                 resourceLength: dataLength,
                 resourceName: resourceName,
                 createResource: false,
-                downloadTransferValidationOptions: clientValidationOptions,
+                downloadAlgorithm: clientAlgorithm,
                 options: clientOptions);
 
             // Act
@@ -1446,12 +1401,14 @@ namespace Azure.Storage.Test.Shared
 
             // Assert
             checksumPipelineAssertion.CheckResponse = true;
-            await DoesNotThrowOrInconclusiveAsync(async () => await readStream.CopyToAsync(Stream.Null));
+            var dest = new MemoryStream();
+            await DoesNotThrowOrInconclusiveAsync(async () => await readStream.CopyToAsync(dest));
+            Assert.IsTrue(dest.ToArray().SequenceEqual(data));
         }
 
         [Test]
         public virtual async Task OpenReadDisablesDefaultClientValidationOptions(
-            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm clientAlgorithm)
+            [ValueSource("GetValidationAlgorithms")] StorageChecksumAlgorithm clientAlgorithm)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
@@ -1468,13 +1425,9 @@ namespace Azure.Storage.Test.Shared
                 resourceName: resourceName);
             await SetupDataAsync(client, new MemoryStream(data));
 
-            var clientValidationOptions = new DownloadTransferValidationOptions
-            {
-                Algorithm = clientAlgorithm
-            };
             var overrideValidationOptions = new DownloadTransferValidationOptions
             {
-                Algorithm = ValidationAlgorithm.None // disable
+                ChecksumAlgorithm = StorageChecksumAlgorithm.None // disable
             };
 
             // make pipeline assertion for checking checksum was not present on upload
@@ -1497,7 +1450,7 @@ namespace Azure.Storage.Test.Shared
                 resourceLength: dataLength,
                 resourceName: resourceName,
                 createResource: false,
-                downloadTransferValidationOptions: clientValidationOptions,
+                downloadAlgorithm: clientAlgorithm,
                 options: clientOptions);
 
             // Act
@@ -1505,13 +1458,15 @@ namespace Azure.Storage.Test.Shared
 
             // Assert
             checksumPipelineAssertion.CheckResponse = true;
-            await DoesNotThrowOrInconclusiveAsync(async () => await readStream.CopyToAsync(Stream.Null));
+            var dest = new MemoryStream();
+            await DoesNotThrowOrInconclusiveAsync(async () => await readStream.CopyToAsync(dest));
+            Assert.IsTrue(dest.ToArray().SequenceEqual(data));
         }
         #endregion
 
         #region Download Streaming/Content Tests
         [TestCaseSource("GetValidationAlgorithms")]
-        public virtual async Task DownloadSuccessfulHashVerification(ValidationAlgorithm algorithm)
+        public virtual async Task DownloadSuccessfulHashVerification(StorageChecksumAlgorithm algorithm)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
@@ -1527,30 +1482,32 @@ namespace Azure.Storage.Test.Shared
                 resourceName: resourceName);
             await SetupDataAsync(client, new MemoryStream(data));
 
-            var validationOptions = new DownloadTransferValidationOptions { Algorithm = algorithm };
+            var validationOptions = new DownloadTransferValidationOptions { ChecksumAlgorithm = algorithm };
 
             // Act
-            var response = await DownloadPartitionAsync(client, Stream.Null, validationOptions, new HttpRange(length: data.Length));
+            var dest = new MemoryStream();
+            var response = await DownloadPartitionAsync(client, dest, validationOptions, new HttpRange(length: data.Length));
 
             // Assert
             // no policies this time; just check response headers
             switch (algorithm.ResolveAuto())
             {
-                case ValidationAlgorithm.MD5:
+                case StorageChecksumAlgorithm.MD5:
                     Assert.True(response.Headers.Contains("Content-MD5"));
                     break;
-                case ValidationAlgorithm.StorageCrc64:
+                case StorageChecksumAlgorithm.StorageCrc64:
                     Assert.True(response.Headers.Contains("x-ms-content-crc64"));
                     break;
                 default:
                     Assert.Fail("Test can't validate given algorithm type.");
                     break;
             }
+            Assert.IsTrue(dest.ToArray().SequenceEqual(data));
         }
 
         [Test, Combinatorial]
         public virtual async Task DownloadHashMismatchThrows(
-            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm algorithm,
+            [ValueSource("GetValidationAlgorithms")] StorageChecksumAlgorithm algorithm,
             [Values(true, false)] bool validate)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
@@ -1567,7 +1524,7 @@ namespace Azure.Storage.Test.Shared
                 resourceName: resourceName);
             await SetupDataAsync(client, new MemoryStream(data));
 
-            var validationOptions = new DownloadTransferValidationOptions { Algorithm = algorithm, Validate = validate };
+            var validationOptions = new DownloadTransferValidationOptions { ChecksumAlgorithm = algorithm, AutoValidateChecksum = validate };
 
             // alter response contents in pipeline, forcing a checksum mismatch on verification step
             var clientOptions = ClientBuilder.GetOptions();
@@ -1579,7 +1536,8 @@ namespace Azure.Storage.Test.Shared
                 options: clientOptions);
 
             // Act
-            AsyncTestDelegate operation = async () => await DownloadPartitionAsync(client, Stream.Null, validationOptions, new HttpRange(length: data.Length));
+            var dest = new MemoryStream();
+            AsyncTestDelegate operation = async () => await DownloadPartitionAsync(client, dest, validationOptions, new HttpRange(length: data.Length));
 
             // Assert
             if (validate)
@@ -1592,11 +1550,13 @@ namespace Azure.Storage.Test.Shared
                 // bad checksum is for caller to find. Don't throw.
                 await DoesNotThrowOrInconclusiveAsync(operation);
             }
+            // data was tamepered. should be different.
+            Assert.IsFalse(dest.ToArray().SequenceEqual(data));
         }
 
         [Test]
         public virtual async Task DownloadUsesDefaultClientValidationOptions(
-            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm clientAlgorithm)
+            [ValueSource("GetValidationAlgorithms")] StorageChecksumAlgorithm clientAlgorithm)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
@@ -1611,11 +1571,6 @@ namespace Azure.Storage.Test.Shared
                 createResource: true,
                 resourceName: resourceName);
             await SetupDataAsync(client, new MemoryStream(data));
-
-            var clientValidationOptions = new DownloadTransferValidationOptions
-            {
-                Algorithm = clientAlgorithm
-            };
 
             // make pipeline assertion for checking checksum was present on download
             var checksumPipelineAssertion = new AssertMessageContentsPolicy(checkResponse: GetResponseChecksumAssertion(
@@ -1628,33 +1583,35 @@ namespace Azure.Storage.Test.Shared
                 resourceLength: dataLength,
                 resourceName: resourceName,
                 createResource: false,
-                downloadTransferValidationOptions: clientValidationOptions,
+                downloadAlgorithm: clientAlgorithm,
                 options: clientOptions);
 
             // Act
-            var response = await DownloadPartitionAsync(client, Stream.Null, default, new HttpRange(length: data.Length));
+            var dest = new MemoryStream();
+            var response = await DownloadPartitionAsync(client, dest, default, new HttpRange(length: data.Length));
 
             // Assert
             // no policies this time; just check response headers
             switch (clientAlgorithm.ResolveAuto())
             {
-                case ValidationAlgorithm.MD5:
+                case StorageChecksumAlgorithm.MD5:
                     Assert.True(response.Headers.Contains("Content-MD5"));
                     break;
-                case ValidationAlgorithm.StorageCrc64:
+                case StorageChecksumAlgorithm.StorageCrc64:
                     Assert.True(response.Headers.Contains("x-ms-content-crc64"));
                     break;
                 default:
                     Assert.Fail("Test can't validate given algorithm type.");
                     break;
             }
+            Assert.IsTrue(dest.ToArray().SequenceEqual(data));
         }
 
         [Test]
         [Combinatorial]
         public virtual async Task DownloadOverwritesDefaultClientValidationOptions(
-            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm clientAlgorithm,
-            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm overrideAlgorithm)
+            [ValueSource("GetValidationAlgorithms")] StorageChecksumAlgorithm clientAlgorithm,
+            [ValueSource("GetValidationAlgorithms")] StorageChecksumAlgorithm overrideAlgorithm)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
@@ -1670,13 +1627,9 @@ namespace Azure.Storage.Test.Shared
                 resourceName: resourceName);
             await SetupDataAsync(client, new MemoryStream(data));
 
-            var clientValidationOptions = new DownloadTransferValidationOptions
-            {
-                Algorithm = clientAlgorithm
-            };
             var overrideValidationOptions = new DownloadTransferValidationOptions
             {
-                Algorithm = overrideAlgorithm
+                ChecksumAlgorithm = overrideAlgorithm
             };
 
             // make pipeline assertion for checking checksum was present on upload
@@ -1690,31 +1643,33 @@ namespace Azure.Storage.Test.Shared
                 resourceLength: dataLength,
                 resourceName: resourceName,
                 createResource: false,
-                downloadTransferValidationOptions: clientValidationOptions,
+                downloadAlgorithm: clientAlgorithm,
                 options: clientOptions);
 
             // Act
-            var response = await DownloadPartitionAsync(client, Stream.Null, overrideValidationOptions, new HttpRange(length: data.Length));
+            var dest = new MemoryStream();
+            var response = await DownloadPartitionAsync(client, dest, overrideValidationOptions, new HttpRange(length: data.Length));
 
             // Assert
             // no policies this time; just check response headers
             switch (overrideAlgorithm.ResolveAuto())
             {
-                case ValidationAlgorithm.MD5:
+                case StorageChecksumAlgorithm.MD5:
                     Assert.True(response.Headers.Contains("Content-MD5"));
                     break;
-                case ValidationAlgorithm.StorageCrc64:
+                case StorageChecksumAlgorithm.StorageCrc64:
                     Assert.True(response.Headers.Contains("x-ms-content-crc64"));
                     break;
                 default:
                     Assert.Fail("Test can't validate given algorithm type.");
                     break;
             }
+            Assert.IsTrue(dest.ToArray().SequenceEqual(data));
         }
 
         [Test]
         public virtual async Task DownloadDisablesDefaultClientValidationOptions(
-            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm clientAlgorithm)
+            [ValueSource("GetValidationAlgorithms")] StorageChecksumAlgorithm clientAlgorithm)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
@@ -1730,13 +1685,9 @@ namespace Azure.Storage.Test.Shared
                 resourceName: resourceName);
             await SetupDataAsync(client, new MemoryStream(data));
 
-            var clientValidationOptions = new DownloadTransferValidationOptions
-            {
-                Algorithm = clientAlgorithm
-            };
             var overrideValidationOptions = new DownloadTransferValidationOptions
             {
-                Algorithm = ValidationAlgorithm.None // disable
+                ChecksumAlgorithm = StorageChecksumAlgorithm.None // disable
             };
 
             // make pipeline assertion for checking checksum was not present on upload
@@ -1759,16 +1710,18 @@ namespace Azure.Storage.Test.Shared
                 resourceLength: dataLength,
                 resourceName: resourceName,
                 createResource: false,
-                downloadTransferValidationOptions: clientValidationOptions,
+                downloadAlgorithm: clientAlgorithm,
                 options: clientOptions);
 
             // Act
-            var response = await DownloadPartitionAsync(client, Stream.Null, overrideValidationOptions, new HttpRange(length: data.Length));
+            var dest = new MemoryStream();
+            var response = await DownloadPartitionAsync(client, dest, overrideValidationOptions, new HttpRange(length: data.Length));
 
             // Assert
             // no policies this time; just check response headers
             Assert.False(response.Headers.Contains("Content-MD5"));
             Assert.False(response.Headers.Contains("x-ms-content-crc64"));
+            Assert.IsTrue(dest.ToArray().SequenceEqual(data));
         }
         #endregion
 
@@ -1777,13 +1730,16 @@ namespace Azure.Storage.Test.Shared
         public void TestDefaults()
         {
             var uploadOptions = new UploadTransferValidationOptions();
-            Assert.AreEqual(ValidationAlgorithm.Auto, uploadOptions.Algorithm);
-            Assert.IsNull(uploadOptions.PrecalculatedChecksum);
+            Assert.AreEqual(StorageChecksumAlgorithm.None, uploadOptions.ChecksumAlgorithm);
+            Assert.IsTrue(uploadOptions.PrecalculatedChecksum.IsEmpty);
 
             var downloadOptions = new DownloadTransferValidationOptions();
-            Assert.AreEqual(ValidationAlgorithm.Auto, downloadOptions.Algorithm);
-            Assert.IsTrue(downloadOptions.Validate);
+            Assert.AreEqual(StorageChecksumAlgorithm.None, downloadOptions.ChecksumAlgorithm);
+            Assert.IsTrue(downloadOptions.AutoValidateChecksum);
         }
+
+        [Test]
+        public abstract void TestAutoResolve();
 
         [Test]
         public async Task RoundtripWIthDefaults()
@@ -1791,11 +1747,11 @@ namespace Azure.Storage.Test.Shared
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
             // Arrange
-            const ValidationAlgorithm expectedAlgorithm = ValidationAlgorithm.StorageCrc64;
+            StorageChecksumAlgorithm expectedAlgorithm = TransferValidationOptionsExtensions.ResolveAuto(StorageChecksumAlgorithm.Auto);
             const int dataLength = Constants.KB;
             var data = GetRandomBuffer(dataLength);
-            var uploadvalidationOptions = new UploadTransferValidationOptions();
-            var downloadvalidationOptions = new DownloadTransferValidationOptions();
+            var uploadvalidationOptions = new UploadTransferValidationOptions() { ChecksumAlgorithm = StorageChecksumAlgorithm.Auto };
+            var downloadvalidationOptions = new DownloadTransferValidationOptions() { ChecksumAlgorithm = StorageChecksumAlgorithm.Auto };
             var clientOptions = ClientBuilder.GetOptions();
             StorageTransferOptions transferOptions = new StorageTransferOptions
             {
@@ -1820,10 +1776,12 @@ namespace Azure.Storage.Test.Shared
             }
 
             checksumPipelineAssertion.CheckResponse = true;
-            await ParallelDownloadAsync(client, Stream.Null, downloadvalidationOptions, transferOptions);
+            var dest = new MemoryStream();
+            await ParallelDownloadAsync(client, dest, downloadvalidationOptions, transferOptions);
 
             // Assert
             // Assertion was in the pipeline and the service returning success means the checksum was correct
+            Assert.IsTrue(dest.ToArray().SequenceEqual(data));
         }
         #endregion
 

@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.Monitor.Models
                     writer.WriteNull("dimensions");
                 }
             }
-            if (Optional.IsDefined(DividePerInstance))
+            if (Optional.IsDefined(IsDividedPerInstance))
             {
                 writer.WritePropertyName("dividePerInstance");
-                writer.WriteBooleanValue(DividePerInstance.Value);
+                writer.WriteBooleanValue(IsDividedPerInstance.Value);
             }
             writer.WriteEndObject();
         }
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.Monitor.Models
             TimeSpan timeGrain = default;
             MetricStatisticType statistic = default;
             TimeSpan timeWindow = default;
-            TimeAggregationType timeAggregation = default;
-            ComparisonOperationType @operator = default;
+            MetricTriggerTimeAggregationType timeAggregation = default;
+            MetricTriggerComparisonOperation @operator = default;
             double threshold = default;
-            Optional<IList<ScaleRuleMetricDimension>> dimensions = default;
+            Optional<IList<AutoscaleRuleMetricDimension>> dimensions = default;
             Optional<bool> dividePerInstance = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -126,12 +126,12 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("timeAggregation"))
                 {
-                    timeAggregation = property.Value.GetString().ToTimeAggregationType();
+                    timeAggregation = property.Value.GetString().ToMetricTriggerTimeAggregationType();
                     continue;
                 }
                 if (property.NameEquals("operator"))
                 {
-                    @operator = property.Value.GetString().ToComparisonOperationType();
+                    @operator = property.Value.GetString().ToMetricTriggerComparisonOperation();
                     continue;
                 }
                 if (property.NameEquals("threshold"))
@@ -146,10 +146,10 @@ namespace Azure.ResourceManager.Monitor.Models
                         dimensions = null;
                         continue;
                     }
-                    List<ScaleRuleMetricDimension> array = new List<ScaleRuleMetricDimension>();
+                    List<AutoscaleRuleMetricDimension> array = new List<AutoscaleRuleMetricDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScaleRuleMetricDimension.DeserializeScaleRuleMetricDimension(item));
+                        array.Add(AutoscaleRuleMetricDimension.DeserializeAutoscaleRuleMetricDimension(item));
                     }
                     dimensions = array;
                     continue;

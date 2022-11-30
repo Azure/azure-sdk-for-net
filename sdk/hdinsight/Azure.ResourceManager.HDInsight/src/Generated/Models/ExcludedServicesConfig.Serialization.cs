@@ -10,8 +10,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class ExcludedServicesConfig
+    public partial class ExcludedServicesConfig : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ExcludedServicesConfigId))
+            {
+                writer.WritePropertyName("excludedServicesConfigId");
+                writer.WriteStringValue(ExcludedServicesConfigId);
+            }
+            if (Optional.IsDefined(ExcludedServicesList))
+            {
+                writer.WritePropertyName("excludedServicesList");
+                writer.WriteStringValue(ExcludedServicesList);
+            }
+            writer.WriteEndObject();
+        }
+
         internal static ExcludedServicesConfig DeserializeExcludedServicesConfig(JsonElement element)
         {
             Optional<string> excludedServicesConfigId = default;

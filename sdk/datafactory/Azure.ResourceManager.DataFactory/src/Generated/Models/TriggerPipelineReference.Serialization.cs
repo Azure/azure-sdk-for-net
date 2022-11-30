@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static TriggerPipelineReference DeserializeTriggerPipelineReference(JsonElement element)
         {
-            Optional<PipelineReference> pipelineReference = default;
+            Optional<FactoryPipelineReference> pipelineReference = default;
             Optional<IDictionary<string, BinaryData>> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    pipelineReference = PipelineReference.DeserializePipelineReference(property.Value);
+                    pipelineReference = FactoryPipelineReference.DeserializeFactoryPipelineReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("parameters"))

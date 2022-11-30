@@ -5,6 +5,10 @@ $PackageRepository = "Nuget"
 $packagePattern = "*.nupkg"
 $MetadataUri = "https://raw.githubusercontent.com/Azure/azure-sdk/main/_data/releases/latest/dotnet-packages.csv"
 $BlobStorageUrl = "https://azuresdkdocs.blob.core.windows.net/%24web?restype=container&comp=list&prefix=dotnet%2F&delimiter=%2F"
+$GithubUri = "https://github.com/Azure/azure-sdk-for-net"
+$PackageRepositoryUri = "https://www.nuget.org/packages"
+
+. "$PSScriptRoot/docs/Docs-ToC.ps1"
 
 function Get-AllPackageInfoFromRepo($serviceDirectory)
 {
@@ -23,16 +27,30 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
   {
     if (!$projectOutput) { continue }
 
-    $pkgPath, $serviceDirectory, $pkgName, $pkgVersion, $sdkType, $isNewSdk = $projectOutput.Split(' ',[System.StringSplitOptions]::RemoveEmptyEntries).Trim("'")
-
+    $pkgPath, $serviceDirectory, $pkgName, $pkgVersion, $sdkType, $isNewSdk, $dllFolder = $projectOutput.Split(' ',[System.StringSplitOptions]::RemoveEmptyEntries).Trim("'")
     if(!(Test-Path $pkgPath)) {
       Write-Host "Parsed package path `$pkgPath` does not exist so skipping the package line '$projectOutput'."
       continue
+    }
+
+    # Add a step to extract namespaces
+    $namespaces = @()
+    # The namespaces currently only use for docs.ms toc, which is necessary for internal release.
+    if (Test-Path "$dllFolder/Release/netstandard2.0/") {
+      $defaultDll = Get-ChildItem "$dllFolder/Release/netstandard2.0/*" -Filter "$pkgName.dll" -Recurse
+      if ($defaultDll -and (Test-Path $defaultDll)) {
+        Write-Verbose "Here is the dll file path: $($defaultDll.FullName)"
+        $namespaces = @(Get-NamespacesFromDll $defaultDll.FullName)
+      }
     }
     $pkgProp = [PackageProps]::new($pkgName, $pkgVersion, $pkgPath, $serviceDirectory)
     $pkgProp.SdkType = $sdkType
     $pkgProp.IsNewSdk = ($isNewSdk -eq 'true')
     $pkgProp.ArtifactName = $pkgName
+    if ($namespaces) {
+      $pkgProp = $pkgProp | Add-Member -MemberType NoteProperty -Name Namespaces -Value $namespaces -PassThru
+      Write-Verbose "Here are the namespaces: $($pkgProp.Namespaces)"
+    }
 
     $allPackageProps += $pkgProp
   }
@@ -112,7 +130,7 @@ function Get-dotnet-PackageInfoFromPackageFile ($pkg, $workingDirectory)
 # Return list of nupkg artifacts
 function Get-dotnet-Package-Artifacts ($Location)
 {
-  $pkgs = Get-ChildItem "${Location}" -Recurse | Where-Object -FilterScript {$_.Name.EndsWith(".nupkg") -and -not $_.Name.EndsWith(".symbols.nupkg")}
+  $pkgs = @(Get-ChildItem $Location -Recurse | Where-Object -FilterScript {$_.Name.EndsWith(".nupkg") -and -not $_.Name.EndsWith(".symbols.nupkg")})
   if (!$pkgs)
   {
     Write-Host "$($Location) does not have any package"
@@ -262,12 +280,6 @@ function GetExistingPackageVersions ($PackageName, $GroupId=$null)
 }
 
 function Get-dotnet-DocsMsMetadataForPackage($PackageInfo) {
-  $suffix = ''
-  $parsedVersion = [AzureEngSemanticVersion]::ParseVersionString($PackageInfo.Version)
-  if ($parsedVersion.IsPrerelease) { 
-    $suffix = '-pre'
-  }
-
   $readmeName = $PackageInfo.Name.ToLower()
 
   # Readme names (which are used in the URL) should not include redundant terms
@@ -284,9 +296,9 @@ function Get-dotnet-DocsMsMetadataForPackage($PackageInfo) {
 
   New-Object PSObject -Property @{
     DocsMsReadMeName = $readmeName
-    LatestReadMeLocation = 'api/overview/azure'
-    PreviewReadMeLocation = 'api/overview/azure'
-    Suffix = $suffix
+    LatestReadMeLocation = 'api/overview/azure/latest'
+    PreviewReadMeLocation = 'api/overview/azure/preview'
+    Suffix = ''
   }
 }
 
@@ -310,6 +322,10 @@ function Get-DocsCiConfig($configPath) {
       # Split the rows by the comma
       $fields = $row.Split(',')
 
+      if (!$fields -or $fields.Count -lt 2) {
+        LogError "Please check the csv entry: $configPath."
+        LogError "Do include the package name for each of the csv entry."
+      }
       # If the {package_ID} field contains optional properties inside square
       # brackets, parse those properties into key value pairs. In the case of 
       # duplicate keys, the last one wins.
@@ -337,7 +353,7 @@ function Get-DocsCiConfig($configPath) {
       # Remaining entries in the row are versions, add them to the package 
       # properties
       $outputVersions = @()
-      if ($fields[2]) {
+      if ($fields.Count -gt 2 -and $fields[2]) {
         $outputVersions = $fields[2..($fields.Count - 1)]
       }
 
@@ -395,11 +411,17 @@ function EnsureCustomSource($package) {
   }
 
   Write-Host "Checking custom package source for $($package.Name)"
-  $existingVersions = Find-Package `
-    -Name $package.Name `
-    -Source CustomPackageSource `
-    -AllVersions `
-    -AllowPrereleaseVersions
+  try {
+    $existingVersions = Find-Package `
+      -Name $package.Name `
+      -Source CustomPackageSource `
+      -AllVersions `
+      -AllowPrereleaseVersions
+  }
+  catch {
+    Write-Error $_ -ErrorAction Continue
+    return $package
+  }
   
   # Matches package version against output: 
   # "Azure.Security.KeyVault.Secrets 4.3.0-alpha.20210915.3"
@@ -462,7 +484,7 @@ function UpdateDocsMsPackages($DocConfigFile, $Mode, $DocsMetadata) {
     }
 
     if ($updatedVersion -ne $package.Versions[0]) {
-      Write-Host "Update tracked package: $($package.Name) to version $($updatedVersions)"
+      Write-Host "Update tracked package: $($package.Name) to version $updatedVersion"
       $package.Versions = @($updatedVersion)
       $package = EnsureCustomSource $package
     } else {

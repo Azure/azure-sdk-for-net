@@ -71,7 +71,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential");
-                writer.WriteStringValue(EncryptedCredential);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(EncryptedCredential);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(EncryptedCredential.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -91,12 +95,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             string type = default;
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
+            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
             Uri url = default;
             Optional<string> username = default;
-            Optional<SecretBase> password = default;
-            Optional<string> encryptedCredential = default;
+            Optional<FactorySecretBaseDefinition> password = default;
+            Optional<BinaryData> encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -128,10 +132,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, ParameterSpecification> dictionary = new Dictionary<string, ParameterSpecification>();
+                    Dictionary<string, EntityParameterSpecification> dictionary = new Dictionary<string, EntityParameterSpecification>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ParameterSpecification.DeserializeParameterSpecification(property0.Value));
+                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value));
                     }
                     parameters = dictionary;
                     continue;
@@ -177,12 +181,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            password = SecretBase.DeserializeSecretBase(property0.Value);
+                            password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"))
                         {
-                            encryptedCredential = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            encryptedCredential = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                     }
