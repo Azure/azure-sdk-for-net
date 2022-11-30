@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="location"> The location. </param>
         public OperationalInsightsWorkspaceData(AzureLocation location) : base(location)
         {
-            PrivateLinkScopedResources = new ChangeTrackingList<PrivateLinkScopedResourceInfo>();
+            PrivateLinkScopedResources = new ChangeTrackingList<OperationalInsightsPrivateLinkScopedResourceInfo>();
         }
 
         /// <summary> Initializes a new instance of OperationalInsightsWorkspaceData. </summary>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="privateLinkScopedResources"> List of linked private link scope resources. </param>
         /// <param name="features"> Workspace features. </param>
         /// <param name="defaultDataCollectionRuleResourceId"> The resource ID of the default Data Collection Rule to use for this workspace. Expected format is - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dcrName}. </param>
-        internal OperationalInsightsWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ETag? etag, OperationalInsightsWorkspaceEntityStatus? provisioningState, Guid? customerId, OperationalInsightsWorkspaceSku sku, int? retentionInDays, OperationalInsightsWorkspaceCapping workspaceCapping, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForQuery, bool? forceCmkForQuery, IReadOnlyList<PrivateLinkScopedResourceInfo> privateLinkScopedResources, OperationalInsightsWorkspaceFeatures features, ResourceIdentifier defaultDataCollectionRuleResourceId) : base(id, name, resourceType, systemData, tags, location)
+        internal OperationalInsightsWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ETag? etag, OperationalInsightsWorkspaceEntityStatus? provisioningState, Guid? customerId, OperationalInsightsWorkspaceSku sku, int? retentionInDays, OperationalInsightsWorkspaceCapping workspaceCapping, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForQuery, bool? forceCmkForQuery, IReadOnlyList<OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources, OperationalInsightsWorkspaceFeatures features, ResourceIdentifier defaultDataCollectionRuleResourceId) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ETag = etag;
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <summary> Indicates whether customer managed storage is mandatory for query management. </summary>
         public bool? ForceCmkForQuery { get; set; }
         /// <summary> List of linked private link scope resources. </summary>
-        public IReadOnlyList<PrivateLinkScopedResourceInfo> PrivateLinkScopedResources { get; }
+        public IReadOnlyList<OperationalInsightsPrivateLinkScopedResourceInfo> PrivateLinkScopedResources { get; }
         /// <summary> Workspace features. </summary>
         public OperationalInsightsWorkspaceFeatures Features { get; set; }
         /// <summary> The resource ID of the default Data Collection Rule to use for this workspace. Expected format is - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dcrName}. </summary>

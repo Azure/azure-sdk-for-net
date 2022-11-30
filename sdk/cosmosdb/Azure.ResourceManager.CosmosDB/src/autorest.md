@@ -109,6 +109,7 @@ rename-rules:
   Mongodb: MongoDB
   VNet: Vnet
   API: Api
+  Db: DB
 
 override-operation-name:
   RestorableMongodbDatabases_List: GetRestorableMongoDBDatabases
@@ -122,6 +123,7 @@ rename-mapping:
   MongoRoleDefinitionType: MongoDBRoleDefinitionType
   Privilege: MongoDBPrivilege
   Role: MongoDBRole
+  Role.db: DBName
   MongoRoleDefinitionGetResults.properties.type: RoleDefinitionType
   PrivilegeResourceInfo: PrivilegeResourceInfoResource
   MongoRoleDefinitionListResult: MongoDBRoleDefinitionListResult
@@ -273,6 +275,9 @@ rename-mapping:
   ServiceStatus: CosmosDBServiceStatus
   ServiceSize: CosmosDBServiceSize
   ServiceType: CosmosDBServiceType
+  AccountKeyMetadata.generationTime: GeneratedOn
+  PrivilegeResource: MongoDBPrivilegeResourceInfo
+  PrivilegeResource.db: DBName
 
 prepend-rp-prefix:
 - UniqueKey

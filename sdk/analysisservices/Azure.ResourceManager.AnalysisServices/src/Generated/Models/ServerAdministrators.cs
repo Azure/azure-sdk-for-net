@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.AnalysisServices.Models
         /// <summary> Initializes a new instance of ServerAdministrators. </summary>
         public ServerAdministrators()
         {
-            Members = new ChangeTrackingList<string>();
+            AsAdministratorIdentities = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ServerAdministrators. </summary>
-        /// <param name="members"> An array of administrator user identities. </param>
-        internal ServerAdministrators(IList<string> members)
+        /// <param name="asAdministratorIdentities"> An array of administrator user identities. </param>
+        internal ServerAdministrators(IList<string> asAdministratorIdentities)
         {
-            Members = members;
+            AsAdministratorIdentities = asAdministratorIdentities;
         }
 
         /// <summary> An array of administrator user identities. </summary>
-        public IList<string> Members { get; }
+        public IList<string> AsAdministratorIdentities { get; }
     }
 }

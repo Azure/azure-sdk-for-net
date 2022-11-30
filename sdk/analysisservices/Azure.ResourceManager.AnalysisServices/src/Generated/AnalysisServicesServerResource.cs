@@ -359,10 +359,10 @@ namespace Azure.ResourceManager.AnalysisServices
         /// Operation Id: Servers_ListSkusForExisting
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SkuDetailsForExistingResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SkuDetailsForExistingResource> GetSkusForExistingAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ExistingResourceSkuDetails" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ExistingResourceSkuDetails> GetSkusForExistingAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SkuDetailsForExistingResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ExistingResourceSkuDetails>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _analysisServicesServerServersClientDiagnostics.CreateScope("AnalysisServicesServerResource.GetSkusForExisting");
                 scope.Start();
@@ -386,10 +386,10 @@ namespace Azure.ResourceManager.AnalysisServices
         /// Operation Id: Servers_ListSkusForExisting
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SkuDetailsForExistingResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SkuDetailsForExistingResource> GetSkusForExisting(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ExistingResourceSkuDetails" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ExistingResourceSkuDetails> GetSkusForExisting(CancellationToken cancellationToken = default)
         {
-            Page<SkuDetailsForExistingResource> FirstPageFunc(int? pageSizeHint)
+            Page<ExistingResourceSkuDetails> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _analysisServicesServerServersClientDiagnostics.CreateScope("AnalysisServicesServerResource.GetSkusForExisting");
                 scope.Start();

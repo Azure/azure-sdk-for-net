@@ -107,6 +107,12 @@
       ]
     },
     {
+      "filename": "**/sdk/analysisservices/**/*.cs",
+      "words": [
+        "Dmts"
+      ]
+    },
+    {
       "filename": "**/sdk/alertsmanagement/**/*.cs",
       "words": [
         "groupby",
@@ -956,7 +962,7 @@
         "Ackable",
         "awps"
         ]
-    }  
+    }
   ],
   "allowCompoundWords": true
 }
