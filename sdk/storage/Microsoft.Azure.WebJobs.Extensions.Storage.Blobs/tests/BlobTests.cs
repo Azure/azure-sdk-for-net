@@ -174,6 +174,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
                 })
                 .Build();
 
+            var container = CreateContainer(blobServiceClient, ContainerName);
+            var blobfile = container.GetBlockBlobClient(BlobName);
+            await blobfile.UploadTextAsync(string.Empty);
+
             var jobHost = host.GetJobHost<BindToParameterBindingDataArray>();
 
             // Act
