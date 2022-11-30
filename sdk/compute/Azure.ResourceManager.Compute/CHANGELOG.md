@@ -4,6 +4,12 @@
 
 ### Features Added
 
+Bumps the api-version
+
+- Compute RP to `2022-08-01` (AvailabilitySets, VirtualMachines, VirtualMachineScaleSets, etc)
+- Disk RP to `2022-07-02` (ManagedDisks, Snapshots, etc)
+- Gallery RP to `2022-03-03` (Galleries, CommunityGalleries, etc)
+
 ### Breaking Changes
 
 ### Bugs Fixed
