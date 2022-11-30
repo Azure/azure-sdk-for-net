@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Containers.ContainerRegistry.Specialized;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Core.Pipeline;
 using NUnit.Framework;
 
 namespace Azure.Containers.ContainerRegistry.Tests
@@ -521,7 +522,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [RecordedTest]
-        public async Task CanGetBlobLocation_Pipeline_HttpMessage()
+        public async Task CanGetBlobLocation()
         {
             // Arrange
             var client = CreateBlobClient("oci-artifact");
@@ -543,10 +544,10 @@ namespace Azure.Containers.ContainerRegistry.Tests
             uri.AppendPath(digest, true);
 
             var message = client.Pipeline.CreateMessage();
-            message.AllowAutoRedirect = false;
             message.Request.Method = RequestMethod.Get;
             message.Request.Uri = uri;
             message.Request.Headers.Add("Accept", "application/octet-stream");
+            RedirectPolicy.AllowAutoRedirect(message, false);
 
             await client.Pipeline.SendAsync(message, CancellationToken.None);
             var response = message.Response;

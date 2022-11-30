@@ -9,6 +9,8 @@ using Azure.Core.Diagnostics;
 namespace Azure.Core.Pipeline
 {
     /// <summary>
+    /// A pipeline policy that detects a redirect response code and resends the request to the
+    /// location specified by the response.
     /// </summary>
     public sealed class RedirectPolicy : HttpPipelinePolicy
     {
@@ -22,6 +24,7 @@ namespace Azure.Core.Pipeline
         }
 
         /// <summary>
+        /// Sets a value that indicates whether redirects will be automatically followed for this message.
         /// </summary>
         /// <param name="message"></param>
         /// <param name="allowAutoRedirect"></param>
@@ -47,7 +50,9 @@ namespace Azure.Core.Pipeline
             Request request = message.Request;
             Response response = message.Response;
 
-            while ((redirectUri = GetUriForRedirect(request, message.Response)) != null)
+            bool allowAutoRedirect = GetAllowAutoRedirectValue(message);
+
+            while (allowAutoRedirect && (redirectUri = GetUriForRedirect(request, message.Response)) != null)
             {
                 redirectCount++;
 
@@ -264,6 +269,18 @@ namespace Azure.Core.Pipeline
                 catch (ArgumentException) { } // Not actually Utf-8
             }
             return input;
+        }
+
+        private static bool GetAllowAutoRedirectValue(HttpMessage message)
+        {
+            bool allowAutoRedirect = true;
+
+            if (message.TryGetInternalProperty(typeof(AllowRedirectsValueKey), out object? value))
+            {
+                allowAutoRedirect = (bool)value!;
+            }
+
+            return allowAutoRedirect;
         }
 
         private class AllowRedirectsValueKey { }
