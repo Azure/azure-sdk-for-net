@@ -183,9 +183,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             Assert.NotNull(result);
 
             // Assert
-            foreach (var res in result)
+            foreach (var blob in result)
             {
-                var blobData = res?.Content.ToObjectFromJson<Dictionary<string,string>>();
+                var blobData = blob?.Content.ToObjectFromJson<Dictionary<string,string>>();
 
                 Assert.True(blobData.TryGetValue("Connection", out var resultConnection));
                 Assert.True(blobData.TryGetValue("ContainerName", out var resultContainerName));
@@ -273,9 +273,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             public IEnumerable<ParameterBindingData> Result { get; set; }
 
             public void Run(
-                [Blob(BlobPath)] IEnumerable<ParameterBindingData> blobData)
+                [Blob(ContainerName)] IEnumerable<ParameterBindingData> blobs)
             {
-                this.Result = blobData;
+                this.Result = blobs;
             }
         }
     }
