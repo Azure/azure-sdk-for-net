@@ -3,6 +3,7 @@
 
 using System;
 using System.Buffers;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.ExceptionServices;
@@ -125,6 +126,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
         }
 
+        private readonly ConcurrentDictionary<Guid, byte> _durableReceivedMessages = new();
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AmqpReceiver"/> class.
         /// </summary>
@@ -132,6 +135,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="entityPath">The name of the Service Bus entity from which events will be consumed.</param>
         /// <param name="receiveMode">The <see cref="ServiceBusReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
+        /// <param name="durableLockExpiration"></param>
         /// <param name="connectionScope">The AMQP connection context for operations .</param>
         /// <param name="retryPolicy">The retry policy to consider when an operation fails.</param>
         /// <param name="identifier">The identifier for the sender.</param>
@@ -153,6 +157,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             string entityPath,
             ServiceBusReceiveMode receiveMode,
             uint prefetchCount,
+            TimeSpan? durableLockExpiration,
             AmqpConnectionScope connectionScope,
             ServiceBusRetryPolicy retryPolicy,
             string identifier,
@@ -182,6 +187,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         timeout: timeout,
                         prefetchCount: prefetchCount,
                         receiveMode: receiveMode,
+                        durableLockExpiration: durableLockExpiration,
                         identifier: identifier,
                         // The cancellationToken will always be CancellationToken.None for non-session receivers
                         // it is okay to register the user provided cancellationToken from the AcceptNextSessionAsync call in
@@ -211,6 +217,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TimeSpan timeout,
             uint prefetchCount,
             ServiceBusReceiveMode receiveMode,
+            TimeSpan? durableLockExpiration,
             string identifier,
             CancellationToken cancellationToken)
         {
@@ -226,6 +233,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     receiveMode: receiveMode,
                     sessionId: SessionId,
                     isSessionReceiver: _isSessionReceiver,
+                    durableLockExpiration: durableLockExpiration,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (_isSessionReceiver)
                 {
@@ -368,7 +376,20 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         link.DisposeDelivery(message, true, AmqpConstants.AcceptedOutcome);
                     }
 
-                    receivedMessages.Add(_messageConverter.AmqpMessageToSBMessage(message));
+                    ServiceBusReceivedMessage sbMessage = _messageConverter.AmqpMessageToSBMessage(message);
+                    if (_receiveMode == ServiceBusReceiveMode.DurablePeekLock)
+                    {
+                        // if the message has not already been received then include it in the results
+                        if (!_durableReceivedMessages.ContainsKey(sbMessage.LockTokenGuid))
+                        {
+                            _durableReceivedMessages.TryAdd(sbMessage.LockTokenGuid, default);
+                            receivedMessages.Add(sbMessage);
+                        }
+                    }
+                    else
+                    {
+                        receivedMessages.Add(sbMessage);
+                    }
                     message.Dispose();
                 }
 
@@ -498,6 +519,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     }
 
                     throw error.ToMessagingContractException();
+                }
+                if (_receiveMode == ServiceBusReceiveMode.DurablePeekLock)
+                {
+                    _durableReceivedMessages.TryRemove(lockToken, out _);
                 }
             }
             catch (Exception exception)

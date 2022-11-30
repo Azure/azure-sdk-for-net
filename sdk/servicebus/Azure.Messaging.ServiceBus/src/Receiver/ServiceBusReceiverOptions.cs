@@ -52,6 +52,12 @@ namespace Azure.Messaging.ServiceBus
         public SubQueue SubQueue { get; set; } = SubQueue.None;
 
         /// <summary>
+        /// The maximum amount of time that a durably locked message will remain locked before re-establishing the link.
+        /// Default is 5 minutes. Only valid if ReceiveMode is DurablePeekLock.
+        /// </summary>
+        public TimeSpan? DurableLockExpiration { get; set; }
+
+        /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
         ///

@@ -181,6 +181,7 @@ namespace Azure.Messaging.ServiceBus
                     retryPolicy: _retryPolicy,
                     receiveMode: ReceiveMode,
                     prefetchCount: (uint)PrefetchCount,
+                    durableLockExpiration: options.DurableLockExpiration,
                     identifier: Identifier,
                     sessionId: sessionId,
                     isSessionReceiver: IsSessionReceiver,

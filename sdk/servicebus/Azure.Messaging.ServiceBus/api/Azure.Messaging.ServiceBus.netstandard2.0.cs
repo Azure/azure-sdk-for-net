@@ -330,6 +330,7 @@ namespace Azure.Messaging.ServiceBus
     {
         PeekLock = 0,
         ReceiveAndDelete = 1,
+        DurablePeekLock = 2,
     }
     public partial class ServiceBusReceiver : System.IAsyncDisposable
     {
@@ -368,6 +369,7 @@ namespace Azure.Messaging.ServiceBus
     public partial class ServiceBusReceiverOptions
     {
         public ServiceBusReceiverOptions() { }
+        public System.TimeSpan? DurableLockExpiration { get { throw null; } set { } }
         public string Identifier { get { throw null; } set { } }
         public int PrefetchCount { get { throw null; } set { } }
         public Azure.Messaging.ServiceBus.ServiceBusReceiveMode ReceiveMode { get { throw null; } set { } }

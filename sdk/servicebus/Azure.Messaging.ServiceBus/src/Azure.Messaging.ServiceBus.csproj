@@ -58,4 +58,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\..\azure-amqp\src\Microsoft.Azure.Amqp.csproj" />
+  </ItemGroup>
 </Project>

@@ -21,5 +21,10 @@ namespace Azure.Messaging.ServiceBus
         /// ReceiveAndDelete will delete the message from Service Bus as soon as the message is delivered.
         /// </summary>
         ReceiveAndDelete,
+
+        /// <summary>
+        /// Durable peek lock.
+        /// </summary>
+        DurablePeekLock
     }
 }

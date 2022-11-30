@@ -348,6 +348,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="receiveMode">The <see cref="ServiceBusReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
         /// <param name="sessionId">The session to connect to.</param>
         /// <param name="isSessionReceiver">Whether or not this is a sessionful receiver.</param>
+        /// <param name="durableLockExpiration"></param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <returns>A link for use with consumer operations.</returns>
         public virtual async Task<ReceivingAmqpLink> OpenReceiverLinkAsync(
@@ -358,6 +359,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             ServiceBusReceiveMode receiveMode,
             string sessionId,
             bool isSessionReceiver,
+            TimeSpan? durableLockExpiration,
             CancellationToken cancellationToken)
         {
             Argument.AssertNotDisposed(_disposed, nameof(AmqpConnectionScope));
@@ -378,6 +380,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 receiveMode: receiveMode,
                 sessionId: sessionId,
                 isSessionReceiver: isSessionReceiver,
+                durableLockExpiration: durableLockExpiration,
                 cancellationToken: cancellationToken
             ).ConfigureAwait(false);
 
@@ -629,6 +632,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="receiveMode">The <see cref="ServiceBusReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
         /// <param name="sessionId">The session to receive from.</param>
         /// <param name="isSessionReceiver">Whether or not this is a sessionful receiver.</param>
+        /// <param name="durableLockExpiration"></param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <returns>A link for use for operations related to receiving events.</returns>
         protected virtual async Task<ReceivingAmqpLink> CreateReceivingLinkAsync(
@@ -641,6 +645,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             ServiceBusReceiveMode receiveMode,
             string sessionId,
             bool isSessionReceiver,
+            TimeSpan? durableLockExpiration,
             CancellationToken cancellationToken)
         {
             Argument.AssertNotDisposed(IsDisposed, nameof(AmqpConnectionScope));
@@ -687,10 +692,16 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     TotalLinkCredit = prefetchCount,
                     AutoSendFlow = prefetchCount > 0,
                     SettleType = (receiveMode == ServiceBusReceiveMode.PeekLock) ? SettleMode.SettleOnDispose : SettleMode.SettleOnSend,
-                    Source = new Source { Address = endpoint.AbsolutePath, FilterSet = filters },
+                    Source = new Source { Address = endpoint.AbsolutePath, FilterSet = filters, Durable = receiveMode == ServiceBusReceiveMode.DurablePeekLock ? 1 : null },
                     Target = new Target { Address = identifier },
                     OperationTimeout = _operationTimeout
                 };
+
+                if (receiveMode == ServiceBusReceiveMode.DurablePeekLock)
+                {
+                    linkSettings.SetExpiryPolicy(LinkTerminusExpiryPolicy.Link_Detach);
+                    linkSettings.SetExpiryTimeout(durableLockExpiration ?? TimeSpan.FromMinutes(5));
+                }
 
                 if (isSessionReceiver && sessionId == null)
                 {

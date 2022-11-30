@@ -165,6 +165,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
         /// <param name="receiveMode">The <see cref="ServiceBusReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
+        /// <param name="durableLockExpiration"></param>
         /// <param name="identifier">The identifier for the sender.</param>
         /// <param name="sessionId">The session ID to receive messages for.</param>
         /// <param name="isSessionReceiver">Whether or not this is a sessionful receiver link.</param>
@@ -177,6 +178,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             ServiceBusRetryPolicy retryPolicy,
             ServiceBusReceiveMode receiveMode,
             uint prefetchCount,
+            TimeSpan? durableLockExpiration,
             string identifier,
             string sessionId,
             bool isSessionReceiver,
@@ -190,6 +192,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 entityPath,
                 receiveMode,
                 prefetchCount,
+                durableLockExpiration,
                 ConnectionScope,
                 retryPolicy,
                 identifier,
