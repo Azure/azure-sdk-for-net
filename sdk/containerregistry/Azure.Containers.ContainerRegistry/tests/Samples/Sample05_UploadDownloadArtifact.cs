@@ -114,26 +114,27 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
                 await WriteFile(Path.Combine(path, TrimSha(layerFile.Digest)), configResult.Value.Content);
             }
 
+            // Helper methods
+            async Task WriteFile(string path, Stream content)
+            {
+                using (FileStream fs = File.Create(path))
+                {
+                    await content.CopyToAsync(fs);
+                }
+            }
+
+            static string TrimSha(string digest)
+            {
+                int index = digest.IndexOf(':');
+                if (index > -1)
+                {
+                    return digest.Substring(index + 1);
+                }
+
+                return digest;
+            }
+
             #endregion
-        }
-
-        private async Task WriteFile(string path, Stream content)
-        {
-            using (FileStream fs = File.Create(path))
-            {
-                await content.CopyToAsync(fs);
-            }
-        }
-
-        private static string TrimSha(string digest)
-        {
-            int index = digest.IndexOf(':');
-            if (index > -1)
-            {
-                return digest.Substring(index + 1);
-            }
-
-            return digest;
         }
     }
 }
