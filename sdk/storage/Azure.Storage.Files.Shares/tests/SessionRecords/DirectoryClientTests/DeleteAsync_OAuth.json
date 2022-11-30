@@ -1,148 +1,139 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://oauthfilerest3.file.core.windows.net/test-share-8ebb456f-0146-c66b-b8ee-d01cfa24361f?restype=share",
+      "RequestUri": "https://sdkfileoauthsa.file.core.windows.net/test-share-263168d9-c8bc-6152-5215-e132e4b8f0dd?restype=share",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "traceparent": "00-5d92ccea383e235ad493da5883a6f722-d876ba781b6e7a9b-00",
-        "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.9.0-alpha.20220126.1",
-          "(.NET 6.0.1; Microsoft Windows 10.0.19044)"
-        ],
-        "x-ms-client-request-id": "c6686fda-cc5a-3b4e-1f15-7808b3e065c7",
-        "x-ms-file-request-intent": "backup",
+        "Content-Length": "0",
+        "traceparent": "00-ddb190fc9a8386cff611b7870e3f8ac8-43ccaf2bf90a8a23-00",
+        "User-Agent": "azsdk-net-Storage.Files.Shares/12.13.0-alpha.20221129.1 (.NET 6.0.11; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "1f8f54b1-18b5-ae8e-b4c4-3a7518fa6919",
+        "x-ms-date": "Wed, 30 Nov 2022 02:48:28 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-06-08"
+        "x-ms-version": "2021-12-02"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Thu, 27 Jan 2022 02:37:30 GMT",
-        "ETag": "\u00220x8D9E13DF77E5E23\u0022",
-        "Last-Modified": "Thu, 27 Jan 2022 02:37:31 GMT",
+        "Date": "Wed, 30 Nov 2022 02:48:28 GMT",
+        "ETag": "\u00220x8DAD27D5C6C729E\u0022",
+        "Last-Modified": "Wed, 30 Nov 2022 02:48:28 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-client-request-id": "c6686fda-cc5a-3b4e-1f15-7808b3e065c7",
-        "x-ms-request-id": "580756af-501a-0022-4f26-13632e000000",
-        "x-ms-version": "2021-06-08"
+        "x-ms-client-request-id": "1f8f54b1-18b5-ae8e-b4c4-3a7518fa6919",
+        "x-ms-request-id": "45837db1-501a-005e-7566-04ce49000000",
+        "x-ms-version": "2021-12-02"
       },
-      "ResponseBody": []
+      "ResponseBody": null
     },
     {
-      "RequestUri": "https://oauthfilerest3.file.core.windows.net/test-share-8ebb456f-0146-c66b-b8ee-d01cfa24361f/test-directory-b2f6f507-9ccc-957f-2e0f-a457583ac9f9?restype=directory",
+      "RequestUri": "https://sdkfileoauthsa.file.core.windows.net/test-share-263168d9-c8bc-6152-5215-e132e4b8f0dd/test-directory-1d8c916d-4bb1-8a36-1e8b-61a922446754?restype=directory",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "traceparent": "00-fceea9c81e8c8f83c5cc1f73fdc54db8-fabf38fc2c76a557-00",
-        "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.9.0-alpha.20220126.1",
-          "(.NET 6.0.1; Microsoft Windows 10.0.19044)"
-        ],
-        "x-ms-client-request-id": "0729e189-9cc9-3d64-f0d3-974a28f6e2e5",
+        "Content-Length": "0",
+        "traceparent": "00-9a265b1262b131cdde9513a47e28cd87-ecdd72e01634c852-00",
+        "User-Agent": "azsdk-net-Storage.Files.Shares/12.13.0-alpha.20221129.1 (.NET 6.0.11; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "68a08ca9-f670-65a8-1e05-0129b7e48c6f",
         "x-ms-file-attributes": "None",
         "x-ms-file-creation-time": "Now",
         "x-ms-file-last-write-time": "Now",
         "x-ms-file-permission": "Inherit",
         "x-ms-file-request-intent": "backup",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-06-08"
+        "x-ms-version": "2021-12-02"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Thu, 27 Jan 2022 02:37:30 GMT",
-        "ETag": "\u00220x8D9E13DF79D27DF\u0022",
-        "Last-Modified": "Thu, 27 Jan 2022 02:37:31 GMT",
+        "Date": "Wed, 30 Nov 2022 02:48:28 GMT",
+        "ETag": "\u00220x8DAD27D5C877A39\u0022",
+        "Last-Modified": "Wed, 30 Nov 2022 02:48:29 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-client-request-id": "0729e189-9cc9-3d64-f0d3-974a28f6e2e5",
+        "x-ms-client-request-id": "68a08ca9-f670-65a8-1e05-0129b7e48c6f",
         "x-ms-file-attributes": "Directory",
-        "x-ms-file-change-time": "2022-01-27T02:37:31.3162207Z",
-        "x-ms-file-creation-time": "2022-01-27T02:37:31.3162207Z",
+        "x-ms-file-change-time": "2022-11-30T02:48:29.1473977Z",
+        "x-ms-file-creation-time": "2022-11-30T02:48:29.1473977Z",
         "x-ms-file-id": "13835128424026341376",
-        "x-ms-file-last-write-time": "2022-01-27T02:37:31.3162207Z",
+        "x-ms-file-last-write-time": "2022-11-30T02:48:29.1473977Z",
         "x-ms-file-parent-id": "0",
-        "x-ms-file-permission-key": "15786088493850344481*12954698658981292968",
-        "x-ms-request-id": "580756b1-501a-0022-5026-13632e000000",
+        "x-ms-file-permission-key": "8792472798472242479*1359530181238362790",
+        "x-ms-request-id": "45837db6-501a-005e-7666-04ce49000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2021-06-08"
+        "x-ms-version": "2021-12-02"
       },
-      "ResponseBody": []
+      "ResponseBody": null
     },
     {
-      "RequestUri": "https://oauthfilerest3.file.core.windows.net/test-share-8ebb456f-0146-c66b-b8ee-d01cfa24361f/test-directory-b2f6f507-9ccc-957f-2e0f-a457583ac9f9?restype=directory",
+      "RequestUri": "https://sdkfileoauthsa.file.core.windows.net/test-share-263168d9-c8bc-6152-5215-e132e4b8f0dd/test-directory-1d8c916d-4bb1-8a36-1e8b-61a922446754?restype=directory",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "traceparent": "00-e87b2e9f133cc3de68079ef164c71f6c-d7a4e7dd56d5b507-00",
-        "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.9.0-alpha.20220126.1",
-          "(.NET 6.0.1; Microsoft Windows 10.0.19044)"
-        ],
-        "x-ms-client-request-id": "77cd9a17-c110-022f-3a04-9ae8d97aad80",
+        "traceparent": "00-27a68ced104fcd411a802908da9b300a-75b4370aabf03e62-00",
+        "User-Agent": "azsdk-net-Storage.Files.Shares/12.13.0-alpha.20221129.1 (.NET 6.0.11; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "950096fe-ffa4-0ae4-df1b-7123cffee4c3",
         "x-ms-file-request-intent": "backup",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-06-08"
+        "x-ms-version": "2021-12-02"
       },
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Thu, 27 Jan 2022 02:37:30 GMT",
+        "Date": "Wed, 30 Nov 2022 02:48:28 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-client-request-id": "77cd9a17-c110-022f-3a04-9ae8d97aad80",
-        "x-ms-request-id": "580756b3-501a-0022-5226-13632e000000",
-        "x-ms-version": "2021-06-08"
+        "x-ms-client-request-id": "950096fe-ffa4-0ae4-df1b-7123cffee4c3",
+        "x-ms-request-id": "45837dbb-501a-005e-7766-04ce49000000",
+        "x-ms-version": "2021-12-02"
       },
-      "ResponseBody": []
+      "ResponseBody": null
     },
     {
-      "RequestUri": "https://oauthfilerest3.file.core.windows.net/test-share-8ebb456f-0146-c66b-b8ee-d01cfa24361f?restype=share",
+      "RequestUri": "https://sdkfileoauthsa.file.core.windows.net/test-share-263168d9-c8bc-6152-5215-e132e4b8f0dd?restype=share",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "traceparent": "00-67d982a1b2c1f0bc1015217182bbaf38-820ba8bbdbb698fc-00",
-        "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.9.0-alpha.20220126.1",
-          "(.NET 6.0.1; Microsoft Windows 10.0.19044)"
-        ],
-        "x-ms-client-request-id": "8d3276a0-6a29-8ad4-4f66-d9993f22bdb4",
+        "traceparent": "00-b1810cf676788296fad1fab7fb4a8942-03abc1ba4e929692-00",
+        "User-Agent": "azsdk-net-Storage.Files.Shares/12.13.0-alpha.20221129.1 (.NET 6.0.11; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "212bb78e-f6e3-5ccb-016a-b15d68cdcd6a",
+        "x-ms-date": "Wed, 30 Nov 2022 02:48:28 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-06-08"
+        "x-ms-version": "2021-12-02"
       },
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Thu, 27 Jan 2022 02:37:30 GMT",
+        "Date": "Wed, 30 Nov 2022 02:48:28 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-client-request-id": "8d3276a0-6a29-8ad4-4f66-d9993f22bdb4",
-        "x-ms-request-id": "580756b4-501a-0022-5326-13632e000000",
-        "x-ms-version": "2021-06-08"
+        "x-ms-client-request-id": "212bb78e-f6e3-5ccb-016a-b15d68cdcd6a",
+        "x-ms-request-id": "45837dbf-501a-005e-7866-04ce49000000",
+        "x-ms-version": "2021-12-02"
       },
-      "ResponseBody": []
+      "ResponseBody": null
     }
   ],
   "Variables": {
-    "RandomSeed": "1368683874",
-    "Storage_TestConfigOAuth": "OAuthTenant\noauthfilerest3\nU2FuaXRpemVk\nhttps://oauthfilerest3.blob.core.windows.net\nhttps://oauthfilerest3.file.core.windows.net\nhttp://oauthfilerest3.queue.core.windows.net\nhttp://oauthfilerest3.table.core.windows.net\n\n\n\n\nhttp://oauthfilerest3-secondary.blob.core.windows.net\nhttp://oauthfilerest3-secondary.file.core.windows.net\nhttp://oauthfilerest3-secondary.queue.core.windows.net\nhttp://oauthfilerest3-secondary.table.core.windows.net\ndc57b189-cd6a-485e-beb1-dd71492b0a92\nSanitized\n922923f3-36c9-4663-b1d7-68e670802ae1\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=https://oauthfilerest3.blob.core.windows.net/;QueueEndpoint=http://oauthfilerest3.queue.core.windows.net/;FileEndpoint=https://oauthfilerest3.file.core.windows.net/;BlobSecondaryEndpoint=http://oauthfilerest3-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://oauthfilerest3-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://oauthfilerest3-secondary.file.core.windows.net/;AccountName=oauthfilerest3;AccountKey=Sanitized\n\njaschrep\n25c81a3f-c3f0-41c0-8453-4f699167c22d"
+    "RandomSeed": "1376159701",
+    "Storage_TestConfigOAuth": "OAuthTenant\nsdkfileoauthsa\nU2FuaXRpemVk\nhttps://sdkfileoauthsa.blob.core.windows.net\nhttps://sdkfileoauthsa.file.core.windows.net\nhttps://sdkfileoauthsa.queue.core.windows.net\nhttps://sdkfileoauthsa.table.core.windows.net\n\n\n\n\nhttps://sdkfileoauthsa-secondary.blob.core.windows.net\nhttps://sdkfileoauthsa-secondary.file.core.windows.net\nhttps://sdkfileoauthsa-secondary.queue.core.windows.net\nhttps://sdkfileoauthsa-secondary.table.core.windows.net\n68390a19-a643-458b-b726-408abf67b4fc\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=https://sdkfileoauthsa.blob.core.windows.net/;QueueEndpoint=https://sdkfileoauthsa.queue.core.windows.net/;FileEndpoint=https://sdkfileoauthsa.file.core.windows.net/;BlobSecondaryEndpoint=https://sdkfileoauthsa-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://sdkfileoauthsa-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://sdkfileoauthsa-secondary.file.core.windows.net/;AccountName=sdkfileoauthsa;AccountKey=Sanitized\n\nkupplaks-rg\n560efead-282d-42a4-8f12-1b37d2a4e785"
   }
 }
