@@ -3,6 +3,11 @@
 ## 5.3.0-beta.1 (Unreleased)
 
 ### Features Added
+- Added support for dynamic classification.
+  - Added the following methods: `TextAnalyticsClient.DynamicClassify` and `TextAnalyticsClient.DynamicClassifyAsync`.
+  - Added the following methods: `TextAnalyticsClient.DynamicClassifyBatch` and `TextAnalyticsClient.DynamicClassifyBatchAsync`.
+  - Added the following classes: `DynamicClassifyDocumentResultCollection` and `DynamicClassifyOptions`.
+  - Added the `ClassificationType` enum.
 - Added support for extractive summarization.
   - Added the `TextAnalyticsActions.ExtractSummaryActions` property to support extractive summarization in a batch of actions.
   - Added the `TextAnalyticsClient.StartExtractSummary` and `TextAnalyticsClient.StartExtractSummaryAsync` methods to perform extractive summarization on a collection of documents.
