@@ -119,6 +119,7 @@ emitters:
 
 - `namespace` define the client library namespace. e.g. Azure.IoT.DeviceUpdate.
 - `new-project` indicate if it is a new sdk project and need to generate a project file (.csproj).
+- `model-namespace` Indicate if we want to put the models in their own namespace which is a sub namespace of the client library namespace plus ".Models". if it is set `false`, the models will be put in the same namespace of the client. The default value is `true`.
 - `clear-output-folder` indicate if you want to clear up the output folder.
 
 
@@ -159,7 +160,10 @@ Generate the library source code files to the directory `<sdkPath>/sdk/<service>
   ```shell
   npx cadl compile --emit @azure-tools/cadl-csharp --output-path /home/azure-sdk-for-net/sdk/deviceupdate/Azure.IoT.DeviceUpdate/src main.cadl
   ```
+**Note**:
 
+- `<path-to-cadl-file>` - Should be the entrypoint cadl file of the cadl project. e.g. When you define `client.cadl` to customize the client, the `client.cadl` will be the entrypoint cadl file, and you should specify the path to the `client.cadl`.
+  
 #### Build the library project
 
 Run `dotnet build` under project folder ``<sdkPath>/sdk/<service>/<namespace>` to build the project to create the starter package binary.
