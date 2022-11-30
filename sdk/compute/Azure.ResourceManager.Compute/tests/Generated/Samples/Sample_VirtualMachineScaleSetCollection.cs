@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -113,7 +114,7 @@ Publisher = "{extension-Publisher}",
 ExtensionType = "{extension-Type}",
 TypeHandlerVersion = "{handler-version}",
 AutoUpgradeMinorVersion = false,
-Settings = BinaryData.FromObjectAsJson(new
+Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
 {
 }),
 SuppressFailures = true,
@@ -227,7 +228,7 @@ Publisher = "{extension-Publisher}",
 ExtensionType = "{extension-Type}",
 TypeHandlerVersion = "{handler-version}",
 AutoUpgradeMinorVersion = false,
-Settings = BinaryData.FromObjectAsJson(new
+Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
 {
 }),
 KeyVaultProtectedSettings = new KeyVaultSecretReference(new Uri("https://kvName.vault.azure.net/secrets/secretName/79b88b3a6f5440ffb2e73e44a0db712e"),new WritableSubResource()
@@ -2402,7 +2403,7 @@ Publisher = "{extension-Publisher}",
 ExtensionType = "{extension-Type}",
 TypeHandlerVersion = "{handler-version}",
 AutoUpgradeMinorVersion = false,
-Settings = BinaryData.FromObjectAsJson(new
+Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
 {
 }),
 }

@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (property.NameEquals("userName"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        userName = null;
+                        continue;
+                    }
                     userName = property.Value.GetString();
                     continue;
                 }
@@ -31,6 +36,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("userId"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        userId = null;
+                        continue;
+                    }
                     userId = property.Value.GetString();
                     continue;
                 }

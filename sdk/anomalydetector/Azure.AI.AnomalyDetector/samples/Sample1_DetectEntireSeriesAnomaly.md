@@ -5,20 +5,21 @@ To get started, make sure you have satisfied all the prerequisites and got all t
 
 ## Create an AnomalyDetectorClient
 
-To create a new `AnomalyDetectorClient` you need the endpoint and credentials from your resource. In the sample below you'll use an Anomaly Detector API key credential by creating an `AzureKeyCredential` object.
+To create a new `AnomalyDetectorClient` you need the endpoint, apiVersion, and credentials from your resource. In the sample below you'll use an Anomaly Detector API key credential by creating an `AzureKeyCredential` object.
 
 You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
 
-```C# Snippet:CreateAnomalyDetectorClient
+```C# Snippet:CreateAnomalyDetectorClientEntire
 //read endpoint and apiKey
 string endpoint = TestEnvironment.Endpoint;
 string apiKey = TestEnvironment.ApiKey;
 
 var endpointUri = new Uri(endpoint);
 var credential = new AzureKeyCredential(apiKey);
+String apiVersion = "v1.1";
 
 //create client
-AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, credential);
+AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, apiVersion, credential);
 ```
 
 ## Load time series and create DetectRequest
@@ -47,7 +48,7 @@ DetectRequest request = new DetectRequest(list)
 ```
 
 ## Detect anomalies of the entire series
-Call the client's `DetectEntireSeriesAsync` method with the `DetectRequest` object and await the response as an `EntireDetectResponse` object. Iterate through the response's `IsAnomaly` values and print any that are true. These values correspond to the index of anomalous data points, if any were found.
+Call the client's `DetectUnivariateEntireSeries` method with the `DetectRequest` object and await the response as an `EntireDetectResponse` object. Iterate through the response's `IsAnomaly` values and print any that are true. These values correspond to the index of anomalous data points, if any were found.
 
 ```C# Snippet:DetectEntireSeriesAnomaly
 //detect
@@ -55,7 +56,7 @@ Console.WriteLine("Detecting anomalies in the entire time series.");
 
 try
 {
-    EntireDetectResponse result = await client.DetectEntireSeriesAsync(request).ConfigureAwait(false);
+    EntireDetectResponse result = client.DetectUnivariateEntireSeries(request);
 
     bool hasAnomaly = false;
     for (int i = 0; i < request.Series.Count; ++i)

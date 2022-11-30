@@ -20,6 +20,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="name"> The name. </param>
         public VirtualMachineScaleSetExtensionData(string name) : base(default, name, default, default)
         {
+            // we should make sure that we call everything inside the no parameter constructor. Otherwise the list in this model is not initialized and we will get exceptions when serializing it.
+            ProvisionAfterExtensions = new ChangeTrackingList<string>();
         }
 
         /// <summary>
@@ -57,15 +59,16 @@ namespace Azure.ResourceManager.Compute
         {
             get
             {
-                string raw;
-                using var stream = new MemoryStream();
-                using (var writer = new Utf8JsonWriter(stream))
-                {
-                    writer.WriteObjectValue(KeyVaultProtectedSettings);
-                    writer.Flush();
-                    raw = Encoding.UTF8.GetString(stream.ToArray());
-                }
-                return BinaryData.FromBytes(stream.ToArray());
+                return BinaryData.FromObjectAsJson(KeyVaultProtectedSettings);
+                //string raw;
+                //using var stream = new MemoryStream();
+                //using (var writer = new Utf8JsonWriter(stream))
+                //{
+                //    writer.WriteObjectValue(KeyVaultProtectedSettings);
+                //    writer.Flush();
+                //    raw = Encoding.UTF8.GetString(stream.ToArray());
+                //}
+                //return BinaryData.FromBytes(stream.ToArray());
             }
             set
             {

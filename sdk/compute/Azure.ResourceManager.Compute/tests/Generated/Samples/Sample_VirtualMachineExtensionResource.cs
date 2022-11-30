@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -45,9 +46,9 @@ namespace Azure.ResourceManager.Compute
                 ExtensionType = "extType",
                 TypeHandlerVersion = "1.2",
                 AutoUpgradeMinorVersion = true,
-                Settings = BinaryData.FromObjectAsJson(new
+                Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
                 {
-                    UserName = "xyz@microsoft.com"
+                    ["UserName"] = "xyz@microsoft.com"
                 }),
                 SuppressFailures = true,
                 KeyVaultProtectedSettings = new KeyVaultSecretReference(new Uri("https://kvName.vault.azure.net/secrets/secretName/79b88b3a6f5440ffb2e73e44a0db712e"), new WritableSubResource()

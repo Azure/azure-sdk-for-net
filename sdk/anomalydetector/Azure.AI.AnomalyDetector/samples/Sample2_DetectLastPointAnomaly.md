@@ -5,7 +5,7 @@ To get started, make sure you have satisfied all the prerequisites and got all t
 
 ## Create an AnomalyDetectorClient
 
-To create a new `AnomalyDetectorClient` you need the endpoint and credentials from your resource. In the sample below you'll use an Anomaly Detector API key credential by creating an `AzureKeyCredential` object.
+To create a new `AnomalyDetectorClient` you need the endpoint, apiVersion, and credentials from your resource. In the sample below you'll use an Anomaly Detector API key credential by creating an `AzureKeyCredential` object.
 
 You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
 
@@ -13,12 +13,14 @@ You can set `endpoint` and `apiKey` based on an environment variable, a configur
 //read endpoint and apiKey
 string endpoint = TestEnvironment.Endpoint;
 string apiKey = TestEnvironment.ApiKey;
-
+string datasource = TestEnvironment.DataSource;
+Console.WriteLine(endpoint);
 var endpointUri = new Uri(endpoint);
 var credential = new AzureKeyCredential(apiKey);
+string apiVersion = "V1.1";
 
 //create client
-AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, credential);
+AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, apiVersion, credential);
 ```
 
 ## Load time series and create DetectRequest
@@ -47,7 +49,7 @@ DetectRequest request = new DetectRequest(list)
 ```
 
 ## Detect anomaly status of the latest data point
-Call the client's `DetectLastPointAsync` method with the `DetectRequest` object and await the response as a `LastDetectResponse` object. Check the response's `IsAnomaly` attribute to determine if the latest data point sent was an anomaly or not.
+Call the client's `DetectUnivariateLastPoint` method with the `DetectRequest` object and await the response as a `LastDetectResponse` object. Check the response's `IsAnomaly` attribute to determine if the latest data point sent was an anomaly or not.
 
 ```C# Snippet:DetectLastPointAnomaly
 //detect
@@ -55,7 +57,7 @@ Console.WriteLine("Detecting the anomaly status of the latest point in the serie
 
 try
 {
-    LastDetectResponse result = await client.DetectLastPointAsync(request).ConfigureAwait(false);
+    LastDetectResponse result = client.DetectUnivariateLastPoint(request);
 
     if (result.IsAnomaly)
     {
