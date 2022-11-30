@@ -67,5 +67,69 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
 
             #endregion
         }
+
+        [Test]
+        [AsyncOnly]
+        public async Task DownloadArtifactAsync()
+        {
+            Environment.SetEnvironmentVariable("REGISTRY_ENDPOINT", TestEnvironment.Endpoint);
+
+            #region Snippet:ContainerRegistry_Tests_Samples_DownloadArtifactAsync
+
+            // Get the service endpoint from the environment
+            Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
+
+            string repository = "sample-artifact";
+            string tag = "demo";
+            string path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "validate-pull");
+            Directory.CreateDirectory(path);
+
+            // Create a new ContainerRegistryBlobClient
+            ContainerRegistryBlobClient client = new ContainerRegistryBlobClient(endpoint, repository, new DefaultAzureCredential(), new ContainerRegistryClientOptions()
+            {
+                Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
+            });
+
+            // Download the manifest to obtain the list of files in the artifact
+            var manifestResult = await client.DownloadManifestAsync(new DownloadManifestOptions(tag));
+            OciManifest manifest = (OciManifest)manifestResult.Value.Manifest;
+
+            await WriteFile(Path.Combine(path, "manifest.json"), manifestResult.Value.ManifestStream);
+
+            // Download and write out the config
+            var configResult = await client.DownloadBlobAsync(manifest.Config.Digest);
+
+            await WriteFile(Path.Combine(path, "config.json"), configResult.Value.Content);
+
+            // Download and write out the layers
+            foreach (var layerFile in manifest.Layers)
+            {
+                var layerResult = await client.DownloadBlobAsync(layerFile.Digest);
+                Stream stream = layerResult.Value.Content;
+
+                await WriteFile(Path.Combine(path, TrimSha(layerFile.Digest)), configResult.Value.Content);
+            }
+
+            #endregion
+        }
+
+        private async Task WriteFile(string path, Stream content)
+        {
+            using (FileStream fs = File.Create(path))
+            {
+                await content.CopyToAsync(fs);
+            }
+        }
+
+        private static string TrimSha(string digest)
+        {
+            int index = digest.IndexOf(':');
+            if (index > -1)
+            {
+                return digest.Substring(index + 1);
+            }
+
+            return digest;
+        }
     }
 }
