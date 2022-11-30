@@ -24,17 +24,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         private const string HttpValue = "http";
         private const string SoapValue = "soap";
-        private const string WebsocketValue = "websocket";
-        private const string GraphqlValue = "graphql";
+        private const string WebSocketValue = "websocket";
+        private const string GraphQLValue = "graphql";
 
         /// <summary> http. </summary>
         public static ApiType Http { get; } = new ApiType(HttpValue);
         /// <summary> soap. </summary>
         public static ApiType Soap { get; } = new ApiType(SoapValue);
         /// <summary> websocket. </summary>
-        public static ApiType Websocket { get; } = new ApiType(WebsocketValue);
+        public static ApiType WebSocket { get; } = new ApiType(WebSocketValue);
         /// <summary> graphql. </summary>
-        public static ApiType Graphql { get; } = new ApiType(GraphqlValue);
+        public static ApiType GraphQL { get; } = new ApiType(GraphQLValue);
         /// <summary> Determines if two <see cref="ApiType"/> values are the same. </summary>
         public static bool operator ==(ApiType left, ApiType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApiType"/> values are not the same. </summary>

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> The secondary type of the database if it is a secondary.  Valid values are Geo and Named. </summary>
+    /// <summary> The secondary type of the database if it is a secondary.  Valid values are Geo, Named and Standby. </summary>
     public readonly partial struct SecondaryType : IEquatable<SecondaryType>
     {
         private readonly string _value;
@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.Sql.Models
 
         private const string GeoValue = "Geo";
         private const string NamedValue = "Named";
+        private const string StandbyValue = "Standby";
 
         /// <summary> Geo. </summary>
         public static SecondaryType Geo { get; } = new SecondaryType(GeoValue);
         /// <summary> Named. </summary>
         public static SecondaryType Named { get; } = new SecondaryType(NamedValue);
+        /// <summary> Standby. </summary>
+        public static SecondaryType Standby { get; } = new SecondaryType(StandbyValue);
         /// <summary> Determines if two <see cref="SecondaryType"/> values are the same. </summary>
         public static bool operator ==(SecondaryType left, SecondaryType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecondaryType"/> values are not the same. </summary>

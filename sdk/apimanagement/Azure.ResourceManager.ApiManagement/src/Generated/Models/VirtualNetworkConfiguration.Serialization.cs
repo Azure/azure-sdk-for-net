@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -25,14 +26,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static VirtualNetworkConfiguration DeserializeVirtualNetworkConfiguration(JsonElement element)
         {
-            Optional<string> vnetid = default;
+            Optional<Guid> vnetid = default;
             Optional<string> subnetname = default;
-            Optional<string> subnetResourceId = default;
+            Optional<ResourceIdentifier> subnetResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vnetid"))
                 {
-                    vnetid = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    vnetid = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("subnetname"))
@@ -42,11 +48,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (property.NameEquals("subnetResourceId"))
                 {
-                    subnetResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    subnetResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }
-            return new VirtualNetworkConfiguration(vnetid.Value, subnetname.Value, subnetResourceId.Value);
+            return new VirtualNetworkConfiguration(Optional.ToNullable(vnetid), subnetname.Value, subnetResourceId.Value);
         }
     }
 }

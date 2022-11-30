@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="version"> Version of the integration runtime node. </param>
         /// <param name="registerOn"> The time at which the integration runtime node was registered in ISO8601 format. </param>
         /// <param name="lastConnectOn"> The most recent time at which the integration runtime was connected in ISO8601 format. </param>
-        /// <param name="expiryOn"> The time at which the integration runtime will expire in ISO8601 format. </param>
+        /// <param name="expireOn"> The time at which the integration runtime will expire in ISO8601 format. </param>
         /// <param name="lastStartOn"> The time the node last started up. </param>
         /// <param name="lastStopOn"> The integration runtime node last stop time. </param>
         /// <param name="lastUpdateResult"> The result of the last integration runtime node update. </param>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="concurrentJobsLimit"> Maximum concurrent jobs on the integration runtime node. </param>
         /// <param name="maxConcurrentJobs"> The maximum concurrent jobs in this integration runtime. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal SelfHostedIntegrationRuntimeNode(string nodeName, string machineName, Uri hostServiceUri, SelfHostedIntegrationRuntimeNodeStatus? status, IReadOnlyDictionary<string, string> capabilities, string versionStatus, string version, DateTimeOffset? registerOn, DateTimeOffset? lastConnectOn, DateTimeOffset? expiryOn, DateTimeOffset? lastStartOn, DateTimeOffset? lastStopOn, IntegrationRuntimeUpdateResult? lastUpdateResult, DateTimeOffset? lastStartUpdateOn, DateTimeOffset? lastEndUpdateOn, bool? isActiveDispatcher, int? concurrentJobsLimit, int? maxConcurrentJobs, IReadOnlyDictionary<string, BinaryData> additionalProperties)
+        internal SelfHostedIntegrationRuntimeNode(string nodeName, string machineName, Uri hostServiceUri, SelfHostedIntegrationRuntimeNodeStatus? status, IReadOnlyDictionary<string, string> capabilities, string versionStatus, string version, DateTimeOffset? registerOn, DateTimeOffset? lastConnectOn, DateTimeOffset? expireOn, DateTimeOffset? lastStartOn, DateTimeOffset? lastStopOn, IntegrationRuntimeUpdateResult? lastUpdateResult, DateTimeOffset? lastStartUpdateOn, DateTimeOffset? lastEndUpdateOn, bool? isActiveDispatcher, int? concurrentJobsLimit, int? maxConcurrentJobs, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
             NodeName = nodeName;
             MachineName = machineName;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Version = version;
             RegisterOn = registerOn;
             LastConnectOn = lastConnectOn;
-            ExpiryOn = expiryOn;
+            ExpireOn = expireOn;
             LastStartOn = lastStartOn;
             LastStopOn = lastStopOn;
             LastUpdateResult = lastUpdateResult;
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The most recent time at which the integration runtime was connected in ISO8601 format. </summary>
         public DateTimeOffset? LastConnectOn { get; }
         /// <summary> The time at which the integration runtime will expire in ISO8601 format. </summary>
-        public DateTimeOffset? ExpiryOn { get; }
+        public DateTimeOffset? ExpireOn { get; }
         /// <summary> The time the node last started up. </summary>
         public DateTimeOffset? LastStartOn { get; }
         /// <summary> The integration runtime node last stop time. </summary>
@@ -100,7 +100,36 @@ namespace Azure.ResourceManager.DataFactory.Models
         public int? ConcurrentJobsLimit { get; }
         /// <summary> The maximum concurrent jobs in this integration runtime. </summary>
         public int? MaxConcurrentJobs { get; }
-        /// <summary> Additional Properties. </summary>
+        /// <summary>
+        /// Additional Properties
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public IReadOnlyDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

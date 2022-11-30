@@ -17,3 +17,6 @@ variables:
   DOTNET_NOLOGO: 1
   Package.EnableSBOMSigning: true
   Codeql.SkipTaskAutoInjection: true
+  # Define optional AdditionalTestFilters via pipeline runtime variables or matrix config variables
+  # See https://docs.microsoft.com/dotnet/core/testing/selective-unit-tests?pivots=nunit
+  AdditionalTestFilters: "Placeholder!=DefaultIgnoreMe"

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.IotCentral;
@@ -25,23 +26,23 @@ namespace Azure.ResourceManager.IotCentral.Models
         /// <summary> Instance tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> A valid instance SKU. </summary>
-        internal AppSkuInfo Sku { get; set; }
+        internal IotCentralAppSkuInfo Sku { get; set; }
         /// <summary> The name of the SKU. </summary>
-        public AppSku? SkuName
+        public IotCentralAppSku? SkuName
         {
-            get => Sku is null ? default(AppSku?) : Sku.Name;
+            get => Sku is null ? default(IotCentralAppSku?) : Sku.Name;
             set
             {
-                Sku = value.HasValue ? new AppSkuInfo(value.Value) : null;
+                Sku = value.HasValue ? new IotCentralAppSkuInfo(value.Value) : null;
             }
         }
 
-        /// <summary> The managed identities for the IoT Central application. </summary>
-        public SystemAssignedServiceIdentity Identity { get; set; }
+        /// <summary> The managed identities for the IoT Central application. Current supported identity types: None, SystemAssigned. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The provisioning state of the application. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public IotCentralProvisioningState? ProvisioningState { get; }
         /// <summary> The ID of the application. </summary>
-        public string ApplicationId { get; }
+        public Guid? ApplicationId { get; }
         /// <summary> The display name of the application. </summary>
         public string DisplayName { get; set; }
         /// <summary> The subdomain of the application. </summary>
@@ -49,11 +50,11 @@ namespace Azure.ResourceManager.IotCentral.Models
         /// <summary> The ID of the application template, which is a blueprint that defines the characteristics and behaviors of an application. Optional; if not specified, defaults to a blank blueprint and allows the application to be defined from scratch. </summary>
         public string Template { get; set; }
         /// <summary> The current state of the application. </summary>
-        public AppState? State { get; }
+        public IotCentralAppState? State { get; }
         /// <summary> Whether requests from the public network are allowed. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public IotCentralPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> Network Rule Set Properties of this IoT Central application. </summary>
-        public NetworkRuleSets NetworkRuleSets { get; set; }
+        public IotCentralNetworkRuleSets NetworkRuleSets { get; set; }
         /// <summary> Private endpoint connections created on this IoT Central application. </summary>
         public IReadOnlyList<IotCentralPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
     }

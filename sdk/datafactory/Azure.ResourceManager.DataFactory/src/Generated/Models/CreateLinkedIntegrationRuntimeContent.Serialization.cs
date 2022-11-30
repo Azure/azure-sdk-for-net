@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(DataFactoryLocation))
             {
                 writer.WritePropertyName("dataFactoryLocation");
-                writer.WriteStringValue(DataFactoryLocation);
+                writer.WriteStringValue(DataFactoryLocation.Value);
             }
             writer.WriteEndObject();
         }

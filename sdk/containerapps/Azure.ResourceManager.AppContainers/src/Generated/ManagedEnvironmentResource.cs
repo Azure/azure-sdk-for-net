@@ -93,11 +93,11 @@ namespace Azure.ResourceManager.AppContainers
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of DaprComponentResources in the ManagedEnvironment. </summary>
-        /// <returns> An object representing collection of DaprComponentResources and their operations over a DaprComponentResource. </returns>
-        public virtual DaprComponentCollection GetDaprComponents()
+        /// <summary> Gets a collection of ManagedEnvironmentDaprComponentResources in the ManagedEnvironment. </summary>
+        /// <returns> An object representing collection of ManagedEnvironmentDaprComponentResources and their operations over a ManagedEnvironmentDaprComponentResource. </returns>
+        public virtual ManagedEnvironmentDaprComponentCollection GetManagedEnvironmentDaprComponents()
         {
-            return GetCachedClient(Client => new DaprComponentCollection(Client, Id));
+            return GetCachedClient(Client => new ManagedEnvironmentDaprComponentCollection(Client, Id));
         }
 
         /// <summary>
@@ -110,9 +110,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DaprComponentResource>> GetDaprComponentAsync(string componentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedEnvironmentDaprComponentResource>> GetManagedEnvironmentDaprComponentAsync(string componentName, CancellationToken cancellationToken = default)
         {
-            return await GetDaprComponents().GetAsync(componentName, cancellationToken).ConfigureAwait(false);
+            return await GetManagedEnvironmentDaprComponents().GetAsync(componentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -125,16 +125,60 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DaprComponentResource> GetDaprComponent(string componentName, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedEnvironmentDaprComponentResource> GetManagedEnvironmentDaprComponent(string componentName, CancellationToken cancellationToken = default)
         {
-            return GetDaprComponents().Get(componentName, cancellationToken);
+            return GetManagedEnvironmentDaprComponents().Get(componentName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ContainerAppCertificateResources in the ManagedEnvironment. </summary>
-        /// <returns> An object representing collection of ContainerAppCertificateResources and their operations over a ContainerAppCertificateResource. </returns>
-        public virtual ContainerAppCertificateCollection GetContainerAppCertificates()
+        /// <summary> Gets a collection of ManagedEnvironmentDetectorResources in the ManagedEnvironment. </summary>
+        /// <returns> An object representing collection of ManagedEnvironmentDetectorResources and their operations over a ManagedEnvironmentDetectorResource. </returns>
+        public virtual ManagedEnvironmentDetectorCollection GetManagedEnvironmentDetectors()
         {
-            return GetCachedClient(Client => new ContainerAppCertificateCollection(Client, Id));
+            return GetCachedClient(Client => new ManagedEnvironmentDetectorCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Get the diagnostics data for a Managed Environment used to host container apps.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/detectors/{detectorName}
+        /// Operation Id: ManagedEnvironmentDiagnostics_GetDetector
+        /// </summary>
+        /// <param name="detectorName"> Name of the Managed Environment detector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ManagedEnvironmentDetectorResource>> GetManagedEnvironmentDetectorAsync(string detectorName, CancellationToken cancellationToken = default)
+        {
+            return await GetManagedEnvironmentDetectors().GetAsync(detectorName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the diagnostics data for a Managed Environment used to host container apps.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/detectors/{detectorName}
+        /// Operation Id: ManagedEnvironmentDiagnostics_GetDetector
+        /// </summary>
+        /// <param name="detectorName"> Name of the Managed Environment detector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ManagedEnvironmentDetectorResource> GetManagedEnvironmentDetector(string detectorName, CancellationToken cancellationToken = default)
+        {
+            return GetManagedEnvironmentDetectors().Get(detectorName, cancellationToken);
+        }
+
+        /// <summary> Gets an object representing a ManagedEnvironmentDetectorPropertyResource along with the instance operations that can be performed on it in the ManagedEnvironment. </summary>
+        /// <returns> Returns a <see cref="ManagedEnvironmentDetectorPropertyResource" /> object. </returns>
+        public virtual ManagedEnvironmentDetectorPropertyResource GetManagedEnvironmentDetectorProperty()
+        {
+            return new ManagedEnvironmentDetectorPropertyResource(Client, new ResourceIdentifier(Id.ToString() + "/detectorProperties/rootApi"));
+        }
+
+        /// <summary> Gets a collection of ManagedEnvironmentCertificateResources in the ManagedEnvironment. </summary>
+        /// <returns> An object representing collection of ManagedEnvironmentCertificateResources and their operations over a ManagedEnvironmentCertificateResource. </returns>
+        public virtual ManagedEnvironmentCertificateCollection GetManagedEnvironmentCertificates()
+        {
+            return GetCachedClient(Client => new ManagedEnvironmentCertificateCollection(Client, Id));
         }
 
         /// <summary>
@@ -147,9 +191,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ContainerAppCertificateResource>> GetContainerAppCertificateAsync(string certificateName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedEnvironmentCertificateResource>> GetManagedEnvironmentCertificateAsync(string certificateName, CancellationToken cancellationToken = default)
         {
-            return await GetContainerAppCertificates().GetAsync(certificateName, cancellationToken).ConfigureAwait(false);
+            return await GetManagedEnvironmentCertificates().GetAsync(certificateName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -162,9 +206,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ContainerAppCertificateResource> GetContainerAppCertificate(string certificateName, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedEnvironmentCertificateResource> GetManagedEnvironmentCertificate(string certificateName, CancellationToken cancellationToken = default)
         {
-            return GetContainerAppCertificates().Get(certificateName, cancellationToken);
+            return GetManagedEnvironmentCertificates().Get(certificateName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ManagedEnvironmentStorageResources in the ManagedEnvironment. </summary>
@@ -366,21 +410,149 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary>
         /// Checks if resource name is available.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/getAuthtoken
+        /// Operation Id: ManagedEnvironments_GetAuthToken
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<EnvironmentAuthToken>> GetAuthTokenAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _managedEnvironmentClientDiagnostics.CreateScope("ManagedEnvironmentResource.GetAuthToken");
+            scope.Start();
+            try
+            {
+                var response = await _managedEnvironmentRestClient.GetAuthTokenAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks if resource name is available.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/getAuthtoken
+        /// Operation Id: ManagedEnvironments_GetAuthToken
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<EnvironmentAuthToken> GetAuthToken(CancellationToken cancellationToken = default)
+        {
+            using var scope = _managedEnvironmentClientDiagnostics.CreateScope("ManagedEnvironmentResource.GetAuthToken");
+            scope.Start();
+            try
+            {
+                var response = _managedEnvironmentRestClient.GetAuthToken(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get all workload Profile States for a Premium Managed Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/workloadProfileStates
+        /// Operation Id: ManagedEnvironments_ListWorkloadProfileStates
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="WorkloadProfileStates" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WorkloadProfileStates> GetWorkloadProfileStatesAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<WorkloadProfileStates>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _managedEnvironmentClientDiagnostics.CreateScope("ManagedEnvironmentResource.GetWorkloadProfileStates");
+                scope.Start();
+                try
+                {
+                    var response = await _managedEnvironmentRestClient.ListWorkloadProfileStatesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<WorkloadProfileStates>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _managedEnvironmentClientDiagnostics.CreateScope("ManagedEnvironmentResource.GetWorkloadProfileStates");
+                scope.Start();
+                try
+                {
+                    var response = await _managedEnvironmentRestClient.ListWorkloadProfileStatesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Get all workload Profile States for a Premium Managed Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/workloadProfileStates
+        /// Operation Id: ManagedEnvironments_ListWorkloadProfileStates
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="WorkloadProfileStates" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WorkloadProfileStates> GetWorkloadProfileStates(CancellationToken cancellationToken = default)
+        {
+            Page<WorkloadProfileStates> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _managedEnvironmentClientDiagnostics.CreateScope("ManagedEnvironmentResource.GetWorkloadProfileStates");
+                scope.Start();
+                try
+                {
+                    var response = _managedEnvironmentRestClient.ListWorkloadProfileStates(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<WorkloadProfileStates> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _managedEnvironmentClientDiagnostics.CreateScope("ManagedEnvironmentResource.GetWorkloadProfileStates");
+                scope.Start();
+                try
+                {
+                    var response = _managedEnvironmentRestClient.ListWorkloadProfileStatesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Checks if resource name is available.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/checkNameAvailability
         /// Operation Id: Namespaces_CheckNameAvailability
         /// </summary>
-        /// <param name="content"> The check name availability request. </param>
+        /// <param name="checkNameAvailabilityRequest"> The check name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CheckNameAvailabilityResponse>> CheckContainerAppNameAvailabilityAsync(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityRequest"/> is null. </exception>
+        public virtual async Task<Response<CheckNameAvailabilityResponse>> CheckContainerAppNameAvailabilityAsync(CheckNameAvailabilityRequest checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(checkNameAvailabilityRequest, nameof(checkNameAvailabilityRequest));
 
             using var scope = _namespacesClientDiagnostics.CreateScope("ManagedEnvironmentResource.CheckContainerAppNameAvailability");
             scope.Start();
             try
             {
-                var response = await _namespacesRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var response = await _namespacesRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, checkNameAvailabilityRequest, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -395,18 +567,18 @@ namespace Azure.ResourceManager.AppContainers
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/checkNameAvailability
         /// Operation Id: Namespaces_CheckNameAvailability
         /// </summary>
-        /// <param name="content"> The check name availability request. </param>
+        /// <param name="checkNameAvailabilityRequest"> The check name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CheckNameAvailabilityResponse> CheckContainerAppNameAvailability(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityRequest"/> is null. </exception>
+        public virtual Response<CheckNameAvailabilityResponse> CheckContainerAppNameAvailability(CheckNameAvailabilityRequest checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(checkNameAvailabilityRequest, nameof(checkNameAvailabilityRequest));
 
             using var scope = _namespacesClientDiagnostics.CreateScope("ManagedEnvironmentResource.CheckContainerAppNameAvailability");
             scope.Start();
             try
             {
-                var response = _namespacesRestClient.CheckNameAvailability(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var response = _namespacesRestClient.CheckNameAvailability(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, checkNameAvailabilityRequest, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -434,11 +606,26 @@ namespace Azure.ResourceManager.AppContainers
             scope.Start();
             try
             {
-                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.TagValues[key] = value;
-                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _managedEnvironmentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ManagedEnvironmentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                {
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues[key] = value;
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _managedEnvironmentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new ManagedEnvironmentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new ManagedEnvironmentData(current.Location);
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags[key] = value;
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                }
             }
             catch (Exception e)
             {
@@ -465,11 +652,26 @@ namespace Azure.ResourceManager.AppContainers
             scope.Start();
             try
             {
-                var originalTags = GetTagResource().Get(cancellationToken);
-                originalTags.Value.Data.TagValues[key] = value;
-                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _managedEnvironmentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new ManagedEnvironmentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (CanUseTagResource(cancellationToken: cancellationToken))
+                {
+                    var originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues[key] = value;
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _managedEnvironmentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new ManagedEnvironmentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new ManagedEnvironmentData(current.Location);
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags[key] = value;
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Get(cancellationToken: cancellationToken);
+                }
             }
             catch (Exception e)
             {
@@ -494,12 +696,23 @@ namespace Azure.ResourceManager.AppContainers
             scope.Start();
             try
             {
-                await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _managedEnvironmentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ManagedEnvironmentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                {
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _managedEnvironmentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new ManagedEnvironmentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new ManagedEnvironmentData(current.Location);
+                    patch.Tags.ReplaceWith(tags);
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                }
             }
             catch (Exception e)
             {
@@ -524,12 +737,23 @@ namespace Azure.ResourceManager.AppContainers
             scope.Start();
             try
             {
-                GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                var originalTags = GetTagResource().Get(cancellationToken);
-                originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _managedEnvironmentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new ManagedEnvironmentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (CanUseTagResource(cancellationToken: cancellationToken))
+                {
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
+                    var originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _managedEnvironmentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new ManagedEnvironmentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new ManagedEnvironmentData(current.Location);
+                    patch.Tags.ReplaceWith(tags);
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Get(cancellationToken: cancellationToken);
+                }
             }
             catch (Exception e)
             {
@@ -554,11 +778,26 @@ namespace Azure.ResourceManager.AppContainers
             scope.Start();
             try
             {
-                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.TagValues.Remove(key);
-                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _managedEnvironmentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ManagedEnvironmentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                {
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues.Remove(key);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _managedEnvironmentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new ManagedEnvironmentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new ManagedEnvironmentData(current.Location);
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags.Remove(key);
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                }
             }
             catch (Exception e)
             {
@@ -583,11 +822,26 @@ namespace Azure.ResourceManager.AppContainers
             scope.Start();
             try
             {
-                var originalTags = GetTagResource().Get(cancellationToken);
-                originalTags.Value.Data.TagValues.Remove(key);
-                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _managedEnvironmentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new ManagedEnvironmentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (CanUseTagResource(cancellationToken: cancellationToken))
+                {
+                    var originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues.Remove(key);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _managedEnvironmentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new ManagedEnvironmentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new ManagedEnvironmentData(current.Location);
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags.Remove(key);
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Get(cancellationToken: cancellationToken);
+                }
             }
             catch (Exception e)
             {

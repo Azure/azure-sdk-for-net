@@ -8,8 +8,8 @@ title: Conversations
 license-header: MICROSOFT_MIT_NO_VERSION
 
 input-file:
-- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/e7f37e4e43b1d12fd1988fda3ed39624c4b23303/specification/cognitiveservices/data-plane/Language/preview/2022-05-15-preview/analyzeconversations.json
-- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/e7f37e4e43b1d12fd1988fda3ed39624c4b23303/specification/cognitiveservices/data-plane/Language/preview/2022-05-15-preview/analyzeconversations-authoring.json
+- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/40f5247a48ff1eec044c8441c422af0628a8a288/specification/cognitiveservices/data-plane/Language/preview/2022-10-01-preview/analyzeconversations.json
+- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/40f5247a48ff1eec044c8441c422af0628a8a288/specification/cognitiveservices/data-plane/Language/preview/2022-10-01-preview/analyzeconversations-authoring.json
 clear-output-folder: true
 
 data-plane: true
@@ -37,7 +37,7 @@ directive:
     $["AzureKey"] = $["apim_key"];
     delete $["apim_key"];
 
-- from: swagger-document
+- from: analyzeconversations.json
   where: $.security
   transform: |
     $ = [
@@ -45,6 +45,11 @@ directive:
           "AzureKey": []
         }
     ];
+
+- from: analyzeconversations-authoring.json
+  where: $.security
+  transform: |
+    $ = [];
 
 # Fix Endpoint parameter description and format.
 - from: swagger-document
@@ -141,38 +146,38 @@ directive:
       }
     };
 
-# Move the stringIndexType parameter to the end for all operations referencing it.
+# Move the stringIndexType parameter to just before the newly append trainedModelLabel for all operations referencing it.
 - where-operation: ConversationalAnalysisAuthoring_Export
   transform: |
     var stringIndexTypeParamIndex = $.parameters.findIndex(param => param["$ref"] === "#/parameters/ConversationalAnalysisAuthoringStringIndexTypeQueryParameter");
     var stringIndexTypeParam = $.parameters[stringIndexTypeParamIndex];
+    $.parameters.splice(stringIndexTypeParamIndex, 1);
 
     var apiVersionParamIndex = $.parameters.findIndex(param => param["$ref"] === "common.json#/parameters/ApiVersionParameter");
     var apiVersionParam = $.parameters[apiVersionParamIndex];
+    $.parameters.splice(apiVersionParamIndex, 1);
 
-    $.parameters.splice(stringIndexTypeParamIndex, 1);
-    $.parameters.splice(apiVersionParamIndex - 1, 1);
-
-    $.parameters.push(stringIndexTypeParam);
+    var trainedModelLabelIndex = $.parameters.findIndex(param => param.name === "trainedModelLabel");
+    $.parameters.splice(trainedModelLabelIndex, 0, stringIndexTypeParam);
     $.parameters.push(apiVersionParam);
 
 # Update descriptions to include a link to the REST API documentation.
 - from: analyzeconversations.json
   where: $.paths.*.*
   transform: |
-    var operationId = $.operationId.substring("ConversationAnalysis_".length);
-    // BUGBUG: Will not work until https://github.com/Azure/autorest.csharp/issues/2384 is fixed.
+    var version = $doc.info.version;
+    var operationId = $.operationId.substring($.operationId.indexOf("_") + 1);
     $["externalDocs"] = {
-        url: "https://docs.microsoft.com/rest/api/language/conversation-analysis-runtime/" + operationId.replace(/([a-z0–9])([A-Z])/g, "$1-$2").toLowerCase()
+        url: "https://learn.microsoft.com/rest/api/language/" + version + "/conversation-analysis-runtime/" + operationId.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase()
     };
 
 - from: analyzeconversations-authoring.json
   where: $.paths.*.*
   transform: |
-    var operationId = $.operationId.substring("ConversationalAnalysisAuthoring_".length);
-    // BUGBUG: Will not work until https://github.com/Azure/autorest.csharp/issues/2384 is fixed.
+    var version = $doc.info.version;
+    var operationId = $.operationId.substring($.operationId.indexOf("_") + 1);
     $["externalDocs"] = {
-        url: "https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/" + operationId.replace(/([a-z0–9])([A-Z])/g, "$1-$2").toLowerCase()
+        url: "https://learn.microsoft.com/rest/api/language/" + version + "/conversational-analysis-authoring/" + operationId.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase()
     };
 
 # Mark the LRO as internal so we can call it from an overload, which we can't do using transforms since that results in duplicate operationIds.

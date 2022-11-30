@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Redis
             if (Optional.IsDefined(StaticIP))
             {
                 writer.WritePropertyName("staticIP");
-                writer.WriteStringValue(StaticIP);
+                writer.WriteStringValue(StaticIP.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -126,19 +127,19 @@ namespace Azure.ResourceManager.Redis
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<RedisCommonPropertiesRedisConfiguration> redisConfiguration = default;
+            Optional<RedisCommonConfiguration> redisConfiguration = default;
             Optional<string> redisVersion = default;
             Optional<bool> enableNonSslPort = default;
             Optional<int> replicasPerMaster = default;
             Optional<int> replicasPerPrimary = default;
             Optional<IDictionary<string, string>> tenantSettings = default;
             Optional<int> shardCount = default;
-            Optional<TlsVersion> minimumTlsVersion = default;
-            Optional<PublicNetworkAccess> publicNetworkAccess = default;
+            Optional<RedisTlsVersion> minimumTlsVersion = default;
+            Optional<RedisPublicNetworkAccess> publicNetworkAccess = default;
             RedisSku sku = default;
-            Optional<string> subnetId = default;
-            Optional<string> staticIP = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<ResourceIdentifier> subnetId = default;
+            Optional<IPAddress> staticIP = default;
+            Optional<RedisProvisioningState> provisioningState = default;
             Optional<string> hostName = default;
             Optional<int> port = default;
             Optional<int> sslPort = default;
@@ -234,7 +235,7 @@ namespace Azure.ResourceManager.Redis
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            redisConfiguration = RedisCommonPropertiesRedisConfiguration.DeserializeRedisCommonPropertiesRedisConfiguration(property0.Value);
+                            redisConfiguration = RedisCommonConfiguration.DeserializeRedisCommonConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("redisVersion"))
@@ -304,7 +305,7 @@ namespace Azure.ResourceManager.Redis
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            minimumTlsVersion = new TlsVersion(property0.Value.GetString());
+                            minimumTlsVersion = new RedisTlsVersion(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"))
@@ -314,7 +315,7 @@ namespace Azure.ResourceManager.Redis
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
+                            publicNetworkAccess = new RedisPublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("sku"))
@@ -324,12 +325,22 @@ namespace Azure.ResourceManager.Redis
                         }
                         if (property0.NameEquals("subnetId"))
                         {
-                            subnetId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            subnetId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("staticIP"))
                         {
-                            staticIP = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            staticIP = IPAddress.Parse(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -339,7 +350,7 @@ namespace Azure.ResourceManager.Redis
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new RedisProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("hostName"))
@@ -371,7 +382,7 @@ namespace Azure.ResourceManager.Redis
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                accessKeys = null;
                                 continue;
                             }
                             accessKeys = RedisAccessKeys.DeserializeRedisAccessKeys(property0.Value);

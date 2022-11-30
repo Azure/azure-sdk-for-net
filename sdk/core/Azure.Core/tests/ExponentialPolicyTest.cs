@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
@@ -33,7 +34,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public async Task WaitsSameAmountEveryTime()
+        public async Task WaitsCorrectAmountBetweenTries()
         {
             var responseClassifier = new MockResponseClassifier(retriableCodes: new[] { 500 });
             var policy = new RetryPolicyMock(RetryMode.Exponential, maxRetries: 4, delay: TimeSpan.FromSeconds(1), maxDelay: TimeSpan.FromSeconds(10));
@@ -42,6 +43,29 @@ namespace Azure.Core.Tests
             var expectedDelaysInSeconds = new int[] { 1, 2, 4, 8 };
 
             await mockTransport.RequestGate.Cycle(new MockResponse(500));
+
+            for (int i = 0; i < 4; i++)
+            {
+                TimeSpan delay = await policy.DelayGate.Cycle();
+                AssertExponentialDelay(TimeSpan.FromSeconds(expectedDelaysInSeconds[i]), delay);
+
+                await mockTransport.RequestGate.Cycle(new MockResponse(500));
+            }
+
+            Response response = await task.TimeoutAfterDefault();
+            Assert.AreEqual(500, response.Status);
+        }
+
+        [Test]
+        public async Task WaitsCorrectAmountBetweenTries_Exceptions()
+        {
+            var responseClassifier = new MockResponseClassifier(retriableCodes: new[] { 500 }, exceptionFilter: ex => ex is IOException);
+            var policy = new RetryPolicyMock(RetryMode.Exponential, maxRetries: 4, delay: TimeSpan.FromSeconds(1), maxDelay: TimeSpan.FromSeconds(10));
+            MockTransport mockTransport = CreateMockTransport();
+            Task<Response> task = SendGetRequest(mockTransport, policy, responseClassifier);
+            var expectedDelaysInSeconds = new int[] { 1, 2, 4, 8 };
+
+            await mockTransport.RequestGate.CycleWithException(new IOException());
 
             for (int i = 0; i < 4; i++)
             {

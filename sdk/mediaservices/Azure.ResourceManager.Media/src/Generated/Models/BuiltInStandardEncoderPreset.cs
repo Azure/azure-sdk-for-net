@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Describes a built-in preset for encoding the input video with the Standard Encoder. </summary>
-    public partial class BuiltInStandardEncoderPreset : Preset
+    public partial class BuiltInStandardEncoderPreset : MediaTransformPreset
     {
         /// <summary> Initializes a new instance of BuiltInStandardEncoderPreset. </summary>
         /// <param name="presetName"> The built-in preset to be used for encoding videos. </param>
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="configurations"> Optional configuration settings for encoder. Configurations is only supported for ContentAwareEncoding and H265ContentAwareEncoding BuiltInStandardEncoderPreset. </param>
         /// <param name="presetName"> The built-in preset to be used for encoding videos. </param>
-        internal BuiltInStandardEncoderPreset(string odataType, PresetConfigurations configurations, EncoderNamedPreset presetName) : base(odataType)
+        internal BuiltInStandardEncoderPreset(string odataType, EncoderPresetConfigurations configurations, EncoderNamedPreset presetName) : base(odataType)
         {
             Configurations = configurations;
             PresetName = presetName;
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Media.Models
         }
 
         /// <summary> Optional configuration settings for encoder. Configurations is only supported for ContentAwareEncoding and H265ContentAwareEncoding BuiltInStandardEncoderPreset. </summary>
-        public PresetConfigurations Configurations { get; set; }
+        public EncoderPresetConfigurations Configurations { get; set; }
         /// <summary> The built-in preset to be used for encoding videos. </summary>
         public EncoderNamedPreset PresetName { get; set; }
     }

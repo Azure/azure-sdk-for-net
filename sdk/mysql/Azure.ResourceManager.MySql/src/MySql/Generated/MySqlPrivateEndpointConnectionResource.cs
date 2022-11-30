@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MySql
     /// A Class representing a MySqlPrivateEndpointConnection along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MySqlPrivateEndpointConnectionResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetMySqlPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServerResource" /> using the GetMySqlPrivateEndpointConnection method.
+    /// Otherwise you can get one from its parent resource <see cref="MySqlServerResource" /> using the GetMySqlPrivateEndpointConnection method.
     /// </summary>
     public partial class MySqlPrivateEndpointConnectionResource : ArmResource
     {

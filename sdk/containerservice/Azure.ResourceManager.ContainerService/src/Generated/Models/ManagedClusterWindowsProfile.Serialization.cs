@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("licenseType");
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
-            if (Optional.IsDefined(EnableCSIProxy))
+            if (Optional.IsDefined(IsCsiProxyEnabled))
             {
                 writer.WritePropertyName("enableCSIProxy");
-                writer.WriteBooleanValue(EnableCSIProxy.Value);
+                writer.WriteBooleanValue(IsCsiProxyEnabled.Value);
             }
             if (Optional.IsDefined(GmsaProfile))
             {
@@ -44,8 +44,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
             string adminUsername = default;
             Optional<string> adminPassword = default;
-            Optional<LicenseType> licenseType = default;
-            Optional<bool> enableCSIProxy = default;
+            Optional<WindowsVmLicenseType> licenseType = default;
+            Optional<bool> enableCsiProxy = default;
             Optional<WindowsGmsaProfile> gmsaProfile = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    licenseType = new LicenseType(property.Value.GetString());
+                    licenseType = new WindowsVmLicenseType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("enableCSIProxy"))
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    enableCSIProxy = property.Value.GetBoolean();
+                    enableCsiProxy = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("gmsaProfile"))
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ManagedClusterWindowsProfile(adminUsername, adminPassword.Value, Optional.ToNullable(licenseType), Optional.ToNullable(enableCSIProxy), gmsaProfile.Value);
+            return new ManagedClusterWindowsProfile(adminUsername, adminPassword.Value, Optional.ToNullable(licenseType), Optional.ToNullable(enableCsiProxy), gmsaProfile.Value);
         }
     }
 }

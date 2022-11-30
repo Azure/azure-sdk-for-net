@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static ReservationToPurchaseCalculateExchange DeserializeReservationToPurchaseCalculateExchange(JsonElement element)
         {
-            Optional<PurchaseRequestContent> properties = default;
+            Optional<ReservationPurchaseContent> properties = default;
             Optional<PurchasePrice> billingCurrencyTotal = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = PurchaseRequestContent.DeserializePurchaseRequestContent(property.Value);
+                    properties = ReservationPurchaseContent.DeserializeReservationPurchaseContent(property.Value);
                     continue;
                 }
                 if (property.NameEquals("billingCurrencyTotal"))

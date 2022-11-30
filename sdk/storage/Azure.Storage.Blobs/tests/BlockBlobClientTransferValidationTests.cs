@@ -23,13 +23,13 @@ namespace Azure.Storage.Blobs.Tests
             int resourceLength = default,
             bool createResource = default,
             string resourceName = null,
-            UploadTransferValidationOptions uploadTransferValidationOptions = default,
-            DownloadTransferValidationOptions downloadTransferValidationOptions = default,
+            StorageChecksumAlgorithm uploadAlgorithm = StorageChecksumAlgorithm.None,
+            StorageChecksumAlgorithm downloadAlgorithm = StorageChecksumAlgorithm.None,
             BlobClientOptions options = null)
         {
             options ??= ClientBuilder.GetOptions();
-            options.UploadTransferValidationOptions = uploadTransferValidationOptions;
-            options.DownloadTransferValidationOptions = downloadTransferValidationOptions;
+            options.TransferValidation.Upload.ChecksumAlgorithm = uploadAlgorithm;
+            options.TransferValidation.Download.ChecksumAlgorithm = downloadAlgorithm;
 
             container = InstrumentClient(new BlobContainerClient(container.Uri, Tenants.GetNewSharedKeyCredentials(), options));
             return Task.FromResult(InstrumentClient(container.GetBlockBlobClient(resourceName ?? GetNewResourceName())));
@@ -37,12 +37,12 @@ namespace Azure.Storage.Blobs.Tests
 
         protected override async Task<Stream> OpenWriteAsync(
             BlockBlobClient client,
-            UploadTransferValidationOptions validationOptions,
+            UploadTransferValidationOptions transferValidation,
             int internalBufferSize)
         {
             return await client.OpenWriteAsync(true, new BlockBlobOpenWriteOptions
             {
-                TransferValidationOptions = validationOptions,
+                TransferValidation = transferValidation,
                 BufferSize = internalBufferSize
             });
         }
@@ -50,25 +50,25 @@ namespace Azure.Storage.Blobs.Tests
         protected override async Task ParallelUploadAsync(
             BlockBlobClient client,
             Stream source,
-            UploadTransferValidationOptions hashingOptions,
+            UploadTransferValidationOptions transferValidation,
             StorageTransferOptions transferOptions)
             => await client.UploadAsync(source, new BlobUploadOptions
             {
-                TransferValidationOptions = hashingOptions,
+                TransferValidation = transferValidation,
                 TransferOptions = transferOptions
             });
 
         protected override async Task<Response> UploadPartitionAsync(
             BlockBlobClient client,
             Stream source,
-            UploadTransferValidationOptions hashingOptions)
+            UploadTransferValidationOptions transferValidation)
         {
             return (await client.StageBlockAsync(
                 Convert.ToBase64String(Recording.Random.NewGuid().ToByteArray()),
                 source,
                 new BlockBlobStageBlockOptions
                 {
-                    TransferValidationOptions = hashingOptions
+                    TransferValidation = transferValidation
                 })).GetRawResponse();
         }
 

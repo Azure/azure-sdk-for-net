@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Initializes a new instance of DiskEncryptionConfiguration. </summary>
         public DiskEncryptionConfiguration()
         {
-            Targets = new ChangeTrackingList<DiskEncryptionTarget>();
+            Targets = new ChangeTrackingList<BatchDiskEncryptionTarget>();
         }
 
         /// <summary> Initializes a new instance of DiskEncryptionConfiguration. </summary>
         /// <param name="targets"> On Linux pool, only &quot;TemporaryDisk&quot; is supported; on Windows pool, &quot;OsDisk&quot; and &quot;TemporaryDisk&quot; must be specified. </param>
-        internal DiskEncryptionConfiguration(IList<DiskEncryptionTarget> targets)
+        internal DiskEncryptionConfiguration(IList<BatchDiskEncryptionTarget> targets)
         {
             Targets = targets;
         }
 
         /// <summary> On Linux pool, only &quot;TemporaryDisk&quot; is supported; on Windows pool, &quot;OsDisk&quot; and &quot;TemporaryDisk&quot; must be specified. </summary>
-        public IList<DiskEncryptionTarget> Targets { get; }
+        public IList<BatchDiskEncryptionTarget> Targets { get; }
     }
 }

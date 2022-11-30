@@ -952,9 +952,9 @@ namespace Azure.Storage.Blobs.Samples
                     blockContentStream,
                     new BlockBlobStageBlockOptions
                     {
-                        TransferValidationOptions = new UploadTransferValidationOptions
+                        TransferValidation = new UploadTransferValidationOptions
                         {
-                            Algorithm = ValidationAlgorithm.MD5,
+                            ChecksumAlgorithm = StorageChecksumAlgorithm.MD5,
                             // a precalculated hash can be provided as follows,
                             // the sdk will calculate one for you otherwise
                             PrecalculatedChecksum = precalculatedBlockHash
@@ -972,9 +972,9 @@ namespace Azure.Storage.Blobs.Samples
                     {
                         // a range must be provided when requesting checksums; here we use transactional download max size
                         Range = new HttpRange(length: 4 * Constants.MB),
-                        TransferValidationOptions = new DownloadTransferValidationOptions
+                        TransferValidation = new DownloadTransferValidationOptions
                         {
-                            Algorithm = ValidationAlgorithm.MD5,
+                            ChecksumAlgorithm = StorageChecksumAlgorithm.MD5,
                             // SDK will validate against checksum for you
                             // to disable this and check in your own workflow, uncomment the below
                             //Validate = false,

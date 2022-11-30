@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -47,49 +46,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     case "AzureFileVolume": return AzureFileVolume.DeserializeAzureFileVolume(element);
                 }
             }
-            UnderlyingResourceType type = default;
-            string mountPath = default;
-            Optional<bool> readOnly = default;
-            Optional<IList<string>> mountOptions = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = new UnderlyingResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("mountPath"))
-                {
-                    mountPath = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("readOnly"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    readOnly = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("mountOptions"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    mountOptions = array;
-                    continue;
-                }
-            }
-            return new CustomPersistentDiskProperties(type, mountPath, Optional.ToNullable(readOnly), Optional.ToList(mountOptions));
+            return UnknownCustomPersistentDiskProperties.DeserializeUnknownCustomPersistentDiskProperties(element);
         }
     }
 }

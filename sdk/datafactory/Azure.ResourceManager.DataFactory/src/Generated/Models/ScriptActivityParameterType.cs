@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string Int64Value = "Int64";
         private const string SingleValue = "Single";
         private const string StringValue = "String";
-        private const string TimespanValue = "Timespan";
+        private const string TimeSpanValue = "Timespan";
 
         /// <summary> Boolean. </summary>
         public static ScriptActivityParameterType Boolean { get; } = new ScriptActivityParameterType(BooleanValue);
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> String. </summary>
         public static ScriptActivityParameterType String { get; } = new ScriptActivityParameterType(StringValue);
         /// <summary> Timespan. </summary>
-        public static ScriptActivityParameterType Timespan { get; } = new ScriptActivityParameterType(TimespanValue);
+        public static ScriptActivityParameterType TimeSpan { get; } = new ScriptActivityParameterType(TimeSpanValue);
         /// <summary> Determines if two <see cref="ScriptActivityParameterType"/> values are the same. </summary>
         public static bool operator ==(ScriptActivityParameterType left, ScriptActivityParameterType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScriptActivityParameterType"/> values are not the same. </summary>

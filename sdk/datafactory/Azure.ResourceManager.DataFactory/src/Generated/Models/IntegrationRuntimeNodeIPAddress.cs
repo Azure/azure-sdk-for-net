@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Net;
+
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The IP address of self-hosted integration runtime node. </summary>
@@ -17,12 +19,12 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of IntegrationRuntimeNodeIPAddress. </summary>
         /// <param name="ipAddress"> The IP address of self-hosted integration runtime node. </param>
-        internal IntegrationRuntimeNodeIPAddress(string ipAddress)
+        internal IntegrationRuntimeNodeIPAddress(IPAddress ipAddress)
         {
             IPAddress = ipAddress;
         }
 
         /// <summary> The IP address of self-hosted integration runtime node. </summary>
-        public string IPAddress { get; }
+        public IPAddress IPAddress { get; }
     }
 }

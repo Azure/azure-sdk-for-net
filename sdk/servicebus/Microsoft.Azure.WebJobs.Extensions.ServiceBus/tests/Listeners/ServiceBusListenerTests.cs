@@ -2,7 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -35,9 +34,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         private readonly LoggerFactory _loggerFactory;
         private readonly string _functionId = "test-functionid";
         private readonly string _entityPath = "test-entity-path";
+        private readonly string _connection = "connection";
         private readonly string _testConnection = "Endpoint=sb://test.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=abc123=";
         private readonly Mock<IConcurrencyThrottleManager> _mockConcurrencyThrottleManager;
         private readonly ServiceBusClient _client;
+        private readonly ConcurrencyManager _concurrencyManager;
 
         public ServiceBusListenerTests()
         {
@@ -46,7 +47,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             _client = new ServiceBusClient(_testConnection);
             ServiceBusProcessor processor = _client.CreateProcessor(_entityPath);
             ServiceBusReceiver receiver = _client.CreateReceiver(_entityPath);
-            var configuration = ConfigurationUtilities.CreateConfiguration(new KeyValuePair<string, string>("connection", _testConnection));
+            var configuration = ConfigurationUtilities.CreateConfiguration(new KeyValuePair<string, string>(_connection, _testConnection));
 
             ServiceBusOptions config = new ServiceBusOptions
             {
@@ -56,6 +57,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
 
             _mockMessagingProvider = new Mock<MessagingProvider>(new OptionsWrapper<ServiceBusOptions>(config));
             _mockClientFactory = new Mock<ServiceBusClientFactory>(configuration, Mock.Of<AzureComponentFactory>(), _mockMessagingProvider.Object, new AzureEventSourceLogForwarder(new NullLoggerFactory()), new OptionsWrapper<ServiceBusOptions>(new ServiceBusOptions()));
+
             _mockMessagingProvider
                 .Setup(p => p.CreateMessageProcessor(It.IsAny<ServiceBusClient>(), _entityPath, It.IsAny<ServiceBusProcessorOptions>()))
                 .Returns(_mockMessageProcessor.Object);
@@ -70,7 +72,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
 
             var concurrencyOptions = new OptionsWrapper<ConcurrencyOptions>(new ConcurrencyOptions());
             _mockConcurrencyThrottleManager = new Mock<IConcurrencyThrottleManager>(MockBehavior.Strict);
-            var concurrencyManager = new ConcurrencyManager(concurrencyOptions, _loggerFactory, _mockConcurrencyThrottleManager.Object);
+            _concurrencyManager = new ConcurrencyManager(concurrencyOptions, _loggerFactory, _mockConcurrencyThrottleManager.Object);
 
             _listener = new ServiceBusListener(
                 _functionId,
@@ -85,8 +87,15 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 _loggerFactory,
                 false,
                 _mockClientFactory.Object,
-                concurrencyManager);
+                _concurrencyManager);
+        }
+
+        [SetUp]
+        public void Setup()
+        {
+            _loggerProvider.ClearAllLogMessages();
             _listener.Started = true;
+            _listener.Disposed = false;
         }
 
         [Test]
@@ -196,6 +205,99 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         }
 
         [Test]
+        public async Task SessionIdleTimeoutRespected()
+        {
+            var mockClient = new Mock<ServiceBusClient>();
+            var mockSessionReceiver = new Mock<ServiceBusSessionReceiver>();
+
+            var options = new ServiceBusOptions
+            {
+                ProcessErrorAsync = ExceptionReceivedHandler,
+                SessionIdleTimeout = TimeSpan.FromSeconds(5)
+            };
+
+            _mockMessagingProvider
+                .Setup(p => p.CreateClient(_testConnection, It.IsAny<ServiceBusClientOptions>()))
+                .Returns(mockClient.Object);
+
+            mockClient
+                .Setup(c => c.AcceptNextSessionAsync(_entityPath, It.IsAny<ServiceBusSessionReceiverOptions>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(mockSessionReceiver.Object));
+
+            mockSessionReceiver
+                .Setup(r => r.ReceiveMessagesAsync(options.MaxMessageBatchSize, options.SessionIdleTimeout, It.IsAny<CancellationToken>()))
+                .Returns(async () =>
+                {
+                    // need to simulate IO otherwise listener loop just spins
+                    await Task.Delay(1);
+                    return await Task.FromResult<IReadOnlyList<ServiceBusReceivedMessage>>(new List<ServiceBusReceivedMessage>(0));
+                });
+
+            var listener = new ServiceBusListener(
+                _functionId,
+                ServiceBusEntityType.Queue,
+                _entityPath,
+                true,
+                true,
+                _mockExecutor.Object,
+                options,
+                _connection,
+                _mockMessagingProvider.Object,
+                _loggerFactory,
+                false,
+                _mockClientFactory.Object,
+                _concurrencyManager);
+
+            await listener.StartAsync(CancellationToken.None);
+            await listener.StopAsync(CancellationToken.None);
+            mockSessionReceiver.VerifyAll();
+        }
+
+        [Test]
+        public async Task SessionIdleTimeoutIgnoredWhenNotUsingSessions()
+        {
+            var mockReceiver = new Mock<ServiceBusReceiver>();
+
+            var options = new ServiceBusOptions
+            {
+                ProcessErrorAsync = ExceptionReceivedHandler,
+                SessionIdleTimeout = TimeSpan.FromSeconds(5)
+            };
+
+            _mockMessagingProvider
+                .Setup(p => p.CreateBatchMessageReceiver(It.IsAny<ServiceBusClient>(), _entityPath, It.IsAny<ServiceBusReceiverOptions>()))
+                .Returns(mockReceiver.Object);
+
+            mockReceiver
+                .Setup(r => r.ReceiveMessagesAsync(options.MaxMessageBatchSize, null, It.IsAny<CancellationToken>()))
+                .Returns(async () =>
+                {
+                    // need to simulate IO otherwise listener loop just spins
+                    await Task.Delay(1);
+                    return await Task.FromResult<IReadOnlyList<ServiceBusReceivedMessage>>(new List<ServiceBusReceivedMessage>(0));
+                });
+
+            var listener = new ServiceBusListener(
+                _functionId,
+                ServiceBusEntityType.Queue,
+                _entityPath,
+                false,
+                true,
+                _mockExecutor.Object,
+                options,
+                _connection,
+                _mockMessagingProvider.Object,
+                _loggerFactory,
+                false,
+                _mockClientFactory.Object,
+                _concurrencyManager);
+
+            await listener.StartAsync(CancellationToken.None);
+            await listener.StopAsync(CancellationToken.None);
+            mockReceiver.VerifyAll();
+        }
+
+        [Test]
         public void GetMonitor_ReturnsExpectedValue()
         {
             IScaleMonitor scaleMonitor = _listener.GetMonitor();
@@ -211,18 +313,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         [Test]
         public void StopAsync_LogListenerDetails()
         {
-            try
-            {
-                Assert.DoesNotThrow(() => _listener.StopAsync(CancellationToken.None));
-                Assert.NotNull(_loggerProvider.GetAllLogMessages()
-                    .SingleOrDefault(x => x.FormattedMessage.StartsWith("Attempting to stop ServiceBus listener")));
-                Assert.NotNull(_loggerProvider.GetAllLogMessages()
-                    .SingleOrDefault(x => x.FormattedMessage.StartsWith("ServiceBus listener stopped")));
-            }
-            finally
-            {
-                _loggerProvider.ClearAllLogMessages();
-            }
+            Assert.DoesNotThrow(() => _listener.StopAsync(CancellationToken.None));
+            Assert.NotNull(_loggerProvider.GetAllLogMessages()
+                .SingleOrDefault(x => x.FormattedMessage.StartsWith("Attempting to stop ServiceBus listener")));
+            Assert.NotNull(_loggerProvider.GetAllLogMessages()
+                .SingleOrDefault(x => x.FormattedMessage.StartsWith("ServiceBus listener stopped")));
         }
 
         [Test]
@@ -240,134 +335,101 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             finally
             {
                 _listener.Started = true;
-                _loggerProvider.ClearAllLogMessages();
             }
         }
 
         [Test]
         public void ProcessMessageAsync_LogsWarning_Stopped()
         {
-            try
-            {
-                _listener.Started = false;
-                var message = ServiceBusModelFactory.ServiceBusReceivedMessage(
-                    messageId: Guid.NewGuid().ToString(),
-                    sequenceNumber: 1,
-                    deliveryCount: 55,
-                    enqueuedTime: DateTimeOffset.Now,
-                    lockedUntil: DateTimeOffset.Now);
-                var receiver = new Mock<ServiceBusReceiver>().Object;
-                var args = new ProcessMessageEventArgs(message, receiver, CancellationToken.None);
+            _listener.Started = false;
+            var message = ServiceBusModelFactory.ServiceBusReceivedMessage(
+                messageId: Guid.NewGuid().ToString(),
+                sequenceNumber: 1,
+                deliveryCount: 55,
+                enqueuedTime: DateTimeOffset.Now,
+                lockedUntil: DateTimeOffset.Now);
+            var receiver = new Mock<ServiceBusReceiver>().Object;
+            var args = new ProcessMessageEventArgs(message, receiver, CancellationToken.None);
 
-                Assert.That(
-                    async () => await _listener.ProcessMessageAsync(args),
-                    Throws.InstanceOf<InvalidOperationException>());
+            Assert.That(
+                async () => await _listener.ProcessMessageAsync(args),
+                Throws.InstanceOf<InvalidOperationException>());
 
-                Assert.NotNull(_loggerProvider.GetAllLogMessages()
-                    .SingleOrDefault(
-                        x => x.FormattedMessage.StartsWith("Message received for a listener that is not in a running state. The message will not be delivered to the function, " +
-                                                           "and instead will be abandoned. (Listener started = False, Listener disposed = False") && x.Level == LogLevel.Warning));
-            }
-            finally
-            {
-                _listener.Started = true;
-                _loggerProvider.ClearAllLogMessages();
-            }
+            Assert.NotNull(_loggerProvider.GetAllLogMessages()
+                .SingleOrDefault(
+                    x => x.FormattedMessage.StartsWith("Message received for a listener that is not in a running state. The message will not be delivered to the function, " +
+                                                       "and instead will be abandoned. (Listener started = False, Listener disposed = False") && x.Level == LogLevel.Warning));
         }
 
         [Test]
         public void ProcessMessageAsync_LogsWarning_Disposed()
         {
-            try
-            {
-                _listener.Disposed = true;
-                var message = ServiceBusModelFactory.ServiceBusReceivedMessage(
-                    messageId: Guid.NewGuid().ToString(),
-                    sequenceNumber: 1,
-                    deliveryCount: 55,
-                    enqueuedTime: DateTimeOffset.Now,
-                    lockedUntil: DateTimeOffset.Now);
-                var receiver = new Mock<ServiceBusReceiver>().Object;
-                var args = new ProcessMessageEventArgs(message, receiver, CancellationToken.None);
+            _listener.Disposed = true;
+            var message = ServiceBusModelFactory.ServiceBusReceivedMessage(
+                messageId: Guid.NewGuid().ToString(),
+                sequenceNumber: 1,
+                deliveryCount: 55,
+                enqueuedTime: DateTimeOffset.Now,
+                lockedUntil: DateTimeOffset.Now);
+            var receiver = new Mock<ServiceBusReceiver>().Object;
+            var args = new ProcessMessageEventArgs(message, receiver, CancellationToken.None);
 
-                Assert.That(
-                    async () => await _listener.ProcessMessageAsync(args),
-                    Throws.InstanceOf<InvalidOperationException>());
+            Assert.That(
+                async () => await _listener.ProcessMessageAsync(args),
+                Throws.InstanceOf<InvalidOperationException>());
 
-                Assert.NotNull(_loggerProvider.GetAllLogMessages()
-                    .SingleOrDefault(
-                        x => x.FormattedMessage.StartsWith("Message received for a listener that is not in a running state. The message will not be delivered to the function, " +
-                                                           "and instead will be abandoned. (Listener started = True, Listener disposed = True") && x.Level == LogLevel.Warning));
-            }
-            finally
-            {
-                _listener.Disposed = false;
-                _loggerProvider.ClearAllLogMessages();
-            }
+            Assert.NotNull(_loggerProvider.GetAllLogMessages()
+                .SingleOrDefault(
+                    x => x.FormattedMessage.StartsWith("Message received for a listener that is not in a running state. The message will not be delivered to the function, " +
+                                                       "and instead will be abandoned. (Listener started = True, Listener disposed = True") && x.Level == LogLevel.Warning));
         }
 
         [Test]
         public void ProcessMessageAsync_LogsWarning_Stopped_Session()
         {
-            try
-            {
-                _listener.Started = false;
-                var message = ServiceBusModelFactory.ServiceBusReceivedMessage(
-                    messageId: Guid.NewGuid().ToString(),
-                    sessionId: Guid.NewGuid().ToString(),
-                    sequenceNumber: 1,
-                    deliveryCount: 55,
-                    enqueuedTime: DateTimeOffset.Now,
-                    lockedUntil: DateTimeOffset.Now);
-                var receiver = new Mock<ServiceBusSessionReceiver>().Object;
-                var args = new ProcessSessionMessageEventArgs(message, receiver, CancellationToken.None);
+            _listener.Started = false;
+            var message = ServiceBusModelFactory.ServiceBusReceivedMessage(
+                messageId: Guid.NewGuid().ToString(),
+                sessionId: Guid.NewGuid().ToString(),
+                sequenceNumber: 1,
+                deliveryCount: 55,
+                enqueuedTime: DateTimeOffset.Now,
+                lockedUntil: DateTimeOffset.Now);
+            var receiver = new Mock<ServiceBusSessionReceiver>().Object;
+            var args = new ProcessSessionMessageEventArgs(message, receiver, CancellationToken.None);
 
-                Assert.That(
-                    async () => await _listener.ProcessSessionMessageAsync(args),
-                    Throws.InstanceOf<InvalidOperationException>());
+            Assert.That(
+                async () => await _listener.ProcessSessionMessageAsync(args),
+                Throws.InstanceOf<InvalidOperationException>());
 
-                Assert.NotNull(_loggerProvider.GetAllLogMessages()
-                    .SingleOrDefault(
-                        x => x.FormattedMessage.StartsWith("Message received for a listener that is not in a running state. The message will not be delivered to the function, " +
-                                                           "and instead will be abandoned. (Listener started = False, Listener disposed = False") && x.Level == LogLevel.Warning));
-            }
-            finally
-            {
-                _listener.Started = true;
-                _loggerProvider.ClearAllLogMessages();
-            }
+            Assert.NotNull(_loggerProvider.GetAllLogMessages()
+                .SingleOrDefault(
+                    x => x.FormattedMessage.StartsWith("Message received for a listener that is not in a running state. The message will not be delivered to the function, " +
+                                                       "and instead will be abandoned. (Listener started = False, Listener disposed = False") && x.Level == LogLevel.Warning));
         }
 
         [Test]
         public void ProcessMessageAsync_LogsWarning_Disposed_Session()
         {
-            try
-            {
-                _listener.Disposed = true;
-                var message = ServiceBusModelFactory.ServiceBusReceivedMessage(
-                    messageId: Guid.NewGuid().ToString(),
-                    sessionId: Guid.NewGuid().ToString(),
-                    sequenceNumber: 1,
-                    deliveryCount: 55,
-                    enqueuedTime: DateTimeOffset.Now,
-                    lockedUntil: DateTimeOffset.Now);
-                var receiver = new Mock<ServiceBusSessionReceiver>().Object;
-                var args = new ProcessSessionMessageEventArgs(message, receiver, CancellationToken.None);
+            _listener.Disposed = true;
+            var message = ServiceBusModelFactory.ServiceBusReceivedMessage(
+                messageId: Guid.NewGuid().ToString(),
+                sessionId: Guid.NewGuid().ToString(),
+                sequenceNumber: 1,
+                deliveryCount: 55,
+                enqueuedTime: DateTimeOffset.Now,
+                lockedUntil: DateTimeOffset.Now);
+            var receiver = new Mock<ServiceBusSessionReceiver>().Object;
+            var args = new ProcessSessionMessageEventArgs(message, receiver, CancellationToken.None);
 
-                Assert.That(
-                    async () => await _listener.ProcessSessionMessageAsync(args),
-                    Throws.InstanceOf<InvalidOperationException>());
+            Assert.That(
+                async () => await _listener.ProcessSessionMessageAsync(args),
+                Throws.InstanceOf<InvalidOperationException>());
 
-                Assert.NotNull(_loggerProvider.GetAllLogMessages()
-                    .SingleOrDefault(
-                        x => x.FormattedMessage.StartsWith("Message received for a listener that is not in a running state. The message will not be delivered to the function, " +
-                                                           "and instead will be abandoned. (Listener started = True, Listener disposed = True") && x.Level == LogLevel.Warning));
-            }
-            finally
-            {
-                _listener.Disposed = false;
-                _loggerProvider.ClearAllLogMessages();
-            }
+            Assert.NotNull(_loggerProvider.GetAllLogMessages()
+                .SingleOrDefault(
+                    x => x.FormattedMessage.StartsWith("Message received for a listener that is not in a running state. The message will not be delivered to the function, " +
+                                                       "and instead will be abandoned. (Listener started = True, Listener disposed = True") && x.Level == LogLevel.Warning));
         }
 
         private Task ExceptionReceivedHandler(ProcessErrorEventArgs eventArgs)

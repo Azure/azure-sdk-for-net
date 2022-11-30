@@ -81,10 +81,12 @@ namespace Azure.ResourceManager.Compute.Tests
             Assert.AreEqual(description, updatedGalleryImage.Data.Description);
         }
 
-        [TestCase]
-        [RecordedTest]
-        public async Task SetTags()
+        [TestCase(null)]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task SetTags(bool? useTagResource)
         {
+            SetTagResourceUsage(Client, useTagResource);
             var name = Recording.GenerateAssetName("testGallery_");
             var image = await CreateGalleryImageAsync(name);
             var tags = new Dictionary<string, string>()

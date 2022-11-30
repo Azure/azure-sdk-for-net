@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of IPAccessControl. </summary>
         public IPAccessControl()
         {
-            Allow = new ChangeTrackingList<IPRange>();
+            AllowedIPs = new ChangeTrackingList<IPRange>();
         }
 
         /// <summary> Initializes a new instance of IPAccessControl. </summary>
-        /// <param name="allow"> The IP allow list. </param>
-        internal IPAccessControl(IList<IPRange> allow)
+        /// <param name="allowedIPs"> The IP allow list. </param>
+        internal IPAccessControl(IList<IPRange> allowedIPs)
         {
-            Allow = allow;
+            AllowedIPs = allowedIPs;
         }
 
         /// <summary> The IP allow list. </summary>
-        public IList<IPRange> Allow { get; }
+        public IList<IPRange> AllowedIPs { get; }
     }
 }

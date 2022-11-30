@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.GuestConfiguration
         internal static GuestConfigurationAssignmentData DeserializeGuestConfigurationAssignmentData(JsonElement element)
         {
             Optional<GuestConfigurationAssignmentProperties> properties = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<AzureLocation> location = default;
-            Optional<string> type = default;
+            Optional<ResourceType> type = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"))
@@ -55,19 +55,14 @@ namespace Azure.ResourceManager.GuestConfiguration
                     properties = GuestConfigurationAssignmentProperties.DeserializeGuestConfigurationAssignmentProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("id"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
-                    continue;
-                }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -87,11 +82,26 @@ namespace Azure.ResourceManager.GuestConfiguration
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
             }
-            return new GuestConfigurationAssignmentData(id.Value, name.Value, Optional.ToNullable(location), type.Value, properties.Value, systemData);
+            return new GuestConfigurationAssignmentData(id.Value, name.Value, Optional.ToNullable(location), Optional.ToNullable(type), systemData, properties.Value);
         }
     }
 }

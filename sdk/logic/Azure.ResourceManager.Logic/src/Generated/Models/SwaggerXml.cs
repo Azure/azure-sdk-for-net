@@ -24,16 +24,16 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="name"> The xml element or attribute name. </param>
         /// <param name="namespace"> The xml namespace. </param>
         /// <param name="prefix"> The name prefix. </param>
-        /// <param name="attribute"> Indicates whether the property should be an attribute instead of an element. </param>
-        /// <param name="wrapped"> Indicates whether the array elements are wrapped in a container element. </param>
+        /// <param name="isAttribute"> Indicates whether the property should be an attribute instead of an element. </param>
+        /// <param name="isWrapped"> Indicates whether the array elements are wrapped in a container element. </param>
         /// <param name="extensions"> The vendor extensions. </param>
-        internal SwaggerXml(string name, string @namespace, string prefix, bool? attribute, bool? wrapped, IDictionary<string, BinaryData> extensions)
+        internal SwaggerXml(string name, string @namespace, string prefix, bool? isAttribute, bool? isWrapped, IDictionary<string, BinaryData> extensions)
         {
             Name = name;
             Namespace = @namespace;
             Prefix = prefix;
-            Attribute = attribute;
-            Wrapped = wrapped;
+            IsAttribute = isAttribute;
+            IsWrapped = isWrapped;
             Extensions = extensions;
         }
 
@@ -44,10 +44,39 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> The name prefix. </summary>
         public string Prefix { get; set; }
         /// <summary> Indicates whether the property should be an attribute instead of an element. </summary>
-        public bool? Attribute { get; set; }
+        public bool? IsAttribute { get; set; }
         /// <summary> Indicates whether the array elements are wrapped in a container element. </summary>
-        public bool? Wrapped { get; set; }
-        /// <summary> The vendor extensions. </summary>
+        public bool? IsWrapped { get; set; }
+        /// <summary>
+        /// The vendor extensions.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public IDictionary<string, BinaryData> Extensions { get; }
     }
 }

@@ -5,8 +5,8 @@ This sample demonstrates how to get answers from an existing knowledge base. To 
 To get answers from an existing knowledge base, you need to first create a `QuestionAnsweringClient` using an endpoint and API key. These can be stored in an environment variable, configuration setting, or any way that works for your application.
 
 ```C# Snippet:QuestionAnsweringClient_Create
-Uri endpoint = new Uri("{LanguageEndpoint}");
-AzureKeyCredential credential = new AzureKeyCredential("{ApiKey}");
+Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com/");
+AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
 QuestionAnsweringClient client = new QuestionAnsweringClient(endpoint, credential);
 ```

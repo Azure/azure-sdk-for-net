@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RecoverableServerResource>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
+        public async Task<Response<PostgreSqlRecoverableServerResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.PostgreSql
             {
                 case 200:
                     {
-                        RecoverableServerResource value = default;
+                        PostgreSqlRecoverableServerResourceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RecoverableServerResource.DeserializeRecoverableServerResource(document.RootElement);
+                        value = PostgreSqlRecoverableServerResourceData.DeserializePostgreSqlRecoverableServerResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RecoverableServerResource> Get(string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
+        public Response<PostgreSqlRecoverableServerResourceData> Get(string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.PostgreSql
             {
                 case 200:
                     {
-                        RecoverableServerResource value = default;
+                        PostgreSqlRecoverableServerResourceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RecoverableServerResource.DeserializeRecoverableServerResource(document.RootElement);
+                        value = PostgreSqlRecoverableServerResourceData.DeserializePostgreSqlRecoverableServerResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

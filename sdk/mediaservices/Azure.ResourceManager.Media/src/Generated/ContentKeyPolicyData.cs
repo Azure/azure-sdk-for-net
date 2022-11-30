@@ -28,15 +28,15 @@ namespace Azure.ResourceManager.Media
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="policyId"> The legacy Policy ID. </param>
-        /// <param name="created"> The creation date of the Policy. </param>
-        /// <param name="lastModified"> The last modified date of the Policy. </param>
+        /// <param name="createdOn"> The creation date of the Policy. </param>
+        /// <param name="lastModifiedOn"> The last modified date of the Policy. </param>
         /// <param name="description"> A description for the Policy. </param>
         /// <param name="options"> The Key Policy options. </param>
-        internal ContentKeyPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? policyId, DateTimeOffset? created, DateTimeOffset? lastModified, string description, IList<ContentKeyPolicyOption> options) : base(id, name, resourceType, systemData)
+        internal ContentKeyPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? policyId, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, IList<ContentKeyPolicyOption> options) : base(id, name, resourceType, systemData)
         {
             PolicyId = policyId;
-            Created = created;
-            LastModified = lastModified;
+            CreatedOn = createdOn;
+            LastModifiedOn = lastModifiedOn;
             Description = description;
             Options = options;
         }
@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.Media
         /// <summary> The legacy Policy ID. </summary>
         public Guid? PolicyId { get; }
         /// <summary> The creation date of the Policy. </summary>
-        public DateTimeOffset? Created { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> The last modified date of the Policy. </summary>
-        public DateTimeOffset? LastModified { get; }
+        public DateTimeOffset? LastModifiedOn { get; }
         /// <summary> A description for the Policy. </summary>
         public string Description { get; set; }
         /// <summary> The Key Policy options. </summary>

@@ -95,8 +95,8 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<EndpointResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope0 = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResource.Get");
-            scope0.Start();
+            using var scope = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResource.Get");
+            scope.Start();
             try
             {
                 var response = await _endpointResourceEndpointsRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -119,8 +119,8 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<EndpointResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope0 = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResource.Get");
-            scope0.Start();
+            using var scope = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResource.Get");
+            scope.Start();
             try
             {
                 var response = _endpointResourceEndpointsRestClient.Get(Id.Parent, Id.Name, cancellationToken);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -144,8 +144,8 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope0 = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResource.Delete");
-            scope0.Start();
+            using var scope = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResource.Delete");
+            scope.Start();
             try
             {
                 var response = await _endpointResourceEndpointsRestClient.DeleteAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -170,8 +170,8 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope0 = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResource.Delete");
-            scope0.Start();
+            using var scope = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResource.Delete");
+            scope.Start();
             try
             {
                 var response = _endpointResourceEndpointsRestClient.Delete(Id.Parent, Id.Name, cancellationToken);
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -199,8 +199,8 @@ namespace Azure.ResourceManager.HybridConnectivity
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope0 = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResource.Update");
-            scope0.Start();
+            using var scope = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResource.Update");
+            scope.Start();
             try
             {
                 var response = await _endpointResourceEndpointsRestClient.UpdateAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -225,8 +225,8 @@ namespace Azure.ResourceManager.HybridConnectivity
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope0 = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResource.Update");
-            scope0.Start();
+            using var scope = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResource.Update");
+            scope.Start();
             try
             {
                 var response = _endpointResourceEndpointsRestClient.Update(Id.Parent, Id.Name, data, cancellationToken);
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -248,8 +248,8 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<TargetResourceEndpointAccess>> GetCredentialsAsync(long? expiresin = null, CancellationToken cancellationToken = default)
         {
-            using var scope0 = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResource.GetCredentials");
-            scope0.Start();
+            using var scope = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResource.GetCredentials");
+            scope.Start();
             try
             {
                 var response = await _endpointResourceEndpointsRestClient.ListCredentialsAsync(Id.Parent, Id.Name, expiresin, cancellationToken).ConfigureAwait(false);
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -271,8 +271,8 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<TargetResourceEndpointAccess> GetCredentials(long? expiresin = null, CancellationToken cancellationToken = default)
         {
-            using var scope0 = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResource.GetCredentials");
-            scope0.Start();
+            using var scope = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResource.GetCredentials");
+            scope.Start();
             try
             {
                 var response = _endpointResourceEndpointsRestClient.ListCredentials(Id.Parent, Id.Name, expiresin, cancellationToken);
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }

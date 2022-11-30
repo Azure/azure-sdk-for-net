@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             Optional<IList<int>> minutes = default;
             Optional<IList<int>> hours = default;
-            Optional<IList<DaysOfWeek>> weekDays = default;
+            Optional<IList<FactoryDayOfWeek>> weekDays = default;
             Optional<IList<int>> monthDays = default;
             Optional<IList<RecurrenceScheduleOccurrence>> monthlyOccurrences = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -127,10 +127,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DaysOfWeek> array = new List<DaysOfWeek>();
+                    List<FactoryDayOfWeek> array = new List<FactoryDayOfWeek>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToDaysOfWeek());
+                        array.Add(item.GetString().ToFactoryDayOfWeek());
                     }
                     weekDays = array;
                     continue;

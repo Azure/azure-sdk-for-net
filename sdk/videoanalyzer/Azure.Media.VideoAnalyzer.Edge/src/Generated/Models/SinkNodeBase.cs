@@ -8,10 +8,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> Base class for topology sink nodes. </summary>
+    /// <summary>
+    /// Base class for topology sink nodes.
+    /// Please note <see cref="SinkNodeBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="FileSink"/>, <see cref="IotHubMessageSink"/> and <see cref="VideoSink"/>.
+    /// </summary>
     public partial class SinkNodeBase
     {
         /// <summary> Initializes a new instance of SinkNodeBase. </summary>
@@ -20,14 +25,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="inputs"/> is null. </exception>
         public SinkNodeBase(string name, IEnumerable<NodeInput> inputs)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (inputs == null)
-            {
-                throw new ArgumentNullException(nameof(inputs));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(inputs, nameof(inputs));
 
             Name = name;
             Inputs = inputs.ToList();

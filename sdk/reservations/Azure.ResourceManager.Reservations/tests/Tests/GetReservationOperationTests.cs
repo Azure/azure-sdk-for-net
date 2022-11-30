@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.Reservations.Tests
             }
         }
 
-        [TestCase]
-        [RecordedTest]
-        public async Task TestGetReservationOperations()
-        {
-            var response = Tenant.GetOperationsAsync();
-            List<OperationResponse> operations = await response.ToEnumerableAsync();
+        //[TestCase]
+        //[RecordedTest]
+        //public async Task TestGetReservationOperations()
+        //{
+        //    var response = Tenant.GetOperationsAsync();
+        //    List<OperationResponse> operations = await response.ToEnumerableAsync();
 
-            Assert.AreEqual(40, operations.Count);
-        }
+        //    Assert.AreEqual(40, operations.Count);
+        //}
     }
 }

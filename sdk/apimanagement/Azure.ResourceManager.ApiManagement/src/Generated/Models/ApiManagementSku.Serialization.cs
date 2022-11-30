@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<string> family = default;
             Optional<string> kind = default;
             Optional<ApiManagementSkuCapacity> capacity = default;
-            Optional<IReadOnlyList<string>> locations = default;
+            Optional<IReadOnlyList<AzureLocation>> locations = default;
             Optional<IReadOnlyList<ApiManagementSkuLocationInfo>> locationInfo = default;
             Optional<IReadOnlyList<string>> apiVersions = default;
             Optional<IReadOnlyList<ApiManagementSkuCosts>> costs = default;
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<AzureLocation> array = new List<AzureLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new AzureLocation(item.GetString()));
                     }
                     locations = array;
                     continue;

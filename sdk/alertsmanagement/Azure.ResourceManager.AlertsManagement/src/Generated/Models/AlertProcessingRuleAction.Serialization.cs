@@ -26,20 +26,11 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AddActionGroups": return AddActionGroups.DeserializeAddActionGroups(element);
-                    case "RemoveAllActionGroups": return RemoveAllActionGroups.DeserializeRemoveAllActionGroups(element);
+                    case "AddActionGroups": return AlertProcessingRuleAddGroupsAction.DeserializeAlertProcessingRuleAddGroupsAction(element);
+                    case "RemoveAllActionGroups": return AlertProcessingRuleRemoveAllGroupsAction.DeserializeAlertProcessingRuleRemoveAllGroupsAction(element);
                 }
             }
-            AlertProcessingRuleActionType actionType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("actionType"))
-                {
-                    actionType = new AlertProcessingRuleActionType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new AlertProcessingRuleAction(actionType);
+            return UnknownAction.DeserializeUnknownAction(element);
         }
     }
 }

@@ -27,23 +27,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 switch (discriminator.GetString())
                 {
                     case "Certificate": return CertificateDatastoreSecrets.DeserializeCertificateDatastoreSecrets(element);
-                    case "KerberosKeytab": return KerberosKeytabSecrets.DeserializeKerberosKeytabSecrets(element);
-                    case "KerberosPassword": return KerberosPasswordSecrets.DeserializeKerberosPasswordSecrets(element);
                     case "Sas": return SasDatastoreSecrets.DeserializeSasDatastoreSecrets(element);
                     case "ServicePrincipal": return ServicePrincipalDatastoreSecrets.DeserializeServicePrincipalDatastoreSecrets(element);
                     case "AccountKey": return AccountKeyDatastoreSecrets.DeserializeAccountKeyDatastoreSecrets(element);
                 }
             }
-            SecretsType secretsType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("secretsType"))
-                {
-                    secretsType = new SecretsType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new DatastoreSecrets(secretsType);
+            return UnknownDatastoreSecrets.DeserializeUnknownDatastoreSecrets(element);
         }
     }
 }

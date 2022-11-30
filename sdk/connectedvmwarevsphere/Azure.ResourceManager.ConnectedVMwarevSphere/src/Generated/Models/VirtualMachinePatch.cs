@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 
         /// <summary> Gets or sets the Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> The identity of the resource. </summary>
-        public SystemAssignedServiceIdentity Identity { get; set; }
+        /// <summary> The identity of the resource. Current supported identity types: None, SystemAssigned. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Defines the resource properties. </summary>
         public HardwareProfile HardwareProfile { get; set; }
         /// <summary> Defines the resource update properties. </summary>

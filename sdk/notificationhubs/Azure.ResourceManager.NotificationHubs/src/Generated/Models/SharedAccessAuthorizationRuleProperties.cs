@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <summary> Initializes a new instance of SharedAccessAuthorizationRuleProperties. </summary>
         public SharedAccessAuthorizationRuleProperties()
         {
-            Rights = new ChangeTrackingList<AccessRight>();
+            Rights = new ChangeTrackingList<AuthorizationRuleAccessRight>();
         }
 
         /// <summary> Initializes a new instance of SharedAccessAuthorizationRuleProperties. </summary>
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="keyName"> A string that describes the authorization rule. </param>
         /// <param name="claimType"> A string that describes the claim type. </param>
         /// <param name="claimValue"> A string that describes the claim value. </param>
-        /// <param name="modifiedTime"> The last modified time for this rule. </param>
-        /// <param name="createdTime"> The created time for this rule. </param>
+        /// <param name="modifiedOn"> The last modified time for this rule. </param>
+        /// <param name="createdOn"> The created time for this rule. </param>
         /// <param name="revision"> The revision number for the rule. </param>
-        internal SharedAccessAuthorizationRuleProperties(IList<AccessRight> rights, string primaryKey, string secondaryKey, string keyName, string claimType, string claimValue, string modifiedTime, string createdTime, int? revision)
+        internal SharedAccessAuthorizationRuleProperties(IList<AuthorizationRuleAccessRight> rights, string primaryKey, string secondaryKey, string keyName, string claimType, string claimValue, DateTimeOffset? modifiedOn, DateTimeOffset? createdOn, int? revision)
         {
             Rights = rights;
             PrimaryKey = primaryKey;
@@ -37,13 +38,13 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             KeyName = keyName;
             ClaimType = claimType;
             ClaimValue = claimValue;
-            ModifiedTime = modifiedTime;
-            CreatedTime = createdTime;
+            ModifiedOn = modifiedOn;
+            CreatedOn = createdOn;
             Revision = revision;
         }
 
         /// <summary> The rights associated with the rule. </summary>
-        public IList<AccessRight> Rights { get; }
+        public IList<AuthorizationRuleAccessRight> Rights { get; }
         /// <summary> A base64-encoded 256-bit primary key for signing and validating the SAS token. </summary>
         public string PrimaryKey { get; }
         /// <summary> A base64-encoded 256-bit primary key for signing and validating the SAS token. </summary>
@@ -55,9 +56,9 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <summary> A string that describes the claim value. </summary>
         public string ClaimValue { get; }
         /// <summary> The last modified time for this rule. </summary>
-        public string ModifiedTime { get; }
+        public DateTimeOffset? ModifiedOn { get; }
         /// <summary> The created time for this rule. </summary>
-        public string CreatedTime { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> The revision number for the rule. </summary>
         public int? Revision { get; }
     }

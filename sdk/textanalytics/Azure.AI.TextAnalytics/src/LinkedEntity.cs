@@ -64,7 +64,7 @@ namespace Azure.AI.TextAnalytics
         /// Use in conjunction with the Bing Entity Search API to fetch additional relevant information.
         /// </summary>
         /// <remarks>
-        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_04_01_Preview"/>, and up.
+        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and newer.
         /// </remarks>
         [CodeGenMember("BingId")]
         public string BingEntitySearchApiId { get; }

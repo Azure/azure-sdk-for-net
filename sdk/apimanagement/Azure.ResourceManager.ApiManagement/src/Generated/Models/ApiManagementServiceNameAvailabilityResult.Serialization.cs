@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
             Optional<bool> nameAvailable = default;
             Optional<string> message = default;
-            Optional<NameAvailabilityReason> reason = default;
+            Optional<ApiManagementServiceNameUnavailableReason> reason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nameAvailable"))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    reason = property.Value.GetString().ToNameAvailabilityReason();
+                    reason = property.Value.GetString().ToApiManagementServiceNameUnavailableReason();
                     continue;
                 }
             }

@@ -106,15 +106,15 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ContainerServiceNetworkProfile DeserializeContainerServiceNetworkProfile(JsonElement element)
         {
-            Optional<NetworkPlugin> networkPlugin = default;
-            Optional<NetworkPolicy> networkPolicy = default;
-            Optional<NetworkMode> networkMode = default;
+            Optional<ContainerServiceNetworkPlugin> networkPlugin = default;
+            Optional<ContainerServiceNetworkPolicy> networkPolicy = default;
+            Optional<ContainerServiceNetworkMode> networkMode = default;
             Optional<string> podCidr = default;
             Optional<string> serviceCidr = default;
             Optional<string> dnsServiceIP = default;
             Optional<string> dockerBridgeCidr = default;
-            Optional<OutboundType> outboundType = default;
-            Optional<LoadBalancerSku> loadBalancerSku = default;
+            Optional<ContainerServiceOutboundType> outboundType = default;
+            Optional<ContainerServiceLoadBalancerSku> loadBalancerSku = default;
             Optional<ManagedClusterLoadBalancerProfile> loadBalancerProfile = default;
             Optional<ManagedClusterNatGatewayProfile> natGatewayProfile = default;
             Optional<IList<string>> podCidrs = default;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    networkPlugin = new NetworkPlugin(property.Value.GetString());
+                    networkPlugin = new ContainerServiceNetworkPlugin(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("networkPolicy"))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    networkPolicy = new NetworkPolicy(property.Value.GetString());
+                    networkPolicy = new ContainerServiceNetworkPolicy(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("networkMode"))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    networkMode = new NetworkMode(property.Value.GetString());
+                    networkMode = new ContainerServiceNetworkMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("podCidr"))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    outboundType = new OutboundType(property.Value.GetString());
+                    outboundType = new ContainerServiceOutboundType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("loadBalancerSku"))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    loadBalancerSku = new LoadBalancerSku(property.Value.GetString());
+                    loadBalancerSku = new ContainerServiceLoadBalancerSku(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("loadBalancerProfile"))

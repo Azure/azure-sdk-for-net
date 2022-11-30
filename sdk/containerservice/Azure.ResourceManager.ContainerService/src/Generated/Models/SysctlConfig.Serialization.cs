@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("netIpv4TcpKeepaliveProbes");
                 writer.WriteNumberValue(NetIPv4TcpKeepaliveProbes.Value);
             }
-            if (Optional.IsDefined(NetIPv4TcpkeepaliveIntvl))
+            if (Optional.IsDefined(NetIPv4TcpKeepaliveIntvl))
             {
                 writer.WritePropertyName("netIpv4TcpkeepaliveIntvl");
-                writer.WriteNumberValue(NetIPv4TcpkeepaliveIntvl.Value);
+                writer.WriteNumberValue(NetIPv4TcpKeepaliveIntvl.Value);
             }
             if (Optional.IsDefined(NetIPv4TcpTwReuse))
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<int> netIPv4TcpFinTimeout = default;
             Optional<int> netIPv4TcpKeepaliveTime = default;
             Optional<int> netIPv4TcpKeepaliveProbes = default;
-            Optional<int> netIPv4TcpkeepaliveIntvl = default;
+            Optional<int> netIPv4TcpKeepaliveIntvl = default;
             Optional<bool> netIPv4TcpTwReuse = default;
             Optional<string> netIPv4IPLocalPortRange = default;
             Optional<int> netIPv4NeighDefaultGcThresh1 = default;
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    netIPv4TcpkeepaliveIntvl = property.Value.GetInt32();
+                    netIPv4TcpKeepaliveIntvl = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("netIpv4TcpTwReuse"))
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new SysctlConfig(Optional.ToNullable(netCoreSomaxconn), Optional.ToNullable(netCoreNetdevMaxBacklog), Optional.ToNullable(netCoreRmemDefault), Optional.ToNullable(netCoreRmemMax), Optional.ToNullable(netCoreWmemDefault), Optional.ToNullable(netCoreWmemMax), Optional.ToNullable(netCoreOptmemMax), Optional.ToNullable(netIPv4TcpMaxSynBacklog), Optional.ToNullable(netIPv4TcpMaxTwBuckets), Optional.ToNullable(netIPv4TcpFinTimeout), Optional.ToNullable(netIPv4TcpKeepaliveTime), Optional.ToNullable(netIPv4TcpKeepaliveProbes), Optional.ToNullable(netIPv4TcpkeepaliveIntvl), Optional.ToNullable(netIPv4TcpTwReuse), netIPv4IPLocalPortRange.Value, Optional.ToNullable(netIPv4NeighDefaultGcThresh1), Optional.ToNullable(netIPv4NeighDefaultGcThresh2), Optional.ToNullable(netIPv4NeighDefaultGcThresh3), Optional.ToNullable(netNetfilterNfConntrackMax), Optional.ToNullable(netNetfilterNfConntrackBuckets), Optional.ToNullable(fsInotifyMaxUserWatches), Optional.ToNullable(fsFileMax), Optional.ToNullable(fsAioMaxNr), Optional.ToNullable(fsNrOpen), Optional.ToNullable(kernelThreadsMax), Optional.ToNullable(vmMaxMapCount), Optional.ToNullable(vmSwappiness), Optional.ToNullable(vmVfsCachePressure));
+            return new SysctlConfig(Optional.ToNullable(netCoreSomaxconn), Optional.ToNullable(netCoreNetdevMaxBacklog), Optional.ToNullable(netCoreRmemDefault), Optional.ToNullable(netCoreRmemMax), Optional.ToNullable(netCoreWmemDefault), Optional.ToNullable(netCoreWmemMax), Optional.ToNullable(netCoreOptmemMax), Optional.ToNullable(netIPv4TcpMaxSynBacklog), Optional.ToNullable(netIPv4TcpMaxTwBuckets), Optional.ToNullable(netIPv4TcpFinTimeout), Optional.ToNullable(netIPv4TcpKeepaliveTime), Optional.ToNullable(netIPv4TcpKeepaliveProbes), Optional.ToNullable(netIPv4TcpKeepaliveIntvl), Optional.ToNullable(netIPv4TcpTwReuse), netIPv4IPLocalPortRange.Value, Optional.ToNullable(netIPv4NeighDefaultGcThresh1), Optional.ToNullable(netIPv4NeighDefaultGcThresh2), Optional.ToNullable(netIPv4NeighDefaultGcThresh3), Optional.ToNullable(netNetfilterNfConntrackMax), Optional.ToNullable(netNetfilterNfConntrackBuckets), Optional.ToNullable(fsInotifyMaxUserWatches), Optional.ToNullable(fsFileMax), Optional.ToNullable(fsAioMaxNr), Optional.ToNullable(fsNrOpen), Optional.ToNullable(kernelThreadsMax), Optional.ToNullable(vmMaxMapCount), Optional.ToNullable(vmSwappiness), Optional.ToNullable(vmVfsCachePressure));
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> name = default;
             Optional<string> subscriptionId = default;
             Optional<string> dataFactoryName = default;
-            Optional<string> dataFactoryLocation = default;
+            Optional<AzureLocation> dataFactoryLocation = default;
             Optional<DateTimeOffset> createTime = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -39,7 +39,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("dataFactoryLocation"))
                 {
-                    dataFactoryLocation = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    dataFactoryLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("createTime"))
@@ -53,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new LinkedIntegrationRuntime(name.Value, subscriptionId.Value, dataFactoryName.Value, dataFactoryLocation.Value, Optional.ToNullable(createTime));
+            return new LinkedIntegrationRuntime(name.Value, subscriptionId.Value, dataFactoryName.Value, Optional.ToNullable(dataFactoryLocation), Optional.ToNullable(createTime));
         }
     }
 }

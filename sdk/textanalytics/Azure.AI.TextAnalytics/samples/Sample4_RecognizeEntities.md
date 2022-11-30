@@ -1,29 +1,27 @@
-# Recognizing Named Entities from Documents
-This sample demonstrates how to recognize entities in one or more documents.
+# Performing named entity recognition (NER)
+This sample demonstrates how to recognize named entities in one or more documents.
 
-## Creating a `TextAnalyticsClient`
-
-To create a new `TextAnalyticsClient` to recognize entities in a document, you need a Cognitive Services or Language service endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a Text Analytics API key credential by creating an `AzureKeyCredential` object, that if needed, will allow you to update the API key without creating a new client. See [README][README] for links and instructions.
-
-You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
+## Create a `TextAnalyticsClient`
+To create a new `TextAnalyticsClient`, you will need the service endpoint and credentials of your Language resource. To authenticate, you can use the [`DefaultAzureCredential`][DefaultAzureCredential], which combines credentials commonly used to authenticate when deployed on Azure, with credentials used to authenticate in a development environment. In this sample, however, you will use an `AzureKeyCredential`, which you can create simply with an API key.
 
 ```C# Snippet:CreateTextAnalyticsClient
 string endpoint = "<endpoint>";
 string apiKey = "<apiKey>";
-var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+TextAnalyticsClient client = new(new Uri(endpoint), new AzureKeyCredential(apiKey));
 ```
 
-## Recognizing entities in a single document
+The values of the `endpoint` and `apiKey` variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
 
-To recognize entities in a document, use the `RecognizeEntities` method.  The returned type is the collection of `CategorizedEntity` that were recognized in the document.
+## Recognize entities in a single document
+To recognize entities in a document, call `RecognizeEntities` on the `TextAnalyticsClient`, which returns a `CategorizedEntityCollection`.
 
 ```C# Snippet:RecognizeEntities
-string document = @"We love this trail and make the trip every year. The views are breathtaking and well
-                    worth the hike! Yesterday was foggy though, so we missed the spectacular views.
-                    We tried again today and it was amazing. Everyone in my family liked the trail although
-                    it was too challenging for the less athletic among us.
-                    Not necessarily recommended for small children.
-                    A hotel close to the trail offers services for childcare in case you want that.";
+string document =
+    "We love this trail and make the trip every year. The views are breathtaking and well worth the hike!"
+    + " Yesterday was foggy though, so we missed the spectacular views. We tried again today and it was"
+    + " amazing. Everyone in my family liked the trail although it was too challenging for the less"
+    + " athletic among us. Not necessarily recommended for small children. A hotel close to the trail"
+    + " offers services for childcare in case you want that.";
 
 try
 {
@@ -40,7 +38,7 @@ try
         if (!string.IsNullOrEmpty(entity.SubCategory))
             Console.WriteLine($"  SubCategory: {entity.SubCategory}");
         Console.WriteLine($"  Confidence score: {entity.ConfidenceScore}");
-        Console.WriteLine("");
+        Console.WriteLine();
     }
 }
 catch (RequestFailedException exception)
@@ -50,31 +48,31 @@ catch (RequestFailedException exception)
 }
 ```
 
-## Recognizing entities in multiple documents
-
-To recognize entities in multiple documents, call `RecognizeEntitiesBatch` on an `IEnumerable` of strings.  The results are returned as a `RecognizeEntitiesResultCollection`.
+## Recognize entities in multiple documents
+To recognize entities in multiple documents, call `RecognizeEntitiesBatch` on the `TextAnalyticsClient` by passing the documents as an `IEnumerable<string>` parameter. This returns a `RecognizeEntitiesResultCollection`.
 
 ```C# Snippet:TextAnalyticsSample4RecognizeEntitiesConvenience
-string documentA = @"We love this trail and make the trip every year. The views are breathtaking and well
-                    worth the hike! Yesterday was foggy though, so we missed the spectacular views.
-                    We tried again today and it was amazing. Everyone in my family liked the trail although
-                    it was too challenging for the less athletic among us.
-                    Not necessarily recommended for small children.
-                    A hotel close to the trail offers services for childcare in case you want that.";
+string documentA =
+    "We love this trail and make the trip every year. The views are breathtaking and well worth the hike!"
+    + " Yesterday was foggy though, so we missed the spectacular views. We tried again today and it was"
+    + " amazing. Everyone in my family liked the trail although it was too challenging for the less"
+    + " athletic among us. Not necessarily recommended for small children. A hotel close to the trail"
+    + " offers services for childcare in case you want that.";
 
-string documentB = @"Last week we stayed at Hotel Foo to celebrate our anniversary. The staff knew about
-                    our anniversary so they helped me organize a little surprise for my partner.
-                    The room was clean and with the decoration I requested. It was perfect!";
+string documentB =
+    "Nos hospedamos en el Hotel Foo la semana pasada por nuestro aniversario. La gerencia sabía de nuestra"
+    + " celebración y me ayudaron a tenerle una sorpresa a mi pareja. La habitación estaba limpia y"
+    + " decorada como yo había pedido. Una gran experiencia. El próximo año volveremos.";
 
-string documentC = @"That was the best day of my life! We went on a 4 day trip where we stayed at Hotel Foo.
-                    They had great amenities that included an indoor pool, a spa, and a bar.
-                    The spa offered couples massages which were really good. 
-                    The spa was clean and felt very peaceful. Overall the whole experience was great.
-                    We will definitely come back.";
+string documentC =
+    "That was the best day of my life! We went on a 4 day trip where we stayed at Hotel Foo. They had"
+    + " great amenities that included an indoor pool, a spa, and a bar. The spa offered couples massages"
+    + " which were really good. The spa was clean and felt very peaceful. Overall the whole experience was"
+    + " great. We will definitely come back.";
 
 string documentD = string.Empty;
 
-var documents = new List<string>
+List<string> documents = new()
 {
     documentA,
     documentB,
@@ -87,12 +85,12 @@ RecognizeEntitiesResultCollection entititesPerDocuments = response.Value;
 
 int i = 0;
 Console.WriteLine($"Results of \"Named Entity Recognition\" Model, version: \"{entititesPerDocuments.ModelVersion}\"");
-Console.WriteLine("");
+Console.WriteLine();
 
 foreach (RecognizeEntitiesResult entitiesInDocument in entititesPerDocuments)
 {
     Console.WriteLine($"On document with Text: \"{documents[i++]}\"");
-    Console.WriteLine("");
+    Console.WriteLine();
 
     if (entitiesInDocument.HasError)
     {
@@ -102,7 +100,7 @@ foreach (RecognizeEntitiesResult entitiesInDocument in entititesPerDocuments)
     }
     else
     {
-        Console.WriteLine($"  Recognized the following {entitiesInDocument.Entities.Count()} entities:");
+        Console.WriteLine($"  Recognized the following {entitiesInDocument.Entities.Count} entities:");
 
         foreach (CategorizedEntity entity in entitiesInDocument.Entities)
         {
@@ -113,35 +111,37 @@ foreach (RecognizeEntitiesResult entitiesInDocument in entititesPerDocuments)
             if (!string.IsNullOrEmpty(entity.SubCategory))
                 Console.WriteLine($"    SubCategory: {entity.SubCategory}");
             Console.WriteLine($"    Confidence score: {entity.ConfidenceScore}");
-            Console.WriteLine("");
+            Console.WriteLine();
         }
     }
-    Console.WriteLine("");
+    Console.WriteLine();
 }
 ```
 
-To recognize entities in a collection of documents in different languages, call `RecognizeEntitiesBatch` on an `IEnumerable` of `TextDocumentInput` objects, setting the `Language` on each document.
+To recognize entities in multiple documents in different languages, call `RecognizeEntitiesBatch` on the `TextAnalyticsClient` by passing the documents as an `IEnumerable<TextDocumentInput>` parameter, having set the `Language` property on each `TextInputDocument` object accordingly.
 
 ```C# Snippet:TextAnalyticsSample4RecognizeEntitiesBatch
-string documentA = @"We love this trail and make the trip every year. The views are breathtaking and well
-                    worth the hike! Yesterday was foggy though, so we missed the spectacular views.
-                    We tried again today and it was amazing. Everyone in my family liked the trail although
-                    it was too challenging for the less athletic among us.
-                    Not necessarily recommended for small children.
-                    A hotel close to the trail offers services for childcare in case you want that.";
+string documentA =
+    "We love this trail and make the trip every year. The views are breathtaking and well worth the hike!"
+    + " Yesterday was foggy though, so we missed the spectacular views. We tried again today and it was"
+    + " amazing. Everyone in my family liked the trail although it was too challenging for the less"
+    + " athletic among us. Not necessarily recommended for small children. A hotel close to the trail"
+    + " offers services for childcare in case you want that.";
 
-string documentB = @"Nos hospedamos en el Hotel Foo la semana pasada por nuestro aniversario. La gerencia
-                    sabía de nuestra celebración y me ayudaron a tenerle una sorpresa a mi pareja.
-                    La habitación estaba limpia y decorada como yo había pedido. Una gran experiencia.
-                    El próximo año volveremos.";
+string documentB =
+    "Nos hospedamos en el Hotel Foo la semana pasada por nuestro aniversario. La gerencia sabía de nuestra"
+    + " celebración y me ayudaron a tenerle una sorpresa a mi pareja. La habitación estaba limpia y"
+    + " decorada como yo había pedido. Una gran experiencia. El próximo año volveremos.";
 
-string documentC = @"That was the best day of my life! We went on a 4 day trip where we stayed at Hotel Foo.
-                    They had great amenities that included an indoor pool, a spa, and a bar.
-                    The spa offered couples massages which were really good. 
-                    The spa was clean and felt very peaceful. Overall the whole experience was great.
-                    We will definitely come back.";
+string documentC =
+    "That was the best day of my life! We went on a 4 day trip where we stayed at Hotel Foo. They had"
+    + " great amenities that included an indoor pool, a spa, and a bar. The spa offered couples massages"
+    + " which were really good. The spa was clean and felt very peaceful. Overall the whole experience was"
+    + " great. We will definitely come back.";
 
-var documents = new List<TextDocumentInput>
+string documentD = string.Empty;
+
+List<TextDocumentInput> documents = new()
 {
     new TextDocumentInput("1", documentA)
     {
@@ -155,16 +155,16 @@ var documents = new List<TextDocumentInput>
     {
          Language = "en",
     },
-    new TextDocumentInput("4", string.Empty)
+    new TextDocumentInput("4", documentD)
 };
 
-var options = new TextAnalyticsRequestOptions { IncludeStatistics = true };
+TextAnalyticsRequestOptions options = new() { IncludeStatistics = true };
 Response<RecognizeEntitiesResultCollection> response = client.RecognizeEntitiesBatch(documents, options);
 RecognizeEntitiesResultCollection entitiesInDocuments = response.Value;
 
 int i = 0;
 Console.WriteLine($"Results of \"Named Entity Recognition\" Model, version: \"{entitiesInDocuments.ModelVersion}\"");
-Console.WriteLine("");
+Console.WriteLine();
 
 foreach (RecognizeEntitiesResult entitiesInDocument in entitiesInDocuments)
 {
@@ -180,7 +180,7 @@ foreach (RecognizeEntitiesResult entitiesInDocument in entitiesInDocuments)
     }
     else
     {
-        Console.WriteLine($"  Recognized the following {entitiesInDocument.Entities.Count()} entities:");
+        Console.WriteLine($"  Recognized the following {entitiesInDocument.Entities.Count} entities:");
 
         foreach (CategorizedEntity entity in entitiesInDocument.Entities)
         {
@@ -191,14 +191,47 @@ foreach (RecognizeEntitiesResult entitiesInDocument in entitiesInDocuments)
             if (!string.IsNullOrEmpty(entity.SubCategory))
                 Console.WriteLine($"    SubCategory: {entity.SubCategory}");
             Console.WriteLine($"    Confidence score: {entity.ConfidenceScore}");
-            Console.WriteLine("");
+            if (entity.Resolutions.Count > 0)
+            {
+                Console.WriteLine($"    Resolutions:");
+                foreach (BaseResolution resolution in entity.Resolutions)
+                {
+                    // There are several different kinds of resolutions. In this particular sample, we are
+                    // interested in viewing those of type DateTimeResolution and TemporalSpanResolution.
+
+                    if (resolution is DateTimeResolution dateTime)
+                    {
+                        Console.WriteLine($"      Value: {dateTime.Value} ");
+                        Console.WriteLine($"      DateTimeSubKind: {dateTime.DateTimeSubKind} ");
+                        if (!string.IsNullOrEmpty(dateTime.Timex))
+                            Console.WriteLine($"      Timex: {dateTime.Timex}");
+                        if (dateTime.Modifier is not null)
+                            Console.WriteLine($"      Modifier: {dateTime.Modifier}");
+                    }
+
+                    if (resolution is TemporalSpanResolution temporalSpan)
+                    {
+                        if (!string.IsNullOrEmpty(temporalSpan.Begin))
+                            Console.WriteLine($"      Begin: {temporalSpan.Begin}");
+                        if (!string.IsNullOrEmpty(temporalSpan.End))
+                            Console.WriteLine($"      End: {temporalSpan.End}");
+                        if (!string.IsNullOrEmpty(temporalSpan.Duration))
+                            Console.WriteLine($"      Duration: {temporalSpan.Duration}");
+                        if (!string.IsNullOrEmpty(temporalSpan.End))
+                            Console.WriteLine($"      Timex: {temporalSpan.Timex}");
+                        if (temporalSpan.Modifier is not null)
+                            Console.WriteLine($"      Modifier: {temporalSpan.Modifier}");
+                    }
+                }
+            }
+            Console.WriteLine();
         }
 
         Console.WriteLine($"  Document statistics:");
         Console.WriteLine($"    Character count: {entitiesInDocument.Statistics.CharacterCount}");
         Console.WriteLine($"    Transaction count: {entitiesInDocument.Statistics.TransactionCount}");
     }
-    Console.WriteLine("");
+    Console.WriteLine();
 }
 
 Console.WriteLine($"Batch operation statistics:");
@@ -206,17 +239,10 @@ Console.WriteLine($"  Document count: {entitiesInDocuments.Statistics.DocumentCo
 Console.WriteLine($"  Valid document count: {entitiesInDocuments.Statistics.ValidDocumentCount}");
 Console.WriteLine($"  Invalid document count: {entitiesInDocuments.Statistics.InvalidDocumentCount}");
 Console.WriteLine($"  Transaction count: {entitiesInDocuments.Statistics.TransactionCount}");
-Console.WriteLine("");
+Console.WriteLine();
 ```
 
-To see the full example source files, see:
-
-* [Synchronously RecognizeEntities](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample4_RecognizeEntities.cs)
-* [Asynchronously RecognizeEntities](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample4_RecognizeEntitiesAsync.cs)
-* [Synchronously RecognizeEntitiesBatch](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample4_RecognizeEntitiesBatch.cs)
-* [Asynchronously RecognizeEntitiesBatch](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample4_RecognizeEntitiesBatchAsync.cs)
-* [Synchronously RecognizeEntitiesBatchConvenience](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample4_RecognizeEntitiesBatchConvenience.cs)
-* [Asynchronously RecognizeEntitiesBatchConvenience](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample4_RecognizeEntitiesBatchConvenienceAsync.cs)
+See the [README][README] of the Text Analytics client library for more information, including useful links and instructions.
 
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/README.md

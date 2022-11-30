@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.ContainerService.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string OCIContainerValue = "OCIContainer";
+        private const string OciContainerValue = "OCIContainer";
         private const string WasmWasiValue = "WasmWasi";
 
         /// <summary> Nodes will use Kubelet to run standard OCI container workloads. </summary>
-        public static WorkloadRuntime OCIContainer { get; } = new WorkloadRuntime(OCIContainerValue);
+        public static WorkloadRuntime OciContainer { get; } = new WorkloadRuntime(OciContainerValue);
         /// <summary> Nodes will use Krustlet to run WASM workloads using the WASI provider (Preview). </summary>
         public static WorkloadRuntime WasmWasi { get; } = new WorkloadRuntime(WasmWasiValue);
         /// <summary> Determines if two <see cref="WorkloadRuntime"/> values are the same. </summary>

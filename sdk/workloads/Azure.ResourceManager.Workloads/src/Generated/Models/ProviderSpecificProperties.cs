@@ -12,10 +12,10 @@ namespace Azure.ResourceManager.Workloads.Models
     /// Please note <see cref="ProviderSpecificProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="DB2ProviderInstanceProperties"/>, <see cref="MsSqlServerProviderInstanceProperties"/>, <see cref="PrometheusHAClusterProviderInstanceProperties"/>, <see cref="PrometheusOSProviderInstanceProperties"/>, <see cref="HanaDBProviderInstanceProperties"/> and <see cref="SapNetWeaverProviderInstanceProperties"/>.
     /// </summary>
-    public partial class ProviderSpecificProperties
+    public abstract partial class ProviderSpecificProperties
     {
         /// <summary> Initializes a new instance of ProviderSpecificProperties. </summary>
-        public ProviderSpecificProperties()
+        protected ProviderSpecificProperties()
         {
         }
 

@@ -21,7 +21,7 @@ namespace Azure.Communication.CallingServer
         public PlaySourceTypeInternal SourceType { get; }
         /// <summary> Defines the identifier to be used for caching related media. </summary>
         public string PlaySourceId { get; set; }
-        /// <summary> Gets or sets the file source. </summary>
+        /// <summary> Defines the file source info to be used for play. </summary>
         public FileSourceInternal FileSource { get; set; }
     }
 }

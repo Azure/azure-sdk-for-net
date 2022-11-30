@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.Monitor
             Optional<string> description = default;
             Optional<string> provisioningState = default;
             bool isEnabled = default;
-            RuleCondition condition = default;
-            Optional<RuleAction> action = default;
-            Optional<IList<RuleAction>> actions = default;
+            AlertRuleCondition condition = default;
+            Optional<AlertRuleAction> action = default;
+            Optional<IList<AlertRuleAction>> actions = default;
             Optional<DateTimeOffset> lastUpdatedTime = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Monitor
                         }
                         if (property0.NameEquals("condition"))
                         {
-                            condition = RuleCondition.DeserializeRuleCondition(property0.Value);
+                            condition = AlertRuleCondition.DeserializeAlertRuleCondition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("action"))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Monitor
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            action = RuleAction.DeserializeRuleAction(property0.Value);
+                            action = AlertRuleAction.DeserializeAlertRuleAction(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("actions"))
@@ -183,10 +183,10 @@ namespace Azure.ResourceManager.Monitor
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<RuleAction> array = new List<RuleAction>();
+                            List<AlertRuleAction> array = new List<AlertRuleAction>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RuleAction.DeserializeRuleAction(item));
+                                array.Add(AlertRuleAction.DeserializeAlertRuleAction(item));
                             }
                             actions = array;
                             continue;

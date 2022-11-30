@@ -261,11 +261,11 @@ namespace Azure.ResourceManager.Reservations.Tests
             {
                 if (alternateResourceTypeName != null)
                 {
-                    Assert.IsTrue(item.ReservedResourceType.Equals(resourceTypeName) || item.ReservedResourceType.Equals(alternateResourceTypeName));
+                    Assert.IsTrue(item.AppliedResourceType.Equals(resourceTypeName) || item.AppliedResourceType.Equals(alternateResourceTypeName));
                 }
                 else
                 {
-                    Assert.AreEqual(resourceTypeName, item.ReservedResourceType);
+                    Assert.AreEqual(resourceTypeName, item.AppliedResourceType);
                 }
 
                 if (hasLocation)

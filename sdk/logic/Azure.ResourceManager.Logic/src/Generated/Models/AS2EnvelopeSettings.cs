@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -17,28 +18,21 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="transmitFileNameInMimeHeader"> The value indicating whether to transmit file name in mime header. </param>
         /// <param name="fileNameTemplate"> The template for file name. </param>
         /// <param name="suspendMessageOnFileNameGenerationError"> The value indicating whether to suspend message on file name generation error. </param>
-        /// <param name="autogenerateFileName"> The value indicating whether to auto generate file name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="messageContentType"/> or <paramref name="fileNameTemplate"/> is null. </exception>
-        public AS2EnvelopeSettings(string messageContentType, bool transmitFileNameInMimeHeader, string fileNameTemplate, bool suspendMessageOnFileNameGenerationError, bool autogenerateFileName)
+        /// <param name="autoGenerateFileName"> The value indicating whether to auto generate file name. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileNameTemplate"/> is null. </exception>
+        public AS2EnvelopeSettings(ContentType messageContentType, bool transmitFileNameInMimeHeader, string fileNameTemplate, bool suspendMessageOnFileNameGenerationError, bool autoGenerateFileName)
         {
-            if (messageContentType == null)
-            {
-                throw new ArgumentNullException(nameof(messageContentType));
-            }
-            if (fileNameTemplate == null)
-            {
-                throw new ArgumentNullException(nameof(fileNameTemplate));
-            }
+            Argument.AssertNotNull(fileNameTemplate, nameof(fileNameTemplate));
 
             MessageContentType = messageContentType;
             TransmitFileNameInMimeHeader = transmitFileNameInMimeHeader;
             FileNameTemplate = fileNameTemplate;
             SuspendMessageOnFileNameGenerationError = suspendMessageOnFileNameGenerationError;
-            AutogenerateFileName = autogenerateFileName;
+            AutoGenerateFileName = autoGenerateFileName;
         }
 
         /// <summary> The message content type. </summary>
-        public string MessageContentType { get; set; }
+        public ContentType MessageContentType { get; set; }
         /// <summary> The value indicating whether to transmit file name in mime header. </summary>
         public bool TransmitFileNameInMimeHeader { get; set; }
         /// <summary> The template for file name. </summary>
@@ -46,6 +40,6 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> The value indicating whether to suspend message on file name generation error. </summary>
         public bool SuspendMessageOnFileNameGenerationError { get; set; }
         /// <summary> The value indicating whether to auto generate file name. </summary>
-        public bool AutogenerateFileName { get; set; }
+        public bool AutoGenerateFileName { get; set; }
     }
 }

@@ -22,6 +22,7 @@ We assume that you are familiar with the `Microsoft.Azure.ServiceBus` library. I
       - [Administration client](#administration-client)
     - [Sending messages](#sending-messages)
     - [Receiving messages](#receiving-messages)
+    - [Dead letter messages](#dead-letter-messages)
     - [Working with sessions](#working-with-sessions)
     - [Cross-Entity transactions](#cross-entity-transactions)
   - [Plugins](#plugins)
@@ -95,7 +96,7 @@ Authenticate with Active Directory:
 ```C# Snippet:ServiceBusAuthAAD
 // Create a ServiceBusClient that will authenticate through Active Directory
 string fullyQualifiedNamespace = "yournamespace.servicebus.windows.net";
-ServiceBusClient client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential());
+await using var client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential());
 ```
 
 Authenticate with connection string:
@@ -103,7 +104,7 @@ Authenticate with connection string:
 ```C# Snippet:ServiceBusAuthConnString
 // Create a ServiceBusClient that will authenticate using a connection string
 string connectionString = "<connection_string>";
-ServiceBusClient client = new ServiceBusClient(connectionString);
+await using var client = new ServiceBusClient(connectionString);
 ```
 
 #### Administration client
@@ -317,6 +318,29 @@ ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync()
 // get the message body as a string
 string body = receivedMessage.Body.ToString();
 Console.WriteLine(body);
+```
+
+### Dead letter messages
+
+There are a few notable differences in `Azure.Messaging.ServiceBus` when it comes to moving messages to the dead letter queue. Instead of exposing the constants `Message.DeadLetterReasonHeader` and `Message.DeadLetterErrorDescriptionHeader` and asking you to set the values on the `UserProperties` dictionary as was the case in `Microsoft.Azure.ServiceBus`, we now offer a dedicated method where you can pass the reason and error description as parameters when moving messages to the dead letter queue. Additionally, we now expose the `ServiceBusReceivedMessage.DeadLetterReason` and `ServiceBusReceivedMessage.DeadLetterErrorDescription` as top-level properties on the received message.
+Another notable difference is that when receiving from the dead letter queue, you will need to set the SubQueue option of the `ServiceBusReceiverOptions` to `SubQueue.DeadLetter` as opposed to constructing the dead letter queue name yourself as was the case with `Microsoft.Azure.ServiceBus`.
+```C# Snippet:ServiceBusDeadLetterMessage
+ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
+
+// Dead-letter the message, thereby preventing the message from being received again without receiving from the dead letter queue.
+// We can optionally pass a dead letter reason and dead letter description to further describe the reason for dead-lettering the message.
+await receiver.DeadLetterMessageAsync(receivedMessage, "sample reason", "sample description");
+
+// receive the dead lettered message with receiver scoped to the dead letter queue.
+ServiceBusReceiver dlqReceiver = client.CreateReceiver(queueName, new ServiceBusReceiverOptions
+{
+    SubQueue = SubQueue.DeadLetter
+});
+ServiceBusReceivedMessage dlqMessage = await dlqReceiver.ReceiveMessageAsync();
+
+// The reason and the description that we specified when dead-lettering the message will be available in the received dead letter message.
+string reason = dlqMessage.DeadLetterReason;
+string description = dlqMessage.DeadLetterErrorDescription;
 ```
 
 ### Working with sessions

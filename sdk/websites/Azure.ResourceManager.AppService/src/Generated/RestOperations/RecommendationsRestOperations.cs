@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RecommendationCollection>> ListAsync(string subscriptionId, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceRecommendationListResult>> ListAsync(string subscriptionId, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        RecommendationCollection value = default;
+                        AppServiceRecommendationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RecommendationCollection.DeserializeRecommendationCollection(document.RootElement);
+                        value = AppServiceRecommendationListResult.DeserializeAppServiceRecommendationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RecommendationCollection> List(string subscriptionId, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<AppServiceRecommendationListResult> List(string subscriptionId, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        RecommendationCollection value = default;
+                        AppServiceRecommendationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RecommendationCollection.DeserializeRecommendationCollection(document.RootElement);
+                        value = AppServiceRecommendationListResult.DeserializeAppServiceRecommendationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostingEnvironmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostingEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RecommendationCollection>> ListHistoryForHostingEnvironmentAsync(string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceRecommendationListResult>> ListHistoryForHostingEnvironmentAsync(string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -286,9 +286,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        RecommendationCollection value = default;
+                        AppServiceRecommendationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RecommendationCollection.DeserializeRecommendationCollection(document.RootElement);
+                        value = AppServiceRecommendationListResult.DeserializeAppServiceRecommendationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostingEnvironmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostingEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RecommendationCollection> ListHistoryForHostingEnvironment(string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<AppServiceRecommendationListResult> ListHistoryForHostingEnvironment(string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -317,9 +317,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        RecommendationCollection value = default;
+                        AppServiceRecommendationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RecommendationCollection.DeserializeRecommendationCollection(document.RootElement);
+                        value = AppServiceRecommendationListResult.DeserializeAppServiceRecommendationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostingEnvironmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostingEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RecommendationCollection>> ListRecommendedRulesForHostingEnvironmentAsync(string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceRecommendationListResult>> ListRecommendedRulesForHostingEnvironmentAsync(string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -377,9 +377,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        RecommendationCollection value = default;
+                        AppServiceRecommendationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RecommendationCollection.DeserializeRecommendationCollection(document.RootElement);
+                        value = AppServiceRecommendationListResult.DeserializeAppServiceRecommendationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostingEnvironmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostingEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RecommendationCollection> ListRecommendedRulesForHostingEnvironment(string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<AppServiceRecommendationListResult> ListRecommendedRulesForHostingEnvironment(string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -408,9 +408,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        RecommendationCollection value = default;
+                        AppServiceRecommendationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RecommendationCollection.DeserializeRecommendationCollection(document.RootElement);
+                        value = AppServiceRecommendationListResult.DeserializeAppServiceRecommendationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -784,7 +784,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RecommendationCollection>> ListHistoryForWebAppAsync(string subscriptionId, string resourceGroupName, string siteName, bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceRecommendationListResult>> ListHistoryForWebAppAsync(string subscriptionId, string resourceGroupName, string siteName, bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -796,9 +796,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        RecommendationCollection value = default;
+                        AppServiceRecommendationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RecommendationCollection.DeserializeRecommendationCollection(document.RootElement);
+                        value = AppServiceRecommendationListResult.DeserializeAppServiceRecommendationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -815,7 +815,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RecommendationCollection> ListHistoryForWebApp(string subscriptionId, string resourceGroupName, string siteName, bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<AppServiceRecommendationListResult> ListHistoryForWebApp(string subscriptionId, string resourceGroupName, string siteName, bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -827,9 +827,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        RecommendationCollection value = default;
+                        AppServiceRecommendationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RecommendationCollection.DeserializeRecommendationCollection(document.RootElement);
+                        value = AppServiceRecommendationListResult.DeserializeAppServiceRecommendationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -875,7 +875,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RecommendationCollection>> ListRecommendedRulesForWebAppAsync(string subscriptionId, string resourceGroupName, string siteName, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceRecommendationListResult>> ListRecommendedRulesForWebAppAsync(string subscriptionId, string resourceGroupName, string siteName, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -887,9 +887,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        RecommendationCollection value = default;
+                        AppServiceRecommendationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RecommendationCollection.DeserializeRecommendationCollection(document.RootElement);
+                        value = AppServiceRecommendationListResult.DeserializeAppServiceRecommendationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -906,7 +906,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RecommendationCollection> ListRecommendedRulesForWebApp(string subscriptionId, string resourceGroupName, string siteName, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<AppServiceRecommendationListResult> ListRecommendedRulesForWebApp(string subscriptionId, string resourceGroupName, string siteName, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -918,9 +918,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        RecommendationCollection value = default;
+                        AppServiceRecommendationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RecommendationCollection.DeserializeRecommendationCollection(document.RootElement);
+                        value = AppServiceRecommendationListResult.DeserializeAppServiceRecommendationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1263,7 +1263,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RecommendationCollection>> ListNextPageAsync(string nextLink, string subscriptionId, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceRecommendationListResult>> ListNextPageAsync(string nextLink, string subscriptionId, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1274,9 +1274,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        RecommendationCollection value = default;
+                        AppServiceRecommendationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RecommendationCollection.DeserializeRecommendationCollection(document.RootElement);
+                        value = AppServiceRecommendationListResult.DeserializeAppServiceRecommendationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1292,7 +1292,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RecommendationCollection> ListNextPage(string nextLink, string subscriptionId, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<AppServiceRecommendationListResult> ListNextPage(string nextLink, string subscriptionId, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1303,9 +1303,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        RecommendationCollection value = default;
+                        AppServiceRecommendationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RecommendationCollection.DeserializeRecommendationCollection(document.RootElement);
+                        value = AppServiceRecommendationListResult.DeserializeAppServiceRecommendationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1337,7 +1337,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostingEnvironmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostingEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RecommendationCollection>> ListHistoryForHostingEnvironmentNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceRecommendationListResult>> ListHistoryForHostingEnvironmentNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1350,9 +1350,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        RecommendationCollection value = default;
+                        AppServiceRecommendationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RecommendationCollection.DeserializeRecommendationCollection(document.RootElement);
+                        value = AppServiceRecommendationListResult.DeserializeAppServiceRecommendationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1370,7 +1370,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostingEnvironmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostingEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RecommendationCollection> ListHistoryForHostingEnvironmentNextPage(string nextLink, string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<AppServiceRecommendationListResult> ListHistoryForHostingEnvironmentNextPage(string nextLink, string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1383,9 +1383,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        RecommendationCollection value = default;
+                        AppServiceRecommendationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RecommendationCollection.DeserializeRecommendationCollection(document.RootElement);
+                        value = AppServiceRecommendationListResult.DeserializeAppServiceRecommendationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1417,7 +1417,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostingEnvironmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostingEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RecommendationCollection>> ListRecommendedRulesForHostingEnvironmentNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceRecommendationListResult>> ListRecommendedRulesForHostingEnvironmentNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1430,9 +1430,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        RecommendationCollection value = default;
+                        AppServiceRecommendationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RecommendationCollection.DeserializeRecommendationCollection(document.RootElement);
+                        value = AppServiceRecommendationListResult.DeserializeAppServiceRecommendationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1450,7 +1450,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostingEnvironmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostingEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RecommendationCollection> ListRecommendedRulesForHostingEnvironmentNextPage(string nextLink, string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<AppServiceRecommendationListResult> ListRecommendedRulesForHostingEnvironmentNextPage(string nextLink, string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1463,9 +1463,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        RecommendationCollection value = default;
+                        AppServiceRecommendationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RecommendationCollection.DeserializeRecommendationCollection(document.RootElement);
+                        value = AppServiceRecommendationListResult.DeserializeAppServiceRecommendationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1497,7 +1497,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RecommendationCollection>> ListHistoryForWebAppNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string siteName, bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceRecommendationListResult>> ListHistoryForWebAppNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string siteName, bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1510,9 +1510,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        RecommendationCollection value = default;
+                        AppServiceRecommendationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RecommendationCollection.DeserializeRecommendationCollection(document.RootElement);
+                        value = AppServiceRecommendationListResult.DeserializeAppServiceRecommendationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1530,7 +1530,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RecommendationCollection> ListHistoryForWebAppNextPage(string nextLink, string subscriptionId, string resourceGroupName, string siteName, bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<AppServiceRecommendationListResult> ListHistoryForWebAppNextPage(string nextLink, string subscriptionId, string resourceGroupName, string siteName, bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1543,9 +1543,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        RecommendationCollection value = default;
+                        AppServiceRecommendationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RecommendationCollection.DeserializeRecommendationCollection(document.RootElement);
+                        value = AppServiceRecommendationListResult.DeserializeAppServiceRecommendationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1577,7 +1577,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RecommendationCollection>> ListRecommendedRulesForWebAppNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string siteName, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceRecommendationListResult>> ListRecommendedRulesForWebAppNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string siteName, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1590,9 +1590,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        RecommendationCollection value = default;
+                        AppServiceRecommendationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RecommendationCollection.DeserializeRecommendationCollection(document.RootElement);
+                        value = AppServiceRecommendationListResult.DeserializeAppServiceRecommendationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1610,7 +1610,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RecommendationCollection> ListRecommendedRulesForWebAppNextPage(string nextLink, string subscriptionId, string resourceGroupName, string siteName, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<AppServiceRecommendationListResult> ListRecommendedRulesForWebAppNextPage(string nextLink, string subscriptionId, string resourceGroupName, string siteName, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1623,9 +1623,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        RecommendationCollection value = default;
+                        AppServiceRecommendationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RecommendationCollection.DeserializeRecommendationCollection(document.RootElement);
+                        value = AppServiceRecommendationListResult.DeserializeAppServiceRecommendationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

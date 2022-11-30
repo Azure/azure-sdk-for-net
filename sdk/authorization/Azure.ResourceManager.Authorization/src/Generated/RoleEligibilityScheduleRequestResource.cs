@@ -94,8 +94,8 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<RoleEligibilityScheduleRequestResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope0 = _roleEligibilityScheduleRequestClientDiagnostics.CreateScope("RoleEligibilityScheduleRequestResource.Get");
-            scope0.Start();
+            using var scope = _roleEligibilityScheduleRequestClientDiagnostics.CreateScope("RoleEligibilityScheduleRequestResource.Get");
+            scope.Start();
             try
             {
                 var response = await _roleEligibilityScheduleRequestRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Authorization
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -118,8 +118,8 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RoleEligibilityScheduleRequestResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope0 = _roleEligibilityScheduleRequestClientDiagnostics.CreateScope("RoleEligibilityScheduleRequestResource.Get");
-            scope0.Start();
+            using var scope = _roleEligibilityScheduleRequestClientDiagnostics.CreateScope("RoleEligibilityScheduleRequestResource.Get");
+            scope.Start();
             try
             {
                 var response = _roleEligibilityScheduleRequestRestClient.Get(Id.Parent, Id.Name, cancellationToken);
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Authorization
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -147,8 +147,8 @@ namespace Azure.ResourceManager.Authorization
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope0 = _roleEligibilityScheduleRequestClientDiagnostics.CreateScope("RoleEligibilityScheduleRequestResource.Update");
-            scope0.Start();
+            using var scope = _roleEligibilityScheduleRequestClientDiagnostics.CreateScope("RoleEligibilityScheduleRequestResource.Update");
+            scope.Start();
             try
             {
                 var response = await _roleEligibilityScheduleRequestRestClient.CreateAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Authorization
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -177,8 +177,8 @@ namespace Azure.ResourceManager.Authorization
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope0 = _roleEligibilityScheduleRequestClientDiagnostics.CreateScope("RoleEligibilityScheduleRequestResource.Update");
-            scope0.Start();
+            using var scope = _roleEligibilityScheduleRequestClientDiagnostics.CreateScope("RoleEligibilityScheduleRequestResource.Update");
+            scope.Start();
             try
             {
                 var response = _roleEligibilityScheduleRequestRestClient.Create(Id.Parent, Id.Name, data, cancellationToken);
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Authorization
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -202,8 +202,8 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> CancelAsync(CancellationToken cancellationToken = default)
         {
-            using var scope0 = _roleEligibilityScheduleRequestClientDiagnostics.CreateScope("RoleEligibilityScheduleRequestResource.Cancel");
-            scope0.Start();
+            using var scope = _roleEligibilityScheduleRequestClientDiagnostics.CreateScope("RoleEligibilityScheduleRequestResource.Cancel");
+            scope.Start();
             try
             {
                 var response = await _roleEligibilityScheduleRequestRestClient.CancelAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Authorization
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -224,8 +224,8 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Cancel(CancellationToken cancellationToken = default)
         {
-            using var scope0 = _roleEligibilityScheduleRequestClientDiagnostics.CreateScope("RoleEligibilityScheduleRequestResource.Cancel");
-            scope0.Start();
+            using var scope = _roleEligibilityScheduleRequestClientDiagnostics.CreateScope("RoleEligibilityScheduleRequestResource.Cancel");
+            scope.Start();
             try
             {
                 var response = _roleEligibilityScheduleRequestRestClient.Cancel(Id.Parent, Id.Name, cancellationToken);
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Authorization
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -250,8 +250,8 @@ namespace Azure.ResourceManager.Authorization
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope0 = _roleEligibilityScheduleRequestClientDiagnostics.CreateScope("RoleEligibilityScheduleRequestResource.Validate");
-            scope0.Start();
+            using var scope = _roleEligibilityScheduleRequestClientDiagnostics.CreateScope("RoleEligibilityScheduleRequestResource.Validate");
+            scope.Start();
             try
             {
                 var response = await _roleEligibilityScheduleRequestRestClient.ValidateAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Authorization
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -276,8 +276,8 @@ namespace Azure.ResourceManager.Authorization
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope0 = _roleEligibilityScheduleRequestClientDiagnostics.CreateScope("RoleEligibilityScheduleRequestResource.Validate");
-            scope0.Start();
+            using var scope = _roleEligibilityScheduleRequestClientDiagnostics.CreateScope("RoleEligibilityScheduleRequestResource.Validate");
+            scope.Start();
             try
             {
                 var response = _roleEligibilityScheduleRequestRestClient.Validate(Id.Parent, Id.Name, data, cancellationToken);
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Authorization
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }

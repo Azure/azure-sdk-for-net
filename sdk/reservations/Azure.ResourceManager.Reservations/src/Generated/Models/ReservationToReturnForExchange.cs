@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> Reservation refund details. </summary>
@@ -21,7 +23,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="billingRefundAmount"></param>
         /// <param name="billingInformation"> billing information. </param>
         /// <param name="status"> Status of the individual operation. </param>
-        internal ReservationToReturnForExchange(string reservationId, int? quantity, PurchasePrice billingRefundAmount, BillingInformation billingInformation, OperationStatus? status)
+        internal ReservationToReturnForExchange(ResourceIdentifier reservationId, int? quantity, PurchasePrice billingRefundAmount, BillingInformation billingInformation, ReservationOperationStatus? status)
         {
             ReservationId = reservationId;
             Quantity = quantity;
@@ -31,7 +33,7 @@ namespace Azure.ResourceManager.Reservations.Models
         }
 
         /// <summary> Fully qualified id of the Reservation being returned. </summary>
-        public string ReservationId { get; }
+        public ResourceIdentifier ReservationId { get; }
         /// <summary> Quantity to be returned. </summary>
         public int? Quantity { get; }
         /// <summary> Gets the billing refund amount. </summary>
@@ -39,6 +41,6 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> billing information. </summary>
         public BillingInformation BillingInformation { get; }
         /// <summary> Status of the individual operation. </summary>
-        public OperationStatus? Status { get; }
+        public ReservationOperationStatus? Status { get; }
     }
 }

@@ -21,27 +21,27 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Initializes a new instance of KubeletConfig. </summary>
         /// <param name="cpuManagerPolicy"> The default is &apos;none&apos;. See [Kubernetes CPU management policies](https://kubernetes.io/docs/tasks/administer-cluster/cpu-management-policies/#cpu-management-policies) for more information. Allowed values are &apos;none&apos; and &apos;static&apos;. </param>
-        /// <param name="cpuCfsQuota"> The default is true. </param>
+        /// <param name="isCpuCfsQuotaEnabled"> The default is true. </param>
         /// <param name="cpuCfsQuotaPeriod"> The default is &apos;100ms.&apos; Valid values are a sequence of decimal numbers with an optional fraction and a unit suffix. For example: &apos;300ms&apos;, &apos;2h45m&apos;. Supported units are &apos;ns&apos;, &apos;us&apos;, &apos;ms&apos;, &apos;s&apos;, &apos;m&apos;, and &apos;h&apos;. </param>
         /// <param name="imageGcHighThreshold"> To disable image garbage collection, set to 100. The default is 85%. </param>
         /// <param name="imageGcLowThreshold"> This cannot be set higher than imageGcHighThreshold. The default is 80%. </param>
         /// <param name="topologyManagerPolicy"> For more information see [Kubernetes Topology Manager](https://kubernetes.io/docs/tasks/administer-cluster/topology-manager). The default is &apos;none&apos;. Allowed values are &apos;none&apos;, &apos;best-effort&apos;, &apos;restricted&apos;, and &apos;single-numa-node&apos;. </param>
         /// <param name="allowedUnsafeSysctls"> Allowed list of unsafe sysctls or unsafe sysctl patterns (ending in `*`). </param>
-        /// <param name="failSwapOn"> If set to true it will make the Kubelet fail to start if swap is enabled on the node. </param>
-        /// <param name="containerLogMaxSizeMB"> The maximum size (e.g. 10Mi) of container log file before it is rotated. </param>
+        /// <param name="failStartWithSwapOn"> If set to true it will make the Kubelet fail to start if swap is enabled on the node. </param>
+        /// <param name="containerLogMaxSizeInMB"> The maximum size (e.g. 10Mi) of container log file before it is rotated. </param>
         /// <param name="containerLogMaxFiles"> The maximum number of container log files that can be present for a container. The number must be ≥ 2. </param>
         /// <param name="podMaxPids"> The maximum number of processes per pod. </param>
-        internal KubeletConfig(string cpuManagerPolicy, bool? cpuCfsQuota, string cpuCfsQuotaPeriod, int? imageGcHighThreshold, int? imageGcLowThreshold, string topologyManagerPolicy, IList<string> allowedUnsafeSysctls, bool? failSwapOn, int? containerLogMaxSizeMB, int? containerLogMaxFiles, int? podMaxPids)
+        internal KubeletConfig(string cpuManagerPolicy, bool? isCpuCfsQuotaEnabled, string cpuCfsQuotaPeriod, int? imageGcHighThreshold, int? imageGcLowThreshold, string topologyManagerPolicy, IList<string> allowedUnsafeSysctls, bool? failStartWithSwapOn, int? containerLogMaxSizeInMB, int? containerLogMaxFiles, int? podMaxPids)
         {
             CpuManagerPolicy = cpuManagerPolicy;
-            CpuCfsQuota = cpuCfsQuota;
+            IsCpuCfsQuotaEnabled = isCpuCfsQuotaEnabled;
             CpuCfsQuotaPeriod = cpuCfsQuotaPeriod;
             ImageGcHighThreshold = imageGcHighThreshold;
             ImageGcLowThreshold = imageGcLowThreshold;
             TopologyManagerPolicy = topologyManagerPolicy;
             AllowedUnsafeSysctls = allowedUnsafeSysctls;
-            FailSwapOn = failSwapOn;
-            ContainerLogMaxSizeMB = containerLogMaxSizeMB;
+            FailStartWithSwapOn = failStartWithSwapOn;
+            ContainerLogMaxSizeInMB = containerLogMaxSizeInMB;
             ContainerLogMaxFiles = containerLogMaxFiles;
             PodMaxPids = podMaxPids;
         }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> The default is &apos;none&apos;. See [Kubernetes CPU management policies](https://kubernetes.io/docs/tasks/administer-cluster/cpu-management-policies/#cpu-management-policies) for more information. Allowed values are &apos;none&apos; and &apos;static&apos;. </summary>
         public string CpuManagerPolicy { get; set; }
         /// <summary> The default is true. </summary>
-        public bool? CpuCfsQuota { get; set; }
+        public bool? IsCpuCfsQuotaEnabled { get; set; }
         /// <summary> The default is &apos;100ms.&apos; Valid values are a sequence of decimal numbers with an optional fraction and a unit suffix. For example: &apos;300ms&apos;, &apos;2h45m&apos;. Supported units are &apos;ns&apos;, &apos;us&apos;, &apos;ms&apos;, &apos;s&apos;, &apos;m&apos;, and &apos;h&apos;. </summary>
         public string CpuCfsQuotaPeriod { get; set; }
         /// <summary> To disable image garbage collection, set to 100. The default is 85%. </summary>
@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Allowed list of unsafe sysctls or unsafe sysctl patterns (ending in `*`). </summary>
         public IList<string> AllowedUnsafeSysctls { get; }
         /// <summary> If set to true it will make the Kubelet fail to start if swap is enabled on the node. </summary>
-        public bool? FailSwapOn { get; set; }
+        public bool? FailStartWithSwapOn { get; set; }
         /// <summary> The maximum size (e.g. 10Mi) of container log file before it is rotated. </summary>
-        public int? ContainerLogMaxSizeMB { get; set; }
+        public int? ContainerLogMaxSizeInMB { get; set; }
         /// <summary> The maximum number of container log files that can be present for a container. The number must be ≥ 2. </summary>
         public int? ContainerLogMaxFiles { get; set; }
         /// <summary> The maximum number of processes per pod. </summary>

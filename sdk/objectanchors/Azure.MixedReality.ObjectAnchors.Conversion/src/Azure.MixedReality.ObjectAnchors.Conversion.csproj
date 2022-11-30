@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure Mixed Reality Object Anchors Client</AssemblyTitle>
-    <Version>0.3.0-beta.4</Version>
+    <Version>0.3.0-beta.7</Version>
     <PackageTags>Azure MixedReality Object Anchors</PackageTags>
     <Copyright>© Microsoft Corporation. All rights reserved.</Copyright>
     <Authors>Microsoft</Authors>
@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="Azure.MixedReality.Authentication" VersionOverride="1.0.1" />
+    <PackageReference Include="Azure.MixedReality.Authentication" VersionOverride="1.2.0" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 

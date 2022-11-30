@@ -15,7 +15,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static DocumentPage DeserializeDocumentPage(JsonElement element)
         {
-            DocumentPageKind kind = default;
             int pageNumber = default;
             Optional<float> angle = default;
             Optional<float> width = default;
@@ -24,15 +23,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             IReadOnlyList<DocumentSpan> spans = default;
             Optional<IReadOnlyList<DocumentWord>> words = default;
             Optional<IReadOnlyList<DocumentSelectionMark>> selectionMarks = default;
-            Optional<IReadOnlyList<DocumentImage>> images = default;
             Optional<IReadOnlyList<DocumentLine>> lines = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
-                {
-                    kind = new DocumentPageKind(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("pageNumber"))
                 {
                     pageNumber = property.Value.GetInt32();
@@ -118,21 +111,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     selectionMarks = array;
                     continue;
                 }
-                if (property.NameEquals("images"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<DocumentImage> array = new List<DocumentImage>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(DocumentImage.DeserializeDocumentImage(item));
-                    }
-                    images = array;
-                    continue;
-                }
                 if (property.NameEquals("lines"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -149,7 +127,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentPage(kind, pageNumber, Optional.ToNullable(angle), Optional.ToNullable(width), Optional.ToNullable(height), Optional.ToNullable(unit), spans, Optional.ToList(words), Optional.ToList(selectionMarks), Optional.ToList(images), Optional.ToList(lines));
+            return new DocumentPage(pageNumber, Optional.ToNullable(angle), Optional.ToNullable(width), Optional.ToNullable(height), Optional.ToNullable(unit), spans, Optional.ToList(words), Optional.ToList(selectionMarks), Optional.ToList(lines));
         }
     }
 }

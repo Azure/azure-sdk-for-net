@@ -24,7 +24,7 @@ namespace Azure.Storage
         /// Gets the default service version to use when building shared access
         /// signatures.
         /// </summary>
-        public const string DefaultSasVersion = "2021-08-06";
+        public const string DefaultSasVersion = "2021-12-02";
 
         /// <summary>
         /// Max download range size while requesting a transactional hash.
@@ -63,6 +63,11 @@ namespace Azure.Storage
         /// download operation.
         /// </summary>
         public const int DefaultDownloadCopyBufferSize = 16384;
+
+        /// <summary>
+        /// Backwards compatible default value for trimming slashes on object name.
+        /// </summary>
+        public const bool DefaultTrimBlobNameSlashes = true;
 
         public const string CloseAllHandles = "*";
         public const string Wildcard = "*";

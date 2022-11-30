@@ -64,10 +64,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vcenterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="vcenterName"/> is null. </exception>
-        public virtual async Task<ArmOperation<VCenterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vcenterName, VCenterData data = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vcenterName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<VCenterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vcenterName, VCenterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _vCenterClientDiagnostics.CreateScope("VCenterCollection.CreateOrUpdate");
             scope.Start();
@@ -96,10 +97,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vcenterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="vcenterName"/> is null. </exception>
-        public virtual ArmOperation<VCenterResource> CreateOrUpdate(WaitUntil waitUntil, string vcenterName, VCenterData data = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vcenterName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<VCenterResource> CreateOrUpdate(WaitUntil waitUntil, string vcenterName, VCenterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _vCenterClientDiagnostics.CreateScope("VCenterCollection.CreateOrUpdate");
             scope.Start();

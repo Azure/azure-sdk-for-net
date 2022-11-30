@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Batch
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-06-01";
+            _apiVersion = apiVersion ?? "2022-10-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Batch
             return message;
         }
 
-        /// <summary> Lists all of the certificates in the specified account. </summary>
+        /// <summary> Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Batch
             }
         }
 
-        /// <summary> Lists all of the certificates in the specified account. </summary>
+        /// <summary> Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Batch
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string accountName, string certificateName, CertificateCreateOrUpdateParameters certificateCreateOrUpdateParameters, string ifMatch, string ifNoneMatch)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string accountName, string certificateName, BatchAccountCertificateCreateOrUpdateContent content, ETag? ifMatch, string ifNoneMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Batch
             request.Uri = uri;
             if (ifMatch != null)
             {
-                request.Headers.Add("If-Match", ifMatch);
+                request.Headers.Add("If-Match", ifMatch.Value);
             }
             if (ifNoneMatch != null)
             {
@@ -161,41 +161,41 @@ namespace Azure.ResourceManager.Batch
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(certificateCreateOrUpdateParameters);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Creates a new certificate inside the specified account. </summary>
+        /// <summary> Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
         /// <param name="certificateName"> The identifier for the certificate. This must be made up of algorithm and thumbprint separated by a dash, and must match the certificate data in the request. For example SHA1-a3d1c5. </param>
-        /// <param name="certificateCreateOrUpdateParameters"> Additional parameters for certificate creation. </param>
+        /// <param name="content"> Additional parameters for certificate creation. </param>
         /// <param name="ifMatch"> The entity state (ETag) version of the certificate to update. A value of &quot;*&quot; can be used to apply the operation only if the certificate already exists. If omitted, this operation will always be applied. </param>
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new certificate to be created, but to prevent updating an existing certificate. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="certificateName"/> or <paramref name="certificateCreateOrUpdateParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="certificateName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CertificateData>> CreateAsync(string subscriptionId, string resourceGroupName, string accountName, string certificateName, CertificateCreateOrUpdateParameters certificateCreateOrUpdateParameters, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<BatchAccountCertificateData>> CreateAsync(string subscriptionId, string resourceGroupName, string accountName, string certificateName, BatchAccountCertificateCreateOrUpdateContent content, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
-            Argument.AssertNotNull(certificateCreateOrUpdateParameters, nameof(certificateCreateOrUpdateParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, accountName, certificateName, certificateCreateOrUpdateParameters, ifMatch, ifNoneMatch);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, accountName, certificateName, content, ifMatch, ifNoneMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CertificateData value = default;
+                        BatchAccountCertificateData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CertificateData.DeserializeCertificateData(document.RootElement);
+                        value = BatchAccountCertificateData.DeserializeBatchAccountCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -203,34 +203,34 @@ namespace Azure.ResourceManager.Batch
             }
         }
 
-        /// <summary> Creates a new certificate inside the specified account. </summary>
+        /// <summary> Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
         /// <param name="certificateName"> The identifier for the certificate. This must be made up of algorithm and thumbprint separated by a dash, and must match the certificate data in the request. For example SHA1-a3d1c5. </param>
-        /// <param name="certificateCreateOrUpdateParameters"> Additional parameters for certificate creation. </param>
+        /// <param name="content"> Additional parameters for certificate creation. </param>
         /// <param name="ifMatch"> The entity state (ETag) version of the certificate to update. A value of &quot;*&quot; can be used to apply the operation only if the certificate already exists. If omitted, this operation will always be applied. </param>
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new certificate to be created, but to prevent updating an existing certificate. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="certificateName"/> or <paramref name="certificateCreateOrUpdateParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="certificateName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CertificateData> Create(string subscriptionId, string resourceGroupName, string accountName, string certificateName, CertificateCreateOrUpdateParameters certificateCreateOrUpdateParameters, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public Response<BatchAccountCertificateData> Create(string subscriptionId, string resourceGroupName, string accountName, string certificateName, BatchAccountCertificateCreateOrUpdateContent content, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
-            Argument.AssertNotNull(certificateCreateOrUpdateParameters, nameof(certificateCreateOrUpdateParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, accountName, certificateName, certificateCreateOrUpdateParameters, ifMatch, ifNoneMatch);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, accountName, certificateName, content, ifMatch, ifNoneMatch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CertificateData value = default;
+                        BatchAccountCertificateData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CertificateData.DeserializeCertificateData(document.RootElement);
+                        value = BatchAccountCertificateData.DeserializeBatchAccountCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Batch
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string certificateName, CertificateCreateOrUpdateParameters certificateCreateOrUpdateParameters, string ifMatch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string certificateName, BatchAccountCertificateCreateOrUpdateContent content, ETag? ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -257,44 +257,44 @@ namespace Azure.ResourceManager.Batch
             request.Uri = uri;
             if (ifMatch != null)
             {
-                request.Headers.Add("If-Match", ifMatch);
+                request.Headers.Add("If-Match", ifMatch.Value);
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(certificateCreateOrUpdateParameters);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Updates the properties of an existing certificate. </summary>
+        /// <summary> Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
         /// <param name="certificateName"> The identifier for the certificate. This must be made up of algorithm and thumbprint separated by a dash, and must match the certificate data in the request. For example SHA1-a3d1c5. </param>
-        /// <param name="certificateCreateOrUpdateParameters"> Certificate entity to update. </param>
+        /// <param name="content"> Certificate entity to update. </param>
         /// <param name="ifMatch"> The entity state (ETag) version of the certificate to update. This value can be omitted or set to &quot;*&quot; to apply the operation unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="certificateName"/> or <paramref name="certificateCreateOrUpdateParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="certificateName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CertificateData>> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string certificateName, CertificateCreateOrUpdateParameters certificateCreateOrUpdateParameters, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<BatchAccountCertificateData>> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string certificateName, BatchAccountCertificateCreateOrUpdateContent content, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
-            Argument.AssertNotNull(certificateCreateOrUpdateParameters, nameof(certificateCreateOrUpdateParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, accountName, certificateName, certificateCreateOrUpdateParameters, ifMatch);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, accountName, certificateName, content, ifMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CertificateData value = default;
+                        BatchAccountCertificateData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CertificateData.DeserializeCertificateData(document.RootElement);
+                        value = BatchAccountCertificateData.DeserializeBatchAccountCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -302,33 +302,33 @@ namespace Azure.ResourceManager.Batch
             }
         }
 
-        /// <summary> Updates the properties of an existing certificate. </summary>
+        /// <summary> Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
         /// <param name="certificateName"> The identifier for the certificate. This must be made up of algorithm and thumbprint separated by a dash, and must match the certificate data in the request. For example SHA1-a3d1c5. </param>
-        /// <param name="certificateCreateOrUpdateParameters"> Certificate entity to update. </param>
+        /// <param name="content"> Certificate entity to update. </param>
         /// <param name="ifMatch"> The entity state (ETag) version of the certificate to update. This value can be omitted or set to &quot;*&quot; to apply the operation unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="certificateName"/> or <paramref name="certificateCreateOrUpdateParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="certificateName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CertificateData> Update(string subscriptionId, string resourceGroupName, string accountName, string certificateName, CertificateCreateOrUpdateParameters certificateCreateOrUpdateParameters, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response<BatchAccountCertificateData> Update(string subscriptionId, string resourceGroupName, string accountName, string certificateName, BatchAccountCertificateCreateOrUpdateContent content, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
-            Argument.AssertNotNull(certificateCreateOrUpdateParameters, nameof(certificateCreateOrUpdateParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, accountName, certificateName, certificateCreateOrUpdateParameters, ifMatch);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, accountName, certificateName, content, ifMatch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CertificateData value = default;
+                        BatchAccountCertificateData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CertificateData.DeserializeCertificateData(document.RootElement);
+                        value = BatchAccountCertificateData.DeserializeBatchAccountCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Batch
             return message;
         }
 
-        /// <summary> Deletes the specified certificate. </summary>
+        /// <summary> Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Batch
             }
         }
 
-        /// <summary> Deletes the specified certificate. </summary>
+        /// <summary> Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.Batch
             return message;
         }
 
-        /// <summary> Gets information about the specified certificate. </summary>
+        /// <summary> Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="certificateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CertificateData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string certificateName, CancellationToken cancellationToken = default)
+        public async Task<Response<BatchAccountCertificateData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string certificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -457,19 +457,19 @@ namespace Azure.ResourceManager.Batch
             {
                 case 200:
                     {
-                        CertificateData value = default;
+                        BatchAccountCertificateData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CertificateData.DeserializeCertificateData(document.RootElement);
+                        value = BatchAccountCertificateData.DeserializeBatchAccountCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((CertificateData)null, message.Response);
+                    return Response.FromValue((BatchAccountCertificateData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Gets information about the specified certificate. </summary>
+        /// <summary> Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="certificateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CertificateData> Get(string subscriptionId, string resourceGroupName, string accountName, string certificateName, CancellationToken cancellationToken = default)
+        public Response<BatchAccountCertificateData> Get(string subscriptionId, string resourceGroupName, string accountName, string certificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -490,13 +490,13 @@ namespace Azure.ResourceManager.Batch
             {
                 case 200:
                     {
-                        CertificateData value = default;
+                        BatchAccountCertificateData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CertificateData.DeserializeCertificateData(document.RootElement);
+                        value = BatchAccountCertificateData.DeserializeBatchAccountCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((CertificateData)null, message.Response);
+                    return Response.FromValue((BatchAccountCertificateData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -525,7 +525,11 @@ namespace Azure.ResourceManager.Batch
             return message;
         }
 
-        /// <summary> If you try to delete a certificate that is being used by a pool or compute node, the status of the certificate changes to deleteFailed. If you decide that you want to continue using the certificate, you can use this operation to set the status of the certificate back to active. If you intend to delete the certificate, you do not need to run this operation after the deletion failed. You must make sure that the certificate is not being used by any resources, and then you can try again to delete the certificate. </summary>
+        /// <summary>
+        /// If you try to delete a certificate that is being used by a pool or compute node, the status of the certificate changes to deleteFailed. If you decide that you want to continue using the certificate, you can use this operation to set the status of the certificate back to active. If you intend to delete the certificate, you do not need to run this operation after the deletion failed. You must make sure that the certificate is not being used by any resources, and then you can try again to delete the certificate.
+        /// 
+        /// Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.
+        /// </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
@@ -533,7 +537,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="certificateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CertificateData>> CancelDeletionAsync(string subscriptionId, string resourceGroupName, string accountName, string certificateName, CancellationToken cancellationToken = default)
+        public async Task<Response<BatchAccountCertificateData>> CancelDeletionAsync(string subscriptionId, string resourceGroupName, string accountName, string certificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -546,9 +550,9 @@ namespace Azure.ResourceManager.Batch
             {
                 case 200:
                     {
-                        CertificateData value = default;
+                        BatchAccountCertificateData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CertificateData.DeserializeCertificateData(document.RootElement);
+                        value = BatchAccountCertificateData.DeserializeBatchAccountCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -556,7 +560,11 @@ namespace Azure.ResourceManager.Batch
             }
         }
 
-        /// <summary> If you try to delete a certificate that is being used by a pool or compute node, the status of the certificate changes to deleteFailed. If you decide that you want to continue using the certificate, you can use this operation to set the status of the certificate back to active. If you intend to delete the certificate, you do not need to run this operation after the deletion failed. You must make sure that the certificate is not being used by any resources, and then you can try again to delete the certificate. </summary>
+        /// <summary>
+        /// If you try to delete a certificate that is being used by a pool or compute node, the status of the certificate changes to deleteFailed. If you decide that you want to continue using the certificate, you can use this operation to set the status of the certificate back to active. If you intend to delete the certificate, you do not need to run this operation after the deletion failed. You must make sure that the certificate is not being used by any resources, and then you can try again to delete the certificate.
+        /// 
+        /// Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.
+        /// </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
@@ -564,7 +572,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="certificateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CertificateData> CancelDeletion(string subscriptionId, string resourceGroupName, string accountName, string certificateName, CancellationToken cancellationToken = default)
+        public Response<BatchAccountCertificateData> CancelDeletion(string subscriptionId, string resourceGroupName, string accountName, string certificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -577,9 +585,9 @@ namespace Azure.ResourceManager.Batch
             {
                 case 200:
                     {
-                        CertificateData value = default;
+                        BatchAccountCertificateData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CertificateData.DeserializeCertificateData(document.RootElement);
+                        value = BatchAccountCertificateData.DeserializeBatchAccountCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -601,7 +609,7 @@ namespace Azure.ResourceManager.Batch
             return message;
         }
 
-        /// <summary> Lists all of the certificates in the specified account. </summary>
+        /// <summary> Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>
@@ -635,7 +643,7 @@ namespace Azure.ResourceManager.Batch
             }
         }
 
-        /// <summary> Lists all of the certificates in the specified account. </summary>
+        /// <summary> Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>

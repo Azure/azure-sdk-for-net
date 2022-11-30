@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Media
     /// A Class representing a StreamingPolicy along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StreamingPolicyResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetStreamingPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MediaserviceResource" /> using the GetStreamingPolicy method.
+    /// Otherwise you can get one from its parent resource <see cref="MediaServicesAccountResource" /> using the GetStreamingPolicy method.
     /// </summary>
     public partial class StreamingPolicyResource : ArmResource
     {

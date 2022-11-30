@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("akamai");
                 writer.WriteObjectValue(Akamai);
             }
-            if (Optional.IsDefined(IP))
+            if (Optional.IsDefined(IPs))
             {
                 writer.WritePropertyName("ip");
-                writer.WriteObjectValue(IP);
+                writer.WriteObjectValue(IPs);
             }
             writer.WriteEndObject();
         }

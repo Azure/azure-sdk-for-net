@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -16,24 +17,47 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="s3LinkedServiceName"> The name of the Amazon S3 linked service which will be used for the unload operation when copying from the Amazon Redshift source. </param>
         /// <param name="bucketName"> The bucket of the interim Amazon S3 which will be used to store the unloaded data from Amazon Redshift source. The bucket must be in the same region as the Amazon Redshift source. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="s3LinkedServiceName"/> or <paramref name="bucketName"/> is null. </exception>
-        public RedshiftUnloadSettings(LinkedServiceReference s3LinkedServiceName, BinaryData bucketName)
+        public RedshiftUnloadSettings(FactoryLinkedServiceReference s3LinkedServiceName, BinaryData bucketName)
         {
-            if (s3LinkedServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(s3LinkedServiceName));
-            }
-            if (bucketName == null)
-            {
-                throw new ArgumentNullException(nameof(bucketName));
-            }
+            Argument.AssertNotNull(s3LinkedServiceName, nameof(s3LinkedServiceName));
+            Argument.AssertNotNull(bucketName, nameof(bucketName));
 
             S3LinkedServiceName = s3LinkedServiceName;
             BucketName = bucketName;
         }
 
         /// <summary> The name of the Amazon S3 linked service which will be used for the unload operation when copying from the Amazon Redshift source. </summary>
-        public LinkedServiceReference S3LinkedServiceName { get; set; }
-        /// <summary> The bucket of the interim Amazon S3 which will be used to store the unloaded data from Amazon Redshift source. The bucket must be in the same region as the Amazon Redshift source. Type: string (or Expression with resultType string). </summary>
+        public FactoryLinkedServiceReference S3LinkedServiceName { get; set; }
+        /// <summary>
+        /// The bucket of the interim Amazon S3 which will be used to store the unloaded data from Amazon Redshift source. The bucket must be in the same region as the Amazon Redshift source. Type: string (or Expression with resultType string).
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public BinaryData BucketName { get; set; }
     }
 }

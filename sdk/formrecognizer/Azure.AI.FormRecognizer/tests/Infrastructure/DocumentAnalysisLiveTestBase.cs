@@ -9,7 +9,7 @@ using Azure.Core.TestFramework;
 namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 {
     [ClientTestFixture(
-    DocumentAnalysisClientOptions.ServiceVersion.V2022_06_30_Preview)]
+    DocumentAnalysisClientOptions.ServiceVersion.V2022_08_31)]
     public class DocumentAnalysisLiveTestBase : RecordedTestBase<DocumentAnalysisTestEnvironment>
     {
         /// <summary>

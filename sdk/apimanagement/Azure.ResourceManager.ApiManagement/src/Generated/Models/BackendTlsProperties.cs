@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of BackendTlsProperties. </summary>
-        /// <param name="validateCertificateChain"> Flag indicating whether SSL certificate chain validation should be done when using self-signed certificates for this backend host. </param>
-        /// <param name="validateCertificateName"> Flag indicating whether SSL certificate name validation should be done when using self-signed certificates for this backend host. </param>
-        internal BackendTlsProperties(bool? validateCertificateChain, bool? validateCertificateName)
+        /// <param name="shouldValidateCertificateChain"> Flag indicating whether SSL certificate chain validation should be done when using self-signed certificates for this backend host. </param>
+        /// <param name="shouldValidateCertificateName"> Flag indicating whether SSL certificate name validation should be done when using self-signed certificates for this backend host. </param>
+        internal BackendTlsProperties(bool? shouldValidateCertificateChain, bool? shouldValidateCertificateName)
         {
-            ValidateCertificateChain = validateCertificateChain;
-            ValidateCertificateName = validateCertificateName;
+            ShouldValidateCertificateChain = shouldValidateCertificateChain;
+            ShouldValidateCertificateName = shouldValidateCertificateName;
         }
 
         /// <summary> Flag indicating whether SSL certificate chain validation should be done when using self-signed certificates for this backend host. </summary>
-        public bool? ValidateCertificateChain { get; set; }
+        public bool? ShouldValidateCertificateChain { get; set; }
         /// <summary> Flag indicating whether SSL certificate name validation should be done when using self-signed certificates for this backend host. </summary>
-        public bool? ValidateCertificateName { get; set; }
+        public bool? ShouldValidateCertificateName { get; set; }
     }
 }

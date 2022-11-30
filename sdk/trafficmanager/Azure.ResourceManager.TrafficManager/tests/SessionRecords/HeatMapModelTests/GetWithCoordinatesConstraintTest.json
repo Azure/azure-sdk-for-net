@@ -1,0 +1,261 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fb9e7fe1-af44-47ef-852d-2d086a069327?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-c27b7ee560ef894088b65d8e8a097fd5-2aed0fbc3c3faf41-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "214e696356a16e9b74e200af27b5f29a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "541",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 30 Jun 2022 17:40:18 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "a149aa97-6550-4146-ae73-b87b53f234fb",
+        "x-ms-ratelimit-remaining-subscription-reads": "11996",
+        "x-ms-request-id": "a149aa97-6550-4146-ae73-b87b53f234fb",
+        "x-ms-routing-request-id": "WESTUS:20220630T174018Z:a149aa97-6550-4146-ae73-b87b53f234fb"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fb9e7fe1-af44-47ef-852d-2d086a069327",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [
+          {
+            "tenantId": "2f4a9838-26b7-47ee-be60-ccc1fdec5953"
+          }
+        ],
+        "tags": {
+          "NRMS12581055": "20220228",
+          "NRMSBreakGlassNonHighRisk ": "NRMSBreakGlassNonHighRisk "
+        },
+        "subscriptionId": "fb9e7fe1-af44-47ef-852d-2d086a069327",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": "GenevaMetrics_Int",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fb9e7fe1-af44-47ef-852d-2d086a069327/resourceGroups/dialtone-traffic-manager/providers/Microsoft.Network/trafficmanagerprofiles/az-int-int-msftmetrics/heatMaps/default?topLeft=-18.910742%2C-47.858517\u0026botRight=-24.341378%2C-37.964283\u0026api-version=2022-04-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.TrafficManager/1.0.0-alpha.20220630.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "048defb0ea450ef9c93cda9f9aa88ea4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "private",
+        "Content-Length": "1976",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 30 Jun 2022 17:40:18 GMT",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "be01e43f-85d0-4f21-b9be-7ebf4201462a",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "596",
+        "x-ms-request-id": "048defb0-ea45-0ef9-c93c-da9f9aa88ea4",
+        "x-ms-routing-request-id": "WESTUS:20220630T174018Z:be01e43f-85d0-4f21-b9be-7ebf4201462a",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fb9e7fe1-af44-47ef-852d-2d086a069327/resourceGroups/dialtone-traffic-manager/providers/Microsoft.Network/trafficManagerProfiles/az-int-int-msftmetrics/heatMaps/default",
+        "name": "default",
+        "type": "Microsoft.Network/trafficManagerProfiles/heatMaps",
+        "properties": {
+          "endTime": "2022-06-29T00:00:00.0000000Z",
+          "endpoints": [
+            {
+              "endpointId": 0,
+              "resourceId": "/subscriptions/fb9e7fe1-af44-47ef-852d-2d086a069327/resourceGroups/dialtone-traffic-manager/providers/Microsoft.Network/trafficManagerProfiles/az-int-int-msftmetrics/externalEndpoints/az-int-black"
+            },
+            {
+              "endpointId": 1,
+              "resourceId": "/subscriptions/fb9e7fe1-af44-47ef-852d-2d086a069327/resourceGroups/dialtone-traffic-manager/providers/Microsoft.Network/trafficManagerProfiles/az-int-int-msftmetrics/externalEndpoints/az-int-red"
+            }
+          ],
+          "startTime": "2022-06-22T00:00:00.0000000Z",
+          "trafficFlows": [
+            {
+              "latitude": -22.906,
+              "longitude": -47.061,
+              "queryExperiences": [
+                {
+                  "endpointId": 0,
+                  "queryCount": 283
+                },
+                {
+                  "endpointId": 1,
+                  "queryCount": 138
+                }
+              ],
+              "sourceIp": "191.233.200.64"
+            },
+            {
+              "latitude": -22.906,
+              "longitude": -47.061,
+              "queryExperiences": [
+                {
+                  "endpointId": 0,
+                  "queryCount": 87
+                },
+                {
+                  "endpointId": 1,
+                  "queryCount": 53
+                }
+              ],
+              "sourceIp": "191.234.145.64"
+            },
+            {
+              "latitude": -22.906,
+              "longitude": -47.061,
+              "queryExperiences": [
+                {
+                  "endpointId": 0,
+                  "queryCount": 71
+                },
+                {
+                  "endpointId": 1,
+                  "queryCount": 34
+                }
+              ],
+              "sourceIp": "191.233.201.64"
+            },
+            {
+              "latitude": -22.906,
+              "longitude": -47.061,
+              "queryExperiences": [
+                {
+                  "endpointId": 0,
+                  "queryCount": 48
+                },
+                {
+                  "endpointId": 1,
+                  "queryCount": 27
+                }
+              ],
+              "sourceIp": "191.234.152.64"
+            },
+            {
+              "latitude": -22.906,
+              "longitude": -47.061,
+              "queryExperiences": [
+                {
+                  "endpointId": 0,
+                  "queryCount": 46
+                },
+                {
+                  "endpointId": 1,
+                  "queryCount": 26
+                }
+              ],
+              "sourceIp": "191.234.144.64"
+            },
+            {
+              "latitude": -23.517,
+              "longitude": -46.57,
+              "queryExperiences": [
+                {
+                  "endpointId": 1,
+                  "latency": 136,
+                  "queryCount": 7
+                },
+                {
+                  "endpointId": 0,
+                  "latency": 199,
+                  "queryCount": 1
+                }
+              ],
+              "sourceIp": "201.6.88.0"
+            },
+            {
+              "latitude": -23.517,
+              "longitude": -46.57,
+              "queryExperiences": [
+                {
+                  "endpointId": 1,
+                  "latency": 135,
+                  "queryCount": 1
+                }
+              ],
+              "sourceIp": "201.6.88.64"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fb9e7fe1-af44-47ef-852d-2d086a069327/resourceGroups/dialtone-traffic-manager/providers/Microsoft.Network/trafficmanagerprofiles/az-int-int-msftmetrics/heatMaps/default?topLeft=47.198208%2C37.385117\u0026botRight=47.072374%2C37.707283\u0026api-version=2022-04-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.TrafficManager/1.0.0-alpha.20220630.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "a61c1b72849d0247798f1e3b76892a49",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "private",
+        "Content-Length": "886",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 30 Jun 2022 17:40:18 GMT",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "7f01c596-f6cc-43f6-8673-de621614e22f",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "595",
+        "x-ms-request-id": "a61c1b72-849d-0247-798f-1e3b76892a49",
+        "x-ms-routing-request-id": "WESTUS:20220630T174019Z:7f01c596-f6cc-43f6-8673-de621614e22f",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fb9e7fe1-af44-47ef-852d-2d086a069327/resourceGroups/dialtone-traffic-manager/providers/Microsoft.Network/trafficManagerProfiles/az-int-int-msftmetrics/heatMaps/default",
+        "name": "default",
+        "type": "Microsoft.Network/trafficManagerProfiles/heatMaps",
+        "properties": {
+          "endTime": "2022-06-29T00:00:00.0000000Z",
+          "endpoints": [
+            {
+              "endpointId": 0,
+              "resourceId": "/subscriptions/fb9e7fe1-af44-47ef-852d-2d086a069327/resourceGroups/dialtone-traffic-manager/providers/Microsoft.Network/trafficManagerProfiles/az-int-int-msftmetrics/externalEndpoints/az-int-black"
+            },
+            {
+              "endpointId": 1,
+              "resourceId": "/subscriptions/fb9e7fe1-af44-47ef-852d-2d086a069327/resourceGroups/dialtone-traffic-manager/providers/Microsoft.Network/trafficManagerProfiles/az-int-int-msftmetrics/externalEndpoints/az-int-red"
+            }
+          ],
+          "startTime": "2022-06-22T00:00:00.0000000Z",
+          "trafficFlows": []
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": null,
+    "RandomSeed": "591130994",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "fb9e7fe1-af44-47ef-852d-2d086a069327"
+  }
+}

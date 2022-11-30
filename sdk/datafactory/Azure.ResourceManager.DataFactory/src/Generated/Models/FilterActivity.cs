@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -18,20 +19,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="items"> Input array on which filter should be applied. </param>
         /// <param name="condition"> Condition to be used for filtering the input. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="items"/> or <paramref name="condition"/> is null. </exception>
-        public FilterActivity(string name, Expression items, Expression condition) : base(name)
+        public FilterActivity(string name, FactoryExpressionDefinition items, FactoryExpressionDefinition condition) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (items == null)
-            {
-                throw new ArgumentNullException(nameof(items));
-            }
-            if (condition == null)
-            {
-                throw new ArgumentNullException(nameof(condition));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(items, nameof(items));
+            Argument.AssertNotNull(condition, nameof(condition));
 
             Items = items;
             Condition = condition;
@@ -47,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="items"> Input array on which filter should be applied. </param>
         /// <param name="condition"> Condition to be used for filtering the input. </param>
-        internal FilterActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, Expression items, Expression condition) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
+        internal FilterActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryExpressionDefinition items, FactoryExpressionDefinition condition) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
         {
             Items = items;
             Condition = condition;
@@ -55,8 +47,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Input array on which filter should be applied. </summary>
-        public Expression Items { get; set; }
+        public FactoryExpressionDefinition Items { get; set; }
         /// <summary> Condition to be used for filtering the input. </summary>
-        public Expression Condition { get; set; }
+        public FactoryExpressionDefinition Condition { get; set; }
     }
 }

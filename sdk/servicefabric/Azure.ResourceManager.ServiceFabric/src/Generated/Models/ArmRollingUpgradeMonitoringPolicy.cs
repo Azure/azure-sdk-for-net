@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="healthCheckRetryTimeout"> The amount of time to retry health evaluation when the application or cluster is unhealthy before FailureAction is executed. It is first interpreted as a string representing an ISO 8601 duration. If that fails, then it is interpreted as a number representing the total number of milliseconds. </param>
         /// <param name="upgradeTimeout"> The amount of time the overall upgrade has to complete before FailureAction is executed. It is first interpreted as a string representing an ISO 8601 duration. If that fails, then it is interpreted as a number representing the total number of milliseconds. </param>
         /// <param name="upgradeDomainTimeout"> The amount of time each upgrade domain has to complete before FailureAction is executed. It is first interpreted as a string representing an ISO 8601 duration. If that fails, then it is interpreted as a number representing the total number of milliseconds. </param>
-        internal ArmRollingUpgradeMonitoringPolicy(ArmUpgradeFailureAction? failureAction, TimeSpan? healthCheckWaitDuration, TimeSpan? healthCheckStableDuration, string healthCheckRetryTimeout, string upgradeTimeout, string upgradeDomainTimeout)
+        internal ArmRollingUpgradeMonitoringPolicy(ArmUpgradeFailureAction? failureAction, TimeSpan? healthCheckWaitDuration, TimeSpan? healthCheckStableDuration, TimeSpan? healthCheckRetryTimeout, TimeSpan? upgradeTimeout, TimeSpan? upgradeDomainTimeout)
         {
             FailureAction = failureAction;
             HealthCheckWaitDuration = healthCheckWaitDuration;
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <summary> The amount of time that the application or cluster must remain healthy before the upgrade proceeds to the next upgrade domain. It is first interpreted as a string representing an ISO 8601 duration. If that fails, then it is interpreted as a number representing the total number of milliseconds. </summary>
         public TimeSpan? HealthCheckStableDuration { get; set; }
         /// <summary> The amount of time to retry health evaluation when the application or cluster is unhealthy before FailureAction is executed. It is first interpreted as a string representing an ISO 8601 duration. If that fails, then it is interpreted as a number representing the total number of milliseconds. </summary>
-        public string HealthCheckRetryTimeout { get; set; }
+        public TimeSpan? HealthCheckRetryTimeout { get; set; }
         /// <summary> The amount of time the overall upgrade has to complete before FailureAction is executed. It is first interpreted as a string representing an ISO 8601 duration. If that fails, then it is interpreted as a number representing the total number of milliseconds. </summary>
-        public string UpgradeTimeout { get; set; }
+        public TimeSpan? UpgradeTimeout { get; set; }
         /// <summary> The amount of time each upgrade domain has to complete before FailureAction is executed. It is first interpreted as a string representing an ISO 8601 duration. If that fails, then it is interpreted as a number representing the total number of milliseconds. </summary>
-        public string UpgradeDomainTimeout { get; set; }
+        public TimeSpan? UpgradeDomainTimeout { get; set; }
     }
 }

@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
     /// A Class representing an AvailabilityGroupListener along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AvailabilityGroupListenerResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetAvailabilityGroupListenerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlVirtualMachineGroupResource" /> using the GetAvailabilityGroupListener method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlVmGroupResource" /> using the GetAvailabilityGroupListener method.
     /// </summary>
     public partial class AvailabilityGroupListenerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AvailabilityGroupListenerResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string sqlVirtualMachineGroupName, string availabilityGroupListenerName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string sqlVmGroupName, string availabilityGroupListenerName)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/{sqlVirtualMachineGroupName}/availabilityGroupListeners/{availabilityGroupListenerName}";
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/{sqlVmGroupName}/availabilityGroupListeners/{availabilityGroupListenerName}";
             return new ResourceIdentifier(resourceId);
         }
 

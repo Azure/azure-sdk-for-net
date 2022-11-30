@@ -27,117 +27,88 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// <summary>
         ///   The activity name associated with events.
         /// </summary>
-        ///
         public static string MessageActivityName { get; } = "Message";
 
         /// <summary>
         ///   The activity name associated with the send operation.
         /// </summary>
-        ///
         public static string SendActivityName { get; } = "ServiceBusSender.Send";
 
         /// <summary>
         ///   The activity name associated with the schedule operation.
         /// </summary>
-        ///
         public static string ScheduleActivityName { get; } = "ServiceBusSender.Schedule";
 
         /// <summary>
-        ///   The activity name associated with the cancel
-        ///   scheduled message operation.
+        ///   The activity name associated with the cancel scheduled message operation.
         /// </summary>
-        ///
         public static string CancelActivityName { get; } = "ServiceBusSender.Cancel";
 
         /// <summary>
-        ///   The activity name associated with the receive
-        ///   operation.
+        ///   The activity name associated with the receive operation.
         /// </summary>
-        ///
         public static string ReceiveActivityName { get; } = "ServiceBusReceiver.Receive";
 
         /// <summary>
-        ///   The activity name associated with the receive
-        ///   operation.
+        ///   The activity name associated with the receive operation.
         /// </summary>
-        ///
         public static string ReceiveDeferredActivityName { get; } = "ServiceBusReceiver.ReceiveDeferred";
 
         /// <summary>
-        ///   The activity name associated with the peek
-        ///   operation.
+        ///   The activity name associated with the peek operation.
         /// </summary>
-        ///
         public static string PeekActivityName { get; } = "ServiceBusReceiver.Peek";
 
         /// <summary>
-        ///   The activity name associated with the abandon
-        ///   operation.
+        ///   The activity name associated with the abandon operation.
         /// </summary>
-        ///
         public static string AbandonActivityName { get; } = "ServiceBusReceiver.Abandon";
 
         /// <summary>
-        ///   The activity name associated with the complete
-        ///   operation.
+        ///   The activity name associated with the complete operation.
         /// </summary>
-        ///
         public static string CompleteActivityName { get; } = "ServiceBusReceiver.Complete";
 
         /// <summary>
-        ///   The activity name associated with the dead letter
-        ///   operation.
+        ///   The activity name associated with the dead letter operation.
         /// </summary>
-        ///
         public static string DeadLetterActivityName { get; } = "ServiceBusReceiver.DeadLetter";
 
         /// <summary>
-        ///   The activity name associated with the defer
-        ///   operation.
+        ///   The activity name associated with the defer operation.
         /// </summary>
-        ///
         public static string DeferActivityName { get; } = "ServiceBusReceiver.Defer";
 
         /// <summary>
-        ///   The activity name associated with the renew message lock
-        ///   operation.
+        ///   The activity name associated with the renew message lock operation.
         /// </summary>
-        ///
         public static string RenewMessageLockActivityName { get; } = "ServiceBusReceiver.RenewMessageLock";
 
         /// <summary>
-        ///   The activity name associated with the renew session lock
-        ///   operation.
+        ///   The activity name associated with the renew session lock operation.
         /// </summary>
-        ///
         public static string RenewSessionLockActivityName { get; } = "ServiceBusSessionReceiver.RenewSessionLock";
 
         /// <summary>
         ///   The activity name associated with the get session state
         ///   operation.
         /// </summary>
-        ///
         public static string GetSessionStateActivityName { get; } = "ServiceBusSessionReceiver.GetSessionState";
 
         /// <summary>
         ///   The activity name associated with the set session state
         ///   operation.
         /// </summary>
-        ///
         public static string SetSessionStateActivityName { get; } = "ServiceBusSessionReceiver.SetSessionState";
 
         /// <summary>
-        ///   The activity name associated with the get session state
-        ///   operation.
+        ///   The activity name associated with processing a single message.
         /// </summary>
-        ///
         public static string ProcessMessageActivityName { get; } = "ServiceBusProcessor.ProcessMessage";
 
         /// <summary>
-        ///   The activity name associated with the set session state
-        ///   operation.
+        ///   The activity name associated with the set session state operation.
         /// </summary>
-        ///
         public static string ProcessSessionMessageActivityName { get; } = "ServiceBusSessionProcessor.ProcessSessionMessage";
 
         /// <summary>

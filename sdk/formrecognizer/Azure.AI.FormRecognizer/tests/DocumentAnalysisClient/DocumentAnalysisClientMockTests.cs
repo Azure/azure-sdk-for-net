@@ -52,7 +52,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         #region Analyze Document
 
         [Test]
-        public async Task StartAnalyzeDocumentSendsContentType()
+        public async Task AnalyzeDocumentSendsContentType()
         {
             var mockResponse = new MockResponse(202);
             mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
@@ -73,7 +73,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [Test]
         [TestCase("")]
         [TestCase("en-US")]
-        public async Task StartAnalyzeDocumentSendsUserSpecifiedLocale(string locale)
+        public async Task AnalyzeDocumentSendsUserSpecifiedLocale(string locale)
         {
             var mockResponse = new MockResponse(202);
             mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
@@ -95,7 +95,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [Test]
         [TestCase("")]
         [TestCase("en-US")]
-        public async Task StartAnalyzeDocumentFromUriSendsUserSpecifiedLocale(string locale)
+        public async Task AnalyzeDocumentFromUriSendsUserSpecifiedLocale(string locale)
         {
             var mockResponse = new MockResponse(202);
             mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
@@ -117,7 +117,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [Test]
         [TestCase("1")]
         [TestCase("1-2")]
-        public async Task StartAnalyzeDocumentSendsOnePageArgument(string pages)
+        public async Task AnalyzeDocumentSendsOnePageArgument(string pages)
         {
             var mockResponse = new MockResponse(202);
             mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
@@ -139,7 +139,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [Test]
         [TestCase("1")]
         [TestCase("1-2")]
-        public async Task StartAnalyzeDocumentFromUriSendsOnePageArgument(string pages)
+        public async Task AnalyzeDocumentFromUriSendsOnePageArgument(string pages)
         {
             var mockResponse = new MockResponse(202);
             mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
@@ -161,7 +161,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [Test]
         [TestCase("1", "3")]
         [TestCase("1-2", "3")]
-        public async Task StartAnalyzeDocumentSendsMultiplePageArgument(string page1, string page2)
+        public async Task AnalyzeDocumentSendsMultiplePageArgument(string page1, string page2)
         {
             var mockResponse = new MockResponse(202);
             mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
@@ -183,7 +183,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [Test]
         [TestCase("1", "3")]
         [TestCase("1-2", "3")]
-        public async Task StartAnalyzeDocumentFromUriSendsMultiplePageArgument(string page1, string page2)
+        public async Task AnalyzeDocumentFromUriSendsMultiplePageArgument(string page1, string page2)
         {
             var mockResponse = new MockResponse(202);
             mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
@@ -203,7 +203,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [Test]
-        public async Task StartAnalyzeDocumentFromUriEncodesBlankSpaces()
+        public async Task AnalyzeDocumentFromUriEncodesBlankSpaces()
         {
             var mockResponse = new MockResponse(202);
             mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));

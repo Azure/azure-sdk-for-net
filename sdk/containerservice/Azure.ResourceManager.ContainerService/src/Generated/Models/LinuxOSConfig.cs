@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="sysctls"> Sysctl settings for Linux agent nodes. </param>
         /// <param name="transparentHugePageEnabled"> Valid values are &apos;always&apos;, &apos;madvise&apos;, and &apos;never&apos;. The default is &apos;always&apos;. For more information see [Transparent Hugepages](https://www.kernel.org/doc/html/latest/admin-guide/mm/transhuge.html#admin-guide-transhuge). </param>
         /// <param name="transparentHugePageDefrag"> Valid values are &apos;always&apos;, &apos;defer&apos;, &apos;defer+madvise&apos;, &apos;madvise&apos; and &apos;never&apos;. The default is &apos;madvise&apos;. For more information see [Transparent Hugepages](https://www.kernel.org/doc/html/latest/admin-guide/mm/transhuge.html#admin-guide-transhuge). </param>
-        /// <param name="swapFileSizeMB"> The size in MB of a swap file that will be created on each node. </param>
-        internal LinuxOSConfig(SysctlConfig sysctls, string transparentHugePageEnabled, string transparentHugePageDefrag, int? swapFileSizeMB)
+        /// <param name="swapFileSizeInMB"> The size in MB of a swap file that will be created on each node. </param>
+        internal LinuxOSConfig(SysctlConfig sysctls, string transparentHugePageEnabled, string transparentHugePageDefrag, int? swapFileSizeInMB)
         {
             Sysctls = sysctls;
             TransparentHugePageEnabled = transparentHugePageEnabled;
             TransparentHugePageDefrag = transparentHugePageDefrag;
-            SwapFileSizeMB = swapFileSizeMB;
+            SwapFileSizeInMB = swapFileSizeInMB;
         }
 
         /// <summary> Sysctl settings for Linux agent nodes. </summary>
@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Valid values are &apos;always&apos;, &apos;defer&apos;, &apos;defer+madvise&apos;, &apos;madvise&apos; and &apos;never&apos;. The default is &apos;madvise&apos;. For more information see [Transparent Hugepages](https://www.kernel.org/doc/html/latest/admin-guide/mm/transhuge.html#admin-guide-transhuge). </summary>
         public string TransparentHugePageDefrag { get; set; }
         /// <summary> The size in MB of a swap file that will be created on each node. </summary>
-        public int? SwapFileSizeMB { get; set; }
+        public int? SwapFileSizeInMB { get; set; }
     }
 }

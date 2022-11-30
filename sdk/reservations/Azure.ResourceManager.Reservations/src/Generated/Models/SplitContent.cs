@@ -22,6 +22,6 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> List of the quantities in the new reservations to create. </summary>
         public IList<int> Quantities { get; }
         /// <summary> Resource id of the reservation to be split. Format of the resource id should be /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </summary>
-        public string ReservationId { get; set; }
+        public ResourceIdentifier ReservationId { get; set; }
     }
 }

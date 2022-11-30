@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateScheduleRunRequest(string subscriptionId, string resourceGroupName, string registryName, RunContent content)
+        internal HttpMessage CreateScheduleRunRequest(string subscriptionId, string resourceGroupName, string registryName, ContainerRegistryRunContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ScheduleRunAsync(string subscriptionId, string resourceGroupName, string registryName, RunContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> ScheduleRunAsync(string subscriptionId, string resourceGroupName, string registryName, ContainerRegistryRunContent content, CancellationToken cancellationToken = default)
         {
-            Core.Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Core.Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Core.Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
-            Core.Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateScheduleRunRequest(subscriptionId, resourceGroupName, registryName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response ScheduleRun(string subscriptionId, string resourceGroupName, string registryName, RunContent content, CancellationToken cancellationToken = default)
+        public Response ScheduleRun(string subscriptionId, string resourceGroupName, string registryName, ContainerRegistryRunContent content, CancellationToken cancellationToken = default)
         {
-            Core.Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Core.Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Core.Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
-            Core.Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateScheduleRunRequest(subscriptionId, resourceGroupName, registryName, content);
             _pipeline.Send(message, cancellationToken);

@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WritePropertyName("restrictOutboundNetworkAccess");
                 writer.WriteBooleanValue(RestrictOutboundNetworkAccess.Value);
             }
-            if (Optional.IsCollectionDefined(AllowedFqdnList))
+            if (Optional.IsCollectionDefined(AllowedFqdns))
             {
                 writer.WritePropertyName("allowedFqdnList");
                 writer.WriteStartArray();
-                foreach (var item in AllowedFqdnList)
+                foreach (var item in AllowedFqdns)
                 {
                     writer.WriteStringValue(item);
                 }

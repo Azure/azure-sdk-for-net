@@ -324,6 +324,77 @@ namespace Azure.Core.TestFramework
             }
         }
 
+        internal HttpMessage CreateSetRecordingTransportOptionsRequest(string xRecordingId, ProxyOptions proxyOptions)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/admin/setrecordingoptions", false);
+            request.Uri = uri;
+            request.Headers.Add("x-recording-id", xRecordingId);
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(proxyOptions);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Set the proxy recording options. </summary>
+        /// <param name="xRecordingId"> The recording ID. </param>
+        /// <param name="proxyOptions"> File location of the recording. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="xRecordingId"/> or <paramref name="proxyOptions"/> is null. </exception>
+        public async Task<Response> SetRecordingTransportOptionsAsync(string xRecordingId, ProxyOptions proxyOptions, CancellationToken cancellationToken = default)
+        {
+            if (xRecordingId == null)
+            {
+                throw new ArgumentNullException(nameof(xRecordingId));
+            }
+            if (proxyOptions == null)
+            {
+                throw new ArgumentNullException(nameof(proxyOptions));
+            }
+
+            using var message = CreateSetRecordingTransportOptionsRequest(xRecordingId, proxyOptions);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Set the proxy recording options. </summary>
+        /// <param name="xRecordingId"> The recording ID. </param>
+        /// <param name="proxyOptions"> File location of the recording. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="xRecordingId"/> or <paramref name="proxyOptions"/> is null. </exception>
+        public Response SetRecordingTransportOptions(string xRecordingId, ProxyOptions proxyOptions, CancellationToken cancellationToken = default)
+        {
+            if (xRecordingId == null)
+            {
+                throw new ArgumentNullException(nameof(xRecordingId));
+            }
+            if (proxyOptions == null)
+            {
+                throw new ArgumentNullException(nameof(proxyOptions));
+            }
+
+            using var message = CreateSetRecordingTransportOptionsRequest(xRecordingId, proxyOptions);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateAddBodyKeySanitizerRequest(BodyKeySanitizer sanitizer, string xRecordingId)
         {
             var message = _pipeline.CreateMessage();

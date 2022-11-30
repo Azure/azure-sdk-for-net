@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Net;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="resourceId"> The ID of the resource corresponding to this hop. </param>
         /// <param name="nextHopIds"> List of next hop identifiers. </param>
         /// <param name="issues"> List of issues. </param>
-        internal ConnectivityHop(string connectivityHopType, string id, string address, string resourceId, IReadOnlyList<string> nextHopIds, IReadOnlyList<ConnectivityIssue> issues)
+        internal ConnectivityHop(string connectivityHopType, string id, IPAddress address, ResourceIdentifier resourceId, IReadOnlyList<string> nextHopIds, IReadOnlyList<ConnectivityIssue> issues)
         {
             ConnectivityHopType = connectivityHopType;
             Id = id;
@@ -42,9 +43,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> The ID of the hop. </summary>
         public string Id { get; }
         /// <summary> The IP address of the hop. </summary>
-        public string Address { get; }
+        public IPAddress Address { get; }
         /// <summary> The ID of the resource corresponding to this hop. </summary>
-        public string ResourceId { get; }
+        public ResourceIdentifier ResourceId { get; }
         /// <summary> List of next hop identifiers. </summary>
         public IReadOnlyList<string> NextHopIds { get; }
         /// <summary> List of issues. </summary>

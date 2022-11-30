@@ -56,10 +56,10 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("email");
                 writer.WriteStringValue(Email);
             }
-            if (Optional.IsDefined(RegistrationOn))
+            if (Optional.IsDefined(RegistriesOn))
             {
                 writer.WritePropertyName("registrationDate");
-                writer.WriteStringValue(RegistrationOn.Value, "O");
+                writer.WriteStringValue(RegistriesOn.Value, "O");
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ApiManagement
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<UserState> state = default;
+            Optional<ApiManagementUserState> state = default;
             Optional<string> note = default;
             Optional<IList<UserIdentityContract>> identities = default;
             Optional<string> firstName = default;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ApiManagement
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            state = new UserState(property0.Value.GetString());
+                            state = new ApiManagementUserState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("note"))

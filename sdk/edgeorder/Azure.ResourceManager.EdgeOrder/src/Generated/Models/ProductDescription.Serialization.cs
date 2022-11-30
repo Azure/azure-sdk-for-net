@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         internal static ProductDescription DeserializeProductDescription(JsonElement element)
         {
-            Optional<DescriptionType> descriptionType = default;
+            Optional<ProductDescriptionType> descriptionType = default;
             Optional<string> shortDescription = default;
             Optional<string> longDescription = default;
             Optional<IReadOnlyList<string>> keywords = default;
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    descriptionType = new DescriptionType(property.Value.GetString());
+                    descriptionType = new ProductDescriptionType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("shortDescription"))

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Monitor
     /// A Class representing a MonitorPrivateEndpointConnection along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MonitorPrivateEndpointConnectionResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetMonitorPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PrivateLinkScopeResource" /> using the GetMonitorPrivateEndpointConnection method.
+    /// Otherwise you can get one from its parent resource <see cref="MonitorPrivateLinkScopeResource" /> using the GetMonitorPrivateEndpointConnection method.
     /// </summary>
     public partial class MonitorPrivateEndpointConnectionResource : ArmResource
     {

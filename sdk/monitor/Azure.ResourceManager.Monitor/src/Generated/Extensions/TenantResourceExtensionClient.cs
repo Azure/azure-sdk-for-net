@@ -53,10 +53,10 @@ namespace Azure.ResourceManager.Monitor
         /// Operation Id: EventCategories_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LocalizableString" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LocalizableString> GetEventCategoriesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MonitorLocalizableString" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MonitorLocalizableString> GetEventCategoriesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<LocalizableString>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<MonitorLocalizableString>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = EventCategoriesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetEventCategories");
                 scope.Start();
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Monitor
         /// Operation Id: EventCategories_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LocalizableString" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LocalizableString> GetEventCategories(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MonitorLocalizableString" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MonitorLocalizableString> GetEventCategories(CancellationToken cancellationToken = default)
         {
-            Page<LocalizableString> FirstPageFunc(int? pageSizeHint)
+            Page<MonitorLocalizableString> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = EventCategoriesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetEventCategories");
                 scope.Start();

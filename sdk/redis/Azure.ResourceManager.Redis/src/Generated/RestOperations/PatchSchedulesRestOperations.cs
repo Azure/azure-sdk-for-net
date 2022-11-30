@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Redis
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-06-01";
+            _apiVersion = apiVersion ?? "2022-06-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Redis
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(DefaultName defaultName, string subscriptionId, string resourceGroupName, string name, RedisPatchScheduleData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string name, RedisPatchScheduleDefaultName defaultName, RedisPatchScheduleData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -143,22 +143,22 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary> Create or replace the patching schedule for Redis cache. </summary>
-        /// <param name="defaultName"> Default string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="name"> The name of the Redis cache. </param>
+        /// <param name="defaultName"> Default string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="data"> Parameters to set the patching schedule for Redis cache. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RedisPatchScheduleData>> CreateOrUpdateAsync(DefaultName defaultName, string subscriptionId, string resourceGroupName, string name, RedisPatchScheduleData data, CancellationToken cancellationToken = default)
+        public async Task<Response<RedisPatchScheduleData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string name, RedisPatchScheduleDefaultName defaultName, RedisPatchScheduleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(defaultName, subscriptionId, resourceGroupName, name, data);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, name, defaultName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -176,22 +176,22 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary> Create or replace the patching schedule for Redis cache. </summary>
-        /// <param name="defaultName"> Default string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="name"> The name of the Redis cache. </param>
+        /// <param name="defaultName"> Default string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="data"> Parameters to set the patching schedule for Redis cache. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RedisPatchScheduleData> CreateOrUpdate(DefaultName defaultName, string subscriptionId, string resourceGroupName, string name, RedisPatchScheduleData data, CancellationToken cancellationToken = default)
+        public Response<RedisPatchScheduleData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string name, RedisPatchScheduleDefaultName defaultName, RedisPatchScheduleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(defaultName, subscriptionId, resourceGroupName, name, data);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, name, defaultName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Redis
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(DefaultName defaultName, string subscriptionId, string resourceGroupName, string name)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string name, RedisPatchScheduleDefaultName defaultName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -231,20 +231,20 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary> Deletes the patching schedule of a redis cache. </summary>
-        /// <param name="defaultName"> Default string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="name"> The name of the redis cache. </param>
+        /// <param name="defaultName"> Default string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(DefaultName defaultName, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string name, RedisPatchScheduleDefaultName defaultName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var message = CreateDeleteRequest(defaultName, subscriptionId, resourceGroupName, name);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, name, defaultName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -257,20 +257,20 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary> Deletes the patching schedule of a redis cache. </summary>
-        /// <param name="defaultName"> Default string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="name"> The name of the redis cache. </param>
+        /// <param name="defaultName"> Default string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(DefaultName defaultName, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response Delete(string subscriptionId, string resourceGroupName, string name, RedisPatchScheduleDefaultName defaultName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var message = CreateDeleteRequest(defaultName, subscriptionId, resourceGroupName, name);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, name, defaultName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Redis
             }
         }
 
-        internal HttpMessage CreateGetRequest(DefaultName defaultName, string subscriptionId, string resourceGroupName, string name)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string name, RedisPatchScheduleDefaultName defaultName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -305,20 +305,20 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary> Gets the patching schedule of a redis cache. </summary>
-        /// <param name="defaultName"> Default string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="name"> The name of the redis cache. </param>
+        /// <param name="defaultName"> Default string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RedisPatchScheduleData>> GetAsync(DefaultName defaultName, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<RedisPatchScheduleData>> GetAsync(string subscriptionId, string resourceGroupName, string name, RedisPatchScheduleDefaultName defaultName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var message = CreateGetRequest(defaultName, subscriptionId, resourceGroupName, name);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, name, defaultName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -337,20 +337,20 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary> Gets the patching schedule of a redis cache. </summary>
-        /// <param name="defaultName"> Default string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="name"> The name of the redis cache. </param>
+        /// <param name="defaultName"> Default string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RedisPatchScheduleData> Get(DefaultName defaultName, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<RedisPatchScheduleData> Get(string subscriptionId, string resourceGroupName, string name, RedisPatchScheduleDefaultName defaultName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var message = CreateGetRequest(defaultName, subscriptionId, resourceGroupName, name);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, name, defaultName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

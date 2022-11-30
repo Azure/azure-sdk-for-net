@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PipelineListResponse>> ListByFactoryAsync(string subscriptionId, string resourceGroupName, string factoryName, CancellationToken cancellationToken = default)
+        public async Task<Response<FactoryPipelineListResult>> ListByFactoryAsync(string subscriptionId, string resourceGroupName, string factoryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        PipelineListResponse value = default;
+                        FactoryPipelineListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PipelineListResponse.DeserializePipelineListResponse(document.RootElement);
+                        value = FactoryPipelineListResult.DeserializeFactoryPipelineListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PipelineListResponse> ListByFactory(string subscriptionId, string resourceGroupName, string factoryName, CancellationToken cancellationToken = default)
+        public Response<FactoryPipelineListResult> ListByFactory(string subscriptionId, string resourceGroupName, string factoryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -107,9 +107,9 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        PipelineListResponse value = default;
+                        FactoryPipelineListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PipelineListResponse.DeserializePipelineListResponse(document.RootElement);
+                        value = FactoryPipelineListResult.DeserializeFactoryPipelineListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataFactory
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string factoryName, string pipelineName, DataFactoryPipelineData data, string ifMatch)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string factoryName, string pipelineName, FactoryPipelineData data, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/>, <paramref name="pipelineName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="pipelineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DataFactoryPipelineData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string factoryName, string pipelineName, DataFactoryPipelineData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<FactoryPipelineData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string factoryName, string pipelineName, FactoryPipelineData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -171,9 +171,9 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        DataFactoryPipelineData value = default;
+                        FactoryPipelineData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DataFactoryPipelineData.DeserializeDataFactoryPipelineData(document.RootElement);
+                        value = FactoryPipelineData.DeserializeFactoryPipelineData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/>, <paramref name="pipelineName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="pipelineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DataFactoryPipelineData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string factoryName, string pipelineName, DataFactoryPipelineData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response<FactoryPipelineData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string factoryName, string pipelineName, FactoryPipelineData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -205,9 +205,9 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        DataFactoryPipelineData value = default;
+                        FactoryPipelineData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DataFactoryPipelineData.DeserializeDataFactoryPipelineData(document.RootElement);
+                        value = FactoryPipelineData.DeserializeFactoryPipelineData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="pipelineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="pipelineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DataFactoryPipelineData>> GetAsync(string subscriptionId, string resourceGroupName, string factoryName, string pipelineName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<FactoryPipelineData>> GetAsync(string subscriptionId, string resourceGroupName, string factoryName, string pipelineName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -263,14 +263,14 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        DataFactoryPipelineData value = default;
+                        FactoryPipelineData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DataFactoryPipelineData.DeserializeDataFactoryPipelineData(document.RootElement);
+                        value = FactoryPipelineData.DeserializeFactoryPipelineData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 304:
                 case 404:
-                    return Response.FromValue((DataFactoryPipelineData)null, message.Response);
+                    return Response.FromValue((FactoryPipelineData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="pipelineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="pipelineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DataFactoryPipelineData> Get(string subscriptionId, string resourceGroupName, string factoryName, string pipelineName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public Response<FactoryPipelineData> Get(string subscriptionId, string resourceGroupName, string factoryName, string pipelineName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -298,14 +298,14 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        DataFactoryPipelineData value = default;
+                        FactoryPipelineData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DataFactoryPipelineData.DeserializeDataFactoryPipelineData(document.RootElement);
+                        value = FactoryPipelineData.DeserializeFactoryPipelineData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 304:
                 case 404:
-                    return Response.FromValue((DataFactoryPipelineData)null, message.Response);
+                    return Response.FromValue((FactoryPipelineData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="pipelineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="pipelineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CreateRunResult>> CreateRunAsync(string subscriptionId, string resourceGroupName, string factoryName, string pipelineName, IDictionary<string, BinaryData> parameterValueSpecification = null, string referencePipelineRunId = null, bool? isRecovery = null, string startActivityName = null, bool? startFromFailure = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PipelineCreateRunResult>> CreateRunAsync(string subscriptionId, string resourceGroupName, string factoryName, string pipelineName, IDictionary<string, BinaryData> parameterValueSpecification = null, string referencePipelineRunId = null, bool? isRecovery = null, string startActivityName = null, bool? startFromFailure = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -469,9 +469,9 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        CreateRunResult value = default;
+                        PipelineCreateRunResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CreateRunResult.DeserializeCreateRunResult(document.RootElement);
+                        value = PipelineCreateRunResult.DeserializePipelineCreateRunResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="pipelineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="pipelineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CreateRunResult> CreateRun(string subscriptionId, string resourceGroupName, string factoryName, string pipelineName, IDictionary<string, BinaryData> parameterValueSpecification = null, string referencePipelineRunId = null, bool? isRecovery = null, string startActivityName = null, bool? startFromFailure = null, CancellationToken cancellationToken = default)
+        public Response<PipelineCreateRunResult> CreateRun(string subscriptionId, string resourceGroupName, string factoryName, string pipelineName, IDictionary<string, BinaryData> parameterValueSpecification = null, string referencePipelineRunId = null, bool? isRecovery = null, string startActivityName = null, bool? startFromFailure = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -505,9 +505,9 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        CreateRunResult value = default;
+                        PipelineCreateRunResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CreateRunResult.DeserializeCreateRunResult(document.RootElement);
+                        value = PipelineCreateRunResult.DeserializePipelineCreateRunResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PipelineListResponse>> ListByFactoryNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string factoryName, CancellationToken cancellationToken = default)
+        public async Task<Response<FactoryPipelineListResult>> ListByFactoryNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string factoryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -550,9 +550,9 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        PipelineListResponse value = default;
+                        FactoryPipelineListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PipelineListResponse.DeserializePipelineListResponse(document.RootElement);
+                        value = FactoryPipelineListResult.DeserializeFactoryPipelineListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PipelineListResponse> ListByFactoryNextPage(string nextLink, string subscriptionId, string resourceGroupName, string factoryName, CancellationToken cancellationToken = default)
+        public Response<FactoryPipelineListResult> ListByFactoryNextPage(string nextLink, string subscriptionId, string resourceGroupName, string factoryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -581,9 +581,9 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        PipelineListResponse value = default;
+                        FactoryPipelineListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PipelineListResponse.DeserializePipelineListResponse(document.RootElement);
+                        value = FactoryPipelineListResult.DeserializeFactoryPipelineListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

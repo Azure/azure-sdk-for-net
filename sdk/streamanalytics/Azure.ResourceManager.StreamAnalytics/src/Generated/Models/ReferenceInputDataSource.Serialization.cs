@@ -26,21 +26,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Microsoft.Sql/Server/Database": return AzureSqlReferenceInputDataSource.DeserializeAzureSqlReferenceInputDataSource(element);
+                    case "Microsoft.Sql/Server/Database": return SqlReferenceInputDataSource.DeserializeSqlReferenceInputDataSource(element);
                     case "Microsoft.Storage/Blob": return BlobReferenceInputDataSource.DeserializeBlobReferenceInputDataSource(element);
                     case "Raw": return RawReferenceInputDataSource.DeserializeRawReferenceInputDataSource(element);
                 }
             }
-            string type = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new ReferenceInputDataSource(type);
+            return UnknownReferenceInputDataSource.DeserializeUnknownReferenceInputDataSource(element);
         }
     }
 }

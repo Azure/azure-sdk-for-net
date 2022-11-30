@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="info"/> is null. </exception>
-        public virtual async Task<Response<KeyInfo>> CreateOrUpdateFunctionSecretAsync(string keyName, KeyInfo info, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebAppKeyInfo>> CreateOrUpdateFunctionSecretAsync(string keyName, WebAppKeyInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
             Argument.AssertNotNull(info, nameof(info));
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="info"/> is null. </exception>
-        public virtual Response<KeyInfo> CreateOrUpdateFunctionSecret(string keyName, KeyInfo info, CancellationToken cancellationToken = default)
+        public virtual Response<WebAppKeyInfo> CreateOrUpdateFunctionSecret(string keyName, WebAppKeyInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
             Argument.AssertNotNull(info, nameof(info));
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListFunctionKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<StringDictionary>> GetFunctionKeysAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServiceConfigurationDictionary>> GetFunctionKeysAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionResource.GetFunctionKeys");
             scope.Start();
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListFunctionKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<StringDictionary> GetFunctionKeys(CancellationToken cancellationToken = default)
+        public virtual Response<AppServiceConfigurationDictionary> GetFunctionKeys(CancellationToken cancellationToken = default)
         {
             using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionResource.GetFunctionKeys");
             scope.Start();

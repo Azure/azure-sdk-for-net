@@ -14,16 +14,21 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static ReservationToReturnForExchange DeserializeReservationToReturnForExchange(JsonElement element)
         {
-            Optional<string> reservationId = default;
+            Optional<ResourceIdentifier> reservationId = default;
             Optional<int> quantity = default;
             Optional<PurchasePrice> billingRefundAmount = default;
             Optional<BillingInformation> billingInformation = default;
-            Optional<OperationStatus> status = default;
+            Optional<ReservationOperationStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("reservationId"))
                 {
-                    reservationId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    reservationId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("quantity"))
@@ -63,7 +68,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new OperationStatus(property.Value.GetString());
+                    status = new ReservationOperationStatus(property.Value.GetString());
                     continue;
                 }
             }

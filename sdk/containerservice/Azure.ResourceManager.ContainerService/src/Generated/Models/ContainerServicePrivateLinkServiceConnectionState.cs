@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of ContainerServicePrivateLinkServiceConnectionState. </summary>
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The private link service connection description. </param>
-        internal ContainerServicePrivateLinkServiceConnectionState(ConnectionStatus? status, string description)
+        internal ContainerServicePrivateLinkServiceConnectionState(ContainerServicePrivateLinkServiceConnectionStatus? status, string description)
         {
             Status = status;
             Description = description;
         }
 
         /// <summary> The private link service connection status. </summary>
-        public ConnectionStatus? Status { get; set; }
+        public ContainerServicePrivateLinkServiceConnectionStatus? Status { get; set; }
         /// <summary> The private link service connection description. </summary>
         public string Description { get; set; }
     }

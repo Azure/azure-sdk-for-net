@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         internal static AppConfigurationPrivateLinkServiceConnectionState DeserializeAppConfigurationPrivateLinkServiceConnectionState(JsonElement element)
         {
-            Optional<ConnectionStatus> status = default;
+            Optional<AppConfigurationPrivateLinkServiceConnectionStatus> status = default;
             Optional<string> description = default;
-            Optional<ActionsRequired> actionsRequired = default;
+            Optional<AppConfigurationActionsRequired> actionsRequired = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new ConnectionStatus(property.Value.GetString());
+                    status = new AppConfigurationPrivateLinkServiceConnectionStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("description"))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    actionsRequired = new ActionsRequired(property.Value.GetString());
+                    actionsRequired = new AppConfigurationActionsRequired(property.Value.GetString());
                     continue;
                 }
             }

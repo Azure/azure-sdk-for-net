@@ -20,11 +20,13 @@ namespace Azure.Identity
         // Lazy initialized on the first call to GetCertificateAsync, based on CertificatePath.
         private X509Certificate2 Certificate { get; set; }
         internal string CertificatePath { get; }
+        internal string CertificatePassword { get; }
 
-        public X509Certificate2FromFileProvider(string clientCertificatePath)
+        public X509Certificate2FromFileProvider(string clientCertificatePath, string certificatePassword)
         {
             Argument.AssertNotNull(clientCertificatePath, nameof(clientCertificatePath));
             CertificatePath = clientCertificatePath ?? throw new ArgumentNullException(nameof(clientCertificatePath));
+            CertificatePassword = certificatePassword;
         }
 
         public ValueTask<X509Certificate2> GetCertificateAsync(bool async, CancellationToken cancellationToken)
@@ -39,15 +41,19 @@ namespace Azure.Identity
             switch (fileType.ToLowerInvariant())
             {
                 case ".pfx":
-                    return LoadCertificateFromPfxFileAsync(async, CertificatePath, cancellationToken);
+                    return LoadCertificateFromPfxFileAsync(async, CertificatePath, CertificatePassword, cancellationToken);
                 case ".pem":
+                    if (CertificatePassword != null)
+                    {
+                        throw new CredentialUnavailableException("Password protection for PEM encoded certificates is not supported.");
+                    }
                     return LoadCertificateFromPemFileAsync(async, CertificatePath, cancellationToken);
                 default:
                     throw new CredentialUnavailableException("Only .pfx and .pem files are supported.");
             }
         }
 
-        private async ValueTask<X509Certificate2> LoadCertificateFromPfxFileAsync(bool async, string clientCertificatePath, CancellationToken cancellationToken)
+        private async ValueTask<X509Certificate2> LoadCertificateFromPfxFileAsync(bool async, string clientCertificatePath, string certificatePassword, CancellationToken cancellationToken)
         {
             const int BufferSize = 4 * 1024;
 
@@ -60,7 +66,7 @@ namespace Azure.Identity
             {
                 if (!async)
                 {
-                    Certificate = new X509Certificate2(clientCertificatePath);
+                    Certificate = new X509Certificate2(clientCertificatePath, certificatePassword);
                 }
                 else
                 {
@@ -84,7 +90,7 @@ namespace Azure.Identity
                         }
                     }
 
-                    Certificate = new X509Certificate2(certContents.ToArray());
+                    Certificate = new X509Certificate2(certContents.ToArray(), certificatePassword);
                 }
 
                 return Certificate;

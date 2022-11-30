@@ -1,31 +1,48 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects?api-version=2022-05-01",
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects?api-version=2022-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-7d1eec4e8b3393e73f7543fe319b46f1-a0b0e61195853939-00",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220617.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "e93f70188d591bdbc45d63f57536d9f4",
+        "traceparent": "00-97b6dc47adbfc0379a01e0fe48978ba1-4da6d356c86c320e-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221019.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "c3264ad6adb2f869cabc4df39f7c475b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": "*",
-        "apim-request-id": "55c53765-64a5-4f61-9b10-aec698d24c99",
-        "Content-Length": "455",
+        "apim-request-id": "cdbd37f0-6e83-4675-b184-dd8ba44e632d",
+        "Content-Length": "834",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 18 Jun 2022 00:44:14 GMT",
-        "request-id": "55c53765-64a5-4f61-9b10-aec698d24c99",
+        "Date": "Thu, 20 Oct 2022 00:18:33 GMT",
+        "request-id": "cdbd37f0-6e83-4675-b184-dd8ba44e632d",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "351"
+        "x-envoy-upstream-service-time": "22",
+        "x-ms-region": "UK South"
       },
       "ResponseBody": {
         "value": [
+          {
+            "createdDateTime": "2022-09-04T14:32:12Z",
+            "lastModifiedDateTime": "2022-09-04T14:32:21Z",
+            "projectKind": "Conversation",
+            "projectName": "net-conv-1265556354",
+            "multilingual": true,
+            "language": "en"
+          },
+          {
+            "createdDateTime": "2022-09-04T14:31:12Z",
+            "lastModifiedDateTime": "2022-09-04T14:31:25Z",
+            "projectKind": "Conversation",
+            "projectName": "net-conv-249494978",
+            "multilingual": true,
+            "language": "en"
+          },
           {
             "createdDateTime": "2022-06-05T12:36:31Z",
             "lastModifiedDateTime": "2022-06-05T12:40:18Z",
@@ -52,6 +69,6 @@
   "Variables": {
     "CONVERSATIONS_ENDPOINT": "https://languagesdkresource.cognitiveservices.azure.com/",
     "CONVERSATIONS_KEY": "Sanitized",
-    "RandomSeed": "497800017"
+    "RandomSeed": "890171655"
   }
 }

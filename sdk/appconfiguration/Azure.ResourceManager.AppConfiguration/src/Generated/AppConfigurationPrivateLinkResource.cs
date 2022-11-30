@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppConfiguration
     /// A Class representing an AppConfigurationPrivateLinkResource along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppConfigurationPrivateLinkResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetAppConfigurationPrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ConfigurationStoreResource" /> using the GetAppConfigurationPrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppConfigurationStoreResource" /> using the GetAppConfigurationPrivateLinkResource method.
     /// </summary>
     public partial class AppConfigurationPrivateLinkResource : ArmResource
     {

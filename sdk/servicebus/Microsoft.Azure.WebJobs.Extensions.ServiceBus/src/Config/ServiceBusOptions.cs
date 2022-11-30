@@ -131,6 +131,16 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         public Func<ProcessErrorEventArgs, Task> ProcessErrorAsync { get; set; }
 
         /// <summary>
+        /// Optional handler that can be set to be notified when a new session is about to be processed.
+        /// </summary>
+        public Func<ProcessSessionEventArgs, Task> SessionInitializingAsync { get; set; }
+
+        /// <summary>
+        /// Optional handler that can be set to be notified when a session is about to be closed for processing.
+        /// </summary>
+        public Func<ProcessSessionEventArgs, Task> SessionClosingAsync { get; set; }
+
+        /// <summary>
         /// Gets or sets the maximum number of messages that will be passed to each function call. This only applies for functions that receive
         /// a batch of messages. The default value is 1000.
         /// </summary>
@@ -200,9 +210,28 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
 
         internal async Task ExceptionReceivedHandler(ProcessErrorEventArgs args)
         {
-            if (ProcessErrorAsync != null)
+            var processErrorAsync = ProcessErrorAsync;
+            if (processErrorAsync != null)
             {
-                await ProcessErrorAsync(args).ConfigureAwait(false);
+                await processErrorAsync(args).ConfigureAwait(false);
+            }
+        }
+
+        internal async Task SessionInitializingHandler(ProcessSessionEventArgs args)
+        {
+            var sessionInitializingAsync = SessionInitializingAsync;
+            if (sessionInitializingAsync != null)
+            {
+                await sessionInitializingAsync(args).ConfigureAwait(false);
+            }
+        }
+
+        internal async Task SessionClosingHandler(ProcessSessionEventArgs args)
+        {
+            var sessionClosingAsync = SessionClosingAsync;
+            if (sessionClosingAsync != null)
+            {
+                await sessionClosingAsync(args).ConfigureAwait(false);
             }
         }
 

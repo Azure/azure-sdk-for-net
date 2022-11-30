@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -14,14 +15,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     public partial class WebLinkedService : LinkedService
     {
         /// <summary> Initializes a new instance of WebLinkedService. </summary>
-        /// <param name="typeProperties"> Web linked service properties. </param>
+        /// <param name="typeProperties">
+        /// Web linked service properties.
+        /// Please note <see cref="WebLinkedServiceTypeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="WebAnonymousAuthentication"/>, <see cref="WebBasicAuthentication"/> and <see cref="WebClientCertificateAuthentication"/>.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeProperties"/> is null. </exception>
         public WebLinkedService(WebLinkedServiceTypeProperties typeProperties)
         {
-            if (typeProperties == null)
-            {
-                throw new ArgumentNullException(nameof(typeProperties));
-            }
+            Argument.AssertNotNull(typeProperties, nameof(typeProperties));
 
             TypeProperties = typeProperties;
             Type = "Web";
@@ -34,14 +36,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="typeProperties"> Web linked service properties. </param>
+        /// <param name="typeProperties">
+        /// Web linked service properties.
+        /// Please note <see cref="WebLinkedServiceTypeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="WebAnonymousAuthentication"/>, <see cref="WebBasicAuthentication"/> and <see cref="WebClientCertificateAuthentication"/>.
+        /// </param>
         internal WebLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, WebLinkedServiceTypeProperties typeProperties) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             TypeProperties = typeProperties;
             Type = type ?? "Web";
         }
 
-        /// <summary> Web linked service properties. </summary>
+        /// <summary>
+        /// Web linked service properties.
+        /// Please note <see cref="WebLinkedServiceTypeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="WebAnonymousAuthentication"/>, <see cref="WebBasicAuthentication"/> and <see cref="WebClientCertificateAuthentication"/>.
+        /// </summary>
         public WebLinkedServiceTypeProperties TypeProperties { get; set; }
     }
 }

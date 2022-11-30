@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MySql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="advisorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="advisorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AdvisorData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string advisorName, CancellationToken cancellationToken = default)
+        public async Task<Response<MySqlAdvisorData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string advisorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -80,13 +80,13 @@ namespace Azure.ResourceManager.MySql
             {
                 case 200:
                     {
-                        AdvisorData value = default;
+                        MySqlAdvisorData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AdvisorData.DeserializeAdvisorData(document.RootElement);
+                        value = MySqlAdvisorData.DeserializeMySqlAdvisorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AdvisorData)null, message.Response);
+                    return Response.FromValue((MySqlAdvisorData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MySql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="advisorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="advisorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AdvisorData> Get(string subscriptionId, string resourceGroupName, string serverName, string advisorName, CancellationToken cancellationToken = default)
+        public Response<MySqlAdvisorData> Get(string subscriptionId, string resourceGroupName, string serverName, string advisorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -113,13 +113,13 @@ namespace Azure.ResourceManager.MySql
             {
                 case 200:
                     {
-                        AdvisorData value = default;
+                        MySqlAdvisorData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AdvisorData.DeserializeAdvisorData(document.RootElement);
+                        value = MySqlAdvisorData.DeserializeMySqlAdvisorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AdvisorData)null, message.Response);
+                    return Response.FromValue((MySqlAdvisorData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.MySql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AdvisorsResultList>> ListByServerAsync(string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
+        public async Task<Response<MySqlAdvisorListResult>> ListByServerAsync(string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -165,9 +165,9 @@ namespace Azure.ResourceManager.MySql
             {
                 case 200:
                     {
-                        AdvisorsResultList value = default;
+                        MySqlAdvisorListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AdvisorsResultList.DeserializeAdvisorsResultList(document.RootElement);
+                        value = MySqlAdvisorListResult.DeserializeMySqlAdvisorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.MySql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AdvisorsResultList> ListByServer(string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
+        public Response<MySqlAdvisorListResult> ListByServer(string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -194,9 +194,9 @@ namespace Azure.ResourceManager.MySql
             {
                 case 200:
                     {
-                        AdvisorsResultList value = default;
+                        MySqlAdvisorListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AdvisorsResultList.DeserializeAdvisorsResultList(document.RootElement);
+                        value = MySqlAdvisorListResult.DeserializeMySqlAdvisorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.MySql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AdvisorsResultList>> ListByServerNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
+        public async Task<Response<MySqlAdvisorListResult>> ListByServerNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -239,9 +239,9 @@ namespace Azure.ResourceManager.MySql
             {
                 case 200:
                     {
-                        AdvisorsResultList value = default;
+                        MySqlAdvisorListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AdvisorsResultList.DeserializeAdvisorsResultList(document.RootElement);
+                        value = MySqlAdvisorListResult.DeserializeMySqlAdvisorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.MySql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AdvisorsResultList> ListByServerNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
+        public Response<MySqlAdvisorListResult> ListByServerNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -270,9 +270,9 @@ namespace Azure.ResourceManager.MySql
             {
                 case 200:
                     {
-                        AdvisorsResultList value = default;
+                        MySqlAdvisorListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AdvisorsResultList.DeserializeAdvisorsResultList(document.RootElement);
+                        value = MySqlAdvisorListResult.DeserializeMySqlAdvisorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

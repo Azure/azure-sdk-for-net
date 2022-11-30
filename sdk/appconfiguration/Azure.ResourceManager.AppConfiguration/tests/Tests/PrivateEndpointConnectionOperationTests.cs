@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
     public class PrivateEndpointConnectionOperationTests : AppConfigurationClientBase
     {
         private ResourceGroupResource ResGroup { get; set; }
-        private ConfigurationStoreResource ConfigStore { get; set; }
+        private AppConfigurationStoreResource ConfigStore { get; set; }
         private Network.PrivateEndpointResource PrivateEndpointResource { get; set; }
         private AppConfigurationPrivateEndpointConnectionResource Connection { get; set; }
 
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 string EndpointName = Recording.GenerateAssetName("endpointxyz");
                 ResGroup = (await ArmClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, groupName, new ResourceGroupData(Location))).Value;
                 string configurationStoreName = Recording.GenerateAssetName("testapp-");
-                ConfigurationStoreData configurationStoreData = new ConfigurationStoreData(Location, new AppConfigurationSku("Standard"))
+                AppConfigurationStoreData configurationStoreData = new AppConfigurationStoreData(Location, new AppConfigurationSku("Standard"))
                 {
-                    PublicNetworkAccess = PublicNetworkAccess.Disabled
+                    PublicNetworkAccess = AppConfigurationPublicNetworkAccess.Disabled
                 };
-                ConfigStore = (await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName, configurationStoreData)).Value;
+                ConfigStore = (await ResGroup.GetAppConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName, configurationStoreData)).Value;
                 // Prepare VNet and Private Endpoint
                 VirtualNetworkData vnetData = new VirtualNetworkData()
                 {

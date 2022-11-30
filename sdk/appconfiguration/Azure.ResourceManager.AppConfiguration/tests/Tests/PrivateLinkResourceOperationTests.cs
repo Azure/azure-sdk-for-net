@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
     public class PrivateLinkResourceOperationTests : AppConfigurationClientBase
     {
         private ResourceGroupResource ResGroup { get; set; }
-        private ConfigurationStoreResource ConfigStore { get; set; }
+        private AppConfigurationStoreResource ConfigStore { get; set; }
         private AppConfigurationPrivateLinkResource LinkResource { get; set; }
 
         public PrivateLinkResourceOperationTests(bool isAsync)
@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 string groupName = Recording.GenerateAssetName(ResourceGroupPrefix);
                 ResGroup = (await ArmClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, groupName, new ResourceGroupData(Location))).Value;
                 string configurationStoreName = Recording.GenerateAssetName("testapp-");
-                ConfigurationStoreData configurationStoreData = new ConfigurationStoreData(Location, new AppConfigurationSku("Standard"))
+                AppConfigurationStoreData configurationStoreData = new AppConfigurationStoreData(Location, new AppConfigurationSku("Standard"))
                 {
-                    PublicNetworkAccess = PublicNetworkAccess.Disabled
+                    PublicNetworkAccess = AppConfigurationPublicNetworkAccess.Disabled
                 };
-                ConfigStore = (await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName, configurationStoreData)).Value;
+                ConfigStore = (await ResGroup.GetAppConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName, configurationStoreData)).Value;
                 LinkResource = await ConfigStore.GetAppConfigurationPrivateLinkResources().GetAsync("configurationStores");
             }
         }

@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// class.
         /// </summary>
         /// <param name="url">The URL of the web service endpoint, e.g.
-        /// http://www.microsoft.com . Type: string (or Expression with
+        /// https://www.microsoft.com . Type: string (or Expression with
         /// resultType string).</param>
         public WebLinkedServiceTypeProperties(object url)
         {
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 
         /// <summary>
         /// Gets or sets the URL of the web service endpoint, e.g.
-        /// http://www.microsoft.com . Type: string (or Expression with
+        /// https://www.microsoft.com . Type: string (or Expression with
         /// resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "url")]

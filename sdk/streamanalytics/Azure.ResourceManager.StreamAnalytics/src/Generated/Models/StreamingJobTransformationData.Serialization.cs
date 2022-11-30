@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.StreamAnalytics
 
         internal static StreamingJobTransformationData DeserializeStreamingJobTransformationData(JsonElement element)
         {
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
-            Optional<string> type = default;
+            Optional<ResourceType> type = default;
             Optional<int> streamingUnits = default;
             Optional<IList<int>> validStreamingUnits = default;
             Optional<string> query = default;
@@ -61,7 +61,12 @@ namespace Azure.ResourceManager.StreamAnalytics
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -71,7 +76,12 @@ namespace Azure.ResourceManager.StreamAnalytics
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -127,7 +137,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                     continue;
                 }
             }
-            return new StreamingJobTransformationData(id.Value, name.Value, type.Value, Optional.ToNullable(streamingUnits), Optional.ToList(validStreamingUnits), query.Value, Optional.ToNullable(etag));
+            return new StreamingJobTransformationData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(streamingUnits), Optional.ToList(validStreamingUnits), query.Value, Optional.ToNullable(etag));
         }
     }
 }

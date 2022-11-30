@@ -26,5 +26,18 @@ namespace Azure.ResourceManager.FluidRelay.Models
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The geo-location where the resource lives. </summary>
         public AzureLocation? Location { get; set; }
+        /// <summary> All encryption configuration for a resource. </summary>
+        internal EncryptionProperties Encryption { get; set; }
+        /// <summary> All Customer-managed key encryption properties for the resource. </summary>
+        public CmkEncryptionProperties CustomerManagedKeyEncryption
+        {
+            get => Encryption is null ? default : Encryption.CustomerManagedKeyEncryption;
+            set
+            {
+                if (Encryption is null)
+                    Encryption = new EncryptionProperties();
+                Encryption.CustomerManagedKeyEncryption = value;
+            }
+        }
     }
 }

@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("slices");
                 writer.WriteNumberValue(Slices.Value);
             }
-            if (Optional.IsDefined(AdaptiveBFrame))
+            if (Optional.IsDefined(UseAdaptiveBFrame))
             {
                 writer.WritePropertyName("adaptiveBFrame");
-                writer.WriteBooleanValue(AdaptiveBFrame.Value);
+                writer.WriteBooleanValue(UseAdaptiveBFrame.Value);
             }
             if (Optional.IsDefined(Width))
             {

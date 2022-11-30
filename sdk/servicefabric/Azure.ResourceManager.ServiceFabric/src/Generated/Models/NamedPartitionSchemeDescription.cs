@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -20,21 +21,18 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <exception cref="ArgumentNullException"> <paramref name="names"/> is null. </exception>
         public NamedPartitionSchemeDescription(int count, IEnumerable<string> names)
         {
-            if (names == null)
-            {
-                throw new ArgumentNullException(nameof(names));
-            }
+            Argument.AssertNotNull(names, nameof(names));
 
             Count = count;
             Names = names.ToList();
-            PartitionScheme = PartitionScheme.Named;
+            PartitionScheme = ApplicationPartitionScheme.Named;
         }
 
         /// <summary> Initializes a new instance of NamedPartitionSchemeDescription. </summary>
         /// <param name="partitionScheme"> Specifies how the service is partitioned. </param>
         /// <param name="count"> The number of partitions. </param>
         /// <param name="names"> Array of size specified by the ‘count’ parameter, for the names of the partitions. </param>
-        internal NamedPartitionSchemeDescription(PartitionScheme partitionScheme, int count, IList<string> names) : base(partitionScheme)
+        internal NamedPartitionSchemeDescription(ApplicationPartitionScheme partitionScheme, int count, IList<string> names) : base(partitionScheme)
         {
             Count = count;
             Names = names;

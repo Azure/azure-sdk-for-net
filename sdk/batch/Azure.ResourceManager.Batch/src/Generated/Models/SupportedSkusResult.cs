@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -17,12 +18,9 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Initializes a new instance of SupportedSkusResult. </summary>
         /// <param name="value"> The list of SKUs available for the Batch service in the location. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal SupportedSkusResult(IEnumerable<SupportedSku> value)
+        internal SupportedSkusResult(IEnumerable<BatchSupportedSku> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
@@ -30,14 +28,14 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Initializes a new instance of SupportedSkusResult. </summary>
         /// <param name="value"> The list of SKUs available for the Batch service in the location. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal SupportedSkusResult(IReadOnlyList<SupportedSku> value, string nextLink)
+        internal SupportedSkusResult(IReadOnlyList<BatchSupportedSku> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of SKUs available for the Batch service in the location. </summary>
-        public IReadOnlyList<SupportedSku> Value { get; }
+        public IReadOnlyList<BatchSupportedSku> Value { get; }
         /// <summary> The URL to use for getting the next set of results. </summary>
         public string NextLink { get; }
     }

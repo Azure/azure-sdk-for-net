@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="systemData"> The systemData. </param>
         /// <param name="vmId"> Gets or sets the Vm Id. </param>
         /// <param name="publicKey"> Gets or sets the Public Key. </param>
-        /// <param name="identity"> The identity of the resource. </param>
+        /// <param name="identity"> The identity of the resource. Current supported identity types: None, SystemAssigned. </param>
         /// <param name="provisioningState"> Gets or sets the provisioning state. </param>
-        internal HybridIdentityMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string vmId, string publicKey, SystemAssignedServiceIdentity identity, string provisioningState) : base(id, name, resourceType, systemData)
+        internal HybridIdentityMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string vmId, string publicKey, ManagedServiceIdentity identity, string provisioningState) : base(id, name, resourceType, systemData)
         {
             VmId = vmId;
             PublicKey = publicKey;
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         public string VmId { get; set; }
         /// <summary> Gets or sets the Public Key. </summary>
         public string PublicKey { get; set; }
-        /// <summary> The identity of the resource. </summary>
-        public SystemAssignedServiceIdentity Identity { get; }
+        /// <summary> The identity of the resource. Current supported identity types: None, SystemAssigned. </summary>
+        public ManagedServiceIdentity Identity { get; }
         /// <summary> Gets or sets the provisioning state. </summary>
         public string ProvisioningState { get; }
     }

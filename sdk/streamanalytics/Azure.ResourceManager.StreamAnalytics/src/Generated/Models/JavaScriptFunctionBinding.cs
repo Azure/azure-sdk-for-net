@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> The binding to a JavaScript function. </summary>
-    public partial class JavaScriptFunctionBinding : FunctionBinding
+    public partial class JavaScriptFunctionBinding : StreamingJobFunctionBinding
     {
         /// <summary> Initializes a new instance of JavaScriptFunctionBinding. </summary>
         public JavaScriptFunctionBinding()

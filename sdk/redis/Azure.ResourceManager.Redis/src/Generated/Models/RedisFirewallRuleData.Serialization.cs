@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -19,9 +20,9 @@ namespace Azure.ResourceManager.Redis
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             writer.WritePropertyName("startIP");
-            writer.WriteStringValue(StartIP);
+            writer.WriteStringValue(StartIP.ToString());
             writer.WritePropertyName("endIP");
-            writer.WriteStringValue(EndIP);
+            writer.WriteStringValue(EndIP.ToString());
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -32,8 +33,8 @@ namespace Azure.ResourceManager.Redis
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            string startIP = default;
-            string endIP = default;
+            IPAddress startIP = default;
+            IPAddress endIP = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -72,12 +73,12 @@ namespace Azure.ResourceManager.Redis
                     {
                         if (property0.NameEquals("startIP"))
                         {
-                            startIP = property0.Value.GetString();
+                            startIP = IPAddress.Parse(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("endIP"))
                         {
-                            endIP = property0.Value.GetString();
+                            endIP = IPAddress.Parse(property0.Value.GetString());
                             continue;
                         }
                     }

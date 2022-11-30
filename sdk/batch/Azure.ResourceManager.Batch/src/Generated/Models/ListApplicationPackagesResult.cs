@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Initializes a new instance of ListApplicationPackagesResult. </summary>
         internal ListApplicationPackagesResult()
         {
-            Value = new ChangeTrackingList<ApplicationPackageData>();
+            Value = new ChangeTrackingList<BatchApplicationPackageData>();
         }
 
         /// <summary> Initializes a new instance of ListApplicationPackagesResult. </summary>
         /// <param name="value"> The list of application packages. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal ListApplicationPackagesResult(IReadOnlyList<ApplicationPackageData> value, string nextLink)
+        internal ListApplicationPackagesResult(IReadOnlyList<BatchApplicationPackageData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of application packages. </summary>
-        public IReadOnlyList<ApplicationPackageData> Value { get; }
+        public IReadOnlyList<BatchApplicationPackageData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

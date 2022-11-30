@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class ListContentKeysResponse
+    internal partial class ListContentKeysResponse
     {
         internal static ListContentKeysResponse DeserializeListContentKeysResponse(JsonElement element)
         {

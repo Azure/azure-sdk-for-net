@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// Please note <see cref="Compute"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AksCompute"/>, <see cref="AmlCompute"/>, <see cref="ComputeInstance"/>, <see cref="DataFactoryCompute"/>, <see cref="DataLakeAnalyticsCompute"/>, <see cref="DatabricksCompute"/>, <see cref="HDInsightCompute"/>, <see cref="KubernetesCompute"/>, <see cref="SynapseSparkCompute"/> and <see cref="VirtualMachineCompute"/>.
     /// </summary>
-    public partial class Compute
+    public abstract partial class Compute
     {
         /// <summary> Initializes a new instance of Compute. </summary>
-        public Compute()
+        protected Compute()
         {
             ProvisioningErrors = new ChangeTrackingList<ErrorResponse>();
         }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> The type of compute. </summary>
         internal ComputeType ComputeType { get; set; }
         /// <summary> Location for the underlying compute. </summary>
-        public string ComputeLocation { get; }
+        public string ComputeLocation { get; set; }
         /// <summary> The provision state of the cluster. Valid values are Unknown, Updating, Provisioning, Succeeded, and Failed. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The description of the Machine Learning compute. </summary>

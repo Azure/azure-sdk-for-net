@@ -1,0 +1,397 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-10-01-preview\u0026showStats=false",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "770",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-305b7eed2ebacfdfce2d7d65f042d749-71a7016dcfb1bf8f-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221123.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "6e6de3f7fa19ad69b87381d3457ea41e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "analysisInput": {
+          "documents": [
+            {
+              "id": "1",
+              "text": "The dog is 14 inches tall and weighs 20 lbs. It is 5 years old.",
+              "language": "en"
+            },
+            {
+              "id": "2",
+              "text": "This is the first aircraft of its kind. It can fly at over 1,300 mph and carry 65-80 passengers.",
+              "language": "en"
+            },
+            {
+              "id": "3",
+              "text": "The apartment is 840 sqft. and it has 2 bedrooms. It costs 2,000 US dollars per month and will be available on 11/01/2022.",
+              "language": "en"
+            },
+            {
+              "id": "4",
+              "text": "Mix 1 cup of sugar. Bake for approximately 60 minutes in an oven preheated to 350 degrees F.",
+              "language": "en"
+            },
+            {
+              "id": "5",
+              "text": "They retrieved 200 terabytes of data from 10/24/2022 to 10/28/2022.",
+              "language": "en"
+            }
+          ]
+        },
+        "parameters": {
+          "stringIndexType": "Utf16CodeUnit",
+          "modelVersion": "2022-10-01-preview"
+        },
+        "kind": "EntityRecognition"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "7dd40011-e066-4fbf-8599-14a8f0bb1c6a",
+        "Content-Length": "4148",
+        "Content-Type": "application/json; charset=utf-8",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=5,CognitiveServices.TextAnalytics.TextRecords=5",
+        "Date": "Wed, 23 Nov 2022 19:56:07 GMT",
+        "Set-Cookie": ".AspNetCore.Mvc.CookieTempDataProvider=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; samesite=lax; httponly",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "253",
+        "x-ms-region": "West US 2"
+      },
+      "ResponseBody": {
+        "kind": "EntityRecognitionResults",
+        "results": {
+          "documents": [
+            {
+              "id": "1",
+              "entities": [
+                {
+                  "text": "14 inches",
+                  "category": "Quantity",
+                  "subcategory": "Dimension",
+                  "offset": 11,
+                  "length": 9,
+                  "confidenceScore": 0.8,
+                  "resolutions": [
+                    {
+                      "resolutionKind": "LengthResolution",
+                      "unit": "Inch",
+                      "value": 14.0
+                    }
+                  ]
+                },
+                {
+                  "text": "20 lbs",
+                  "category": "Quantity",
+                  "subcategory": "Dimension",
+                  "offset": 37,
+                  "length": 6,
+                  "confidenceScore": 0.8,
+                  "resolutions": [
+                    {
+                      "resolutionKind": "WeightResolution",
+                      "unit": "Pound",
+                      "value": 20.0
+                    }
+                  ]
+                },
+                {
+                  "text": "5 years old",
+                  "category": "Quantity",
+                  "subcategory": "Age",
+                  "offset": 51,
+                  "length": 11,
+                  "confidenceScore": 0.98,
+                  "resolutions": [
+                    {
+                      "resolutionKind": "AgeResolution",
+                      "unit": "Year",
+                      "value": 5.0
+                    }
+                  ]
+                }
+              ],
+              "warnings": []
+            },
+            {
+              "id": "2",
+              "entities": [
+                {
+                  "text": "first",
+                  "category": "Quantity",
+                  "subcategory": "Ordinal",
+                  "offset": 12,
+                  "length": 5,
+                  "confidenceScore": 0.8,
+                  "resolutions": [
+                    {
+                      "resolutionKind": "OrdinalResolution",
+                      "offset": "1",
+                      "relativeTo": "Start",
+                      "value": "1"
+                    }
+                  ]
+                },
+                {
+                  "text": "aircraft",
+                  "category": "Product",
+                  "offset": 18,
+                  "length": 8,
+                  "confidenceScore": 0.8
+                },
+                {
+                  "text": "1,300 mph",
+                  "category": "Quantity",
+                  "subcategory": "Dimension",
+                  "offset": 59,
+                  "length": 9,
+                  "confidenceScore": 0.8,
+                  "resolutions": [
+                    {
+                      "resolutionKind": "SpeedResolution",
+                      "unit": "MilePerHour",
+                      "value": 1300.0
+                    }
+                  ]
+                },
+                {
+                  "text": "65-80",
+                  "category": "Quantity",
+                  "subcategory": "NumberRange",
+                  "offset": 79,
+                  "length": 5,
+                  "confidenceScore": 0.83,
+                  "resolutions": [
+                    {
+                      "resolutionKind": "NumericRangeResolution",
+                      "rangeKind": "Number",
+                      "minimum": 65.0,
+                      "maximum": 80.0
+                    }
+                  ]
+                },
+                {
+                  "text": "passengers",
+                  "category": "PersonType",
+                  "offset": 85,
+                  "length": 10,
+                  "confidenceScore": 0.92
+                }
+              ],
+              "warnings": []
+            },
+            {
+              "id": "3",
+              "entities": [
+                {
+                  "text": "apartment",
+                  "category": "Location",
+                  "offset": 4,
+                  "length": 9,
+                  "confidenceScore": 0.81
+                },
+                {
+                  "text": "840 sqft",
+                  "category": "Quantity",
+                  "subcategory": "Dimension",
+                  "offset": 17,
+                  "length": 8,
+                  "confidenceScore": 0.8,
+                  "resolutions": [
+                    {
+                      "resolutionKind": "AreaResolution",
+                      "unit": "SquareFoot",
+                      "value": 840.0
+                    }
+                  ]
+                },
+                {
+                  "text": "2",
+                  "category": "Quantity",
+                  "subcategory": "Number",
+                  "offset": 38,
+                  "length": 1,
+                  "confidenceScore": 0.98,
+                  "resolutions": [
+                    {
+                      "resolutionKind": "NumberResolution",
+                      "numberKind": "Integer",
+                      "value": 2.0
+                    }
+                  ]
+                },
+                {
+                  "text": "bedrooms",
+                  "category": "Location",
+                  "offset": 40,
+                  "length": 8,
+                  "confidenceScore": 0.66
+                },
+                {
+                  "text": "2,000 US dollars",
+                  "category": "Quantity",
+                  "subcategory": "Currency",
+                  "offset": 59,
+                  "length": 16,
+                  "confidenceScore": 0.99,
+                  "resolutions": [
+                    {
+                      "resolutionKind": "CurrencyResolution",
+                      "unit": "United States dollar",
+                      "iso4217": "USD",
+                      "value": 2000.0
+                    }
+                  ]
+                },
+                {
+                  "text": "11/01/2022",
+                  "category": "DateTime",
+                  "subcategory": "Date",
+                  "offset": 111,
+                  "length": 10,
+                  "confidenceScore": 0.99,
+                  "resolutions": [
+                    {
+                      "resolutionKind": "DateTimeResolution",
+                      "dateTimeSubKind": "Date",
+                      "timex": "2022-11-01",
+                      "value": "2022-11-01"
+                    }
+                  ]
+                }
+              ],
+              "warnings": []
+            },
+            {
+              "id": "4",
+              "entities": [
+                {
+                  "text": "1",
+                  "category": "Quantity",
+                  "subcategory": "Number",
+                  "offset": 4,
+                  "length": 1,
+                  "confidenceScore": 0.69,
+                  "resolutions": [
+                    {
+                      "resolutionKind": "NumberResolution",
+                      "numberKind": "Integer",
+                      "value": 1.0
+                    }
+                  ]
+                },
+                {
+                  "text": "1 cup",
+                  "category": "Quantity",
+                  "subcategory": "Dimension",
+                  "offset": 4,
+                  "length": 5,
+                  "confidenceScore": 0.8,
+                  "resolutions": [
+                    {
+                      "resolutionKind": "VolumeResolution",
+                      "unit": "Cup",
+                      "value": 1.0
+                    }
+                  ]
+                },
+                {
+                  "text": "sugar",
+                  "category": "Product",
+                  "offset": 13,
+                  "length": 5,
+                  "confidenceScore": 0.92
+                },
+                {
+                  "text": "60 minutes",
+                  "category": "DateTime",
+                  "subcategory": "Duration",
+                  "offset": 43,
+                  "length": 10,
+                  "confidenceScore": 0.95,
+                  "resolutions": [
+                    {
+                      "resolutionKind": "TemporalSpanResolution",
+                      "duration": "PT60M"
+                    }
+                  ]
+                },
+                {
+                  "text": "oven",
+                  "category": "Product",
+                  "offset": 60,
+                  "length": 4,
+                  "confidenceScore": 0.87
+                },
+                {
+                  "text": "350 degrees F",
+                  "category": "Quantity",
+                  "subcategory": "Temperature",
+                  "offset": 78,
+                  "length": 13,
+                  "confidenceScore": 0.8,
+                  "resolutions": [
+                    {
+                      "resolutionKind": "TemperatureResolution",
+                      "unit": "Fahrenheit",
+                      "value": 350.0
+                    }
+                  ]
+                }
+              ],
+              "warnings": []
+            },
+            {
+              "id": "5",
+              "entities": [
+                {
+                  "text": "200 terabytes",
+                  "category": "Quantity",
+                  "subcategory": "Dimension",
+                  "offset": 15,
+                  "length": 13,
+                  "confidenceScore": 0.8,
+                  "resolutions": [
+                    {
+                      "resolutionKind": "InformationResolution",
+                      "unit": "Terabyte",
+                      "value": 200.0
+                    }
+                  ]
+                },
+                {
+                  "text": "10/24/2022 to 10/28/2022",
+                  "category": "DateTime",
+                  "subcategory": "DateRange",
+                  "offset": 42,
+                  "length": 24,
+                  "confidenceScore": 0.85,
+                  "resolutions": [
+                    {
+                      "resolutionKind": "TemporalSpanResolution",
+                      "duration": "P4D",
+                      "begin": "2022-10-24",
+                      "end": "2022-10-28"
+                    }
+                  ]
+                }
+              ],
+              "warnings": []
+            }
+          ],
+          "errors": [],
+          "modelVersion": "2022-10-01-preview"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1195462607",
+    "TEXT_ANALYTICS_API_KEY": "Sanitized",
+    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
+  }
+}

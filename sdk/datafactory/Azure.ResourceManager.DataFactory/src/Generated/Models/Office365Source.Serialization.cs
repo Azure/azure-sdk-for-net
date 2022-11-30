@@ -44,22 +44,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(DateFilterColumn.ToString()).RootElement);
 #endif
             }
-            if (Optional.IsDefined(StartTime))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime");
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(StartTime);
+				writer.WriteRawValue(StartOn);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(StartTime.ToString()).RootElement);
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(StartOn.ToString()).RootElement);
 #endif
             }
-            if (Optional.IsDefined(EndTime))
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime");
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(EndTime);
+				writer.WriteRawValue(EndOn);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(EndTime.ToString()).RootElement);
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(EndOn.ToString()).RootElement);
 #endif
             }
             if (Optional.IsDefined(OutputColumns))

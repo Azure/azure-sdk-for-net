@@ -2,9 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Messaging.ServiceBus.Amqp;
 using Moq;
 using NUnit.Framework;
 
@@ -51,10 +53,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         [Test]
         public async Task CallingCloseAsyncUpdatesIsClosed()
         {
-            var mockConnection = ServiceBusTestUtilities.GetMockedReceiverConnection();
-            var receiver = new ServiceBusSessionReceiver(mockConnection, "fake", default, CancellationToken.None);
+            var account = Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(12));
+            var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
+            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(64))}";
+            var client = new ServiceBusClient(connString);
+            var receiver = new ServiceBusSessionReceiver(client.Connection, "fake", default, CancellationToken.None);
             await receiver.CloseAsync();
             Assert.IsTrue(receiver.IsClosed);
+
+            Assert.IsTrue(((AmqpReceiver)receiver.InnerReceiver).RequestResponseLockedMessages.IsDisposed);
         }
     }
 }

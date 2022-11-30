@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.AppService
         /// <param name="branch"> Name of branch to use for deployment. </param>
         /// <param name="isManualIntegration"> &lt;code&gt;true&lt;/code&gt; to limit to manual integration; &lt;code&gt;false&lt;/code&gt; to enable continuous integration (which configures webhooks into online repos like GitHub). </param>
         /// <param name="isGitHubAction"> &lt;code&gt;true&lt;/code&gt; if this is deployed via GitHub action. </param>
-        /// <param name="deploymentRollbackEnabled"> &lt;code&gt;true&lt;/code&gt; to enable deployment rollback; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isDeploymentRollbackEnabled"> &lt;code&gt;true&lt;/code&gt; to enable deployment rollback; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isMercurial"> &lt;code&gt;true&lt;/code&gt; for a Mercurial repository; &lt;code&gt;false&lt;/code&gt; for a Git repository. </param>
         /// <param name="gitHubActionConfiguration"> If GitHub Action is selected, than the associated configuration. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal SiteSourceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri repoUri, string branch, bool? isManualIntegration, bool? isGitHubAction, bool? deploymentRollbackEnabled, bool? isMercurial, GitHubActionConfiguration gitHubActionConfiguration, string kind) : base(id, name, resourceType, systemData)
+        internal SiteSourceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri repoUri, string branch, bool? isManualIntegration, bool? isGitHubAction, bool? isDeploymentRollbackEnabled, bool? isMercurial, GitHubActionConfiguration gitHubActionConfiguration, string kind) : base(id, name, resourceType, systemData)
         {
             RepoUri = repoUri;
             Branch = branch;
             IsManualIntegration = isManualIntegration;
             IsGitHubAction = isGitHubAction;
-            DeploymentRollbackEnabled = deploymentRollbackEnabled;
+            IsDeploymentRollbackEnabled = isDeploymentRollbackEnabled;
             IsMercurial = isMercurial;
             GitHubActionConfiguration = gitHubActionConfiguration;
             Kind = kind;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> &lt;code&gt;true&lt;/code&gt; if this is deployed via GitHub action. </summary>
         public bool? IsGitHubAction { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; to enable deployment rollback; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
-        public bool? DeploymentRollbackEnabled { get; set; }
+        public bool? IsDeploymentRollbackEnabled { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; for a Mercurial repository; &lt;code&gt;false&lt;/code&gt; for a Git repository. </summary>
         public bool? IsMercurial { get; set; }
         /// <summary> If GitHub Action is selected, than the associated configuration. </summary>

@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         private const string NameValue = "Name";
-        private const string UrlValue = "Url";
+        private const string UriValue = "Url";
 
         /// <summary> API_NAME;rev=API_REVISION - OPERATION_NAME. </summary>
         public static OperationNameFormat Name { get; } = new OperationNameFormat(NameValue);
         /// <summary> HTTP_VERB URL. </summary>
-        public static OperationNameFormat Url { get; } = new OperationNameFormat(UrlValue);
+        public static OperationNameFormat Uri { get; } = new OperationNameFormat(UriValue);
         /// <summary> Determines if two <see cref="OperationNameFormat"/> values are the same. </summary>
         public static bool operator ==(OperationNameFormat left, OperationNameFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OperationNameFormat"/> values are not the same. </summary>

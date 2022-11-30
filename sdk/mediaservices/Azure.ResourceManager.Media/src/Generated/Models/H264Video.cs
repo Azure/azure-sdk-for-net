@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Describes all the properties for encoding a video with the H.264 codec. </summary>
-    public partial class H264Video : Video
+    public partial class H264Video : MediaVideoBase
     {
         /// <summary> Initializes a new instance of H264Video. </summary>
         public H264Video()
@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="complexity"> Tells the encoder how to choose its encoding settings. The default value is Balanced. </param>
         /// <param name="layers"> The collection of output H.264 layers to be produced by the encoder. </param>
         /// <param name="rateControlMode"> The video rate control mode. </param>
-        /// <param name="sceneChangeDetection"> Whether or not the encoder should insert key frames at scene changes. If not specified, the default is false. This flag should be set to true only when the encoder is being configured to produce a single output video. </param>
-        internal H264Video(string odataType, string label, TimeSpan? keyFrameInterval, StretchMode? stretchMode, VideoSyncMode? syncMode, H264Complexity? complexity, IList<H264Layer> layers, H264RateControlMode? rateControlMode, bool? sceneChangeDetection) : base(odataType, label, keyFrameInterval, stretchMode, syncMode)
+        /// <param name="useSceneChangeDetection"> Whether or not the encoder should insert key frames at scene changes. If not specified, the default is false. This flag should be set to true only when the encoder is being configured to produce a single output video. </param>
+        internal H264Video(string odataType, string label, TimeSpan? keyFrameInterval, InputVideoStretchMode? stretchMode, VideoSyncMode? syncMode, H264Complexity? complexity, IList<H264Layer> layers, H264RateControlMode? rateControlMode, bool? useSceneChangeDetection) : base(odataType, label, keyFrameInterval, stretchMode, syncMode)
         {
             Complexity = complexity;
             Layers = layers;
             RateControlMode = rateControlMode;
-            SceneChangeDetection = sceneChangeDetection;
+            UseSceneChangeDetection = useSceneChangeDetection;
             OdataType = odataType ?? "#Microsoft.Media.H264Video";
         }
 
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> The video rate control mode. </summary>
         public H264RateControlMode? RateControlMode { get; set; }
         /// <summary> Whether or not the encoder should insert key frames at scene changes. If not specified, the default is false. This flag should be set to true only when the encoder is being configured to produce a single output video. </summary>
-        public bool? SceneChangeDetection { get; set; }
+        public bool? UseSceneChangeDetection { get; set; }
     }
 }

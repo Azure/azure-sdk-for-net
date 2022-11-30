@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor
     public partial class VmInsightsOnboardingStatusData : ResourceData
     {
         /// <summary> Initializes a new instance of VmInsightsOnboardingStatusData. </summary>
-        public VmInsightsOnboardingStatusData()
+        internal VmInsightsOnboardingStatusData()
         {
             Data = new ChangeTrackingList<DataContainer>();
         }
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="onboardingStatus"> The onboarding status for the resource. Note that, a higher level scope, e.g., resource group or subscription, is considered onboarded if at least one resource under it is onboarded. </param>
         /// <param name="dataStatus"> The status of VM Insights data from the resource. When reported as `present` the data array will contain information about the data containers to which data for the specified resource is being routed. </param>
         /// <param name="data"> Containers that currently store VM Insights data for the specified resource. </param>
-        internal VmInsightsOnboardingStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier resourceId, OnboardingStatus? onboardingStatus, DataStatus? dataStatus, IList<DataContainer> data) : base(id, name, resourceType, systemData)
+        internal VmInsightsOnboardingStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier resourceId, OnboardingStatus? onboardingStatus, DataStatus? dataStatus, IReadOnlyList<DataContainer> data) : base(id, name, resourceType, systemData)
         {
             ResourceId = resourceId;
             OnboardingStatus = onboardingStatus;
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary> Azure Resource Manager identifier of the resource whose onboarding status is being represented. </summary>
-        public ResourceIdentifier ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; }
         /// <summary> The onboarding status for the resource. Note that, a higher level scope, e.g., resource group or subscription, is considered onboarded if at least one resource under it is onboarded. </summary>
-        public OnboardingStatus? OnboardingStatus { get; set; }
+        public OnboardingStatus? OnboardingStatus { get; }
         /// <summary> The status of VM Insights data from the resource. When reported as `present` the data array will contain information about the data containers to which data for the specified resource is being routed. </summary>
-        public DataStatus? DataStatus { get; set; }
+        public DataStatus? DataStatus { get; }
         /// <summary> Containers that currently store VM Insights data for the specified resource. </summary>
-        public IList<DataContainer> Data { get; }
+        public IReadOnlyList<DataContainer> Data { get; }
     }
 }

@@ -41,6 +41,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="tags">Resource tags.</param>
         /// <param name="extendedLocation">The extended location of the custom
         /// IP prefix.</param>
+        /// <param name="asn">The ASN for CIDR advertising. Should be an
+        /// integer as string.</param>
         /// <param name="cidr">The prefix range in CIDR notation. Should
         /// include the start address and the prefix length.</param>
         /// <param name="signedMessage">Signed message for WAN
@@ -53,10 +55,19 @@ namespace Microsoft.Azure.Management.Network.Models
         /// IPv6 /48 CustomIpPrefix.</param>
         /// <param name="commissionedState">The commissioned state of the
         /// Custom IP Prefix. Possible values include: 'Provisioning',
-        /// 'Provisioned', 'Commissioning', 'Commissioned', 'Decommissioning',
-        /// 'Deprovisioning', 'CommissionedNoInternetAdvertise'</param>
+        /// 'Provisioned', 'Commissioning', 'CommissionedNoInternetAdvertise',
+        /// 'Commissioned', 'Decommissioning', 'Deprovisioning',
+        /// 'Deprovisioned'</param>
+        /// <param name="expressRouteAdvertise">Whether to do express route
+        /// advertise.</param>
+        /// <param name="geo">The Geo for CIDR advertising. Should be an Geo
+        /// code. Possible values include: 'GLOBAL', 'AFRI', 'APAC', 'EURO',
+        /// 'LATAM', 'NAM', 'ME', 'OCEANIA', 'AQ'</param>
         /// <param name="noInternetAdvertise">Whether to Advertise the range to
         /// Internet.</param>
+        /// <param name="prefixType">Type of custom IP prefix. Should be
+        /// Singular, Parent, or Child. Possible values include: 'Singular',
+        /// 'Parent', 'Child'</param>
         /// <param name="publicIpPrefixes">The list of all referenced
         /// PublicIpPrefixes.</param>
         /// <param name="resourceGuid">The resource GUID property of the custom
@@ -70,17 +81,21 @@ namespace Microsoft.Azure.Management.Network.Models
         /// the resource is updated.</param>
         /// <param name="zones">A list of availability zones denoting the IP
         /// allocated for the resource needs to come from.</param>
-        public CustomIpPrefix(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ExtendedLocation extendedLocation = default(ExtendedLocation), string cidr = default(string), string signedMessage = default(string), string authorizationMessage = default(string), SubResource customIpPrefixParent = default(SubResource), IList<SubResource> childCustomIpPrefixes = default(IList<SubResource>), string commissionedState = default(string), bool? noInternetAdvertise = default(bool?), IList<SubResource> publicIpPrefixes = default(IList<SubResource>), string resourceGuid = default(string), string failedReason = default(string), string provisioningState = default(string), string etag = default(string), IList<string> zones = default(IList<string>))
+        public CustomIpPrefix(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ExtendedLocation extendedLocation = default(ExtendedLocation), string asn = default(string), string cidr = default(string), string signedMessage = default(string), string authorizationMessage = default(string), SubResource customIpPrefixParent = default(SubResource), IList<SubResource> childCustomIpPrefixes = default(IList<SubResource>), string commissionedState = default(string), bool? expressRouteAdvertise = default(bool?), string geo = default(string), bool? noInternetAdvertise = default(bool?), string prefixType = default(string), IList<SubResource> publicIpPrefixes = default(IList<SubResource>), string resourceGuid = default(string), string failedReason = default(string), string provisioningState = default(string), string etag = default(string), IList<string> zones = default(IList<string>))
             : base(id, name, type, location, tags)
         {
             ExtendedLocation = extendedLocation;
+            Asn = asn;
             Cidr = cidr;
             SignedMessage = signedMessage;
             AuthorizationMessage = authorizationMessage;
             CustomIpPrefixParent = customIpPrefixParent;
             ChildCustomIpPrefixes = childCustomIpPrefixes;
             CommissionedState = commissionedState;
+            ExpressRouteAdvertise = expressRouteAdvertise;
+            Geo = geo;
             NoInternetAdvertise = noInternetAdvertise;
+            PrefixType = prefixType;
             PublicIpPrefixes = publicIpPrefixes;
             ResourceGuid = resourceGuid;
             FailedReason = failedReason;
@@ -100,6 +115,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "extendedLocation")]
         public ExtendedLocation ExtendedLocation { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ASN for CIDR advertising. Should be an integer as
+        /// string.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.asn")]
+        public string Asn { get; set; }
 
         /// <summary>
         /// Gets or sets the prefix range in CIDR notation. Should include the
@@ -135,17 +157,38 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets the commissioned state of the Custom IP Prefix.
         /// Possible values include: 'Provisioning', 'Provisioned',
-        /// 'Commissioning', 'Commissioned', 'Decommissioning',
-        /// 'Deprovisioning', 'CommissionedNoInternetAdvertise'
+        /// 'Commissioning', 'CommissionedNoInternetAdvertise', 'Commissioned',
+        /// 'Decommissioning', 'Deprovisioning', 'Deprovisioned'
         /// </summary>
         [JsonProperty(PropertyName = "properties.commissionedState")]
         public string CommissionedState { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether to do express route advertise.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.expressRouteAdvertise")]
+        public bool? ExpressRouteAdvertise { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Geo for CIDR advertising. Should be an Geo code.
+        /// Possible values include: 'GLOBAL', 'AFRI', 'APAC', 'EURO', 'LATAM',
+        /// 'NAM', 'ME', 'OCEANIA', 'AQ'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.geo")]
+        public string Geo { get; set; }
 
         /// <summary>
         /// Gets or sets whether to Advertise the range to Internet.
         /// </summary>
         [JsonProperty(PropertyName = "properties.noInternetAdvertise")]
         public bool? NoInternetAdvertise { get; set; }
+
+        /// <summary>
+        /// Gets or sets type of custom IP prefix. Should be Singular, Parent,
+        /// or Child. Possible values include: 'Singular', 'Parent', 'Child'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.prefixType")]
+        public string PrefixType { get; set; }
 
         /// <summary>
         /// Gets the list of all referenced PublicIpPrefixes.

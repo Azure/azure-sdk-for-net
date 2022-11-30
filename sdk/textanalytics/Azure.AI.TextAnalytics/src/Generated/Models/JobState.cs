@@ -18,13 +18,16 @@ namespace Azure.AI.TextAnalytics.Models
         /// <summary> Initializes a new instance of JobState. </summary>
         /// <param name="createdDateTime"></param>
         /// <param name="jobId"></param>
-        /// <param name="lastUpdateDateTime"></param>
-        /// <param name="status"></param>
-        internal JobState(DateTimeOffset createdDateTime, Guid jobId, DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status)
+        /// <param name="lastUpdatedDateTime"></param>
+        /// <param name="status"> The status of the task at the mentioned last update time. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        internal JobState(DateTimeOffset createdDateTime, string jobId, DateTimeOffset lastUpdatedDateTime, TextAnalyticsOperationStatus status)
         {
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
             CreatedDateTime = createdDateTime;
             JobId = jobId;
-            LastUpdateDateTime = lastUpdateDateTime;
+            LastUpdatedDateTime = lastUpdatedDateTime;
             Status = status;
             Errors = new ChangeTrackingList<Error>();
         }
@@ -34,17 +37,17 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="createdDateTime"></param>
         /// <param name="expirationDateTime"></param>
         /// <param name="jobId"></param>
-        /// <param name="lastUpdateDateTime"></param>
-        /// <param name="status"></param>
+        /// <param name="lastUpdatedDateTime"></param>
+        /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="errors"></param>
         /// <param name="nextLink"></param>
-        internal JobState(string displayName, DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, Guid jobId, DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status, IReadOnlyList<Error> errors, string nextLink)
+        internal JobState(string displayName, DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, string jobId, DateTimeOffset lastUpdatedDateTime, TextAnalyticsOperationStatus status, IReadOnlyList<Error> errors, string nextLink)
         {
             DisplayName = displayName;
             CreatedDateTime = createdDateTime;
             ExpirationDateTime = expirationDateTime;
             JobId = jobId;
-            LastUpdateDateTime = lastUpdateDateTime;
+            LastUpdatedDateTime = lastUpdatedDateTime;
             Status = status;
             Errors = errors;
             NextLink = nextLink;
@@ -57,10 +60,10 @@ namespace Azure.AI.TextAnalytics.Models
         /// <summary> Gets the expiration date time. </summary>
         public DateTimeOffset? ExpirationDateTime { get; }
         /// <summary> Gets the job id. </summary>
-        public Guid JobId { get; }
-        /// <summary> Gets the last update date time. </summary>
-        public DateTimeOffset LastUpdateDateTime { get; }
-        /// <summary> Gets the status. </summary>
+        public string JobId { get; }
+        /// <summary> Gets the last updated date time. </summary>
+        public DateTimeOffset LastUpdatedDateTime { get; }
+        /// <summary> The status of the task at the mentioned last update time. </summary>
         public TextAnalyticsOperationStatus Status { get; }
         /// <summary> Gets the errors. </summary>
         public IReadOnlyList<Error> Errors { get; }

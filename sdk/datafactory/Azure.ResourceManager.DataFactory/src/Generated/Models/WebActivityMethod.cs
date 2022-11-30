@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string GETValue = "GET";
+        private const string GetValue = "GET";
         private const string PostValue = "POST";
-        private const string PUTValue = "PUT";
+        private const string PutValue = "PUT";
         private const string DeleteValue = "DELETE";
 
         /// <summary> GET. </summary>
-        public static WebActivityMethod GET { get; } = new WebActivityMethod(GETValue);
+        public static WebActivityMethod Get { get; } = new WebActivityMethod(GetValue);
         /// <summary> POST. </summary>
         public static WebActivityMethod Post { get; } = new WebActivityMethod(PostValue);
         /// <summary> PUT. </summary>
-        public static WebActivityMethod PUT { get; } = new WebActivityMethod(PUTValue);
+        public static WebActivityMethod Put { get; } = new WebActivityMethod(PutValue);
         /// <summary> DELETE. </summary>
         public static WebActivityMethod Delete { get; } = new WebActivityMethod(DeleteValue);
         /// <summary> Determines if two <see cref="WebActivityMethod"/> values are the same. </summary>

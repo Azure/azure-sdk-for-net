@@ -80,7 +80,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanoauthcanary.blob.core.windows.net/3d7a4bfa-58c0-4b80-a607-f1ede74d929c/test-blob-4a90f3e0-54f2-5a39-b221-536c308bd758?versionid=2021-08-31T21%3A19%3A31.4330417Z\u0026sv=2021-08-06\u0026se=2021-09-01T21%3A19%3A32Z\u0026sr=b\u0026sp=xyi\u0026sig=Sanitized\u0026comp=immutabilityPolicies",
+      "RequestUri": "https://seanoauthcanary.blob.core.windows.net/3d7a4bfa-58c0-4b80-a607-f1ede74d929c/test-blob-4a90f3e0-54f2-5a39-b221-536c308bd758?versionid=2021-08-31T21%3A19%3A31.4330417Z\u0026sv=2021-12-02\u0026se=2021-09-01T21%3A19%3A32Z\u0026sr=b\u0026sp=xyi\u0026sig=Sanitized\u0026comp=immutabilityPolicies",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -113,7 +113,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanoauthcanary.blob.core.windows.net/3d7a4bfa-58c0-4b80-a607-f1ede74d929c/test-blob-4a90f3e0-54f2-5a39-b221-536c308bd758?versionid=2021-08-31T21%3A19%3A31.4330417Z\u0026sv=2021-08-06\u0026se=2021-09-01T21%3A19%3A32Z\u0026sr=b\u0026sp=xyi\u0026sig=Sanitized\u0026comp=legalhold",
+      "RequestUri": "https://seanoauthcanary.blob.core.windows.net/3d7a4bfa-58c0-4b80-a607-f1ede74d929c/test-blob-4a90f3e0-54f2-5a39-b221-536c308bd758?versionid=2021-08-31T21%3A19%3A31.4330417Z\u0026sv=2021-12-02\u0026se=2021-09-01T21%3A19%3A32Z\u0026sr=b\u0026sp=xyi\u0026sig=Sanitized\u0026comp=legalhold",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",

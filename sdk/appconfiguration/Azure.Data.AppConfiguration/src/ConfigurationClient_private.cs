@@ -15,20 +15,9 @@ namespace Azure.Data.AppConfiguration
     public partial class ConfigurationClient
     {
         private const string AcceptDateTimeFormat = "R";
-        private const string AcceptDatetimeHeader = "Accept-Datetime";
-        private const string KvRoute = "/kv/";
-        private const string RevisionsRoute = "/revisions/";
-        private const string LocksRoute = "/locks/";
         private const string KeyQueryFilter = "key";
         private const string LabelQueryFilter = "label";
         private const string FieldsQueryFilter = "$select";
-
-        private static readonly char[] s_reservedCharacters = new char[] { ',', '\\' };
-
-        private static readonly HttpHeader s_mediaTypeKeyValueApplicationHeader = new HttpHeader(
-            HttpHeader.Names.Accept,
-            "application/vnd.microsoft.appconfig.kv+json"
-        );
 
         private static async Task<Response<ConfigurationSetting>> CreateResponseAsync(Response response, CancellationToken cancellation)
         {
@@ -64,50 +53,6 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        private void BuildUriForKvRoute(RequestUriBuilder builder, ConfigurationSetting keyValue)
-            => BuildUriForKvRoute(builder, keyValue.Key, keyValue.Label); // TODO (pri 2) : does this need to filter ETag?
-
-        private void BuildUriForKvRoute(RequestUriBuilder builder, string key, string label)
-        {
-            builder.Reset(_endpoint);
-            builder.AppendPath(KvRoute, escape: false);
-            builder.AppendPath(key);
-
-            if (label != null)
-            {
-                builder.AppendQuery(LabelQueryFilter, label);
-            }
-        }
-
-        private void BuildUriForLocksRoute(RequestUriBuilder builder, string key, string label)
-        {
-            builder.Reset(_endpoint);
-            builder.AppendPath(LocksRoute, escape: false);
-            builder.AppendPath(key);
-
-            if (label != null)
-            {
-                builder.AppendQuery(LabelQueryFilter, label);
-            }
-        }
-
-        private static string EscapeReservedCharacters(string input)
-        {
-            string resp = string.Empty;
-            for (int i = 0; i < input.Length; i++)
-            {
-                if (s_reservedCharacters.Contains(input[i]))
-                {
-                    resp += $"\\{input[i]}";
-                }
-                else
-                {
-                    resp += input[i];
-                }
-            }
-            return resp;
-        }
-
         internal static void BuildBatchQuery(RequestUriBuilder builder, SettingSelector selector, string pageLink)
         {
             if (!string.IsNullOrEmpty(selector.KeyFilter))
@@ -130,20 +75,6 @@ namespace Azure.Data.AppConfiguration
             {
                 builder.AppendQuery("after", pageLink, escapeValue: false);
             }
-        }
-
-        private void BuildUriForGetBatch(RequestUriBuilder builder, SettingSelector selector, string pageLink)
-        {
-            builder.Reset(_endpoint);
-            builder.AppendPath(KvRoute, escape: false);
-            BuildBatchQuery(builder, selector, pageLink);
-        }
-
-        private void BuildUriForRevisions(RequestUriBuilder builder, SettingSelector selector, string pageLink)
-        {
-            builder.Reset(_endpoint);
-            builder.AppendPath(RevisionsRoute, escape: false);
-            BuildBatchQuery(builder, selector, pageLink);
         }
 
         #region nobody wants to see these

@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Media.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("playbackDurationSeconds");
-            writer.WriteNumberValue(PlaybackDurationSeconds);
+            writer.WriteNumberValue(PlaybackDurationInSeconds);
             writer.WritePropertyName("storageDurationSeconds");
-            writer.WriteNumberValue(StorageDurationSeconds);
+            writer.WriteNumberValue(StorageDurationInSeconds);
             writer.WriteEndObject();
         }
 

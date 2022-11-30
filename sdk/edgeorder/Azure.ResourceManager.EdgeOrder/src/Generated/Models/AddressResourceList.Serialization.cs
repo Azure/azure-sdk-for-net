@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         internal static AddressResourceList DeserializeAddressResourceList(JsonElement element)
         {
-            Optional<IReadOnlyList<AddressResourceData>> value = default;
+            Optional<IReadOnlyList<EdgeOrderAddressData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AddressResourceData> array = new List<AddressResourceData>();
+                    List<EdgeOrderAddressData> array = new List<EdgeOrderAddressData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AddressResourceData.DeserializeAddressResourceData(item));
+                        array.Add(EdgeOrderAddressData.DeserializeEdgeOrderAddressData(item));
                     }
                     value = array;
                     continue;

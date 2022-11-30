@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.TextAnalytics
 {
-    /// <summary> The State. </summary>
+    /// <summary> The status of the task at the mentioned last update time. </summary>
     public readonly partial struct TextAnalyticsOperationStatus : IEquatable<TextAnalyticsOperationStatus>
     {
         private readonly string _value;
@@ -25,10 +25,10 @@ namespace Azure.AI.TextAnalytics
         private const string NotStartedValue = "notStarted";
         private const string RunningValue = "running";
         private const string SucceededValue = "succeeded";
-        private const string PartiallySucceededValue = "partiallySucceeded";
         private const string FailedValue = "failed";
         private const string CancelledValue = "cancelled";
         private const string CancellingValue = "cancelling";
+        private const string PartiallyCompletedValue = "partiallyCompleted";
 
         /// <summary> notStarted. </summary>
         public static TextAnalyticsOperationStatus NotStarted { get; } = new TextAnalyticsOperationStatus(NotStartedValue);
@@ -36,14 +36,14 @@ namespace Azure.AI.TextAnalytics
         public static TextAnalyticsOperationStatus Running { get; } = new TextAnalyticsOperationStatus(RunningValue);
         /// <summary> succeeded. </summary>
         public static TextAnalyticsOperationStatus Succeeded { get; } = new TextAnalyticsOperationStatus(SucceededValue);
-        /// <summary> partiallySucceeded. </summary>
-        public static TextAnalyticsOperationStatus PartiallySucceeded { get; } = new TextAnalyticsOperationStatus(PartiallySucceededValue);
         /// <summary> failed. </summary>
         public static TextAnalyticsOperationStatus Failed { get; } = new TextAnalyticsOperationStatus(FailedValue);
         /// <summary> cancelled. </summary>
         public static TextAnalyticsOperationStatus Cancelled { get; } = new TextAnalyticsOperationStatus(CancelledValue);
         /// <summary> cancelling. </summary>
         public static TextAnalyticsOperationStatus Cancelling { get; } = new TextAnalyticsOperationStatus(CancellingValue);
+        /// <summary> partiallyCompleted. </summary>
+        public static TextAnalyticsOperationStatus PartiallyCompleted { get; } = new TextAnalyticsOperationStatus(PartiallyCompletedValue);
         /// <summary> Determines if two <see cref="TextAnalyticsOperationStatus"/> values are the same. </summary>
         public static bool operator ==(TextAnalyticsOperationStatus left, TextAnalyticsOperationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TextAnalyticsOperationStatus"/> values are not the same. </summary>

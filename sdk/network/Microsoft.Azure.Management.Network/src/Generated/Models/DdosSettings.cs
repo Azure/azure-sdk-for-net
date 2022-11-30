@@ -29,19 +29,16 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the DdosSettings class.
         /// </summary>
-        /// <param name="ddosCustomPolicy">The DDoS custom policy associated
-        /// with the public IP.</param>
-        /// <param name="protectionCoverage">The DDoS protection policy
-        /// customizability of the public IP. Only standard coverage will have
-        /// the ability to be customized. Possible values include: 'Basic',
-        /// 'Standard'</param>
-        /// <param name="protectedIP">Enables DDoS protection on the public
-        /// IP.</param>
-        public DdosSettings(SubResource ddosCustomPolicy = default(SubResource), string protectionCoverage = default(string), bool? protectedIP = default(bool?))
+        /// <param name="protectionMode">The DDoS protection mode of the public
+        /// IP. Possible values include: 'VirtualNetworkInherited', 'Enabled',
+        /// 'Disabled'</param>
+        /// <param name="ddosProtectionPlan">The DDoS protection plan
+        /// associated with the public IP. Can only be set if ProtectionMode is
+        /// Enabled</param>
+        public DdosSettings(string protectionMode = default(string), SubResource ddosProtectionPlan = default(SubResource))
         {
-            DdosCustomPolicy = ddosCustomPolicy;
-            ProtectionCoverage = protectionCoverage;
-            ProtectedIP = protectedIP;
+            ProtectionMode = protectionMode;
+            DdosProtectionPlan = ddosProtectionPlan;
             CustomInit();
         }
 
@@ -51,24 +48,18 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the DDoS custom policy associated with the public IP.
+        /// Gets or sets the DDoS protection mode of the public IP. Possible
+        /// values include: 'VirtualNetworkInherited', 'Enabled', 'Disabled'
         /// </summary>
-        [JsonProperty(PropertyName = "ddosCustomPolicy")]
-        public SubResource DdosCustomPolicy { get; set; }
+        [JsonProperty(PropertyName = "protectionMode")]
+        public string ProtectionMode { get; set; }
 
         /// <summary>
-        /// Gets or sets the DDoS protection policy customizability of the
-        /// public IP. Only standard coverage will have the ability to be
-        /// customized. Possible values include: 'Basic', 'Standard'
+        /// Gets or sets the DDoS protection plan associated with the public
+        /// IP. Can only be set if ProtectionMode is Enabled
         /// </summary>
-        [JsonProperty(PropertyName = "protectionCoverage")]
-        public string ProtectionCoverage { get; set; }
-
-        /// <summary>
-        /// Gets or sets enables DDoS protection on the public IP.
-        /// </summary>
-        [JsonProperty(PropertyName = "protectedIP")]
-        public bool? ProtectedIP { get; set; }
+        [JsonProperty(PropertyName = "ddosProtectionPlan")]
+        public SubResource DdosProtectionPlan { get; set; }
 
     }
 }

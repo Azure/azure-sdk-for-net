@@ -62,12 +62,8 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </summary>
         /// <param name="alertId"> Unique ID of an alert instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="alertId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
-        public virtual async Task<Response<ServiceAlertResource>> GetAsync(string alertId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceAlertResource>> GetAsync(Guid alertId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
-
             using var scope = _serviceAlertAlertsClientDiagnostics.CreateScope("ServiceAlertCollection.Get");
             scope.Start();
             try
@@ -91,12 +87,8 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </summary>
         /// <param name="alertId"> Unique ID of an alert instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="alertId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
-        public virtual Response<ServiceAlertResource> Get(string alertId, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceAlertResource> Get(Guid alertId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
-
             using var scope = _serviceAlertAlertsClientDiagnostics.CreateScope("ServiceAlertCollection.Get");
             scope.Start();
             try
@@ -137,7 +129,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="customTimeRange"> Filter by custom time range in the format &lt;start-time&gt;/&lt;end-time&gt;  where time is in (ISO-8601 format)&apos;. Permissible values is within 30 days from  query time. Either timeRange or customTimeRange could be used but not both. Default is none. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ServiceAlertResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServiceAlertResource> GetAllAsync(string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorService? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, AlertState? alertState = null, string alertRule = null, string smartGroupId = null, bool? includeContext = null, bool? includeEgressConfig = null, long? pageCount = null, AlertsSortByField? sortBy = null, SortOrder? sortOrder = null, string select = null, TimeRangeFilter? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ServiceAlertResource> GetAllAsync(string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorServiceSourceForAlert? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, ServiceAlertState? alertState = null, string alertRule = null, string smartGroupId = null, bool? includeContext = null, bool? includeEgressConfig = null, long? pageCount = null, ListServiceAlertsSortByField? sortBy = null, AlertsManagementQuerySortOrder? sortOrder = null, string select = null, TimeRangeFilter? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<ServiceAlertResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -196,7 +188,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="customTimeRange"> Filter by custom time range in the format &lt;start-time&gt;/&lt;end-time&gt;  where time is in (ISO-8601 format)&apos;. Permissible values is within 30 days from  query time. Either timeRange or customTimeRange could be used but not both. Default is none. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ServiceAlertResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServiceAlertResource> GetAll(string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorService? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, AlertState? alertState = null, string alertRule = null, string smartGroupId = null, bool? includeContext = null, bool? includeEgressConfig = null, long? pageCount = null, AlertsSortByField? sortBy = null, SortOrder? sortOrder = null, string select = null, TimeRangeFilter? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ServiceAlertResource> GetAll(string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorServiceSourceForAlert? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, ServiceAlertState? alertState = null, string alertRule = null, string smartGroupId = null, bool? includeContext = null, bool? includeEgressConfig = null, long? pageCount = null, ListServiceAlertsSortByField? sortBy = null, AlertsManagementQuerySortOrder? sortOrder = null, string select = null, TimeRangeFilter? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default)
         {
             Page<ServiceAlertResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -238,12 +230,8 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </summary>
         /// <param name="alertId"> Unique ID of an alert instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="alertId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string alertId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(Guid alertId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
-
             using var scope = _serviceAlertAlertsClientDiagnostics.CreateScope("ServiceAlertCollection.Exists");
             scope.Start();
             try
@@ -265,12 +253,8 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </summary>
         /// <param name="alertId"> Unique ID of an alert instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="alertId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
-        public virtual Response<bool> Exists(string alertId, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(Guid alertId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
-
             using var scope = _serviceAlertAlertsClientDiagnostics.CreateScope("ServiceAlertCollection.Exists");
             scope.Start();
             try

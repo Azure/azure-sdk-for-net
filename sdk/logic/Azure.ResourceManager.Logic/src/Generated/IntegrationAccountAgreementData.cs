@@ -25,28 +25,13 @@ namespace Azure.ResourceManager.Logic
         /// <param name="guestIdentity"> The business identity of the guest partner. </param>
         /// <param name="content"> The agreement content. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hostPartner"/>, <paramref name="guestPartner"/>, <paramref name="hostIdentity"/>, <paramref name="guestIdentity"/> or <paramref name="content"/> is null. </exception>
-        public IntegrationAccountAgreementData(AzureLocation location, AgreementType agreementType, string hostPartner, string guestPartner, BusinessIdentity hostIdentity, BusinessIdentity guestIdentity, AgreementContent content) : base(location)
+        public IntegrationAccountAgreementData(AzureLocation location, IntegrationAccountAgreementType agreementType, string hostPartner, string guestPartner, IntegrationAccountBusinessIdentity hostIdentity, IntegrationAccountBusinessIdentity guestIdentity, IntegrationAccountAgreementContent content) : base(location)
         {
-            if (hostPartner == null)
-            {
-                throw new ArgumentNullException(nameof(hostPartner));
-            }
-            if (guestPartner == null)
-            {
-                throw new ArgumentNullException(nameof(guestPartner));
-            }
-            if (hostIdentity == null)
-            {
-                throw new ArgumentNullException(nameof(hostIdentity));
-            }
-            if (guestIdentity == null)
-            {
-                throw new ArgumentNullException(nameof(guestIdentity));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(hostPartner, nameof(hostPartner));
+            Argument.AssertNotNull(guestPartner, nameof(guestPartner));
+            Argument.AssertNotNull(hostIdentity, nameof(hostIdentity));
+            Argument.AssertNotNull(guestIdentity, nameof(guestIdentity));
+            Argument.AssertNotNull(content, nameof(content));
 
             AgreementType = agreementType;
             HostPartner = hostPartner;
@@ -72,7 +57,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="hostIdentity"> The business identity of the host partner. </param>
         /// <param name="guestIdentity"> The business identity of the guest partner. </param>
         /// <param name="content"> The agreement content. </param>
-        internal IntegrationAccountAgreementData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, AgreementType agreementType, string hostPartner, string guestPartner, BusinessIdentity hostIdentity, BusinessIdentity guestIdentity, AgreementContent content) : base(id, name, resourceType, systemData, tags, location)
+        internal IntegrationAccountAgreementData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, IntegrationAccountAgreementType agreementType, string hostPartner, string guestPartner, IntegrationAccountBusinessIdentity hostIdentity, IntegrationAccountBusinessIdentity guestIdentity, IntegrationAccountAgreementContent content) : base(id, name, resourceType, systemData, tags, location)
         {
             CreatedOn = createdOn;
             ChangedOn = changedOn;
@@ -89,19 +74,48 @@ namespace Azure.ResourceManager.Logic
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The changed time. </summary>
         public DateTimeOffset? ChangedOn { get; }
-        /// <summary> The metadata. </summary>
+        /// <summary>
+        /// The metadata.
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public BinaryData Metadata { get; set; }
         /// <summary> The agreement type. </summary>
-        public AgreementType AgreementType { get; set; }
+        public IntegrationAccountAgreementType AgreementType { get; set; }
         /// <summary> The integration account partner that is set as host partner for this agreement. </summary>
         public string HostPartner { get; set; }
         /// <summary> The integration account partner that is set as guest partner for this agreement. </summary>
         public string GuestPartner { get; set; }
         /// <summary> The business identity of the host partner. </summary>
-        public BusinessIdentity HostIdentity { get; set; }
+        public IntegrationAccountBusinessIdentity HostIdentity { get; set; }
         /// <summary> The business identity of the guest partner. </summary>
-        public BusinessIdentity GuestIdentity { get; set; }
+        public IntegrationAccountBusinessIdentity GuestIdentity { get; set; }
         /// <summary> The agreement content. </summary>
-        public AgreementContent Content { get; set; }
+        public IntegrationAccountAgreementContent Content { get; set; }
     }
 }

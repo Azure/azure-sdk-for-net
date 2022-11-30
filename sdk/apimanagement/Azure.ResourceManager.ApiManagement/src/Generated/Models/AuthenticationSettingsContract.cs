@@ -17,16 +17,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Initializes a new instance of AuthenticationSettingsContract. </summary>
         /// <param name="oAuth2"> OAuth2 Authentication settings. </param>
-        /// <param name="openid"> OpenID Connect Authentication Settings. </param>
-        internal AuthenticationSettingsContract(OAuth2AuthenticationSettingsContract oAuth2, OpenIdAuthenticationSettingsContract openid)
+        /// <param name="openId"> OpenID Connect Authentication Settings. </param>
+        internal AuthenticationSettingsContract(OAuth2AuthenticationSettingsContract oAuth2, OpenIdAuthenticationSettingsContract openId)
         {
             OAuth2 = oAuth2;
-            Openid = openid;
+            OpenId = openId;
         }
 
         /// <summary> OAuth2 Authentication settings. </summary>
         public OAuth2AuthenticationSettingsContract OAuth2 { get; set; }
         /// <summary> OpenID Connect Authentication Settings. </summary>
-        public OpenIdAuthenticationSettingsContract Openid { get; set; }
+        public OpenIdAuthenticationSettingsContract OpenId { get; set; }
     }
 }

@@ -1,15 +1,23 @@
 # Release History
 
-## 12.14.0-beta.1 (Unreleased)
+## 12.15.0-beta.1 (Unreleased)
+- Added support for service version 2021-12-02.
+- Added support for Blob Cold Tier.
+- Fixed bug where BlobErrorCode.IncrementalCopyOfEarlierVersionSnapshotNotAllowed was spelled incorrectly.
 
-### Features Added
-Support for SDK-calculated transactional checksums on data transfer.
+## 12.14.1 (2022-10-20)
+- Fixed bug were BlobBaseClient constructor taking a URI and BlobClientOptions would ignore BlobClientOptions.TrimBlobNameSlashes.
 
-### Breaking Changes
+## 12.14.0 (2022-10-12)
+- Includes all features from 12.14.0-beta.1.
+- Added support for leading and trailing '/' characters in blob names when constructing URIs via builder.
 
-### Bugs Fixed
+## 12.14.0-beta.1 (2022-08-23)
+- Added support for service version 2021-10-04.
+- Added support for SDK-calculated transactional checksums on data transfer.
 
-### Other Changes
+## 12.13.1 (2022-08-22)
+- Added support for downloading blobs with bugged client-side encryption metadata from previous library versions.
 
 ## 12.13.0 (2022-07-07)
 - Includes all features from 12.13.0-beta.1.

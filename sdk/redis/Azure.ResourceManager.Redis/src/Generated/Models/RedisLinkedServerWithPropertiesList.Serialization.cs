@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Redis.Models
     {
         internal static RedisLinkedServerWithPropertiesList DeserializeRedisLinkedServerWithPropertiesList(JsonElement element)
         {
-            Optional<IReadOnlyList<RedisLinkedServerWithPropertiesData>> value = default;
+            Optional<IReadOnlyList<RedisLinkedServerWithPropertyData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Redis.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<RedisLinkedServerWithPropertiesData> array = new List<RedisLinkedServerWithPropertiesData>();
+                    List<RedisLinkedServerWithPropertyData> array = new List<RedisLinkedServerWithPropertyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RedisLinkedServerWithPropertiesData.DeserializeRedisLinkedServerWithPropertiesData(item));
+                        array.Add(RedisLinkedServerWithPropertyData.DeserializeRedisLinkedServerWithPropertyData(item));
                     }
                     value = array;
                     continue;

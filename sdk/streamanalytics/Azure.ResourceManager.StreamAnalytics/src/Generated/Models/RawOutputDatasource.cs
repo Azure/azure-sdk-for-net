@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Describes a raw output data source. This data source type is only applicable/usable when using the query testing API. You cannot create a job with this data source type or add an output of this data source type to an existing job. </summary>
-    public partial class RawOutputDatasource : OutputDataSource
+    public partial class RawOutputDatasource : StreamingJobOutputDataSource
     {
         /// <summary> Initializes a new instance of RawOutputDatasource. </summary>
         public RawOutputDatasource()

@@ -40,15 +40,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("retryIntervalInSeconds");
                 writer.WriteNumberValue(RetryIntervalInSeconds.Value);
             }
-            if (Optional.IsDefined(SecureInput))
+            if (Optional.IsDefined(EnableSecureInput))
             {
                 writer.WritePropertyName("secureInput");
-                writer.WriteBooleanValue(SecureInput.Value);
+                writer.WriteBooleanValue(EnableSecureInput.Value);
             }
-            if (Optional.IsDefined(SecureOutput))
+            if (Optional.IsDefined(EnableSecureOutput))
             {
                 writer.WritePropertyName("secureOutput");
-                writer.WriteBooleanValue(SecureOutput.Value);
+                writer.WriteBooleanValue(EnableSecureOutput.Value);
             }
             foreach (var item in AdditionalProperties)
             {

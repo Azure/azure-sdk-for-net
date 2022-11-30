@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> A rule condition based on a certain number of locations failing. </summary>
-    public partial class LocationThresholdRuleCondition : RuleCondition
+    public partial class LocationThresholdRuleCondition : AlertRuleCondition
     {
         /// <summary> Initializes a new instance of LocationThresholdRuleCondition. </summary>
         /// <param name="failedLocationCount"> the number of locations that must fail to activate the alert. </param>

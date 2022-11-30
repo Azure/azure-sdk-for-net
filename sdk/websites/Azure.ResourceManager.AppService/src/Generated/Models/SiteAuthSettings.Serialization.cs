@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -24,10 +25,10 @@ namespace Azure.ResourceManager.AppService.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(RuntimeVersion))
             {
@@ -39,10 +40,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("unauthenticatedClientAction");
                 writer.WriteStringValue(UnauthenticatedClientAction.Value.ToSerialString());
             }
-            if (Optional.IsDefined(TokenStoreEnabled))
+            if (Optional.IsDefined(IsTokenStoreEnabled))
             {
                 writer.WritePropertyName("tokenStoreEnabled");
-                writer.WriteBooleanValue(TokenStoreEnabled.Value);
+                writer.WriteBooleanValue(IsTokenStoreEnabled.Value);
             }
             if (Optional.IsCollectionDefined(AllowedExternalRedirectUrls))
             {
@@ -82,7 +83,11 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(ClientSecretCertificateThumbprint))
             {
                 writer.WritePropertyName("clientSecretCertificateThumbprint");
-                writer.WriteStringValue(ClientSecretCertificateThumbprint);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ClientSecretCertificateThumbprint);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ClientSecretCertificateThumbprint.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Issuer))
             {
@@ -270,7 +275,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> clientId = default;
             Optional<string> clientSecret = default;
             Optional<string> clientSecretSettingName = default;
-            Optional<string> clientSecretCertificateThumbprint = default;
+            Optional<BinaryData> clientSecretCertificateThumbprint = default;
             Optional<string> issuer = default;
             Optional<bool> validateIssuer = default;
             Optional<IList<string>> allowedAudiences = default;
@@ -426,7 +431,12 @@ namespace Azure.ResourceManager.AppService.Models
                         }
                         if (property0.NameEquals("clientSecretCertificateThumbprint"))
                         {
-                            clientSecretCertificateThumbprint = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            clientSecretCertificateThumbprint = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("issuer"))

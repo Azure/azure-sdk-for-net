@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -19,14 +20,8 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> or <paramref name="ipMask"/> is null. </exception>
         public IotHubIPFilterRule(string filterName, IotHubIPFilterActionType action, string ipMask)
         {
-            if (filterName == null)
-            {
-                throw new ArgumentNullException(nameof(filterName));
-            }
-            if (ipMask == null)
-            {
-                throw new ArgumentNullException(nameof(ipMask));
-            }
+            Argument.AssertNotNull(filterName, nameof(filterName));
+            Argument.AssertNotNull(ipMask, nameof(ipMask));
 
             FilterName = filterName;
             Action = action;

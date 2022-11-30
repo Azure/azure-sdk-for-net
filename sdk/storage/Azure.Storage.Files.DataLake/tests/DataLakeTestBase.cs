@@ -64,6 +64,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public string GetNewNonAsciiDirectoryName() => DataLakeClientBuilder.GetNewNonAsciiDirectoryName();
         public string GetNewFileName() => DataLakeClientBuilder.GetNewFileName();
         public string GetNewNonAsciiFileName() => DataLakeClientBuilder.GetNewNonAsciiFileName();
+        public Uri GetDefaultPrimaryEndpoint() => new Uri(DataLakeClientBuilder.Tenants.TestConfigHierarchicalNamespace.BlobServiceEndpoint);
 
         public async Task<DisposingFileSystem> GetNewFileSystem(
             DataLakeServiceClient service = default,
@@ -71,8 +72,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             IDictionary<string, string> metadata = default,
             PublicAccessType? publicAccessType = default,
             bool premium = default,
-            bool hnsEnabled = true)
-            => await DataLakeClientBuilder.GetNewFileSystem(service, fileSystemName, metadata, publicAccessType, premium, hnsEnabled);
+            bool hnsEnabled = true,
+            DataLakeFileSystemEncryptionScopeOptions encryptionScopeOptions = default)
+            => await DataLakeClientBuilder.GetNewFileSystem(service, fileSystemName, metadata, publicAccessType, premium, hnsEnabled, encryptionScopeOptions);
 
         public DataLakeClientOptions GetOptions(bool parallelRange = false)
             => DataLakeClientBuilder.GetOptions(parallelRange);
@@ -376,6 +378,26 @@ namespace Azure.Storage.Files.DataLake.Tests
                 lease = await InstrumentClient(fileSystem.GetDataLakeLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync(DataLakeLeaseClient.InfiniteLeaseDuration);
             }
             return leaseId == ReceivedLeaseId ? lease.LeaseId : leaseId;
+        }
+
+        /// <summary>
+        /// Gets a custom account SAS where the permissions, services and resourceType
+        /// comes back in the string character order that the user inputs it as.
+        /// </summary>
+        /// <param name="permissions"></param>
+        /// <param name="services"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="sharedKeyCredential"></param>
+        /// <returns></returns>
+        public override string GetCustomAccountSas(
+            string permissions = default,
+            string services = default,
+            string resourceType = default,
+            StorageSharedKeyCredential sharedKeyCredential = default)
+        {
+            // Default to the HNS credentials instead of the primary credentials in the base method
+            sharedKeyCredential ??= Tenants.GetNewHnsSharedKeyCredentials();
+            return base.GetCustomAccountSas(permissions, services, resourceType, sharedKeyCredential);
         }
 
         public DataLakeSignedIdentifier[] BuildSignedIdentifiers() =>

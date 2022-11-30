@@ -3,9 +3,11 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
+using System;
 using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.AlertsManagement.Tests

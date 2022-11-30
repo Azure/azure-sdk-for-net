@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static SingletonPartitionSchemeDescription DeserializeSingletonPartitionSchemeDescription(JsonElement element)
         {
-            PartitionScheme partitionScheme = default;
+            ApplicationPartitionScheme partitionScheme = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("partitionScheme"))
                 {
-                    partitionScheme = new PartitionScheme(property.Value.GetString());
+                    partitionScheme = new ApplicationPartitionScheme(property.Value.GetString());
                     continue;
                 }
             }

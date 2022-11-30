@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text.Json.Serialization;
+using Azure.Core;
 
 namespace Azure.Data.AppConfiguration
 {
@@ -75,6 +76,12 @@ namespace Azure.Data.AppConfiguration
         internal virtual void SetValue(string value)
         {
             _value = value;
+        }
+
+        internal static RequestContent ToRequestContent(ConfigurationSetting setting)
+        {
+            ReadOnlyMemory<byte> serializedSetting = ConfigurationServiceSerializer.SerializeRequestBody(setting);
+            return RequestContent.Create(serializedSetting);
         }
 
         /// <summary>

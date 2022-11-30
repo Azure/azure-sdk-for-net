@@ -97,5 +97,26 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             var documentModelAdministrationClient = new DocumentModelAdministrationClient(new Uri(endpoint), credential);
             #endregion
         }
+
+        [RecordedTest]
+        public async Task StartLongRunningOperation()
+        {
+            string endpoint = TestEnvironment.Endpoint;
+            string apiKey = TestEnvironment.ApiKey;
+            var credential = new AzureKeyCredential(apiKey);
+            var client = new DocumentModelAdministrationClient(new Uri(endpoint), credential);
+
+            Uri blobContainerUri = new Uri(TestEnvironment.BlobContainerSasUrl);
+            BuildDocumentModelOperation buildOperation = await client.BuildDocumentModelAsync(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
+            Response<DocumentModelDetails> operationResponse = await buildOperation.WaitForCompletionAsync();
+            DocumentModelDetails model = operationResponse.Value;
+
+            string modelId = model.ModelId;
+            DocumentModelCopyAuthorization authorization = await client.GetCopyAuthorizationAsync();
+
+            #region Snippet:WaitForLongRunningOperationV3
+            CopyDocumentModelToOperation operation = await client.CopyDocumentModelToAsync(WaitUntil.Completed, modelId, authorization);
+            #endregion
+        }
     }
 }

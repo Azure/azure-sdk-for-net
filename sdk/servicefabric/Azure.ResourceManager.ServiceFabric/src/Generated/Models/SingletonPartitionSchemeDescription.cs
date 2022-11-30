@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <summary> Initializes a new instance of SingletonPartitionSchemeDescription. </summary>
         public SingletonPartitionSchemeDescription()
         {
-            PartitionScheme = PartitionScheme.Singleton;
+            PartitionScheme = ApplicationPartitionScheme.Singleton;
         }
 
         /// <summary> Initializes a new instance of SingletonPartitionSchemeDescription. </summary>
         /// <param name="partitionScheme"> Specifies how the service is partitioned. </param>
-        internal SingletonPartitionSchemeDescription(PartitionScheme partitionScheme) : base(partitionScheme)
+        internal SingletonPartitionSchemeDescription(ApplicationPartitionScheme partitionScheme) : base(partitionScheme)
         {
             PartitionScheme = partitionScheme;
         }

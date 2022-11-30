@@ -251,9 +251,7 @@ namespace Microsoft.Azure.Management.IotHub
         /// Create or update the metadata of an Iot hub. The usual pattern to modify a
         /// property is to retrieve the IoT hub metadata and security metadata, and
         /// then combine them with the modified values in a new body to update the IoT
-        /// hub. If certain properties are missing in the JSON, updating IoT Hub may
-        /// cause these values to fallback to default, which may lead to unexpected
-        /// behavior.
+        /// hub.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the IoT hub.
@@ -274,10 +272,10 @@ namespace Microsoft.Azure.Management.IotHub
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IotHubDescription>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, IotHubDescription iotHubDescription, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IotHubDescription,IotHubResourceCreateOrUpdateHeaders>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, IotHubDescription iotHubDescription, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<IotHubDescription> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, resourceName, iotHubDescription, ifMatch, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<IotHubDescription,IotHubResourceCreateOrUpdateHeaders> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, resourceName, iotHubDescription, ifMatch, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -303,10 +301,10 @@ namespace Microsoft.Azure.Management.IotHub
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IotHubDescription>> UpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IotHubDescription,IotHubResourceUpdateHeaders>> UpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<IotHubDescription> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, resourceName, tags, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<IotHubDescription,IotHubResourceUpdateHeaders> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, resourceName, tags, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -328,10 +326,10 @@ namespace Microsoft.Azure.Management.IotHub
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<object>> DeleteWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<object,IotHubResourceDeleteHeaders>> DeleteWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse<object> _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, resourceName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<object,IotHubResourceDeleteHeaders> _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, resourceName, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -4171,9 +4169,7 @@ namespace Microsoft.Azure.Management.IotHub
         /// Create or update the metadata of an Iot hub. The usual pattern to modify a
         /// property is to retrieve the IoT hub metadata and security metadata, and
         /// then combine them with the modified values in a new body to update the IoT
-        /// hub. If certain properties are missing in the JSON, updating IoT Hub may
-        /// cause these values to fallback to default, which may lead to unexpected
-        /// behavior.
+        /// hub.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the IoT hub.
@@ -4209,7 +4205,7 @@ namespace Microsoft.Azure.Management.IotHub
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IotHubDescription>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, IotHubDescription iotHubDescription, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IotHubDescription,IotHubResourceCreateOrUpdateHeaders>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, IotHubDescription iotHubDescription, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -4362,7 +4358,7 @@ namespace Microsoft.Azure.Management.IotHub
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IotHubDescription>();
+            var _result = new AzureOperationResponse<IotHubDescription,IotHubResourceCreateOrUpdateHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -4404,6 +4400,19 @@ namespace Microsoft.Azure.Management.IotHub
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<IotHubResourceCreateOrUpdateHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
@@ -4449,7 +4458,7 @@ namespace Microsoft.Azure.Management.IotHub
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IotHubDescription>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IotHubDescription,IotHubResourceUpdateHeaders>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -4595,7 +4604,7 @@ namespace Microsoft.Azure.Management.IotHub
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IotHubDescription>();
+            var _result = new AzureOperationResponse<IotHubDescription,IotHubResourceUpdateHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -4619,6 +4628,19 @@ namespace Microsoft.Azure.Management.IotHub
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<IotHubResourceUpdateHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
@@ -4660,7 +4682,7 @@ namespace Microsoft.Azure.Management.IotHub
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<object>> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<object,IotHubResourceDeleteHeaders>> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -4789,7 +4811,7 @@ namespace Microsoft.Azure.Management.IotHub
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<object>();
+            var _result = new AzureOperationResponse<object,IotHubResourceDeleteHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -4849,6 +4871,19 @@ namespace Microsoft.Azure.Management.IotHub
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<IotHubResourceDeleteHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {

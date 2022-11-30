@@ -372,7 +372,7 @@ namespace Microsoft.Azure.Management.Maintenance
             Operations = new Operations(this);
             Updates = new UpdatesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-09-01-preview";
+            ApiVersion = "2022-07-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static ManagementEventAggregationCondition DeserializeManagementEventAggregationCondition(JsonElement element)
         {
-            Optional<ConditionOperator> @operator = default;
+            Optional<MonitorConditionOperator> @operator = default;
             Optional<double> threshold = default;
             Optional<TimeSpan> windowSize = default;
             foreach (var property in element.EnumerateObject())
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    @operator = property.Value.GetString().ToConditionOperator();
+                    @operator = property.Value.GetString().ToMonitorConditionOperator();
                     continue;
                 }
                 if (property.NameEquals("threshold"))

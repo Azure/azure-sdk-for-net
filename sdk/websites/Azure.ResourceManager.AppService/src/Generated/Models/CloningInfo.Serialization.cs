@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("correlationId");
                 writer.WriteStringValue(CorrelationId.Value);
             }
-            if (Optional.IsDefined(Overwrite))
+            if (Optional.IsDefined(CanOverwrite))
             {
                 writer.WritePropertyName("overwrite");
-                writer.WriteBooleanValue(Overwrite.Value);
+                writer.WriteBooleanValue(CanOverwrite.Value);
             }
             if (Optional.IsDefined(CloneCustomHostNames))
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(SourceWebAppLocation))
             {
                 writer.WritePropertyName("sourceWebAppLocation");
-                writer.WriteStringValue(SourceWebAppLocation);
+                writer.WriteStringValue(SourceWebAppLocation.Value);
             }
             if (Optional.IsDefined(HostingEnvironment))
             {
@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<bool> overwrite = default;
             Optional<bool> cloneCustomHostNames = default;
             Optional<bool> cloneSourceControl = default;
-            string sourceWebAppId = default;
-            Optional<string> sourceWebAppLocation = default;
+            ResourceIdentifier sourceWebAppId = default;
+            Optional<AzureLocation> sourceWebAppLocation = default;
             Optional<string> hostingEnvironment = default;
             Optional<IDictionary<string, string>> appSettingsOverrides = default;
             Optional<bool> configureLoadBalancing = default;
-            Optional<string> trafficManagerProfileId = default;
+            Optional<ResourceIdentifier> trafficManagerProfileId = default;
             Optional<string> trafficManagerProfileName = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -135,12 +135,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("sourceWebAppId"))
                 {
-                    sourceWebAppId = property.Value.GetString();
+                    sourceWebAppId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sourceWebAppLocation"))
                 {
-                    sourceWebAppLocation = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    sourceWebAppLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("hostingEnvironment"))
@@ -175,7 +180,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("trafficManagerProfileId"))
                 {
-                    trafficManagerProfileId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    trafficManagerProfileId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("trafficManagerProfileName"))
@@ -184,7 +194,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new CloningInfo(Optional.ToNullable(correlationId), Optional.ToNullable(overwrite), Optional.ToNullable(cloneCustomHostNames), Optional.ToNullable(cloneSourceControl), sourceWebAppId, sourceWebAppLocation.Value, hostingEnvironment.Value, Optional.ToDictionary(appSettingsOverrides), Optional.ToNullable(configureLoadBalancing), trafficManagerProfileId.Value, trafficManagerProfileName.Value);
+            return new CloningInfo(Optional.ToNullable(correlationId), Optional.ToNullable(overwrite), Optional.ToNullable(cloneCustomHostNames), Optional.ToNullable(cloneSourceControl), sourceWebAppId, Optional.ToNullable(sourceWebAppLocation), hostingEnvironment.Value, Optional.ToDictionary(appSettingsOverrides), Optional.ToNullable(configureLoadBalancing), trafficManagerProfileId.Value, trafficManagerProfileName.Value);
         }
     }
 }

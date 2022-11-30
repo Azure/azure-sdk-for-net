@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Describes a PostgreSQL output data source. </summary>
-    public partial class PostgreSQLOutputDataSource : OutputDataSource
+    public partial class PostgreSQLOutputDataSource : StreamingJobOutputDataSource
     {
         /// <summary> Initializes a new instance of PostgreSQLOutputDataSource. </summary>
         public PostgreSQLOutputDataSource()
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="password"> The password that will be used to connect to the Azure SQL database. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="maxWriterCount"> Max Writer count, currently only 1(single writer) and 0(based on query partition) are available. Optional on PUT requests. </param>
         /// <param name="authenticationMode"> Authentication Mode. </param>
-        internal PostgreSQLOutputDataSource(string outputDataSourceType, string server, string database, string table, string user, string password, float? maxWriterCount, AuthenticationMode? authenticationMode) : base(outputDataSourceType)
+        internal PostgreSQLOutputDataSource(string outputDataSourceType, string server, string database, string table, string user, string password, int? maxWriterCount, StreamAnalyticsAuthenticationMode? authenticationMode) : base(outputDataSourceType)
         {
             Server = server;
             Database = database;
@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> The password that will be used to connect to the Azure SQL database. Required on PUT (CreateOrReplace) requests. </summary>
         public string Password { get; set; }
         /// <summary> Max Writer count, currently only 1(single writer) and 0(based on query partition) are available. Optional on PUT requests. </summary>
-        public float? MaxWriterCount { get; set; }
+        public int? MaxWriterCount { get; set; }
         /// <summary> Authentication Mode. </summary>
-        public AuthenticationMode? AuthenticationMode { get; set; }
+        public StreamAnalyticsAuthenticationMode? AuthenticationMode { get; set; }
     }
 }

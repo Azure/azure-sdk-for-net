@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -21,9 +22,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> The resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> Managed service identity of the factory. </summary>
-        public FactoryIdentity Identity { get; set; }
+        /// <summary> Managed service identity of the factory. Current supported identity types: SystemAssigned, UserAssigned, SystemAssigned,UserAssigned. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Whether or not public network access is allowed for the data factory. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public FactoryPublicNetworkAccess? PublicNetworkAccess { get; set; }
     }
 }

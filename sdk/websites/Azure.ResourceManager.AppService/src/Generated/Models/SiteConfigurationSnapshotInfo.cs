@@ -24,18 +24,18 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="time"> The time the snapshot was taken. </param>
+        /// <param name="snapshotTakenOn"> The time the snapshot was taken. </param>
         /// <param name="snapshotId"> The id of the snapshot. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal SiteConfigurationSnapshotInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? time, int? snapshotId, string kind) : base(id, name, resourceType, systemData)
+        internal SiteConfigurationSnapshotInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? snapshotTakenOn, int? snapshotId, string kind) : base(id, name, resourceType, systemData)
         {
-            Time = time;
+            SnapshotTakenOn = snapshotTakenOn;
             SnapshotId = snapshotId;
             Kind = kind;
         }
 
         /// <summary> The time the snapshot was taken. </summary>
-        public DateTimeOffset? Time { get; }
+        public DateTimeOffset? SnapshotTakenOn { get; }
         /// <summary> The id of the snapshot. </summary>
         public int? SnapshotId { get; }
         /// <summary> Kind of resource. </summary>

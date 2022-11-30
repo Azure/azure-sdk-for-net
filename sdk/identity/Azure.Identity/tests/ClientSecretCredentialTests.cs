@@ -19,6 +19,30 @@ namespace Azure.Identity.Tests
         public override TokenCredential GetTokenCredential(TokenCredentialOptions options) => InstrumentClient(
             new ClientSecretCredential(expectedTenantId, ClientId, "secret", options, null, mockConfidentialMsalClient));
 
+        public override async Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)
+        {
+            Console.WriteLine(parameters.ToDebugString());
+
+            // no need to test with null TenantId since we can't construct this credential without it
+            if (parameters.TenantId == null)
+            {
+                Assert.Ignore("Null TenantId test does not apply to this credential");
+            }
+
+            var options = new ClientSecretCredentialOptions();
+
+            foreach (var addlTenant in parameters.AdditionallyAllowedTenants)
+            {
+                options.AdditionallyAllowedTenants.Add(addlTenant);
+            }
+
+            var msalClientMock = new MockMsalConfidentialClient(AuthenticationResultFactory.Create());
+
+            var cred = InstrumentClient(new ClientSecretCredential(parameters.TenantId, ClientId, "secret", options, null, msalClientMock));
+
+            await AssertAllowedTenantIdsEnforcedAsync(parameters, cred);
+        }
+
         [Test]
         public void VerifyCtorParametersValidation()
         {
@@ -38,7 +62,8 @@ namespace Azure.Identity.Tests
         {
             TestSetup();
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(TenantId, context);
+            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, TenantIdResolver.AllTenants);
+            var options = new ClientSecretCredentialOptions { AdditionallyAllowedTenants = { TenantIdHint } };
             ClientSecretCredential client =
                 InstrumentClient(new ClientSecretCredential(expectedTenantId, ClientId, "secret", options, null, mockConfidentialMsalClient));
 

@@ -1,6 +1,16 @@
 # Release History
 
-## 1.1.0-beta.5 (2022-07-18)
+## 1.1.0-beta.6 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.1.0-beta.5 (2022-07-21)
 
 ### Features Added
 
@@ -11,11 +21,11 @@
 Polishing since last public beta release:
 - Prepended `Communication` prefix to all single / simple model names.
 - Corrected the format of all `Guid` type properties / parameters.
-- Corrected the format of all `ResourceIdentifier` type properteis / parameters.
-- Corrected the format of all `ResouceType` type properteis / parameters.
-- Corrected the format of all `ETag` type properteis / parameters.
-- Corrected the format of all `AzureLocation` type properteis / parameters.
-- Corrected the format of all binary type properteis / parameters.
+- Corrected the format of all `ResourceIdentifier` type properties / parameters.
+- Corrected the format of all `ResouceType` type properties / parameters.
+- Corrected the format of all `ETag` type properties / parameters.
+- Corrected the format of all `AzureLocation` type properties / parameters.
+- Corrected the format of all binary type properties / parameters.
 - Corrected all acronyms which not follow [.Net Naming Guidelines](https://docs.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
 - Corrected enumeration name by following [Naming Enumerations Rule](https://docs.microsoft.com/dotnet/standard/design-guidelines/names-of-classes-structs-and-interfaces#naming-enumerations).
 - Corrected the suffix of `DateTimeOffset` properties / parameters.

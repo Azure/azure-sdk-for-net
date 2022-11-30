@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// 'Secondary'</param>
         /// <param name="systemData">The system meta data relating to this
         /// resource.</param>
-        public ArmDisasterRecovery(string id = default(string), string name = default(string), string type = default(string), string location = default(string), ProvisioningStateDR? provisioningState = default(ProvisioningStateDR?), long? pendingReplicationOperationsCount = default(long?), string partnerNamespace = default(string), string alternateName = default(string), RoleDisasterRecovery? role = default(RoleDisasterRecovery?), SystemData systemData = default(SystemData))
+        public ArmDisasterRecovery(string id = default(string), string name = default(string), string type = default(string), string location = default(string), string provisioningState = default(string), long? pendingReplicationOperationsCount = default(long?), string partnerNamespace = default(string), string alternateName = default(string), string role = default(string), SystemData systemData = default(SystemData))
             : base(id, name, type, location)
         {
             ProvisioningState = provisioningState;
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public ProvisioningStateDR? ProvisioningState { get; private set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets number of entities pending to be replicated.
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// 'Primary', 'PrimaryNotReplicating', 'Secondary'
         /// </summary>
         [JsonProperty(PropertyName = "properties.role")]
-        public RoleDisasterRecovery? Role { get; private set; }
+        public string Role { get; private set; }
 
         /// <summary>
         /// Gets the system meta data relating to this resource.

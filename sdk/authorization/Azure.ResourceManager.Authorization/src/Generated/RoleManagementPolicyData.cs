@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Authorization
         /// The available derived classes include <see cref="RoleManagementPolicyApprovalRule"/>, <see cref="RoleManagementPolicyAuthenticationContextRule"/>, <see cref="RoleManagementPolicyEnablementRule"/>, <see cref="RoleManagementPolicyExpirationRule"/> and <see cref="RoleManagementPolicyNotificationRule"/>.
         /// </param>
         /// <param name="policyProperties"> Additional properties of scope. </param>
-        internal RoleManagementPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, string displayName, string description, bool? isOrganizationDefault, AzurePrincipal lastModifiedBy, DateTimeOffset? lastModifiedOn, IList<RoleManagementPolicyRule> rules, IReadOnlyList<RoleManagementPolicyRule> effectiveRules, PolicyProperties policyProperties) : base(id, name, resourceType, systemData)
+        internal RoleManagementPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, string displayName, string description, bool? isOrganizationDefault, RoleManagementPrincipal lastModifiedBy, DateTimeOffset? lastModifiedOn, IList<RoleManagementPolicyRule> rules, IReadOnlyList<RoleManagementPolicyRule> effectiveRules, RoleManagementPolicyProperties policyProperties) : base(id, name, resourceType, systemData)
         {
             Scope = scope;
             DisplayName = displayName;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> The role management policy is default policy. </summary>
         public bool? IsOrganizationDefault { get; set; }
         /// <summary> The name of the entity last modified it. </summary>
-        public AzurePrincipal LastModifiedBy { get; }
+        public RoleManagementPrincipal LastModifiedBy { get; }
         /// <summary> The last modified date time. </summary>
         public DateTimeOffset? LastModifiedOn { get; }
         /// <summary>
@@ -83,11 +83,6 @@ namespace Azure.ResourceManager.Authorization
         /// </summary>
         public IReadOnlyList<RoleManagementPolicyRule> EffectiveRules { get; }
         /// <summary> Additional properties of scope. </summary>
-        internal PolicyProperties PolicyProperties { get; }
-        /// <summary> Details of the resource scope. </summary>
-        public PolicyPropertiesScope PolicyScope
-        {
-            get => PolicyProperties?.Scope;
-        }
+        public RoleManagementPolicyProperties PolicyProperties { get; }
     }
 }

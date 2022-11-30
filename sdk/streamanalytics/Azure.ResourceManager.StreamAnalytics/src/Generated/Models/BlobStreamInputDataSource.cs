@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> Initializes a new instance of BlobStreamInputDataSource. </summary>
         public BlobStreamInputDataSource()
         {
-            StorageAccounts = new ChangeTrackingList<StorageAccount>();
+            StorageAccounts = new ChangeTrackingList<StreamAnalyticsStorageAccount>();
             StreamInputDataSourceType = "Microsoft.Storage/Blob";
         }
 
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="timeFormat"> The time format. Wherever {time} appears in pathPattern, the value of this property is used as the time format instead. </param>
         /// <param name="authenticationMode"> Authentication Mode. </param>
         /// <param name="sourcePartitionCount"> The partition count of the blob input data source. Range 1 - 1024. </param>
-        internal BlobStreamInputDataSource(string streamInputDataSourceType, IList<StorageAccount> storageAccounts, string container, string pathPattern, string dateFormat, string timeFormat, AuthenticationMode? authenticationMode, int? sourcePartitionCount) : base(streamInputDataSourceType)
+        internal BlobStreamInputDataSource(string streamInputDataSourceType, IList<StreamAnalyticsStorageAccount> storageAccounts, string container, string pathPattern, string dateFormat, string timeFormat, StreamAnalyticsAuthenticationMode? authenticationMode, int? sourcePartitionCount) : base(streamInputDataSourceType)
         {
             StorageAccounts = storageAccounts;
             Container = container;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> A list of one or more Azure Storage accounts. Required on PUT (CreateOrReplace) requests. </summary>
-        public IList<StorageAccount> StorageAccounts { get; }
+        public IList<StreamAnalyticsStorageAccount> StorageAccounts { get; }
         /// <summary> The name of a container within the associated Storage account. This container contains either the blob(s) to be read from or written to. Required on PUT (CreateOrReplace) requests. </summary>
         public string Container { get; set; }
         /// <summary> The blob path pattern. Not a regular expression. It represents a pattern against which blob names will be matched to determine whether or not they should be included as input or output to the job. See https://docs.microsoft.com/en-us/rest/api/streamanalytics/stream-analytics-input or https://docs.microsoft.com/en-us/rest/api/streamanalytics/stream-analytics-output for a more detailed explanation and example. </summary>
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> The time format. Wherever {time} appears in pathPattern, the value of this property is used as the time format instead. </summary>
         public string TimeFormat { get; set; }
         /// <summary> Authentication Mode. </summary>
-        public AuthenticationMode? AuthenticationMode { get; set; }
+        public StreamAnalyticsAuthenticationMode? AuthenticationMode { get; set; }
         /// <summary> The partition count of the blob input data source. Range 1 - 1024. </summary>
         public int? SourcePartitionCount { get; set; }
     }

@@ -13,8 +13,8 @@ namespace Azure.AI.TextAnalytics
 {
     internal class OperationContinuationToken
     {
+        // This represents the version of the token, not the service API version. The value itself is actually arbitrary.
         private const ServiceVersion LatestTokenVersion = ServiceVersion.V3_1;
-
         private static readonly string s_latestTokenVersion = TextAnalyticsClientOptions.GetVersionString(LatestTokenVersion);
 
         private static readonly JsonSerializerOptions s_jsonOptions = new JsonSerializerOptions()

@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Initializes a new instance of OutboundEnvironmentEndpointCollection. </summary>
         internal OutboundEnvironmentEndpointCollection()
         {
-            Value = new ChangeTrackingList<OutboundEnvironmentEndpoint>();
+            Value = new ChangeTrackingList<BatchAccountOutboundEnvironmentEndpoint>();
         }
 
         /// <summary> Initializes a new instance of OutboundEnvironmentEndpointCollection. </summary>
         /// <param name="value"> The collection of outbound network dependency endpoints returned by the listing operation. </param>
         /// <param name="nextLink"> The continuation token. </param>
-        internal OutboundEnvironmentEndpointCollection(IReadOnlyList<OutboundEnvironmentEndpoint> value, string nextLink)
+        internal OutboundEnvironmentEndpointCollection(IReadOnlyList<BatchAccountOutboundEnvironmentEndpoint> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The collection of outbound network dependency endpoints returned by the listing operation. </summary>
-        public IReadOnlyList<OutboundEnvironmentEndpoint> Value { get; }
+        public IReadOnlyList<BatchAccountOutboundEnvironmentEndpoint> Value { get; }
         /// <summary> The continuation token. </summary>
         public string NextLink { get; }
     }

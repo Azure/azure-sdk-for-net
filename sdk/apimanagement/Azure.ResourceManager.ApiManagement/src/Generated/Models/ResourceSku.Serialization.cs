@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static ResourceSku DeserializeResourceSku(JsonElement element)
         {
-            Optional<SkuType> name = default;
+            Optional<ApiManagementServiceSkuType> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    name = new SkuType(property.Value.GetString());
+                    name = new ApiManagementServiceSkuType(property.Value.GetString());
                     continue;
                 }
             }

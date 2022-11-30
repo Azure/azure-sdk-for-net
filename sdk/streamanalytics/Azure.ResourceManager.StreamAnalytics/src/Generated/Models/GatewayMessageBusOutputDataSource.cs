@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Describes a Gateway Message Bus output data source. </summary>
-    public partial class GatewayMessageBusOutputDataSource : OutputDataSource
+    public partial class GatewayMessageBusOutputDataSource : StreamingJobOutputDataSource
     {
         /// <summary> Initializes a new instance of GatewayMessageBusOutputDataSource. </summary>
         public GatewayMessageBusOutputDataSource()

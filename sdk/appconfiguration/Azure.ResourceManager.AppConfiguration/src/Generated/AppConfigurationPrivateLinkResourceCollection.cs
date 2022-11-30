@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.AppConfiguration
 {
     /// <summary>
     /// A class representing a collection of <see cref="AppConfigurationPrivateLinkResource" /> and their operations.
-    /// Each <see cref="AppConfigurationPrivateLinkResource" /> in the collection will belong to the same instance of <see cref="ConfigurationStoreResource" />.
-    /// To get an <see cref="AppConfigurationPrivateLinkResourceCollection" /> instance call the GetAppConfigurationPrivateLinkResources method from an instance of <see cref="ConfigurationStoreResource" />.
+    /// Each <see cref="AppConfigurationPrivateLinkResource" /> in the collection will belong to the same instance of <see cref="AppConfigurationStoreResource" />.
+    /// To get an <see cref="AppConfigurationPrivateLinkResourceCollection" /> instance call the GetAppConfigurationPrivateLinkResources method from an instance of <see cref="AppConfigurationStoreResource" />.
     /// </summary>
     public partial class AppConfigurationPrivateLinkResourceCollection : ArmCollection, IEnumerable<AppConfigurationPrivateLinkResource>, IAsyncEnumerable<AppConfigurationPrivateLinkResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.AppConfiguration
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ConfigurationStoreResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ConfigurationStoreResource.ResourceType), nameof(id));
+            if (id.ResourceType != AppConfigurationStoreResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AppConfigurationStoreResource.ResourceType), nameof(id));
         }
 
         /// <summary>

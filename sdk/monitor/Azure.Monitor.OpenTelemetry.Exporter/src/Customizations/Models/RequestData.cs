@@ -32,7 +32,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Duration = activity.Duration < SchemaConstants.RequestData_Duration_LessThanDays
                 ? activity.Duration.ToString("c", CultureInfo.InvariantCulture)
                 : SchemaConstants.Duration_MaxValue;
-            Success = activity.GetStatus().StatusCode != StatusCode.Error;
+            Success = activity.Status != ActivityStatusCode.Error;
             ResponseCode = AzMonList.GetTagValue(ref monitorTags.MappedTags, SemanticConventions.AttributeHttpStatusCode)
                 ?.ToString().Truncate(SchemaConstants.RequestData_ResponseCode_MaxLength)
                 ?? "0";

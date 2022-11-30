@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppService
             Optional<SystemData> systemData = default;
             Optional<byte[]> blob = default;
             Optional<PublicCertificateLocation> publicCertificateLocation = default;
-            Optional<string> thumbprint = default;
+            Optional<BinaryData> thumbprint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -112,7 +112,12 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("thumbprint"))
                         {
-                            thumbprint = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            thumbprint = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                     }

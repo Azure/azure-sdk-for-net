@@ -19,28 +19,19 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="image"> The name of the image used to create the container instance. </param>
         /// <param name="resources"> The resource requirements of the container instance. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="image"/> or <paramref name="resources"/> is null. </exception>
-        public ContainerInstanceContainer(string name, string image, ResourceRequirements resources)
+        public ContainerInstanceContainer(string name, string image, ContainerResourceRequirements resources)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (image == null)
-            {
-                throw new ArgumentNullException(nameof(image));
-            }
-            if (resources == null)
-            {
-                throw new ArgumentNullException(nameof(resources));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(image, nameof(image));
+            Argument.AssertNotNull(resources, nameof(resources));
 
             Name = name;
             Image = image;
             Command = new ChangeTrackingList<string>();
             Ports = new ChangeTrackingList<ContainerPort>();
-            EnvironmentVariables = new ChangeTrackingList<EnvironmentVariable>();
+            EnvironmentVariables = new ChangeTrackingList<ContainerEnvironmentVariable>();
             Resources = resources;
-            VolumeMounts = new ChangeTrackingList<VolumeMount>();
+            VolumeMounts = new ChangeTrackingList<ContainerVolumeMount>();
         }
 
         /// <summary> Initializes a new instance of ContainerInstanceContainer. </summary>
@@ -54,7 +45,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="volumeMounts"> The volume mounts available to the container instance. </param>
         /// <param name="livenessProbe"> The liveness probe. </param>
         /// <param name="readinessProbe"> The readiness probe. </param>
-        internal ContainerInstanceContainer(string name, string image, IList<string> command, IList<ContainerPort> ports, IList<EnvironmentVariable> environmentVariables, ContainerPropertiesInstanceView instanceView, ResourceRequirements resources, IList<VolumeMount> volumeMounts, ContainerProbe livenessProbe, ContainerProbe readinessProbe)
+        internal ContainerInstanceContainer(string name, string image, IList<string> command, IList<ContainerPort> ports, IList<ContainerEnvironmentVariable> environmentVariables, ContainerInstanceView instanceView, ContainerResourceRequirements resources, IList<ContainerVolumeMount> volumeMounts, ContainerProbe livenessProbe, ContainerProbe readinessProbe)
         {
             Name = name;
             Image = image;
@@ -77,13 +68,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> The exposed ports on the container instance. </summary>
         public IList<ContainerPort> Ports { get; }
         /// <summary> The environment variables to set in the container instance. </summary>
-        public IList<EnvironmentVariable> EnvironmentVariables { get; }
+        public IList<ContainerEnvironmentVariable> EnvironmentVariables { get; }
         /// <summary> The instance view of the container instance. Only valid in response. </summary>
-        public ContainerPropertiesInstanceView InstanceView { get; }
+        public ContainerInstanceView InstanceView { get; }
         /// <summary> The resource requirements of the container instance. </summary>
-        public ResourceRequirements Resources { get; set; }
+        public ContainerResourceRequirements Resources { get; set; }
         /// <summary> The volume mounts available to the container instance. </summary>
-        public IList<VolumeMount> VolumeMounts { get; }
+        public IList<ContainerVolumeMount> VolumeMounts { get; }
         /// <summary> The liveness probe. </summary>
         public ContainerProbe LivenessProbe { get; set; }
         /// <summary> The readiness probe. </summary>

@@ -23,15 +23,15 @@ namespace Azure.ResourceManager.Media.Models
         }
 
         private const string AacLcValue = "AacLc";
-        private const string HeAacV1Value = "HeAacV1";
-        private const string HeAacV2Value = "HeAacV2";
+        private const string HEAacV1Value = "HeAacV1";
+        private const string HEAacV2Value = "HeAacV2";
 
         /// <summary> Specifies that the output audio is to be encoded into AAC Low Complexity profile (AAC-LC). </summary>
         public static AacAudioProfile AacLc { get; } = new AacAudioProfile(AacLcValue);
         /// <summary> Specifies that the output audio is to be encoded into HE-AAC v1 profile. </summary>
-        public static AacAudioProfile HeAacV1 { get; } = new AacAudioProfile(HeAacV1Value);
+        public static AacAudioProfile HEAacV1 { get; } = new AacAudioProfile(HEAacV1Value);
         /// <summary> Specifies that the output audio is to be encoded into HE-AAC v2 profile. </summary>
-        public static AacAudioProfile HeAacV2 { get; } = new AacAudioProfile(HeAacV2Value);
+        public static AacAudioProfile HEAacV2 { get; } = new AacAudioProfile(HEAacV2Value);
         /// <summary> Determines if two <see cref="AacAudioProfile"/> values are the same. </summary>
         public static bool operator ==(AacAudioProfile left, AacAudioProfile right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AacAudioProfile"/> values are not the same. </summary>

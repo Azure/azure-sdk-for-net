@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.Relay
                 writer.WritePropertyName("relayType");
                 writer.WriteStringValue(RelayType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(RequiresClientAuthorization))
+            if (Optional.IsDefined(IsClientAuthorizationRequired))
             {
                 writer.WritePropertyName("requiresClientAuthorization");
-                writer.WriteBooleanValue(RequiresClientAuthorization.Value);
+                writer.WriteBooleanValue(IsClientAuthorizationRequired.Value);
             }
-            if (Optional.IsDefined(RequiresTransportSecurity))
+            if (Optional.IsDefined(IsTransportSecurityRequired))
             {
                 writer.WritePropertyName("requiresTransportSecurity");
-                writer.WriteBooleanValue(RequiresTransportSecurity.Value);
+                writer.WriteBooleanValue(IsTransportSecurityRequired.Value);
             }
             if (Optional.IsDefined(UserMetadata))
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Relay
             Optional<DateTimeOffset> createdAt = default;
             Optional<DateTimeOffset> updatedAt = default;
             Optional<int> listenerCount = default;
-            Optional<Relaytype> relayType = default;
+            Optional<RelayType> relayType = default;
             Optional<bool> requiresClientAuthorization = default;
             Optional<bool> requiresTransportSecurity = default;
             Optional<string> userMetadata = default;
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Relay
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            relayType = property0.Value.GetString().ToRelaytype();
+                            relayType = property0.Value.GetString().ToRelayType();
                             continue;
                         }
                         if (property0.NameEquals("requiresClientAuthorization"))

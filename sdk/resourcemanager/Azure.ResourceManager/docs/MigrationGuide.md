@@ -1,4 +1,4 @@
-# Migrating from old to preview management SDK.
+# Migrating from old to new management SDK
 
 There are several differences between the old sdk and this new sdk. Here's an example of how to create a Virtual Machine with both SDKs:
 
@@ -16,7 +16,7 @@ using Microsoft.Rest;
 using System;
 using System.Threading.Tasks;
 ```
-#### New (Azure.ResourceManager._ Beta)
+#### New (Azure.ResourceManager._)
 ```C# Snippet:Using_Statements
 using System;
 using System.Linq;
@@ -73,9 +73,9 @@ ResourceGroupData resourceGroupData = new ResourceGroupData(location);
 ArmOperation<ResourceGroupResource> resourceGroupOperation = await resourceGroups.CreateOrUpdateAsync(WaitUntil.Completed, resourceGroupName, resourceGroupData);
 ResourceGroupResource resourceGroup = resourceGroupOperation.Value;
 ```
-The main difference is that the previous libraries represent all operations as flat, while the new preview libraries respresents the hierarchy of resources. In that way, you can use a `subscriptionCollection` to manage the resources in a particular subscription. In this example, a `resourceGroupCollection` is used to manage the resources in a particular resource group. In the example above, a new resource group is created from a resourceGroupCollection. With that `ResourceGroup` you will be able to get the resource collections to manage all the resources that will be inside it, as it is shown in the next part of this guide.
+The main difference is that the previous libraries represent all operations as flat, while the new libraries respresents the hierarchy of resources. In that way, you can use a `subscriptionCollection` to manage the resources in a particular subscription. In this example, a `resourceGroupCollection` is used to manage the resources in a particular resource group. In the example above, a new resource group is created from a resourceGroupCollection. With that `ResourceGroup` you will be able to get the resource collections to manage all the resources that will be inside it, as it is shown in the next part of this guide.
 
-The new preview SDK also provides some common classes to represent commonly-used constructs, like `Location`, and allows you to use them directly throughout the APIs, making it easier to discover how to properly configure resources.
+The new SDK also provides some common classes to represent commonly-used constructs, like `Location`, and allows you to use them directly throughout the APIs, making it easier to discover how to properly configure resources.
 
 ### Create an Availability Set
 #### Old

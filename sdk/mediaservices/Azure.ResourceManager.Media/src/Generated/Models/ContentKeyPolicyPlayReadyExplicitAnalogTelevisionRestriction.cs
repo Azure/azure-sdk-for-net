@@ -11,16 +11,16 @@ namespace Azure.ResourceManager.Media.Models
     public partial class ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction
     {
         /// <summary> Initializes a new instance of ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction. </summary>
-        /// <param name="bestEffort"> Indicates whether this restriction is enforced on a Best Effort basis. </param>
+        /// <param name="isBestEffort"> Indicates whether this restriction is enforced on a Best Effort basis. </param>
         /// <param name="configurationData"> Configures the restriction control bits. Must be between 0 and 3 inclusive. </param>
-        public ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction(bool bestEffort, int configurationData)
+        public ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction(bool isBestEffort, int configurationData)
         {
-            BestEffort = bestEffort;
+            IsBestEffort = isBestEffort;
             ConfigurationData = configurationData;
         }
 
         /// <summary> Indicates whether this restriction is enforced on a Best Effort basis. </summary>
-        public bool BestEffort { get; set; }
+        public bool IsBestEffort { get; set; }
         /// <summary> Configures the restriction control bits. Must be between 0 and 3 inclusive. </summary>
         public int ConfigurationData { get; set; }
     }

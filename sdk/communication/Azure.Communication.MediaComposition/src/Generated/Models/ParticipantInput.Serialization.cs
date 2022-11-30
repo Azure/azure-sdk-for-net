@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Communication;
 using Azure.Communication.MediaComposition;
 using Azure.Core;
 
@@ -17,22 +18,25 @@ namespace Azure.Communication.MediaComposition.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id");
-            writer.WriteObjectValue(Id);
+            writer.WriteObjectValue(ServiceId);
+            writer.WritePropertyName("call");
+            writer.WriteStringValue(Call);
+            writer.WritePropertyName("kind");
+            writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(PlaceholderImageUri))
             {
                 writer.WritePropertyName("placeholderImageUri");
                 writer.WriteStringValue(PlaceholderImageUri);
             }
-            writer.WritePropertyName("call");
-            writer.WriteStringValue(Call);
             writer.WriteEndObject();
         }
 
         internal static ParticipantInput DeserializeParticipantInput(JsonElement element)
         {
             CommunicationIdentifierModel id = default;
-            Optional<string> placeholderImageUri = default;
             string call = default;
+            MediaInputType kind = default;
+            Optional<string> placeholderImageUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -40,18 +44,23 @@ namespace Azure.Communication.MediaComposition.Models
                     id = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
-                if (property.NameEquals("placeholderImageUri"))
-                {
-                    placeholderImageUri = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("call"))
                 {
                     call = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("kind"))
+                {
+                    kind = new MediaInputType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("placeholderImageUri"))
+                {
+                    placeholderImageUri = property.Value.GetString();
+                    continue;
+                }
             }
-            return new ParticipantInput(id, placeholderImageUri.Value, call);
+            return new ParticipantInput(kind, placeholderImageUri.Value, id, call);
         }
     }
 }

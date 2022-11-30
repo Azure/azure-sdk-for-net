@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public LinkedIntegrationRuntimeRbacAuthorization(string resourceId)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
 
             ResourceId = resourceId;
             AuthorizationType = "RBAC";
@@ -30,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="authorizationType"> The authorization type for integration runtime sharing. </param>
         /// <param name="resourceId"> The resource identifier of the integration runtime to be shared. </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
-        internal LinkedIntegrationRuntimeRbacAuthorization(string authorizationType, string resourceId, CredentialReference credential) : base(authorizationType)
+        internal LinkedIntegrationRuntimeRbacAuthorization(string authorizationType, string resourceId, FactoryCredentialReference credential) : base(authorizationType)
         {
             ResourceId = resourceId;
             Credential = credential;
@@ -40,6 +38,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The resource identifier of the integration runtime to be shared. </summary>
         public string ResourceId { get; set; }
         /// <summary> The credential reference containing authentication information. </summary>
-        public CredentialReference Credential { get; set; }
+        public FactoryCredentialReference Credential { get; set; }
     }
 }

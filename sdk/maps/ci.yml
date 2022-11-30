@@ -1,0 +1,46 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger:
+  branches:
+    include:
+    - main
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/maps/
+    exclude:
+    - sdk/maps/Azure.ResourceManager.Maps/
+    - sdk/maps/ci.mgmt.yml
+
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/maps/
+    exclude:
+    - sdk/maps/Azure.ResourceManager.Maps/
+    - sdk/maps/ci.mgmt.yml
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    SDKType: client
+    ServiceDirectory: maps
+    ArtifactName: packages
+    Artifacts:
+    - name: Azure.Maps.Common
+      safeName: AzureMapsCommon
+    - name: Azure.Maps.Rendering
+      safeName: AzureMapsRendering
+    - name: Azure.Maps.Routing
+      safeName: AzureMapsRouting
+    - name: Azure.Maps.Search
+      safeName: AzureMapsSearch
+    - name: Azure.Maps.Geolocation
+      safeName: AzureMapsGeolocation

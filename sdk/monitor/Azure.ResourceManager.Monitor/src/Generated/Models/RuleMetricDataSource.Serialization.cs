@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<string> metricName = default;
             string odataType = default;
             Optional<ResourceIdentifier> resourceUri = default;
-            Optional<string> legacyResourceId = default;
+            Optional<ResourceIdentifier> legacyResourceId = default;
             Optional<string> resourceLocation = default;
             Optional<string> metricNamespace = default;
             foreach (var property in element.EnumerateObject())
@@ -77,7 +77,12 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("legacyResourceId"))
                 {
-                    legacyResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    legacyResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resourceLocation"))

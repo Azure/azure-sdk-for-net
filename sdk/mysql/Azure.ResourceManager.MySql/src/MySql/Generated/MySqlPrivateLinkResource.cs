@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MySql
     /// A Class representing a MySqlPrivateLinkResource along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MySqlPrivateLinkResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetMySqlPrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServerResource" /> using the GetMySqlPrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MySqlServerResource" /> using the GetMySqlPrivateLinkResource method.
     /// </summary>
     public partial class MySqlPrivateLinkResource : ArmResource
     {

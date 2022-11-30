@@ -34,13 +34,20 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
             if (Optional.IsCollectionDefined(VmssVmList))
             {
-                writer.WritePropertyName("vmssVMList");
-                writer.WriteStartArray();
-                foreach (var item in VmssVmList)
+                if (VmssVmList != null)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WritePropertyName("vmssVMList");
+                    writer.WriteStartArray();
+                    foreach (var item in VmssVmList)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("vmssVMList");
+                }
             }
             writer.WriteEndObject();
         }
@@ -49,16 +56,16 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         {
             Optional<string> targetResourceId = default;
             Optional<GuestConfigurationNavigation> guestConfiguration = default;
-            Optional<ComplianceStatus> complianceStatus = default;
+            Optional<AssignedGuestConfigurationMachineComplianceStatus> complianceStatus = default;
             Optional<DateTimeOffset?> lastComplianceStatusChecked = default;
-            Optional<string> latestReportId = default;
+            Optional<ResourceIdentifier> latestReportId = default;
             Optional<string> parameterHash = default;
-            Optional<AssignmentReport> latestAssignmentReport = default;
+            Optional<GuestConfigurationAssignmentReportInfo> latestAssignmentReport = default;
             Optional<string> context = default;
             Optional<string> assignmentHash = default;
-            Optional<ProvisioningState?> provisioningState = default;
+            Optional<GuestConfigurationProvisioningState?> provisioningState = default;
             Optional<string> resourceType = default;
-            Optional<IList<VmssVmInfo>> vmssVmList = default;
+            Optional<IList<GuestConfigurationVmssVmInfo>> vmssVmList = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetResourceId"))
@@ -88,7 +95,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    complianceStatus = new ComplianceStatus(property.Value.GetString());
+                    complianceStatus = new AssignedGuestConfigurationMachineComplianceStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lastComplianceStatusChecked"))
@@ -108,7 +115,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         latestReportId = null;
                         continue;
                     }
-                    latestReportId = property.Value.GetString();
+                    latestReportId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("parameterHash"))
@@ -128,7 +135,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    latestAssignmentReport = AssignmentReport.DeserializeAssignmentReport(property.Value);
+                    latestAssignmentReport = GuestConfigurationAssignmentReportInfo.DeserializeGuestConfigurationAssignmentReportInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("context"))
@@ -153,7 +160,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         provisioningState = null;
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new GuestConfigurationProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resourceType"))
@@ -170,13 +177,13 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        vmssVmList = null;
                         continue;
                     }
-                    List<VmssVmInfo> array = new List<VmssVmInfo>();
+                    List<GuestConfigurationVmssVmInfo> array = new List<GuestConfigurationVmssVmInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VmssVmInfo.DeserializeVmssVmInfo(item));
+                        array.Add(GuestConfigurationVmssVmInfo.DeserializeGuestConfigurationVmssVmInfo(item));
                     }
                     vmssVmList = array;
                     continue;

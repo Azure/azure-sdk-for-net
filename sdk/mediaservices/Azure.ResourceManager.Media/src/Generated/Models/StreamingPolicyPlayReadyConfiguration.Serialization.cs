@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Media.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CustomLicenseAcquisitionUrlTemplate))
+            if (Optional.IsDefined(CustomLicenseAcquisitionUriTemplate))
             {
                 writer.WritePropertyName("customLicenseAcquisitionUrlTemplate");
-                writer.WriteStringValue(CustomLicenseAcquisitionUrlTemplate);
+                writer.WriteStringValue(CustomLicenseAcquisitionUriTemplate);
             }
             if (Optional.IsDefined(PlayReadyCustomAttributes))
             {
@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static StreamingPolicyPlayReadyConfiguration DeserializeStreamingPolicyPlayReadyConfiguration(JsonElement element)
         {
-            Optional<string> customLicenseAcquisitionUrlTemplate = default;
+            Optional<string> customLicenseAcquisitionUriTemplate = default;
             Optional<string> playReadyCustomAttributes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("customLicenseAcquisitionUrlTemplate"))
                 {
-                    customLicenseAcquisitionUrlTemplate = property.Value.GetString();
+                    customLicenseAcquisitionUriTemplate = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("playReadyCustomAttributes"))
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new StreamingPolicyPlayReadyConfiguration(customLicenseAcquisitionUrlTemplate.Value, playReadyCustomAttributes.Value);
+            return new StreamingPolicyPlayReadyConfiguration(customLicenseAcquisitionUriTemplate.Value, playReadyCustomAttributes.Value);
         }
     }
 }

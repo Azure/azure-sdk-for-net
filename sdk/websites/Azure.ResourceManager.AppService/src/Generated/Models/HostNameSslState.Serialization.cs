@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -33,7 +34,11 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Thumbprint))
             {
                 writer.WritePropertyName("thumbprint");
-                writer.WriteStringValue(Thumbprint);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Thumbprint);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Thumbprint.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ToUpdate))
             {
@@ -58,11 +63,11 @@ namespace Azure.ResourceManager.AppService.Models
         internal static HostNameSslState DeserializeHostNameSslState(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<SslState> sslState = default;
+            Optional<HostNameBindingSslState> sslState = default;
             Optional<string> virtualIP = default;
-            Optional<string> thumbprint = default;
+            Optional<BinaryData> thumbprint = default;
             Optional<bool?> toUpdate = default;
-            Optional<HostType> hostType = default;
+            Optional<AppServiceHostType> hostType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -77,7 +82,7 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sslState = property.Value.GetString().ToSslState();
+                    sslState = property.Value.GetString().ToHostNameBindingSslState();
                     continue;
                 }
                 if (property.NameEquals("virtualIP"))
@@ -87,7 +92,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("thumbprint"))
                 {
-                    thumbprint = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    thumbprint = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("toUpdate"))
@@ -107,7 +117,7 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    hostType = property.Value.GetString().ToHostType();
+                    hostType = property.Value.GetString().ToAppServiceHostType();
                     continue;
                 }
             }

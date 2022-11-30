@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="autoRenew"> AutoRenew commitment plan. </param>
         /// <param name="next"> Cognitive Services account commitment period. </param>
         /// <param name="last"> Cognitive Services account commitment period. </param>
-        internal CommitmentPlanProperties(HostingModel? hostingModel, string planType, CommitmentPeriod current, bool? autoRenew, CommitmentPeriod next, CommitmentPeriod last)
+        internal CommitmentPlanProperties(ServiceAccountHostingModel? hostingModel, string planType, CommitmentPeriod current, bool? autoRenew, CommitmentPeriod next, CommitmentPeriod last)
         {
             HostingModel = hostingModel;
             PlanType = planType;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Account hosting model. </summary>
-        public HostingModel? HostingModel { get; set; }
+        public ServiceAccountHostingModel? HostingModel { get; set; }
         /// <summary> Commitment plan type. </summary>
         public string PlanType { get; set; }
         /// <summary> Cognitive Services account commitment period. </summary>

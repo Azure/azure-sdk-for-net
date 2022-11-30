@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ElasticSan.Models;
@@ -26,14 +27,14 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="elasticSanVolumeId"> Unique Id of the volume in GUID format. </param>
+        /// <param name="volumeId"> Unique Id of the volume in GUID format. </param>
         /// <param name="creationData"> State of the operation on the resource. </param>
         /// <param name="sizeGiB"> Volume size. </param>
         /// <param name="storageTarget"> Storage target information. </param>
         /// <param name="tags"> Azure resource tags. </param>
-        internal ElasticSanVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string elasticSanVolumeId, SourceCreationData creationData, long? sizeGiB, IscsiTargetInfo storageTarget, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        internal ElasticSanVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? volumeId, ElasticSanVolumeDataSourceInfo creationData, long? sizeGiB, IscsiTargetInfo storageTarget, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
-            ElasticSanVolumeId = elasticSanVolumeId;
+            VolumeId = volumeId;
             CreationData = creationData;
             SizeGiB = sizeGiB;
             StorageTarget = storageTarget;
@@ -41,9 +42,9 @@ namespace Azure.ResourceManager.ElasticSan
         }
 
         /// <summary> Unique Id of the volume in GUID format. </summary>
-        public string ElasticSanVolumeId { get; }
+        public Guid? VolumeId { get; }
         /// <summary> State of the operation on the resource. </summary>
-        public SourceCreationData CreationData { get; set; }
+        public ElasticSanVolumeDataSourceInfo CreationData { get; set; }
         /// <summary> Volume size. </summary>
         public long? SizeGiB { get; set; }
         /// <summary> Storage target information. </summary>

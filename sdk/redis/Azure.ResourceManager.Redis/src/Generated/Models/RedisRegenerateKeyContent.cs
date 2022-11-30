@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Redis.Models
     {
         /// <summary> Initializes a new instance of RedisRegenerateKeyContent. </summary>
         /// <param name="keyType"> The Redis access key to regenerate. </param>
-        public RedisRegenerateKeyContent(RedisKeyType keyType)
+        public RedisRegenerateKeyContent(RedisRegenerateKeyType keyType)
         {
             KeyType = keyType;
         }
 
         /// <summary> The Redis access key to regenerate. </summary>
-        public RedisKeyType KeyType { get; }
+        public RedisRegenerateKeyType KeyType { get; }
     }
 }

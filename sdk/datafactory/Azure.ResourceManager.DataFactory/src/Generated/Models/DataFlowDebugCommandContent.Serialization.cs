@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(SessionId))
             {
                 writer.WritePropertyName("sessionId");
-                writer.WriteStringValue(SessionId);
+                writer.WriteStringValue(SessionId.Value);
             }
             if (Optional.IsDefined(Command))
             {

@@ -6,13 +6,12 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Identitiy;
 
 namespace Azure.Identity
 {
@@ -29,7 +28,7 @@ namespace Azure.Identity
         internal const string Troubleshoot = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/azclicredential/troubleshoot";
         internal const string InteractiveLoginRequired = "Azure CLI could not login. Interactive login is required.";
         internal const string CLIInternalError = "CLIInternalError: The command failed with an unexpected error. Here is the traceback:";
-        private const int CliProcessTimeoutMs = 13000;
+        internal TimeSpan CliProcessTimeout { get; private set; }
 
         // The default install paths are used to find Azure CLI if no path is specified. This is to prevent executing out of the current working directory.
         private static readonly string DefaultPathWindows = $"{EnvironmentVariables.ProgramFilesX86}\\Microsoft SDKs\\Azure\\CLI2\\wbin;{EnvironmentVariables.ProgramFiles}\\Microsoft SDKs\\Azure\\CLI2\\wbin";
@@ -46,9 +45,10 @@ namespace Azure.Identity
 
         private readonly CredentialPipeline _pipeline;
         private readonly IProcessService _processService;
-        private readonly string _tenantId;
         private readonly bool _logPII;
         private readonly bool _logAccountDetails;
+        internal string TenantId { get; }
+        internal string[] AdditionallyAllowedTenantIds { get; }
 
         /// <summary>
         /// Create an instance of CliCredential class.
@@ -72,7 +72,9 @@ namespace Azure.Identity
             _pipeline = pipeline;
             _path = !string.IsNullOrEmpty(EnvironmentVariables.Path) ? EnvironmentVariables.Path : DefaultPath;
             _processService = processService ?? ProcessService.Default;
-            _tenantId = options?.TenantId;
+            TenantId = options?.TenantId;
+            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenantsCore);
+            CliProcessTimeout = options?.CliProcessTimeout ?? TimeSpan.FromSeconds(13);
         }
 
         /// <summary>
@@ -115,13 +117,13 @@ namespace Azure.Identity
         private async ValueTask<AccessToken> RequestCliAccessTokenAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
         {
             string resource = ScopeUtilities.ScopesToResource(context.Scopes);
-            string tenantId = TenantIdResolver.Resolve(_tenantId, context);
+            string tenantId = TenantIdResolver.Resolve(TenantId, context, AdditionallyAllowedTenantIds);
 
             ScopeUtilities.ValidateScope(resource);
 
             GetFileNameAndArguments(resource, tenantId, out string fileName, out string argument);
             ProcessStartInfo processStartInfo = GetAzureCliProcessStartInfo(fileName, argument);
-            using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), TimeSpan.FromMilliseconds(CliProcessTimeoutMs), _logPII, cancellationToken);
+            using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), CliProcessTimeout, _logPII, cancellationToken);
 
             string output;
             try
@@ -143,10 +145,11 @@ namespace Azure.Identity
                     throw new CredentialUnavailableException(AzureCLINotInstalled);
                 }
 
+                bool isAADSTSError = exception.Message.Contains("AADSTS");
                 bool isLoginError = exception.Message.IndexOf("az login", StringComparison.OrdinalIgnoreCase) != -1 ||
                                     exception.Message.IndexOf("az account set", StringComparison.OrdinalIgnoreCase) != -1;
 
-                if (isLoginError)
+                if (isLoginError && !isAADSTSError)
                 {
                     throw new CredentialUnavailableException(AzNotLogIn);
                 }
@@ -167,7 +170,7 @@ namespace Azure.Identity
             if (_logAccountDetails)
             {
                 var accountDetails = TokenHelper.ParseAccountInfoFromToken(token.Token);
-                AzureIdentityEventSource.Singleton.AuthenticatedAccountDetails(accountDetails.ClientId, accountDetails.TenantId ?? _tenantId, accountDetails.Upn, accountDetails.ObjectId);
+                AzureIdentityEventSource.Singleton.AuthenticatedAccountDetails(accountDetails.ClientId, accountDetails.TenantId ?? TenantId, accountDetails.Upn, accountDetails.ObjectId);
             }
 
             return token;

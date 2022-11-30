@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ContainerRegistry
     /// A Class representing a ContainerRegistryPrivateEndpointConnection along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ContainerRegistryPrivateEndpointConnectionResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetContainerRegistryPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="RegistryResource" /> using the GetContainerRegistryPrivateEndpointConnection method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerRegistryResource" /> using the GetContainerRegistryPrivateEndpointConnection method.
     /// </summary>
     public partial class ContainerRegistryPrivateEndpointConnectionResource : ArmResource
     {

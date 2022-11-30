@@ -10,6 +10,7 @@ Familiarity with the `Microsoft.Azure.ApplicationInsights.Query` v1.0.0 package 
   - [Cross-service SDK improvements](#cross-service-sdk-improvements)
   - [New features](#new-features)
 - [Important changes](#important-changes)
+  - [Resource mode support](#resource-mode-support)
   - [The client](#the-client)
   - [Client constructors and authentication](#client-constructors-and-authentication)
   - [Send a single query request](#sending-a-single-query-request)
@@ -43,6 +44,10 @@ There are a variety of new features in version 1.0 of the `Azure.Monitor.Query` 
 For more new features, changes, and bug fixes, see the [CHANGELOG](https://github.com/Azure/azure-sdk-for-net/blob/Azure.Monitor.Query_1.0.1/sdk/monitor/Azure.Monitor.Query/CHANGELOG.md).
 
 ## Important changes
+
+### Resource mode support
+
+The Azure Monitor Query library doesn't support Application Insights resources using the [classic resource mode](https://docs.microsoft.com/azure/azure-monitor/app/create-new-resource). To use this library with a classic Application Insights resource, you must first [migrate to a workspace-based resource](https://docs.microsoft.com/azure/azure-monitor/app/convert-classic-resource).
 
 ### The client
 

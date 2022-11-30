@@ -18,7 +18,8 @@ namespace Azure.ResourceManager.Network.Tests
     {
         private SubscriptionResource _subscription;
 
-        public PublicIpPrefixTests(bool isAsync) : base(isAsync)
+        public PublicIpPrefixTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -38,10 +39,12 @@ namespace Azure.ResourceManager.Network.Tests
             return resourceGroup.GetPublicIPPrefixes();
         }
 
-        [Test]
-        [RecordedTest]
-        public async Task PublicIpPrefixApiTest()
+        [TestCase(null)]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task PublicIpPrefixApiTest(bool? useTagResource)
         {
+            SetTagResourceUsage(ArmClient, useTagResource);
             var container = await GetCollection();
             var name = Recording.GenerateAssetName("test_public_ip_prefix_");
 

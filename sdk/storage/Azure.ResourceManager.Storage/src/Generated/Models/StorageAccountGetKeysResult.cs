@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The response from the ListKeys operation. </summary>
-    public partial class StorageAccountGetKeysResult
+    internal partial class StorageAccountGetKeysResult
     {
         /// <summary> Initializes a new instance of StorageAccountGetKeysResult. </summary>
         internal StorageAccountGetKeysResult()
