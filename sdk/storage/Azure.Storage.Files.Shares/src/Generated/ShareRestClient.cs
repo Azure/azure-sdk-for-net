@@ -34,7 +34,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
         /// <param name="fileRequestIntent"> Valid value is backup. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public ShareRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2021-12-02", ShareFileRequestIntent? fileRequestIntent = null)
+        public ShareRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2022-11-02", ShareFileRequestIntent? fileRequestIntent = null)
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -76,10 +76,6 @@ namespace Azure.Storage.Files.Shares
             if (rootSquash != null)
             {
                 request.Headers.Add("x-ms-root-squash", rootSquash.Value.ToSerialString());
-            }
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
             }
             request.Headers.Add("Accept", "application/xml");
             return message;
@@ -712,6 +708,10 @@ namespace Azure.Storage.Files.Shares
             }
             request.Uri = uri;
             request.Headers.Add("x-ms-version", _version);
+            if (_fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
+            }
             request.Headers.Add("Accept", "application/xml");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
@@ -784,6 +784,10 @@ namespace Azure.Storage.Files.Shares
             request.Uri = uri;
             request.Headers.Add("x-ms-file-permission-key", filePermissionKey);
             request.Headers.Add("x-ms-version", _version);
+            if (_fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
+            }
             request.Headers.Add("Accept", "application/json");
             return message;
         }

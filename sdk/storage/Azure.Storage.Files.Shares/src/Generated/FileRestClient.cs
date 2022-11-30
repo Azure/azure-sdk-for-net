@@ -36,7 +36,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="fileRequestIntent"> Valid value is backup. </param>
         /// <param name="fileRangeWriteFromUrl"> Only update is supported: - Update: Writes the bytes downloaded from the source url into the specified range. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="url"/>, <paramref name="version"/> or <paramref name="fileRangeWriteFromUrl"/> is null. </exception>
-        public FileRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2021-12-02", ShareFileRequestIntent? fileRequestIntent = null, string fileRangeWriteFromUrl = "update")
+        public FileRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2022-11-02", ShareFileRequestIntent? fileRequestIntent = null, string fileRangeWriteFromUrl = "update")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
