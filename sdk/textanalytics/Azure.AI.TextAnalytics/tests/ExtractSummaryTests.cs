@@ -223,6 +223,25 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32759")]
+        public async Task ExtractSummaryBatchConvenienceWithAutoDetectedLanguageTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            ExtractSummaryOptions options = new() { AutoDetectionDefaultLanguage = "en" };
+
+            ExtractSummaryOperation operation = await client.StartExtractSummaryAsync(s_extractSummaryBatchConvenienceDocuments, "auto", options);
+            await operation.WaitForCompletionAsync();
+            ValidateOperationProperties(operation);
+
+            List<ExtractSummaryResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
+            Assert.AreEqual(1, resultInPages.Count);
+
+            // Take the first page.
+            ExtractSummaryResultCollection resultCollection = resultInPages.FirstOrDefault();
+            ValidateSummaryBatchResult(resultCollection, SummarySentencesOrder.Offset, isLanguageAutoDetected: true);
+        }
+
+        [RecordedTest]
         public async Task AnalyzeOperationExtractSummaryWithAutoDetectedLanguageTest()
         {
             TextAnalyticsClient client = GetClient();

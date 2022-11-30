@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.OperationalInsights
             Optional<DateTimeOffset> createdDate = default;
             Optional<DateTimeOffset> lastModifiedDate = default;
             Optional<ResourceIdentifier> resourceId = default;
-            Optional<OperationalInsightsDataExportsDestinationType> type0 = default;
+            Optional<OperationalInsightsDataExportDestinationType> type0 = default;
             Optional<string> eventHubName = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.OperationalInsights
                                         property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
-                                    type0 = new OperationalInsightsDataExportsDestinationType(property1.Value.GetString());
+                                    type0 = new OperationalInsightsDataExportDestinationType(property1.Value.GetString());
                                     continue;
                                 }
                                 if (property1.NameEquals("metaData"))

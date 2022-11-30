@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.AnalysisServices.Models
         /// <summary> A collection of AS server administrators. </summary>
         internal ServerAdministrators AsAdministrators { get; set; }
         /// <summary> An array of administrator user identities. </summary>
-        public IList<string> AsAdministratorsMembers
+        public IList<string> AsAdministratorIdentities
         {
             get
             {
                 if (AsAdministrators is null)
                     AsAdministrators = new ServerAdministrators();
-                return AsAdministrators.Members;
+                return AsAdministrators.AsAdministratorIdentities;
             }
         }
 

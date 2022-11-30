@@ -408,6 +408,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 {
                     Assert.AreEqual("2022-11-01", dateTime.Value);
                     Assert.AreEqual("2022-11-01", dateTime.Timex);
+                    Assert.AreEqual(DateTimeSubKind.Date, dateTime.DateTimeSubKind);
                     Assert.IsNull(dateTime.Modifier);
                 }
             }
@@ -480,13 +481,16 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             List<string> documents = s_batchConvenienceDocuments;
             Dictionary<string, List<string>> expectedOutput = s_expectedBatchOutput;
+            AnalyzeActionsOptions options = new()
+            {
+                AutoDetectionDefaultLanguage = "en"
+            };
             TextAnalyticsActions actions = new()
             {
                 RecognizeEntitiesActions = new List<RecognizeEntitiesAction>() { new RecognizeEntitiesAction() },
-                DisplayName = "RecognizeEntitiesWithAutoDetectedLanguage",
             };
 
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, actions, "auto");
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, actions, "auto", options);
             await operation.WaitForCompletionAsync();
 
             // Take the first page.

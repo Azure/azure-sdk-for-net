@@ -337,6 +337,30 @@ namespace Azure.AI.TextAnalytics.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
+        public async Task RecognizeCustomEntitiesBatchConvenienceWithAutoDetectedLanguageTest()
+        {
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
+            RecognizeCustomEntitiesOptions options = new()
+            {
+                AutoDetectionDefaultLanguage = "en"
+            };
+
+            RecognizeCustomEntitiesOperation operation = await client.StartRecognizeCustomEntitiesAsync(
+                s_englishBatchConvenienceDocuments,
+                TestEnvironment.RecognizeCustomEntitiesProjectName,
+                TestEnvironment.RecognizeCustomEntitiesDeploymentName,
+                "auto",
+                options);
+
+            await operation.WaitForCompletionAsync();
+
+            // Take the first page.
+            RecognizeCustomEntitiesResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            ValidateBatchDocumentsResult(resultCollection, s_englishExpectedBatchOutput, isLanguageAutoDetected: true);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
         public async Task AnalyzeOperationRecognizeCustomEntitiesWithAutoDetectedLanguageTest()
         {
             TextAnalyticsClient client = GetClient(useStaticResource: true);
@@ -361,6 +385,29 @@ namespace Azure.AI.TextAnalytics.Tests
 
             RecognizeCustomEntitiesResultCollection results = actionResults.FirstOrDefault().DocumentsResults;
             ValidateBatchDocumentsResult(results, expectedOutput, isLanguageAutoDetected: true);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
+        public void RecognizeCustomEntitiesBatchWithDefaultLanguageThrows()
+        {
+            TestDiagnostics = false;
+
+            TextAnalyticsClient client = GetClient();
+            RecognizeCustomEntitiesOptions options = new()
+            {
+                AutoDetectionDefaultLanguage = "en"
+            };
+
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(
+                async () => await client.StartRecognizeCustomEntitiesAsync(
+                s_englishBatchConvenienceDocuments,
+                TestEnvironment.RecognizeCustomEntitiesProjectName,
+                TestEnvironment.RecognizeCustomEntitiesDeploymentName,
+                "auto",
+                options));
+
+            Assert.That(ex.Message.EndsWith("Use service API version 2022-10-01-preview or newer."));
         }
 
         private RecognizeCustomEntitiesResultCollection ExtractDocumentsResultsFromResponse(AnalyzeActionsOperation analyzeActionOperation)
