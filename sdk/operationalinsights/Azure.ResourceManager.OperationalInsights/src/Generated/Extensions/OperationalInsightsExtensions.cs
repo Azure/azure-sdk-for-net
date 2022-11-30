@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ClusterResource> GetClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="OperationalInsightsClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<OperationalInsightsClusterResource> GetOperationalInsightsClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetClustersAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetOperationalInsightsClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -73,10 +73,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ClusterResource> GetClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="OperationalInsightsClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<OperationalInsightsClusterResource> GetOperationalInsightsClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetClusters(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetOperationalInsightsClusters(cancellationToken);
         }
 
         /// <summary>
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<WorkspaceResource> GetWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="OperationalInsightsWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<OperationalInsightsWorkspaceResource> GetOperationalInsightsWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetWorkspacesAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetOperationalInsightsWorkspacesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<WorkspaceResource> GetWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="OperationalInsightsWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<OperationalInsightsWorkspaceResource> GetOperationalInsightsWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetWorkspaces(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetOperationalInsightsWorkspaces(cancellationToken);
         }
 
         /// <summary>
@@ -112,10 +112,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<WorkspaceResource> GetWorkspacesByDeletedWorkspaceAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="OperationalInsightsWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<OperationalInsightsWorkspaceResource> GetDeletedWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetWorkspacesByDeletedWorkspaceAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetDeletedWorkspacesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -125,10 +125,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<WorkspaceResource> GetWorkspacesByDeletedWorkspace(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="OperationalInsightsWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<OperationalInsightsWorkspaceResource> GetDeletedWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetWorkspacesByDeletedWorkspace(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetDeletedWorkspaces(cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -180,12 +180,12 @@ namespace Azure.ResourceManager.OperationalInsights
             return resourceGroupResource.GetLogAnalyticsQueryPacks().Get(queryPackName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ClusterResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of OperationalInsightsClusterResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ClusterResources and their operations over a ClusterResource. </returns>
-        public static ClusterCollection GetClusters(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of OperationalInsightsClusterResources and their operations over a OperationalInsightsClusterResource. </returns>
+        public static OperationalInsightsClusterCollection GetOperationalInsightsClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetClusters();
+            return GetExtensionClient(resourceGroupResource).GetOperationalInsightsClusters();
         }
 
         /// <summary>
@@ -199,9 +199,9 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ClusterResource>> GetClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
+        public static async Task<Response<OperationalInsightsClusterResource>> GetOperationalInsightsClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetOperationalInsightsClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -215,33 +215,17 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ClusterResource> GetCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
+        public static Response<OperationalInsightsClusterResource> GetOperationalInsightsCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetClusters().Get(clusterName, cancellationToken);
+            return resourceGroupResource.GetOperationalInsightsClusters().Get(clusterName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of WorkspaceResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of OperationalInsightsWorkspaceResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of WorkspaceResources and their operations over a WorkspaceResource. </returns>
-        public static WorkspaceCollection GetWorkspaces(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of OperationalInsightsWorkspaceResources and their operations over a OperationalInsightsWorkspaceResource. </returns>
+        public static OperationalInsightsWorkspaceCollection GetOperationalInsightsWorkspaces(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetWorkspaces();
-        }
-
-        /// <summary>
-        /// Gets a workspace instance.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}
-        /// Operation Id: Workspaces_Get
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<WorkspaceResource>> GetWorkspaceAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
+            return GetExtensionClient(resourceGroupResource).GetOperationalInsightsWorkspaces();
         }
 
         /// <summary>
@@ -255,9 +239,25 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<WorkspaceResource> GetWorkspace(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<OperationalInsightsWorkspaceResource>> GetOperationalInsightsWorkspaceAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetWorkspaces().Get(workspaceName, cancellationToken);
+            return await resourceGroupResource.GetOperationalInsightsWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a workspace instance.
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}
+        /// Operation Id: Workspaces_Get
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="workspaceName"> The name of the workspace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<OperationalInsightsWorkspaceResource> GetOperationalInsightsWorkspace(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetOperationalInsightsWorkspaces().Get(workspaceName, cancellationToken);
         }
 
         /// <summary>
@@ -299,10 +299,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<WorkspaceResource> GetWorkspacesByDeletedWorkspaceAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="OperationalInsightsWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<OperationalInsightsWorkspaceResource> GetDeletedWorkspacesAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(resourceGroupResource).GetWorkspacesByDeletedWorkspaceAsync(cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetDeletedWorkspacesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -312,10 +312,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<WorkspaceResource> GetWorkspacesByDeletedWorkspace(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="OperationalInsightsWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<OperationalInsightsWorkspaceResource> GetDeletedWorkspaces(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(resourceGroupResource).GetWorkspacesByDeletedWorkspace(cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetDeletedWorkspaces(cancellationToken);
         }
 
         #region LogAnalyticsQueryPackResource
@@ -337,96 +337,96 @@ namespace Azure.ResourceManager.OperationalInsights
         }
         #endregion
 
-        #region LogAnalyticsQueryPackQueryResource
+        #region LogAnalyticsQueryResource
         /// <summary>
-        /// Gets an object representing a <see cref="LogAnalyticsQueryPackQueryResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LogAnalyticsQueryPackQueryResource.CreateResourceIdentifier" /> to create a <see cref="LogAnalyticsQueryPackQueryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LogAnalyticsQueryResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LogAnalyticsQueryResource.CreateResourceIdentifier" /> to create a <see cref="LogAnalyticsQueryResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LogAnalyticsQueryPackQueryResource" /> object. </returns>
-        public static LogAnalyticsQueryPackQueryResource GetLogAnalyticsQueryPackQueryResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LogAnalyticsQueryResource" /> object. </returns>
+        public static LogAnalyticsQueryResource GetLogAnalyticsQueryResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                LogAnalyticsQueryPackQueryResource.ValidateResourceId(id);
-                return new LogAnalyticsQueryPackQueryResource(client, id);
+                LogAnalyticsQueryResource.ValidateResourceId(id);
+                return new LogAnalyticsQueryResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DataExportResource
+        #region OperationalInsightsDataExportResource
         /// <summary>
-        /// Gets an object representing a <see cref="DataExportResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataExportResource.CreateResourceIdentifier" /> to create a <see cref="DataExportResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="OperationalInsightsDataExportResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OperationalInsightsDataExportResource.CreateResourceIdentifier" /> to create an <see cref="OperationalInsightsDataExportResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataExportResource" /> object. </returns>
-        public static DataExportResource GetDataExportResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="OperationalInsightsDataExportResource" /> object. </returns>
+        public static OperationalInsightsDataExportResource GetOperationalInsightsDataExportResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DataExportResource.ValidateResourceId(id);
-                return new DataExportResource(client, id);
+                OperationalInsightsDataExportResource.ValidateResourceId(id);
+                return new OperationalInsightsDataExportResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DataSourceResource
+        #region OperationalInsightsDataSourceResource
         /// <summary>
-        /// Gets an object representing a <see cref="DataSourceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataSourceResource.CreateResourceIdentifier" /> to create a <see cref="DataSourceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="OperationalInsightsDataSourceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OperationalInsightsDataSourceResource.CreateResourceIdentifier" /> to create an <see cref="OperationalInsightsDataSourceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataSourceResource" /> object. </returns>
-        public static DataSourceResource GetDataSourceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="OperationalInsightsDataSourceResource" /> object. </returns>
+        public static OperationalInsightsDataSourceResource GetOperationalInsightsDataSourceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DataSourceResource.ValidateResourceId(id);
-                return new DataSourceResource(client, id);
+                OperationalInsightsDataSourceResource.ValidateResourceId(id);
+                return new OperationalInsightsDataSourceResource(client, id);
             }
             );
         }
         #endregion
 
-        #region LinkedServiceResource
+        #region OperationalInsightsLinkedServiceResource
         /// <summary>
-        /// Gets an object representing a <see cref="LinkedServiceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LinkedServiceResource.CreateResourceIdentifier" /> to create a <see cref="LinkedServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="OperationalInsightsLinkedServiceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OperationalInsightsLinkedServiceResource.CreateResourceIdentifier" /> to create an <see cref="OperationalInsightsLinkedServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LinkedServiceResource" /> object. </returns>
-        public static LinkedServiceResource GetLinkedServiceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="OperationalInsightsLinkedServiceResource" /> object. </returns>
+        public static OperationalInsightsLinkedServiceResource GetOperationalInsightsLinkedServiceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                LinkedServiceResource.ValidateResourceId(id);
-                return new LinkedServiceResource(client, id);
+                OperationalInsightsLinkedServiceResource.ValidateResourceId(id);
+                return new OperationalInsightsLinkedServiceResource(client, id);
             }
             );
         }
         #endregion
 
-        #region LinkedStorageAccountsResource
+        #region OperationalInsightsLinkedStorageAccountsResource
         /// <summary>
-        /// Gets an object representing a <see cref="LinkedStorageAccountsResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LinkedStorageAccountsResource.CreateResourceIdentifier" /> to create a <see cref="LinkedStorageAccountsResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="OperationalInsightsLinkedStorageAccountsResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OperationalInsightsLinkedStorageAccountsResource.CreateResourceIdentifier" /> to create an <see cref="OperationalInsightsLinkedStorageAccountsResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LinkedStorageAccountsResource" /> object. </returns>
-        public static LinkedStorageAccountsResource GetLinkedStorageAccountsResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="OperationalInsightsLinkedStorageAccountsResource" /> object. </returns>
+        public static OperationalInsightsLinkedStorageAccountsResource GetOperationalInsightsLinkedStorageAccountsResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                LinkedStorageAccountsResource.ValidateResourceId(id);
-                return new LinkedStorageAccountsResource(client, id);
+                OperationalInsightsLinkedStorageAccountsResource.ValidateResourceId(id);
+                return new OperationalInsightsLinkedStorageAccountsResource(client, id);
             }
             );
         }
@@ -451,77 +451,77 @@ namespace Azure.ResourceManager.OperationalInsights
         }
         #endregion
 
-        #region SavedSearchResource
+        #region OperationalInsightsSavedSearchResource
         /// <summary>
-        /// Gets an object representing a <see cref="SavedSearchResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SavedSearchResource.CreateResourceIdentifier" /> to create a <see cref="SavedSearchResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="OperationalInsightsSavedSearchResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OperationalInsightsSavedSearchResource.CreateResourceIdentifier" /> to create an <see cref="OperationalInsightsSavedSearchResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SavedSearchResource" /> object. </returns>
-        public static SavedSearchResource GetSavedSearchResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="OperationalInsightsSavedSearchResource" /> object. </returns>
+        public static OperationalInsightsSavedSearchResource GetOperationalInsightsSavedSearchResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SavedSearchResource.ValidateResourceId(id);
-                return new SavedSearchResource(client, id);
+                OperationalInsightsSavedSearchResource.ValidateResourceId(id);
+                return new OperationalInsightsSavedSearchResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ClusterResource
+        #region OperationalInsightsClusterResource
         /// <summary>
-        /// Gets an object representing a <see cref="ClusterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ClusterResource.CreateResourceIdentifier" /> to create a <see cref="ClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="OperationalInsightsClusterResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OperationalInsightsClusterResource.CreateResourceIdentifier" /> to create an <see cref="OperationalInsightsClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ClusterResource" /> object. </returns>
-        public static ClusterResource GetClusterResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="OperationalInsightsClusterResource" /> object. </returns>
+        public static OperationalInsightsClusterResource GetOperationalInsightsClusterResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ClusterResource.ValidateResourceId(id);
-                return new ClusterResource(client, id);
+                OperationalInsightsClusterResource.ValidateResourceId(id);
+                return new OperationalInsightsClusterResource(client, id);
             }
             );
         }
         #endregion
 
-        #region WorkspaceResource
+        #region OperationalInsightsWorkspaceResource
         /// <summary>
-        /// Gets an object representing a <see cref="WorkspaceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="OperationalInsightsWorkspaceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OperationalInsightsWorkspaceResource.CreateResourceIdentifier" /> to create an <see cref="OperationalInsightsWorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkspaceResource" /> object. </returns>
-        public static WorkspaceResource GetWorkspaceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="OperationalInsightsWorkspaceResource" /> object. </returns>
+        public static OperationalInsightsWorkspaceResource GetOperationalInsightsWorkspaceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WorkspaceResource.ValidateResourceId(id);
-                return new WorkspaceResource(client, id);
+                OperationalInsightsWorkspaceResource.ValidateResourceId(id);
+                return new OperationalInsightsWorkspaceResource(client, id);
             }
             );
         }
         #endregion
 
-        #region TableResource
+        #region OperationalInsightsTableResource
         /// <summary>
-        /// Gets an object representing a <see cref="TableResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TableResource.CreateResourceIdentifier" /> to create a <see cref="TableResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="OperationalInsightsTableResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OperationalInsightsTableResource.CreateResourceIdentifier" /> to create an <see cref="OperationalInsightsTableResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TableResource" /> object. </returns>
-        public static TableResource GetTableResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="OperationalInsightsTableResource" /> object. </returns>
+        public static OperationalInsightsTableResource GetOperationalInsightsTableResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                TableResource.ValidateResourceId(id);
-                return new TableResource(client, id);
+                OperationalInsightsTableResource.ValidateResourceId(id);
+                return new OperationalInsightsTableResource(client, id);
             }
             );
         }

@@ -3,10 +3,7 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -17,6 +14,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="name"> The name. </param>
         public VirtualMachineScaleSetExtensionData(string name) : base(default, name, default, default)
         {
+            // we should make sure that we call everything inside the no parameter constructor. Otherwise the list in this model is not initialized and we will get exceptions when serializing it.
+            ProvisionAfterExtensions = new ChangeTrackingList<string>();
         }
     }
 }
