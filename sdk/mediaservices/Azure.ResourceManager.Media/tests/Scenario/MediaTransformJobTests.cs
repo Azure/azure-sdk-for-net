@@ -28,12 +28,27 @@ namespace Azure.ResourceManager.Media.Tests
         [OneTimeSetUp]
         public async Task GlobalSetup()
         {
-            var rgLro = await (await GlobalClient.GetDefaultSubscriptionAsync()).GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Started, SessionRecording.GenerateAssetName(ResourceGroupNamePrefix), new ResourceGroupData(AzureLocation.WestUS2));
-            var storage = await CreateStorageAccount(rgLro.Value, SessionRecording.GenerateAssetName(StorageAccountNamePrefix));
-            var mediaService = await CreateMediaService(rgLro.Value, SessionRecording.GenerateAssetName("mediafortjob"), storage.Id);
-            var mediaTransform = await CreateMediaTransfer(mediaService.GetMediaTransforms(), SessionRecording.GenerateAssetName("randomtransfer"));
-            _mediaServiceIdentifier = mediaService.Id;
-            _mediaTransformIdentifier = mediaTransform.Id;
+            var rgName = SessionRecording.GenerateAssetName(ResourceGroupNamePrefix);
+            var storageAccountName = SessionRecording.GenerateAssetName(StorageAccountNamePrefix);
+            var mediaServiceName = SessionRecording.GenerateAssetName("dotnetsdkmediatest");
+            var mediaTransformName = SessionRecording.GenerateAssetName("randomtransfer");
+            if (Mode == RecordedTestMode.Playback)
+            {
+                _mediaServiceIdentifier = MediaServicesAccountResource.CreateResourceIdentifier(SessionRecording.GetVariable("SUBSCRIPTION_ID", null), rgName, mediaServiceName);
+                _mediaTransformIdentifier = MediaTransformResource.CreateResourceIdentifier(SessionRecording.GetVariable("SUBSCRIPTION_ID", null), rgName, mediaServiceName, mediaTransformName);
+            }
+            else
+            {
+                using (SessionRecording.DisableRecording())
+                {
+                    var rgLro = await (await GlobalClient.GetDefaultSubscriptionAsync()).GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Started, rgName, new ResourceGroupData(AzureLocation.WestUS2));
+                    var storage = await CreateStorageAccount(rgLro.Value, storageAccountName);
+                    var mediaService = await CreateMediaService(rgLro.Value, mediaServiceName, storage.Id);
+                    var mediaTransform = await CreateMediaTransfer(mediaService.GetMediaTransforms(), mediaTransformName);
+                    _mediaServiceIdentifier = mediaService.Id;
+                    _mediaTransformIdentifier = mediaTransform.Id;
+                }
+            }
             await StopSessionRecordingAsync();
         }
 
@@ -47,8 +62,8 @@ namespace Azure.ResourceManager.Media.Tests
         private async Task<MediaJobResource> CreateDefautMediaTransferJob(string jobName)
         {
             // create two asset
-            var inputAsset = await _mediaService.GetMediaAssets().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("empty-asset-input"), new MediaAssetData());
-            var outputAsset = await _mediaService.GetMediaAssets().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("empty-asset-output"), new MediaAssetData());
+            var inputAsset = await _mediaService.GetMediaAssets().CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("empty-asset-input"), new MediaAssetData());
+            var outputAsset = await _mediaService.GetMediaAssets().CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("empty-asset-output"), new MediaAssetData());
 
             MediaJobData data = new MediaJobData();
             data.Input = new MediaJobInputAsset(inputAsset.Value.Data.Name);
@@ -62,7 +77,7 @@ namespace Azure.ResourceManager.Media.Tests
         public async Task MediaTransformJobBasicTests()
         {
             // Create
-            string jobName = SessionRecording.GenerateAssetName("job");
+            string jobName = Recording.GenerateAssetName("job");
             var job = await CreateDefautMediaTransferJob(jobName);
             Assert.IsNotNull(job);
             Assert.AreEqual(jobName, job.Data.Name);

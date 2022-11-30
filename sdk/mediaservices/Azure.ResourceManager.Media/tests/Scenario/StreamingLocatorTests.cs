@@ -26,10 +26,23 @@ namespace Azure.ResourceManager.Media.Tests
         [OneTimeSetUp]
         public async Task GlobalSetup()
         {
-            var rgLro = await (await GlobalClient.GetDefaultSubscriptionAsync()).GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Started, SessionRecording.GenerateAssetName(ResourceGroupNamePrefix), new ResourceGroupData(AzureLocation.WestUS2));
-            var storage = await CreateStorageAccount(rgLro.Value, SessionRecording.GenerateAssetName(StorageAccountNamePrefix));
-            var mediaService = await CreateMediaService(rgLro.Value, SessionRecording.GenerateAssetName("mediaservice"), storage.Id);
-            _mediaServiceIdentifier = mediaService.Id;
+            var rgName = SessionRecording.GenerateAssetName(ResourceGroupNamePrefix);
+            var storageAccountName = SessionRecording.GenerateAssetName(StorageAccountNamePrefix);
+            var mediaServiceName = SessionRecording.GenerateAssetName("dotnetsdkmediatest");
+            if (Mode == RecordedTestMode.Playback)
+            {
+                _mediaServiceIdentifier = MediaServicesAccountResource.CreateResourceIdentifier(SessionRecording.GetVariable("SUBSCRIPTION_ID", null), rgName, mediaServiceName);
+            }
+            else
+            {
+                using (SessionRecording.DisableRecording())
+                {
+                    var rgLro = await (await GlobalClient.GetDefaultSubscriptionAsync()).GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Started, rgName, new ResourceGroupData(AzureLocation.WestUS2));
+                    var storage = await CreateStorageAccount(rgLro.Value, storageAccountName);
+                    var mediaService = await CreateMediaService(rgLro.Value, mediaServiceName, storage.Id);
+                    _mediaServiceIdentifier = mediaService.Id;
+                }
+            }
             await StopSessionRecordingAsync();
         }
 
@@ -41,7 +54,7 @@ namespace Azure.ResourceManager.Media.Tests
 
         private async Task<StreamingLocatorResource> CreateStreamingLocator(string streamingLocatorName)
         {
-            var emptyAsset = await _mediaService.GetMediaAssets().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("emptyAsset"), new MediaAssetData());
+            var emptyAsset = await _mediaService.GetMediaAssets().CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("emptyAsset"), new MediaAssetData());
             StreamingLocatorData data = new StreamingLocatorData()
             {
                 AssetName = emptyAsset.Value.Data.Name,
@@ -55,7 +68,7 @@ namespace Azure.ResourceManager.Media.Tests
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            string streamingLocatorName = SessionRecording.GenerateAssetName("streamingLocator");
+            string streamingLocatorName = Recording.GenerateAssetName("streamingLocator");
             var streamingLocator = await CreateStreamingLocator(streamingLocatorName);
             Assert.IsNotNull(streamingLocator);
             Assert.AreEqual(streamingLocatorName, streamingLocator.Data.Name);
@@ -65,7 +78,7 @@ namespace Azure.ResourceManager.Media.Tests
         [RecordedTest]
         public async Task Exist()
         {
-            string streamingLocatorName = SessionRecording.GenerateAssetName("streamingLocator");
+            string streamingLocatorName = Recording.GenerateAssetName("streamingLocator");
             await CreateStreamingLocator(streamingLocatorName);
             bool flag = await streamingLocatorCollection.ExistsAsync(streamingLocatorName);
             Assert.IsTrue(flag);
@@ -75,7 +88,7 @@ namespace Azure.ResourceManager.Media.Tests
         [RecordedTest]
         public async Task Get()
         {
-            string streamingLocatorName = SessionRecording.GenerateAssetName("streamingLocator");
+            string streamingLocatorName = Recording.GenerateAssetName("streamingLocator");
             await CreateStreamingLocator(streamingLocatorName);
             var streamingLocator = await streamingLocatorCollection.GetAsync(streamingLocatorName);
             Assert.IsNotNull(streamingLocator);
@@ -86,7 +99,7 @@ namespace Azure.ResourceManager.Media.Tests
         [RecordedTest]
         public async Task GetAll()
         {
-            string streamingLocatorName = SessionRecording.GenerateAssetName("streamingLocator");
+            string streamingLocatorName = Recording.GenerateAssetName("streamingLocator");
             await CreateStreamingLocator(streamingLocatorName);
             var list = await streamingLocatorCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
@@ -96,7 +109,7 @@ namespace Azure.ResourceManager.Media.Tests
         [RecordedTest]
         public async Task Delete()
         {
-            string streamingLocatorName = SessionRecording.GenerateAssetName("streamingLocator");
+            string streamingLocatorName = Recording.GenerateAssetName("streamingLocator");
             var streamingLocator = await CreateStreamingLocator(streamingLocatorName);
             bool flag = await streamingLocatorCollection.ExistsAsync(streamingLocatorName);
             Assert.IsTrue(flag);

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -25,10 +26,23 @@ namespace Azure.ResourceManager.Media.Tests
         [OneTimeSetUp]
         public async Task GlobalSetup()
         {
-            var rgLro = await (await GlobalClient.GetDefaultSubscriptionAsync()).GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Started, SessionRecording.GenerateAssetName(ResourceGroupNamePrefix), new ResourceGroupData(AzureLocation.WestUS2));
-            var storage = await CreateStorageAccount(rgLro.Value, SessionRecording.GenerateAssetName(StorageAccountNamePrefix));
-            var mediaService = await CreateMediaService(rgLro.Value, SessionRecording.GenerateAssetName("mediaservice"), storage.Id);
-            _mediaServiceIdentifier = mediaService.Id;
+            var rgName = SessionRecording.GenerateAssetName(ResourceGroupNamePrefix);
+            var storageAccountName = SessionRecording.GenerateAssetName(StorageAccountNamePrefix);
+            var mediaServiceName = SessionRecording.GenerateAssetName("dotnetsdkmediatest");
+            if (Mode == RecordedTestMode.Playback)
+            {
+                _mediaServiceIdentifier = MediaServicesAccountResource.CreateResourceIdentifier(SessionRecording.GetVariable("SUBSCRIPTION_ID", null), rgName, mediaServiceName);
+            }
+            else
+            {
+                using (SessionRecording.DisableRecording())
+                {
+                    var rgLro = await (await GlobalClient.GetDefaultSubscriptionAsync()).GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Started, rgName, new ResourceGroupData(AzureLocation.WestUS2));
+                    var storage = await CreateStorageAccount(rgLro.Value, storageAccountName);
+                    var mediaService = await CreateMediaService(rgLro.Value, mediaServiceName, storage.Id);
+                    _mediaServiceIdentifier = mediaService.Id;
+                }
+            }
             await StopSessionRecordingAsync();
         }
 
@@ -51,7 +65,7 @@ namespace Azure.ResourceManager.Media.Tests
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            string contentKeyPolicyName = SessionRecording.GenerateAssetName("contentKeyPolicy");
+            string contentKeyPolicyName = Recording.GenerateAssetName("contentKeyPolicy");
             var contentKey = await CreateDefaultContentKey(contentKeyPolicyName);
             Assert.IsNotNull(contentKey);
             Assert.AreEqual(contentKeyPolicyName, contentKey.Data.Name);
@@ -62,7 +76,7 @@ namespace Azure.ResourceManager.Media.Tests
         [RecordedTest]
         public async Task Exist()
         {
-            string contentKeyPolicyName = SessionRecording.GenerateAssetName("contentKeyPolicy");
+            string contentKeyPolicyName = Recording.GenerateAssetName("contentKeyPolicy");
             await CreateDefaultContentKey(contentKeyPolicyName);
             bool flag = await contentKeyPolicyCollection.ExistsAsync(contentKeyPolicyName);
             Assert.IsTrue(flag);
@@ -72,7 +86,7 @@ namespace Azure.ResourceManager.Media.Tests
         [RecordedTest]
         public async Task Get()
         {
-            string contentKeyPolicyName = SessionRecording.GenerateAssetName("contentKeyPolicy");
+            string contentKeyPolicyName = Recording.GenerateAssetName("contentKeyPolicy");
             await CreateDefaultContentKey(contentKeyPolicyName);
             var contentKey = await contentKeyPolicyCollection.GetAsync(contentKeyPolicyName);
             Assert.IsNotNull(contentKey);
@@ -84,7 +98,7 @@ namespace Azure.ResourceManager.Media.Tests
         [RecordedTest]
         public async Task GetAll()
         {
-            string contentKeyPolicyName = SessionRecording.GenerateAssetName("contentKeyPolicy");
+            string contentKeyPolicyName = Recording.GenerateAssetName("contentKeyPolicy");
             await CreateDefaultContentKey(contentKeyPolicyName);
             var list = await contentKeyPolicyCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
@@ -94,7 +108,7 @@ namespace Azure.ResourceManager.Media.Tests
         [RecordedTest]
         public async Task Delete()
         {
-            string contentKeyPolicyName = SessionRecording.GenerateAssetName("contentKeyPolicy");
+            string contentKeyPolicyName = Recording.GenerateAssetName("contentKeyPolicy");
             var contentKey = await CreateDefaultContentKey(contentKeyPolicyName);
             bool flag = await contentKeyPolicyCollection.ExistsAsync(contentKeyPolicyName);
             Assert.IsTrue(flag);

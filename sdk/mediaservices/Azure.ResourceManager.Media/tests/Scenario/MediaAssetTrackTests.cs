@@ -11,22 +11,45 @@ namespace Azure.ResourceManager.Media.Tests
 {
     public class MediaAssetTrackTests : MediaManagementTestBase
     {
-        private MediaAssetResource _mediaAsset;
+        private ResourceIdentifier _mediaAssetIdentifier;
+        private MediaAssetResource _mediaAssetResource;
 
-        private MediaAssetTrackCollection mediaAssetCollection => _mediaAsset.GetMediaAssetTracks();
+        private MediaAssetTrackCollection mediaAssetCollection => _mediaAssetResource.GetMediaAssetTracks();
 
-        public MediaAssetTrackTests(bool isAsync) : base(isAsync)
+        public MediaAssetTrackTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
+        }
+
+        [OneTimeSetUp]
+        public async Task GlobalSetup()
+        {
+            var rgName = SessionRecording.GenerateAssetName(ResourceGroupNamePrefix);
+            var storageAccountName = SessionRecording.GenerateAssetName(StorageAccountNamePrefix);
+            var mediaServiceName = SessionRecording.GenerateAssetName("dotnetsdkmediatest");
+            var mediaAssetName = SessionRecording.GenerateAssetName("asset");
+            if (Mode == RecordedTestMode.Playback)
+            {
+                _mediaAssetIdentifier = MediaAssetResource.CreateResourceIdentifier(SessionRecording.GetVariable("SUBSCRIPTION_ID", null), rgName, mediaServiceName, mediaAssetName);
+            }
+            else
+            {
+                using (SessionRecording.DisableRecording())
+                {
+                    var rgLro = await (await GlobalClient.GetDefaultSubscriptionAsync()).GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Started, rgName, new ResourceGroupData(AzureLocation.WestUS2));
+                    var storage = await CreateStorageAccount(rgLro.Value, storageAccountName);
+                    var mediaService = await CreateMediaService(rgLro.Value, mediaServiceName, storage.Id);
+                    var mediaAsset = await mediaService.GetMediaAssets().CreateOrUpdateAsync(WaitUntil.Completed, mediaAssetName, new MediaAssetData());
+                    _mediaAssetIdentifier = mediaAsset.Value.Id;
+                }
+            }
+            await StopSessionRecordingAsync();
         }
 
         [SetUp]
         public async Task SetUp()
         {
-            var resourceGroup = await CreateResourceGroup(AzureLocation.WestUS2);
-            var storage = await CreateStorageAccount(resourceGroup, Recording.GenerateAssetName(StorageAccountNamePrefix));
-            var mediaService = await CreateMediaService(resourceGroup, Recording.GenerateAssetName("mediaservice"), storage.Id);
-            var mediaAsset = await mediaService.GetMediaAssets().CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("asset"), new MediaAssetData());
-            _mediaAsset = mediaAsset.Value;
+            _mediaAssetResource = await Client.GetMediaAssetResource(_mediaAssetIdentifier).GetAsync();
         }
 
         [Test]

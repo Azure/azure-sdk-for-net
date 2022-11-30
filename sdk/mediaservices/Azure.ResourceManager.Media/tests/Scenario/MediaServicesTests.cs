@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Storage;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Media.Tests
@@ -26,10 +27,23 @@ namespace Azure.ResourceManager.Media.Tests
         [OneTimeSetUp]
         public async Task GlobalSetup()
         {
-            var rgLro = await (await GlobalClient.GetDefaultSubscriptionAsync()).GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Started, SessionRecording.GenerateAssetName(ResourceGroupNamePrefix), new ResourceGroupData(AzureLocation.WestUS2));
-            var storage = await CreateStorageAccount(rgLro.Value, SessionRecording.GenerateAssetName(StorageAccountNamePrefix));
-            _resourceGroupIdentifier = rgLro.Value.Data.Id;
-            _storageAccountIdentifier = storage.Id;
+            var rgName = SessionRecording.GenerateAssetName(ResourceGroupNamePrefix);
+            var storageAccountName = SessionRecording.GenerateAssetName(StorageAccountNamePrefix);
+            if (Mode == RecordedTestMode.Playback)
+            {
+                _resourceGroupIdentifier = ResourceGroupResource.CreateResourceIdentifier(SessionRecording.GetVariable("SUBSCRIPTION_ID", null), rgName);
+                _storageAccountIdentifier = StorageAccountResource.CreateResourceIdentifier(SessionRecording.GetVariable("SUBSCRIPTION_ID", null), rgName, storageAccountName);
+            }
+            else
+            {
+                using (SessionRecording.DisableRecording())
+                {
+                    var rgLro = await (await GlobalClient.GetDefaultSubscriptionAsync()).GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Started, rgName, new ResourceGroupData(AzureLocation.WestUS2));
+                    var storage = await CreateStorageAccount(rgLro.Value, storageAccountName);
+                    _resourceGroupIdentifier = rgLro.Value.Data.Id;
+                    _storageAccountIdentifier = storage.Id;
+                }
+            };
             await StopSessionRecordingAsync();
         }
 
@@ -44,7 +58,7 @@ namespace Azure.ResourceManager.Media.Tests
         public async Task MediaServicesBasicTests()
         {
             // Create
-            string mediaServiceName = SessionRecording.GenerateAssetName("mediabasic");
+            string mediaServiceName = Recording.GenerateAssetName("mediabasic");
             var mediaService = await CreateMediaService(_resourceGroup, mediaServiceName, _storageAccountIdentifier);
             Assert.IsNotNull(mediaService);
             Assert.AreEqual(mediaServiceName, mediaService.Data.Name);

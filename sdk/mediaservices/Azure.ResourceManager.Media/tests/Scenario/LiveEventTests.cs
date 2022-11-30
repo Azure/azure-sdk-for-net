@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -12,6 +13,7 @@ namespace Azure.ResourceManager.Media.Tests
 {
     public class LiveEventTests : MediaManagementTestBase
     {
+        private ResourceIdentifier _mediaServiceIdentifier;
         private MediaServicesAccountResource _mediaService;
 
         private MediaLiveEventCollection liveEventCollection => _mediaService.GetMediaLiveEvents();
@@ -21,12 +23,33 @@ namespace Azure.ResourceManager.Media.Tests
         {
         }
 
+        [OneTimeSetUp]
+        public async Task GlobalSetUp()
+        {
+            var rgName = SessionRecording.GenerateAssetName(ResourceGroupNamePrefix);
+            var storageAccountName = SessionRecording.GenerateAssetName(StorageAccountNamePrefix);
+            var mediaServiceName = SessionRecording.GenerateAssetName("dotnetsdkmediatest");
+            if (Mode == RecordedTestMode.Playback)
+            {
+                _mediaServiceIdentifier = MediaServicesAccountResource.CreateResourceIdentifier(SessionRecording.GetVariable("SUBSCRIPTION_ID", null), rgName, mediaServiceName);
+            }
+            else
+            {
+                using (SessionRecording.DisableRecording())
+                {
+                    var rgLro = await (await GlobalClient.GetDefaultSubscriptionAsync()).GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Started, rgName, new ResourceGroupData(AzureLocation.WestUS2));
+                    var storage = await CreateStorageAccount(rgLro.Value, storageAccountName);
+                    var mediaService = await CreateMediaService(rgLro.Value, mediaServiceName, storage.Id);
+                    _mediaServiceIdentifier = mediaService.Id;
+                }
+            }
+            await StopSessionRecordingAsync();
+        }
+
         [SetUp]
         public async Task SetUp()
         {
-            var resourceGroup = await CreateResourceGroup(AzureLocation.WestUS2);
-            var storage = await CreateStorageAccount(resourceGroup, Recording.GenerateAssetName(StorageAccountNamePrefix));
-            _mediaService = await CreateMediaService(resourceGroup, Recording.GenerateAssetName("mediaforle"), storage.Id);
+            _mediaService = await Client.GetMediaServicesAccountResource(_mediaServiceIdentifier).GetAsync();
         }
 
         [Test]
