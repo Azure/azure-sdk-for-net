@@ -30,7 +30,6 @@ namespace Azure.Identity.Tests
         public string UserAssignedVault => GetRecordedOptionalVariable("IDENTITYTEST_IMDSTEST_USERASSIGNEDVAULT");
 
         public string TestPassword => GetOptionalVariable("AZURE_IDENTITY_TEST_PASSWORD") ?? "SANITIZED";
-        public string TestTenantId => GetRecordedOptionalVariable("TENANT_ID") ?? GetRecordedVariable("AZURE_IDENTITY_TEST_TENANTID");
         public string KeyvaultScope => GetRecordedOptionalVariable("AZURE_KEYVAULT_SCOPE") ?? "https://vault.azure.net/.default";
 
         public string ServicePrincipalClientId => GetRecordedVariable("IDENTITY_SP_CLIENT_ID");
@@ -39,5 +38,6 @@ namespace Azure.Identity.Tests
         public string ServicePrincipalCertificatePfxPath => GetOptionalVariable("IDENTITY_SP_CERT_PFX") ?? Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
         public string ServicePrincipalCertificatePemPath => GetOptionalVariable("IDENTITY_SP_CERT_PEM") ?? Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pem");
         public string ServicePrincipalSniCertificatePath => GetOptionalVariable("IDENTITY_SP_CERT_SNI") ?? Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+        public string IdentityTestWebName =>  GetRecordedVariable("IDENTITY_WEBAPP_NAME");
     }
 }
