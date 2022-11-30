@@ -8,40 +8,61 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Batch.Models;
 using Azure.ResourceManager.Batch.Tests.Helpers;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 namespace Azure.ResourceManager.Batch.Tests.TestCase
 {
     public class BatchApplicationOperationTests : BatchManagementTestBase
     {
+        private ResourceIdentifier _batchApplicationId;
+        private BatchApplicationResource _batchApplicationResource;
+
         public BatchApplicationOperationTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
-        private async Task<BatchApplicationResource> CreateAccountResourceAsync(string accountName)
+        [OneTimeSetUp]
+        public async Task GlobalSetup()
         {
-            ResourceIdentifier storageAccountId = (await GetStorageAccountResource()).Id;
-            var collection = (await CreateResourceGroupAsync()).GetBatchAccounts();
-            var input = ResourceDataHelper.GetBatchAccountData(storageAccountId);
-            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testaccount"), input);
-            var account = lro.Value;
-            var applicationContainer = account.GetBatchApplications();
-            var applicationInput = ResourceDataHelper.GetBatchApplicationData();
-            var lroc = await applicationContainer.CreateOrUpdateAsync(WaitUntil.Completed, accountName, applicationInput);
-            return lroc.Value;
+            var rgName = SessionRecording.GenerateAssetName("testrg-batch");
+            var storageAccountName = SessionRecording.GenerateAssetName("azstorageforbatch");
+            var batchAccountName = SessionRecording.GenerateAssetName("testaccount");
+            var applicationName = SessionRecording.GenerateAssetName("testApplication-");
+            if (Mode == RecordedTestMode.Playback)
+            {
+                _batchApplicationId = BatchApplicationResource.CreateResourceIdentifier(SessionRecording.GetVariable("SUBSCRIPTION_ID", null), rgName, batchAccountName, applicationName);
+            }
+            else
+            {
+                using (SessionRecording.DisableRecording())
+                {
+                    var rgLro = await (await GlobalClient.GetDefaultSubscriptionAsync()).GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Started, rgName, new ResourceGroupData(AzureLocation.WestUS2));
+                    var storage = await CreateStorageAccount(rgLro.Value, storageAccountName);
+                    var batchAccount = await CreateBatchAccount(rgLro.Value, batchAccountName, storage.Id);
+                    var applicationInput = ResourceDataHelper.GetBatchApplicationData();
+                    var lro = await batchAccount.GetBatchApplications().CreateOrUpdateAsync(WaitUntil.Completed, applicationName, applicationInput);
+                    _batchApplicationId = lro.Value.Id;
+                }
+            }
+            await StopSessionRecordingAsync();
+        }
+
+        [SetUp]
+        public async Task SetUp()
+        {
+            _batchApplicationResource = await Client.GetBatchApplicationResource(_batchApplicationId).GetAsync();
         }
 
         [TestCase]
         public async Task ApplicationResourceApiTests()
         {
             //1.Get
-            var applicationName = Recording.GenerateAssetName("testApplication-");
-            var application1 = await CreateAccountResourceAsync(applicationName);
-            BatchApplicationResource application2 = await application1.GetAsync();
+            BatchApplicationResource application2 = await _batchApplicationResource.GetAsync();
 
-            ResourceDataHelper.AssertApplicationData(application1.Data, application2.Data);
+            ResourceDataHelper.AssertApplicationData(_batchApplicationResource.Data, application2.Data);
             //2.Delete
-            await application1.DeleteAsync(WaitUntil.Completed);
+            await _batchApplicationResource.DeleteAsync(WaitUntil.Completed);
         }
     }
 }

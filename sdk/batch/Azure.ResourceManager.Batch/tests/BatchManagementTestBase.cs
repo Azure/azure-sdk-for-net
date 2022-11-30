@@ -21,7 +21,6 @@ namespace Azure.ResourceManager.Batch.Tests
     {
         protected ArmClient Client { get; private set; }
         protected AzureLocation DefaultLocation => AzureLocation.WestUS;
-        protected SubscriptionResource DefaultSubscription { get; private set; }
 
         protected BatchManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
@@ -34,41 +33,23 @@ namespace Azure.ResourceManager.Batch.Tests
         }
 
         [SetUp]
-        public async Task CreateCommonClient()
+        public void CreateCommonClient()
         {
             Client = GetArmClient();
-            DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
         }
 
-        protected async Task<ResourceGroupResource> CreateResourceGroupAsync()
+        public async Task<StorageAccountResource> CreateStorageAccount(ResourceGroupResource rg, string storageAccountName)
         {
-            var resourceGroupName = Recording.GenerateAssetName("testRG-");
-            var rgOp = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
-                WaitUntil.Completed,
-                resourceGroupName,
-                new ResourceGroupData(DefaultLocation)
-                {
-                    Tags =
-                    {
-                        { "test", "env" }
-                    }
-                });
-            return rgOp.Value;
-        }
-        #region GetStorageAccoountId
-        public async Task<StorageAccountCollection> GetStorageAccountCollectionAsync()
-        {
-            var resourceGroup = await CreateResourceGroupAsync();
-            return resourceGroup.GetStorageAccounts();
-        }
-        public async Task<StorageAccountResource> GetStorageAccountResource()
-        {
-            var storageCollection = await GetStorageAccountCollectionAsync();
-            var storageName = Recording.GenerateAssetName("accountforbatch");
             var storageInput = ResourceDataHelper.GetStorageAccountData();
-            var lros = await storageCollection.CreateOrUpdateAsync(WaitUntil.Completed, storageName, storageInput);
+            var lros = await rg.GetStorageAccounts().CreateOrUpdateAsync(WaitUntil.Completed, storageAccountName, storageInput);
             return lros.Value;
         }
-        #endregion
+
+        public async Task<BatchAccountResource> CreateBatchAccount(ResourceGroupResource rg, string batchAccountName, ResourceIdentifier storageAccountId)
+        {
+            var input = ResourceDataHelper.GetBatchAccountData(storageAccountId);
+            var lro = await rg.GetBatchAccounts().CreateOrUpdateAsync(WaitUntil.Completed, batchAccountName, input);
+            return lro.Value;
+        }
     }
 }

@@ -8,32 +8,55 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Batch.Models;
 using Azure.ResourceManager.Batch.Tests.Helpers;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Batch.Tests.TestCase
 {
     public class BatchApplicationCollectionTests : BatchManagementTestBase
     {
+        private ResourceIdentifier _batchAccountId;
+        private BatchAccountResource _batchAccountResource;
+
         public BatchApplicationCollectionTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
-        private async Task<BatchApplicationCollection> GetApplicationCollectionAsync()
+        [OneTimeSetUp]
+        public async Task GlobalSetup()
         {
-            ResourceIdentifier storageAccountId = (await GetStorageAccountResource()).Id;
-            var collection = (await CreateResourceGroupAsync()).GetBatchAccounts();
-            var input = ResourceDataHelper.GetBatchAccountData(storageAccountId);
-            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testaccount"), input);
-            var account = lro.Value;
-            return account.GetBatchApplications();
+            var rgName = SessionRecording.GenerateAssetName("testrg-batch");
+            var storageAccountName = SessionRecording.GenerateAssetName("azstorageforbatch");
+            var batchAccountName = SessionRecording.GenerateAssetName("testaccount");
+            if (Mode == RecordedTestMode.Playback)
+            {
+                _batchAccountId = BatchAccountResource.CreateResourceIdentifier(SessionRecording.GetVariable("SUBSCRIPTION_ID", null), rgName, batchAccountName);
+            }
+            else
+            {
+                using (SessionRecording.DisableRecording())
+                {
+                    var rgLro = await (await GlobalClient.GetDefaultSubscriptionAsync()).GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Started, rgName, new ResourceGroupData(AzureLocation.WestUS2));
+                    var storage = await CreateStorageAccount(rgLro.Value, storageAccountName);
+                    var batchAccount = await CreateBatchAccount(rgLro.Value, batchAccountName, storage.Id);
+                    _batchAccountId = batchAccount.Id;
+                }
+            }
+            await StopSessionRecordingAsync();
+        }
+
+        [SetUp]
+        public async Task SetUp()
+        {
+            _batchAccountResource = await Client.GetBatchAccountResource(_batchAccountId).GetAsync();
         }
 
         [TestCase]
         public async Task ApplicationCollectionApiTests()
         {
             //1.CreateOrUpdate
-            var collection = await GetApplicationCollectionAsync();
+            var collection = _batchAccountResource.GetBatchApplications();
             var name = Recording.GenerateAssetName("Application-");
             var name2 = Recording.GenerateAssetName("Application-");
             var name3 = Recording.GenerateAssetName("Application-");
