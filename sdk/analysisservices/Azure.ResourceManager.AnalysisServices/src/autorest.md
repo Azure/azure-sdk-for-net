@@ -7,7 +7,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 csharp: true
 library-name: Analysiservices
-namespace: Azure.ResourceManager.Analysiservices
+namespace: Azure.ResourceManager.Analysis
 require: https://github.com/Azure/azure-rest-api-specs/blob/c2d2b523575031790b8672640ea762bdf9ad4964/specification/analysisservices/resource-manager/readme.md
 tag: package-2017-08
 output-folder: $(this-folder)/Generated
