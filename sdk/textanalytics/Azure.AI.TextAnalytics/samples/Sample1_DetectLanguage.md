@@ -85,17 +85,18 @@ foreach (DetectLanguageResult documentLanguage in documentsLanguage)
 {
     Console.WriteLine($"On document with Text: \"{documents[i++]}\"");
     Console.WriteLine();
+
     if (documentLanguage.HasError)
     {
         Console.WriteLine("  Error!");
         Console.WriteLine($"  Document error code: {documentLanguage.Error.ErrorCode}.");
         Console.WriteLine($"  Message: {documentLanguage.Error.Message}");
+        Console.WriteLine();
+        continue;
     }
-    else
-    {
-        Console.WriteLine($"  Detected language: {documentLanguage.PrimaryLanguage.Name}");
-        Console.WriteLine($"  Confidence score: {documentLanguage.PrimaryLanguage.ConfidenceScore}");
-    }
+
+    Console.WriteLine($"  Detected language: {documentLanguage.PrimaryLanguage.Name}");
+    Console.WriteLine($"  Confidence score: {documentLanguage.PrimaryLanguage.ConfidenceScore}");
     Console.WriteLine();
 }
 ```
@@ -180,18 +181,18 @@ foreach (DetectLanguageResult documentLanguage in documentsLanguage)
         Console.WriteLine("  Error!");
         Console.WriteLine($"  Document error code: {documentLanguage.Error.ErrorCode}.");
         Console.WriteLine($"  Message: {documentLanguage.Error.Message}");
+        Console.WriteLine();
+        continue;
     }
-    else
-    {
-        Console.WriteLine($"  Detected language: {documentLanguage.PrimaryLanguage.Name}");
-        Console.WriteLine($"  Confidence score: {documentLanguage.PrimaryLanguage.ConfidenceScore}");
-        if (documentLanguage.PrimaryLanguage.Script is not null)
-            Console.WriteLine($"  Script: {documentLanguage.PrimaryLanguage.Script}");
 
-        Console.WriteLine($"  Document statistics:");
-        Console.WriteLine($"    Character count: {documentLanguage.Statistics.CharacterCount}");
-        Console.WriteLine($"    Transaction count: {documentLanguage.Statistics.TransactionCount}");
-    }
+    Console.WriteLine($"  Detected language: {documentLanguage.PrimaryLanguage.Name}");
+    Console.WriteLine($"  Confidence score: {documentLanguage.PrimaryLanguage.ConfidenceScore}");
+    if (documentLanguage.PrimaryLanguage.Script is not null)
+        Console.WriteLine($"  Script: {documentLanguage.PrimaryLanguage.Script}");
+
+    Console.WriteLine($"  Document statistics:");
+    Console.WriteLine($"    Character count: {documentLanguage.Statistics.CharacterCount}");
+    Console.WriteLine($"    Transaction count: {documentLanguage.Statistics.TransactionCount}");
     Console.WriteLine();
 }
 

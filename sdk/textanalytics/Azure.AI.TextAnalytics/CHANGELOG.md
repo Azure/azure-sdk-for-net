@@ -46,10 +46,6 @@
   - Added the `DetectedLanguage.Script` property.
   - Added the `ScriptKind` enum.
 
-### Breaking Changes
-
-### Bugs Fixed
-
 ### Other Changes
 The client now defaults to targeting service API version `2022-10-01-preview`.
 
