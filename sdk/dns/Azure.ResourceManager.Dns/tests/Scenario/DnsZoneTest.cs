@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         private ResourceGroupResource _resourceGroup;
         private DnsZoneCollection _dnsZoneCollection;
 
-        public DnsZoneTest(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public DnsZoneTest(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
