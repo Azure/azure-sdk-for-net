@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text.Json.Serialization;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace Azure.Core.Expressions.DataFactory
 {
@@ -13,7 +14,9 @@ namespace Azure.Core.Expressions.DataFactory
     /// A class representing either a primitive value or an expression.
     /// For details on DataFactoryExpressions see https://learn.microsoft.com/en-us/azure/data-factory/control-flow-expression-language-functions#expressions.
     /// </summary>
-    /// <typeparam name="T"> Can be one of <see cref="string"/>, <see cref="bool"/>, <see cref="int"/>, <see cref="double"/>, <see cref="Array"/>, or <see cref="IList{TElement}"/>.</typeparam>
+    /// <typeparam name="T"> Can be one of <see cref="string"/>, <see cref="bool"/>, <see cref="int"/>, <see cref="double"/>, <see cref="TimeSpan"/>,
+    /// <see cref="DateTimeOffset"/>, <see cref="Uri"/>, <see cref="IList{String}"/>, <see cref="IList{TElement}"/>,
+    /// or <see cref="IDictionary{String,String}"/>.</typeparam>
 #pragma warning disable SA1649 // File name should match first type name
     [JsonConverter(typeof(DataFactoryExpressionJsonConverter))]
     public sealed class DataFactoryExpression<T>
@@ -63,16 +66,30 @@ namespace Azure.Core.Expressions.DataFactory
         {
             if (HasLiteral)
             {
-                if (_literal is Array literalArray)
+                if (_literal == null)
+                    return null;
+
+                if (typeof(T).IsGenericType && typeof(T).GetGenericTypeDefinition() == typeof(IList<>))
                 {
-                    return $"[{string.Join(",", literalArray.OfType<object>().Select(item => item?.ToString()))}]";
+                    var methodInfo = typeof(DataFactoryExpression<>).MakeGenericType(typeof(IList<>)).GetGenericTypeDefinition().MakeGenericType(typeof(T).GenericTypeArguments[0])
+                        .GetMethod(nameof(ToStringList), BindingFlags.Static | BindingFlags.NonPublic)!
+                        .MakeGenericMethod(typeof(T).GenericTypeArguments[0]);
+                    return (string?) methodInfo!.Invoke(null, new object?[] {_literal})!;
                 }
-                else
+
+                if (typeof(T) == typeof(IDictionary<string, string>))
                 {
-                    return _literal?.ToString();
+                     return string.Join(",", ((IDictionary<string, string?>)_literal!).Select(kvp => $"{kvp.Key}={kvp.Value}"));
                 }
+
+                return _literal?.ToString();
             }
-            return Expression!;
+            return Expression;
+        }
+
+        private static string? ToStringList<TV>(IList<TV>? list)
+        {
+            return list == null ? null : $"[{string.Join(",", list.Select(item => item?.ToString()))}]";
         }
 
         /// <summary>
