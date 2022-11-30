@@ -510,7 +510,7 @@ Given a matrix like below with `JavaTestVersion` marked as a non-sparse paramete
 {
   "matrix": {
     "Agent": {
-      "windows-2019": { "OSVmImage": "MMS2019", "Pool": "azsdk-pool-mms-win-2019-general" },
+      "windows-2019": { "OSVmImage": "MMS2019", "Pool": "azsdk-pool-mms-win-2022-general" },
       "ubuntu-1804": { "OSVmImage": "MMSUbuntu18.04", "Pool": "azsdk-pool-mms-ubuntu-1804-general" },
       "macos-11": { "OSVmImage": "macos-11", "Pool": "Azure Pipelines" }
     },
