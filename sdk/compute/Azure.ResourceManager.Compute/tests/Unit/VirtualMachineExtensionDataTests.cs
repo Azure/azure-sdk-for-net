@@ -37,6 +37,35 @@ namespace Azure.ResourceManager.Compute.Tests.Unit
         }
 
         [TestCase]
+        public void ValidateModifyModelSetFromBinaryData()
+        {
+            // set it as binary data
+            var binarySetting = BinaryData.FromObjectAsJson(new
+            {
+                secretUrl = secretUri,
+                sourceVault = new
+                {
+                    id = vaultId
+                }
+            });
+            var data = new VirtualMachineExtensionData(AzureLocation.WestUS)
+            {
+                ProtectedSettingsFromKeyVault = binarySetting
+            };
+            // get it as concrete type property
+            var settings = data.KeyVaultProtectedSettings;
+            // modify it
+            var newVaultId = vaultId + "1";
+            settings.SourceVaultId = new ResourceIdentifier(newVaultId);
+            // validate the new value also reflected in the binary data property
+            var newBinaryDataSetting = data.ProtectedSettingsFromKeyVault;
+            var root = newBinaryDataSetting.ToObjectFromJson<JsonElement>();
+
+            Assert.AreEqual(secretUri, root.GetProperty("secretUrl").GetString());
+            Assert.AreEqual(newVaultId, root.GetProperty("sourceVault").GetProperty("id").GetString());
+        }
+
+        [TestCase]
         public void ValidateSetModelGetFromBinaryData()
         {
             var keyVaultSecretReference = new KeyVaultSecretReference(new Uri(secretUri), new WritableSubResource()
