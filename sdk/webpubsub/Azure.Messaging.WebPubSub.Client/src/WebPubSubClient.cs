@@ -28,23 +28,59 @@ namespace Azure.Messaging.WebPubSub.Clients
     public class WebPubSubClient
     {
         private const string ErrorNameDuplicate = "Duplicate";
+        private const string RecoverConnectionIdQuery = "awps_connection_id";
+        private const string RecoverReconnectionTokenQuery = "awps_reconnection_token";
 
         // Some exposed properties for testing
         internal IWebSocketClientFactory WebSocketClientFactory { get; set; }
         internal TimeSpan RecoverDelay { get; set; } = TimeSpan.FromSeconds(1);
+        internal ulong CurrentSequenceId => _sequenceId.Current;
+
+        private static readonly UnboundedChannelOptions s_unboundedChannelOptions = new UnboundedChannelOptions
+        {
+            SingleReader = true,
+            SingleWriter = true,
+        };
 
         private readonly WebPubSubClientCredential _webPubSubClientCredential;
         private readonly WebPubSubClientOptions _options;
         private readonly WebPubSubProtocol _protocol;
+        private readonly SequenceId _sequenceId = new SequenceId();
         private readonly ConcurrentDictionary<string, WebPubSubGroup> _groups = new();
         private readonly WebPubSubRetryPolicy _reconnectRetryPolicy;
         private readonly WebPubSubRetryPolicy _messageRetryPolicy;
         private readonly ClientState _clientState;
+        private readonly Channel<GroupDataMessage> _groupDataChannel = Channel.CreateUnbounded<GroupDataMessage>(s_unboundedChannelOptions);
+        private readonly Channel<ServerDataMessage> _serverDataChannel = Channel.CreateUnbounded<ServerDataMessage>(s_unboundedChannelOptions);
+        private readonly Task _processingServerDataMessageTask;
+        private readonly Task _processingGroupDataMessageTask;
         private ulong _nextAckId;
 
         private readonly object _ackIdLock = new();
+        private readonly object _stopLock = new();
+#pragma warning disable CA2213 // Disposable fields should be disposed
+        private readonly SemaphoreSlim _connectionLock = new SemaphoreSlim(1);
+#pragma warning restore CA2213 // Disposable fields should be disposed
 
+        // Fields per start stop
+        private Task _stoppingTask;
+#pragma warning disable CA2213 // Disposable fields should be disposed
+        private volatile CancellationTokenSource _stoppedCts = new();
+#pragma warning restore CA2213 // Disposable fields should be disposed
+
+        // Fields per connection-id
+        private Uri _clientAccessUri;
+        private string _connectionId;
+        private string _reconnectionToken;
+        private bool _isInitialConnected;
+        private DisconnectedMessage _latestDisconnectedMessage;
         private ConcurrentDictionary<ulong, AckEntity> _ackCache = new();
+
+        // Fields per websocket
+        private Task _receiveTask;
+#pragma warning disable CA2213 // Disposable fields should be disposed
+        private volatile IWebSocketClient _client;
+#pragma warning restore CA2213 // Disposable fields should be disposed
 
         private volatile bool _disposed;
 
@@ -87,6 +123,10 @@ namespace Azure.Messaging.WebPubSub.Clients
 
             _reconnectRetryPolicy = new WebPubSubRetryPolicy(_options.ReconnectRetryOptions);
             _messageRetryPolicy = new WebPubSubRetryPolicy(_options.MessageRetryOptions);
+
+            // Process message
+            _processingServerDataMessageTask = StartServerProcessingDataMessage();
+            _processingGroupDataMessageTask = StartGroupProcessingDataMessage();
         }
 
         /// <summary>
@@ -101,9 +141,90 @@ namespace Azure.Messaging.WebPubSub.Clients
         /// </summary>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
         /// <returns></returns>
-        public virtual Task StartAsync(CancellationToken cancellationToken = default)
+        public virtual async Task StartAsync(CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            ThrowIfDisposed();
+
+            if (_stoppedCts.IsCancellationRequested)
+            {
+                throw new InvalidOperationException("Can not start a client during stopping");
+            }
+
+            await _connectionLock.WaitAsync(cancellationToken).ConfigureAwait(false);
+            try
+            {
+                lock (_stopLock)
+                {
+                    _stoppingTask = null;
+                }
+
+                if (_clientState.CurrentState != WebPubSubClientState.Stopped)
+                {
+                    throw new InvalidOperationException("Client can be only started when the state is Stopped");
+                }
+
+                try
+                {
+                    await StartAsyncCore(cancellationToken).ConfigureAwait(false);
+                }
+                catch
+                {
+                    _clientState.ChangeState(WebPubSubClientState.Stopped);
+                    throw;
+                }
+            }
+            finally
+            {
+                _connectionLock.Release();
+            }
+        }
+
+        private async Task StartAsyncByReconnection(CancellationToken cancellationToken)
+        {
+            if (_stoppedCts.IsCancellationRequested)
+            {
+                throw new InvalidOperationException("Can not start a client during stopping");
+            }
+
+            await _connectionLock.WaitAsync(cancellationToken).ConfigureAwait(false);
+            try
+            {
+                if (_clientState.CurrentState != WebPubSubClientState.Disconnected)
+                {
+                    throw new InvalidOperationException("Client restart should happen only when the state is Disconnected");
+                }
+
+                try
+                {
+                    await StartAsyncCore(cancellationToken).ConfigureAwait(false);
+                }
+                catch
+                {
+                    _clientState.ChangeState(WebPubSubClientState.Disconnected);
+                    throw;
+                }
+            }
+            finally
+            {
+                _connectionLock.Release();
+            }
+        }
+
+        private async Task StartAsyncCore(CancellationToken cancellationToken)
+        {
+            _clientState.ChangeState(WebPubSubClientState.Connecting);
+            WebPubSubClientEventSource.Log.ClientStarting();
+
+            // Reset before new connection.
+            _sequenceId.Reset();
+            _isInitialConnected = false;
+            _latestDisconnectedMessage = null;
+            _reconnectionToken = null;
+            _connectionId = null;
+            _ackCache.Clear();
+
+            _clientAccessUri = await _webPubSubClientCredential.GetClientAccessUriAsync(cancellationToken).ConfigureAwait(false);
+            await ConnectAsync(_clientAccessUri, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -114,7 +235,48 @@ namespace Azure.Messaging.WebPubSub.Clients
         public virtual Task StopAsync()
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         {
-            throw new NotImplementedException();
+            ThrowIfDisposed();
+
+            lock (_stopLock)
+            {
+                if (_stoppingTask == null)
+                {
+                    _stoppingTask = StopAsyncCore();
+                }
+                return _stoppingTask;
+            }
+        }
+
+        private async Task StopAsyncCore()
+        {
+            // We will wait for StartAsync
+            // After that, there will be two cases:
+            //   1. Start success and ReceiveTask is set, then we just wait for the ReceiveTask
+            //   2. Start failed. And in this case, another start will be blocked.
+            await _connectionLock.WaitAsync().ConfigureAwait(false);
+            try
+            {
+                try
+                {
+                    // Try close websocket gracefully first
+                    await (_client?.StopAsync(CancellationToken.None) ?? Task.CompletedTask).ConfigureAwait(false);
+                }
+                catch { }
+
+                try
+                {
+                    // Stop new StartAsync during this time and stop all related receiving tasks in running.
+                    _stoppedCts.Cancel();
+                    await (_receiveTask ?? Task.CompletedTask).ConfigureAwait(false);
+                }
+                catch { }
+            }
+            finally
+            {
+                // After stop, we can set a new CancellationToken and wait for another start.
+                _stoppedCts = new CancellationTokenSource();
+                _connectionLock.Release();
+            }
         }
 
         /// <summary>
@@ -139,15 +301,30 @@ namespace Azure.Messaging.WebPubSub.Clients
         /// <summary>
         /// Stop and close the client to the service
         /// </summary>
-        protected virtual ValueTask DisposeAsyncCore()
+        protected virtual async ValueTask DisposeAsyncCore()
         {
             if (_disposed)
             {
-                return default;
+                return;
             }
 
             _disposed = true;
-            return default;
+
+            try
+            {
+                await StopAsyncCore().ConfigureAwait(false);
+            }
+            catch
+            {
+            }
+
+            _serverDataChannel.Writer.TryComplete();
+            _groupDataChannel.Writer.TryComplete();
+
+            _stoppedCts.Cancel();
+            _client?.Dispose();
+            _stoppedCts.Dispose();
+            _connectionLock.Dispose();
         }
 
         /// <summary>
@@ -291,9 +468,91 @@ namespace Azure.Messaging.WebPubSub.Clients
         /// </summary>
         public event Func<WebPubSubRejoinGroupFailedEventArgs, Task> RejoinGroupFailed;
 
-        internal virtual Task SendCoreAsync(ReadOnlyMemory<byte> buffer, WebPubSubProtocolMessageType webPubSubProtocolMessageType, bool endOfMessage, CancellationToken cancellationToken)
+        // This method is in a semaphore, DON'T make it endless.
+        private async Task ConnectAsync(Uri uri, CancellationToken token)
         {
-            throw new NotImplementedException();
+            var client = WebSocketClientFactory.CreateWebSocketClient(uri, _protocol.Name);
+
+            try
+            {
+                await client.ConnectAsync(token).ConfigureAwait(false);
+            }
+            catch
+            {
+                client.Dispose();
+                throw;
+            }
+
+            var oldClient = _client;
+            _client = client;
+            oldClient?.Dispose();
+
+            _clientState.ChangeState(WebPubSubClientState.Connected);
+
+            // Force to run in a thread pool to avoid long sync codes make it hung
+            _receiveTask = Task.Run(() => ListenLoop(client, _stoppedCts.Token), default);
+        }
+
+        private async Task ListenLoop(IWebSocketClient client, CancellationToken token)
+        {
+            var sequenceAckTask = Task.CompletedTask;
+            var sequenceAckCts = new CancellationTokenSource();
+            if (_protocol.IsReliable)
+            {
+                sequenceAckTask = SequenceAckLoop(sequenceAckCts.Token);
+            }
+
+            using var buffer = new MemoryBufferWriter();
+            WebSocketCloseStatus? closeStatus = null;
+            try
+            {
+                while (!token.IsCancellationRequested)
+                {
+                    var result = await client.ReceiveOneFrameAsync(token).ConfigureAwait(false);
+                    if (result.IsClosed)
+                    {
+                        closeStatus = result.CloseStatus;
+                        break;
+                    }
+                    if (result.Payload.Length > 0)
+                    {
+                        try
+                        {
+                            var message = _protocol.ParseMessage(result.Payload);
+                            await HandleMessageAsync(message, token).ConfigureAwait(false);
+                        }
+                        catch (Exception ex)
+                        {
+                            WebPubSubClientEventSource.Log.FailedToProcessMessage(ex.Message);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                WebPubSubClientEventSource.Log.FailedToReceiveBytes(ex.Message);
+            }
+            finally
+            {
+                try
+                {
+                    WebPubSubClientEventSource.Log.WebSocketClosed();
+                    sequenceAckCts.Cancel();
+                    sequenceAckCts.Dispose();
+                    await sequenceAckTask.ConfigureAwait(false);
+                }
+                catch
+                {
+                }
+
+                await HandleConnectionClose(closeStatus, token).ConfigureAwait(false);
+            }
+        }
+
+        internal virtual async Task SendCoreAsync(ReadOnlyMemory<byte> buffer, WebPubSubProtocolMessageType webPubSubProtocolMessageType, bool endOfMessage, CancellationToken cancellationToken)
+        {
+            var messageType = webPubSubProtocolMessageType == WebPubSubProtocolMessageType.Text ? WebSocketMessageType.Text : WebSocketMessageType.Binary;
+            await _client.SendAsync(buffer, messageType, endOfMessage, cancellationToken).ConfigureAwait(false);
         }
 
         internal async Task SendMessageWithoutAckAsync(WebPubSubMessage message, CancellationToken cancellationToken)
@@ -328,6 +587,319 @@ namespace Azure.Messaging.WebPubSub.Clients
             return await entity.Task.ConfigureAwait(false);
         }
 
+        private Task HandleConnectionCloseAndNoRecovery(DisconnectedMessage disconnectedMessage, CancellationToken token)
+        {
+            _clientState.ChangeState(WebPubSubClientState.Disconnected);
+
+            SafeInvkeDisconnectedAsync(new WebPubSubDisconnectedEventArgs(_connectionId, disconnectedMessage)).FireAndForget();
+
+            if (_options.AutoReconnect)
+            {
+                return AutoReconnectAsync(token);
+            }
+
+            HandleClientStopped();
+            return Task.CompletedTask;
+        }
+
+        internal async void HandleConnectionConnected(ConnectedMessage connectedMessage, CancellationToken token)
+        {
+            foreach (var pair in _groups)
+            {
+                var name = pair.Key;
+                var g = pair.Value;
+                if (g.Joined)
+                {
+                    try
+                    {
+                        await JoinGroupAttemptAsync(name, cancellationToken: token).ConfigureAwait(false);
+                    }
+                    catch (Exception ex)
+                    {
+                        SafeInvkeRestoreGroupFailedAsync(new WebPubSubRejoinGroupFailedEventArgs(name, ex, token)).FireAndForget();
+                    }
+                }
+            }
+            SafeInvkeConnectedAsync(new WebPubSubConnectedEventArgs(connectedMessage, token)).FireAndForget();
+        }
+
+        private void HandleClientStopped()
+        {
+            _clientState.ChangeState(WebPubSubClientState.Stopped);
+
+            SafeInvkeStoppedAsync(new WebPubSubStoppedEventArgs(default)).FireAndForget();
+        }
+
+        private async Task SafeInvokeGroupMessageReceivedAsync(WebPubSubGroupMessageEventArgs eventArgs)
+        {
+            try
+            {
+                await (GroupMessageReceived?.Invoke(eventArgs) ?? Task.CompletedTask).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                WebPubSubClientEventSource.Log.FailedToInvokeEvent(nameof(GroupMessageReceived), ex.Message);
+            }
+        }
+
+        private async Task SafeInvokeServerMessageReceivedAsync(WebPubSubServerMessageEventArgs eventArgs)
+        {
+            try
+            {
+                await (ServerMessageReceived?.Invoke(eventArgs) ?? Task.CompletedTask).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                WebPubSubClientEventSource.Log.FailedToInvokeEvent(nameof(ServerMessageReceived), ex.Message);
+            }
+        }
+
+        private async Task SafeInvkeConnectedAsync(WebPubSubConnectedEventArgs eventArgs)
+        {
+            try
+            {
+                WebPubSubClientEventSource.Log.ConnectionConnected(_connectionId);
+                await (Connected?.Invoke(eventArgs) ?? Task.CompletedTask).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                WebPubSubClientEventSource.Log.FailedToInvokeEvent(nameof(Connected), ex.Message);
+            }
+        }
+
+        private async Task SafeInvkeDisconnectedAsync(WebPubSubDisconnectedEventArgs eventArgs)
+        {
+            try
+            {
+                WebPubSubClientEventSource.Log.ConnectionDisconnected(_connectionId);
+                await (Disconnected?.Invoke(eventArgs) ?? Task.CompletedTask).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                WebPubSubClientEventSource.Log.FailedToInvokeEvent(nameof(Disconnected), ex.Message);
+            }
+        }
+
+        private async Task SafeInvkeStoppedAsync(WebPubSubStoppedEventArgs eventArgs)
+        {
+            try
+            {
+                await (Stopped?.Invoke(eventArgs) ?? Task.CompletedTask).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                WebPubSubClientEventSource.Log.FailedToInvokeEvent(nameof(Stopped), ex.Message);
+            }
+        }
+
+        private async Task SafeInvkeRestoreGroupFailedAsync(WebPubSubRejoinGroupFailedEventArgs eventArgs)
+        {
+            try
+            {
+                await (RejoinGroupFailed?.Invoke(eventArgs) ?? Task.CompletedTask).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                WebPubSubClientEventSource.Log.FailedToInvokeEvent(nameof(RejoinGroupFailed), ex.Message);
+            }
+        }
+
+        private async Task AutoReconnectAsync(CancellationToken token)
+        {
+            var isSuccess = false;
+            var retryAttempt = 0;
+            try
+            {
+                while (!token.IsCancellationRequested)
+                {
+                    try
+                    {
+                        await StartAsyncByReconnection(token).ConfigureAwait(false);
+                        isSuccess = true;
+                        return;
+                    }
+                    catch (Exception ex)
+                    {
+                        WebPubSubClientEventSource.Log.FailedToReconnect(_connectionId, ex.Message);
+
+                        retryAttempt++;
+                        var delay = _reconnectRetryPolicy.NextRetryDelay(new RetryContext { RetryAttempt = retryAttempt });
+
+                        if (delay == null)
+                        {
+                            return;
+                        }
+
+                        await Task.Delay(delay.Value, token).ConfigureAwait(false);
+                    }
+                }
+            }
+            finally
+            {
+                if (!isSuccess)
+                {
+                    HandleClientStopped();
+                }
+            }
+        }
+
+        private async Task HandleConnectionClose(WebSocketCloseStatus? closeStatus, CancellationToken token)
+        {
+            foreach (var entity in _ackCache)
+            {
+                if (_ackCache.TryRemove(entity.Key, out var value))
+                {
+                    value.SetException(new SendMessageFailedException("Connection is disconnected before receive ack from the service", entity.Value.AckId));
+                }
+            }
+
+            if (closeStatus == WebSocketCloseStatus.PolicyViolation)
+            {
+                WebPubSubClientEventSource.Log.StopRecovery(_connectionId, $"The websocket close with status: {WebSocketCloseStatus.PolicyViolation}");
+                await HandleConnectionCloseAndNoRecovery(_latestDisconnectedMessage, token).ConfigureAwait(false);
+                return;
+            }
+
+            // Called StopAsync, don't recover or restart.
+            if (token.IsCancellationRequested)
+            {
+                WebPubSubClientEventSource.Log.StopRecovery(_connectionId, "The client is stopped");
+                await HandleConnectionCloseAndNoRecovery(_latestDisconnectedMessage, token).ConfigureAwait(false);
+                return;
+            }
+
+            // Unrecoverable protocol
+            if (!_protocol.IsReliable)
+            {
+                WebPubSubClientEventSource.Log.StopRecovery(_connectionId, "The protocol is not reliable, recovery is not applicable");
+                await HandleConnectionCloseAndNoRecovery(_latestDisconnectedMessage, token).ConfigureAwait(false);
+                return;
+            }
+
+            var uri = BuildRecoveryUri();
+
+            // Can't recovery
+            if (uri == null)
+            {
+                WebPubSubClientEventSource.Log.StopRecovery(_connectionId, "Connection id or reconnection token is not availble");
+                await HandleConnectionCloseAndNoRecovery(_latestDisconnectedMessage, token).ConfigureAwait(false);
+                return;
+            }
+
+            // Totally timeout 30s as service will remove the connection if it's not recovered in 30s
+            var recovered = false;
+            _clientState.ChangeState(WebPubSubClientState.Recovering);
+            var cts = new CancellationTokenSource(30 * 1000);
+            var linkedTcs = CancellationTokenSource.CreateLinkedTokenSource(cts.Token, token);
+            try
+            {
+                while (!linkedTcs.IsCancellationRequested)
+                {
+                    try
+                    {
+                        await _connectionLock.WaitAsync(linkedTcs.Token).ConfigureAwait(false);
+                        try
+                        {
+                            await ConnectAsync(uri, CancellationToken.None).ConfigureAwait(false);
+                            recovered = true;
+                            return;
+                        }
+                        finally
+                        {
+                            _connectionLock.Release();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        WebPubSubClientEventSource.Log.FailedToRecoverConnection(_connectionId, ex.Message);
+                        await Task.Delay(RecoverDelay, linkedTcs.Token).ConfigureAwait(false);
+                    }
+                }
+            }
+            finally
+            {
+                cts.Dispose();
+                linkedTcs.Dispose();
+
+                if (!recovered)
+                {
+                    WebPubSubClientEventSource.Log.StopRecovery(_connectionId, "Recovery attempts failed more then 30 seconds or the client is stopped");
+                    await HandleConnectionCloseAndNoRecovery(_latestDisconnectedMessage, token).ConfigureAwait(false);
+                }
+            }
+        }
+
+        private Task HandleMessageAsync(WebPubSubMessage message, CancellationToken token)
+        {
+            switch (message)
+            {
+                case ConnectedMessage connectedMessage:
+                    HandleConnectedMessage(connectedMessage);
+                    break;
+                case DisconnectedMessage disconnectedMessage:
+                    HandleDisconnectedMessage(disconnectedMessage);
+                    break;
+                case AckMessage ackMessage:
+                    HandleAckMessage(ackMessage);
+                    break;
+                case GroupDataMessage groupResponseMessage:
+                    HandleGroupMessage(groupResponseMessage);
+                    break;
+                case ServerDataMessage serverResponseMessage:
+                    HandleServerMessage(serverResponseMessage);
+                    break;
+                default:
+                    throw new InvalidDataException($"Received unknown type of message {message.GetType()}");
+            }
+
+            return Task.CompletedTask;
+
+            void HandleConnectedMessage(ConnectedMessage connectedMessage)
+            {
+                _connectionId = connectedMessage.ConnectionId;
+                _reconnectionToken = connectedMessage.ReconnectionToken;
+
+                if (!_isInitialConnected)
+                {
+                    _isInitialConnected = true;
+                    HandleConnectionConnected(connectedMessage, token);
+                }
+            }
+
+            void HandleDisconnectedMessage(DisconnectedMessage disconnectedMessage)
+            {
+                _latestDisconnectedMessage = disconnectedMessage;
+            }
+
+            void HandleGroupMessage(GroupDataMessage groupResponseMessage)
+            {
+                if (groupResponseMessage.SequenceId != null)
+                {
+                    if (!_sequenceId.TryUpdate(groupResponseMessage.SequenceId.Value))
+                    {
+                        // drop duplicated msg
+                        return;
+                    }
+                }
+
+                _groupDataChannel.Writer.TryWrite(groupResponseMessage);
+            }
+
+            void HandleServerMessage(ServerDataMessage serverResponseMessage)
+            {
+                if (serverResponseMessage.SequenceId != null)
+                {
+                    if (!_sequenceId.TryUpdate(serverResponseMessage.SequenceId.Value))
+                    {
+                        // drop duplicated msg
+                        return;
+                    }
+                }
+
+                _serverDataChannel.Writer.TryWrite(serverResponseMessage);
+            }
+        }
+
         internal void HandleAckMessage(AckMessage ackMessage)
         {
             if (_ackCache.TryRemove(ackMessage.AckId, out var entity))
@@ -335,7 +907,7 @@ namespace Azure.Messaging.WebPubSub.Clients
                 if (ackMessage.Success ||
                     ackMessage.Error?.Name == ErrorNameDuplicate)
                 {
-                    entity.SetResult(new WebPubSubResult(ackMessage.AckId, ackMessage.Error?.Name == ErrorNameDuplicate));
+                    entity.SetResult(new WebPubSubResult(ackMessage.AckId, ackMessage.Error?.Name == "Duplicate"));
                     return;
                 }
 
@@ -343,9 +915,69 @@ namespace Azure.Messaging.WebPubSub.Clients
             }
         }
 
+        private async Task StartServerProcessingDataMessage()
+        {
+            var reader = _serverDataChannel.Reader;
+            while (await reader.WaitToReadAsync().ConfigureAwait(false))
+            {
+                while (reader.TryRead(out var message))
+                {
+                    await SafeInvokeServerMessageReceivedAsync(new WebPubSubServerMessageEventArgs(message, default)).ConfigureAwait(false);
+                }
+            }
+        }
+
+        private async Task StartGroupProcessingDataMessage()
+        {
+            var reader = _groupDataChannel.Reader;
+            while (await reader.WaitToReadAsync().ConfigureAwait(false))
+            {
+                while (reader.TryRead(out var message))
+                {
+                    await SafeInvokeGroupMessageReceivedAsync(new WebPubSubGroupMessageEventArgs(message, default)).ConfigureAwait(false);
+                }
+            }
+        }
+
+        private async Task SequenceAckLoop(CancellationToken token)
+        {
+            while (!token.IsCancellationRequested)
+            {
+                try
+                {
+                    if (_sequenceId.TryGetSequenceId(out var sequenceId))
+                    {
+                        var payload = _protocol.GetMessageBytes(new SequenceAckMessage(sequenceId));
+                        await SendCoreAsync(payload, _protocol.WebSocketMessageType, true, token).ConfigureAwait(false);
+                    }
+                }
+                catch
+                {
+                }
+                finally
+                {
+                    await Task.Delay(1000, token).ConfigureAwait(false);
+                }
+            }
+        }
+
+        private Uri BuildRecoveryUri()
+        {
+            if (_connectionId != null && _reconnectionToken != null)
+            {
+                var builder = new UriBuilder(_clientAccessUri);
+                var query = HttpUtility.ParseQueryString(builder.Query);
+                query.Add(RecoverConnectionIdQuery, _connectionId);
+                query.Add(RecoverReconnectionTokenQuery, _reconnectionToken);
+                builder.Query = query.ToString();
+                return builder.Uri;
+            }
+            return null;
+        }
+
         private AckEntity CreateAckEntity(ulong ackId)
         {
-            return _ackCache.GetOrAdd(ackId, id => new AckEntity(id));
+            return _ackCache.AddOrUpdate(ackId, new AckEntity(ackId), (_, oldEntity) => oldEntity);
         }
 
         private void ThrowIfDisposed()
@@ -413,6 +1045,55 @@ namespace Azure.Messaging.WebPubSub.Clients
             public void SetCancelled() => _tcs.TrySetException(new OperationCanceledException());
             public void SetException(Exception ex) => _tcs.TrySetException(ex);
             public Task<WebPubSubResult> Task => _tcs.Task;
+        }
+
+        private class SequenceId
+        {
+            private readonly object _lock = new object();
+            private ulong _sequenceId;
+            private bool _updated;
+
+            public ulong Current => _sequenceId;
+
+            public bool TryUpdate(ulong sequenceId)
+            {
+                lock (_lock)
+                {
+                    _updated = true;
+
+                    if (sequenceId > _sequenceId)
+                    {
+                        _sequenceId = sequenceId;
+                        return true;
+                    }
+                    return false;
+                }
+            }
+
+            public bool TryGetSequenceId(out ulong sequenceId)
+            {
+                lock (_lock)
+                {
+                    if (_updated)
+                    {
+                        sequenceId = _sequenceId;
+                        _updated = false;
+                        return true;
+                    }
+
+                    sequenceId = 0;
+                    return false;
+                }
+            }
+
+            public void Reset()
+            {
+                lock (_lock)
+                {
+                    _sequenceId = 0;
+                    _updated = false;
+                }
+            }
         }
 
         private sealed class ClientState
