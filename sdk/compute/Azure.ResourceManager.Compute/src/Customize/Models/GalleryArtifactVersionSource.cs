@@ -12,8 +12,5 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> The uri of the gallery artifact version source. Currently used to specify vhd/blob source. </summary>
         public virtual Uri Uri { get; set; }
-
-        /// <summary> The Storage Account Id that contains the vhd blob being used as a source for this artifact version. </summary>
-        public virtual ResourceIdentifier StorageAccountId { get; set; }
     }
 }

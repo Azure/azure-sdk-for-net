@@ -5,7 +5,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -13,8 +12,5 @@ namespace Azure.ResourceManager.Compute.Models
     {
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override Uri Uri { get; set; }
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override ResourceIdentifier StorageAccountId { get; set; }
     }
 }

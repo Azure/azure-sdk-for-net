@@ -27,5 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
             Uri = uri;
             StorageAccountId = storageAccountId;
         }
+        /// <summary> The Storage Account Id that contains the vhd blob being used as a source for this artifact version. </summary>
+        public ResourceIdentifier StorageAccountId { get; set; }
     }
 }
