@@ -150,6 +150,13 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
             return option;
         }
 
+        public static RetryOptions GetRetryOptions()
+        {
+            return (RetryOptions)typeof(RetryOptions).GetConstructor(
+                  BindingFlags.NonPublic | BindingFlags.Instance,
+                  null, Type.EmptyTypes, null).Invoke(null);
+        }
+
         private static string GetMessage(string memberName, string filePath, int? lineNumber)
         {
             if (!string.IsNullOrEmpty(memberName))

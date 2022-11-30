@@ -360,8 +360,7 @@ namespace Azure.Messaging.WebPubSub.Clients
         {
             lock (_ackIdLock)
             {
-                _nextAckId = _nextAckId + 1;
-                return _nextAckId;
+                return ++_nextAckId;
             }
         }
 

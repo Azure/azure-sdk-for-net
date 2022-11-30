@@ -35,7 +35,7 @@ namespace Azure.Messaging.WebPubSub.Clients
             {
                 if (options.MaxDelay < options.Delay)
                 {
-                    throw new InvalidOperationException("RetryOptions.MaxDelay should larger or equal than RetryOptions.Delay");
+                    throw new ArgumentException("RetryOptions.MaxDelay should larger or equal than RetryOptions.Delay");
                 }
                 _maxRetriesToGetMaxDelay = (int)Math.Ceiling(Math.Log(_maxDelay.Ticks, 2) - Math.Log(_delay.Ticks, 2) + 1);
             }
