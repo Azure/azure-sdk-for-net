@@ -1,6 +1,6 @@
 # Microsoft Azure BillingBenefits management client library for .NET
 
-**[Describe the service briefly first.]**
+Microsoft BillingBenefits is a Microsoft-managed service which allows management on Azure savings plan. See here for more details about savings plan: https://learn.microsoft.com/en-us/azure/cost-management-billing/savings-plan/savings-plan-compute-overview
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
@@ -10,7 +10,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
     - Better error-handling.
     - Support uniform telemetry across all languages.
 
-## Getting started 
+## Getting started
 
 ### Install the package
 
