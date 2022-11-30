@@ -7,7 +7,7 @@
 
 using Azure.Core;
 
-namespace Azure.ResourceManager.AnalysisServices.Models
+namespace Azure.ResourceManager.Analysis.Models
 {
     /// <summary> An object that represents SKU details for existing resources. </summary>
     public partial class ExistingResourceSkuDetails

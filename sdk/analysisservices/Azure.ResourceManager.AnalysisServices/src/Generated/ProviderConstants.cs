@@ -7,7 +7,7 @@
 
 using Azure.Core.Pipeline;
 
-namespace Azure.ResourceManager.AnalysisServices
+namespace Azure.ResourceManager.Analysis
 {
     internal static class ProviderConstants
     {

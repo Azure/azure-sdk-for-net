@@ -9,9 +9,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
-using Azure.ResourceManager.AnalysisServices;
+using Azure.ResourceManager.Analysis;
 
-namespace Azure.ResourceManager.AnalysisServices.Models
+namespace Azure.ResourceManager.Analysis.Models
 {
     /// <summary> An array of Analysis Services resources. </summary>
     internal partial class AnalysisServicesServers

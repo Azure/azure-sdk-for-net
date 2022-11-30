@@ -8,7 +8,7 @@
 using Azure.Core;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.AnalysisServices
+namespace Azure.ResourceManager.Analysis
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     internal partial class ResourceGroupResourceExtensionClient : ArmResource

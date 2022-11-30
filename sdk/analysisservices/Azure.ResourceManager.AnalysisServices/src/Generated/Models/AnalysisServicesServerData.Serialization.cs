@@ -9,10 +9,10 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AnalysisServices.Models;
+using Azure.ResourceManager.Analysis.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.AnalysisServices
+namespace Azure.ResourceManager.Analysis
 {
     public partial class AnalysisServicesServerData : IUtf8JsonSerializable
     {

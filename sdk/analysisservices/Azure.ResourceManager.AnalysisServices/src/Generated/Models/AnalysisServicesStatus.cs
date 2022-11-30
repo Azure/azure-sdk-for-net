@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using System.Globalization;
 
-namespace Azure.ResourceManager.AnalysisServices.Models
+namespace Azure.ResourceManager.Analysis.Models
 {
     /// <summary> Live message of list gateway. Status: 0 - Live. </summary>
     public readonly partial struct AnalysisServicesStatus : IEquatable<AnalysisServicesStatus>

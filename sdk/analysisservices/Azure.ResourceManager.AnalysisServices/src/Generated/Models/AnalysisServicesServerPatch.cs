@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.AnalysisServices.Models
+namespace Azure.ResourceManager.Analysis.Models
 {
     /// <summary> Provision request specification. </summary>
     public partial class AnalysisServicesServerPatch

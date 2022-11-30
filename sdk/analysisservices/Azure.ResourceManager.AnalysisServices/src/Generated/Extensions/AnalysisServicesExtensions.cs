@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
-using Azure.ResourceManager.AnalysisServices.Models;
+using Azure.ResourceManager.Analysis.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.AnalysisServices
+namespace Azure.ResourceManager.Analysis
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.AnalysisServices. </summary>
     public static partial class AnalysisServicesExtensions

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.AnalysisServices.Models
+namespace Azure.ResourceManager.Analysis.Models
 {
     /// <summary> The current state of Analysis Services resource. The state is to indicate more states outside of resource provisioning. </summary>
     public readonly partial struct AnalysisServicesState : IEquatable<AnalysisServicesState>

@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.AnalysisServices.Models
+namespace Azure.ResourceManager.Analysis.Models
 {
     internal static partial class ConnectionModeExtensions
     {

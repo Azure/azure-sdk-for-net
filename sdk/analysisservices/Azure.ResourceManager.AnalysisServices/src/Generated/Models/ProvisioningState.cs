@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.AnalysisServices.Models
+namespace Azure.ResourceManager.Analysis.Models
 {
     /// <summary> The current deployment state of Analysis Services resource. The provisioningState is to indicate states for resource provisioning. </summary>
     public readonly partial struct ProvisioningState : IEquatable<ProvisioningState>

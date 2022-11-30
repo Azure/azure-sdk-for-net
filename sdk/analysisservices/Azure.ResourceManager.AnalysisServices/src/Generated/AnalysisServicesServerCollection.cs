@@ -18,7 +18,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.AnalysisServices
+namespace Azure.ResourceManager.Analysis
 {
     /// <summary>
     /// A class representing a collection of <see cref="AnalysisServicesServerResource" /> and their operations.

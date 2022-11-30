@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.AnalysisServices.Models
+namespace Azure.ResourceManager.Analysis.Models
 {
     /// <summary> The gateway details. </summary>
     public partial class GatewayDetails

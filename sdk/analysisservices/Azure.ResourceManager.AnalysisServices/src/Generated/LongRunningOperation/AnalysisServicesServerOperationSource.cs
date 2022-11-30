@@ -12,7 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.AnalysisServices
+namespace Azure.ResourceManager.Analysis
 {
     internal class AnalysisServicesServerOperationSource : IOperationSource<AnalysisServicesServerResource>
     {

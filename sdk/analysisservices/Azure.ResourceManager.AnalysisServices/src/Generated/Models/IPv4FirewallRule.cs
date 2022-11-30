@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.AnalysisServices.Models
+namespace Azure.ResourceManager.Analysis.Models
 {
     /// <summary> The detail of firewall rule. </summary>
     public partial class IPv4FirewallRule

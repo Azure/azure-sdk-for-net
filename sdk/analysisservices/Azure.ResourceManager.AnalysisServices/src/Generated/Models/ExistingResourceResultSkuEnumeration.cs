@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.AnalysisServices.Models
+namespace Azure.ResourceManager.Analysis.Models
 {
     /// <summary> An object that represents enumerating SKUs for existing resources. </summary>
     internal partial class ExistingResourceResultSkuEnumeration

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.AnalysisServices.Models
+namespace Azure.ResourceManager.Analysis.Models
 {
     /// <summary> The name of the Azure pricing tier to which the SKU applies. </summary>
     public readonly partial struct AnalysisServicesSkuTier : IEquatable<AnalysisServicesSkuTier>

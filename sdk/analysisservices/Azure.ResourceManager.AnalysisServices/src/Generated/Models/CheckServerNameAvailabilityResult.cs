@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.AnalysisServices.Models
+namespace Azure.ResourceManager.Analysis.Models
 {
     /// <summary> The checking result of server name availability. </summary>
     public partial class CheckServerNameAvailabilityResult

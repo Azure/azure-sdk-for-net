@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.ResourceManager.AnalysisServices.Models
+namespace Azure.ResourceManager.Analysis.Models
 {
     /// <summary> Represents the SKU name and Azure pricing tier for Analysis Services resource. </summary>
     public partial class ResourceSku

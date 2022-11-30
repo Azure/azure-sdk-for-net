@@ -8,9 +8,9 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AnalysisServices;
+using Azure.ResourceManager.Analysis;
 
-namespace Azure.ResourceManager.AnalysisServices.Models
+namespace Azure.ResourceManager.Analysis.Models
 {
     internal partial class AnalysisServicesServers
     {

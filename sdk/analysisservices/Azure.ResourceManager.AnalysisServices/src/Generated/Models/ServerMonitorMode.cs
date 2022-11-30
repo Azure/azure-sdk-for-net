@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using System.Globalization;
 
-namespace Azure.ResourceManager.AnalysisServices.Models
+namespace Azure.ResourceManager.Analysis.Models
 {
     /// <summary> The server monitor mode for AS server. </summary>
     public readonly partial struct ServerMonitorMode : IEquatable<ServerMonitorMode>

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.AnalysisServices.Models
+namespace Azure.ResourceManager.Analysis.Models
 {
     /// <summary> Status of gateway is live. </summary>
     public partial class GatewayListStatusLive

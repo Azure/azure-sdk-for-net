@@ -7,7 +7,7 @@
 
 using Azure;
 
-namespace Azure.ResourceManager.AnalysisServices.Models
+namespace Azure.ResourceManager.Analysis.Models
 {
     /// <summary> The status of operation. </summary>
     public partial class OperationStatus

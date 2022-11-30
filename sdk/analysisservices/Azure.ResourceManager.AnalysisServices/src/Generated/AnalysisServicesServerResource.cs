@@ -14,10 +14,10 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.AnalysisServices.Models;
+using Azure.ResourceManager.Analysis.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.AnalysisServices
+namespace Azure.ResourceManager.Analysis
 {
     /// <summary>
     /// A Class representing an AnalysisServicesServer along with the instance operations that can be performed on it.

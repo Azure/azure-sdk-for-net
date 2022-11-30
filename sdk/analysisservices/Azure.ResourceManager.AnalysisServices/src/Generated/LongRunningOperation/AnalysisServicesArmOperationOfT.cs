@@ -13,7 +13,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.AnalysisServices
+namespace Azure.ResourceManager.Analysis
 {
 #pragma warning disable SA1649 // File name should match first type name
     internal class AnalysisServicesArmOperation<T> : ArmOperation<T>

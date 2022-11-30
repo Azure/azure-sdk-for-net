@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.AnalysisServices.Models;
+using Azure.ResourceManager.Analysis.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.AnalysisServices
+namespace Azure.ResourceManager.Analysis
 {
     /// <summary> A class representing the AnalysisServicesServer data model. </summary>
     public partial class AnalysisServicesServerData : TrackedResourceData

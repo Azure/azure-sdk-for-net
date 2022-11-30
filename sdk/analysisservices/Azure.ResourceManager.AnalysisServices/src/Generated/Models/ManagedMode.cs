@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using System.Globalization;
 
-namespace Azure.ResourceManager.AnalysisServices.Models
+namespace Azure.ResourceManager.Analysis.Models
 {
     /// <summary> The managed mode of the server (0 = not managed, 1 = managed). </summary>
     public readonly partial struct ManagedMode : IEquatable<ManagedMode>
