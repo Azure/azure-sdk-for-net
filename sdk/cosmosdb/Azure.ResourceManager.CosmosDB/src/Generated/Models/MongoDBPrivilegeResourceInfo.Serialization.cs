@@ -10,15 +10,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class PrivilegeResource : IUtf8JsonSerializable
+    public partial class MongoDBPrivilegeResourceInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Db))
+            if (Optional.IsDefined(DBName))
             {
                 writer.WritePropertyName("db");
-                writer.WriteStringValue(Db);
+                writer.WriteStringValue(DBName);
             }
             if (Optional.IsDefined(Collection))
             {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteEndObject();
         }
 
-        internal static PrivilegeResource DeserializePrivilegeResource(JsonElement element)
+        internal static MongoDBPrivilegeResourceInfo DeserializeMongoDBPrivilegeResourceInfo(JsonElement element)
         {
             Optional<string> db = default;
             Optional<string> collection = default;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new PrivilegeResource(db.Value, collection.Value);
+            return new MongoDBPrivilegeResourceInfo(db.Value, collection.Value);
         }
     }
 }
