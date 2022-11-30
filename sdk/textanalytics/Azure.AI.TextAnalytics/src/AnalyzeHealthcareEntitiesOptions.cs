@@ -26,7 +26,8 @@ namespace Azure.AI.TextAnalytics
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// The default language to consider during automatic language detection.
+        /// The two-letter ISO 639-1 representation of the default language to consider for automatic language
+        /// detection (for example, "en" for English or "fr" for French).
         /// </summary>
         /// <remarks>
         /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
