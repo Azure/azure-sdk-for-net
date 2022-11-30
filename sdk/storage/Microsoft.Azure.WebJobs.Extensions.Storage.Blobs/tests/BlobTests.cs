@@ -123,7 +123,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
                 {
                     builder.AddAzureStorageBlobs()
                     .UseStorageServices(blobServiceClient, queueServiceClient)
-                    .AddEnvironmentVariables();
+                    .ConfigureAppConfiguration(cb => cb.AddInMemoryCollection(
+                        new Dictionary<string, string>() {
+                        { "ConnectionStrings:AzureWebJobsStorage", AzuriteNUnitFixture.Instance.GetAzureAccount().ConnectionString }
+                        }
+                    ));
                 })
                 .Build();
 
@@ -157,7 +161,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
                 {
                     builder.AddAzureStorageBlobs()
                     .UseStorageServices(blobServiceClient, queueServiceClient)
-                    .AddEnvironmentVariables();
+                    .ConfigureAppConfiguration(cb => cb.AddInMemoryCollection(
+                        new Dictionary<string, string>() {
+                        { "ConnectionStrings:AzureWebJobsStorage", AzuriteNUnitFixture.Instance.GetAzureAccount().ConnectionString }
+                        }
+                    ));
                 })
                 .Build();
 
