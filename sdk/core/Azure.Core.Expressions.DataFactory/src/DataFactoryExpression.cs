@@ -15,7 +15,7 @@ namespace Azure.Core.Expressions.DataFactory
     /// For details on DataFactoryExpressions see https://learn.microsoft.com/en-us/azure/data-factory/control-flow-expression-language-functions#expressions.
     /// </summary>
     /// <typeparam name="T"> Can be one of <see cref="string"/>, <see cref="bool"/>, <see cref="int"/>, <see cref="double"/>, <see cref="TimeSpan"/>,
-    /// <see cref="DateTimeOffset"/>, <see cref="Uri"/>, <see cref="IList{String}"/>, <see cref="IList{TElement}"/>,
+    /// <see cref="DateTimeOffset"/>, <see cref="Uri"/>, <see cref="IList{String}"/>, <see cref="IList{TElement}"/> where TElement has a <see cref="JsonConverter"/> defined,
     /// or <see cref="IDictionary{String,String}"/>.</typeparam>
 #pragma warning disable SA1649 // File name should match first type name
     [JsonConverter(typeof(DataFactoryExpressionJsonConverter))]
