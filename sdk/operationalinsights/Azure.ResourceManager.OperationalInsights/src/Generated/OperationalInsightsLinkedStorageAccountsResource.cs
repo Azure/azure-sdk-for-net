@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.OperationalInsights
 
         private readonly ClientDiagnostics _operationalInsightsLinkedStorageAccountsLinkedStorageAccountsClientDiagnostics;
         private readonly LinkedStorageAccountsRestOperations _operationalInsightsLinkedStorageAccountsLinkedStorageAccountsRestClient;
-        private readonly OperationalInsightsLinkedStorageAccountData _data;
+        private readonly OperationalInsightsLinkedStorageAccountsData _data;
 
         /// <summary> Initializes a new instance of the <see cref="OperationalInsightsLinkedStorageAccountsResource"/> class for mocking. </summary>
         protected OperationalInsightsLinkedStorageAccountsResource()
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <summary> Initializes a new instance of the <see cref = "OperationalInsightsLinkedStorageAccountsResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal OperationalInsightsLinkedStorageAccountsResource(ArmClient client, OperationalInsightsLinkedStorageAccountData data) : this(client, data.Id)
+        internal OperationalInsightsLinkedStorageAccountsResource(ArmClient client, OperationalInsightsLinkedStorageAccountsData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.OperationalInsights
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual OperationalInsightsLinkedStorageAccountData Data
+        public virtual OperationalInsightsLinkedStorageAccountsData Data
         {
             get
             {
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="data"> The parameters required to create or update linked storage accounts. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<OperationalInsightsLinkedStorageAccountsResource>> UpdateAsync(WaitUntil waitUntil, OperationalInsightsLinkedStorageAccountData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<OperationalInsightsLinkedStorageAccountsResource>> UpdateAsync(WaitUntil waitUntil, OperationalInsightsLinkedStorageAccountsData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="data"> The parameters required to create or update linked storage accounts. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<OperationalInsightsLinkedStorageAccountsResource> Update(WaitUntil waitUntil, OperationalInsightsLinkedStorageAccountData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<OperationalInsightsLinkedStorageAccountsResource> Update(WaitUntil waitUntil, OperationalInsightsLinkedStorageAccountsData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
