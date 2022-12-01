@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of MongoDBPrivilege. </summary>
         /// <param name="resource"> An Azure Cosmos DB Mongo DB Resource. </param>
         /// <param name="actions"> An array of actions that are allowed. </param>
-        internal MongoDBPrivilege(PrivilegeResource resource, IList<string> actions)
+        internal MongoDBPrivilege(MongoDBPrivilegeResourceInfo resource, IList<string> actions)
         {
             Resource = resource;
             Actions = actions;
         }
 
         /// <summary> An Azure Cosmos DB Mongo DB Resource. </summary>
-        public PrivilegeResource Resource { get; set; }
+        public MongoDBPrivilegeResourceInfo Resource { get; set; }
         /// <summary> An array of actions that are allowed. </summary>
         public IList<string> Actions { get; }
     }
