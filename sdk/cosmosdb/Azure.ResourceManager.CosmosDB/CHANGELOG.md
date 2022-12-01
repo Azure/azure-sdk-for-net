@@ -1,14 +1,11 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0 (2022-11-29)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgraded API version to 2022-08-15.
+- Added MongoDB RBAC APIs.
 
 ## 1.1.0 (2022-10-27)
 

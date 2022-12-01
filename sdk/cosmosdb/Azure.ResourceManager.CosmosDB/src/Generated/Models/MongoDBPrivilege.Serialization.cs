@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static MongoDBPrivilege DeserializeMongoDBPrivilege(JsonElement element)
         {
-            Optional<PrivilegeResource> resource = default;
+            Optional<MongoDBPrivilegeResourceInfo> resource = default;
             Optional<IList<string>> actions = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    resource = PrivilegeResource.DeserializePrivilegeResource(property.Value);
+                    resource = MongoDBPrivilegeResourceInfo.DeserializeMongoDBPrivilegeResourceInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("actions"))
