@@ -224,6 +224,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
                 b.AddAzureStorageQueues();
             }, programType,
             settings: new Dictionary<string, string>() {
+                // This takes precedence over env variables.
                 { "ConnectionStrings:AzureWebJobsStorage", AzuriteNUnitFixture.Instance.GetAzureAccount().ConnectionString }
             });
         }
