@@ -47,6 +47,10 @@ jobs:
       condition: and(succeeded(), eq(dependencies.smoke_test_eligibility.outputs['output_eligibility.RunSmokeTests'], true))
     strategy:
       matrix:
+        Ubuntu_Net60:
+          Pool: "azsdk-pool-mms-ubuntu-2004-general"
+          OSVmImage: "MMSUbuntu20.04"
+          TestTargetFramework: net6.0
         Windows_NetFramework:
           Pool: "azsdk-pool-mms-win-2022-general"
           OSVmImage: "MMS2022"
@@ -56,8 +60,8 @@ jobs:
           OSVmImage: "MMS2022"
           TestTargetFramework: net6.0
         Windows_Net70:
-          Pool: "azsdk-pool-mms-ubuntu-2004-general"
-          OSVmImage: "MMSUbuntu20.04"
+          Pool: "azsdk-pool-mms-win-2022-general"
+          OSVmImage: "MMS2022"
           TestTargetFramework: net7.0
     pool:
       name: $(Pool)

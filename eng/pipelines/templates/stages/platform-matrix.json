@@ -48,14 +48,14 @@
   "include": [
     {
       "Agent": {
-        "Windows2022": {
+        "Windows2022_NET7.0": {
           "OSVmImage": "MMS2022",
           "Pool": "azsdk-pool-mms-win-2022-general",
           "TestTargetFramework": "net7.0"
         }
       },
       "TestMode": {
-        "NET7.0_Coverage_Record": {
+        "Coverage_Record": {
           "SupportsRecording": true,
           "CollectCoverage": true
         }
